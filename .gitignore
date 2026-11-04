@@ -18,6 +18,7 @@ archive/
 !data/processed/v2/wax_dauphin_coutinho.csv
 !data/processed/v2/cetane_master_recalibrated.csv
 !data/processed/v2/octane_master_recalibrated.csv
+!data/processed/v2/compounds_anchored_vp.csv
 !data/MISSING.md
 !data/processed/cetane_pure_curated.csv
 !data/real_fuels/

@@ -1,0 +1,32 @@
+design_id,design_name,fuel_family,property,computed_value,limit_lo,limit_hi,spec_margin,effective_margin,margin_satisfied,status
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,density_kg_m3,802.88,775.0,840.0,2.5,25.38,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,flash_point_C,47.04,38.0,,5.56,3.48,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,freezing_point_C,-97.64,,-40.0,6.5,51.14,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,viscosity_minus20C_recal_cSt,6.01,,8.0,1.94,0.09,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,heat_of_combustion_net_MJ_kg,43.59,42.8,,0.28,0.51,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,aromatics_wt_pct,15.0,,25.0,0.0,10.0,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,aromatics_vol_pct,12.41,,25.0,0.0,12.59,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,T10_D86_C,194.24,,205.0,6.8,3.96,True,PASS
+jet_minimal_3comp,Jet A (Minimal 3-Comp),jet,T90_D86_C,178.36,,300.0,7.2,114.44,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,density_kg_m3,796.34,775.0,840.0,2.5,18.84,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,flash_point_C,48.61,38.0,,5.56,5.05,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,freezing_point_C,-54.62,,-40.0,6.5,8.12,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,viscosity_minus20C_recal_cSt,5.99,,8.0,1.94,0.13,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,heat_of_combustion_net_MJ_kg,43.64,42.8,,0.28,0.56,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,aromatics_wt_pct,15.0,,25.0,0.0,10.0,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,aromatics_vol_pct,12.31,,25.0,0.0,12.69,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,T10_D86_C,194.24,,205.0,6.8,3.96,True,PASS
+jet_realistic_4comp,Jet A (Realistic 4-Comp),jet,T90_D86_C,194.39,,300.0,7.2,98.41,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,density_kg_m3,837.61,820.0,845.0,2.5,4.89,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,flash_point_C,77.8,52.0,,5.56,20.24,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,wat_C,-3.42,,0.0,3.0,0.42,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,viscosity_40C_recal_cSt,2.0,1.9,4.1,0.1,0.0,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,dcn,47.5,40.0,,5.8,1.7,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,aromatics_wt_pct,20.0,10.0,35.0,0.0,10.0,True,PASS
+diesel_realistic_5comp,Diesel No. 2 (Realistic 5-Comp),diesel,T90_D86_C,266.87,,338.0,7.2,63.93,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,density_kg_m3,726.33,720.0,775.0,2.5,3.83,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,ron,104.62,91.0,,8.5,5.12,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,mon,96.69,82.0,,7.8,6.89,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,octane_sensitivity,7.93,7.0,14.0,0.0,0.93,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,vapor_pressure_kPa,57.07,45.0,70.0,24.5,0.82,True,PASS
+gasoline_realistic_5comp,Gasoline (Realistic 5-Comp),gasoline,T50_D86_C,78.38,77.0,121.0,0.0,1.38,True,PASS
