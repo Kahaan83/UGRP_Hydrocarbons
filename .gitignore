@@ -11,6 +11,7 @@ archive/
 !archive/baseline_manifest.json
 !data/antoine_sources.csv
 !data/processed/v2/distillation_real_fuels.csv
+!data/real_fuels/
 ajftd_session.json
 runs/
 

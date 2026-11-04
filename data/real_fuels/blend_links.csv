@@ -1,0 +1,20 @@
+blend_id,parent_fuel_1,parent_fuel_2,blend_ratio,target_fuel,measured_properties,source
+RP1_Binary_2comp,NIST_RP1,none,chemical_surrogate,NIST_RP1,density_kg_m3;viscosity_kin_cSt,NISTIR 6646
+RP1_Edwards_3comp,NIST_RP1,none,chemical_surrogate,NIST_RP1,density_kg_m3;viscosity_kin_cSt,NISTIR 6646
+RP1_NIST_14comp,NIST_RP1,none,chemical_surrogate,NIST_RP1,density_kg_m3;viscosity_kin_cSt,NISTIR 6646
+BrunoHuber2010_3comp,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Bruno, T. J., Huber, M. L. ""Evaluation of the Physicochemica"
+Chen2016_JI,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Chen, J. Y., et al. JI surrogate (n-dodecane/iso-cetane/tran"
+Dooley2010_1stGen,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Dooley, S., Won, S. H., Chaos, M., Heyne, J. S., Ju, Y., Dry"
+Dooley2012_2ndGen,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Dooley, S., Won, S. H., Heyne, J., Farouk, T. I., Ju, Y., Dr"
+Honnet2009_Aachen,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Honnet, S., Seshadri, K., Niemann, U., Peters, N. ""A surroga"
+HyChem_NJFCP_A1,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Xu, R., Wang, H., Colket, M., Edwards, T. ""Thermochemical Pr"
+HyChem_NJFCP_A2,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Xu, R., Wang, H., Colket, M., Edwards, T. ""Thermochemical Pr"
+HyChem_NJFCP_A3,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Xu, R., Wang, H., Colket, M., Edwards, T. ""Thermochemical Pr"
+KimVioli2014_UM1,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Kim, D.-H., Martz, J. B., Violi, A. ""A surrogate for emulati"
+KimVioli2014_UM2,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Kim, D.-H., Martz, J. B., Violi, A. ""A surrogate for emulati"
+Violi2002_JP8_6comp,Jet_A,none,chemical_surrogate,Jet_A,density_kg_m3;viscosity_kin_cSt;flash_point_C;dcn,"Violi, A., Yan, S., Eddings, E. G., Sarofim, A. F., Granata,"
+SURR_TRF_60,Isooctane_Primary_Reference,n-Heptane_Primary_Reference,60.0/40.0 vol%,Gasoline_60RON,ron=60.0;mon=60.0,ASTM D2699 / D2700
+SURR_TRF_70,Isooctane_Primary_Reference,n-Heptane_Primary_Reference,70.0/30.0 vol%,Gasoline_70RON,ron=70.0;mon=70.0,ASTM D2699 / D2700
+SURR_TRF_80,Isooctane_Primary_Reference,n-Heptane_Primary_Reference,80.0/20.0 vol%,Gasoline_80RON,ron=80.0;mon=80.0,ASTM D2699 / D2700
+SURR_TRF_90,Isooctane_Primary_Reference,n-Heptane_Primary_Reference,90.0/10.0 vol%,Gasoline_90RON,ron=90.0;mon=90.0,ASTM D2699 / D2700
+POSF_10325,Petroleum_Crude_Distillate,none,baseline_conventional_jet_a,POSF_10325,density_kg_m3;viscosity_kin_cSt;flash_point_C;freezing_point_C,AFRL / ASCENT Project 31a
