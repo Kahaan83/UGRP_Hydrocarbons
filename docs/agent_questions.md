@@ -80,3 +80,17 @@ repositories or restricted to private internal releases?
 **Default assumed:** Marked `redistribution_allowed = unclear` in `docs/data_sources.csv` for all such sources,
 with explicit explanatory notes detailing source access conditions. Only datasets with explicit CC0, CC BY,
 MIT, or U.S. Federal Government Public Domain status are marked `redistribution_allowed = yes`.
+
+---
+
+## Q5 — 2026-11-04 (T0.2)
+
+**Task:** Reconciliation of Near-Duplicate (C2) and Split Discipline (C4) Verdicts with Acceptance Criteria.
+
+**Question:**
+1. Check C2 acceptance criteria specifically requires `(CRC system component sets overlapping >=80% with training blends, same property, T within 2 K, value within 5%)`. Because CRC fuels lack speciated molecular component lists, component overlap is 0% (or <=8.3% against 36-component bulk-route reconstructions), yielding 0 near-duplicates (PASS). When component overlap is omitted entirely, 67,324 physical value coincidences appear in density and viscosity.
+2. Check C4 acceptance criteria requires `none of the 31 LOSO systems appear in S1 training rows`. 22 of the 31 flash LOSO systems appear in S1 training rows (65 rows), which violates S1 isolation for neural network models (`t8`), although `eval_flash_loso.py` runs its own internal leave-one-system-out cross-validation across the 31 systems.
+How should these verdicts be presented in the PASS/FAIL/UNCHECKED schema?
+
+**Default assumed:** Marked C2 as PASS under the strict component overlap criterion (0 near-duplicates), with full documentation and export of the 67,324 relaxed physical coincidences. Marked C4 as FAIL against the S1-isolation criterion (22 systems / 65 rows affected), with explicit documentation that the Le Chatelier baseline does not train on any data, while HGB and t8 neural evaluations must account for S1 presence.
+

@@ -1,33 +1,33 @@
-inchikey,n_pure_vp_rows,was_refit,n_loso_systems_using,severity
-AUHZEENZYGFFBQ-UHFFFAOYSA-N,1,False,1,vp_exists_not_refit
-BGHCVCJVXZWKCC-UHFFFAOYSA-N,33,True,1,shared_compound_refit
-CDKDZKXSXLNROY-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-CHBAWFGIXDBEBT-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-CTQNGGLPUBDAKN-UHFFFAOYSA-N,53,True,2,shared_compound_refit
-DCAYPVUWAIABOU-UHFFFAOYSA-N,47,True,3,shared_compound_refit
-DIOQZVSQGTUSAI-UHFFFAOYSA-N,121,True,1,shared_compound_refit
-FLTJDUOFAQWHDF-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-GWHJZXXIDMPWGX-UHFFFAOYSA-N,12,True,1,shared_compound_refit
-HDGQICNBXPAKLR-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-IMNFDUFMRHMDMM-UHFFFAOYSA-N,172,True,4,shared_compound_refit
-IVSZLXZYQVIEFR-UHFFFAOYSA-N,64,True,2,shared_compound_refit
-JVSWJIKNEAIKJW-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-KUMXLFIBWFCMOJ-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-KVZJLSYJROEPSQ-HTQZYQBOSA-N,0,False,1,webbook_or_no_antoine
-KVZJLSYJROEPSQ-OCAPTIKFSA-N,0,False,1,webbook_or_no_antoine
-KWKXNDCHNDYVRT-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-LAIUFBWHERIJIH-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-LTEQMZWBSYACLV-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-NHTMVDHEPJAVLT-UHFFFAOYSA-N,57,True,1,shared_compound_refit
-ODLMAHJVESYWTB-UHFFFAOYSA-N,0,True,1,refit_ok_no_pure_vp
-QRMPKOFEUHIBNM-OCAPTIKFSA-N,0,False,1,webbook_or_no_antoine
-QRMPKOFEUHIBNM-ZKCHVHJHSA-N,0,False,1,webbook_or_no_antoine
-RLPGDEORIPLBNF-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-RNTWWGNZUXGTAX-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-SNRUBQQJIBEYMU-UHFFFAOYSA-N,74,False,21,vp_exists_not_refit
-TVMXDCGIABBOFY-UHFFFAOYSA-N,70,True,2,shared_compound_refit
-URLKBWYHVLBVBO-UHFFFAOYSA-N,57,True,1,shared_compound_refit
-UWNADWZGEHDQAB-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-VKPSKYDESGTTFR-UHFFFAOYSA-N,0,False,3,webbook_or_no_antoine
-XTDQDBVBDLYELW-UHFFFAOYSA-N,0,False,1,webbook_or_no_antoine
-YNQLUTRBYVCPMQ-UHFFFAOYSA-N,59,True,2,shared_compound_refit
+inchikey,name,smiles,formula,antoine_source,citation,is_nov3_added,is_unverified,n_pure_vp_rows,refit_status,n_loso_systems_using,loso_systems,leakage_category
+AUHZEENZYGFFBQ-UHFFFAOYSA-N,mesitylene,Cc1cc(C)cc(C)c1,C9H12,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 108-67-8, ref Forziati, Norris, et al., 1949",True,False,1,skipped: <6 points or span <30 K,1,"[""6b00f1bbc8c1""]",shared_compound_webbook_verified
+BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,CCCCCCCCCCCCCC,C14H30,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,53,ok,1,"[""f630521a0719""]",shared_compound_refit
+CDKDZKXSXLNROY-UHFFFAOYSA-N,octylbenzene,CCCCCCCCc1ccccc1,C14H22,webbook,unverified,True,True,0,none,1,"[""595e405e4094""]",shared_compound_unverified_provenance
+CHBAWFGIXDBEBT-UHFFFAOYSA-N,4-methylheptane,CCCC(C)CCC,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 589-53-7, ref Stull, 1947",True,False,0,none,1,"[""cf91cc3631a6""]",shared_compound_webbook_verified
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,Cc1ccccc1C,Cc1ccccc1C,C8H10,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,84,ok,2,"[""ab46fa372238"", ""f23a569b59f2""]",shared_compound_refit
+DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,CCCCCCCCCCCCCCCC,C16H34,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,47,ok,3,"[""595e405e4094"", ""c025d27a717d"", ""f70a95ecf8ed""]",shared_compound_refit
+DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,CCCCCCCCCC,C10H22,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,174,ok,1,"[""f630521a0719""]",shared_compound_refit
+FLTJDUOFAQWHDF-UHFFFAOYSA-N,"2,2-dimethylhexane",CCCCC(C)(C)C,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 590-73-8, ref Stull, 1947",True,False,0,none,1,"[""869a202eaad3""]",shared_compound_webbook_verified
+GWHJZXXIDMPWGX-UHFFFAOYSA-N,Cc1ccc(C)c(C)c1,Cc1ccc(C)c(C)c1,C9H12,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,12,ok,1,"[""bedb14fc8474""]",shared_compound_refit
+HDGQICNBXPAKLR-UHFFFAOYSA-N,"2,4-dimethylhexane",CCC(C)CC(C)C,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 589-43-5, ref Stull, 1947",True,False,0,none,1,"[""4a46b7d7afd9""]",shared_compound_webbook_verified
+IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,CCCCCCC,C7H16,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,390,ok,4,"[""52b3471ca35f"", ""aee28024efb3"", ""f23a569b59f2"", ""fe6dc19336b5""]",shared_compound_refit
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,Cc1cccc(C)c1,Cc1cccc(C)c1,C8H10,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,84,ok,2,"[""c63e4108c743"", ""fe6dc19336b5""]",shared_compound_refit
+JVSWJIKNEAIKJW-UHFFFAOYSA-N,2-methylheptane,CCCCCC(C)C,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 592-27-8, ref Willingham, Taylor, et al., 1945",True,False,0,none,1,"[""53ea21ae7d78""]",shared_compound_webbook_verified
+KUMXLFIBWFCMOJ-UHFFFAOYSA-N,"3,3-dimethylhexane",CCCC(C)(C)CC,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 563-16-6, ref Stull, 1947",True,False,0,none,1,"[""43f938ddf729""]",shared_compound_webbook_verified
+KVZJLSYJROEPSQ-HTQZYQBOSA-N,"cis-1,2-dimethylcyclohexane",C[C@@H]1CCCC[C@H]1C,C8H16,webbook,unverified,True,True,0,none,1,"[""2c7f61bd0f86""]",shared_compound_unverified_provenance
+KVZJLSYJROEPSQ-OCAPTIKFSA-N,"trans-1,2-dimethylcyclohexane",C[C@@H]1CCCC[C@@H]1C,C8H16,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 2207-01-4, ref Willingham, Taylor, et al., 1945",True,False,0,none,1,"[""d578a427731e""]",shared_compound_webbook_verified
+KWKXNDCHNDYVRT-UHFFFAOYSA-N,dodecylbenzene,CCCCCCCCCCCCc1ccccc1,C18H30,webbook,unverified,True,True,0,none,1,"[""c025d27a717d""]",shared_compound_unverified_provenance
+LAIUFBWHERIJIH-UHFFFAOYSA-N,3-methylheptane,CCCCC(C)CC,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 589-81-1, ref Willingham, Taylor, et al., 1945",True,False,0,none,1,"[""2905e4e4ab30""]",shared_compound_webbook_verified
+LTEQMZWBSYACLV-UHFFFAOYSA-N,hexylbenzene,CCCCCCc1ccccc1,C12H18,webbook,unverified,True,True,0,none,1,"[""f70a95ecf8ed""]",shared_compound_unverified_provenance
+NHTMVDHEPJAVLT-UHFFFAOYSA-N,CC(C)CC(C)(C)C,CC(C)CC(C)(C)C,C8H18,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,87,ok,1,"[""73561b87527d""]",shared_compound_refit
+ODLMAHJVESYWTB-UHFFFAOYSA-N,CCCc1ccccc1,CCCc1ccccc1,C9H12,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,0,ok,1,"[""b30d7680e486""]",shared_compound_refit
+QRMPKOFEUHIBNM-OCAPTIKFSA-N,"trans-1,4-dimethylcyclohexane",C[C@H]1CC[C@@H](C)CC1,C8H16,webbook,unverified,True,True,0,none,1,"[""cb680dfd1c38""]",shared_compound_unverified_provenance
+QRMPKOFEUHIBNM-ZKCHVHJHSA-N,"cis-1,4-dimethylcyclohexane",C[C@H]1CC[C@H](C)CC1,C8H16,webbook,unverified,True,True,0,none,1,"[""39a914ff0579""]",shared_compound_unverified_provenance
+RLPGDEORIPLBNF-UHFFFAOYSA-N,"2,3,4-trimethylpentane",CC(C)C(C)C(C)C,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 565-75-3, ref Willingham, Taylor, et al., 1945",True,False,0,none,1,"[""532de9d259d1""]",shared_compound_webbook_verified
+RNTWWGNZUXGTAX-UHFFFAOYSA-N,"3,4-dimethylhexane",CCC(C)C(C)CC,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 583-48-2, ref Stull, 1947",True,False,0,none,1,"[""8797faed3336""]",shared_compound_webbook_verified
+SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,CCCCCCCCCCCC,C12H26,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,82,check: rms > 0.03 log10 units (~7 %),21,"[""2905e4e4ab30"", ""2c7f61bd0f86"", ""314cc4c34772"", ""36a1c57c3f21"", ""39a914ff0579"", ""43f938ddf729"", ""4a46b7d7afd9"", ""518951b6119a"", ""532de9d259d1"", ""53ea21ae7d78"", ""73561b87527d"", ""869a202eaad3"", ""8797faed3336"", ""88b2bf63f8b0"", ""ab46fa372238"", ""c63e4108c743"", ""cb680dfd1c38"", ""cf91cc3631a6"", ""d578a427731e"", ""d76b6e9a19b5"", ""f630521a0719""]",shared_compound_refit
+TVMXDCGIABBOFY-UHFFFAOYSA-N,CCCCCCCC,CCCCCCCC,C8H18,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,97,ok,2,"[""314cc4c34772"", ""52b3471ca35f""]",shared_compound_refit
+URLKBWYHVLBVBO-UHFFFAOYSA-N,Cc1ccc(C)cc1,Cc1ccc(C)cc1,C8H10,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,78,ok,1,"[""518951b6119a""]",shared_compound_refit
+UWNADWZGEHDQAB-UHFFFAOYSA-N,"2,5-dimethylhexane",CC(C)CCC(C)C,C8H18,webbook,"NIST/TRC Web Thermo Tables (webbook.nist.gov), set for CAS 592-13-2, ref Stull, 1947",True,False,0,none,1,"[""d76b6e9a19b5""]",shared_compound_webbook_verified
+VKPSKYDESGTTFR-UHFFFAOYSA-N,isocetane,CC(CC(C)(C)C)CC(C)(C)C,C12H26,webbook,unverified,True,True,0,none,3,"[""6b00f1bbc8c1"", ""b30d7680e486"", ""bedb14fc8474""]",shared_compound_unverified_provenance
+XTDQDBVBDLYELW-UHFFFAOYSA-N,"2,3,3-trimethylpentane",CCC(C)C(C)(C)C,C8H18,webbook,unverified,True,True,0,none,1,"[""36a1c57c3f21""]",shared_compound_unverified_provenance
+YNQLUTRBYVCPMQ-UHFFFAOYSA-N,CCc1ccccc1,CCc1ccccc1,C8H10,refit_measured,ThermoML archive (doi:10.18434/mds2-2422) refit,False,False,72,ok,2,"[""88b2bf63f8b0"", ""aee28024efb3""]",shared_compound_refit
