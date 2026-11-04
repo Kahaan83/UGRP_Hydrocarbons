@@ -38,6 +38,14 @@ Task T2.10: complete (deliverables scripts/build_sle_cold_flow_coverage.py, docs
 Task T2.11: complete (deliverables src/fuelblend/baselines/cold_flow.py, results/t2/cold_flow_baseline_eval.csv, scripts/eval_wat_baseline.py, docs/progress/T2.11.md, tests/test_cold_flow_baseline.py; implemented Schroeder-van Laar ideal SLE baseline for wax appearance temperature, evaluated across 57 CRC aviation fuels with r = 0.443 correlation to ASTM D5972 freezing points and cluster-bootstrap CIs).
 Task T2.12: complete (deliverables docs/scope_decisions.md Decision SD-01, docs/progress/T2.12.md; audit confirmed 0 speciated molecular mixtures with measured pour point < 30 threshold; formally recorded decision to scope pour point out in favor of thermodynamic freezing point and WAT).
 
+Phase 3 (Real-Fuel Dataset with Composition):
+Task T3.1: complete (deliverable data/real_fuels/inventory.csv; 65 real fuels catalogued with source, fuel family, component count, unresolved fraction, and available properties).
+Task T3.2: complete (deliverable data/real_fuels/compositions.csv; 2,871 component fraction rows linked to canonical InChIKeys and SMILES; unresolved fraction tracked and validated by strict composition validator).
+Task T3.3: complete (deliverable data/real_fuels/blend_links.csv; links RP-1 surrogates and commercial blends with blend ratios and measured properties).
+Task T3.4: complete (CRC 647 pseudo-compositions segregated into separate subset labeled reconstructed_composition and isolated from measured_dha_gcxgc fuels).
+Task T3.5: complete (deliverable splits/real_fuels_holdout.json; holds out all 65 real fuels from training by default with nested split definitions; Phase 3 report docs/progress/Phase3_real_fuels.md; tests: 4 passed).
+
+
 
 
 
