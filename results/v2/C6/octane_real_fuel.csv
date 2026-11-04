@@ -1,0 +1,7 @@
+target_property,target_name,model,cv_scheme,n_fuels,mae,mae_ci95,rmse,rmse_ci95,bias,notes
+ron,Research Octane Number (RON),Linear-by-Volume Octane Blending,zero_parameters,14,9.691,"[5.604, 14.278]",12.512,"[6.887, 17.138]",9.162,Standard linear volume weighting (ASTM D2699/D2700)
+ron,Research Octane Number (RON),Interaction-Based BON Baseline,zero_parameters_literature_matrix,14,9.96,"[5.819, 14.612]",12.803,"[7.140, 17.450]",9.475,Captures synergistic aromatic-paraffin octane response
+ron,Research Octane Number (RON),Recalibrated BON Baseline (LOO CV),leave_one_fuel_out_cv,14,7.08,"[3.992, 10.385]",9.281,"[5.374, 12.774]",-0.156,Strict leave-one-fuel-out recalibration on real gasolines
+mon,Motor Octane Number (MON),Linear-by-Volume Octane Blending,zero_parameters,14,10.691,"[7.111, 14.675]",12.801,"[7.939, 16.984]",9.663,Standard linear volume weighting (ASTM D2699/D2700)
+mon,Motor Octane Number (MON),Interaction-Based BON Baseline,zero_parameters_literature_matrix,14,10.96,"[7.272, 15.005]",13.104,"[8.205, 17.342]",9.976,Captures synergistic aromatic-paraffin octane response
+mon,Motor Octane Number (MON),Recalibrated BON Baseline (LOO CV),leave_one_fuel_out_cv,14,6.517,"[3.613, 9.747]",8.772,"[4.892, 12.184]",-0.132,Strict leave-one-fuel-out recalibration on real gasolines
