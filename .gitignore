@@ -9,6 +9,7 @@ __pycache__/
 archive/
 # deliverables that must be tracked despite dir ignores
 !archive/baseline_manifest.json
+!archive/v2_manifest.json
 !data/antoine_sources.csv
 !data/processed/v2/distillation_real_fuels.csv
 !data/processed/v2/gcv_v2_MJ_kg.csv

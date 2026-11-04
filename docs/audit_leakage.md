@@ -13,7 +13,7 @@
 | C3b | Antoine true leakage (blend measurements in refit) | **PASS** | 0 | 0 mixture measurements used in Antoine refit. 12 mixture VP rows share a system_id with LOSO flash systems in measurements.csv, but refit_antoine.py strictly filters n_comp == 1, completely excluding them structurally. |
 | C3c | Antoine parameter provenance (19 Nov-3 additions) | **FAIL** | 58 | 8 of the 19 Nov-3 added compounds lack Antoine tables on NIST WebBook (unverified provenance, likely secondary handbooks). All 8 are active across 10/31 flash LOSO systems (58 mixture flash rows). Flagged as needs-removal-candidate for baseline purification. |
 | C4 | LOSO flash system discipline vs S1 training rows | **FAIL** | 65 | 22/31 flash LOSO systems (65/126 rows) are assigned to S1 training set. 2 systems (22 rows) in S2, 7 systems (39 rows) unassigned. eval_flash_loso.py runs an independent internal leave-one-system-out CV, so the Le Chatelier baseline is unaffected. However, t8 neural models trained on S1 cannot claim held-out evaluation on these 22 systems. |
-| C5 | T1 test suite (test_t1_leakage_audit.py) | **PASS** | 0 | returncode=0 | collected 3 items | tests\test_t1_leakage_audit.py ...                                       [100%] | ============================== 3 passed in 0.48s ============================== |
+| C5 | T1 test suite (test_t1_leakage_audit.py) | **PASS** | 0 | returncode=0 | collected 3 items | tests\test_t1_leakage_audit.py ...                                       [100%] | ============================== 3 passed in 1.51s ============================== |
 
 ---
 
@@ -50,6 +50,7 @@ Sample coincidences (top 10):
 
 | crc_system_id | crc_fuel_id | crc_property | crc_value | crc_T_K | train_system_id | train_sources | train_value | train_T_K |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| fuel:36 | 36 | viscosity_kin_cSt | 1.3 | 293.15 | 94fcd8397090 | thermoml | 1.256 | 293.15 |
 | fuel:2 | 2 | density_kg_m3 | 827.2 | 254.75 | 108ac6aa0b49 | thermoml | 829.9 | 253.15 |
 | fuel:2 | 2 | density_kg_m3 | 827.2 | 254.75 | 93f7bb11f599 | thermoml | 834.0 | 253.15 |
 | fuel:2 | 2 | density_kg_m3 | 827.2 | 254.75 | 93f7bb11f599 | thermoml | 831.0 | 253.15 |
@@ -74,7 +75,6 @@ Sample coincidences (top 10):
 | fuel:6 | 6 | density_kg_m3 | 825.4 | 273.45 | 2daa996d07a3 | thermoml | 820.29 | 273.15 |
 | fuel:6 | 6 | density_kg_m3 | 825.4 | 273.45 | 4307dc8972e1 | thermoml | 792.0 | 273.15 |
 | fuel:6 | 6 | density_kg_m3 | 825.4 | 273.45 | 4307dc8972e1 | thermoml | 810.0 | 273.15 |
-| fuel:7 | 7 | density_kg_m3 | 838.6 | 254.45 | 108ac6aa0b49 | thermoml | 829.9 | 253.15 |
 
 ## C3 -- Antoine Baseline Leakage Across Flash LOSO Folds
 
@@ -198,7 +198,7 @@ Rows: 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 279, 281, 282,
 
 **Verdict: PASS** (Failures: 0)
 
-returncode=0 | collected 3 items | tests\test_t1_leakage_audit.py ...                                       [100%] | ============================== 3 passed in 0.48s ==============================
+returncode=0 | collected 3 items | tests\test_t1_leakage_audit.py ...                                       [100%] | ============================== 3 passed in 1.51s ==============================
 
 Executed `pytest tests/test_t1_leakage_audit.py`. All 3 tests passed successfully:
 - `test_scaffold_family_key_groups_homologs`: PASS
