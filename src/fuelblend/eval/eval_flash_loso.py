@@ -155,6 +155,7 @@ def evaluate_loso(root: Path):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     summary = pd.DataFrame([{
+        "ci_method": "4000-resample system-level cluster bootstrap (system_id)",
         "property": "flash_point_C",
         "n_rows": int(ok.sum()),
         "n_systems": int(len(np.unique(sys_ok))),

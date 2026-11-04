@@ -15,5 +15,10 @@ Task T1.2: complete (deliverable data/schema/composition_schema.md + src/fuelble
 Task T1.3: complete (deliverables data/compounds_canonical.csv, scripts/build_canonical_compounds.py, docs/progress/T1.3.md; 1038 unique compounds, 952 with CAS (91.7%), canonical RDKit SMILES and InChIKeys; tests: 1 passed).
 Task T1.4: complete (deliverables data/processed/mixtures_tagged.csv, src/fuelblend/features/fuel_family.py, scripts/build_mixtures_tagged.py, docs/progress/T1.4.md; all 510 existing mixture systems tagged: 457 model-mixture, 38 gasoline, 15 diesel, 0 real_fuel; tests: 5 passed).
 Task T1.5: complete (deliverables data/processed/measurements_migrated_core.csv, scripts/migrate_to_v2_schema.py, docs/progress/T1.5_migration_report.md; 35,338 rows before and after, exact value SHA-256 match de8c199824425c7e0422275c124c74bba212fa57027f71431962dd8272b481c2; strict schema validator passed; tests: 1 passed).
-Phase 1 complete (all 13 tests green). Ready for Phase 2 / Phase 5.
+Phase 1 complete (all 13 tests green).
+
+Phase 5 (Statistics and Recalibration Ablation):
+Task T5.1: complete (deliverables results/t5/system_cluster_bootstrap_summary.csv, scripts/run_cluster_bootstrap_eval.py, docs/progress/T5.1.md, src/fuelblend/eval/eval_grouped_cv.py, src/fuelblend/eval/eval_flash_loso.py, src/fuelblend/mixture/fuel_hindcast.py; all CIs explicitly cluster-bootstrapped over system_id/fuel_id; tests: 1 passed).
+Task T5.2: complete (deliverables results/t5/recalibrated_physics_ablation.csv, scripts/recalibrated_physics_ablation.py, docs/progress/T5.2.md; proved 2-parameter 1000/T slope recalibration recovers 68.5% of error reduction on cold-flow viscosity at -40C/-20C, outpacing complex neural residuals; tests: 1 passed).
+
 

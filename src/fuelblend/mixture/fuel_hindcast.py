@@ -201,6 +201,30 @@ def parse_targets(cols):
     return t
 
 
+def cluster_bootstrap_hindcast(df_subset, mdl, kind, B=2000, seed=42):
+    """Cluster bootstrap over unique fuel_ids for hindcast metrics."""
+    fuels = df_subset["fuel_id"].unique()
+    n_fuels = len(fuels)
+    if n_fuels <= 1:
+        return (np.nan, np.nan)
+    rng = np.random.default_rng(seed)
+    rmse_boots = []
+    
+    # Pre-index by fuel_id
+    fuel_groups = {f: df_subset[df_subset["fuel_id"] == f] for f in fuels}
+    
+    for _ in range(B):
+        sample_fuels = rng.choice(fuels, size=n_fuels, replace=True)
+        sampled_rows = pd.concat([fuel_groups[f] for f in sample_fuels], ignore_index=True)
+        if kind == "density":
+            err = sampled_rows[mdl] - sampled_rows["measured"]
+        else:
+            err = np.log(sampled_rows[mdl] / sampled_rows["measured"])
+        rmse_boots.append(np.sqrt((err ** 2).mean()))
+        
+    return (float(np.percentile(rmse_boots, 2.5)), float(np.percentile(rmse_boots, 97.5)))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
@@ -289,14 +313,27 @@ def main():
     models = ["physics"] + list(bundles)
     rows = []
     for (route, kind, T), g in res.groupby(["route", "kind", "T_C"]):
-        row = {"route": route, "kind": kind, "T_C": T, "n_fuels": len(g), "mean_n_comp": g["n_comp"].mean()}
+        metric_col = "rmse" if kind == "density" else "rmse_ln"
+        row = {
+            "ci_method": "2000-resample fuel-level cluster bootstrap (fuel_id)",
+            "route": route,
+            "kind": kind,
+            "T_C": T,
+            "n_fuels": len(g),
+            "mean_n_comp": g["n_comp"].mean(),
+        }
         for mdl in models:
             e = (g[mdl] - g["measured"]) if kind == "density" else np.log(g[mdl] / g["measured"])
-            row[f"{mdl}_{'rmse' if kind == 'density' else 'rmse_ln'}"] = float(np.sqrt((e ** 2).mean()))
+            val = float(np.sqrt((e ** 2).mean()))
+            lo, hi = cluster_bootstrap_hindcast(g, mdl, kind, B=2000, seed=42)
+            row[f"{mdl}_{metric_col}"] = val
+            row[f"{mdl}_{metric_col}_ci95"] = f"[{lo:.4f}, {hi:.4f}]"
             row[f"{mdl}_bias"] = float(e.mean())
         rows.append(row)
+    summary_df = pd.DataFrame(rows)
+    summary_df.to_csv(Path(a.out) / "hindcast_summary.csv", index=False)
     pd.set_option("display.width", 250, "display.max_columns", 40, "display.float_format", "{:.4f}".format)
-    print("\n" + pd.DataFrame(rows).to_string(index=False))
+    print("\n" + summary_df.to_string(index=False))
     print("\n(density in kg/m3; viscosity as RMSE of ln(pred/measured), 0.05 ~ 5%; bias = mean signed error)")
     if a.write_reference:
         key = next((k for k in ref_vec if k == (a.reference_fuel, a.route)), None)

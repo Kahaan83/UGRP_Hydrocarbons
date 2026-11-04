@@ -140,6 +140,7 @@ def run_grouped_cv(root: Path, n_splits=5, seed=42):
         diff_mean, ci, p_better = cluster_bootstrap_metric(err_h, err_b, sids, is_rmse=is_rmse)
 
         row = {
+            "ci_method": "4000-resample system-level cluster bootstrap (system_id)",
             "property": short_names[p],
             "n_obs": int(len(r)),
             "n_systems": int(len(np.unique(sids))),
