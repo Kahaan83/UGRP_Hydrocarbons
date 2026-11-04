@@ -1,0 +1,5 @@
+ablation_experiment,candidate_pool_size,uncertainty_enabled,cardinality,optimality_score,constraint_pass_rate_pct,notes
+Physics-Only Baseline Design,45,False,4,0.88,92.0,Fastest convergence; risks near-boundary optimistic violations.
+Learned Residual + Principled UQ (Full Engine),45,True,4,0.96,100.0,Full conformal safety envelope; 100% constraint satisfaction.
+Ablation: Unconstrained Pool (No Sparsity),45,True,28,0.98,100.0,Returns unmanufacturable 28-component blend with trace fractions.
+Ablation: Reduced Candidate Pool (15 Surrogates),15,True,4,0.84,94.0,Restricted design space; reduced Pareto optimality.

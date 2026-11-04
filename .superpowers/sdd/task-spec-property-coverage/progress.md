@@ -78,6 +78,16 @@ Task T5.5: complete (deliverables splits/harder_splits.json, results/t5/harder_s
 Task T5.6: complete (deliverable results/t5/multiseed_ensemble_eval.csv, docs/progress/T5.3_T5.6.md, tests/test_baselines_harder_splits_phase5.py; executed 5 independent seeds with mean and standard deviation spread reported; tests: 3 passed).
 Phase 5 complete (all tasks T5.1-T5.6 finished).
 
+Phase 6 (Inverse Design for Three Fuel Families):
+Task T6.1: complete (deliverables configs/specs_jet.yaml, configs/specs_diesel.yaml, configs/specs_gasoline.yaml; explicit property targets, ASTM standards, source citations, and property-specific uncertainty factors).
+Task T6.2: complete (deliverable results/t6/flash_margin_sweep.csv; evaluated flash LOSO residual quantile sweep; principled 90% conformal quantile is 3.4 C, replacing arbitrary 5 C heuristic).
+Task T6.3: complete (engine dynamically reads property-specific uncertainty inflation factors g_visc=1.377, g_dens=2.530, g_flash=1.541 from YAML configs).
+Task T6.4: complete (deliverable results/t6/inverse_designs_three_families.csv; generated verified feasible multi-fuel formulations for Jet, Diesel, and Gasoline with per-constraint feasibility checks).
+Task T6.5: complete (cardinality penalty restricts blend to 2-4 dominant components even when optimized over candidate pool of 45 hydrocarbons).
+Task T6.6: complete (deliverable results/t6/inverse_design_ablations.csv, docs/progress/Phase6_inverse_design.md, tests/test_inverse_design_phase6.py; evaluated physics-only vs learned+UQ, sparsity penalty, and pool size; tests: 5 passed).
+Entire task spec (Phases 0 through 6) complete. All 65 tests passing.
+
+
 
 
 

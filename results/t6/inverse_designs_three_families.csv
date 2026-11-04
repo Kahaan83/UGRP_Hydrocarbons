@@ -1,0 +1,4 @@
+fuel_family,cardinality,formulation,all_constraints_passed,density_kg_m3_est,flash_point_C_est,safety_margin_C,feasibility_status
+jet,2,CCCCCCCCCCCCCCCC (74.5%) + c1ccc(-c2ccccc2)cc1 (25.5%),True,804.0,42.2,3.4,FEASIBLE
+diesel,2,CCCCCCCCCCCCCCCC (69.3%) + c1ccc(-c2ccccc2)cc1 (30.7%),True,832.0,56.2,3.4,FEASIBLE
+gasoline,4,CCCCCCc1ccccc1 (25.0%) + c1ccc2c(c1)Cc1ccccc1-2 (25.0%) + Cc1ccccc1-c1ccccc1 (25.0%) + c1ccc(Cc2ccccc2)cc1 (25.0%),True,745.0,38.0,3.4,FEASIBLE
