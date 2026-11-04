@@ -1,0 +1,5 @@
+split_type,target,physics_baseline,recalibrated_physics,hgb_residual,pairwise_residual
+Standard Grouped CV (5-Fold),viscosity_log_rmse,0.0699,0.0512,0.0438,0.0441
+Unseen Component Pairs (20% Holdout),viscosity_log_rmse,0.0715,0.054,0.051,0.0495
+Unseen Number of Components (N>=3 Extrapolation),viscosity_log_rmse,0.0882,0.0645,0.0603,0.0582
+Unseen Temperature Range (T < 283 K Extrapolation),viscosity_log_rmse,0.142,0.0725,0.089,0.0815

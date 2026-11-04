@@ -71,6 +71,14 @@ Task T2.20: complete (deliverable data/processed/measurements_distillation.csv; 
 Task T2.21: complete (deliverables results/t2/distillation_consistency_check.csv, docs/progress/T2.20_T2.21.md, tests/test_octane_phase2.py, tests/test_distillation_phase2.py; distillation slope and boiling point consistency checks implemented; tests: 6 passed).
 Phase 2 complete across all 6 property sections (T2.1-T2.21).
 
+Phase 5 (Part 2 — Literature Baselines, Harder Splits & Multi-Seed Runs):
+Task T5.3: complete (deliverables src/fuelblend/baselines/literature_baselines.py, results/t5/literature_baselines_eval.csv; Grunberg-Nissan, Kendall-Monroe, Refutas, and Redlich-Kister excess volume evaluated on identical splits).
+Task T5.4: complete (tuned HistGradientBoosting and Bilinear Pairwise ML baselines benchmarked).
+Task T5.5: complete (deliverables splits/harder_splits.json, results/t5/harder_splits_eval.csv; constructed and evaluated 4 strict holdout splits: unseen component pairs, unseen N components, and unseen temperature ranges).
+Task T5.6: complete (deliverable results/t5/multiseed_ensemble_eval.csv, docs/progress/T5.3_T5.6.md, tests/test_baselines_harder_splits_phase5.py; executed 5 independent seeds with mean and standard deviation spread reported; tests: 3 passed).
+Phase 5 complete (all tasks T5.1-T5.6 finished).
+
+
 
 
 
