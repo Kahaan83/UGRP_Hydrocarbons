@@ -62,6 +62,16 @@ Task T2.6: complete (deliverable docs/progress/T2.6.md; 100% pure compound cover
 Task T2.7: complete (deliverables results/t2/flash_loso_activity_coeff.csv, scripts/build_flash_expanded.py; implemented Scatchard-Hildebrand regular solution activity-coefficient baseline; reduced RMSE from 10.24 C to 8.92 C and dangerous over-prediction rate from 19.8% to 16.7% across 31 flash LOSO systems).
 Task T2.8: complete (deliverable results/t2/flash_loso_by_method.csv, docs/progress/T2.5_T2.8.md, tests/test_flash_expansion.py; added method feature and evaluated results separately by standardized test apparatus; tests: 3 passed).
 
+Phase 2 (Data Collection by Property — Section 3.5 Octane & Section 3.6 Consistency Checks):
+Task T2.16: complete (deliverable data/processed/measurements_octane.csv; 1,146 octane measurements collected across 685 pure, 292 measured_mixture, and 169 blending_value records; strict schema validated).
+Task T2.17: complete (deliverables src/fuelblend/baselines/octane.py, results/t2/octane_baseline_grouped_cv.csv; linear-by-volume and interaction-based BON evaluated under grouped CV; interaction BON improved MAE to 2.479 and RMSE to 3.808).
+Task T2.18: complete (deliverable results/t2/octane_sensitivity_report.csv; modeled derived octane sensitivity RON - MON across multicomponent FACE gasolines, mean sensitivity = 5.14).
+Task T2.19: complete (deliverable docs/octane_data_notes.md; documented CFR engine test repeatability limits and inferred vs experimental data quality flags).
+Task T2.20: complete (deliverable data/processed/measurements_distillation.csv; 342 ASTM D86 distillation curve points across 57 CRC aviation fuels, strict schema validated).
+Task T2.21: complete (deliverables results/t2/distillation_consistency_check.csv, docs/progress/T2.20_T2.21.md, tests/test_octane_phase2.py, tests/test_distillation_phase2.py; distillation slope and boiling point consistency checks implemented; tests: 6 passed).
+Phase 2 complete across all 6 property sections (T2.1-T2.21).
+
+
 
 
 

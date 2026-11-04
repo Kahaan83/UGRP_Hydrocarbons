@@ -1,0 +1,3 @@
+model,target,n_obs,n_systems,mae,mae_ci95,rmse,rmse_ci95,bias
+Linear-by-Volume Octane Blending,mon,98,14,2.769,"[1.747, 4.996]",4.144,"[2.686, 6.362]",-2.229
+Interaction-Based Blending Octane Number (BON),mon,98,14,2.479,"[1.543, 4.572]",3.808,"[2.420, 6.004]",-1.816
