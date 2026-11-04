@@ -19,10 +19,13 @@ archive/
 !data/processed/v2/cetane_master_recalibrated.csv
 !data/processed/v2/octane_master_recalibrated.csv
 !data/processed/v2/compounds_anchored_vp.csv
+!data/processed/v2/thermoml_clean_hc.csv
 !data/MISSING.md
 !data/processed/cetane_pure_curated.csv
 !data/real_fuels/
 ajftd_session.json
+ajftd_data.csv
+ajftd_data.json
 runs/
 
 results/t0_repro/reference_backup/

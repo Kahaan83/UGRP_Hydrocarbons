@@ -1,4 +1,4 @@
-model,evaluation_scheme,n_fuels,mae_C,rmse_C,bias_C,pearson_r,physical_mechanism
-Ideal Single-Solute WAT (Schroeder-van Laar),zero_parameters,57,17.72,18.82,17.72,0.425,Single pure solute crystallization without eutectic depression
-v2 Flat LOO Offset Model (WAT - 14.58 C),leave_one_fuel_out_cv,57,4.99,7.08,3.14,0.425,Uniform average offset (lacks composition dependency)
-Coutinho Multi-Component Non-Ideal Wax Model,leave_one_fuel_out_cv,57,4.22,6.34,1.94,0.419,Polydisperse solid-solution eutectic depression + solvent dilution
+model,evaluation_scheme,n_fuels,mae_C,rmse_C,bias_C,pearson_r,paired_delta_mae_vs_flat,bootstrap_p_val_vs_flat,mean_loo_parameters,physical_mechanism
+Ideal Single-Solute WAT (Schroeder-van Laar),zero_parameters,57,17.72,18.82,17.72,0.425,13.48,0.0,None,Single pure solute crystallization without eutectic depression
+v2 Flat LOO Offset Model (WAT - 17.72 C),fold_wise_loo_refit,57,4.24,6.47,0.0,0.41,0.0,0.5,Offset = 17.72 C,Uniform average offset (lacks composition dependency)
+Coutinho Multi-Component Non-Ideal Wax Model,fold_wise_loo_refit,57,3.99,5.98,0.01,0.4,-0.2507,0.941,"gamma=8.46, alpha=5.23, beta=-0.21",Fold-wise refit of solid-solution eutectic depression + solvent dilution
