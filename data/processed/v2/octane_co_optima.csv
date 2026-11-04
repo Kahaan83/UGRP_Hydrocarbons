@@ -1,0 +1,104 @@
+compound_name,cas,formula,ron,mon,sensitivity,lfl_vol_pct,flash_point_C,source_reference,source_tag
+(4E)-nonene (racemic),2198-23-4,C9H18,8.8,-16.7,25.5,,27.2,DOE Co-Optima Database (2018),doe_co_optima
+(9Z)-octadecene,1779-13-1,C18H36,,,,,150.4,DOE Co-Optima Database (2018),doe_co_optima
+"1, 3- dimethyl-Tricyclo[3.3.1.1] decane",702-79-4,C12H20,,,,,53.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Butene,106-98-9,C4H8,,,,1.6,-79.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Hexene,592-41-6,C6H12,76.0,,,1.2,-26.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Nonene,124-11-8,C9H18,35.0,,,0.8,24.0,DOE Co-Optima Database (2018),doe_co_optima
+"2,4-dimethyl-2-pentene",625-65-0,C7H14,100.0,85.0,15.0,,-8.9,DOE Co-Optima Database (2018),doe_co_optima
+"2,5-diethylcyclopentane",19398-75-5,C9H18,44.2,16.5,27.700000000000003,,30.9,DOE Co-Optima Database (2018),doe_co_optima
+"2,6- Dimethylheptane",1072-05-5,C9H20,36.0,,,,53.1,DOE Co-Optima Database (2018),doe_co_optima
+2-pentene (racemic),109-68-2,C5H10,90.0,77.2,12.799999999999997,,-45.0,DOE Co-Optima Database (2018),doe_co_optima
+2-pentene (trans),646-04-8,C5H10,,,,,-45.0,DOE Co-Optima Database (2018),doe_co_optima
+3-ethyl nonane,17302-11-3,C11H24,-19.2,-82.7,63.5,,50.2,DOE Co-Optima Database (2018),doe_co_optima
+3Z-heptene (cis),7642-10-6,C7H14,90.0,,,,-7.2,DOE Co-Optima Database (2018),doe_co_optima
+3E-heptene (trans),14686-14-7,C7H14,90.0,78.0,12.0,,-7.2,DOE Co-Optima Database (2018),doe_co_optima
+3E-hexene (trans),13269-52-8,C6H12,94.0,80.0,14.0,,-12.2,DOE Co-Optima Database (2018),doe_co_optima
+4-methyl-1-(1-methylethyl)-cyclohexene,500-00-5,C10H18,,,,,43.3,DOE Co-Optima Database (2018),doe_co_optima
+3-methylhexane,589-34-4,C7H16,52.0,56.0,-4.0,,-1.0,DOE Co-Optima Database (2018),doe_co_optima
+3-methylnonane,5911-04-6,C10H22,-19.2,-44.2,25.000000000000004,,38.9,DOE Co-Optima Database (2018),doe_co_optima
+3-methyloctane,2216-33-3,C9H20,-1.0,-6.2,5.2,,32.0,DOE Co-Optima Database (2018),doe_co_optima
+4Z-octene (cis),7642-15-1,C8H16,64.8,50.5,14.299999999999997,,21.1,DOE Co-Optima Database (2018),doe_co_optima
+4E-octene (trans),14850-23-8,C8H16,73.0,74.0,-1.0,0.9,21.0,DOE Co-Optima Database (2018),doe_co_optima
+"4- (1, 5- dimethyl- 4- hexen- 1- ylidene) - 1- methyl-cyclohexene",495-62-5,C15H24,,,,,112.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 2, 3- Trimethyl-butane",464-06-2,C7H16,112.0,101.0,11.0,1.0,-7.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 2, 3, 3- tetramethyl-butane",594-82-1,C8H18,104.5,103.5,1.0,,4.0,DOE Co-Optima Database (2018),doe_co_optima
+Butylcyclohexane,1678-93-9,C10H20,63.8,,,0.75,50.0,DOE Co-Optima Database (2018),doe_co_optima
+"1, 2, 4a, 5, 8, 8a- hexahydro- 4, 7- dimethyl- 1- (1- methylethyl) - , (1S, 4aR, 8aS) -naphthalene",523-47-7,C15H24,,,,,107.0,DOE Co-Optima Database (2018),doe_co_optima
+"4, 11, 11- trimethyl- 8- methylene- , (1R, 4E, 9S) -bicyclo[7.2.0] undec- 4- ene,",87-44-5,C15H24,72.0,,,,96.0,DOE Co-Optima Database (2018),doe_co_optima
+"3, 7- dimethyl- , (3E) -1, 3, 6- octatriene",3779-61-1,C10H16,74.5,,,,46.9,DOE Co-Optima Database (2018),doe_co_optima
+"3, 7- dimethyl- , (3Z) -1, 3, 6- octatriene",3338-55-4,C10H16,,,,,46.9,DOE Co-Optima Database (2018),doe_co_optima
+Cyclohexane,110-82-7,C6H12,83.0,77.0,6.0,1.3,-18.0,DOE Co-Optima Database (2018),doe_co_optima
+1- ethyl- 1- methyl-cyclopentane,16747-50-5,C8H16,83.9,73.4,10.5,,10.6,DOE Co-Optima Database (2018),doe_co_optima
+Dodecane,112-40-3,C12H26,-85.0,,,0.6,74.0,DOE Co-Optima Database (2018),doe_co_optima
+Ethylcyclopentane,1640-89-7,C7H14,67.0,41.0,26.0,1.1,16.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 6, 10- trimethyl-dodecane",3891-98-3,C15H32,-17.5,,,,103.0,DOE Co-Optima Database (2018),doe_co_optima
+"3, 7, 11- trimethyl- , (3E, 6E) -1, 3, 6, 10- dodecatetraene",502-61-4,C15H24,67.0,,,,113.0,DOE Co-Optima Database (2018),doe_co_optima
+"1a, 2, 3, 4, 4a, 5, 6, 7b- octahydro- 1, 1, 4, 7- tetramethyl- , (1aR, 4R, 4aR, 7bS) -1H- cycloprop[e] azulene",489-40-7,C15H24,,,,,110.0,DOE Co-Optima Database (2018),doe_co_optima
+Heptadecane,629-78-7,C17H36,,,,,149.0,DOE Co-Optima Database (2018),doe_co_optima
+2- methyl-hexane,591-76-4,C7H16,42.0,46.0,-4.0,1.0,-18.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 4- dimethyl-hexane",589-43-5,C8H18,65.2,69.8,-4.599999999999994,,22.0,DOE Co-Optima Database (2018),doe_co_optima
+"2- methyl-1, 3- butadiene",78-79-5,C5H8,99.0,,,1.5,-54.0,DOE Co-Optima Database (2018),doe_co_optima
+"decahydro- 4, 8, 8- trimethyl- 9- methylene- , (1S, 3aR, 4S, 8aS) -1, 4- methanoazulene",475-20-7,C15H24,,,,,101.0,DOE Co-Optima Database (2018),doe_co_optima
+"1a, 2, 3, 3a, 4, 5, 6, 7b- octahydro- 1, 1, 3a, 7- tetramethyl- , (1aR, 3aS, 7bS) -1H- cyclopropa[a] naphthalene",489-29-2,C15H24,,,,,98.0,DOE Co-Optima Database (2018),doe_co_optima
+Methylcyclohexane,108-87-2,C7H14,74.1,71.0,3.0999999999999943,1.2,-4.0,DOE Co-Optima Database (2018),doe_co_optima
+"7- methyl- 3- methylene-1, 6- octadiene",123-35-3,C10H16,82.5,76.6,5.900000000000006,,44.0,DOE Co-Optima Database (2018),doe_co_optima
+Nonane,111-84-2,C9H20,-34.0,,,0.8,31.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 7- dimethyl-nonane",17302-29-3,C11H24,,,,,109.0,DOE Co-Optima Database (2018),doe_co_optima
+n-Tetradecane,629-59-4,C14H30,,,,0.5,100.0,DOE Co-Optima Database (2018),doe_co_optima
+n-Undecane,1120-21-4,C11H24,,,,,65.0,DOE Co-Optima Database (2018),doe_co_optima
+Octadecane,593-45-3,C18H38,,,,,166.0,DOE Co-Optima Database (2018),doe_co_optima
+Octane,111-65-9,C8H18,-18.0,,,1.0,15.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 4, 6- trimethyl-octane",62016-37-9,C11H24,,,,,52.7,DOE Co-Optima Database (2018),doe_co_optima
+Pentadecane,629-62-9,C15H32,,,,,132.0,DOE Co-Optima Database (2018),doe_co_optima
+Pentane,109-66-0,C5H12,62.0,62.0,0.0,1.5,-49.0,DOE Co-Optima Database (2018),doe_co_optima
+"2, 6, 6- trimethyl- , (1R, 5R) -bicyclo[3.1.1] hept- 2- ene",80-56-8,C10H16,80.0,57.3,22.700000000000003,,32.0,DOE Co-Optima Database (2018),doe_co_optima
+Propane,74-98-6,C3H8,,,,2.1,-104.0,DOE Co-Optima Database (2018),doe_co_optima
+Propylcyclohexane,1678-92-8,C9H18,18.0,14.0,4.0,0.85,35.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Propene,115-07-1,C3H6,,,,2.1,-108.0,DOE Co-Optima Database (2018),doe_co_optima
+"1- methyl- 4- (1- methylethyl) -1, 3- cyclohexadiene ( )",99-86-5,C10H16,87.9,82.9,5.0,,50.0,DOE Co-Optima Database (2018),doe_co_optima
+"1- methyl- 4- (1- methylethyl) -1, 4- cyclohexadiene (gamma)",99-85-4,C10H16,87.9,82.9,5.0,,50.0,DOE Co-Optima Database (2018),doe_co_optima
+Methylbenzene,108-88-3,C7H8,120.0,104.0,16.0,1.1,4.0,DOE Co-Optima Database (2018),doe_co_optima
+Tridecane,629-50-5,C13H28,,,,,94.0,DOE Co-Optima Database (2018),doe_co_optima
+"1,2,3,5,6,7,8,8a-octahydro-1,8a-dimethyl-7-(1-methylethenyl)-(1R,7R,8aS)-naphthalene",4630-07-3,C15H24,,,,,100.0,DOE Co-Optima Database (2018),doe_co_optima
+3-Methylheptane,589-81-1,C8H18,27.0,35.0,-8.0,0.98,7.0,DOE Co-Optima Database (2018),doe_co_optima
+(cis)- 5-Undecene,764-96-5,C11H22,,,,,60.0,DOE Co-Optima Database (2018),doe_co_optima
+(trans)- 5-Undecene,764-97-6,C11H22,,,,,60.0,DOE Co-Optima Database (2018),doe_co_optima
+(4R) -1- methyl- 4- (1- methylethenyl) -cyclohexene,5989-27-5,C10H16,87.1,,,0.7,48.0,DOE Co-Optima Database (2018),doe_co_optima
+"3,7-dimethyl-1,3,6-octatriene",13877-91-3,C10H16,108.9,86.8,22.10000000000001,,38.0,DOE Co-Optima Database (2018),doe_co_optima
+2-Heptene (cis),6443-92-1,C7H14,72.5,70.5,2.0,1.0,-6.0,DOE Co-Optima Database (2018),doe_co_optima
+2-Heptene (trans),14686-13-6,C7H14,73.0,69.0,4.0,,-6.1,DOE Co-Optima Database (2018),doe_co_optima
+"2,2,4-trimethylpentane",540-84-1,C8H18,100.0,100.0,0.0,1.1,-12.0,DOE Co-Optima Database (2018),doe_co_optima
+Heptane,142-82-5,C7H16,0.0,0.0,0.0,1.05,-4.0,DOE Co-Optima Database (2018),doe_co_optima
+Hexadecane,544-76-3,C16H34,,,,,135.0,DOE Co-Optima Database (2018),doe_co_optima
+"2,2,4,4,6,8,8-heptamethylnonane",4390-04-9,C16H34,95.2,,,,96.0,DOE Co-Optima Database (2018),doe_co_optima
+o-Xylene,95-47-6,C8H10,120.0,100.0,20.0,0.9,32.0,DOE Co-Optima Database (2018),doe_co_optima
+"1,2,4-Trimethylbenzene",95-63-6,C9H12,108.6,104.4,4.199999999999989,0.9,44.4,DOE Co-Optima Database (2018),doe_co_optima
+Methylcyclopentane,96-37-7,C6H12,91.0,80.0,11.0,1.0,-23.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Methyl-4-(1-methylethyl)benzene,99-87-6,C10H14,110.0,98.0,12.0,0.7,47.0,DOE Co-Optima Database (2018),doe_co_optima
+"4,6,6-trimethylbicyclo[3.1.1]heptane",473-55-2,C10H18,77.0,65.0,12.0,0.7,42.0,DOE Co-Optima Database (2018),doe_co_optima
+"4,7,7-trimethylbicyclo[4.1.0]hept-3-ene",13466-78-9,C10H16,73.5,55.8,17.700000000000003,,47.0,DOE Co-Optima Database (2018),doe_co_optima
+4-methylene-1-(1-methylethyl)bicyclo[3.1.0]hexane,3387-41-5,C10H16,80.9,59.0,21.900000000000006,,36.7,DOE Co-Optima Database (2018),doe_co_optima
+"6,6-dimethyl-2-methylenebicyclo[3.1.1]heptane",127-91-3,C10H16,,,,,31.1,DOE Co-Optima Database (2018),doe_co_optima
+"2,6- Dimethyloctane",2051-30-1,C10H22,10.0,,,,34.0,DOE Co-Optima Database (2018),doe_co_optima
+1-methyl-4-propan-2-ylcyclohexane,99-82-1,C10H20,60.0,60.0,0.0,,45.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Methyl-4-(6-methyl-2-heptanyl)cyclohexane,29799-19-7,C15H30,,,,,108.7,DOE Co-Optima Database (2018),doe_co_optima
+"4,7,7-trimethylbicyclo[4.1.0]heptane",554-59-6,C10H18,85.5,78.1,7.400000000000006,,36.0,DOE Co-Optima Database (2018),doe_co_optima
+1-Isopropyl-4-methylbicyclo[3.1.0]hexane,471-12-5,C10H18,85.0,75.6,9.400000000000006,,34.7,DOE Co-Optima Database (2018),doe_co_optima
+"(1S,4S,4aS,6S,8aS)-4-Isopropyl-1,6-dimethyldecahydronaphthalene",483-73-8,C15H28,,,,,106.4,DOE Co-Optima Database (2018),doe_co_optima
+"(1S,4S)-1,7,7-trimethylbicyclo[2.2.1]heptane",464-15-3,C10H18,102.9,91.0,11.900000000000006,,,DOE Co-Optima Database (2018),doe_co_optima
+Ethylbenzene,100-41-4,C8H10,107.0,97.0,10.0,0.8,12.8,DOE Co-Optima Database (2018),doe_co_optima
+Propylbenzene,103-65-1,C9H12,111.0,99.0,12.0,0.8,47.0,DOE Co-Optima Database (2018),doe_co_optima
+Butylbenzene,104-51-8,C10H14,104.0,94.0,10.0,0.8,71.0,DOE Co-Optima Database (2018),doe_co_optima
+Decane,124-18-5,C10H22,-41.0,-38.0,-3.0,0.8,46.0,DOE Co-Optima Database (2018),doe_co_optima
+"1,1,2,3 tetramethyl cyclohexane",6783-92-2,C10H20,,,,,38.1,DOE Co-Optima Database (2018),doe_co_optima
+(1-methylethyl)benzene,98-82-8,C9H12,113.0,99.0,14.0,0.9,39.0,DOE Co-Optima Database (2018),doe_co_optima
+"1,1,3- Trimethylcyclohexane",3073-66-3,C9H18,81.0,82.0,-1.0,,25.2,DOE Co-Optima Database (2018),doe_co_optima
+"1,1,3-Trimethyl-2-propylcyclohexane",255885-34-8,C12H24,,,,,67.9,DOE Co-Optima Database (2018),doe_co_optima
+"1-methyl-2 pentylcyclopentane, cis-",53366-47-5,C11H22,,,,,61.5,DOE Co-Optima Database (2018),doe_co_optima
+"1,1,3- trimethyl-2-butylcyclohexane",54676-39-0,C13H26,,,,,81.3,DOE Co-Optima Database (2018),doe_co_optima
+1-Methyl-4-(1-methylethenyl)-cyclohexene,138-86-3,C10H16,87.1,,,0.7,45.0,DOE Co-Optima Database (2018),doe_co_optima
+"2,4,4-Trimethyl-1-pentene",107-39-1,C8H16,106.0,87.0,19.0,0.8,-5.0,DOE Co-Optima Database (2018),doe_co_optima
+"2,4-Dimethyl-1-heptene",19549-87-2,C9H18,79.6,60.5,19.099999999999994,,,DOE Co-Optima Database (2018),doe_co_optima
+"1,1,3-trimethylcyclopentane",4516-69-2,C8H16,90.8,85.0,5.799999999999997,,6.4,DOE Co-Optima Database (2018),doe_co_optima
+"1,5,5-trimethylcyclopentene",62184-83-2,C8H14,98.5,88.8,9.700000000000003,,2.2,DOE Co-Optima Database (2018),doe_co_optima

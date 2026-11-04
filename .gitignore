@@ -13,6 +13,9 @@ archive/
 !data/antoine_sources.csv
 !data/processed/v2/distillation_real_fuels.csv
 !data/processed/v2/gcv_v2_MJ_kg.csv
+!data/processed/v2/cetane_nrel_compendium.csv
+!data/processed/v2/octane_co_optima.csv
+!data/processed/v2/wax_dauphin_coutinho.csv
 !data/MISSING.md
 !data/processed/cetane_pure_curated.csv
 !data/real_fuels/

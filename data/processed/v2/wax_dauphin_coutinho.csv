@@ -1,0 +1,13 @@
+system_id,system_name,n_comp,components,mole_fractions,wat_measured_K,wat_measured_C,source_reference,source_tag
+wax_bin_C7-C23_4,C7-C23,2,"[""C7"", ""C23""]","[306.7, -305.7]",305.0,31.85,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_5,C7-C23,2,"[""C7"", ""C23""]","[305.2, -304.2]",303.46,30.31,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_6,C7-C23,2,"[""C7"", ""C23""]","[304.5, -303.5]",302.79,29.64,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_7,C7-C23,2,"[""C7"", ""C23""]","[304.3, -303.3]",302.03,28.88,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_8,C7-C23,2,"[""C7"", ""C23""]","[301.3, -300.3]",300.29,27.14,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_9,C7-C23,2,"[""C7"", ""C23""]","[300.9, -299.9]",298.62,25.47,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_10,C7-C23,2,"[""C7"", ""C23""]","[298.8, -297.8]",296.68,23.53,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_11,C7-C23,2,"[""C7"", ""C23""]","[297.2, -296.2]",294.7,21.55,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_12,C7-C23,2,"[""C7"", ""C23""]","[294.2, -293.2]",292.39,19.25,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_13,C7-C23,2,"[""C7"", ""C23""]","[292.6, -291.6]",289.89,16.74,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_14,C7-C23,2,"[""C7"", ""C23""]","[286.5, -285.5]",286.78,13.63,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
+wax_bin_C7-C23_16,C7-C23,2,"[""C7"", ""C23""]","[299.2909, -298.2909]",297.51,24.36,Dauphin / Coutinho SP-Wax (2018),coutinho_dauphin_wax
