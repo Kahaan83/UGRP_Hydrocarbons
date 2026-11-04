@@ -6,5 +6,6 @@ Task T0.1: complete (commits 241a08b, ddface6; tests: eval scripts re-run → PA
 Ruling (T0.1): model fallback — antigravity claude was quota-blocked (>90% usage), T0.2 assigned to antigravity-gemini-3.8-flash-high instead; cost: slightly weaker reasoning on the audit, mitigated by an existing 27 KB audit script left by the interrupted Sonnet run that the agent now verifies/completes.
 Task T0.3: complete (commit ddface6; deliverable docs/data_sources.csv, 24 sources, unclear entries marked).
 Task T0.4: complete (commit ddface6; deliverable data/antoine_sources.csv, 19 compounds — 11 cited, 8 flagged needs-removal-candidate, unverified provenance ACTIVE in flash baseline).
-Task T0.2: in progress (background subagent ses_e5a16f378ffeI06DBBsay2hUNJ verifying/completing scripts/t02_leakage_audit.py left by an interrupted run; writes docs/audit_leakage.md + results/t0/leakage_*.csv).
+Task T0.2: complete (deliverables docs/audit_leakage.md, results/t0/leakage_*.csv; C1 PASS, C2 WARN physical coincidences, C3a WARN low-severity shared pure VP, C3b PASS zero blend leakage, C4 WARN 22/31 systems in S1, C5 PASS). Acceptance criteria met.
+Phase 0 complete (T0.1, T0.2, T0.3, T0.4 all finished). Ready for Phase 1.
 
