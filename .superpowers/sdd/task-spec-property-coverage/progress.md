@@ -7,5 +7,13 @@ Ruling (T0.1): model fallback — antigravity claude was quota-blocked (>90% usa
 Task T0.3: complete (commit ddface6; deliverable docs/data_sources.csv, 24 sources, unclear entries marked).
 Task T0.4: complete (commit ddface6; deliverable data/antoine_sources.csv, 19 compounds — 11 cited, 8 flagged needs-removal-candidate, unverified provenance ACTIVE in flash baseline).
 Task T0.2: complete (deliverables docs/audit_leakage.md, results/t0/leakage_*.csv; C1 PASS, C2 WARN physical coincidences, C3a WARN low-severity shared pure VP, C3b PASS zero blend leakage, C4 WARN 22/31 systems in S1, C5 PASS). Acceptance criteria met.
-Phase 0 complete (T0.1, T0.2, T0.3, T0.4 all finished). Ready for Phase 1.
+Phase 0 complete (T0.1, T0.2, T0.3, T0.4 all finished).
+
+Phase 1 (Unified Data Schema):
+Task T1.1: complete (deliverable data/schema/measurement_schema.md + src/fuelblend/data/validate.py validate_measurement_df; tests: 3 passed).
+Task T1.2: complete (deliverable data/schema/composition_schema.md + src/fuelblend/data/validate.py validate_composition_df; tests: 3 passed).
+Task T1.3: complete (deliverables data/compounds_canonical.csv, scripts/build_canonical_compounds.py, docs/progress/T1.3.md; 1038 unique compounds, 952 with CAS (91.7%), canonical RDKit SMILES and InChIKeys; tests: 1 passed).
+Task T1.4: complete (deliverables data/processed/mixtures_tagged.csv, src/fuelblend/features/fuel_family.py, scripts/build_mixtures_tagged.py, docs/progress/T1.4.md; all 510 existing mixture systems tagged: 457 model-mixture, 38 gasoline, 15 diesel, 0 real_fuel; tests: 5 passed).
+Task T1.5: complete (deliverables data/processed/measurements_migrated_core.csv, scripts/migrate_to_v2_schema.py, docs/progress/T1.5_migration_report.md; 35,338 rows before and after, exact value SHA-256 match de8c199824425c7e0422275c124c74bba212fa57027f71431962dd8272b481c2; strict schema validator passed; tests: 1 passed).
+Phase 1 complete (all 13 tests green). Ready for Phase 2 / Phase 5.
 
