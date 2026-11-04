@@ -1,0 +1,14 @@
+# heavy data — kept out of git; baseline state preserved via tag + archive manifest checksums
+data/
+debug/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.pt
+archive/
+# deliverables that must be tracked despite dir ignores
+!archive/baseline_manifest.json
+!data/antoine_sources.csv
+ajftd_session.json
+runs/

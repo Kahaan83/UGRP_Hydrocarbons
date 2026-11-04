@@ -1,0 +1,373 @@
+[
+  {
+    "rank": 1,
+    "J": 27.17478370666504,
+    "robust_feasible": false,
+    "n_active": 4,
+    "n_eff": 3.7852638055793375,
+    "class_wt_pct": {
+      "aromatic": 20.39981249474205,
+      "alkene_alkyne": 0.0,
+      "cycloalkane": 28.114679619458744,
+      "iso_paraffin": 14.739780194167373,
+      "n_paraffin": 36.74572769163183
+    },
+    "composition": [
+      {
+        "name": "CCCCCCCCCCC",
+        "mass_pct": 36.74572769163183,
+        "inchikey": "RSJKGSCJYJTIGS-UHFFFAOYSA-N"
+      },
+      {
+        "name": "C1CC2C3CCC(C3)C2C1",
+        "mass_pct": 28.114679619458744,
+        "inchikey": "LPSXSORODABQKT-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCc1ccccc1",
+        "mass_pct": 20.39981249474205,
+        "inchikey": "LTEQMZWBSYACLV-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CC(C)CCCC(C)CCCC(C)CCCCC(C)CCCC(C)CCCC(C)C",
+        "mass_pct": 14.739780194167373,
+        "inchikey": "PRAKJMSDJKAYCZ-UHFFFAOYSA-N"
+      }
+    ],
+    "predicted": {
+      "kin_visc_cSt@40.0C": {
+        "value": 1.9122619711779107,
+        "lo": 1.8957998134303928,
+        "hi": 1.9288670778991464,
+        "std_metric": 0.00864600483328104,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "density_kg_m3@15.0C": {
+        "value": 824.3619995117188,
+        "lo": 823.3640650510788,
+        "hi": 825.3599339723587,
+        "std_metric": 0.9979344606399536,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "flash_C@-C": {
+        "value": 67.80162811279297,
+        "lo": 54.07707214355469,
+        "hi": 81.52618408203125,
+        "std_metric": 8.724555969238281,
+        "nominal_ok": true,
+        "robust_ok": false
+      },
+      "class_wt_pct[n_paraffin]": {
+        "value": 36.7457275390625,
+        "lo": 36.7457275390625,
+        "hi": 36.7457275390625,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "class_wt_pct[iso_paraffin]": {
+        "value": 14.73978042602539,
+        "lo": 14.73978042602539,
+        "hi": 14.73978042602539,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "class_wt_pct[cycloalkane]": {
+        "value": 28.11467933654785,
+        "lo": 28.11467933654785,
+        "hi": 28.11467933654785,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "class_wt_pct[aromatic]": {
+        "value": 20.399812698364258,
+        "lo": 20.399812698364258,
+        "hi": 20.399812698364258,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "wat_C": {
+        "value": -39.114837646484375,
+        "lo": -44.114837646484375,
+        "hi": -34.114837646484375,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      }
+    },
+    "api_check": {
+      "kin_visc_cSt@40.0C": {
+        "value": 1.9630603079910902
+      },
+      "density_kg_m3@15.0C": {
+        "value": 834.1678020741573
+      },
+      "flash_C@-C": {
+        "value": 25.080342621795047,
+        "interval": [
+          null,
+          null
+        ]
+      }
+    },
+    "warnings": [
+      "4 active components > 3 max seen in training mixtures (extrapolation)",
+      "never seen in a training mixture: C1CC2C3CCC(C3)C2C1",
+      "63.3 wt% has no melting data (assumed never to precipitate in the wax proxy)"
+    ]
+  },
+  {
+    "rank": 2,
+    "J": 29.410236358642578,
+    "robust_feasible": false,
+    "n_active": 4,
+    "n_eff": 3.372903850356827,
+    "class_wt_pct": {
+      "aromatic": 27.790027179230346,
+      "alkene_alkyne": 0.0,
+      "cycloalkane": 30.277011971703725,
+      "iso_paraffin": 4.076932480628126,
+      "n_paraffin": 37.8560283684378
+    },
+    "composition": [
+      {
+        "name": "CCCCCCCCCCCCCCC",
+        "mass_pct": 37.8560283684378,
+        "inchikey": "YCOZIPAWZNQLMR-UHFFFAOYSA-N"
+      },
+      {
+        "name": "C1CC2C3CCC(C3)C2C1",
+        "mass_pct": 30.277011971703725,
+        "inchikey": "LPSXSORODABQKT-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCCCc1ccccc1",
+        "mass_pct": 27.790027179230346,
+        "inchikey": "CDKDZKXSXLNROY-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCC(C)C",
+        "mass_pct": 4.076932480628126,
+        "inchikey": "JVSWJIKNEAIKJW-UHFFFAOYSA-N"
+      }
+    ],
+    "predicted": {
+      "kin_visc_cSt@40.0C": {
+        "value": 2.165057909692105,
+        "lo": 2.139095934082127,
+        "hi": 2.1913349829874345,
+        "std_metric": 0.01206383015960455,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "density_kg_m3@15.0C": {
+        "value": 829.4871215820312,
+        "lo": 829.0320494174957,
+        "hi": 829.9421937465668,
+        "std_metric": 0.45507216453552246,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "flash_C@-C": {
+        "value": 62.7161750793457,
+        "lo": 53.792856216430664,
+        "hi": 71.63949394226074,
+        "std_metric": 3.923318862915039,
+        "nominal_ok": true,
+        "robust_ok": false
+      },
+      "class_wt_pct[n_paraffin]": {
+        "value": 37.85602569580078,
+        "lo": 37.85602569580078,
+        "hi": 37.85602569580078,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "class_wt_pct[iso_paraffin]": {
+        "value": 4.076932430267334,
+        "lo": 4.076932430267334,
+        "hi": 4.076932430267334,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "class_wt_pct[cycloalkane]": {
+        "value": 30.277009963989258,
+        "lo": 30.277009963989258,
+        "hi": 30.277009963989258,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "class_wt_pct[aromatic]": {
+        "value": 27.790027618408203,
+        "lo": 27.790027618408203,
+        "hi": 27.790027618408203,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "wat_C": {
+        "value": -5.165313720703125,
+        "lo": -10.165313720703125,
+        "hi": -0.165313720703125,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      }
+    },
+    "api_check": {
+      "kin_visc_cSt@40.0C": {
+        "value": 2.096615886526596
+      },
+      "density_kg_m3@15.0C": {
+        "value": 845.1861891998657
+      },
+      "flash_C@-C": {
+        "value": 25.0806489641822,
+        "interval": [
+          null,
+          null
+        ]
+      }
+    },
+    "warnings": [
+      "4 active components > 3 max seen in training mixtures (extrapolation)",
+      "never seen in a training mixture: CCCCCCCCCCCCCCC, C1CC2C3CCC(C3)C2C1, CCCCCC(C)C",
+      "62.1 wt% has no melting data (assumed never to precipitate in the wax proxy)"
+    ]
+  },
+  {
+    "rank": 3,
+    "J": 46.01685333251953,
+    "robust_feasible": false,
+    "n_active": 5,
+    "n_eff": 4.138053391155184,
+    "class_wt_pct": {
+      "aromatic": 29.798297609225383,
+      "alkene_alkyne": 0.0,
+      "cycloalkane": 32.63042663152078,
+      "iso_paraffin": 0.0,
+      "n_paraffin": 37.57127575925384
+    },
+    "composition": [
+      {
+        "name": "C1CC2C3CCC(C3)C2C1",
+        "mass_pct": 32.63042663152078,
+        "inchikey": "LPSXSORODABQKT-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCCCc1ccccc1",
+        "mass_pct": 27.88609040088168,
+        "inchikey": "CDKDZKXSXLNROY-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCCCCCCCCCCC",
+        "mass_pct": 21.907803219657172,
+        "inchikey": "DCAYPVUWAIABOU-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCCCCC",
+        "mass_pct": 15.663472539596665,
+        "inchikey": "DIOQZVSQGTUSAI-UHFFFAOYSA-N"
+      },
+      {
+        "name": "CCCCCCCCCCCCc1ccccc1",
+        "mass_pct": 1.9122072083437025,
+        "inchikey": "KWKXNDCHNDYVRT-UHFFFAOYSA-N"
+      }
+    ],
+    "predicted": {
+      "kin_visc_cSt@40.0C": {
+        "value": 2.0315612932008484,
+        "lo": 2.010316532134471,
+        "hi": 2.05303056611178,
+        "std_metric": 0.010512419044971466,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "density_kg_m3@15.0C": {
+        "value": 839.4671020507812,
+        "lo": 838.4942039251328,
+        "hi": 840.4400001764297,
+        "std_metric": 0.9728981256484985,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "flash_C@-C": {
+        "value": 66.72175598144531,
+        "lo": 54.78937530517578,
+        "hi": 78.65413665771484,
+        "std_metric": 6.932380199432373,
+        "nominal_ok": true,
+        "robust_ok": false
+      },
+      "class_wt_pct[n_paraffin]": {
+        "value": 37.57127380371094,
+        "lo": 37.57127380371094,
+        "hi": 37.57127380371094,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "class_wt_pct[iso_paraffin]": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "class_wt_pct[cycloalkane]": {
+        "value": 32.63042449951172,
+        "lo": 32.63042449951172,
+        "hi": 32.63042449951172,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "class_wt_pct[aromatic]": {
+        "value": 29.798295974731445,
+        "lo": 29.798295974731445,
+        "hi": 29.798295974731445,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "wat_C": {
+        "value": -4.12872314453125,
+        "lo": -9.12872314453125,
+        "hi": 0.87127685546875,
+        "std_metric": 0.0,
+        "nominal_ok": true,
+        "robust_ok": false
+      }
+    },
+    "api_check": {
+      "kin_visc_cSt@40.0C": {
+        "value": 2.0447623433547264
+      },
+      "density_kg_m3@15.0C": {
+        "value": 849.9562156947127
+      },
+      "flash_C@-C": {
+        "value": 25.080240670775787,
+        "interval": [
+          null,
+          null
+        ]
+      }
+    },
+    "warnings": [
+      "5 active components > 3 max seen in training mixtures (extrapolation)",
+      "never seen in a training mixture: C1CC2C3CCC(C3)C2C1, CCCCCCCCCCCCc1ccccc1",
+      "62.4 wt% has no melting data (assumed never to precipitate in the wax proxy)"
+    ]
+  }
+]

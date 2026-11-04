@@ -1,0 +1,93 @@
+[
+  {
+    "rank": 1,
+    "J": 15.11001968383789,
+    "robust_feasible": false,
+    "n_active": 3,
+    "n_eff": 2.5855719248397016,
+    "class_wt_pct": {
+      "aromatic": 28.816618437041136,
+      "alkene_alkyne": 0.0,
+      "cycloalkane": 0.0,
+      "iso_paraffin": 0.0,
+      "n_paraffin": 71.18338156295887
+    },
+    "composition": [
+      {
+        "name": "n-decane",
+        "mass_pct": 57.42684127059451,
+        "inchikey": "DIOQZVSQGTUSAI-UHFFFAOYSA-N"
+      },
+      {
+        "name": "mesitylene",
+        "mass_pct": 28.816618437041136,
+        "inchikey": "AUHZEENZYGFFBQ-UHFFFAOYSA-N"
+      },
+      {
+        "name": "n-dodecane",
+        "mass_pct": 13.756540292364361,
+        "inchikey": "SNRUBQQJIBEYMU-UHFFFAOYSA-N"
+      }
+    ],
+    "predicted": {
+      "kin_visc_cSt@-20.0C": {
+        "value": 2.0028239178649527,
+        "lo": 1.929913459545016,
+        "hi": 2.078488870126642,
+        "std_metric": 0.0370829813182354,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "density_kg_m3@15.0C": {
+        "value": 771.220703125,
+        "lo": 770.5780849456787,
+        "hi": 771.8633213043213,
+        "std_metric": 0.6426181793212891,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "flash_C@-C": {
+        "value": 53.739315032958984,
+        "lo": 46.42687368392944,
+        "hi": 61.051756381988525,
+        "std_metric": 2.312441349029541,
+        "nominal_ok": true,
+        "robust_ok": true
+      },
+      "class_wt_pct[aromatic]": {
+        "value": 28.816619873046875,
+        "lo": 28.816619873046875,
+        "hi": 28.816619873046875,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      },
+      "wat_C": {
+        "value": -38.91587829589844,
+        "lo": -43.91587829589844,
+        "hi": -33.91587829589844,
+        "std_metric": 0.0,
+        "nominal_ok": false,
+        "robust_ok": false
+      }
+    },
+    "api_check": {
+      "kin_visc_cSt@-20.0C": {
+        "value": 2.4925899992375835
+      },
+      "density_kg_m3@15.0C": {
+        "value": 768.6395258238324
+      },
+      "flash_C@-C": {
+        "value": 50.57650401500911,
+        "interval": [
+          36.725248069351665,
+          64.42775996066655
+        ]
+      }
+    },
+    "warnings": [
+      "28.8 wt% has no melting data (assumed never to precipitate in the wax proxy)"
+    ]
+  }
+]
