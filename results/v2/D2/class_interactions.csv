@@ -1,0 +1,21 @@
+model,condition,eval_scheme,parameters,n_obs,n_fuels,rmse_log,rmse_log_ci95,mae_log,mae_log_ci95,bias_log,error_reduction_pct
+Raw Refutas Physics,overall (all T),zero-shot,0 (baseline),171,57,0.44206870291294126,"[0.4150, 0.4687]",0.3432223929609028,"[0.3199, 0.3670]",-0.3332301191236542,0.0
+Raw Refutas Physics,T = -40 C,zero-shot,0 (baseline),57,57,0.6879341203847521,"[0.6451, 0.7299]",0.6689591989607273,"[0.6280, 0.7119]",-0.6689591989607273,0.0
+Raw Refutas Physics,T = -20 C,zero-shot,0 (baseline),57,57,0.3190869054737472,"[0.2915, 0.3472]",0.2994052852151581,"[0.2714, 0.3303]",-0.2994052852151581,0.0
+Raw Refutas Physics,T = 20 C,zero-shot,0 (baseline),57,57,0.10585087175378535,"[0.0560, 0.1614]",0.06130269470682279,"[0.0436, 0.0865]",-0.03132587319507716,0.0
+Lab Class Interaction (Ridge alpha=100),overall (all T),lab -> fuels zero-shot,15 class pairs (lab fit),171,57,0.49241158382166156,"[0.4650, 0.5191]",0.3988816680950547,"[0.3731, 0.4246]",-0.39786047511867656,-11.388021947039896
+Lab Class Interaction (Ridge alpha=100),T = -40 C,lab -> fuels zero-shot,15 class pairs (lab fit),57,57,0.7507016410913083,"[0.7085, 0.7922]",0.7335895549557498,"[0.6928, 0.7760]",-0.7335895549557498,-9.12405982588147
+Lab Class Interaction (Ridge alpha=100),T = -20 C,lab -> fuels zero-shot,15 class pairs (lab fit),57,57,0.38012558333507834,"[0.3528, 0.4084]",0.36403564121018045,"[0.3363, 0.3945]",-0.36403564121018045,-19.129170396606288
+Lab Class Interaction (Ridge alpha=100),T = 20 C,lab -> fuels zero-shot,15 class pairs (lab fit),57,57,0.13913694909065139,"[0.0936, 0.1948]",0.09901980811923405,"[0.0779, 0.1260]",-0.09595622919009954,-31.446200475600406
+"Real-Fuel Class Interaction (Ridge alpha=10, LOO)",overall (all T),leave-one-fuel-out,15 class pairs (LOO fit),171,57,0.31363053314641665,"[0.2928, 0.3346]",0.2550106037240613,"[0.2407, 0.2697]",-0.1177514178163701,29.053893415254638
+"Real-Fuel Class Interaction (Ridge alpha=10, LOO)",T = -40 C,leave-one-fuel-out,15 class pairs (LOO fit),57,57,0.4812272610988235,"[0.4380, 0.5225]",0.45348049765344334,"[0.4122, 0.4964]",-0.45348049765344334,30.047478844387054
+"Real-Fuel Class Interaction (Ridge alpha=10, LOO)",T = -20 C,leave-one-fuel-out,15 class pairs (LOO fit),57,57,0.13896614082906195,"[0.1155, 0.1606]",0.11242061601070188,"[0.0921, 0.1337]",-0.08392658390787401,56.44881114041975
+"Real-Fuel Class Interaction (Ridge alpha=10, LOO)",T = 20 C,leave-one-fuel-out,15 class pairs (LOO fit),57,57,0.21024050238600256,"[0.1908, 0.2296]",0.1991306975080388,"[0.1814, 0.2174]",0.18415282811220693,-98.61952849574345
+Recalibrated Physics (Task A2 2-param LOO),overall (all T),leave-one-fuel-out,2 (slope + intercept),171,57,0.14105145917760076,"[0.1174, 0.1667]",0.10421703574557781,"[0.0890, 0.1205]",3.012534990795746e-16,68.09286469542751
+Recalibrated Physics (Task A2 2-param LOO),T = -40 C,leave-one-fuel-out,2 (slope + intercept),57,57,0.1705310743280253,"[0.1388, 0.1982]",0.1351973786772167,"[0.1085, 0.1621]",-0.04966144213401173,75.21113297409211
+Recalibrated Physics (Task A2 2-param LOO),T = -20 C,leave-one-fuel-out,2 (slope + intercept),57,57,0.13816143608751372,"[0.1129, 0.1615]",0.11532600631070987,"[0.0953, 0.1354]",0.08088222652514575,56.70100097577306
+Recalibrated Physics (Task A2 2-param LOO),T = 20 C,leave-one-fuel-out,2 (slope + intercept),57,57,0.10731781154662293,"[0.0567, 0.1637]",0.06212772224880679,"[0.0443, 0.0877]",-0.031220784391133124,-1.3858551833656696
+Recalibrated Physics + Class Interaction (LOO),overall (all T),leave-one-fuel-out,2 + 15 class pairs,171,57,0.1399825134134569,"[0.1165, 0.1656]",0.10316361063351083,"[0.0880, 0.1192]",9.822446153351502e-05,68.33467004312577
+Recalibrated Physics + Class Interaction (LOO),T = -40 C,leave-one-fuel-out,2 + 15 class pairs,57,57,0.16896122931551258,"[0.1375, 0.1964]",0.13392484764530055,"[0.1072, 0.1605]",-0.049563217672478524,75.43932997232135
+Recalibrated Physics + Class Interaction (LOO),T = -20 C,leave-one-fuel-out,2 + 15 class pairs,57,57,0.1371990416511763,"[0.1124, 0.1604]",0.1145069042647822,"[0.0945, 0.1345]",0.08098045098667898,57.00260985405296
+Recalibrated Physics + Class Interaction (LOO),T = 20 C,leave-one-fuel-out,2 + 15 class pairs,57,57,0.10683556590777946,"[0.0554, 0.1637]",0.06105907999044971,"[0.0432, 0.0867]",-0.031122559929599905,-0.9302655119218572
