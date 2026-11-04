@@ -1,0 +1,196 @@
+fuel_id,fuel_name,fuel_family,composition_type,total_components,top_k,total_pairs,seen_comp_pairs,comp_pair_coverage_pct,seen_class_pairs,class_pair_coverage_pct
+CRC647_101,Dartmouth / Halifax,jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_101,Dartmouth / Halifax,jet,reconstructed_composition,48,20,190,37,19.47,190,100.0
+CRC647_101,Dartmouth / Halifax,jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_104,Toronto,jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_104,Toronto,jet,reconstructed_composition,48,20,190,31,16.32,190,100.0
+CRC647_104,Toronto,jet,reconstructed_composition,48,40,780,124,15.9,780,100.0
+CRC647_105,Richmond / Vancouver,jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_105,Richmond / Vancouver,jet,reconstructed_composition,48,20,190,28,14.74,190,100.0
+CRC647_105,Richmond / Vancouver,jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_108,Edmonton,jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_108,Edmonton,jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_108,Edmonton,jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_109,"Ontario, Canada",jet,reconstructed_composition,48,10,45,9,20.0,45,100.0
+CRC647_109,"Ontario, Canada",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_109,"Ontario, Canada",jet,reconstructed_composition,48,40,780,132,16.92,780,100.0
+CRC647_110,"Ontario, Canada",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_110,"Ontario, Canada",jet,reconstructed_composition,48,20,190,31,16.32,190,100.0
+CRC647_110,"Ontario, Canada",jet,reconstructed_composition,48,40,780,116,14.87,780,100.0
+CRC647_111,"Edmonton, Oil Sands",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_111,"Edmonton, Oil Sands",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_111,"Edmonton, Oil Sands",jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_14,"Pittsburg, PA",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_14,"Pittsburg, PA",jet,reconstructed_composition,48,20,190,33,17.37,190,100.0
+CRC647_14,"Pittsburg, PA",jet,reconstructed_composition,48,40,780,125,16.03,780,100.0
+CRC647_17,"Seattle, WA",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_17,"Seattle, WA",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_17,"Seattle, WA",jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_18,"Seattle/Boeing, WA",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_18,"Seattle/Boeing, WA",jet,reconstructed_composition,48,20,190,28,14.74,190,100.0
+CRC647_18,"Seattle/Boeing, WA",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_2,"Boston, MA",jet,reconstructed_composition,48,10,45,9,20.0,45,100.0
+CRC647_2,"Boston, MA",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_2,"Boston, MA",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_20,"Shell Martinez Refinery, CA",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_20,"Shell Martinez Refinery, CA",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_20,"Shell Martinez Refinery, CA",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_206,"Rio de Janiero, Brazil",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_206,"Rio de Janiero, Brazil",jet,reconstructed_composition,48,20,190,37,19.47,190,100.0
+CRC647_206,"Rio de Janiero, Brazil",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_211,"Talara City, Peru",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_211,"Talara City, Peru",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_211,"Talara City, Peru",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_3,"Chicago, IL",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_3,"Chicago, IL",jet,reconstructed_composition,48,20,190,33,17.37,190,100.0
+CRC647_3,"Chicago, IL",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_30,"Lebanon, OH",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_30,"Lebanon, OH",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_30,"Lebanon, OH",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_301,"Amsterdam, Netherlands",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_301,"Amsterdam, Netherlands",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_301,"Amsterdam, Netherlands",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_304,"Brussels, Belgium",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_304,"Brussels, Belgium",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_304,"Brussels, Belgium",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_306,"Dublin, Ireland",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_306,"Dublin, Ireland",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_306,"Dublin, Ireland",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_31,"Langley AFB, VA",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_31,"Langley AFB, VA",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_31,"Langley AFB, VA",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_314,"London, England",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_314,"London, England",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_314,"London, England",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_315,"London, England",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_315,"London, England",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_315,"London, England",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_316,"Madrid, Spain",jet,reconstructed_composition,48,10,45,18,40.0,45,100.0
+CRC647_316,"Madrid, Spain",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_316,"Madrid, Spain",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_318,"Munich, Germany",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_318,"Munich, Germany",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_318,"Munich, Germany",jet,reconstructed_composition,48,40,780,130,16.67,780,100.0
+CRC647_32,"Shaw AFB, SC",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_32,"Shaw AFB, SC",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_32,"Shaw AFB, SC",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_321,"Paris, France",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_321,"Paris, France",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_321,"Paris, France",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_325,"Toulouse, France",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_325,"Toulouse, France",jet,reconstructed_composition,48,20,190,37,19.47,190,100.0
+CRC647_325,"Toulouse, France",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_33,"Randolph AFB, TX",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_33,"Randolph AFB, TX",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_33,"Randolph AFB, TX",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_334,"Bordeaux, France",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_334,"Bordeaux, France",jet,reconstructed_composition,48,20,190,37,19.47,190,100.0
+CRC647_334,"Bordeaux, France",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_335,"Lyon, France",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_335,"Lyon, France",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_335,"Lyon, France",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_336,"Montpellier, France",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_336,"Montpellier, France",jet,reconstructed_composition,48,20,190,40,21.05,190,100.0
+CRC647_336,"Montpellier, France",jet,reconstructed_composition,48,40,780,116,14.87,780,100.0
+CRC647_34,"McConnell AFB, KS",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_34,"McConnell AFB, KS",jet,reconstructed_composition,48,20,190,42,22.11,190,100.0
+CRC647_34,"McConnell AFB, KS",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_35,"Robins AFB, KS",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_35,"Robins AFB, KS",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_35,"Robins AFB, KS",jet,reconstructed_composition,48,40,780,124,15.9,780,100.0
+CRC647_36,Stoddard Solvent,jet,reconstructed_composition,48,10,45,11,24.44,45,100.0
+CRC647_36,Stoddard Solvent,jet,reconstructed_composition,48,20,190,34,17.89,190,100.0
+CRC647_36,Stoddard Solvent,jet,reconstructed_composition,48,40,780,168,21.54,780,100.0
+CRC647_37,"Seymour Johnson AFB, NC",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_37,"Seymour Johnson AFB, NC",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_37,"Seymour Johnson AFB, NC",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_39,Valero Benicia Refinery,jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_39,Valero Benicia Refinery,jet,reconstructed_composition,48,20,190,26,13.68,190,100.0
+CRC647_39,Valero Benicia Refinery,jet,reconstructed_composition,48,40,780,130,16.67,780,100.0
+CRC647_4,Dallas/Ft. Worth,jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_4,Dallas/Ft. Worth,jet,reconstructed_composition,48,20,190,28,14.74,190,100.0
+CRC647_4,Dallas/Ft. Worth,jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_40,"Petro Star Valdez Refinery, AK",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_40,"Petro Star Valdez Refinery, AK",jet,reconstructed_composition,48,20,190,31,16.32,190,100.0
+CRC647_40,"Petro Star Valdez Refinery, AK",jet,reconstructed_composition,48,40,780,124,15.9,780,100.0
+CRC647_403,"Praha (Prague), Czech Republic",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_403,"Praha (Prague), Czech Republic",jet,reconstructed_composition,48,20,190,37,19.47,190,100.0
+CRC647_403,"Praha (Prague), Czech Republic",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_41,"Trend Western Fuels, Tyndall",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_41,"Trend Western Fuels, Tyndall",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_41,"Trend Western Fuels, Tyndall",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_42,"Charleston AFB, SC",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_42,"Charleston AFB, SC",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_42,"Charleston AFB, SC",jet,reconstructed_composition,48,40,780,130,16.67,780,100.0
+CRC647_43,"Placid Refining, LA",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_43,"Placid Refining, LA",jet,reconstructed_composition,48,20,190,34,17.89,190,100.0
+CRC647_43,"Placid Refining, LA",jet,reconstructed_composition,48,40,780,125,16.03,780,100.0
+CRC647_44,"Buckeye Pipeline, IN",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_44,"Buckeye Pipeline, IN",jet,reconstructed_composition,48,20,190,28,14.74,190,100.0
+CRC647_44,"Buckeye Pipeline, IN",jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_45,"Monee, IL (TEPPCO)",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_45,"Monee, IL (TEPPCO)",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_45,"Monee, IL (TEPPCO)",jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+CRC647_507,South Africa (part synth),jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_507,South Africa (part synth),jet,reconstructed_composition,48,20,190,34,17.89,190,100.0
+CRC647_507,South Africa (part synth),jet,reconstructed_composition,48,40,780,130,16.67,780,100.0
+CRC647_508,South Africa (100% synth),jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_508,South Africa (100% synth),jet,reconstructed_composition,48,20,190,26,13.68,190,100.0
+CRC647_508,South Africa (100% synth),jet,reconstructed_composition,48,40,780,144,18.46,780,100.0
+CRC647_6,"Lebanon, OH",jet,reconstructed_composition,48,10,45,12,26.67,45,100.0
+CRC647_6,"Lebanon, OH",jet,reconstructed_composition,48,20,190,34,17.89,190,100.0
+CRC647_6,"Lebanon, OH",jet,reconstructed_composition,48,40,780,124,15.9,780,100.0
+CRC647_606,"Abu Dhabi, UAE",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_606,"Abu Dhabi, UAE",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_606,"Abu Dhabi, UAE",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_7,"Lima, OH",jet,reconstructed_composition,48,10,45,8,17.78,45,100.0
+CRC647_7,"Lima, OH",jet,reconstructed_composition,48,20,190,31,16.32,190,100.0
+CRC647_7,"Lima, OH",jet,reconstructed_composition,48,40,780,130,16.67,780,100.0
+CRC647_704,"Beijing, China",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_704,"Beijing, China",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_704,"Beijing, China",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_711,"Kuala Lumpur, Malaysia",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_711,"Kuala Lumpur, Malaysia",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_711,"Kuala Lumpur, Malaysia",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_716,"Sydney, Australia",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_716,"Sydney, Australia",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_716,"Sydney, Australia",jet,reconstructed_composition,48,40,780,131,16.79,780,100.0
+CRC647_717,"Tokyo, Japan",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_717,"Tokyo, Japan",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_717,"Tokyo, Japan",jet,reconstructed_composition,48,40,780,114,14.62,780,100.0
+CRC647_718,"Oil Shale, Australia",jet,reconstructed_composition,48,10,45,13,28.89,45,100.0
+CRC647_718,"Oil Shale, Australia",jet,reconstructed_composition,48,20,190,44,23.16,190,100.0
+CRC647_718,"Oil Shale, Australia",jet,reconstructed_composition,48,40,780,137,17.56,780,100.0
+CRC647_720,"Oil Shale, Australia (low nit.)",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_720,"Oil Shale, Australia (low nit.)",jet,reconstructed_composition,48,20,190,34,17.89,190,100.0
+CRC647_720,"Oil Shale, Australia (low nit.)",jet,reconstructed_composition,48,40,780,148,18.97,780,100.0
+CRC647_721,"Oil Shale, Australia (high Nit.)",jet,reconstructed_composition,48,10,45,17,37.78,45,100.0
+CRC647_721,"Oil Shale, Australia (high Nit.)",jet,reconstructed_composition,48,20,190,41,21.58,190,100.0
+CRC647_721,"Oil Shale, Australia (high Nit.)",jet,reconstructed_composition,48,40,780,148,18.97,780,100.0
+CRC647_8,"Los Angeles, CA",jet,reconstructed_composition,48,10,45,9,20.0,45,100.0
+CRC647_8,"Los Angeles, CA",jet,reconstructed_composition,48,20,190,36,18.95,190,100.0
+CRC647_8,"Los Angeles, CA",jet,reconstructed_composition,48,40,780,110,14.1,780,100.0
+NASA_LFP3,LFP-3 (Paraffinic Diesel),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFP3,LFP-3 (Paraffinic Diesel),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFP3,LFP-3 (Paraffinic Diesel),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFP5,LFP-5 (Paraffinic Distillate),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFP5,LFP-5 (Paraffinic Distillate),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFP5,LFP-5 (Paraffinic Distillate),diesel,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFPA3,LFPA-3 (Aviation Turbine Blend),jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFPA3,LFPA-3 (Aviation Turbine Blend),jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_LFPA3,LFPA-3 (Aviation Turbine Blend),jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_Shale_JP5,Shale II JP-5 Kerosene,jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_Shale_JP5,Shale II JP-5 Kerosene,jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NASA_Shale_JP5,Shale II JP-5 Kerosene,jet,measured_dha_gcxgc,8,8,28,23,82.14,28,100.0
+NIST_RP1,Rocket Propellant RP-1 (NIST Standard Sample 4572),jet,measured_dha_gcxgc,33,10,45,0,0.0,6,13.33
+NIST_RP1,Rocket Propellant RP-1 (NIST Standard Sample 4572),jet,measured_dha_gcxgc,33,20,190,1,0.53,28,14.74
+NIST_RP1,Rocket Propellant RP-1 (NIST Standard Sample 4572),jet,measured_dha_gcxgc,33,33,528,3,0.57,210,39.77
+RP1_Binary_2comp,RP-1 2-Component Binary Baseline (MCH/n-dodecane 50/50),jet,measured_dha_gcxgc,2,2,1,1,100.0,1,100.0
+RP1_Binary_2comp,RP-1 2-Component Binary Baseline (MCH/n-dodecane 50/50),jet,measured_dha_gcxgc,2,2,1,1,100.0,1,100.0
+RP1_Binary_2comp,RP-1 2-Component Binary Baseline (MCH/n-dodecane 50/50),jet,measured_dha_gcxgc,2,2,1,1,100.0,1,100.0
+RP1_Edwards_3comp,Edwards/Stanford 3-Component RP-1 Pyrolysis Surrogate,jet,measured_dha_gcxgc,3,3,3,3,100.0,3,100.0
+RP1_Edwards_3comp,Edwards/Stanford 3-Component RP-1 Pyrolysis Surrogate,jet,measured_dha_gcxgc,3,3,3,3,100.0,3,100.0
+RP1_Edwards_3comp,Edwards/Stanford 3-Component RP-1 Pyrolysis Surrogate,jet,measured_dha_gcxgc,3,3,3,3,100.0,3,100.0
+RP1_NIST_14comp,NISTIR 6646 14-Component Surrogate (Table 2),jet,measured_dha_gcxgc,14,10,45,1,2.22,15,33.33
+RP1_NIST_14comp,NISTIR 6646 14-Component Surrogate (Table 2),jet,measured_dha_gcxgc,14,14,91,3,3.3,45,49.45
+RP1_NIST_14comp,NISTIR 6646 14-Component Surrogate (Table 2),jet,measured_dha_gcxgc,14,14,91,3,3.3,45,49.45

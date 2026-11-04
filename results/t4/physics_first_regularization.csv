@@ -1,0 +1,8 @@
+regularization_lambda,shrinkage_factor,mean_abs_residual_viscosity,mean_abs_residual_density,mean_abs_residual_flash_C,physics_dominance_pct
+0.0,1.0,0.0603,2.46,2.75,0.0
+0.0001,0.9999,0.0603,2.4598,2.7497,0.01
+0.001,0.999,0.0602,2.4575,2.7473,0.1
+0.01,0.9901,0.0597,2.4356,2.7228,0.99
+0.1,0.9091,0.0548,2.2364,2.5,9.09
+1.0,0.5,0.0301,1.23,1.375,50.0
+10.0,0.0909,0.0055,0.2236,0.25,90.91

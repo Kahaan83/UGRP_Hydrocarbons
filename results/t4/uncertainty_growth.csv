@@ -1,0 +1,4 @@
+property,binary_error_ln,multi_error_ln,fitted_growth_factor_g,nominal_90pct_coverage_binary,empirical_90pct_coverage_real_fuels
+viscosity_kin_cSt,0.0438,0.0603,1.377,0.912,0.925
+density_kg_m3,2.385,6.034,2.53,0.908,0.918
+flash_point_C,1.59,2.45,1.541,0.93,0.942

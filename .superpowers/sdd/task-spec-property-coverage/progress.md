@@ -45,6 +45,18 @@ Task T3.3: complete (deliverable data/real_fuels/blend_links.csv; links RP-1 sur
 Task T3.4: complete (CRC 647 pseudo-compositions segregated into separate subset labeled reconstructed_composition and isolated from measured_dha_gcxgc fuels).
 Task T3.5: complete (deliverable splits/real_fuels_holdout.json; holds out all 65 real fuels from training by default with nested split definitions; Phase 3 report docs/progress/Phase3_real_fuels.md; tests: 4 passed).
 
+Phase 4 (Models for Up to 40+ Components):
+Task T4.1: complete (deliverable results/t4/pair_coverage.csv, docs/progress/T4.1.md; pair-coverage diagnostic showed molecular pair coverage drops to 0.57% on real fuels, while class pair coverage remains >95%).
+Task T4.2: complete (deliverable src/fuelblend/mixture/bilinear_pairwise.py, tests/test_bilinear_pairwise.py; implemented low-rank bilinear interaction model scaling in O(N*d*r) time; exact match to explicit O(N^2) double sum verified; tests: 4 passed).
+Task T4.3: complete (deliverable ClassSharedInteraction in bilinear_pairwise.py; symmetric 5x5 class-level interaction matrix).
+Task T4.4: complete (deliverable tests/test_model_invariances.py, docs/progress/T4.4.md; 5 physical invariance principles verified; documented why DeepSets attention fails component splitting while Pairwise passes; tests: 5 passed).
+Task T4.5: complete (deliverable results/t4/truncation_study.csv; proved retaining top 20 components captures 96.8% mass and 98.4% variance).
+Task T4.6: complete (deliverable results/t4/reconstruction_sensitivity.csv; measured prediction spread across pseudo-composition perturbations).
+Task T4.7: complete (deliverable results/t4/error_vs_n_components.csv; error stratified by component count bucket with cluster bootstrap CIs).
+Task T4.8: complete (deliverable results/t4/uncertainty_growth.csv; fitted property-specific inflation factors g_visc=1.377, g_dens=2.530, g_flash=1.541, validating >90% empirical coverage on real fuels).
+Task T4.9: complete (deliverable results/t4/physics_first_regularization.csv, docs/progress/Phase4_many_components.md; evaluated L2 residual shrinkage ensuring physics dominance at high N; tests: 3 passed).
+
+
 
 
 

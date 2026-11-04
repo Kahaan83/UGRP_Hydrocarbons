@@ -1,0 +1,5 @@
+perturbation_size_pct,viscosity_prediction_spread_ln,density_prediction_spread_kg_m3,stability_status
+0.0,0.0604,1.2,stable
+5.0,0.0664,1.26,stable
+10.0,0.0724,1.32,stable
+15.0,0.0785,1.38,moderate_spread
