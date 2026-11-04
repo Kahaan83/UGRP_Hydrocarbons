@@ -21,4 +21,10 @@ Phase 5 (Statistics and Recalibration Ablation):
 Task T5.1: complete (deliverables results/t5/system_cluster_bootstrap_summary.csv, scripts/run_cluster_bootstrap_eval.py, docs/progress/T5.1.md, src/fuelblend/eval/eval_grouped_cv.py, src/fuelblend/eval/eval_flash_loso.py, src/fuelblend/mixture/fuel_hindcast.py; all CIs explicitly cluster-bootstrapped over system_id/fuel_id; tests: 1 passed).
 Task T5.2: complete (deliverables results/t5/recalibrated_physics_ablation.csv, scripts/recalibrated_physics_ablation.py, docs/progress/T5.2.md; proved 2-parameter 1000/T slope recalibration recovers 68.5% of error reduction on cold-flow viscosity at -40C/-20C, outpacing complex neural residuals; tests: 1 passed).
 
+Phase 2 (Data Collection by Property — Section 3.1 Heat of Combustion):
+Task T2.1: complete (deliverables data/processed/gcv_MJ_kg.csv, scripts/check_gcv_coverage.py, docs/progress/T2.1.md; 100% pure compound coverage across 1038 compounds: 114 Tier A stoichiometric, 924 Tier C modified Dulong).
+Task T2.2: complete (deliverables src/fuelblend/baselines/heat_of_combustion.py, tests/test_heat_of_combustion_baseline.py; mass vs mole basis conversions, gross vs net conversions, water latent heat accounting; tests: 3 passed).
+Task T2.3: complete (deliverables data/processed/measurements_real_fuels_heat_of_combustion.csv, scripts/build_heat_of_combustion_measurements.py, docs/progress/T2.3.md; 1,083 real-fuel heat of combustion measurements from AJFTD and CRC 647 with test methods ASTM D4809 / D3338, schema validated).
+Task T2.4: complete (deliverables results/t2/heat_of_combustion_eval.csv, scripts/eval_heat_of_combustion_baseline.py, docs/progress/T2.4.md, tests/test_heat_of_combustion_eval.py; evaluated across 57 real aviation fuels with cluster bootstrap CIs over fuel_id; physics baseline achieves 1.60% MAPE and 0.689 MJ/kg MAE).
+
 
