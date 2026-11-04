@@ -12,3 +12,6 @@ archive/
 !data/antoine_sources.csv
 ajftd_session.json
 runs/
+
+results/t0_repro/reference_backup/
+results/t0_repro/rerun_outputs/

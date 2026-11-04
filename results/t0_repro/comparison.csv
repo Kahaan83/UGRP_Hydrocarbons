@@ -1,0 +1,134 @@
+script,metric,old_value,new_value,abs_diff,tolerance,verdict
+grouped_cv_summary.csv,visc.n_obs,15507.0,15507.0,0.0,0.0,pass
+grouped_cv_summary.csv,visc.n_systems,321.0,321.0,0.0,0.0,pass
+grouped_cv_summary.csv,visc.base_rmse,0.0698552593507193,0.0698552595609362,2.1021689944333843e-10,0.002,pass
+grouped_cv_summary.csv,visc.base_mae,0.0525949532330435,0.0525949531622086,7.083490044523799e-11,0.002,pass
+grouped_cv_summary.csv,visc.model_rmse,0.0438096260281135,0.0438143648760122,4.738847898699827e-06,0.002,pass
+grouped_cv_summary.csv,visc.model_mae,0.0249017807867571,0.024905350388341,3.5696015839026263e-06,0.002,pass
+grouped_cv_summary.csv,visc.diff_metric,-0.0262608439976225,-0.0262559866923818,4.857305240701243e-06,0.002,pass
+grouped_cv_summary.csv,visc.ci_95_lo,-0.0330906556722017,-0.0330942918343604,3.636162158697498e-06,0.002,pass
+grouped_cv_summary.csv,visc.ci_95_hi,-0.0194165439642328,-0.019416884131887,3.4016765420100126e-07,0.002,pass
+grouped_cv_summary.csv,visc.P(model<base),1.0,1.0,0.0,0.02,pass
+grouped_cv_summary.csv,visc.base_mape_pct,5.432274764048175,5.432274764206535,1.5835954769727323e-10,0.05,pass
+grouped_cv_summary.csv,visc.model_mape_pct,2.475009807810592,2.475376514952607,0.00036670714201481047,0.05,pass
+grouped_cv_summary.csv,dens.n_obs,13401.0,13401.0,0.0,0.0,pass
+grouped_cv_summary.csv,dens.n_systems,219.0,219.0,0.0,0.0,pass
+grouped_cv_summary.csv,dens.base_rmse,2.385882383824887,2.385882383824887,0.0,0.15,pass
+grouped_cv_summary.csv,dens.base_mae,1.3205098045024042,1.3205098045024042,0.0,0.15,pass
+grouped_cv_summary.csv,dens.model_rmse,1.9908402851658908,1.9908402851658908,0.0,0.15,pass
+grouped_cv_summary.csv,dens.model_mae,0.931337187636374,0.931337187636374,0.0,0.15,pass
+grouped_cv_summary.csv,dens.diff_metric,-0.4073294501399701,-0.4073294501399701,0.0,0.15,pass
+grouped_cv_summary.csv,dens.ci_95_lo,-0.6126155447544522,-0.6126155447544522,0.0,0.15,pass
+grouped_cv_summary.csv,dens.ci_95_hi,-0.2366215918773905,-0.2366215918773905,0.0,0.15,pass
+grouped_cv_summary.csv,dens.P(model<base),1.0,1.0,0.0,0.02,pass
+grouped_cv_summary.csv,flash.n_obs,126.0,126.0,0.0,0.0,pass
+grouped_cv_summary.csv,flash.n_systems,31.0,31.0,0.0,0.0,pass
+grouped_cv_summary.csv,flash.base_rmse,10.240518225957162,10.240518168417571,5.753959086973737e-08,0.3,pass
+grouped_cv_summary.csv,flash.base_mae,6.155731206984748,6.155730964781747,2.4220300076649437e-07,0.3,pass
+grouped_cv_summary.csv,flash.model_rmse,4.7940116812045055,4.74577170541919,0.04823997578531536,0.3,pass
+grouped_cv_summary.csv,flash.model_mae,3.4918936430170944,3.443179446422141,0.048714196594953574,0.3,pass
+grouped_cv_summary.csv,flash.diff_metric,-2.6901033506691507,-2.739127725301032,0.04902437463188125,0.3,pass
+grouped_cv_summary.csv,flash.ci_95_lo,-5.734879329520098,-5.781428566178456,0.04654923665835842,0.3,pass
+grouped_cv_summary.csv,flash.ci_95_hi,-0.0724663052511247,-0.1472007958300523,0.0747344905789276,0.3,pass
+grouped_cv_summary.csv,flash.P(model<base),0.9775,0.9805,0.0030000000000000027,0.02,pass
+grouped_cv_summary.csv,flash.base_over5_pct,19.84126984126984,19.84126984126984,0.0,0.05,pass
+grouped_cv_summary.csv,flash.model_over5_pct,13.492063492063492,13.492063492063492,0.0,0.05,pass
+flash_loso_summary.csv,flash.n_rows,126.0,126.0,0.0,0.0,pass
+flash_loso_summary.csv,flash.n_systems,31.0,31.0,0.0,0.0,pass
+flash_loso_summary.csv,flash.base_mae,6.155733176675896,6.155733176675896,0.0,0.3,pass
+flash_loso_summary.csv,flash.base_rmse,10.240520812341815,10.240520812341815,0.0,0.3,pass
+flash_loso_summary.csv,flash.base_over5_pct,19.84126984126984,19.84126984126984,0.0,0.05,pass
+flash_loso_summary.csv,flash.base_max_over,42.43436832528488,42.43436832528488,0.0,0.3,pass
+flash_loso_summary.csv,flash.hgb_mae,2.7525557742842315,2.7525557742842315,0.0,0.3,pass
+flash_loso_summary.csv,flash.hgb_rmse,3.87508745066293,3.87508745066293,0.0,0.3,pass
+flash_loso_summary.csv,flash.hgb_over5_pct,9.523809523809524,9.523809523809524,0.0,0.05,pass
+flash_loso_summary.csv,flash.hgb_max_over,11.444760515877306,11.444760515877306,0.0,0.3,pass
+flash_loso_summary.csv,flash.hgb-base_mae,-3.4266307779219765,-3.4266307779219765,0.0,0.3,pass
+flash_loso_summary.csv,flash.ci_95_lo,-6.027229689192408,-6.027229689192408,0.0,0.3,pass
+flash_loso_summary.csv,flash.ci_95_hi,-1.259222554849795,-1.259222554849795,0.0,0.3,pass
+flash_loso_summary.csv,flash.P(hgb<base),1.0,1.0,0.0,0.02,pass
+flash_loso_predictions.csv,max|delta hgb_flash| (per row),0.0,0.0,0.0,1e-06,pass
+hindcast_predictions.csv,max|delta physics| (per row),0.0,0.00018310546875,0.00018310546875,0.01,pass (float32 write precision)
+hindcast_predictions.csv,max|delta extrap_deepsets| (per row),0.0,0.00018310546875,0.00018310546875,0.01,pass (float32 write precision)
+hindcast_predictions.csv,max|delta extrap_pairwise| (per row),0.0,0.00018310546875,0.00018310546875,0.01,pass (float32 write precision)
+hindcast_predictions.csv (derived),density@15C.n_fuels,57.0,57.0,0.0,0.0,pass
+hindcast_predictions.csv (derived),density@15C.physics_rmse,9.728059591409902,9.728072678593282,1.3087183379667522e-05,0.3,pass
+hindcast_predictions.csv (derived),density@15C.physics_bias,0.4891787880345407,0.4891787880345407,0.0,0.3,pass
+hindcast_predictions.csv (derived),density@15C.extrap_deepsets_rmse,9.746508535013383,9.746519965966069,1.1430952685742568e-05,0.3,pass
+hindcast_predictions.csv (derived),density@15C.extrap_deepsets_bias,-0.2346242804276304,-0.23464783785635845,2.3557428728060437e-05,0.3,pass
+hindcast_predictions.csv (derived),density@15C.extrap_pairwise_rmse,9.920138174654328,9.920148705848444,1.0531194115870335e-05,0.3,pass
+hindcast_predictions.csv (derived),density@15C.extrap_pairwise_bias,1.5933947111430933,1.5933925695586635,2.1415844297933972e-06,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.n_fuels,57.0,57.0,0.0,0.0,pass
+hindcast_predictions.csv (derived),kv@-40C.physics_rmse,0.687934120384752,0.6879343061002318,1.857154797724192e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.physics_bias,-0.6689591989607273,-0.6689593765854253,1.7762469795012947e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.extrap_deepsets_rmse,0.6309521692430616,0.6309523436871742,1.7444411259948112e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.extrap_deepsets_bias,-0.6103836063793231,-0.6103837752986879,1.6891936482910097e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.extrap_pairwise_rmse,0.6870309237102021,0.6870310914283942,1.6771819211225392e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-40C.extrap_pairwise_bias,-0.6689311541422711,-0.6689313137540226,1.5961175148238027e-07,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.n_fuels,57.0,57.0,0.0,0.0,pass
+hindcast_predictions.csv (derived),kv@-20C.physics_rmse,0.3190869054737472,0.3190869460273087,4.0553561508893665e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.physics_bias,-0.2994052852151581,-0.29940533040470524,4.518954715981849e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.extrap_deepsets_rmse,0.27197497085260625,0.2719750525588533,8.170624704595397e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.extrap_deepsets_bias,-0.24896815655103766,-0.24896824000837045,8.345733279457868e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.extrap_pairwise_rmse,0.3400475708595345,0.34004762056980886,4.9710274341308036e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@-20C.extrap_pairwise_bias,-0.32276096519314124,-0.3227610058592982,4.0666156941870923e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.n_fuels,57.0,57.0,0.0,0.0,pass
+hindcast_predictions.csv (derived),kv@20C.physics_rmse,0.10585087175378537,0.10585086488004858,6.873736788093332e-09,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.physics_bias,-0.031325873195077146,-0.03132587971287735,6.517800202332502e-09,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.extrap_deepsets_rmse,0.13023982774079548,0.13023983185493665,4.114141166633445e-09,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.extrap_deepsets_bias,-0.08450422372935369,-0.08450423242760588,8.698252187966382e-09,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.extrap_pairwise_rmse,0.14472553790581652,0.1447255192713267,1.8634489812319188e-08,0.3,pass
+hindcast_predictions.csv (derived),kv@20C.extrap_pairwise_bias,-0.10481934571758308,-0.10481935948376471,1.3766181625185503e-08,0.3,pass
+hindcast_predictions.csv,mean extrap_deepsets_mc_spread,3.6047390598166538,3.961545923447008,0.3568068636303541,0.001,deviation-not-reported (MC-Dirichlet spread depends on --mc / draw sequence; not quoted in the report)
+hindcast_predictions.csv,mean extrap_pairwise_mc_spread,3.5952706772490943,3.9489166770587887,0.35364599980969436,0.001,deviation-not-reported (MC-Dirichlet spread depends on --mc / draw sequence; not quoted in the report)
+hindcast_predictions.csv,mean physics_mc_spread,3.5909450515009986,3.945264863830648,0.35431981232964915,0.001,deviation-not-reported (MC-Dirichlet spread depends on --mc / draw sequence; not quoted in the report)
+PROGRESS_REPORT Â§3.3 flash LOSO,base_mae,6.16,6.155733176675896,0.00426682332410433,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,base_rmse,10.24,10.240520812341815,0.0005208123418150024,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,base_over5_pct,19.8,19.84126984126984,0.04126984126983757,0.05,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,base_max_over,42.4,42.43436832528488,0.03436832528488054,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,hgb_mae,2.75,2.7525557742842315,0.0025557742842314823,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,hgb_rmse,3.88,3.87508745066293,0.004912549337070082,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,hgb_over5_pct,9.5,9.523809523809524,0.023809523809523725,0.05,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,hgb_max_over,11.4,11.444760515877306,0.04476051587730545,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,delta mae,-3.43,-3.4266307779219765,0.0033692220780237037,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,ci_lo,-6.03,-6.027229689192408,0.002770310807592047,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,ci_hi,-1.26,-1.259222554849795,0.0007774451502049473,0.3,pass
+PROGRESS_REPORT Â§3.3 flash LOSO,P(model<base),1.0,1.0,0.0,0.02,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,base log-RMSE,0.0699,0.0698552595609362,4.474043906380065e-05,0.002,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,base MAPE %,5.43,5.432274764206535,0.0022747642065352736,0.05,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,model log-RMSE,0.0438,0.0438143648760122,1.4364876012203098e-05,0.002,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,model MAPE %,2.48,2.475376514952607,0.004623485047392961,0.05,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,delta,-0.0263,-0.0262559866923818,4.401330761820074e-05,0.002,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,ci_lo,-0.0331,-0.0330942918343604,5.708165639599361e-06,0.002,pass
+PROGRESS_REPORT Â§3.4 grouped CV visc,ci_hi,-0.0194,-0.019416884131887,1.688413188699958e-05,0.002,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,base RMSE,2.3859,2.385882383824887,1.7616175112866728e-05,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,base MAE,1.32,1.3205098045024042,0.0005098045024041209,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,model RMSE,1.9908,1.9908402851658908,4.028516589094089e-05,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,model MAE,0.93,0.931337187636374,0.0013371876363739155,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,delta,-0.4073,-0.4073294501399701,2.9450139970077505e-05,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,ci_lo,-0.6126,-0.6126155447544522,1.554475445220138e-05,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV dens,ci_hi,-0.2366,-0.2366215918773905,2.159187739050883e-05,0.15,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,base MAE,6.16,6.155730964781747,0.004269035218253059,0.3,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,base over5 %,19.8,19.84126984126984,0.04126984126983757,0.05,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,model MAE,3.44,3.443179446422141,0.0031794464221408525,0.3,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,model over5 %,13.5,13.492063492063492,0.007936507936507908,0.05,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,delta,-2.74,-2.739127725301032,0.0008722746989682229,0.3,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,ci_lo,-5.78,-5.781428566178456,0.0014285661784558812,0.3,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,ci_hi,-0.15,-0.1472007958300523,0.0027992041699476944,0.3,pass
+PROGRESS_REPORT Â§3.4 grouped CV flash,P(model<base),0.98,0.9805,0.000500000000000056,0.02,pass
+PROGRESS_REPORT Â§2.4 density baseline,mixture density base RMSE,2.3859,2.385882383824887,1.7616175112866728e-05,0.15,pass
+PROGRESS_REPORT Â§3.2 hindcast,visc -20C physics rmse_ln,0.3189,0.3190869460273087,0.0001869460273086765,0.002,pass
+PROGRESS_REPORT Â§3.2 hindcast,visc -20C deepsets rmse_ln,0.1633,0.2719750525588533,0.10867505255885329,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,visc -20C pairwise rmse_ln,0.1795,0.34004762056980886,0.16054762056980887,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,visc -40C physics rmse_ln,0.6878,0.6879343061002318,0.0001343061002317958,0.002,pass
+PROGRESS_REPORT Â§3.2 hindcast,visc -40C deepsets rmse_ln,0.4968,0.6309523436871742,0.1341523436871742,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,visc -40C pairwise rmse_ln,0.5012,0.6870310914283942,0.18583109142839427,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,visc 20C physics rmse_ln,0.1058,0.10585086488004858,5.086488004857337e-05,0.002,pass
+PROGRESS_REPORT Â§3.2 hindcast,visc 20C deepsets rmse_ln,0.1172,0.13023983185493665,0.013039831854936651,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,visc 20C pairwise rmse_ln,0.1082,0.1447255192713267,0.036525519271326704,0.002,fail
+PROGRESS_REPORT Â§3.2 hindcast,density 15C physics RMSE,9.73,9.728072678593282,0.001927321406718363,0.15,pass
+PROGRESS_REPORT Â§3.2 hindcast,density 15C physics bias,0.51,0.4891787880345407,0.02082121196545933,0.15,pass
+PROGRESS_REPORT Â§3.2 hindcast,density 15C deepsets RMSE,10.3,9.746519965966069,0.5534800340339316,0.15,fail
+PROGRESS_REPORT Â§3.2 hindcast,density 15C deepsets bias,3.64,-0.23464783785635845,3.8746478378563585,0.15,fail
+PROGRESS_REPORT Â§3.2 hindcast,density 15C pairwise RMSE,9.85,9.920148705848444,0.07014870584844424,0.15,pass
+PROGRESS_REPORT Â§3.2 hindcast,density 15C pairwise bias,1.22,1.5933925695586635,0.3733925695586635,0.15,fail
