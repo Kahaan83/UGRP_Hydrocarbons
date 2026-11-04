@@ -1,0 +1,26 @@
+design_id,design_name,fuel_family,property,computed_value,limit_lo,limit_hi,spec_margin,uq_inflation_factor,passed,failure_reason
+jet_csv,Jet A (from results/t6 CSV),jet,density_kg_m3,827.49,775.0,840.0,12.51,2.53,True,
+jet_csv,Jet A (from results/t6 CSV),jet,flash_point_C,217.04,38.0,,179.04,1.541,True,
+jet_csv,Jet A (from results/t6 CSV),jet,wat_C,20.06,,-40.0,-60.06,0.0,False,OUT_OF_BOUNDS
+jet_csv,Jet A (from results/t6 CSV),jet,kin_visc_cSt@-20C,SOLID/UNDEFINED,,8.0,-999.0,1.377,False,SOLID/PHASE_SEPARATION
+jet_csv,Jet A (from results/t6 CSV),jet,heat_of_combustion_net_MJ_kg,43.08,42.8,,0.28,0.0,True,
+jet_csv,Jet A (from results/t6 CSV),jet,aromatics_wt_pct,25.50,,25.0,-0.5,0.0,False,OUT_OF_BOUNDS
+jet_csv,Jet A (from results/t6 CSV),jet,aromatics_vol_pct,20.29,,25.0,4.71,0.0,True,
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,density_kg_m3,798.25,775.0,840.0,23.25,2.53,True,
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,flash_point_C,190.49,38.0,,152.49,1.541,True,
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,wat_C,-15.21,,-40.0,-24.79,0.0,False,OUT_OF_BOUNDS
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,kin_visc_cSt@-20C,SOLID/UNDEFINED,,8.0,-999.0,1.377,False,SOLID/PHASE_SEPARATION
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,heat_of_combustion_net_MJ_kg,43.50,42.8,,0.7,0.0,True,
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,aromatics_wt_pct,25.50,,25.0,-0.5,0.0,False,OUT_OF_BOUNDS
+jet_claimed_text,Jet A (claimed in FULL_REPORT text: dodecane + tetralin),jet,aromatics_vol_pct,20.98,,25.0,4.02,0.0,True,
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,density_kg_m3,839.46,820.0,845.0,5.54,2.53,True,
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,flash_point_C,216.61,52.0,,164.61,1.541,True,
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,wat_C,26.50,,0.0,-26.5,0.0,False,OUT_OF_BOUNDS
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,kin_visc_cSt@40C,SOLID/UNDEFINED,1.9,4.1,-999.0,1.377,False,SOLID/PHASE_SEPARATION
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,dcn,76.46,40.0,,36.46,0.0,True,
+diesel_csv,Diesel No. 2 (from results/t6 CSV),diesel,aromatics_wt_pct,30.70,10.0,35.0,4.3,0.0,True,
+gasoline_csv,Gasoline (from results/t6 CSV),gasoline,density_kg_m3,1008.98,720.0,775.0,-233.98,2.53,False,OUT_OF_BOUNDS
+gasoline_csv,Gasoline (from results/t6 CSV),gasoline,ron,98.73,91.0,,7.73,0.0,True,
+gasoline_csv,Gasoline (from results/t6 CSV),gasoline,mon,90.19,82.0,,8.19,0.0,True,
+gasoline_csv,Gasoline (from results/t6 CSV),gasoline,wat_C,43.52,,-40.0,-83.52,0.0,False,OUT_OF_BOUNDS
+gasoline_csv,Gasoline (from results/t6 CSV),gasoline,flash_point_C,207.81,,-40.0,-247.81,1.541,False,OUT_OF_BOUNDS
