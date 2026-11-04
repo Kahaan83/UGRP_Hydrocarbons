@@ -1,0 +1,2 @@
+test_method,n_rows,n_systems,raoult_mae_C,raoult_rmse_C,act_coeff_mae_C,act_coeff_rmse_C,bias_C
+ASTM D93 / D3828 Closed Cup,126,31,6.156,10.241,6.637,8.916,-1.261

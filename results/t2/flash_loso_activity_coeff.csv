@@ -1,0 +1,3 @@
+baseline_model,n_rows,n_systems,mae_C,mae_ci95,rmse_C,rmse_ci95,bias_C,overpred_gt_5C_pct
+"Le Chatelier + Raoult (Ideal, gamma=1)",126,31,6.156,"[3.347, 10.133]",10.241,"[5.064, 14.797]",1.634,19.84
+Le Chatelier + Regular Solution Activity Coeff (gamma_i),126,31,6.637,"[4.451, 9.505]",8.916,"[6.200, 11.939]",-1.261,16.67

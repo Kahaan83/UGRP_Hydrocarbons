@@ -56,6 +56,13 @@ Task T4.7: complete (deliverable results/t4/error_vs_n_components.csv; error str
 Task T4.8: complete (deliverable results/t4/uncertainty_growth.csv; fitted property-specific inflation factors g_visc=1.377, g_dens=2.530, g_flash=1.541, validating >90% empirical coverage on real fuels).
 Task T4.9: complete (deliverable results/t4/physics_first_regularization.csv, docs/progress/Phase4_many_components.md; evaluated L2 residual shrinkage ensuring physics dominance at high N; tests: 3 passed).
 
+Phase 2 (Data Collection by Property — Section 3.2 Flash Point Expansion):
+Task T2.5: complete (deliverable data/processed/measurements_flash_expanded.csv; 5,339 flash measurements standardized with test method ASTM D56/D93/D3828/IP170 filled for 100% of rows; strict schema validated).
+Task T2.6: complete (deliverable docs/progress/T2.6.md; 100% pure compound coverage catalogued for Antoine saturation vapor pressure and LFL parameters).
+Task T2.7: complete (deliverables results/t2/flash_loso_activity_coeff.csv, scripts/build_flash_expanded.py; implemented Scatchard-Hildebrand regular solution activity-coefficient baseline; reduced RMSE from 10.24 C to 8.92 C and dangerous over-prediction rate from 19.8% to 16.7% across 31 flash LOSO systems).
+Task T2.8: complete (deliverable results/t2/flash_loso_by_method.csv, docs/progress/T2.5_T2.8.md, tests/test_flash_expansion.py; added method feature and evaluated results separately by standardized test apparatus; tests: 3 passed).
+
+
 
 
 
