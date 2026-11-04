@@ -1,0 +1,2 @@
+baseline_model,fuel_family,n_fuels,mae_C,mae_ci95,rmse_C,rmse_ci95,pearson_r,bias_C
+Thermodynamic SLE (Schroeder-van Laar Wax Appearance),jet,57,14.58,"[13.083, 16.175]",15.792,"[13.968, 17.786]",0.443,14.58

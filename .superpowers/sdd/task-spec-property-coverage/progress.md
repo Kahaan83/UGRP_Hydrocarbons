@@ -32,5 +32,12 @@ Task T2.13: complete (deliverables data/processed/cetane_pure_curated.csv, scrip
 Task T2.14: complete (deliverables data/processed/measurements_dcn.csv, scripts/build_dcn_measurements.py, docs/progress/T2.14.md; 391 DCN measurements collected across 346 speciated mixtures and 45 real fuels from AJFTD, strict schema validated).
 Task T2.15: complete (deliverables src/fuelblend/baselines/cetane.py, results/t2/cetane_baseline_grouped_cv.csv, scripts/eval_cetane_baseline_grouped_cv.py, docs/progress/T2.15.md, tests/test_cetane_baseline.py; mole vs mass vs volume basis tested under grouped CV across 31 systems; mass/volume basis proved optimal with MAE 3.731 vs mole 5.707).
 
+Phase 2 (Data Collection by Property — Section 3.3 Low-Temperature Behavior):
+Task T2.9: complete (deliverables data/processed/measurements_low_temp_flow.csv, scripts/build_low_temp_measurements.py, docs/progress/T2.9.md; 189 low-temp flow property measurements from CRC 647, AJFTD, NASA, Kirgina with test methods ASTM D5972/D2386/D5949/D2500, schema validated).
+Task T2.10: complete (deliverables scripts/build_sle_cold_flow_coverage.py, docs/progress/T2.10.md; documented 905 pure hydrocarbons with experimental Tm and SLE parameters for n-alkanes C8-C22 and solid aromatics).
+Task T2.11: complete (deliverables src/fuelblend/baselines/cold_flow.py, results/t2/cold_flow_baseline_eval.csv, scripts/eval_wat_baseline.py, docs/progress/T2.11.md, tests/test_cold_flow_baseline.py; implemented Schroeder-van Laar ideal SLE baseline for wax appearance temperature, evaluated across 57 CRC aviation fuels with r = 0.443 correlation to ASTM D5972 freezing points and cluster-bootstrap CIs).
+Task T2.12: complete (deliverables docs/scope_decisions.md Decision SD-01, docs/progress/T2.12.md; audit confirmed 0 speciated molecular mixtures with measured pour point < 30 threshold; formally recorded decision to scope pour point out in favor of thermodynamic freezing point and WAT).
+
+
 
 
