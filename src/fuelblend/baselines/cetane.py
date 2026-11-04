@@ -7,7 +7,7 @@ Models supported:
 """
 from __future__ import annotations
 
-from typing import Sequence, Dict, Any
+from typing import Sequence
 import numpy as np
 
 
@@ -21,11 +21,24 @@ def blend_dcn_linear(fractions: Sequence[float], pure_dcn: Sequence[float]) -> f
     return float(np.dot(f_norm, c))
 
 
+def mass_to_volume_fractions(w_mass: Sequence[float], densities: Sequence[float]) -> np.ndarray:
+    """Convert mass fractions to volume fractions using pure component liquid densities."""
+    w = np.asarray(w_mass, dtype=float)
+    rho = np.asarray(densities, dtype=float)
+    if len(w) != len(rho):
+        raise ValueError("Lengths of w_mass and densities must match.")
+    if np.any(rho <= 0):
+        raise ValueError("Densities must be strictly positive.")
+    v = w / rho
+    return v / np.sum(v)
+
+
 def predict_mixture_dcn(
     pure_dcn: Sequence[float],
     x_mole: Sequence[float] | None = None,
     w_mass: Sequence[float] | None = None,
     v_vol: Sequence[float] | None = None,
+    densities: Sequence[float] | None = None,
     basis: str = "mole",
 ) -> float:
     """Predict mixture DCN given pure component DCNs and fractions in requested basis.
@@ -35,6 +48,7 @@ def predict_mixture_dcn(
       x_mole: Mole fractions
       w_mass: Mass fractions
       v_vol: Volume fractions
+      densities: Pure component liquid densities (used to compute v_vol from w_mass)
       basis: 'mole', 'mass', or 'volume'
     """
     b = basis.lower()
@@ -47,11 +61,11 @@ def predict_mixture_dcn(
             raise ValueError("w_mass required for mass basis.")
         return blend_dcn_linear(w_mass, pure_dcn)
     elif b == "volume":
-        if v_vol is None:
-            # If volume not explicitly provided, fall back to mass
-            if w_mass is not None:
-                return blend_dcn_linear(w_mass, pure_dcn)
-            raise ValueError("v_vol or w_mass required for volume basis.")
-        return blend_dcn_linear(v_vol, pure_dcn)
+        if v_vol is not None:
+            return blend_dcn_linear(v_vol, pure_dcn)
+        if w_mass is not None and densities is not None:
+            v_calc = mass_to_volume_fractions(w_mass, densities)
+            return blend_dcn_linear(v_calc, pure_dcn)
+        raise ValueError("v_vol or (w_mass and densities) required for true volume basis.")
     else:
         raise ValueError(f"Unknown basis: {basis}")
