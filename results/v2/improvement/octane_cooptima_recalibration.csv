@@ -1,0 +1,7 @@
+target_property,target_name,model,cv_scheme,n_fuels,mae,rmse,bias,source_library
+ron,Research Octane Number (RON),Linear-by-Volume Octane Blending,zero_parameters,14,9.691,12.512,9.162,Co-Optima + CombustDB (549 entries)
+ron,Research Octane Number (RON),Interaction-Based BON Baseline,zero_parameters_literature_matrix,14,9.96,12.803,9.475,Co-Optima + CombustDB (549 entries)
+ron,Research Octane Number (RON),Recalibrated BON Baseline (LOO CV) (with Co-Optima),recalibrated_with_co_optima,14,6.372,8.446,-0.078,Co-Optima + CombustDB (549 entries)
+mon,Motor Octane Number (MON),Linear-by-Volume Octane Blending,zero_parameters,14,10.691,12.801,9.663,Co-Optima + CombustDB (549 entries)
+mon,Motor Octane Number (MON),Interaction-Based BON Baseline,zero_parameters_literature_matrix,14,10.96,13.104,9.976,Co-Optima + CombustDB (549 entries)
+mon,Motor Octane Number (MON),Recalibrated BON Baseline (LOO CV) (with Co-Optima),recalibrated_with_co_optima,14,5.865,7.983,-0.066,Co-Optima + CombustDB (549 entries)
