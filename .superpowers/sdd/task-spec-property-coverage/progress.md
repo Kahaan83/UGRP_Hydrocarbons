@@ -27,4 +27,10 @@ Task T2.2: complete (deliverables src/fuelblend/baselines/heat_of_combustion.py,
 Task T2.3: complete (deliverables data/processed/measurements_real_fuels_heat_of_combustion.csv, scripts/build_heat_of_combustion_measurements.py, docs/progress/T2.3.md; 1,083 real-fuel heat of combustion measurements from AJFTD and CRC 647 with test methods ASTM D4809 / D3338, schema validated).
 Task T2.4: complete (deliverables results/t2/heat_of_combustion_eval.csv, scripts/eval_heat_of_combustion_baseline.py, docs/progress/T2.4.md, tests/test_heat_of_combustion_eval.py; evaluated across 57 real aviation fuels with cluster bootstrap CIs over fuel_id; physics baseline achieves 1.60% MAPE and 0.689 MJ/kg MAE).
 
+Phase 2 (Data Collection by Property — Section 3.4 Cetane / DCN):
+Task T2.13: complete (deliverables data/processed/cetane_pure_curated.csv, scripts/build_dcn_pure_compounds.py, docs/progress/T2.13.md; 80 pure hydrocarbons with standardized method ASTM D6890/D613 and reliability flags; remaining un-digitized NREL compounds logged in data/MISSING.md).
+Task T2.14: complete (deliverables data/processed/measurements_dcn.csv, scripts/build_dcn_measurements.py, docs/progress/T2.14.md; 391 DCN measurements collected across 346 speciated mixtures and 45 real fuels from AJFTD, strict schema validated).
+Task T2.15: complete (deliverables src/fuelblend/baselines/cetane.py, results/t2/cetane_baseline_grouped_cv.csv, scripts/eval_cetane_baseline_grouped_cv.py, docs/progress/T2.15.md, tests/test_cetane_baseline.py; mole vs mass vs volume basis tested under grouped CV across 31 systems; mass/volume basis proved optimal with MAE 3.731 vs mole 5.707).
+
+
 
