@@ -1,0 +1,46 @@
+fuel_family,tradeoff,sweep_param,sweep_val,obj1_name,obj1_val,obj2_name,obj2_val,aux_name,aux_val,feasible_with_margins
+jet,Freezing Point vs Flash Point,target_flash_C,38.0,flash_point_C,46.52,freezing_point_C,-64.73,viscosity_minus20C_recal_cSt,5.67,True
+jet,Freezing Point vs Flash Point,target_flash_C,39.6,flash_point_C,46.8,freezing_point_C,-62.27,viscosity_minus20C_recal_cSt,5.7,True
+jet,Freezing Point vs Flash Point,target_flash_C,41.1,flash_point_C,47.08,freezing_point_C,-60.21,viscosity_minus20C_recal_cSt,5.74,True
+jet,Freezing Point vs Flash Point,target_flash_C,42.7,flash_point_C,47.36,freezing_point_C,-58.43,viscosity_minus20C_recal_cSt,5.78,True
+jet,Freezing Point vs Flash Point,target_flash_C,44.3,flash_point_C,47.65,freezing_point_C,-56.87,viscosity_minus20C_recal_cSt,5.82,True
+jet,Freezing Point vs Flash Point,target_flash_C,45.9,flash_point_C,47.94,freezing_point_C,-55.48,viscosity_minus20C_recal_cSt,5.86,True
+jet,Freezing Point vs Flash Point,target_flash_C,47.4,flash_point_C,48.24,freezing_point_C,-54.22,viscosity_minus20C_recal_cSt,5.9,True
+jet,Freezing Point vs Flash Point,target_flash_C,49.0,flash_point_C,48.54,freezing_point_C,-53.06,viscosity_minus20C_recal_cSt,5.95,True
+jet,Freezing Point vs Flash Point,target_flash_C,50.6,flash_point_C,48.85,freezing_point_C,-52.0,viscosity_minus20C_recal_cSt,5.99,True
+jet,Freezing Point vs Flash Point,target_flash_C,52.1,flash_point_C,49.16,freezing_point_C,-51.02,viscosity_minus20C_recal_cSt,6.03,True
+jet,Freezing Point vs Flash Point,target_flash_C,53.7,flash_point_C,49.48,freezing_point_C,-50.1,viscosity_minus20C_recal_cSt,6.07,True
+jet,Freezing Point vs Flash Point,target_flash_C,55.3,flash_point_C,49.8,freezing_point_C,-49.24,viscosity_minus20C_recal_cSt,6.12,False
+jet,Freezing Point vs Flash Point,target_flash_C,56.9,flash_point_C,50.13,freezing_point_C,-48.43,viscosity_minus20C_recal_cSt,6.16,False
+jet,Freezing Point vs Flash Point,target_flash_C,58.4,flash_point_C,50.46,freezing_point_C,-47.67,viscosity_minus20C_recal_cSt,6.2,False
+jet,Freezing Point vs Flash Point,target_flash_C,60.0,flash_point_C,50.8,freezing_point_C,-46.94,viscosity_minus20C_recal_cSt,6.25,False
+diesel,DCN vs Cloud Point,target_dcn,42.0,dcn,42.72,cloud_point_C,-11.24,viscosity_40C_recal_cSt,1.97,False
+diesel,DCN vs Cloud Point,target_dcn,43.9,dcn,44.36,cloud_point_C,-9.44,viscosity_40C_recal_cSt,1.98,False
+diesel,DCN vs Cloud Point,target_dcn,45.7,dcn,46.6,cloud_point_C,-7.36,viscosity_40C_recal_cSt,1.99,False
+diesel,DCN vs Cloud Point,target_dcn,47.6,dcn,48.84,cloud_point_C,-5.59,viscosity_40C_recal_cSt,2.0,False
+diesel,DCN vs Cloud Point,target_dcn,49.4,dcn,51.08,cloud_point_C,-4.04,viscosity_40C_recal_cSt,2.01,True
+diesel,DCN vs Cloud Point,target_dcn,51.3,dcn,53.31,cloud_point_C,-2.67,viscosity_40C_recal_cSt,2.02,False
+diesel,DCN vs Cloud Point,target_dcn,53.1,dcn,55.55,cloud_point_C,-1.43,viscosity_40C_recal_cSt,2.03,False
+diesel,DCN vs Cloud Point,target_dcn,55.0,dcn,57.78,cloud_point_C,-0.3,viscosity_40C_recal_cSt,2.04,False
+diesel,DCN vs Cloud Point,target_dcn,56.9,dcn,60.01,cloud_point_C,0.73,viscosity_40C_recal_cSt,2.05,False
+diesel,DCN vs Cloud Point,target_dcn,58.7,dcn,62.23,cloud_point_C,1.69,viscosity_40C_recal_cSt,2.06,False
+diesel,DCN vs Cloud Point,target_dcn,60.6,dcn,64.46,cloud_point_C,2.58,viscosity_40C_recal_cSt,2.08,False
+diesel,DCN vs Cloud Point,target_dcn,62.4,dcn,66.69,cloud_point_C,3.42,viscosity_40C_recal_cSt,2.09,False
+diesel,DCN vs Cloud Point,target_dcn,64.3,dcn,68.91,cloud_point_C,4.2,viscosity_40C_recal_cSt,2.1,False
+diesel,DCN vs Cloud Point,target_dcn,66.1,dcn,71.13,cloud_point_C,4.94,viscosity_40C_recal_cSt,2.11,False
+diesel,DCN vs Cloud Point,target_dcn,68.0,dcn,72.74,cloud_point_C,5.54,viscosity_40C_recal_cSt,2.12,False
+gasoline,RON vs Volatility (DVPE),target_ron,92.0,ron,102.2,vapor_pressure_kPa,58.76,octane_sensitivity,5.75,False
+gasoline,RON vs Volatility (DVPE),target_ron,93.0,ron,102.42,vapor_pressure_kPa,58.6,octane_sensitivity,5.95,False
+gasoline,RON vs Volatility (DVPE),target_ron,94.0,ron,102.64,vapor_pressure_kPa,58.44,octane_sensitivity,6.14,False
+gasoline,RON vs Volatility (DVPE),target_ron,95.0,ron,102.86,vapor_pressure_kPa,58.28,octane_sensitivity,6.34,False
+gasoline,RON vs Volatility (DVPE),target_ron,96.0,ron,103.08,vapor_pressure_kPa,58.13,octane_sensitivity,6.53,False
+gasoline,RON vs Volatility (DVPE),target_ron,97.0,ron,103.31,vapor_pressure_kPa,57.97,octane_sensitivity,6.73,False
+gasoline,RON vs Volatility (DVPE),target_ron,98.0,ron,103.53,vapor_pressure_kPa,57.81,octane_sensitivity,6.92,False
+gasoline,RON vs Volatility (DVPE),target_ron,99.0,ron,103.75,vapor_pressure_kPa,57.66,octane_sensitivity,7.12,False
+gasoline,RON vs Volatility (DVPE),target_ron,100.0,ron,103.98,vapor_pressure_kPa,57.5,octane_sensitivity,7.32,False
+gasoline,RON vs Volatility (DVPE),target_ron,101.0,ron,104.2,vapor_pressure_kPa,57.35,octane_sensitivity,7.52,False
+gasoline,RON vs Volatility (DVPE),target_ron,102.0,ron,104.43,vapor_pressure_kPa,57.2,octane_sensitivity,7.72,False
+gasoline,RON vs Volatility (DVPE),target_ron,103.0,ron,104.66,vapor_pressure_kPa,57.05,octane_sensitivity,7.92,True
+gasoline,RON vs Volatility (DVPE),target_ron,104.0,ron,104.88,vapor_pressure_kPa,56.9,octane_sensitivity,8.12,True
+gasoline,RON vs Volatility (DVPE),target_ron,105.0,ron,105.11,vapor_pressure_kPa,56.75,octane_sensitivity,8.32,True
+gasoline,RON vs Volatility (DVPE),target_ron,106.0,ron,105.34,vapor_pressure_kPa,56.6,octane_sensitivity,8.53,True

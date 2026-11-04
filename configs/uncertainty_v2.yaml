@@ -1,0 +1,128 @@
+# Uncertainty Safety Margins (v2) for Robust Inverse Design
+# Formulated from empirical out-of-sample evaluations, conformal quantile analysis,
+# and Leave-One-Fuel-Out (LOO) cross-validation across Phase A and Phase C.
+
+version: "2.0"
+description: "Calibrated 90% confidence safety margins for fuel blend constraint enforcement"
+calibration_date: "2026-11-04"
+
+margins:
+  flash_point_C:
+    value: 5.56
+    unit: "degC"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 5.56
+    target_coverage: 0.90
+    empirical_system_coverage: 0.9032  # 28 / 31 systems covered
+    source_task: "Task A7"
+    source_file: "results/v2/A7/flash_margin_semantics.csv"
+    notes: "Conformal quantile rank k=ceil(32*0.90)=29 on 31 LOSO systems in Leenhouts dataset. Replaces heuristic 3.4 C / 5.0 C."
+
+  viscosity_kin_cSt:
+    value: 1.94
+    unit: "factor"
+    direction: "log_uncertainty_scale"  # Factor on recalibrated Refutas standard error
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.8947  # 51 / 57 CRC aviation fuels
+    source_task: "Task A6"
+    source_file: "results/v2/A6/uncertainty_growth_refit.csv"
+    notes: "Inflation factor on 2-parameter recalibrated Refutas standard error (0.1411 log-RMSE), giving upper bound multiplier 1.315x."
+
+  density_kg_m3:
+    value: 2.50
+    unit: "kg/m3"
+    direction: "symmetric"  # Tightens both lower and upper spec limits
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9123  # 52 / 57 CRC aviation fuels
+    source_task: "Task A6"
+    source_file: "results/v2/A6/uncertainty_growth_refit.csv"
+    notes: "90% error quantile on ideal volume blending for multicomponent hydrocarbon fuels."
+
+  freezing_point_C:
+    value: 6.50
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 6.50
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9123  # 52 / 57 CRC aviation fuels
+    source_task: "Task C4"
+    source_file: "results/v2/C4/cold_flow_v2.csv"
+    notes: "90% error margin for transparent offset SLE baseline (WAT - 14.58 C). Evaluated on 57 CRC fuels."
+
+  cloud_point_C:
+    value: 3.00
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 3.00
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9000  # 9 / 10 Kirgina diesel fuels
+    source_task: "Task C4"
+    source_file: "results/v2/C4/cold_flow_v2.csv"
+    notes: "90% error margin for heavy paraffin SLE onset on diesel fuels (MAE 1.22 C, RMSE 1.35 C, ASTM D2500)."
+
+  heat_of_combustion_net_MJ_kg:
+    value: 0.28
+    unit: "MJ/kg"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 0.28
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9298  # 53 / 57 CRC aviation fuels
+    source_task: "Task C1"
+    source_file: "results/v2/C1/hoc_eval.csv"
+    notes: "90% error quantile on Benson/Joback group-additivity GCV baseline against bomb calorimetry."
+
+  dcn:
+    value: 5.8
+    unit: "number"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 5.8
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9000
+    source_task: "Task A3 / C5"
+    source_file: "results/v2/A3/cetane_basis_rerun.csv"
+    notes: "90% error quantile for volume-weighted DCN blending baseline across real diesel fuels."
+
+  ron:
+    value: 8.5
+    unit: "octane"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 8.5
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9286  # 13 / 14 real gasolines
+    source_task: "Task C6"
+    source_file: "results/v2/C6/octane_real_fuel.csv"
+    notes: "90% error margin for Recalibrated BON interaction model on 14 real FACE and certification gasolines."
+
+  mon:
+    value: 7.8
+    unit: "octane"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 7.8
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9286  # 13 / 14 real gasolines
+    source_task: "Task C6"
+    source_file: "results/v2/C6/octane_real_fuel.csv"
+    notes: "90% error margin for Recalibrated BON interaction model on 14 real FACE and certification gasolines."
+
+  distillation_T10_C:
+    value: 6.8
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 6.8
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9123
+    source_task: "Task C7"
+    source_file: "results/v2/C7/d86_eval.csv"
+    notes: "90% error quantile on API transfer function + TBP prediction for front-end D86 T10 cut."
+
+  distillation_T90_C:
+    value: 7.2
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 7.2
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9123
+    source_task: "Task C7"
+    source_file: "results/v2/C7/d86_eval.csv"
+    notes: "90% error quantile on API transfer function + TBP prediction for heavy-end D86 T90 cut."
+
+  vapor_pressure_kPa:
+    value: 24.5
+    unit: "kPa"
+    direction: "symmetric"  # Tightens both minimum and maximum volatility bounds
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.9231  # 12 / 13 real gasolines
+    source_task: "Task C8"
+    source_file: "results/v2/C8/dvpe_eval.csv"
+    notes: "90% error margin for ASTM D5191 DVPE prediction from Raoult's law saturation pressures."
