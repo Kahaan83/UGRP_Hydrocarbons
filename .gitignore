@@ -10,6 +10,7 @@ archive/
 # deliverables that must be tracked despite dir ignores
 !archive/baseline_manifest.json
 !data/antoine_sources.csv
+!data/processed/v2/distillation_real_fuels.csv
 ajftd_session.json
 runs/
 
