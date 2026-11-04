@@ -1,0 +1,6 @@
+model,n_obs,n_systems,fold_discipline,log_rmse,log_mae,mape_pct,n_parameters,parameter_summary
+"Grunberg-Nissan (Ideal Log-Linear, G=0)",15507,321,zero_parameters,0.1014,0.0669,6.72,0,G=0 (v1 literature baseline)
+"Grunberg-Nissan (Global G, 5-Fold Grouped CV)",15507,321,5_fold_grouped_cv_system_id,0.0976,0.0589,5.75,1,Mean G = -0.1494
+"Grunberg-Nissan (Class-Pair G, 5-Fold Grouped CV)",15507,321,5_fold_grouped_cv_system_id,0.089,0.0555,5.46,15,15 class-pair interaction parameters
+Refutas Blending Index (Zero Parameters),15507,321,zero_parameters,0.0699,0.0526,5.43,0,ASTM D7152 VBN blending index
+"Grunberg-Nissan (Per-System G, In-Sample Bound)",15507,321,in_sample_upper_bound,0.0412,0.0232,2.31,321,1 parameter per chemical system
