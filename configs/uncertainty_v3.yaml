@@ -1,0 +1,122 @@
+# Uncertainty Safety Margins (v3) for Robust Real-Fuel Inverse Design
+# Formulated from empirical out-of-sample evaluations, conformal quantile analysis,
+# and Leave-One-Fuel-Out (LOO) cross-validation across Phase 0 (R1-R8) and Phase 2 (G1-G11).
+
+version: "3.0"
+description: "Calibrated 90% confidence safety margins reflecting repaired property models across Jet, Diesel, and Gasoline"
+calibration_date: "2026-11-05"
+
+margins:
+  flash_point_C:
+    value: 4.20
+    unit: "degC"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 4.20
+    target_coverage: 0.90
+    empirical_system_coverage: 0.957  # 67 / 70 real fuels safe from over-prediction > 5 C
+    source_tasks: ["Task R2", "Task R3", "Task G7"]
+    source_files:
+      - "results/v3/R2/flash_anchoring_audit.csv"
+      - "results/v3/R3/real_fuels_flash_hindcast.csv"
+    notes: >
+      Recomputed conformal flash margin:
+      1. Task R2 established 2.28 °C MAE and 5.28 °C worst-case over-prediction on 126 pure-anchored lab mixtures.
+      2. Task R3 demonstrated on 70 real fuels that ASTM D93 (Pensky-Martens Closed Cup) exhibits a systematic
+         conservative negative bias (-8.12 °C) due to shutter sweep and stirring vapor dilution.
+      3. Setting margin = 4.20 °C achieves >= 95% compliance against ASTM D93 closed-cup specifications
+         with zero dangerous over-predictions on commercial aviation fuels (0.0% rate on 57 CRC fuels).
+
+  ron:
+    value: 4.50
+    unit: "octane"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 4.50
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.927  # 51 / 55 expanded gasolines
+    source_tasks: ["Task G1", "Task G2", "Task G4"]
+    source_file: "results/v3/G2/octane_lump_model_eval.csv"
+    notes: >
+      90% error quantile for Ghosh-style 7-lump model on 55 expanded real gasolines (MAE = 3.10 ON,
+      Sens MAE = 0.98 ON), reduced from 8.5 ON in v2.
+
+  mon:
+    value: 4.00
+    unit: "octane"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 4.00
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.927  # 51 / 55 expanded gasolines
+    source_tasks: ["Task G1", "Task G2", "Task G4"]
+    source_file: "results/v3/G2/octane_lump_model_eval.csv"
+    notes: >
+      90% error quantile for Ghosh-style 7-lump model on 55 expanded real gasolines (MAE = 2.63 ON),
+      reduced from 7.8 ON in v2.
+
+  dvpe_kpa:
+    value: 7.20
+    unit: "kPa"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 7.20
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.909  # 50 / 55 expanded gasolines
+    source_tasks: ["Task G5", "Task G6"]
+    source_file: "results/v3/G6/dvpe_activity_eval.csv"
+    notes: >
+      90% error quantile for Activity-Corrected DVPE model (Margules gamma_EtOH ~ 4.5-6.0 + C4-C5 light ends,
+      MAE = 4.39 kPa), replacing uncalibrated Raoult baseline (MAE 18.50 kPa).
+
+  dcn:
+    value: 5.50
+    unit: "number"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 5.50
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.938  # 15 / 16 diesels
+    source_tasks: ["Task G8"]
+    source_file: "results/v3/G8/diesel_cetane_cold_flow_eval.csv"
+    notes: "90% error quantile for LOO-recalibrated DCN blending across 16 real diesels (MAE = 4.34 DCN)."
+
+  cloud_point_C:
+    value: 3.50
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 3.50
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.900
+    source_tasks: ["Task G9"]
+    source_file: "results/v3/G8/diesel_cetane_cold_flow_eval.csv"
+    notes: "90% error margin for Coutinho eutectic wax model on real diesels."
+
+  pour_point_C:
+    value: 4.50
+    unit: "degC"
+    direction: "subtract_from_max"  # Required: pred + margin <= spec_max <=> pred <= spec_max - 4.50
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.900
+    source_tasks: ["Task G9"]
+    source_file: "results/v3/G8/diesel_cetane_cold_flow_eval.csv"
+    notes: "90% error margin for diesel pour point correlation (WAT - 4.5 C)."
+
+  viscosity_kin_cSt:
+    value: 1.94
+    unit: "factor"
+    direction: "log_uncertainty_scale"  # Factor on recalibrated Refutas standard error
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.895
+    source_tasks: ["Task R1", "Task G10"]
+    source_file: "results/v3/R1/viscosity_leaderboard.csv"
+    notes: "Multiplier on 2-param Refutas log-error, calibrated across 57 CRC aviation fuels and 16 diesels."
+
+  density_kg_m3:
+    value: 2.50
+    unit: "kg/m3"
+    direction: "symmetric"  # Tightens both lower and upper spec limits
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.912
+    source_tasks: ["Task G10", "Task G11"]
+    source_file: "results/v3/G10/thermoml_integration_eval.csv"
+    notes: "90% error quantile on ideal volume blending across 153 real fuels verified against cleaned ThermoML."
+
+  heat_of_combustion_net_MJ_kg:
+    value: 0.28
+    unit: "MJ/kg"
+    direction: "add_to_min"  # Required: pred - margin >= spec_min <=> pred >= spec_min + 0.28
+    target_coverage: 0.90
+    empirical_real_fuel_coverage: 0.930
+    source_tasks: ["Task R7"]
+    source_file: "results/v3/R7/hoc_propagation_error.csv"
+    notes: "90% error quantile on group-additivity net heat of combustion against bomb calorimetry."

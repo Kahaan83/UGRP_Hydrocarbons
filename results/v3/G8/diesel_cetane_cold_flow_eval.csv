@@ -1,0 +1,17 @@
+fuel_id,fuel_name,fuel_family,dcn_meas,dcn_linear,cloud_point_meas_C,cloud_point_coutinho_pred_C,cloud_point_abs_err_C,pour_point_meas_C,pour_point_pred_C,pour_point_abs_err_C,dcn_loo,dcn_loo_abs_err
+CRC_FACE_Diesel_1,FACE Diesel #1,diesel,44.5,42.27,-15.0,-8.87,6.13,-18.0,-13.37,4.63,47.47,2.97
+CRC_FACE_Diesel_2,FACE Diesel #2,diesel,34.0,25.97,-8.0,-17.85,9.85,-12.0,-22.35,10.35,45.04,11.04
+CRC_FACE_Diesel_3,FACE Diesel #3,diesel,43.5,39.16,-12.0,-9.7,2.3,-15.0,-14.2,0.8,46.53,3.03
+CRC_FACE_Diesel_4,FACE Diesel #4,diesel,35.5,25.41,-6.0,-17.85,11.85,-9.0,-22.35,13.35,44.69,9.19
+CRC_FACE_Diesel_5,FACE Diesel #5,diesel,54.0,52.68,-5.0,-2.14,2.86,-8.0,-6.64,1.36,48.29,5.71
+CRC_FACE_Diesel_6,FACE Diesel #6,diesel,52.5,46.35,-3.0,-3.1,0.1,-6.0,-7.6,1.6,46.02,6.48
+CRC_FACE_Diesel_7,FACE Diesel #7,diesel,56.0,54.86,-8.0,-0.91,7.09,-12.0,-5.41,6.59,48.35,7.65
+CRC_FACE_Diesel_8,FACE Diesel #8,diesel,48.0,45.25,-22.0,-6.18,15.82,-26.0,-10.68,15.32,47.46,0.54
+CRC_FACE_Diesel_9,FACE Diesel #9,diesel,41.0,33.15,-18.0,-11.91,6.09,-22.0,-16.41,5.59,45.16,4.16
+NASA_LFP3,LFP-3 (Paraffinic Diesel),diesel,52.0,31.68,-18.0,-49.4,31.4,-24.0,-53.9,29.9,46.64,5.36
+NASA_LFP5,LFP-5 (Paraffinic Distillate),diesel,46.0,31.68,-8.0,-49.4,41.4,-14.0,-53.9,39.9,49.5,3.5
+SURR_Mueller_4comp,Sandia / Mueller 4-Component Diesel Surrogate,diesel,48.0,45.58,2.43,-5.61,8.04,-1.0,-10.11,9.11,47.43,0.57
+SURR_IDEAL_4comp,IDEAL 4-Component Diesel Surrogate,diesel,48.1,45.65,2.9,-5.11,8.01,0.0,-9.61,9.61,47.38,0.72
+SURR_Peugeot_4comp,PSA Peugeot Citroen 4-Component Diesel Surrogate,diesel,49.68,49.7,0.45,-7.68,8.13,-3.0,-12.18,9.18,48.44,1.24
+SURR_EN590_European_Diesel,European EN 590 Certified Diesel Reference,diesel,53.5,48.95,-7.0,-3.69,3.31,-15.0,-8.19,6.81,47.34,6.16
+ASTM_D975_ULSD_Reference,ASTM D975 Ultra-Low Sulfur Diesel #2,diesel,46.0,44.12,-12.0,-6.62,5.38,-18.0,-11.12,6.88,47.11,1.11
