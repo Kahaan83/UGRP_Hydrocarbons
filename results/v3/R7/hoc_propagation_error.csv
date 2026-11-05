@@ -1,0 +1,4 @@
+evaluation_setting,base_model_mae_MJ_kg,base_model_rmse_MJ_kg,propagated_input_uncertainty_MJ_kg,total_design_time_rmse_MJ_kg,recommendation
+Group Additivity (Pure Structure Basis),0.1792,0.2242,0.0,0.2242,"Recommended for Inverse Blend Design (Zero input error propagation, first-principles structure basis)"
+ASTM D3338 (Measured Density & Aromatics),0.086,0.1219,0.0,0.1219,Recommended for Quality Control / Lab Verification (Requires physically measured density and aromatics)
+ASTM D3338 (Predicted Density & Aromatics at Design Time),0.086,0.1219,0.0789,0.1452,Not recommended for Inverse Design without explicit error propagation tracking (Vulnerable to correlated density/aromatic prediction errors)
