@@ -1,0 +1,121 @@
+# Bureau of Indian Standards (BIS) Fuel Specifications
+# Standards: IS 1571:2014 (Jet A-1), IS 1460:2017 BS VI (Diesel), IS 2796:2017 (Motor Gasoline / E10)
+version: "3.0"
+description: "Indian National Standards (BIS) Fuel Specifications for Aviation, Automotive Diesel BS VI, and Motor Gasoline"
+
+scope:
+  modeled_properties:
+    - density_15C_kg_m3
+    - kin_visc_cSt
+    - flash_point_C
+    - freezing_point_C
+    - pour_point_C
+    - cloud_point_C
+    - dcn
+    - ron
+    - mon
+    - dvpe_kPa
+    - nhoc_MJ_kg
+    - aromatics_vol_pct
+    - distillation_E70_pct
+  unmodeled_properties:
+    - sulfur_content_ppm
+    - lubricity_hfrr_um
+    - cfpp_C
+    - existent_gum_mg_100ml
+    - oxidation_stability_minutes
+    - electrical_conductivity_pS_m
+    - smoke_point_mm
+  scope_statement: >
+    Unmodeled properties (sulfur, lubricity, CFPP, gum, oxidation stability, conductivity, smoke point)
+    depend primarily on refinery hydrotreating severity, natural polar surfactants, and finishing additive
+    chemistry rather than bulk hydrocarbon thermodynamic properties. In particular, BS VI ultralow sulfur
+    (< 10 ppm) and lubricity (< 460 um wear scar) are enforced in refinery processing units and via lubricity
+    improver additives (esters/fatty acids), whereas cold flow, volatility, and combustion performance are
+    governed by the thermodynamic bulk hydrocarbon matrix modeled herein.
+
+families:
+  jet_a1:
+    standard: "IS 1571:2014"
+    grade: "Aviation Turbine Fuel (Jet A-1)"
+    constraints:
+      density_15C_kg_m3:
+        min: 775.0
+        max: 840.0
+        test_method: "IS 1448 [P:32] / ASTM D4052"
+        uncertainty_margin: 8.0
+      flash_point_C:
+        min: 38.0
+        test_method: "IS 1448 [P:20] (Abel)"
+        uncertainty_margin: 4.2
+      freezing_point_C:
+        max: -47.0
+        test_method: "IS 1448 [P:11] / ASTM D5972"
+        uncertainty_margin: 5.0
+      kin_visc_m20C_cSt:
+        max: 8.0
+        test_method: "IS 1448 [P:25] / ASTM D445"
+        uncertainty_margin_factor: 1.25
+      nhoc_MJ_kg:
+        min: 42.8
+        test_method: "IS 1448 [P:7] / ASTM D4809"
+        uncertainty_margin: 0.28
+      aromatics_vol_pct:
+        max: 25.0
+        test_method: "IS 1448 [P:23] / ASTM D1319"
+
+  diesel_bs6:
+    standard: "IS 1460:2017"
+    grade: "Automotive Diesel Fuel BS VI"
+    constraints:
+      dcn:
+        min: 51.0
+        test_method: "IS 1448 [P:9] / ASTM D613 / ASTM D6890"
+        uncertainty_margin: 5.5
+      kin_visc_40C_cSt:
+        min: 2.0
+        max: 4.5
+        test_method: "IS 1448 [P:25] / ASTM D445"
+        uncertainty_margin_factor: 1.25
+      flash_point_C:
+        min: 35.0
+        test_method: "IS 1448 [P:20] (Abel Closed Cup)"
+        uncertainty_margin: 4.2
+      pour_point_C:
+        max: 3.0  # Winter grade (Summer grade is max 15.0)
+        test_method: "IS 1448 [P:10] / ASTM D97"
+        uncertainty_margin: 4.5
+      density_15C_kg_m3:
+        min: 810.0
+        max: 845.0
+        test_method: "IS 1448 [P:32] / ASTM D4052"
+        uncertainty_margin: 8.0
+
+  gasoline_e10:
+    standard: "IS 2796:2017"
+    grade: "Motor Gasoline BS VI (E10 Blend)"
+    constraints:
+      density_15C_kg_m3:
+        min: 720.0
+        max: 775.0
+        test_method: "IS 1448 [P:32] / ASTM D4052"
+        uncertainty_margin: 8.0
+      ron:
+        min: 91.0  # Regular is min 91.0, Premium is min 95.0
+        test_method: "IS 1448 [P:26] / ASTM D2699"
+        uncertainty_margin: 3.5
+      mon:
+        min: 81.0  # Regular is min 81.0, Premium is min 85.0
+        test_method: "IS 1448 [P:27] / ASTM D2700"
+        uncertainty_margin: 3.5
+      dvpe_kPa:
+        max: 67.0  # Max 60.0 kPa neat, max 67.0 kPa for E10 blends
+        test_method: "ASTM D5191 / IS 1448 [P:101]"
+        uncertainty_margin: 5.0
+      distillation_E70_pct:
+        min: 10.0
+        max: 45.0
+        test_method: "IS 1448 [P:18] / ASTM D86"
+      ethanol_vol_pct:
+        max: 10.0
+        test_method: "IS 2796 Annex A"
