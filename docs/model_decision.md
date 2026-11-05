@@ -12,7 +12,7 @@ Based on empirical evidence across Phase A (triage & LOO recalibration), Phase C
 
 | Property | Primary Production Model | Secondary / High-Precision Predictive Model | Empirical Evidence Table |
 |---|---|---|---|
-| **Kinematic Viscosity** ($\nu$) | **2-Parameter Recalibrated Refutas** (Parsimonious physical baseline) | **Bilinear Pairwise Interaction** (Highest LOO predictive accuracy) | `results/v3/R1/viscosity_leaderboard.csv`<br>`results/v2/D1/bilinear_hindcast.csv`<br>`results/v2/A2/recalibration_loo.csv` |
+| **Kinematic Viscosity** ($\nu$) | **2-Parameter Recalibrated Refutas** (Parsimonious recalibrated physics baseline) | **Bilinear Pairwise Interaction** (Highest LOO predictive accuracy) | `results/v3/R1/viscosity_leaderboard.csv`<br>`results/v2/D1/bilinear_hindcast.csv`<br>`results/v2/A2/recalibration_loo.csv` |
 | **Density** ($\rho$) | **Ideal Volume Blending** ($\rho_{ideal} + \Delta\rho$) | Stacked Ideal Volume + Shrunk Ridge | `results/v2/D4/stacked_eval.csv` |
 | **Flash Point** ($T_{flash}$) | **Transparent Offset Correlation / Le Chatelier** | Le Chatelier + Shrunk HGB Residual (LOSO) | `results/v2/C2/flash_loso_v2.csv`<br>`results/v2/D4/stacked_eval.csv` |
 | **Freezing Point** ($T_{freeze}$) | **Transparent Offset SLE WAT** ($WAT - 14.58$ °C) | Linear Recalibrated SLE | `results/v2/C4/cold_flow_v2.csv`<br>`results/v2/D4/stacked_eval.csv` |
