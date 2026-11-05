@@ -98,6 +98,7 @@ def run_audit():
         breakdown_rows.append({
             "rule": rule_name,
             "raw_matches": matched_count,
+            "rows_matched": matched_count,
             "unique_drops": unique_count,
             "pct_of_total_drops": round(matched_count / n_dropped_expected * 100, 2),
             "properties_affected": affected_str,
@@ -108,6 +109,7 @@ def run_audit():
     breakdown_rows.append({
         "rule": "total_unique_drops",
         "raw_matches": int(master_drop.sum()),
+        "rows_matched": int(master_drop.sum()),
         "unique_drops": int(master_drop.sum()),
         "pct_of_total_drops": 100.0,
         "properties_affected": "All properties (Density, Viscosity, Vapor pressure)",

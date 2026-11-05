@@ -1,8 +1,8 @@
-rule,raw_matches,unique_drops,pct_of_total_drops,properties_affected,description
-non_positive_value,60,0,2.76,"Viscosity, Pa*s (60)","value <= 0 (removes non-positive values; all 60 are Delta eta deviations misclassified under Viscosity, Pa*s)"
-extreme_or_missing_temperature,511,483,23.53,"Vapor or sublimation pressure, kPa (451); Mass density, kg/m3 (51); Viscosity, Pa*s (9)","T_K < 170 K or T_K > 550 K or T_K is NaN (removes cryogenic, cracking, and unconditioned data)"
-high_pressure_gt_500kPa,1426,1353,65.65,"Mass density, kg/m3 (1092); Viscosity, Pa*s (334)",P_kPa > 500 kPa (removes non-ambient high-pressure hydraulic/reservoir measurements)
-unphysical_liquid_density,267,188,12.29,"Mass density, kg/m3 (267)","density < 550 kg/m3 or > 1100 kg/m3 (removes gas-phase, supercritical, or critical point densities)"
-unphysical_liquid_viscosity,60,0,2.76,"Viscosity, Pa*s (60)",viscosity < 1e-5 Pa*s or > 2.0 Pa*s (removes unphysical liquid viscosities; 100% overlap with non_positive_value)
-non_positive_vapor_pressure,0,0,0.0,None (0),vapor pressure <= 0 kPa (removes non-positive vapor pressures)
-total_unique_drops,2172,2172,100.0,"All properties (Density, Viscosity, Vapor pressure)",Union of all 6 physical and environmental filter criteria
+rule,raw_matches,rows_matched,unique_drops,pct_of_total_drops,properties_affected,description
+non_positive_value,60,60,0,2.76,"Viscosity, Pa*s (60)","value <= 0 (removes non-positive values; all 60 are Delta eta deviations misclassified under Viscosity, Pa*s)"
+extreme_or_missing_temperature,511,511,483,23.53,"Vapor or sublimation pressure, kPa (451); Mass density, kg/m3 (51); Viscosity, Pa*s (9)","T_K < 170 K or T_K > 550 K or T_K is NaN (removes cryogenic, cracking, and unconditioned data)"
+high_pressure_gt_500kPa,1426,1426,1353,65.65,"Mass density, kg/m3 (1092); Viscosity, Pa*s (334)",P_kPa > 500 kPa (removes non-ambient high-pressure hydraulic/reservoir measurements)
+unphysical_liquid_density,267,267,188,12.29,"Mass density, kg/m3 (267)","density < 550 kg/m3 or > 1100 kg/m3 (removes gas-phase, supercritical, or critical point densities)"
+unphysical_liquid_viscosity,60,60,0,2.76,"Viscosity, Pa*s (60)",viscosity < 1e-5 Pa*s or > 2.0 Pa*s (removes unphysical liquid viscosities; 100% overlap with non_positive_value)
+non_positive_vapor_pressure,0,0,0,0.0,None (0),vapor pressure <= 0 kPa (removes non-positive vapor pressures)
+total_unique_drops,2172,2172,2172,100.0,"All properties (Density, Viscosity, Vapor pressure)",Union of all 6 physical and environmental filter criteria
