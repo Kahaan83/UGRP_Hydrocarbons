@@ -36,13 +36,15 @@ def get_pure_thermal_properties(comp_df: pd.DataFrame | None = None) -> dict[str
         # Pure alkane melting enthalpy & temperature
         if cls == "n_paraffin" and nc >= 6:
             # Broadhurst / NIST correlations for n-alkanes
-            tm = 273.15 + (0.69 * (nc * 14.027) - 100.0) / (0.002 * (nc * 14.027) + 0.35)
-            # Refined for common alkanes
+            # Refined for common alkanes up to C36
             known_tm = {
                 6: 177.8, 7: 182.6, 8: 216.4, 9: 219.7, 10: 243.5, 11: 247.6, 12: 263.6,
-                13: 267.8, 14: 279.0, 15: 283.1, 16: 291.3, 17: 295.1, 18: 301.3, 19: 305.0, 20: 309.6
+                13: 267.8, 14: 279.0, 15: 283.1, 16: 291.3, 17: 295.1, 18: 301.3, 19: 305.0, 20: 309.6,
+                21: 313.6, 22: 317.5, 23: 320.7, 24: 324.0, 25: 327.1, 26: 329.5, 27: 332.6, 28: 334.5,
+                29: 336.8, 30: 338.9, 31: 341.1, 32: 342.8, 34: 345.9, 36: 349.1,
             }
-            tm_k = known_tm.get(int(nc), tm)
+            tm_default = 414.3 * (nc - 1.5) / (nc + 5.0)
+            tm_k = known_tm.get(int(nc), tm_default)
             dh_fus = (4.0 * nc - 10.6) * 1000.0  # J/mol
         elif cls == "aromatic":
             smi = str(row.get("smiles", ""))
@@ -147,3 +149,15 @@ def predict_freezing_point_coutinho(
     }
 
     return round(t_freeze_C, 2), round(delta_eutectic, 2), meta
+
+
+def ideal_wat_schroeder(
+    fractions: Sequence[float],
+    inchikeys: Sequence[str],
+    thermal_map: dict | None = None,
+) -> float:
+    """Compute single-solute ideal Wax Appearance Temperature (WAT) via Schroeder-van Laar equation in °C."""
+    _, _, meta = predict_freezing_point_coutinho(fractions, inchikeys, thermal_map)
+    val = meta.get("ideal_wat_C", np.nan)
+    return float(val) if val is not None else np.nan
+
