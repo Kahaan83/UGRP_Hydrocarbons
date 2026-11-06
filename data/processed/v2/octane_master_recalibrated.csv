@@ -1,0 +1,445 @@
+compound_name,smiles,ron,mon,source
+vinylcyclohexene,C=CC1CC=CCC1,77.0,57.7,combustdb_vom_lehn
+ethylbenzene,CCC1=CC=CC=C1,107.0,97.9,combustdb_vom_lehn
+styrene,C=CC1=CC=CC=C1,103.0,100.2,combustdb_vom_lehn
+ethylidenecyclohexane,CC=C1CCCCC1,83.0,70.6,combustdb_vom_lehn
+cumene,CC(C)c1ccccc1,113.1,99.3,combustdb_vom_lehn
+"1,3-di-tert-butylbenzene",CC(C)(C)C1=CC(=CC=C1)C(C)(C)C,121.3,104.2,combustdb_vom_lehn
+propylbenzene,CCCC1=CC=CC=C1,111.0,98.7,combustdb_vom_lehn
+butylbenzene,CCCCC1=CC=CC=C1,104.4,95.3,combustdb_vom_lehn
+decylbenzene,CCCCCCCCCCC1=CC=CC=C1,-28.0,-12.2,combustdb_vom_lehn
+"1,4-diethylbenzene",CCC1=CC=C(C=C1)CC,106.0,96.4,combustdb_vom_lehn
+(z)-3-methyl-2-hexene,CCC/C(=C\C)/C,92.4,80.0,combustdb_vom_lehn
+"2,3-dimethyl-2-pentene",CCC(=C(C)C)C,97.5,80.0,combustdb_vom_lehn
+p-xylene,CC1=CC=C(C=C1)C,103.4,101.2,combustdb_vom_lehn
+butane,CCCC,94.0,89.1,combustdb_vom_lehn
+1-butene,CCC=C,97.5,79.9,combustdb_vom_lehn
+3-ethyl-3-methylpentane,CCC(C)(CC)CC,80.8,88.7,combustdb_vom_lehn
+tetraethylmethane,CCC(CC)(CC)CC,84.0,91.6,combustdb_vom_lehn
+"4,4-dimethylheptane",CCCC(C)(C)CCC,65.0,78.9,combustdb_vom_lehn
+"2,4-dimethyl-3-ethylpentane",CCC(C(C)C)C(C)C,105.3,96.6,combustdb_vom_lehn
+"2,3,5-trimethylhexane",CC(C)CC(C)C(C)C,90.9,88.9,combustdb_vom_lehn
+2-butene,CC=CC,100.0,83.5,combustdb_vom_lehn
+diisobutylene,CC(=C)CC(C)(C)C,106.0,86.5,combustdb_vom_lehn
+"2,4,4-trimethyl-2-pentene",CC(=CC(C)(C)C)C,103.5,86.2,combustdb_vom_lehn
+2-Methylpentane,CCCC(C)C,73.4,73.5,combustdb_vom_lehn
+"2,2,4,4-tetramethylpentane",CC(C)(C)CC(C)(C)C,107.3,97.4,combustdb_vom_lehn
+"2,2-dimethylheptane",CCCCCC(C)(C)C,50.3,60.5,combustdb_vom_lehn
+"heptane, 2,6-dimethyl-",CC(C)CCCC(C)C,36.0,41.3,combustdb_vom_lehn
+2-propyltoluene,CCCC1=CC=CC=C1C,103.5,92.2,combustdb_vom_lehn
+3-propyltoluene,CCCC1=CC=CC(=C1)C,112.1,100.5,combustdb_vom_lehn
+4-propyltoluene,CCCC1=CC=C(C=C1)C,109.6,97.6,combustdb_vom_lehn
+"2,4-dimethylpentane",CC(C)CC(C)C,83.1,83.8,combustdb_vom_lehn
+m-xylene,CC1=CC(=CC=C1)C,117.5,115.0,combustdb_vom_lehn
+mesitylene,CC1=CC(=CC(=C1)C)C,120.3,120.3,combustdb_vom_lehn
+methylcyclohexane,CC1CCCCC1,74.8,71.1,combustdb_vom_lehn
+toluene,CC1=CC=CC=C1,120.1,103.5,combustdb_vom_lehn
+pentane,CCCCC,61.8,63.2,combustdb_vom_lehn
+1-pentene,CCCC=C,87.9,77.1,combustdb_vom_lehn
+trans-2-pentene,CC/C=C/C,87.8,77.2,combustdb_vom_lehn
+hexane,CCCCCC,24.8,26.0,combustdb_vom_lehn
+cyclohexane,C1CCCCC1,83.0,77.2,combustdb_vom_lehn
+cyclohexene,C1CCC=CC1,83.9,63.4,combustdb_vom_lehn
+"1-heptene, 6-methyl-",CC(C)CCCC=C,63.6,62.6,combustdb_vom_lehn
+octane,CCCCCCCC,,0.0,combustdb_vom_lehn
+1-octene,CCCCCCC=C,28.7,34.7,combustdb_vom_lehn
+trans-2-octene,CCCCCC=CC,56.3,56.5,combustdb_vom_lehn
+3-methylheptane,CCCCC(C)CC,26.8,35.0,combustdb_vom_lehn
+propene,CC=C,101.8,84.9,combustdb_vom_lehn
+isobutene,CC(=C)C,102.1,84.3,combustdb_vom_lehn
+"2,2,3,4-tetramethylpentane",CC(C)C(C)C(C)(C)C,117.4,108.8,combustdb_vom_lehn
+"1,2,3,4-tetrahydronaphthalene",C1CCC2=CC=CC=C2C1,96.4,81.9,combustdb_vom_lehn
+ethylcyclopropane,CCC1CC1,100.2,83.9,combustdb_vom_lehn
+1-nonene,CCCCCCCC=C,9.5,21.4,combustdb_vom_lehn
+beta-pinene,CC1(C2CCC(=C)C1C2)C,80.6,60.3,combustdb_vom_lehn
+5-methyl-1-heptene,CCC(C)CCC=C,69.3,67.2,combustdb_vom_lehn
+"1-heptene, 4-methyl-",CCCC(C)CC=C,74.9,70.6,combustdb_vom_lehn
+3404-62-4,CC=CCC(C)C,94.3,81.2,combustdb_vom_lehn
+ethylcycloheptane,CCC1CCCCCC1,28.0,30.0,combustdb_vom_lehn
+5-methyl-3-heptene,CCC=CC(C)CC,93.8,81.3,combustdb_vom_lehn
+"cyclohexene, 1-methyl-",CC1=CCCCC1,89.1,71.9,combustdb_vom_lehn
+3-carene,CC1=CCC2C(C1)C2(C)C,73.5,55.8,combustdb_vom_lehn
+"2,2,3,3-tetramethylhexane",CCCC(C)(C)C(C)(C)C,112.8,92.4,combustdb_vom_lehn
+sec-butylbenzene,CCC(C)C1=CC=CC=C1,100.7,95.7,combustdb_vom_lehn
+dipentene,CC1=CCC(CC1)C(=C)C,90.6,73.2,combustdb_vom_lehn
+"4,4-dimethyl-1-cyclohexene",CC1(CCC=CC1)C,96.2,79.8,combustdb_vom_lehn
+m-diethylbenzene,CCC1=CC(=CC=C1)CC,115.5,97.0,combustdb_vom_lehn
+cyclopentene,C1CC=CC1,93.3,69.7,combustdb_vom_lehn
+heptane,CCCCCCC,0.0,0.0,combustdb_vom_lehn
+"2,4-dimethyl-2-hexene",CCC(C)C=C(C)C,95.8,81.8,combustdb_vom_lehn
+1-ethylcyclohexene,CCC1=CCCCC1,85.0,70.5,combustdb_vom_lehn
+1-methylcycloheptene,CC1=CCCCCC1,83.6,72.3,combustdb_vom_lehn
+trans-2-Heptene,C/C=C/CCCC,,69.0,combustdb_vom_lehn
+cis-3-octene,CCCCC=CCC,72.5,68.1,combustdb_vom_lehn
+trans-3-octene,CCCC/C=C/CC,72.5,68.1,combustdb_vom_lehn
+2-methylhex-3-ene,CCC=CC(C)C,97.9,82.0,combustdb_vom_lehn
+3-ethylheptane,CCCCC(CC)CC,17.9,38.3,combustdb_vom_lehn
+"2,2-dimethyloctane",CCCCCCC(C)(C)C,,46.0,combustdb_vom_lehn
+1-allyl-2-methylbenzene,CC1=CC=CC=C1CC=C,98.6,86.0,combustdb_vom_lehn
+2-methyl-1-heptene,CCCCCC(=C)C,70.2,66.3,combustdb_vom_lehn
+trans-diisopropylethylene,CC(C)/C=C/C(C)C,,83.0,combustdb_vom_lehn
+"4,5-dimethyl-1-hexene",CC(C)C(C)CC=C,93.6,80.2,combustdb_vom_lehn
+"4-isopropenyl-1,2,4-trimethyl-1-cyclohexene",CC1=C(CC(CC1)(C)C(=C)C)C,,76.0,combustdb_vom_lehn
+bicyclopentyl,C1CCC(C1)C2CCCC2,9.7,9.7,combustdb_vom_lehn
+"4,5-diethyloctane",CCCC(CC)C(CC)CCC,,25.0,combustdb_vom_lehn
+gem-dimethylcyclopentane,CC1(CCCC1)C,92.3,89.3,combustdb_vom_lehn
+ethylcyclopentane,CCC1CCCC1,67.2,61.2,combustdb_vom_lehn
+"4,4-dimethyl-1-hexene",CCC(C)(C)CC=C,101.3,83.5,combustdb_vom_lehn
+"cyclohexene, 1,2-dimethyl-",CC1=C(CCCC1)C,89.7,72.2,combustdb_vom_lehn
+"3,4-dimethyl-1-hexene",CCC(C)C(C)C=C,96.1,82.3,combustdb_vom_lehn
+"2,3-dimethyl-1-hexene",CCCC(C)C(=C)C,96.3,83.6,combustdb_vom_lehn
+"2,4-dimethyl-1-hexene",CCC(C)CC(=C)C,94.9,83.6,combustdb_vom_lehn
+"2,2,3-trimethylhexane",CCCC(C)C(C)(C)C,99.0,95.6,combustdb_vom_lehn
+"2,2,4-trimethylhexane",CCC(C)CC(C)(C)C,99.0,95.6,combustdb_vom_lehn
+"2,3,3-trimethylhexane",CCCC(C)(C)C(C)C,102.1,95.7,combustdb_vom_lehn
+"2,4,4-trimethylhexane",CCC(C)(C)CC(C)C,102.1,95.7,combustdb_vom_lehn
+"3,3,4-trimethylhexane",CCC(C)C(C)(C)CC,104.9,95.5,combustdb_vom_lehn
+"2,2-dimethyl-3-ethylpentane",CCC(CC)C(C)(C)C,112.1,99.5,combustdb_vom_lehn
+"3-ethyl-2,3-dimethylpentane",CCC(C)(CC)C(C)C,110.3,95.2,combustdb_vom_lehn
+"2,3,3,4-tetramethylpentane",CC(C)C(C)(C)C(C)C,118.9,108.4,combustdb_vom_lehn
+"1,2,3-trimethylcyclohexane",CC1CCCC(C1C)C,83.4,81.0,combustdb_vom_lehn
+ethylcyclohexane,CCC1CCCCC1,45.6,40.8,combustdb_vom_lehn
+propylcyclohexane,CCCC1CCCCC1,17.8,14.0,combustdb_vom_lehn
+isobutylcyclohexane,CC(C)CC1CCCCC1,,29.0,combustdb_vom_lehn
+3-ethyl-2-methylhexane,CCCC(CC)C(C)C,67.1,80.0,combustdb_vom_lehn
+2-ethyl-p-xylene,CCC1=C(C=CC(=C1)C)C,106.0,96.0,combustdb_vom_lehn
+"1,trans-3-dimethylcyclopentane",C[C@@H]1CC[C@H](C1)C,80.6,72.6,combustdb_vom_lehn
+2-methylhept-3-ene,CCCC=CC(C)C,94.4,80.4,combustdb_vom_lehn
+3-methyl-2-hexene,CCCC(=CC)C,92.2,79.9,combustdb_vom_lehn
+"cyclohexane, 1,3,5-trimethyl-, (1α,3α,5β)-",C[C@H]1C[C@H](C)C[C@@H](C)C1,,70.0,combustdb_vom_lehn
+"1,3,5-trimethylcyclohexane",CC1CC(CC(C1)C)C,68.5,70.1,combustdb_vom_lehn
+"1-butene, 2-ethyl-3,3-dimethyl",CCC(=C)C(C)(C)C,105.3,86.4,combustdb_vom_lehn
+"2,5-dimethyl-2-hexene",CC(C)CC=C(C)C,95.2,82.2,combustdb_vom_lehn
+4-octyne,CCCC#CCCC,59.6,65.9,combustdb_vom_lehn
+"1-pentene, 3-ethyl-2-methyl-",CCC(CC)C(=C)C,99.5,85.3,combustdb_vom_lehn
+(c2h5)2c=c(ch3)2,CCC(=C(C)C)CC,95.6,82.0,combustdb_vom_lehn
+19780-68-8,CCC(=CC)C(C)C,97.6,83.9,combustdb_vom_lehn
+"trans-1,2-Dimethylcyclohexane",C[C@@H]1CCCC[C@H]1C,,79.0,combustdb_vom_lehn
+but-1-en-2-ylbenzene,CCC(=C)C1=CC=CC=C1,107.2,93.0,combustdb_vom_lehn
+butylcyclopentane,CCCCC1CCCC1,3.0,2.0,combustdb_vom_lehn
+"cyclopentane, propyl-",CCCC1CCCC1,31.2,28.1,combustdb_vom_lehn
+tert-amylbenzene,CCC(C)(C)C1=CC=CC=C1,108.0,96.8,combustdb_vom_lehn
+(e)-3-methyl-2-hexene,CCC/C(=C/C)/C,,80.0,combustdb_vom_lehn
+ethylidenecyclopentane,CC=C1CCCC1,82.4,66.6,combustdb_vom_lehn
+1-ethyl-1-cyclopentene,CCC1=CCCC1,90.3,72.0,combustdb_vom_lehn
+"norbornane, 2-ethyl-",CCC1CC2CCC1C2,,50.0,combustdb_vom_lehn
+non-4-ene,CCCCC=CCCC,64.5,66.7,combustdb_vom_lehn
+"cis-1,2-dimethylcyclohexane",C[C@@H]1CCCC[C@@H]1C,80.9,78.6,combustdb_vom_lehn
+"cyclohexane, 1,3-dimethyl-, (1R,3R)-rel-",C[C@@H]1CCC[C@@H](C)C1,66.9,64.2,combustdb_vom_lehn
+"trans-1,4-Dimethylcyclohexane",C[C@H]1CC[C@H](C)CC1,68.3,62.2,combustdb_vom_lehn
+"2,4-dimethylheptane",CCCC(C)CC(C)C,47.2,61.2,combustdb_vom_lehn
+"2,4-dimethyl-1-pentene",CC(C)CC(=C)C,99.2,84.6,combustdb_vom_lehn
+"3,4-dimethyl-2-hexene",CCC(C)C(=CC)C,96.2,82.1,combustdb_vom_lehn
+"2,5-dimethylheptane",CCC(C)CCC(C)C,41.7,50.4,combustdb_vom_lehn
+4-ethylheptane,CCCC(CC)CCC,27.0,46.8,combustdb_vom_lehn
+3-methyloctane,CCCCCC(C)CC,4.2,18.4,combustdb_vom_lehn
+4-methyloctane,CCCCC(C)CCC,7.5,23.9,combustdb_vom_lehn
+"1,2,4-trimethylcyclohexane",CC1CCC(C(C1)C)C,73.0,74.6,combustdb_vom_lehn
+5-methyl-2-heptene,CCC(C)CC=CC,83.0,76.0,combustdb_vom_lehn
+"1,2-dimethylcyclopentane",CC1CCCC1C,85.7,79.6,combustdb_vom_lehn
+"1,3-dimethylcyclopentane",CC1CCC(C1)C,80.6,72.6,combustdb_vom_lehn
+"3,4-dimethylpent-2-ene",CC=C(C)C(C)C,96.0,82.2,combustdb_vom_lehn
+4-methyl-1-pentene,CC(C)CC=C,95.7,80.9,combustdb_vom_lehn
+"1,2-dimethylcyclopropane",CC1CC1C,100.4,84.3,combustdb_vom_lehn
+"cis-1,3-Dimethylcyclopentane",C[C@@H]1CC[C@H](C)C1,79.2,73.1,combustdb_vom_lehn
+"1,2,3-trimethylbenzene",CC1=C(C(=CC=C1)C)C,105.3,100.8,combustdb_vom_lehn
+"1,2,4-trimethylcyclopentane",CC1CC(C(C1)C)C,89.2,79.5,combustdb_vom_lehn
+"4,4-dimethylpent-2-ene",CC=CC(C)(C)C,100.5,90.2,combustdb_vom_lehn
+3-methyl-1-pentene,CCC(C)C=C,96.0,81.2,combustdb_vom_lehn
+2-methyl-1-butene,CCC(=C)C,102.5,81.9,combustdb_vom_lehn
+cyclopentadiene,C1C=CC=C1,103.5,86.1,combustdb_vom_lehn
+sec-butylcyclohexane,CCC(C)C1CCCCC1,,55.0,combustdb_vom_lehn
+"benzene, sec-pentyl-",CCCC(C)C1=CC=CC=C1,103.5,92.1,combustdb_vom_lehn
+"1,1-dimethylcyclohexane",CC1(CCCCC1)C,87.3,85.9,combustdb_vom_lehn
+2-methyl-2-hexene,CCCC=C(C)C,90.4,78.9,combustdb_vom_lehn
+"2,3-dimethyl-1-butene",CC(C)C(=C)C,101.3,82.8,combustdb_vom_lehn
+cyclopropene,C1C=C1,100.9,94.0,combustdb_vom_lehn
+cyclobutane,C1CCC1,102.6,87.9,combustdb_vom_lehn
+cyclopentane,C1CCCC1,100.6,85.0,combustdb_vom_lehn
+2-methylheptane,CCCCCC(C)C,21.7,23.8,combustdb_vom_lehn
+cycloheptane,C1CCCCCC1,38.9,40.8,combustdb_vom_lehn
+cyclooctane,C1CCCCCCC1,69.9,58.5,combustdb_vom_lehn
+"2,2-dimethylhexane",CCCCC(C)(C)C,72.5,77.4,combustdb_vom_lehn
+"1-ethyl-2,3-dimethylbenzene",CCC1=CC=CC(=C1C)C,104.4,91.9,combustdb_vom_lehn
+"1,3-cyclohexadiene",C1CC=CC=C1,74.8,53.0,combustdb_vom_lehn
+allylbenzene,C=CCC1=CC=CC=C1,102.5,90.9,combustdb_vom_lehn
+2-hexene,CCCC=CC,92.7,80.8,combustdb_vom_lehn
+"1,1,2-trimethylcyclohexane",CC1CCCCC1(C)C,95.7,87.7,combustdb_vom_lehn
+1-methyl-1-ethylcyclohexane,CCC1(CCCCC1)C,,77.0,combustdb_vom_lehn
+cyclogeraniolane,CC1CCCC(C1)(C)C,81.3,82.6,combustdb_vom_lehn
+1-propylcyclopentene,CCCC1=CCCC1,82.1,64.1,combustdb_vom_lehn
+"2,3-dimethylheptane",CCCCC(C)C(C)C,41.7,50.4,combustdb_vom_lehn
+4-ethyl-2-methylhexane,CCC(CC)CC(C)C,67.1,80.0,combustdb_vom_lehn
+3-ethyl-3-methylhexane,CCCC(C)(CC)CC,70.7,85.7,combustdb_vom_lehn
+3-ethyl-4-methylhexane,CCC(C)C(CC)CC,73.7,83.4,combustdb_vom_lehn
+"(e)-3,4-dimethylhex-3-ene",CC/C(=C(\C)/CC)/C,94.3,79.8,combustdb_vom_lehn
+"3-hexene, 2,2-dimethyl-",CCC=CC(C)(C)C,106.7,88.0,combustdb_vom_lehn
+tert-butylcyclohexane,CC(C)(C)C1CCCCC1,98.5,89.2,combustdb_vom_lehn
+tert-pentylcyclohexane,CCC(C)(C)C1CCCCC1,90.4,85.1,combustdb_vom_lehn
+1-octyne,CCCCCCC#C,,52.0,combustdb_vom_lehn
+2-methyloctane,CCCCCCC(C)C,0.4,11.0,combustdb_vom_lehn
+p-allyltoluene,CC1=CC=C(C=C1)CC=C,107.0,93.4,combustdb_vom_lehn
+sabinen,CC(C)C12CCC(=C)C1C2,,59.0,combustdb_vom_lehn
+4-methyl-2-hexene,CCC(C)C=CC,96.8,83.0,combustdb_vom_lehn
+3404-56-6,CCCC(C)C=CC,87.2,80.7,combustdb_vom_lehn
+3404-57-7,CCC=CCC(C)C,93.4,82.0,combustdb_vom_lehn
+3-methyl-1-hexene,CCCC(C)C=C,82.2,71.5,combustdb_vom_lehn
+"2-hexene, 5-methyl-",C/C=C/CC(C)C,,81.0,combustdb_vom_lehn
+2-ethyl-1-pentene,CCCC(=C)CC,91.9,78.7,combustdb_vom_lehn
+"2,3-dimethyl-1-pentene",CCC(C)C(=C)C,99.3,84.2,combustdb_vom_lehn
+"3,3-dimethyl-1-pentene",CCC(C)(C)C=C,103.5,86.1,combustdb_vom_lehn
+3-methyl-2-heptene,CCCCC(=CC)C,79.7,73.8,combustdb_vom_lehn
+"3,3-dimethyl-1-hexene",CCCC(C)(C)C=C,101.3,83.5,combustdb_vom_lehn
+4-Ethylstyrene,C=Cc1ccc(CC)cc1,107.0,93.4,combustdb_vom_lehn
+"2,2,5-trimethylhexane",CC(C)CCC(C)(C)C,95.5,95.1,combustdb_vom_lehn
+5-methyl-1-hexene,CC(C)CCC=C,75.5,64.0,combustdb_vom_lehn
+allylcyclopentane,C=CCC1CCCC1,52.1,45.6,combustdb_vom_lehn
+"cyclopropane, isopropyl-",CC(C)C1CC1,100.02,88.1,combustdb_vom_lehn
+"5,5-dimethyl-2-hexene",CC=CCC(C)(C)C,101.4,89.6,combustdb_vom_lehn
+4-methylhex-2-ene,CCC(C)/C=C/C,,83.0,combustdb_vom_lehn
+"cyclopentane, 1-ethyl-3-methyl-",CCC1CCC(C1)C,57.6,59.8,combustdb_vom_lehn
+vinylcyclopentane,C=CC1CCCC1,69.3,54.3,combustdb_vom_lehn
+4-methyl-1-hexene,CCC(C)CC=C,86.4,74.0,combustdb_vom_lehn
+isobutylcyclopentane,CC(C)CC1CCCC1,33.4,28.2,combustdb_vom_lehn
+isopropylcyclopentane,CC(C)C1CCCC1,81.1,76.2,combustdb_vom_lehn
+2-methylhexane,CCCCC(C)C,42.4,46.4,combustdb_vom_lehn
+(e)-3-methyl-3-hexene,CC/C=C(\C)/CC,,81.0,combustdb_vom_lehn
+"3,3-dimethylheptane",CCCCC(C)(C)CC,58.4,68.7,combustdb_vom_lehn
+3-ethyl-1-pentene,CCC(CC)C=C,95.6,81.6,combustdb_vom_lehn
+methylcycloheptane,CC1CCCCCC1,64.4,61.3,combustdb_vom_lehn
+"cyclopropane, 1,1,2-trimethyl-",CC1CC1(C)C,101.5,87.8,combustdb_vom_lehn
+"1,1,2,2-tetramethylcyclopropane",CC1(CC1(C)C)C,100.5,90.1,combustdb_vom_lehn
+(e)-2-methyl-3-hexene,CC/C=C/C(C)C,,82.0,combustdb_vom_lehn
+trans-1-methyl-2-propylcyclohexane,CCC[C@@H]1CCCC[C@H]1C,,39.0,combustdb_vom_lehn
+1-Methyl-2-propylcyclohexane,CCCC1CCCCC1C,,39.0,combustdb_vom_lehn
+"1-methyl-1,4-cyclohexadiene",CC1=CCC=CC1,75.0,42.1,combustdb_vom_lehn
+trans-4-methyl-2-pentene,CC=CC(C)C,99.3,84.3,combustdb_vom_lehn
+"3-heptene, 4-methyl-",CCCC(=CCC)C,82.3,76.0,combustdb_vom_lehn
+"1,1,3-trimethylcyclopentane",CC1CCC(C1)(C)C,87.7,83.5,combustdb_vom_lehn
+neopentane,CC(C)(C)C,85.5,80.2,combustdb_vom_lehn
+"2,2,3-trimethylbutane",CC(C)C(C)(C)C,112.1,101.3,combustdb_vom_lehn
+isopropenylcyclopropane,CC(=C)C1CC1,94.4,74.9,combustdb_vom_lehn
+pinane,CC1CCC2CC1C2(C)C,77.7,65.9,combustdb_vom_lehn
+ethylcyclobutane,CCC1CCC1,41.1,63.9,combustdb_vom_lehn
+3-methyl-1-heptene,CCCCC(C)C=C,69.3,67.2,combustdb_vom_lehn
+"1,2,3,4-tetramethylbenzene",CC1=C(C(=C(C=C1)C)C)C,105.3,100.3,combustdb_vom_lehn
+"cis-3,4-dimethyl-2-pentene",C/C=C(/C)\C(C)C,96.0,82.2,combustdb_vom_lehn
+cis-1-methyl-2-propylcyclohexane,CCC[C@H]1CCCC[C@H]1C,,39.0,combustdb_vom_lehn
+p-Cymene,Cc1ccc(C(C)C)cc1,110.5,97.7,combustdb_vom_lehn
+"1h-indene, octahydro-",C1CCC2CCCC2C1,70.0,64.1,combustdb_vom_lehn
+indan,C1CC2=CC=CC=C2C1,100.3,89.8,combustdb_vom_lehn
+6-Methyl-1-heptene,C=CCCCC(C)C,63.6,62.6,combustdb_vom_lehn
+2-butyne,CC#CC,85.9,70.2,combustdb_vom_lehn
+"cyclohexene, 3,3,5-trimethyl-",CC1CC=CC(C1)(C)C,96.5,82.8,combustdb_vom_lehn
+2-methyl-2-butene,CC=C(C)C,97.3,84.7,combustdb_vom_lehn
+biisopropenyl,CC(=C)C(=C)C,99.2,83.4,combustdb_vom_lehn
+isodurene,CC1=CC(=C(C(=C1)C)C)C,105.1,102.5,combustdb_vom_lehn
+o-cymene,CC1=CC=CC=C1C(C)C,106.0,96.0,combustdb_vom_lehn
+"hexane, 2,3,4,5-tetramethyl-",CC(C)C(C)C(C)C(C)C,107.3,98.4,combustdb_vom_lehn
+methylcyclopentane,CC1CCCC1,91.3,80.0,combustdb_vom_lehn
+m-cymene,CC1=CC(=CC=C1)C(C)C,110.7,97.2,combustdb_vom_lehn
+pentylbenzene,CCCCCC1=CC=CC=C1,89.2,81.7,combustdb_vom_lehn
+isobutylbenzene,CC(C)CC1=CC=CC=C1,111.4,98.0,combustdb_vom_lehn
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,100.0,100.0,combustdb_vom_lehn
+"3,3-dimethyl-1-butene",CC(C)(C)C=C,111.7,93.3,combustdb_vom_lehn
+"2,3,3-trimethylpentane",CCC(C)(C)C(C)C,106.0,99.4,combustdb_vom_lehn
+"3,3,4-trimethylpent-1-ene",CC(C)C(C)(C)C=C,111.9,90.7,combustdb_vom_lehn
+"2,3,3-trimethyl-1-pentene",CCC(C)(C)C(=C)C,106.0,85.7,combustdb_vom_lehn
+"3,3-dimethylpentane",CCC(C)(C)CC,80.8,86.6,combustdb_vom_lehn
+"3,3-dimethylhexane",CCCC(C)(C)CC,75.5,83.4,combustdb_vom_lehn
+3-methyl-1-butene,CC(C)C=C,98.0,98.0,combustdb_vom_lehn
+"2,3-dimethyl-2-butene",CC(=C(C)C)C,97.4,80.5,combustdb_vom_lehn
+"2,2,3-trimethylpentane",CCC(C)C(C)(C)C,109.6,99.9,combustdb_vom_lehn
+"3,4,4-trimethylpent-1-ene",CC(C=C)C(C)(C)C,110.7,91.1,combustdb_vom_lehn
+"2,3-dimethylpentane",CCC(C)C(C)C,91.1,88.5,combustdb_vom_lehn
+"2,3,4-trimethylpentane",CC(C)C(C)C(C)C,102.5,95.9,combustdb_vom_lehn
+"2,3,4-trimethyl-1-pentene",CC(C)C(C)C(=C)C,103.3,85.2,combustdb_vom_lehn
+"2,3,4-trimethyl-2-pentene",CC(C)C(=C(C)C)C,96.6,80.9,combustdb_vom_lehn
+"methane, dicyclopropyl-",C1CC1CC2CC2,95.1,72.1,combustdb_vom_lehn
+"3,4-dimethylhexane",CCC(C)C(C)CC,76.3,81.7,combustdb_vom_lehn
+"1,2-dimethylcyclohexane",CC1CCCCC1C,80.9,78.6,combustdb_vom_lehn
+"2,3-dimethylhexane",CCCC(C)C(C)C,71.3,78.9,combustdb_vom_lehn
+3-methylhexane,CCCC(C)CC,52.0,55.8,combustdb_vom_lehn
+"2,4-dimethylhexane",CCC(C)CC(C)C,65.2,69.9,combustdb_vom_lehn
+4-methylheptane,CCCC(C)CCC,26.7,39.0,combustdb_vom_lehn
+"2,2-dimethylpentane",CCCC(C)(C)C,92.8,95.6,combustdb_vom_lehn
+"1,3-dimethylcyclohexane",CC1CCCC(C1)C,71.7,71.0,combustdb_vom_lehn
+4-methyl-1-cyclohexene,CC1CCC=CC1,84.1,67.0,combustdb_vom_lehn
+2-methyl-2-pentene,CCC=C(C)C,97.8,83.0,combustdb_vom_lehn
+"2,5-dimethylhexane",CC(C)CCC(C)C,55.2,55.7,combustdb_vom_lehn
+1-hexene,CCCCC=C,76.4,63.4,combustdb_vom_lehn
+"1,5-hexadiene",C=CCCC=C,71.1,37.6,combustdb_vom_lehn
+trans-2-hexene,CCC/C=C/C,92.7,80.8,combustdb_vom_lehn
+"2,4-hexadiene",CC=CC=CC,97.1,80.7,combustdb_vom_lehn
+cis-3-hexene,CCC=CCC,94.0,80.1,combustdb_vom_lehn
+1-heptene,CCCCCC=C,54.5,50.7,combustdb_vom_lehn
+cis-2-heptene,CCCCC=CC,73.2,68.95,combustdb_vom_lehn
+(e)-3-heptene,CCC/C=C/CC,89.8,79.3,combustdb_vom_lehn
+cis-4-octene,CCCC=CCCC,73.3,74.3,combustdb_vom_lehn
+methylcyclopropane,CC1CC1,100.2,81.2,combustdb_vom_lehn
+"2,3,3-trimethyl-1-butene",CC(=C)C(C)(C)C,105.3,90.5,combustdb_vom_lehn
+hexamethylethane,CC(C)(C)C(C)(C)C,110.4,96.7,combustdb_vom_lehn
+"1,1-dimethylallene",CC(=C=C)C,61.0,42.4,combustdb_vom_lehn
+"2-pentene, 3,4,4-trimethyl-",C/C=C(\C)/C(C)(C)C,102.5,85.8,combustdb_vom_lehn
+p-menthane,CC1CCC(CC1)C(C)C,,61.0,combustdb_vom_lehn
+3-ethyl-2-methylpentane,CCC(CC)C(C)C,87.3,88.1,combustdb_vom_lehn
+2-methyl-1-hexene,CCCCC(=C)C,90.7,78.8,combustdb_vom_lehn
+2-ethyltoluene,CCC1=CC=CC=C1C,102.5,92.1,combustdb_vom_lehn
+trans-3-Methyl-2-pentene,C/C=C(\C)CC,,81.0,combustdb_vom_lehn
+3-ethylpentane,CCC(CC)CC,65.0,69.3,combustdb_vom_lehn
+3-ethylhexane,CCCC(CC)CC,33.5,52.4,combustdb_vom_lehn
+3-ethyltoluene,CCC1=CC=CC(=C1)C,112.1,100.0,combustdb_vom_lehn
+"1,5,5-trimethylcyclopentene",CC1=CCCC1(C)C,96.2,83.5,combustdb_vom_lehn
+4-ethyltoluene,CCC1=CC=C(C=C1)C,112.9,97.0,combustdb_vom_lehn
+"cis-1,4-Dimethylcyclohexane",C[C@H]1CC[C@@H](C)CC1,,68.0,combustdb_vom_lehn
+"2,4-dimethyl-2-pentene",CC(C)C=C(C)C,100.0,86.0,combustdb_vom_lehn
+cis-2-pentene,CCC=CC,,88.0,combustdb_vom_lehn
+bimethallyl,CC(=C)CCC(=C)C,90.2,65.5,combustdb_vom_lehn
+2-methyl-2-heptene,CCCCC=C(C)C,75.9,71.0,combustdb_vom_lehn
+"1,4-cyclohexadiene",C1C=CCC=C1,75.4,39.9,combustdb_vom_lehn
+cycloheptene,C1CCC=CCC1,84.1,65.9,combustdb_vom_lehn
+"4,4-dimethyl-1-pentene",CC(C)(C)CC=C,104.4,85.4,combustdb_vom_lehn
+decane,CCCCCCCCCC,39.8,40.5,combustdb_vom_lehn
+1-phenylpropene,C/C=C/C1=CC=CC=C1,,92.0,combustdb_vom_lehn
+"cis-1,3-Dimethylcyclohexane",C[C@@H]1CCC[C@H](C)C1,,71.0,combustdb_vom_lehn
+(e)-6-methylhept-3-ene,CC/C=C/CC(C)C,,82.0,combustdb_vom_lehn
+trans-4-Methyl-2-pentene,C/C=C/C(C)C,,83.0,combustdb_vom_lehn
+o-xylene,CC1=CC=CC=C1C,106.2,100.0,combustdb_vom_lehn
+"trans,trans-2,4-Hexadiene",C/C=C/C=C/C,97.1,80.7,combustdb_vom_lehn
+trans-2-butene,C/C=C/C,99.6,86.5,combustdb_vom_lehn
+"cis-2,2-dimethyl-3-hexene",CC/C=C\C(C)(C)C,100.7,88.0,combustdb_vom_lehn
+"2,2-dimethylhex-3-ene",CC/C=C/C(C)(C)C,106.0,88.0,combustdb_vom_lehn
+cis-4-Methyl-2-pentene,C/C=C\C(C)C,,85.0,combustdb_vom_lehn
+2-methyl-trans-3-heptene,CCC/C=C/C(C)C,,81.0,combustdb_vom_lehn
+1-methylcyclopentene,CC1=CCCC1,93.6,72.9,combustdb_vom_lehn
+3-ethylcyclopentene,CCC1CCC=C1,90.8,71.4,combustdb_vom_lehn
+vinylcyclohexane,C=CC1CCCCC1,64.3,53.4,combustdb_vom_lehn
+isopropylcyclohexane,CC(C)C1CCCCC1,62.8,61.1,combustdb_vom_lehn
+"2,5-dimethyl-1-hexene",CC(C)CCC(=C)C,92.4,82.4,combustdb_vom_lehn
+2-methyldecane,CCCCCCCCC(C)C,,0.0,combustdb_vom_lehn
+benzene,C1=CC=CC=C1,120.0,115.0,combustdb_vom_lehn
+"5,5-dimethylhex-1-ene",CC(C)(C)CCC=C,100.0,82.7,combustdb_vom_lehn
+"2,3-dimethyl-2-hexene",CCCC(=C(C)C)C,93.1,79.3,combustdb_vom_lehn
+"2,3-dimethyl-3-hexene",CC/C=C(\C)/C(C)C,95.8,81.8,combustdb_vom_lehn
+4-methyl-1-pentyne,CC(C)CC#C,91.3,72.9,combustdb_vom_lehn
+"2,2,3,3-tetramethylpentane",CCC(C)(C)C(C)(C)C,116.8,95.0,combustdb_vom_lehn
+"3,3,5-trimethylheptane",CCC(C)CC(C)(C)CC,86.4,88.7,combustdb_vom_lehn
+indene,C1C=CC2=CC=CC=C21,113.7,106.7,combustdb_vom_lehn
+bis(3-methylhept-3-ene),CCC/C=C(/CC)\C.CCC/C=C(/CC)\C,79.7,73.8,combustdb_vom_lehn
+"4,5-dimethyl-trans-2-hexene",CC=CC(C)C(C)C,100.1,87.6,combustdb_vom_lehn
+73548-72-8,CC=CCCC(C)C,71.3,65.5,combustdb_vom_lehn
+2-ethyl-3-methylbut-1-ene,CCC(=C)C(C)C,97.0,82.0,combustdb_vom_lehn
+"3,4-dimethyl-1-pentene",CC(C)C(C)C=C,98.9,80.9,combustdb_vom_lehn
+ethane,CC,111.0,100.7,combustdb_vom_lehn
+ethene,C=C,97.3,75.6,combustdb_vom_lehn
+propane,CCC,112.5,97.1,combustdb_vom_lehn
+"3,5-dimethyl-1-hexene",CC(C)CC(C)C=C,93.6,80.2,combustdb_vom_lehn
+cyclopropane,C1CC1,106.5,90.9,combustdb_vom_lehn
+isobutane,CC(C)C,102.1,97.6,combustdb_vom_lehn
+"2,2-dimethylbutane",CCC(C)(C)C,91.8,93.4,combustdb_vom_lehn
+3-ethylstyrene,CCC1=CC=CC(=C1)C=C,107.0,93.4,combustdb_vom_lehn
+o-Ethylstyrene,C=Cc1ccccc1CC,96.8,85.7,combustdb_vom_lehn
+2-ethyl-1-butene,CCC(=C)CC,98.3,79.4,combustdb_vom_lehn
+2-methyl-1-pentene,CCCC(=C)C,94.2,81.5,combustdb_vom_lehn
+"2,5-dimethyl-2,4-hexadiene",CC(=CC=C(C)C)C,94.3,78.9,combustdb_vom_lehn
+cis-2-Octene,C/C=C\CCCCC,56.3,56.5,combustdb_vom_lehn
+"3-Hexene, (3Z)-",CC/C=C\CC,94.0,80.05,combustdb_vom_lehn
+"3-Heptene, (3Z)-",CC/C=C\CCC,89.8,78.65,combustdb_vom_lehn
+cis-propenylbenzene,C/C=C\C1=CC=CC=C1,105.3,91.7,combustdb_vom_lehn
+(2-methylpropenyl)benzene,CC(=CC1=CC=CC=C1)C,105.3,91.7,combustdb_vom_lehn
+dicyclopentadiene,C1C=CC2C1C3CC2C=C3,107.4,95.9,combustdb_vom_lehn
+isopentane,CCC(C)C,92.3,90.3,combustdb_vom_lehn
+isoprene,CC(=C)C=C,99.1,81.0,combustdb_vom_lehn
+"2,3-dimethylbutane",CC(C)C(C)C,103.5,94.3,combustdb_vom_lehn
+alpha-pinene,CC1=CCC2CC1C2(C)C,83.1,68.6,combustdb_vom_lehn
+3-ethyl-2-pentene,CCC(=CC)CC,93.7,80.6,combustdb_vom_lehn
+cyclobutene,C1CC=C1,95.9,81.3,combustdb_vom_lehn
+"benzene, propenyl-",CC=CC1=CC=CC=C1,104.4,92.1,combustdb_vom_lehn
+"1-ethyl-2,4-dimethylbenzene",CCC1=C(C=C(C=C1)C)C,106.0,95.9,combustdb_vom_lehn
+trans-3-heptene,CCCC=CCC,89.8,79.3,combustdb_vom_lehn
+naphthalene,C1=CC=C2C=CC=CC2=C1,115.1,105.4,combustdb_vom_lehn
+2-methylnaphthalene,CC1=CC2=CC=CC=C2C=C1,114.3,101.1,combustdb_vom_lehn
+"2,3,4-trimethylhexane",CCC(C)C(C)C(C)C,95.5,91.4,combustdb_vom_lehn
+"3,4-dimethylheptane",CCCC(C)C(C)CC,53.4,70.8,combustdb_vom_lehn
+"2-pentene, 3-methyl-",CCC(=CC)C,97.2,81.0,combustdb_vom_lehn
+cis-3-Methyl-2-pentene,C/C=C(/C)CC,97.2,81.0,combustdb_vom_lehn
+"3,5-dimethylheptane",CCC(C)CC(C)CC,47.2,61.2,combustdb_vom_lehn
+cyclooctene,C1CCC/C=C\CC1,81.4,67.8,combustdb_vom_lehn
+"3,5,5-trimethylcyclohexene",CC1CC(CC=C1)(C)C,95.5,80.9,combustdb_vom_lehn
+5-ethyl-m-xylene,CCC1=CC(=CC(=C1)C)C,114.8,102.5,combustdb_vom_lehn
+"1,2,4-trimethylbenzene",CC1=CC(=C(C=C1)C)C,110.5,108.0,combustdb_vom_lehn
+"1,2,4,5-tetramethylbenzene",CC1=CC(=C(C=C1C)C)C,107.5,112.3,combustdb_vom_lehn
+3-methylpentane,CCC(C)CC,74.5,74.3,combustdb_vom_lehn
+tert-butylbenzene,CC(C)(C)C1=CC=CC=C1,115.5,107.4,combustdb_vom_lehn
+alpha-methylstyrene,CC(=C)C1=CC=CC=C1,113.1,101.3,combustdb_vom_lehn
+(4E)-nonene (racemic),(4E)-nonene (racemic),8.8,-16.7,doe_co_optima
+1-Hexene,1-Hexene,76.0,,doe_co_optima
+1-Nonene,1-Nonene,35.0,,doe_co_optima
+"2,4-dimethyl-2-pentene","2,4-dimethyl-2-pentene",100.0,85.0,doe_co_optima
+"2,5-diethylcyclopentane","2,5-diethylcyclopentane",44.2,16.5,doe_co_optima
+"2,6- Dimethylheptane","2,6- Dimethylheptane",36.0,,doe_co_optima
+2-pentene (racemic),2-pentene (racemic),90.0,77.2,doe_co_optima
+3-ethyl nonane,3-ethyl nonane,-19.2,-82.7,doe_co_optima
+3Z-heptene (cis),3Z-heptene (cis),90.0,,doe_co_optima
+3E-heptene (trans),3E-heptene (trans),90.0,78.0,doe_co_optima
+3E-hexene (trans),3E-hexene (trans),94.0,80.0,doe_co_optima
+3-methylhexane,3-methylhexane,52.0,56.0,doe_co_optima
+3-methylnonane,3-methylnonane,-19.2,-44.2,doe_co_optima
+3-methyloctane,3-methyloctane,-1.0,-6.2,doe_co_optima
+4Z-octene (cis),4Z-octene (cis),64.8,50.5,doe_co_optima
+4E-octene (trans),4E-octene (trans),73.0,74.0,doe_co_optima
+"2, 2, 3- Trimethyl-butane","2, 2, 3- Trimethyl-butane",112.0,101.0,doe_co_optima
+"2, 2, 3, 3- tetramethyl-butane","2, 2, 3, 3- tetramethyl-butane",104.5,103.5,doe_co_optima
+Butylcyclohexane,Butylcyclohexane,63.8,,doe_co_optima
+"4, 11, 11- trimethyl- 8- methylene- , (1R, 4E, 9S) -bicyclo[7.2.0] undec- 4- ene,","4, 11, 11- trimethyl- 8- methylene- , (1R, 4E, 9S) -bicyclo[7.2.0] undec- 4- ene,",72.0,,doe_co_optima
+"3, 7- dimethyl- , (3E) -1, 3, 6- octatriene","3, 7- dimethyl- , (3E) -1, 3, 6- octatriene",74.5,,doe_co_optima
+Cyclohexane,Cyclohexane,83.0,77.0,doe_co_optima
+1- ethyl- 1- methyl-cyclopentane,1- ethyl- 1- methyl-cyclopentane,83.9,73.4,doe_co_optima
+Dodecane,Dodecane,-85.0,,doe_co_optima
+Ethylcyclopentane,Ethylcyclopentane,67.0,41.0,doe_co_optima
+"2, 6, 10- trimethyl-dodecane","2, 6, 10- trimethyl-dodecane",-17.5,,doe_co_optima
+"3, 7, 11- trimethyl- , (3E, 6E) -1, 3, 6, 10- dodecatetraene","3, 7, 11- trimethyl- , (3E, 6E) -1, 3, 6, 10- dodecatetraene",67.0,,doe_co_optima
+2- methyl-hexane,2- methyl-hexane,42.0,46.0,doe_co_optima
+"2, 4- dimethyl-hexane","2, 4- dimethyl-hexane",65.2,69.8,doe_co_optima
+"2- methyl-1, 3- butadiene","2- methyl-1, 3- butadiene",99.0,,doe_co_optima
+Methylcyclohexane,Methylcyclohexane,74.1,71.0,doe_co_optima
+"7- methyl- 3- methylene-1, 6- octadiene","7- methyl- 3- methylene-1, 6- octadiene",82.5,76.6,doe_co_optima
+Nonane,Nonane,-34.0,,doe_co_optima
+Octane,Octane,-18.0,,doe_co_optima
+Pentane,Pentane,62.0,62.0,doe_co_optima
+"2, 6, 6- trimethyl- , (1R, 5R) -bicyclo[3.1.1] hept- 2- ene","2, 6, 6- trimethyl- , (1R, 5R) -bicyclo[3.1.1] hept- 2- ene",80.0,57.3,doe_co_optima
+Propylcyclohexane,Propylcyclohexane,18.0,14.0,doe_co_optima
+"1- methyl- 4- (1- methylethyl) -1, 3- cyclohexadiene ( )","1- methyl- 4- (1- methylethyl) -1, 3- cyclohexadiene ( )",87.9,82.9,doe_co_optima
+"1- methyl- 4- (1- methylethyl) -1, 4- cyclohexadiene (gamma)","1- methyl- 4- (1- methylethyl) -1, 4- cyclohexadiene (gamma)",87.9,82.9,doe_co_optima
+Methylbenzene,Methylbenzene,120.0,104.0,doe_co_optima
+3-Methylheptane,3-Methylheptane,27.0,35.0,doe_co_optima
+(4R) -1- methyl- 4- (1- methylethenyl) -cyclohexene,(4R) -1- methyl- 4- (1- methylethenyl) -cyclohexene,87.1,,doe_co_optima
+"3,7-dimethyl-1,3,6-octatriene","3,7-dimethyl-1,3,6-octatriene",108.9,86.8,doe_co_optima
+2-Heptene (cis),2-Heptene (cis),72.5,70.5,doe_co_optima
+2-Heptene (trans),2-Heptene (trans),73.0,69.0,doe_co_optima
+"2,2,4-trimethylpentane","2,2,4-trimethylpentane",100.0,100.0,doe_co_optima
+Heptane,Heptane,0.0,0.0,doe_co_optima
+"2,2,4,4,6,8,8-heptamethylnonane","2,2,4,4,6,8,8-heptamethylnonane",95.2,,doe_co_optima
+o-Xylene,o-Xylene,120.0,100.0,doe_co_optima
+"1,2,4-Trimethylbenzene","1,2,4-Trimethylbenzene",108.6,104.4,doe_co_optima
+Methylcyclopentane,Methylcyclopentane,91.0,80.0,doe_co_optima
+1-Methyl-4-(1-methylethyl)benzene,1-Methyl-4-(1-methylethyl)benzene,110.0,98.0,doe_co_optima
+"4,6,6-trimethylbicyclo[3.1.1]heptane","4,6,6-trimethylbicyclo[3.1.1]heptane",77.0,65.0,doe_co_optima
+"4,7,7-trimethylbicyclo[4.1.0]hept-3-ene","4,7,7-trimethylbicyclo[4.1.0]hept-3-ene",73.5,55.8,doe_co_optima
+4-methylene-1-(1-methylethyl)bicyclo[3.1.0]hexane,4-methylene-1-(1-methylethyl)bicyclo[3.1.0]hexane,80.9,59.0,doe_co_optima
+"2,6- Dimethyloctane","2,6- Dimethyloctane",10.0,,doe_co_optima
+1-methyl-4-propan-2-ylcyclohexane,1-methyl-4-propan-2-ylcyclohexane,60.0,60.0,doe_co_optima
+"4,7,7-trimethylbicyclo[4.1.0]heptane","4,7,7-trimethylbicyclo[4.1.0]heptane",85.5,78.1,doe_co_optima
+1-Isopropyl-4-methylbicyclo[3.1.0]hexane,1-Isopropyl-4-methylbicyclo[3.1.0]hexane,85.0,75.6,doe_co_optima
+"(1S,4S)-1,7,7-trimethylbicyclo[2.2.1]heptane","(1S,4S)-1,7,7-trimethylbicyclo[2.2.1]heptane",102.9,91.0,doe_co_optima
+Ethylbenzene,Ethylbenzene,107.0,97.0,doe_co_optima
+Propylbenzene,Propylbenzene,111.0,99.0,doe_co_optima
+Butylbenzene,Butylbenzene,104.0,94.0,doe_co_optima
+Decane,Decane,-41.0,-38.0,doe_co_optima
+(1-methylethyl)benzene,(1-methylethyl)benzene,113.0,99.0,doe_co_optima
+"1,1,3- Trimethylcyclohexane","1,1,3- Trimethylcyclohexane",81.0,82.0,doe_co_optima
+1-Methyl-4-(1-methylethenyl)-cyclohexene,1-Methyl-4-(1-methylethenyl)-cyclohexene,87.1,,doe_co_optima
+"2,4,4-Trimethyl-1-pentene","2,4,4-Trimethyl-1-pentene",106.0,87.0,doe_co_optima
+"2,4-Dimethyl-1-heptene","2,4-Dimethyl-1-heptene",79.6,60.5,doe_co_optima
+"1,1,3-trimethylcyclopentane","1,1,3-trimethylcyclopentane",90.8,85.0,doe_co_optima
+"1,5,5-trimethylcyclopentene","1,5,5-trimethylcyclopentene",98.5,88.8,doe_co_optima

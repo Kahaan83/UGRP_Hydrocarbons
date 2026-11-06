@@ -1,0 +1,67 @@
+design_id,design_name,fuel_family,cardinality,formulation,property,computed_value,limit_lo,limit_hi,safety_margin,effective_margin,constraint_passed,overall_design_passed,failure_reason
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,density_kg_m3,798.25,775.0,840.0,2.5,20.75,True,False,
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,flash_point_C,66.94,38.0,,5.56,23.38,True,False,
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,freezing_point_C,-29.78,,-40.0,6.5,-16.72,False,False,ABOVE_MAX (val=-29.78 > req=-46.50)
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,viscosity_minus20C_recal_cSt,6.89,,8.0,1.94,-1.07,False,False,VISCOSITY_UPPER_LIMIT_EXCEEDED (val_upper=9.07 > 8.00)
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,heat_of_combustion_net_MJ_kg,43.5,42.8,,0.28,0.42,True,False,
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,aromatics_wt_pct,25.5,,25.0,0.0,-0.5,False,False,ABOVE_MAX (val=25.50 > req=25.00)
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,aromatics_vol_pct,20.98,,25.0,0.0,4.02,True,False,
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,T10_D86_C,224.84,,205.0,6.8,-26.64,False,False,ABOVE_MAX (val=224.84 > req=198.20)
+JET_V1_CLAIMED_FAIL,Jet A (Claimed 2-comp: dodecane+tetralin),jet,2,n-dodecane:74.5%; tetralin:25.5%,T90_D86_C,200.14,,300.0,7.2,92.66,True,False,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,density_kg_m3,802.88,775.0,840.0,2.5,25.38,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,flash_point_C,47.04,38.0,,5.56,3.48,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,freezing_point_C,-97.64,,-40.0,6.5,51.14,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,viscosity_minus20C_recal_cSt,6.01,,8.0,1.94,0.09,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,heat_of_combustion_net_MJ_kg,43.59,42.8,,0.28,0.51,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,aromatics_wt_pct,15.0,,25.0,0.0,10.0,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,aromatics_vol_pct,12.41,,25.0,0.0,12.59,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,T10_D86_C,194.24,,205.0,6.8,3.96,True,True,
+JET_V2_MINIMAL_3COMP,Jet A (Minimal Feasible 3-comp),jet,3,isododecane:65.0%; decalin:20.0%; tetralin:15.0%,T90_D86_C,178.36,,300.0,7.2,114.44,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,density_kg_m3,796.34,775.0,840.0,2.5,18.84,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,flash_point_C,48.61,38.0,,5.56,5.05,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,freezing_point_C,-54.62,,-40.0,6.5,8.12,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,viscosity_minus20C_recal_cSt,5.99,,8.0,1.94,0.13,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,heat_of_combustion_net_MJ_kg,43.64,42.8,,0.28,0.56,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,aromatics_wt_pct,15.0,,25.0,0.0,10.0,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,aromatics_vol_pct,12.31,,25.0,0.0,12.69,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,T10_D86_C,194.24,,205.0,6.8,3.96,True,True,
+JET_V2_REALISTIC_4COMP,Jet A (Realistic Feasible 4-comp),jet,4,isododecane:58.0%; n-dodecane:12.0%; decalin:15.0%; tetralin:15.0%,T90_D86_C,194.39,,300.0,7.2,98.41,True,True,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,density_kg_m3,839.46,820.0,845.0,2.5,3.04,True,False,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,flash_point_C,78.55,52.0,,5.56,20.99,True,False,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,wat_C,26.5,,0.0,3.0,-29.5,False,False,ABOVE_MAX (val=26.50 > req=-3.00)
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,viscosity_40C_recal_cSt,2.35,1.9,4.1,0.1,0.35,True,False,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,dcn,76.46,40.0,,5.8,30.66,True,False,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,aromatics_wt_pct,30.7,10.0,35.0,0.0,4.3,True,False,
+DIESEL_V1_CSV_FAIL,Diesel No. 2 (v1 CSV: hexadecane+biphenyl),diesel,2,n-hexadecane:69.3%; biphenyl:30.7%,T90_D86_C,267.69,,338.0,7.2,63.11,True,False,
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,density_kg_m3,805.5,820.0,845.0,2.5,-17.0,False,False,"OUT_OF_BOUNDS (val=805.50 not in [822.50, 842.50])"
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,flash_point_C,76.39,52.0,,5.56,18.83,True,False,
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,wat_C,-0.79,,0.0,3.0,-2.21,False,False,ABOVE_MAX (val=-0.79 > req=-3.00)
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,viscosity_40C_recal_cSt,1.95,1.9,4.1,0.1,-0.05,False,False,"OUT_OF_BOUNDS (val=1.95 not in [2.00, 4.00])"
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,dcn,55.62,40.0,,5.8,9.82,True,False,
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,aromatics_wt_pct,18.0,10.0,35.0,0.0,8.0,True,False,
+DIESEL_V2_FEASIBLE_4COMP,Diesel No. 2 (Feasible 4-comp),diesel,4,n-hexadecane:25.0%; n-tetradecane:22.0%; heptamethylnonane:35.0%; tetralin:18.0%,T90_D86_C,259.11,,338.0,7.2,71.69,True,False,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,density_kg_m3,837.61,820.0,845.0,2.5,4.89,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,flash_point_C,77.8,52.0,,5.56,20.24,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,wat_C,-3.42,,0.0,3.0,0.42,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,viscosity_40C_recal_cSt,2.0,1.9,4.1,0.1,0.0,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,dcn,47.5,40.0,,5.8,1.7,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,aromatics_wt_pct,20.0,10.0,35.0,0.0,10.0,True,True,
+DIESEL_V2_REALISTIC_5COMP,Diesel No. 2 (Realistic Feasible 5-comp),diesel,5,n-hexadecane:21.0%; n-octadecane:7.0%; heptamethylnonane:27.0%; bicyclohexyl:25.0%; tetralin:20.0%,T90_D86_C,266.87,,338.0,7.2,63.93,True,True,
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,density_kg_m3,968.69,720.0,775.0,2.5,-196.19,False,False,"OUT_OF_BOUNDS (val=968.69 not in [722.50, 772.50])"
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,ron,97.88,91.0,,8.5,-1.62,False,False,BELOW_MIN (val=97.88 < req=99.50)
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,mon,89.29,82.0,,7.8,-0.51,False,False,BELOW_MIN (val=89.29 < req=89.80)
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,octane_sensitivity,8.59,7.0,14.0,0.0,1.59,True,False,
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,vapor_pressure_kPa,-3.73,45.0,70.0,24.5,-59.98,False,False,"OUT_OF_BOUNDS (val=-3.73 not in [56.25, 58.75])"
+GASOLINE_V1_FAIL,Gasoline (v1 Infeasible Polycyclics),gasoline,4,hexylbenzene:25.0%; biphenyl:25.0%; 1-methylnaphthalene:25.0%; tetralin:25.0%,T50_D86_C,226.59,77.0,121.0,0.0,-105.59,False,False,"OUT_OF_BOUNDS (val=226.59 not in [77.00, 121.00])"
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,density_kg_m3,738.52,720.0,775.0,2.5,16.02,True,False,
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,ron,105.49,91.0,,8.5,5.99,True,False,
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,mon,98.21,82.0,,7.8,8.41,True,False,
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,octane_sensitivity,7.28,7.0,14.0,0.0,0.28,True,False,
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,vapor_pressure_kPa,26.21,45.0,70.0,24.5,-30.04,False,False,"OUT_OF_BOUNDS (val=26.21 not in [56.25, 58.75])"
+GASOLINE_V2_FEASIBLE_4COMP,Gasoline (Feasible 4-comp),gasoline,4,isooctane:38.0%; toluene:38.0%; isopentane:18.0%; diisobutylene:6.0%,T50_D86_C,81.22,77.0,121.0,0.0,4.22,True,False,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,density_kg_m3,726.33,720.0,775.0,2.5,3.83,True,True,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,ron,104.62,91.0,,8.5,5.12,True,True,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,mon,96.69,82.0,,7.8,6.89,True,True,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,octane_sensitivity,7.93,7.0,14.0,0.0,0.93,True,True,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,vapor_pressure_kPa,57.07,45.0,70.0,24.5,0.82,True,True,
+GASOLINE_V2_REALISTIC_5COMP,Gasoline (Realistic Feasible 5-comp),gasoline,5,isooctane:28.0%; toluene:36.0%; isopentane:20.0%; n-butane:5.7%; diisobutylene:10.3%,T50_D86_C,78.38,77.0,121.0,0.0,1.38,True,True,

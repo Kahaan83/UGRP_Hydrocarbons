@@ -1,0 +1,18 @@
+category,source_id,sample_kind,test_method,n_observations,pct_of_total,pipeline_usage
+source_by_kind,ajftd,real_fuel,All methods,2413,45.2,"Real-fuel validation, front-end distillation correlation, consistency checks"
+source_by_kind,av2718,real_fuel,All methods,17,0.32,"Real-fuel validation, front-end distillation correlation, consistency checks"
+source_by_kind,crc647,real_fuel,All methods,57,1.07,"Real-fuel validation, front-end distillation correlation, consistency checks"
+source_by_kind,flashpoint_li,pure,All methods,2159,40.44,"Pure baseline fitting (Antoine, LFL, pure flash) & Multitask pretraining"
+source_by_kind,leenhouts,binary,All methods,123,2.3,Mixture baseline evaluation (Le Chatelier) & LOSO residual modeling
+source_by_kind,leenhouts,multi,All methods,3,0.06,Mixture baseline evaluation (Le Chatelier) & LOSO residual modeling
+source_by_kind,leenhouts,pure,All methods,240,4.5,"Pure baseline fitting (Antoine, LFL, pure flash) & Multitask pretraining"
+source_by_kind,saldana11,pure,All methods,327,6.12,"Pure baseline fitting (Antoine, LFL, pure flash) & Multitask pretraining"
+test_method,All sources,All kinds,Standard Closed Cup (calibrated),3702,69.34,Standardized apparatus classification (ASTM D56/D93/D3828/IP170)
+test_method,All sources,All kinds,ASTM D56 (Tag Closed Cup),805,15.08,Standardized apparatus classification (ASTM D56/D93/D3828/IP170)
+test_method,All sources,All kinds,ASTM D93 (Pensky-Martens Closed Cup),411,7.7,Standardized apparatus classification (ASTM D56/D93/D3828/IP170)
+test_method,All sources,All kinds,ASTM D3828 (Small Scale Closed Cup),327,6.12,Standardized apparatus classification (ASTM D56/D93/D3828/IP170)
+test_method,All sources,All kinds,IP 170 (Abel Closed Cup),94,1.76,Standardized apparatus classification (ASTM D56/D93/D3828/IP170)
+sample_kind,All sources,pure,All methods,2726,51.06,"Pure baseline fitting (Antoine, LFL, pure flash) & Multitask pretraining"
+sample_kind,All sources,real_fuel,All methods,2487,46.58,"Real-fuel validation, front-end distillation correlation, consistency checks"
+sample_kind,All sources,binary,All methods,123,2.3,Mixture baseline evaluation (Le Chatelier) & LOSO residual modeling
+sample_kind,All sources,multi,All methods,3,0.06,Mixture baseline evaluation (Le Chatelier) & LOSO residual modeling

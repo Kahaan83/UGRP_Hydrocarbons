@@ -1,0 +1,3 @@
+baseline_version,tier_coverage,n_fuels,fuel_family,mae_MJ_kg,mae_ci95,rmse_MJ_kg,rmse_ci95,mape_pct,bias_MJ_kg,error_reduction_pct
+v1 Physics (Dulong Fallback),"114 Tier A (11.0%), 924 Tier C (89.0%)",57,jet,0.6889,"[0.6466, 0.7335]",0.7076,"[0.6588, 0.7571]",1.6,0.6889,0.0
+v2 Physics (Group Additivity Baseline),"114 Tier A (11.0%), 924 Tier B (89.0%), 0 Tier C (0.0%)",57,jet,0.1792,"[0.1462, 0.2154]",0.2242,"[0.1863, 0.2613]",0.42,-0.1039,73.99

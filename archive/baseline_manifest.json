@@ -1,0 +1,79 @@
+{
+  "tag": "baseline-2026-11-03",
+  "created": "2026-11-04T14:42:44",
+  "note": "Full raw data (data/, debug/) is intentionally not copied: 4.9 GB + 2.1 GB. Key data files are checksummed above so state can be verified; code+configs+splits+results(CSV/JSON) are in the zip.",
+  "zip": {
+    "path": "archive/baseline_2026-11-03_code.zip",
+    "sha256": "3bcf9b7626540c5063c5e3d0efc01e629d7bd739e7c5cdbb2c49f750f89edd3d",
+    "bytes": 5362817,
+    "n_files": 127
+  },
+  "files": [
+    {
+      "path": "data/processed/model_table.csv",
+      "sha256": "510215e792a34dead8c18907814c515abceb584a33a4870436fbfa893d6f36f8",
+      "bytes": 10216168,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/excluded_by_R1.csv",
+      "sha256": "73cfdf5c403b72327ba9505ee4dd13caaa55b0135b7a642d71c6d3a4b8d2aacd",
+      "bytes": 5146909,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/gcv_MJ_kg.csv",
+      "sha256": "6e9daa3838a790f2a007a5fd76f0f42d929a8ca93b95ef8450e4455839d9dd01",
+      "bytes": 150702,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/dcn_hc.csv",
+      "sha256": "c2fa378f8b952fdebed4787bd783381ca19bb8a30aa15169a3136399fc80ad80",
+      "bytes": 150266,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/octane_ron_mon_hc.csv",
+      "sha256": "c698dd162a2d4de58c92fc14ee8e2c6d2efae2e516198775838cc32df054e89e",
+      "bytes": 55360,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/freezing_point_pure_hc.csv",
+      "sha256": "b43b1f013508f5755ce167ce1a795f36aa2e83718c80e748b66b478620651e21",
+      "bytes": 123772,
+      "in_zip": false
+    },
+    {
+      "path": "data/processed/heat_of_combustion_real_fuels.csv",
+      "sha256": "1c48f7dd9a9498efbd32ad71b1504d655344d12bd3439dcbf3c043eb42e25227",
+      "bytes": 57775,
+      "in_zip": false
+    },
+    {
+      "path": "data/unified/measurements_dedup.csv",
+      "sha256": "bd980ce4a7d13542c1d8f07f825b0c4ed2060220b8adb7913e5f3ba753e566f5",
+      "bytes": 17359539,
+      "in_zip": false
+    },
+    {
+      "path": "data/unified/measurements.csv",
+      "sha256": "4e9932e477c6827a4330158f77a0097f7e09780de24e6e2e00cd7ac4db38907a",
+      "bytes": 18495150,
+      "in_zip": false
+    },
+    {
+      "path": "splits/s1s2s3.json",
+      "sha256": "998d01d4fdf86a478cc14d40216231aa6a0582daa57d6febfc02a7bf6c3666aa",
+      "bytes": 371455,
+      "in_zip": true
+    },
+    {
+      "path": "splits/locked.json",
+      "sha256": "0586b17a4dbb00c5ab55a4e96f66bd6801d15869c4cb26670f82f817a0589b05",
+      "bytes": 10035,
+      "in_zip": true
+    }
+  ]
+}

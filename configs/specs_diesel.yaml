@@ -1,0 +1,58 @@
+# Fuel Specification Limits: Automotive Diesel Fuel (No. 2-D / EN 590)
+# Standards: ASTM D975 / EN 590
+
+fuel_family: diesel
+specification_standard: "ASTM D975 / EN 590"
+governing_notes: "Specification targets for high-speed compression ignition fuels."
+
+constraints:
+  - prop: kin_visc_cSt
+    T_C: 40.0
+    lo: 1.9
+    hi: 4.1
+    test_method: "ASTM D445"
+    source_note: "ASTM D975 Grade No. 2-D kinematic viscosity limits at 40 C."
+    weight: 2.0
+
+  - prop: density_kg_m3
+    T_C: 15.0
+    lo: 820.0
+    hi: 845.0
+    test_method: "ASTM D4052"
+    source_note: "EN 590 density window at 15 C."
+    weight: 1.5
+
+  - prop: flash_point_C
+    T_C: null
+    lo: 52.0
+    test_method: "ASTM D93"
+    source_note: "ASTM D975 legal minimum Pensky-Martens closed-cup flash point."
+    weight: 3.0
+
+  - prop: dcn
+    T_C: null
+    lo: 40.0
+    test_method: "ASTM D6890"
+    source_note: "ASTM D975 minimum cetane number (EN 590 requires 51.0 min)."
+    weight: 2.5
+
+  - prop: wat_C
+    T_C: null
+    hi: 0.0
+    margin: 3.0
+    test_method: "ASTM D2500"
+    source_note: "Typical cloud point limit for temperate summer diesel."
+    weight: 1.5
+
+  - prop: class_wt_pct
+    group: aromatic
+    lo: 10.0
+    hi: 35.0
+    test_method: "ASTM D1319"
+    source_note: "Aromatic content range for lubricity balance and cetane retention."
+    weight: 1.0
+
+uncertainty_inflation_factors:
+  viscosity_kin_cSt: 1.377
+  density_kg_m3: 2.530
+  flash_point_C: 1.541

@@ -1,0 +1,4 @@
+model,evaluation,n_fuels,features,mae_MJ_kg,mae_ci95,rmse_MJ_kg,rmse_ci95,mape_pct,bias_MJ_kg
+Physics Baseline (Mass-weighted + H2O Latent Heat),zero_parameters,57,Pure compound GCV + composition,0.6889,"[0.6466, 0.7335]",0.7076,"[0.6588, 0.7571]",1.6,0.6889
+"Physics + Learned Residual (Ridge on Density/Aromatics, In-Sample v1)",in_sample_reproduced,57,"density_15C_kg_m3, aromatics_vol_pct",0.0783,"[0.0608, 0.0972]",0.1056,"[0.0823, 0.1286]",0.18,-0.0
+"Physics + Learned Residual (Ridge on Density/Aromatics, Strict LOO CV)",leave_one_fuel_out_cv,57,"density_15C_kg_m3, aromatics_vol_pct",0.086,"[0.0651, 0.1103]",0.1219,"[0.0891, 0.1554]",0.2,-0.0026

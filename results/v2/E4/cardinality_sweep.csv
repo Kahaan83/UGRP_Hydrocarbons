@@ -1,0 +1,46 @@
+fuel_family,pool_name,pool_size_K,cardinality_limit_M,active_components_count,feasible_with_margins,optimization_loss,active_formulation,n_constraint_violations
+jet,K_15,15,2,1,False,62719.4762,n-dodecane:100.0%,4
+jet,K_15,15,3,1,False,62719.4762,n-dodecane:100.0%,4
+jet,K_15,15,4,1,False,62719.4762,n-dodecane:100.0%,4
+jet,K_15,15,6,1,False,62719.4762,n-dodecane:100.0%,4
+jet,K_15,15,10,1,False,62719.4762,n-dodecane:100.0%,4
+jet,K_30,30,2,1,False,93750.0482,n-dodecane:100.0%,4
+jet,K_30,30,3,1,False,93750.0482,n-dodecane:100.0%,4
+jet,K_30,30,4,1,False,93750.0482,n-dodecane:100.0%,4
+jet,K_30,30,6,1,False,93750.0482,n-dodecane:100.0%,4
+jet,K_30,30,10,1,False,93750.0482,n-dodecane:100.0%,4
+jet,K_60,35,2,5,False,15136.9795,n-decane:20.3%; decalin:30.0%; n-undecane:22.6%; n-tridecane:24.4%; n-octadecane:2.7%,2
+jet,K_60,35,3,5,False,14636.9795,n-decane:20.3%; decalin:30.0%; n-undecane:22.6%; n-tridecane:24.4%; n-octadecane:2.7%,2
+jet,K_60,35,4,5,False,14336.9795,n-decane:20.3%; decalin:30.0%; n-undecane:22.6%; n-tridecane:24.4%; n-octadecane:2.7%,2
+jet,K_60,35,6,4,False,8244.1578,n-decane:21.6%; decalin:29.7%; n-undecane:23.2%; n-tridecane:23.8%,2
+jet,K_60,35,10,4,False,8244.1578,n-decane:21.6%; decalin:29.7%; n-undecane:23.2%; n-tridecane:23.8%,2
+diesel,K_15,15,2,3,False,98799.0042,n-tetradecane:53.7%; decalin:6.6%; toluene:39.8%,4
+diesel,K_15,15,3,3,False,98699.0042,n-tetradecane:53.7%; decalin:6.6%; toluene:39.8%,4
+diesel,K_15,15,4,3,False,98918.084,n-tetradecane:53.8%; decalin:6.3%; toluene:39.9%,4
+diesel,K_15,15,6,3,False,98918.084,n-tetradecane:53.8%; decalin:6.3%; toluene:39.9%,4
+diesel,K_15,15,10,2,False,46056.0499,n-hexadecane:77.8%; decalin:22.2%,3
+diesel,K_30,30,2,1,False,163474.3832,n-tetradecane:100.0%,4
+diesel,K_30,30,3,1,False,163474.3832,n-tetradecane:100.0%,4
+diesel,K_30,30,4,1,False,163474.3832,n-tetradecane:100.0%,4
+diesel,K_30,30,6,1,False,163474.3832,n-tetradecane:100.0%,4
+diesel,K_30,30,10,1,False,163474.3832,n-tetradecane:100.0%,4
+diesel,K_60,35,2,5,False,62010.1696,n-decane:17.4%; decalin:30.1%; n-undecane:21.2%; n-tridecane:23.0%; n-octadecane:8.3%,4
+diesel,K_60,35,3,5,False,61510.1696,n-decane:17.4%; decalin:30.1%; n-undecane:21.2%; n-tridecane:23.0%; n-octadecane:8.3%,4
+diesel,K_60,35,4,5,False,61210.1696,n-decane:17.4%; decalin:30.1%; n-undecane:21.2%; n-tridecane:23.0%; n-octadecane:8.3%,4
+diesel,K_60,35,6,5,False,61110.1696,n-decane:17.4%; decalin:30.1%; n-undecane:21.2%; n-tridecane:23.0%; n-octadecane:8.3%,4
+diesel,K_60,35,10,5,False,61110.1696,n-decane:17.4%; decalin:30.1%; n-undecane:21.2%; n-tridecane:23.0%; n-octadecane:8.3%,4
+gasoline,K_15,15,2,2,False,122919.1375,n-pentane:19.5%; isooctane:80.5%,5
+gasoline,K_15,15,3,2,False,122919.1375,n-pentane:19.5%; isooctane:80.5%,5
+gasoline,K_15,15,4,2,False,122919.1375,n-pentane:19.5%; isooctane:80.5%,5
+gasoline,K_15,15,6,2,False,122919.1375,n-pentane:19.5%; isooctane:80.5%,5
+gasoline,K_15,15,10,2,False,122919.1375,n-pentane:19.5%; isooctane:80.5%,5
+gasoline,K_30,30,2,14,False,41233.4089,"n-hexane:4.0%; n-tetradecane:5.8%; isooctane:8.4%; isododecane:3.0%; heptamethylnonane:2.4%; toluene:2.0%; isopentane:2.7%; 2,3-dimethylbutane:14.1%; cyclopentane:13.3%; bicyclohexyl:2.9%; ethylbenzene:12.6%; m-xylene:9.3%; 1,2,4-trimethylbenzene:6.0%; diisobutylene:10.1%",3
+gasoline,K_30,30,3,14,False,39133.4089,"n-hexane:4.0%; n-tetradecane:5.8%; isooctane:8.4%; isododecane:3.0%; heptamethylnonane:2.4%; toluene:2.0%; isopentane:2.7%; 2,3-dimethylbutane:14.1%; cyclopentane:13.3%; bicyclohexyl:2.9%; ethylbenzene:12.6%; m-xylene:9.3%; 1,2,4-trimethylbenzene:6.0%; diisobutylene:10.1%",3
+gasoline,K_30,30,4,14,False,37233.4089,"n-hexane:4.0%; n-tetradecane:5.8%; isooctane:8.4%; isododecane:3.0%; heptamethylnonane:2.4%; toluene:2.0%; isopentane:2.7%; 2,3-dimethylbutane:14.1%; cyclopentane:13.3%; bicyclohexyl:2.9%; ethylbenzene:12.6%; m-xylene:9.3%; 1,2,4-trimethylbenzene:6.0%; diisobutylene:10.1%",3
+gasoline,K_30,30,6,14,False,34033.4089,"n-hexane:4.0%; n-tetradecane:5.8%; isooctane:8.4%; isododecane:3.0%; heptamethylnonane:2.4%; toluene:2.0%; isopentane:2.7%; 2,3-dimethylbutane:14.1%; cyclopentane:13.3%; bicyclohexyl:2.9%; ethylbenzene:12.6%; m-xylene:9.3%; 1,2,4-trimethylbenzene:6.0%; diisobutylene:10.1%",3
+gasoline,K_30,30,10,14,False,30033.4089,"n-hexane:4.0%; n-tetradecane:5.8%; isooctane:8.4%; isododecane:3.0%; heptamethylnonane:2.4%; toluene:2.0%; isopentane:2.7%; 2,3-dimethylbutane:14.1%; cyclopentane:13.3%; bicyclohexyl:2.9%; ethylbenzene:12.6%; m-xylene:9.3%; 1,2,4-trimethylbenzene:6.0%; diisobutylene:10.1%",3
+gasoline,K_60,35,2,17,False,85012.146,"n-pentane:3.9%; n-octane:3.2%; n-decane:3.4%; isooctane:5.6%; isododecane:6.2%; cyclohexane:9.3%; toluene:19.6%; isobutane:2.9%; isopentane:3.7%; 2,3-dimethylbutane:3.5%; methylcyclohexane:4.4%; bicyclohexyl:4.4%; 1,2,4-trimethylbenzene:13.3%; tetralin:2.5%; diisobutylene:3.1%; n-octadecane:5.4%; hexylbenzene:3.8%",4
+gasoline,K_60,35,3,17,False,82112.146,"n-pentane:3.9%; n-octane:3.2%; n-decane:3.4%; isooctane:5.6%; isododecane:6.2%; cyclohexane:9.3%; toluene:19.6%; isobutane:2.9%; isopentane:3.7%; 2,3-dimethylbutane:3.5%; methylcyclohexane:4.4%; bicyclohexyl:4.4%; 1,2,4-trimethylbenzene:13.3%; tetralin:2.5%; diisobutylene:3.1%; n-octadecane:5.4%; hexylbenzene:3.8%",4
+gasoline,K_60,35,4,17,False,79412.146,"n-pentane:3.9%; n-octane:3.2%; n-decane:3.4%; isooctane:5.6%; isododecane:6.2%; cyclohexane:9.3%; toluene:19.6%; isobutane:2.9%; isopentane:3.7%; 2,3-dimethylbutane:3.5%; methylcyclohexane:4.4%; bicyclohexyl:4.4%; 1,2,4-trimethylbenzene:13.3%; tetralin:2.5%; diisobutylene:3.1%; n-octadecane:5.4%; hexylbenzene:3.8%",4
+gasoline,K_60,35,6,17,False,74612.146,"n-pentane:3.9%; n-octane:3.2%; n-decane:3.4%; isooctane:5.6%; isododecane:6.2%; cyclohexane:9.3%; toluene:19.6%; isobutane:2.9%; isopentane:3.7%; 2,3-dimethylbutane:3.5%; methylcyclohexane:4.4%; bicyclohexyl:4.4%; 1,2,4-trimethylbenzene:13.3%; tetralin:2.5%; diisobutylene:3.1%; n-octadecane:5.4%; hexylbenzene:3.8%",4
+gasoline,K_60,35,10,17,False,67412.146,"n-pentane:3.9%; n-octane:3.2%; n-decane:3.4%; isooctane:5.6%; isododecane:6.2%; cyclohexane:9.3%; toluene:19.6%; isobutane:2.9%; isopentane:3.7%; 2,3-dimethylbutane:3.5%; methylcyclohexane:4.4%; bicyclohexyl:4.4%; 1,2,4-trimethylbenzene:13.3%; tetralin:2.5%; diisobutylene:3.1%; n-octadecane:5.4%; hexylbenzene:3.8%",4

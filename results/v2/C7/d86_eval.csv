@@ -1,0 +1,7 @@
+cut,description,model,cv_scheme,n_fuels,mae_C,mae_ci95,rmse_C,rmse_ci95,bias_C
+T10_C,Front-End Volatility (10% Recovery),Physics TBP + API Engler Conversion,zero_parameters,57,13.57,"[12.36, 14.75]",14.38,"[13.26, 15.38]",-13.57
+T10_C,Front-End Volatility (10% Recovery),Recalibrated D86 Offset (LOO CV),leave_one_fuel_out_cv,57,4.11,"[3.47, 4.79]",4.83,"[4.16, 5.52]",-0.0
+T50_C,Mid-Boiling Point (50% Recovery),Physics TBP + API Engler Conversion,zero_parameters,57,4.05,"[3.15, 5.10]",5.56,"[3.97, 7.12]",0.12
+T50_C,Mid-Boiling Point (50% Recovery),Recalibrated D86 Offset (LOO CV),leave_one_fuel_out_cv,57,4.13,"[3.21, 5.20]",5.65,"[4.03, 7.25]",-0.0
+T90_C,Heavy-End Tail (90% Recovery),Physics TBP + API Engler Conversion,zero_parameters,57,9.57,"[8.24, 10.96]",10.88,"[9.53, 12.14]",9.57
+T90_C,Heavy-End Tail (90% Recovery),Recalibrated D86 Offset (LOO CV),leave_one_fuel_out_cv,57,4.39,"[3.68, 5.16]",5.26,"[4.50, 6.00]",0.0

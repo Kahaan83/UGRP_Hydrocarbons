@@ -1,0 +1,7 @@
+model,has_learned_residual,cv_scheme,n_obs,n_systems,mae_C,rmse_C,bias_C,over_prediction_rate_gt_5C,worst_case_over_prediction_C
+"Raoult (Ideal, gamma=1)",False,zero_parameters,126,31,6.3061,10.1411,1.2504,18.25,41.49
+"Raoult (Ideal, gamma=1) + HGB Residual",True,leave_one_system_out_cv,126,31,3.9748,6.9103,0.2535,12.7,37.43
+Regular Solution (Hildebrand),False,zero_parameters,126,31,6.7756,9.0325,-1.6011,15.08,33.3
+Regular Solution (Hildebrand) + HGB Residual,True,leave_one_system_out_cv,126,31,4.9538,6.8649,0.8364,26.19,30.18
+UNIFAC-type (Group Contribution),False,zero_parameters,126,31,6.5542,9.4223,-0.7248,16.67,38.26
+UNIFAC-type (Group Contribution) + HGB Residual,True,leave_one_system_out_cv,126,31,4.5527,6.7544,0.7833,20.63,28.66

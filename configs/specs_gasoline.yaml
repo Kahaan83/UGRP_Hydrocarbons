@@ -1,0 +1,58 @@
+# Fuel Specification Limits: Automotive Spark-Ignition Fuel (Gasoline)
+# Standards: ASTM D4814 / EN 228
+
+fuel_family: gasoline
+specification_standard: "ASTM D4814 / EN 228"
+governing_notes: "Specification targets for spark-ignition automotive gasoline."
+
+constraints:
+  - prop: ron
+    T_C: null
+    lo: 91.0
+    test_method: "ASTM D2699"
+    source_note: "Standard Regular/Midgrade Research Octane Number limit."
+    weight: 3.0
+
+  - prop: mon
+    T_C: null
+    lo: 82.0
+    test_method: "ASTM D2700"
+    source_note: "Standard Motor Octane Number limit for high-speed knock resistance."
+    weight: 2.5
+
+  - prop: octane_sensitivity
+    T_C: null
+    lo: 7.0
+    hi: 14.0
+    test_method: "Derived (RON - MON)"
+    source_note: "Octane sensitivity range for modern turbocharged engines."
+    weight: 1.0
+
+  - prop: density_kg_m3
+    T_C: 15.0
+    lo: 720.0
+    hi: 775.0
+    test_method: "ASTM D4052"
+    source_note: "ASTM D4814 density envelope for volatile gasoline."
+    weight: 1.5
+
+  - prop: vapor_pressure_kPa
+    T_C: 37.8
+    lo: 45.0
+    hi: 70.0
+    test_method: "ASTM D5191"
+    source_note: "Dry Vapor Pressure Equivalent (DVPE) limits for summer volatility."
+    weight: 2.0
+
+  - prop: distillation_T50_C
+    T_C: null
+    lo: 77.0
+    hi: 121.0
+    test_method: "ASTM D86"
+    source_note: "ASTM D4814 mid-boiling drivability index limit."
+    weight: 1.0
+
+uncertainty_inflation_factors:
+  viscosity_kin_cSt: 1.377
+  density_kg_m3: 2.530
+  flash_point_C: 1.541

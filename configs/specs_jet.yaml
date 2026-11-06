@@ -1,0 +1,56 @@
+# Fuel Specification Limits: Aviation Turbine Fuel (Jet A / Jet A-1)
+# Standards: ASTM D1655 / Def Stan 91-091
+
+fuel_family: jet
+specification_standard: "ASTM D1655 / Def Stan 91-091"
+governing_notes: "Specification targets for civil and military aviation turbine fuels."
+
+constraints:
+  - prop: kin_visc_cSt
+    T_C: -20.0
+    hi: 8.0
+    test_method: "ASTM D445"
+    source_note: "ASTM D1655 Table 1 maximum pumpability limit at high altitude."
+    weight: 2.0
+
+  - prop: density_kg_m3
+    T_C: 15.0
+    lo: 775.0
+    hi: 840.0
+    test_method: "ASTM D4052"
+    source_note: "ASTM D1655 standard density envelope for aircraft payload balance."
+    weight: 1.5
+
+  - prop: flash_point_C
+    T_C: null
+    lo: 38.0
+    test_method: "ASTM D56"
+    source_note: "ASTM D1655 minimum closed-cup flash point for ground handling safety."
+    weight: 3.0
+
+  - prop: wat_C
+    T_C: null
+    hi: -40.0
+    margin: 5.0
+    test_method: "ASTM D5972"
+    source_note: "Jet A freezing point specification (-40 C max; Jet A-1 is -47 C)."
+    weight: 2.0
+
+  - prop: heat_of_combustion_net_MJ_kg
+    T_C: 25.0
+    lo: 42.8
+    test_method: "ASTM D4809"
+    source_note: "ASTM D1655 minimum gravimetric energy density."
+    weight: 1.0
+
+  - prop: class_wt_pct
+    group: aromatic
+    hi: 25.0
+    test_method: "ASTM D1319"
+    source_note: "ASTM D1655 maximum aromatics to limit elastomer degradation and soot."
+    weight: 1.0
+
+uncertainty_inflation_factors:
+  viscosity_kin_cSt: 1.377
+  density_kg_m3: 2.530
+  flash_point_C: 1.541

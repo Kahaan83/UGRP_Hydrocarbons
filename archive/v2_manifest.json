@@ -1,0 +1,448 @@
+{
+  "tag": "v2-2026-11-05",
+  "created": "2026-11-05T00:30:56.291756",
+  "description": "Checksum manifest for UGRP Hydrocarbons v2 verification freeze, deliverables, configs, scripts, and docs.",
+  "n_files": 88,
+  "files": [
+    {
+      "path": "results/v2/A1/design_audit.csv",
+      "sha256": "c3b4b1fa7a1a4193f223f3a3c2703c59c494f274e7882791373817116b742c81",
+      "bytes": 2882
+    },
+    {
+      "path": "results/v2/A12/redistribution_audit.csv",
+      "sha256": "d660c6f00649aa1829584034db79b7e7c8c7a14a045896073d91efca1ad90ff3",
+      "bytes": 5783
+    },
+    {
+      "path": "results/v2/A2/recalibration_loo.csv",
+      "sha256": "6d484ed3373a13ae97763225716df8742f1834dc03e78352242ffffbd0b8a7b1",
+      "bytes": 1627
+    },
+    {
+      "path": "results/v2/A3/cetane_basis_rerun.csv",
+      "sha256": "f2df03d16301c32abd5f1c21d398cdddae3311dacd0c5311b45fc5fb723523a4",
+      "bytes": 285
+    },
+    {
+      "path": "results/v2/A4/flash_baseline_full.csv",
+      "sha256": "969c6e7a3290f1da137ea1f251628c5159b578021322ea0219fa51c3428a1f9c",
+      "bytes": 231158
+    },
+    {
+      "path": "results/v2/A4/gn_baselines.csv",
+      "sha256": "ec18aacdad798d862d3f8c31e74bba06de7442be4b6136bf1db7962e00dceb8f",
+      "bytes": 746
+    },
+    {
+      "path": "results/v2/A5/distillation_baseline.csv",
+      "sha256": "cf17e866a9b61b82e8a5dbd6a5eba793a378aa2e630697871d13c819adfacb94",
+      "bytes": 38912
+    },
+    {
+      "path": "results/v2/A5/hoc_recheck.csv",
+      "sha256": "34323aabba3b60cfde6da2bb298ebee546a0d8185eb6d7b641d1081b9dd13abf",
+      "bytes": 660
+    },
+    {
+      "path": "results/v2/A6/property_correlations.csv",
+      "sha256": "8f802c7fae50dd690567a36868d249e8195f8aa8fbdf9bb623f26c6775da5e67",
+      "bytes": 11272
+    },
+    {
+      "path": "results/v2/A6/real_fuels_multi_property.csv",
+      "sha256": "ac60130d6b26399805c579170cbde97fbb022be247110034a87184f112b52085",
+      "bytes": 223776
+    },
+    {
+      "path": "results/v2/A6/uncertainty_growth_refit.csv",
+      "sha256": "752961ceb97740167239b6b47aa9d2aae7dd1faf129982235c335ca017a6aa98",
+      "bytes": 1272
+    },
+    {
+      "path": "results/v2/A7/flash_margin_semantics.csv",
+      "sha256": "d9f66bfdf5d630aa9ce9a46fe4612bedb5b1b013a7933794284a27e81d7c2765",
+      "bytes": 576
+    },
+    {
+      "path": "results/v2/A8/flash_usage_audit.csv",
+      "sha256": "ba90af193051aa02c84528d4c967725c79fa7708ab13b2421f61406d18101daf",
+      "bytes": 2316
+    },
+    {
+      "path": "results/v2/A9/hindcast_predictions.csv",
+      "sha256": "43c01f2c8efaa1cce04aaae8f2d5118bef10d401cc51c3ef607a721c57d39a12",
+      "bytes": 49898
+    },
+    {
+      "path": "results/v2/A9/hindcast_summary.csv",
+      "sha256": "c2a7175f1c6854dc601bf62bc20ccd67201516ae1f57dc2ccceb977a0286ea7a",
+      "bytes": 1404
+    },
+    {
+      "path": "results/v2/B6/real_fuels_property_matrix.csv",
+      "sha256": "0efcc53e1e1fe1c6c083cdd12420e5a557516ed998c3e9d2b29b58ef14a1e60a",
+      "bytes": 14107
+    },
+    {
+      "path": "results/v2/C1/hoc_eval.csv",
+      "sha256": "1920b21f8b8b5c7944130faeca8416c179b9093801e574914e97b302d2c3d577",
+      "bytes": 453
+    },
+    {
+      "path": "results/v2/C2/flash_loso_v2.csv",
+      "sha256": "dddae11bff81dba6ced88ac798af651222307e3efb3378a24834ed2d7597ba85",
+      "bytes": 753
+    },
+    {
+      "path": "results/v2/C4/cold_flow_v2.csv",
+      "sha256": "a1b832461083a8d3121149b49b5b4ff249e092e39b24e5f03bb9c91b8967654f",
+      "bytes": 906
+    },
+    {
+      "path": "results/v2/C6/octane_real_fuel.csv",
+      "sha256": "cba50c134e7b1f87798ab81d1d8cce5ae579858ea6a410c9f3d41957d66b5854",
+      "bytes": 1305
+    },
+    {
+      "path": "results/v2/C7/d86_eval.csv",
+      "sha256": "3f97e417dff37963886ee24a93548a81c672345deff0f406017a96e5bb201b2e",
+      "bytes": 939
+    },
+    {
+      "path": "results/v2/C8/dvpe_eval.csv",
+      "sha256": "21b582556f2624d1326634be6523b9af1f3a059f799d1a3c9d5427df92e8fdd9",
+      "bytes": 459
+    },
+    {
+      "path": "results/v2/D1/bilinear_hindcast.csv",
+      "sha256": "21ff005c5402ceac6b21627f47880b64868d34658a49d48296815780e983ff94",
+      "bytes": 5396
+    },
+    {
+      "path": "results/v2/D2/class_interactions.csv",
+      "sha256": "8a78b4063385d0fd476d0ecd9e61695cd91da14cff34cb5beeebd69b61303da8",
+      "bytes": 4359
+    },
+    {
+      "path": "results/v2/D3/shrinkage_sweep.csv",
+      "sha256": "baddeae1f3e9db085b50f2c595921d605b17c0c83a867fd9162f8572207be202",
+      "bytes": 27115
+    },
+    {
+      "path": "results/v2/D4/stacked_eval.csv",
+      "sha256": "9b9cb3fdc78f740c773b0d304d9ac6b4dacd9021a79e2b34bd8ca9fbfcc7be3c",
+      "bytes": 3401
+    },
+    {
+      "path": "results/v2/D5/error_vs_n.csv",
+      "sha256": "974d006eaf7b4a4bf6c32480598a09ea2ac813a277a44a3632eea02b9f051073",
+      "bytes": 5064
+    },
+    {
+      "path": "results/v2/D6/truncation.csv",
+      "sha256": "e60fde6ee84ccb0f66aa251e0d7f517967cc1ca7f2bb519ae15bdf35bcc891f0",
+      "bytes": 24451
+    },
+    {
+      "path": "results/v2/E3/designs.csv",
+      "sha256": "71ccf7a84dda24023ca3225615965567c02c1041609e79e63c6b7cec385e3a23",
+      "bytes": 12789
+    },
+    {
+      "path": "results/v2/E4/cardinality_sweep.csv",
+      "sha256": "0ccfffdbeac1a491905e7bbe5ac5d485676a2b8b063dd7628d494f50e6dd0a92",
+      "bytes": 6389
+    },
+    {
+      "path": "results/v2/E4/pareto.csv",
+      "sha256": "39ffac3495f7fa874e4f827eba07b8a4c070464569ac2902502a65362d2faca0",
+      "bytes": 5546
+    },
+    {
+      "path": "results/v2/E5/surrogate_comparison.csv",
+      "sha256": "affb7d93269a60a81abe63816e0566982fb7c48e0309522cfb92c7bf30ab0f4c",
+      "bytes": 4154
+    },
+    {
+      "path": "results/v2/E6/ablations.csv",
+      "sha256": "98bf7159377d1ffcd1747ca0c90909473635fed1a3f9cd42b9a5a70ae60e7ef6",
+      "bytes": 7004
+    },
+    {
+      "path": "configs/specs_diesel.yaml",
+      "sha256": "1fa64bb5569b8d05d2a9c3821a545aaf31ee1f6c348874404ac1d15b31bfb497",
+      "bytes": 1446
+    },
+    {
+      "path": "configs/specs_gasoline.yaml",
+      "sha256": "4d5a8512a0bdd204a825eac3b0b695908cb837c1a7576dbd3331dc2fa0fce7ac",
+      "bytes": 1478
+    },
+    {
+      "path": "configs/specs_jet.yaml",
+      "sha256": "91e2128d4e812b835e2d1a2296f16bf000d092ed03f9c8f8f944eaa8f7ad366f",
+      "bytes": 1515
+    },
+    {
+      "path": "configs/uncertainty_v2.yaml",
+      "sha256": "07dd9bf32d7297fadec91c39840f29798642b6b7c2b5f4b3a0797dfe5797874d",
+      "bytes": 5456
+    },
+    {
+      "path": "scripts/v2/assemble_distillation_real_fuels.py",
+      "sha256": "ec4932b7f022d3dc75764f7ffe83f5a289f607d471ed06457eeef13b384b4178",
+      "bytes": 6389
+    },
+    {
+      "path": "scripts/v2/audit_data_redistribution.py",
+      "sha256": "4e13dc7ecbe18c4cdd7efa99653acc46cc12e6b89431f029e5d855224dfcb2ef",
+      "bytes": 9236
+    },
+    {
+      "path": "scripts/v2/audit_flash_data.py",
+      "sha256": "8b4cccfb9fdbf6bf098d404bce82c05a51a8ce6c04956c64ab7adce5e8ab7853",
+      "bytes": 8341
+    },
+    {
+      "path": "scripts/v2/audit_inverse_designs.py",
+      "sha256": "8de89000ccfa017f02e1f74591256523c8a1904d609ea28b2b5385bddcfaf858",
+      "bytes": 20109
+    },
+    {
+      "path": "scripts/v2/build_candidates_inventory.py",
+      "sha256": "22ca8f360f0c92985ea4f7cfc04e1ef597777f78cc5a76d3b590b245113bd7e5",
+      "bytes": 45411
+    },
+    {
+      "path": "scripts/v2/check_cetane_basis.py",
+      "sha256": "6fa8c827e2beef8c417f360c73059a27df61ee802759c1c14d3b1c8bfa030ce6",
+      "bytes": 8600
+    },
+    {
+      "path": "scripts/v2/compute_property_correlations.py",
+      "sha256": "97f215a144be291c71f55345394b64330464e63f491ddfb21ae37f4d6b6063b7",
+      "bytes": 7972
+    },
+    {
+      "path": "scripts/v2/digitize_cetane_compounds.py",
+      "sha256": "e468aa7a1b58edaeef6318cadcb6b7e90d607ff7b6e81c5fa2aeb3b3c25c82ac",
+      "bytes": 10795
+    },
+    {
+      "path": "scripts/v2/eval_bilinear_hindcast.py",
+      "sha256": "072b8ca079a7d197e30d68f32acaa9d16588f7577ce6e1c33910d3caa04b8801",
+      "bytes": 23971
+    },
+    {
+      "path": "scripts/v2/eval_class_interactions.py",
+      "sha256": "c117fed9ed325e2426dc30546b533635d75683419d8b6c247278c467950c7840",
+      "bytes": 15231
+    },
+    {
+      "path": "scripts/v2/eval_cold_flow_v2.py",
+      "sha256": "2c88ff35e35dc6c712d3ba064d420256c04d456f6c15b8a608b093c0edb591b3",
+      "bytes": 13003
+    },
+    {
+      "path": "scripts/v2/eval_d86_prediction.py",
+      "sha256": "b4a2bc6837968d99bd63919815c94b05bb3944c225f855c8f1bc7d2defd0dfd2",
+      "bytes": 10925
+    },
+    {
+      "path": "scripts/v2/eval_distillation_baseline.py",
+      "sha256": "92ed876302d8c61bcc5cd19895ed1fb382b1ee48969a1730abf4079cfe65fea0",
+      "bytes": 7575
+    },
+    {
+      "path": "scripts/v2/eval_dvpe_baseline.py",
+      "sha256": "45bd5683dab8b50bcff1f6630595e6b3723299783149111380531e95fce96301",
+      "bytes": 9881
+    },
+    {
+      "path": "scripts/v2/eval_error_vs_n_components.py",
+      "sha256": "f01088dd9bc9e0a7c64b77c4c408d0bb3253a3a3bc3cc61bd266a9b194f6704a",
+      "bytes": 12523
+    },
+    {
+      "path": "scripts/v2/eval_flash_baseline_full.py",
+      "sha256": "845425c3829e419aff9e81e5f45cc082a018c6a2a00ab98ac7d4aee1b09688e7",
+      "bytes": 10464
+    },
+    {
+      "path": "scripts/v2/eval_flash_loso_v2.py",
+      "sha256": "9156e382f2df48d04caa930f2c95797a27c3bb820a5676f3d09ffed8f8d6c607",
+      "bytes": 12874
+    },
+    {
+      "path": "scripts/v2/eval_flash_margin_semantics.py",
+      "sha256": "6e70b668f47b75332dfff417fc286901584c36178ca5c4890fdc3e1b0f196cb2",
+      "bytes": 8738
+    },
+    {
+      "path": "scripts/v2/eval_gn_baselines.py",
+      "sha256": "32ddd1b21711b34bfad0ccc4db229da4cc7bbf591b2285e2969bf0e803fed643",
+      "bytes": 11236
+    },
+    {
+      "path": "scripts/v2/eval_hoc_v2.py",
+      "sha256": "c11e6a641d99dd0c481031eacca7c72d85373c4c87e9f20b1fd02fb91eb865a9",
+      "bytes": 11301
+    },
+    {
+      "path": "scripts/v2/eval_octane_real_fuels.py",
+      "sha256": "4d3949334af0e90d32140b17240a96d13e7a2258e248f539f9387b82564d8f7a",
+      "bytes": 13226
+    },
+    {
+      "path": "scripts/v2/eval_recalibration_loo.py",
+      "sha256": "0d087589ff304d322e35ed384f2e2f29ba1b81ca69b74c980eae02380afa5111",
+      "bytes": 12319
+    },
+    {
+      "path": "scripts/v2/eval_shrinkage_sweep.py",
+      "sha256": "fe9db707671d8c43bcd347e6ba07a7e346402a034f19e84abaa59cd5b93e3803",
+      "bytes": 15791
+    },
+    {
+      "path": "scripts/v2/eval_stacked_model.py",
+      "sha256": "8f0095f7cca9faf298fff96633a05fd435b372da37cce95ac4f1b634756d0c0d",
+      "bytes": 18292
+    },
+    {
+      "path": "scripts/v2/eval_truncation_sensitivity.py",
+      "sha256": "be5022a350676a2f3f5da9d5766ee57daa626b6f9c9573b2b6f154fb70c6ebc1",
+      "bytes": 14148
+    },
+    {
+      "path": "scripts/v2/ingest_real_fuels_v2.py",
+      "sha256": "87546c8bb4f973ef3bb016695c8957488175711e44c0286f5bf2f6eacd646b1d",
+      "bytes": 39031
+    },
+    {
+      "path": "scripts/v2/make_v2_manifest.py",
+      "sha256": "a7b5a3f159b1d773351c2976dc20df4dbc4ba9359749c2f0be203951f342316a",
+      "bytes": 2757
+    },
+    {
+      "path": "scripts/v2/recheck_hoc.py",
+      "sha256": "52607fee903e77c4b1e65aec9433daf56af504de2e6211bd63c758f08310721a",
+      "bytes": 11417
+    },
+    {
+      "path": "scripts/v2/refit_uncertainty_growth.py",
+      "sha256": "000875eb3b8801be81dcb5eb25bb26392ce48ae5c2d2955bd324844b408caa36",
+      "bytes": 12622
+    },
+    {
+      "path": "scripts/v2/reproduce_all.py",
+      "sha256": "3b950694bced33024a7b9b7a53cf5be64b0fef752a764c49a6a9ad1797056b0f",
+      "bytes": 7942
+    },
+    {
+      "path": "scripts/v2/reproduce_hindcast.py",
+      "sha256": "2c7a7a7837a4c8504ef35516ce1c9023b7b2260c5d2cc46dde527876c3c2d0ca",
+      "bytes": 2231
+    },
+    {
+      "path": "scripts/v2/run_phase_c.py",
+      "sha256": "f868b989926add1fdfa8c32c78b4ebc551da18315e84deadd7076cfb3c961510",
+      "bytes": 2538
+    },
+    {
+      "path": "scripts/v2/run_phase_d.py",
+      "sha256": "9a281ae2c3669a22bfe83e293231062d0f012f3726d6b2cd0a42405977d7ec52",
+      "bytes": 2256
+    },
+    {
+      "path": "scripts/v2/run_phase_e.py",
+      "sha256": "41b751ad3d312bc0952711df075ad251a46f49c6b9294de149563d1aa7deed4b",
+      "bytes": 26751
+    },
+    {
+      "path": "scripts/v2/verify_c3_leakage.py",
+      "sha256": "95613b642cc62ca58ac3de2b7422f6fafdfb9b69771fc509c479f9a38f5823ea",
+      "bytes": 4803
+    },
+    {
+      "path": "scripts/reproduce_all_v2.sh",
+      "sha256": "2f884401ad06c77329bccebeee59836316b273db2d6d5e0264857284cfceb100",
+      "bytes": 831
+    },
+    {
+      "path": "Makefile",
+      "sha256": "c0decc76994a312dcad117f3e869ea85df47580edf237a23e44edf965eb964ad",
+      "bytes": 521
+    },
+    {
+      "path": "data/real_fuels/blend_links.csv",
+      "sha256": "1a5b33b5e418558e7991caa9229ed3fcc87fa8db04336e5e2b1c15e026725049",
+      "bytes": 2963
+    },
+    {
+      "path": "data/real_fuels/candidates_v2.csv",
+      "sha256": "8e127928a97ccae03d73931be2d20346412f2a241965a027973da09ba76f4537",
+      "bytes": 16729
+    },
+    {
+      "path": "data/real_fuels/compositions.csv",
+      "sha256": "3db71fea337546a6407ba51e828a8784155d6ae197b2a65e7f033ed1dd37140a",
+      "bytes": 270208
+    },
+    {
+      "path": "data/real_fuels/compositions_measured.csv",
+      "sha256": "4a31ed0c7bb7b3ce1d61967730bb013a8f2b9ab03e678549d4543165b228f268",
+      "bytes": 21714
+    },
+    {
+      "path": "data/real_fuels/compositions_reconstructed.csv",
+      "sha256": "e5fc9fd248e4ba5c181bc44a97fc61eff535353f849a44662ca40d05df2efaaa",
+      "bytes": 248567
+    },
+    {
+      "path": "data/real_fuels/inventory.csv",
+      "sha256": "a4c4d51ffa09f3a3acdad968895ef359a34d281e5917377a57053b7579a0fd4d",
+      "bytes": 22935
+    },
+    {
+      "path": "data/real_fuels/inventory_measured.csv",
+      "sha256": "0707a05e30b546b2ae7ccad1c6f3327eaf9a762b4db3a7c3d341fee7b72306b1",
+      "bytes": 9090
+    },
+    {
+      "path": "data/real_fuels/inventory_reconstructed.csv",
+      "sha256": "fc925e4410042339cbd6c72872f41095b97e8d3d10c3c34e4bb2e8b96feb998d",
+      "bytes": 14001
+    },
+    {
+      "path": "splits/real_fuels_nested_v2.json",
+      "sha256": "4a9564706ffc11dd8c15ba13d34fdaa9be201c0031aff5de94c17f8f7491c821",
+      "bytes": 64705
+    },
+    {
+      "path": "data/processed/v2/distillation_real_fuels.csv",
+      "sha256": "2965cd8664986e23697d428a3d45c0debeaf41b9a930c7d3911e5ccb252a359f",
+      "bytes": 43553
+    },
+    {
+      "path": "data/processed/v2/gcv_v2_MJ_kg.csv",
+      "sha256": "a52fe20d51997bc6cf481831bdd27e51aaa340e98cbe74b162fd043f0de68d30",
+      "bytes": 100822
+    },
+    {
+      "path": "docs/FULL_REPORT_v2.md",
+      "sha256": "a22d97dcd18f7822556013f16534a6bd269c43861f0773e734b58327a47ba49a",
+      "bytes": 34600
+    },
+    {
+      "path": "docs/experiment_plan.md",
+      "sha256": "8cef0db4fd75b122a449acabe4610d649119d7928e971e8322ea7a9cc30d1f5c",
+      "bytes": 15193
+    },
+    {
+      "path": "docs/claims_register.md",
+      "sha256": "4e961b5c00e331df550f50aa9697f22f85e8d6e936dea99811db4945514e57c2",
+      "bytes": 6588
+    }
+  ]
+}

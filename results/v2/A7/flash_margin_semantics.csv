@@ -1,0 +1,9 @@
+safety_margin_C,analysis_level,model_obs_coverage,model_system_coverage,base_obs_coverage,base_system_coverage,uncovered_systems,worst_case_violation_C
+0.5,margin_sweep,0.6508,0.3548,0.7381,0.7097,20,10.94
+1.0,margin_sweep,0.7222,0.5806,0.746,0.7097,13,10.44
+2.0,margin_sweep,0.7937,0.7097,0.7619,0.7097,9,9.44
+3.4,margin_sweep,0.8968,0.8387,0.7778,0.7419,5,8.04
+5.0,margin_sweep,0.9048,0.8387,0.8016,0.7742,5,6.44
+7.5,margin_sweep,0.9524,0.9677,0.8333,0.8387,1,3.94
+10.0,margin_sweep,0.9762,0.9677,0.8492,0.8387,1,1.44
+11.45,margin_sweep,1.0,1.0,0.8571,0.8387,0,0.0

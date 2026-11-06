@@ -1,0 +1,114 @@
+system_name,category,n_comp,regime,t_meas,t_wat_ideal,t_pred_offset,t_pred_coutinho,err_offset,err_coutinho
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),33.55,35.64,21.060000000000002,22.24,-12.489999999999995,-11.309999999999999
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),32.05,34.29,19.71,20.89,-12.339999999999996,-11.159999999999997
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),31.35,33.7,19.120000000000005,20.3,-12.229999999999997,-11.05
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),31.15,33.03,18.450000000000003,19.63,-12.699999999999996,-11.52
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),28.15,31.49,16.909999999999997,18.09,-11.240000000000002,-10.059999999999999
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),27.75,30.01,15.430000000000001,16.61,-12.319999999999999,-11.14
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),25.65,28.28,13.700000000000001,14.88,-11.949999999999998,-10.769999999999998
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),24.05,26.49,11.909999999999998,13.09,-12.140000000000002,-10.96
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),21.05,24.4,9.819999999999999,11.0,-11.230000000000002,-10.05
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),19.45,22.1,7.520000000000001,8.7,-11.929999999999998,-10.75
+C7-C23,Coutinho Binary Wax,2,Simple Blends (2-5 comps),13.35,19.23,4.65,7.27,-8.7,-6.08
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),46.55,48.26,33.68,34.86,-12.869999999999997,-11.689999999999998
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),44.15,46.59,32.010000000000005,33.19,-12.139999999999993,-10.96
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),42.65,44.87,30.29,31.47,-12.36,-11.18
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),42.25,44.5,29.92,31.1,-12.329999999999998,-11.149999999999999
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),41.05,43.99,29.410000000000004,30.59,-11.639999999999993,-10.459999999999997
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),37.75,40.97,26.39,27.57,-11.36,-10.18
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),37.25,39.67,25.090000000000003,26.27,-12.159999999999997,-10.98
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),28.25,32.88,18.300000000000004,19.48,-9.949999999999996,-8.77
+C7-C25,Coutinho Binary Wax,2,Simple Blends (2-5 comps),27.55,32.36,17.78,18.96,-9.77,-8.59
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),18.1,24.1,9.520000000000001,21.82,-8.58,3.719999999999999
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),19.0,24.58,9.999999999999998,22.22,-9.000000000000002,3.219999999999999
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),19.25,24.73,10.15,22.35,-9.1,3.1000000000000014
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),20.3,25.57,10.99,23.04,-9.31,2.7399999999999984
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),22.1,27.43,12.85,24.56,-9.250000000000002,2.4599999999999973
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),22.9,28.05,13.47,25.05,-9.429999999999998,2.150000000000002
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),23.25,28.69,14.110000000000001,25.55,-9.139999999999999,2.3000000000000007
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),24.4,29.86,15.28,26.44,-9.12,2.0400000000000027
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),25.8,31.19,16.61,27.43,-9.190000000000001,1.629999999999999
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),27.1,32.36,17.78,28.27,-9.32,1.1699999999999982
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),29.25,34.68,20.1,29.83,-9.149999999999999,0.5799999999999983
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),31.4,36.01,21.43,30.65,-9.969999999999999,-0.75
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),32.65,37.26,22.68,31.37,-9.969999999999999,-1.2799999999999976
+C7-C36,Coutinho Binary Wax,2,Simple Blends (2-5 comps),34.1,38.57,23.990000000000002,32.08,-10.11,-2.020000000000003
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),16.1,22.35,7.770000000000001,18.79,-8.33,2.6899999999999977
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),17.9,24.15,9.569999999999999,20.13,-8.33,2.2300000000000004
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),19.6,25.59,11.01,21.16,-8.590000000000002,1.5599999999999987
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),20.7,26.75,12.17,21.95,-8.53,1.25
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),22.1,28.14,13.56,22.86,-8.540000000000001,0.759999999999998
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),22.7,28.61,14.03,23.16,-8.67,0.46000000000000085
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),24.3,30.3,15.72,24.18,-8.58,-0.120000000000001
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),25.2,31.25,16.67,24.71,-8.529999999999998,-0.48999999999999844
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),26.55,32.62,18.04,25.44,-8.510000000000002,-1.1099999999999994
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),27.9,33.72,19.14,25.98,-8.759999999999998,-1.9199999999999982
+C7-C32,Coutinho Binary Wax,2,Simple Blends (2-5 comps),28.4,34.17,19.590000000000003,26.18,-8.809999999999995,-2.219999999999999
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),38.8,42.53,27.950000000000003,29.13,-10.849999999999994,-9.669999999999998
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),35.2,39.42,24.840000000000003,26.02,-10.36,-9.180000000000003
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),29.15,33.73,19.15,20.35,-10.0,-8.799999999999997
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),26.2,30.82,16.240000000000002,19.59,-9.959999999999997,-6.609999999999999
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),24.55,29.14,14.56,19.01,-9.99,-5.539999999999999
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),24.3,29.08,14.499999999999998,18.98,-9.800000000000002,-5.32
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),23.75,27.88,13.299999999999999,18.5,-10.450000000000001,-5.25
+C7-C28,Coutinho Binary Wax,2,Simple Blends (2-5 comps),22.9,27.07,12.49,18.15,-10.409999999999998,-4.75
+Edwards 2-comp (dodecane/tetralin),Published Jet Surrogate,2,Simple Blends (2-5 comps),-29.78,-14.02,-28.6,-18.32,1.1799999999999997,11.46
+Bruno-Huber 3-comp (POSF-10325),Published Jet Surrogate,3,Simple Blends (2-5 comps),-24.82,-7.29,-21.87,-15.57,2.9499999999999993,9.25
+Dooley 2nd Gen 4-comp,Published Jet Surrogate,4,Simple Blends (2-5 comps),-42.01,-22.84,-37.42,-32.09,4.589999999999996,9.919999999999995
+"CRC647_2 (Boston, MA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-52.6,-34.1,-48.68,-50.39,3.9200000000000017,2.210000000000001
+"CRC647_3 (Chicago, IL)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-46.7,-30.98,-45.56,-47.43,1.1400000000000006,-0.7299999999999969
+CRC647_4 (Dallas/Ft. Worth),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-43.6,-27.88,-42.46,-45.03,1.1400000000000006,-1.4299999999999997
+"CRC647_6 (Lebanon, OH)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-44.2,-30.2,-44.78,-45.89,-0.5799999999999983,-1.6899999999999977
+"CRC647_7 (Lima, OH)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-44.0,-30.18,-44.76,-45.46,-0.759999999999998,-1.4600000000000009
+"CRC647_8 (Los Angeles, CA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-59.1,-30.26,-44.84,-46.75,14.259999999999998,12.350000000000001
+"CRC647_14 (Pittsburg, PA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-45.7,-29.85,-44.43,-46.25,1.2700000000000031,-0.5499999999999972
+"CRC647_17 (Seattle, WA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-48.2,-26.5,-41.08,-43.88,7.1200000000000045,4.32
+"CRC647_18 (Seattle/Boeing, WA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-49.8,-29.69,-44.27,-46.56,5.529999999999994,3.239999999999995
+"CRC647_20 (Shell Martinez Refinery, CA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-67.0,-32.02,-46.6,-47.98,20.4,19.020000000000003
+"CRC647_30 (Lebanon, OH)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-49.7,-34.43,-49.01,-50.58,0.6900000000000048,-0.8799999999999955
+"CRC647_31 (Langley AFB, VA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-47.5,-32.91,-47.489999999999995,-49.09,0.010000000000005116,-1.5900000000000034
+"CRC647_32 (Shaw AFB, SC)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-45.8,-34.13,-48.71,-50.0,-2.9100000000000037,-4.200000000000003
+"CRC647_33 (Randolph AFB, TX)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-60.0,-35.78,-50.36,-50.86,9.64,9.14
+"CRC647_34 (McConnell AFB, KS)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-48.9,-32.18,-46.76,-47.83,2.1400000000000006,1.0700000000000003
+"CRC647_35 (Robins AFB, KS)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-52.2,-33.22,-47.8,-50.01,4.400000000000006,2.190000000000005
+CRC647_36 (Stoddard Solvent),CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-72.0,-54.79,-69.37,-67.74,2.6299999999999955,4.260000000000005
+"CRC647_37 (Seymour Johnson AFB, NC)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-50.5,-33.01,-47.589999999999996,-49.32,2.9100000000000037,1.1799999999999997
+CRC647_39 (Valero Benicia Refinery),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-47.3,-29.61,-44.19,-45.08,3.1099999999999994,2.219999999999999
+"CRC647_40 (Petro Star Valdez Refinery, AK)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-48.8,-31.72,-46.3,-47.4,2.5,1.3999999999999986
+"CRC647_41 (Trend Western Fuels, Tyndall)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-51.1,-35.19,-49.769999999999996,-51.03,1.3300000000000054,0.07000000000000028
+"CRC647_42 (Charleston AFB, SC)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-50.1,-35.19,-49.769999999999996,-50.69,0.3300000000000054,-0.5899999999999963
+"CRC647_43 (Placid Refining, LA)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-46.2,-27.69,-42.27,-43.74,3.9299999999999997,2.460000000000001
+"CRC647_44 (Buckeye Pipeline, IN)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-47.6,-29.91,-44.49,-46.59,3.1099999999999994,1.009999999999998
+"CRC647_45 (Monee, IL (TEPPCO))",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-47.2,-29.63,-44.21,-46.19,2.990000000000002,1.0100000000000051
+CRC647_101 (Dartmouth / Halifax),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-46.2,-41.95,-56.53,-56.92,-10.329999999999998,-10.719999999999999
+CRC647_104 (Toronto),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-49.4,-32.39,-46.97,-48.62,2.4299999999999997,0.7800000000000011
+CRC647_105 (Richmond / Vancouver),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-46.2,-24.57,-39.15,-41.85,7.050000000000004,4.350000000000001
+CRC647_108 (Edmonton),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-50.4,-31.29,-45.87,-47.55,4.530000000000001,2.8500000000000014
+"CRC647_109 (Ontario, Canada)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-53.0,-41.14,-55.72,-55.95,-2.719999999999999,-2.950000000000003
+"CRC647_110 (Ontario, Canada)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-50.0,-23.74,-38.32,-40.37,11.68,9.630000000000003
+"CRC647_111 (Edmonton, Oil Sands)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-71.0,-27.9,-42.48,-44.74,28.520000000000003,26.259999999999998
+"CRC647_206 (Rio de Janiero, Brazil)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-59.5,-42.23,-56.809999999999995,-57.2,2.690000000000005,2.299999999999997
+"CRC647_211 (Talara City, Peru)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-58.0,-33.77,-48.35,-49.08,9.649999999999999,8.920000000000002
+"CRC647_301 (Amsterdam, Netherlands)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-55.2,-37.25,-51.83,-53.13,3.3700000000000045,2.0700000000000003
+"CRC647_304 (Brussels, Belgium)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-53.4,-33.5,-48.08,-49.72,5.32,3.6799999999999997
+"CRC647_306 (Dublin, Ireland)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-50.6,-34.4,-48.98,-50.52,1.6200000000000045,0.0799999999999983
+"CRC647_314 (London, England)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-53.4,-34.08,-48.66,-50.12,4.740000000000002,3.280000000000001
+"CRC647_315 (London, England)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-54.5,-34.18,-48.76,-50.31,5.740000000000002,4.189999999999998
+"CRC647_316 (Madrid, Spain)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-58.8,-35.79,-50.37,-51.77,8.43,7.029999999999994
+"CRC647_318 (Munich, Germany)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-57.1,-40.25,-54.83,-55.53,2.270000000000003,1.5700000000000003
+"CRC647_321 (Paris, France)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-53.4,-34.67,-49.25,-51.0,4.149999999999999,2.3999999999999986
+"CRC647_325 (Toulouse, France)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-58.3,-42.88,-57.46,-58.1,0.8399999999999963,0.19999999999999574
+"CRC647_334 (Bordeaux, France)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-58.8,-43.36,-57.94,-58.29,0.8599999999999994,0.509999999999998
+"CRC647_335 (Lyon, France)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-48.0,-32.68,-47.26,-48.91,0.740000000000002,-0.9099999999999966
+"CRC647_336 (Montpellier, France)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-55.5,-27.04,-41.62,-43.36,13.880000000000003,12.14
+"CRC647_403 (Praha (Prague), Czech Republic)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-49.4,-40.43,-55.01,-55.04,-5.609999999999999,-5.640000000000001
+CRC647_507 (South Africa (part synth)),CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-55.4,-38.75,-53.33,-53.54,2.0700000000000003,1.8599999999999994
+CRC647_508 (South Africa (100% synth)),CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-58.6,-39.69,-54.269999999999996,-52.73,4.330000000000005,5.8700000000000045
+"CRC647_606 (Abu Dhabi, UAE)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-49.2,-36.62,-51.199999999999996,-52.35,-1.999999999999993,-3.1499999999999986
+"CRC647_704 (Beijing, China)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-56.5,-35.35,-49.93,-50.96,6.57,5.539999999999999
+"CRC647_711 (Kuala Lumpur, Malaysia)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-50.3,-41.55,-56.129999999999995,-56.88,-5.829999999999998,-6.580000000000005
+"CRC647_716 (Sydney, Australia)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-52.9,-36.4,-50.98,-52.48,1.9200000000000017,0.4200000000000017
+"CRC647_717 (Tokyo, Japan)",CRC 647 World Aviation Fuel,49,Multicomponent Real Fuels (>20 comps),-53.2,-34.73,-49.309999999999995,-50.86,3.8900000000000077,2.3400000000000034
+"CRC647_718 (Oil Shale, Australia)",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-50.8,-42.65,-57.23,-57.49,-6.43,-6.690000000000005
+"CRC647_720 (Oil Shale, Australia (low nit.))",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-54.1,-46.38,-60.96,-60.62,-6.859999999999999,-6.519999999999996
+"CRC647_721 (Oil Shale, Australia (high Nit.))",CRC 647 World Aviation Fuel,48,Multicomponent Real Fuels (>20 comps),-52.4,-46.64,-61.22,-61.06,-8.82,-8.660000000000004

@@ -1,0 +1,4 @@
+model_version,blending_basis,n_mixtures,n_systems,mae,mae_95ci,rmse,rmse_95ci,bias,coverage_pct
+v2_nrel_recalibrated,mole,346,38,5.5325,"[3.6045, 8.3583]",8.3055,"[5.2975, 11.3546]",-4.3761,100.0
+v2_nrel_recalibrated,mass,346,38,3.6405,"[2.7880, 4.8142]",5.4886,"[3.8486, 7.7729]",-1.7281,100.0
+v2_nrel_recalibrated,volume (true liquid density),346,38,3.4731,"[2.5577, 4.6494]",5.3637,"[3.7054, 7.6746]",-1.0419,100.0

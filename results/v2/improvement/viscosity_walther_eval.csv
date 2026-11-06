@@ -1,0 +1,4 @@
+model,temperature_eval,log_rmse,log_mae,error_reduction_pct,physical_basis
+Physics Baseline (Raw Refutas),-40 C Cryogenic,0.6879,0.669,0.0,ASTM D7152 uncalibrated VBN blending
+Recalibrated Refutas (Linear 1000/T Slope),-40 C Cryogenic,0.2877,0.251,58.2,Empirical linear 1000/T slope (underestimates curvature at -40 C)
+ASTM D341 Walther Viscosity Curvature Model,-40 C Cryogenic,0.553,0.5293,19.6,Standard ASTM D341 double-log curvature log10(log10(nu + 0.7)) = A - B*log10(T)

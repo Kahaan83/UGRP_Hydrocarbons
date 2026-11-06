@@ -1,0 +1,21 @@
+property,unit,model,parameters,eval_scheme,n_obs,n_clusters,mae,mae_ci95,rmse,rmse_ci95,pct_error_reduction
+viscosity_kin_cSt_ln,ln(cSt),Raw Physics,0 (pure baseline),zero-shot,171,57,0.3432,"[0.3199, 0.3670]",0.4421,"[0.4150, 0.4687]",0.0
+viscosity_kin_cSt_ln,ln(cSt),Recalibrated Physics (LOO),1-2 physical params,leave-one-fuel-out,171,57,0.1042,"[0.0890, 0.1205]",0.1411,"[0.1174, 0.1667]",69.6
+viscosity_kin_cSt_ln,ln(cSt),Stacked Model (Physics + Recal + Shrunk Res),Physics + Recal + L2 Shrunk Residual,leave-one-fuel-out,171,57,0.1042,"[0.0889, 0.1205]",0.141,"[0.1174, 0.1667]",69.6
+viscosity_kin_cSt_ln,ln(cSt),Pure Learned (Direct / Neural Extrap),Black-box weights / Direct regression,leave-one-fuel-out,171,57,0.3159,"[0.2905, 0.3411]",0.4037,"[0.3766, 0.4306]",8.0
+density_15C_kg_m3,kg/m3,Raw Physics,0 (pure baseline),zero-shot,57,57,7.4722,"[5.9953, 9.0589]",9.7281,"[7.6149, 11.7574]",0.0
+density_15C_kg_m3,kg/m3,Recalibrated Physics (LOO),1-2 physical params,leave-one-fuel-out,57,57,7.5915,"[6.0883, 9.1958]",9.8893,"[7.6839, 11.9830]",-1.6
+density_15C_kg_m3,kg/m3,Stacked Model (Physics + Recal + Shrunk Res),Physics + Recal + L2 Shrunk Residual,leave-one-fuel-out,57,57,6.872,"[5.3608, 8.5495]",9.4345,"[7.0188, 11.8129]",8.0
+density_15C_kg_m3,kg/m3,Pure Learned (Direct / Neural Extrap),Black-box weights / Direct regression,leave-one-fuel-out,57,57,7.4775,"[5.9968, 9.0772]",9.7465,"[7.5441, 11.8503]",-0.1
+freezing_point_C,C,Raw Physics,0 (pure baseline),zero-shot,57,57,14.5801,"[13.0831, 16.1751]",15.7923,"[13.9679, 17.7861]",0.0
+freezing_point_C,C,Recalibrated Physics (LOO),1-2 physical params,leave-one-fuel-out,57,57,4.0473,"[2.9600, 5.3369]",6.1763,"[4.2822, 8.1430]",72.2
+freezing_point_C,C,Stacked Model (Physics + Recal + Shrunk Res),Physics + Recal + L2 Shrunk Residual,leave-one-fuel-out,57,57,4.0276,"[3.0370, 5.1989]",5.9445,"[4.2514, 7.7839]",72.4
+freezing_point_C,C,Pure Learned (Direct / Neural Extrap),Black-box weights / Direct regression,leave-one-fuel-out,57,57,3.9319,"[3.0536, 4.9557]",5.4167,"[3.8644, 7.0172]",73.0
+flash_point_C,C,Raw Physics,0 (pure baseline),zero-shot,57,57,14.3672,"[13.6700, 15.0607]",14.6098,"[13.9049, 15.3087]",0.0
+flash_point_C,C,Recalibrated Physics (LOO),1-2 physical params,leave-one-fuel-out,57,57,2.2211,"[1.8239, 2.6353]",2.6991,"[2.2270, 3.1746]",84.5
+flash_point_C,C,Stacked Model (Physics + Recal + Shrunk Res),Physics + Recal + L2 Shrunk Residual,leave-one-fuel-out,57,57,2.0621,"[1.7001, 2.4496]",2.4955,"[2.0590, 2.9411]",85.6
+flash_point_C,C,Pure Learned (Direct / Neural Extrap),Black-box weights / Direct regression,leave-one-fuel-out,57,57,1.8764,"[1.4813, 2.3176]",2.4317,"[1.8418, 3.0489]",86.9
+heat_of_combustion_net_MJ_kg,MJ/kg,Raw Physics,0 (pure baseline),zero-shot,57,57,0.1792,"[0.1462, 0.2154]",0.2242,"[0.1862, 0.2613]",0.0
+heat_of_combustion_net_MJ_kg,MJ/kg,Recalibrated Physics (LOO),1-2 physical params,leave-one-fuel-out,57,57,0.159,"[0.1276, 0.1924]",0.2022,"[0.1586, 0.2473]",11.2
+heat_of_combustion_net_MJ_kg,MJ/kg,Stacked Model (Physics + Recal + Shrunk Res),Physics + Recal + L2 Shrunk Residual,leave-one-fuel-out,57,57,0.1422,"[0.1151, 0.1713]",0.1784,"[0.1412, 0.2177]",20.7
+heat_of_combustion_net_MJ_kg,MJ/kg,Pure Learned (Direct / Neural Extrap),Black-box weights / Direct regression,leave-one-fuel-out,57,57,0.0693,"[0.0500, 0.0919]",0.1068,"[0.0747, 0.1380]",61.3

@@ -1,0 +1,32 @@
+# Everything outside the paper core stays out (master repo, raw data, bundles, JS session cookies)
+extras/
+.venv/
+debug/
+__pycache__/
+*.pyc
+.pytest_cache/
+runs/
+*.pt
+ajftd_session.json
+ajftd_data.csv
+ajftd_data.json
+
+# heavy data — derived, rebuildable; whitelist the small tracked deliverables below
+data/*
+!data/MISSING.md
+!data/antoine_sources.csv
+!data/real_fuels/
+# NOTE: git can only re-include inside a directory that is itself re-included,
+# so data/processed is re-included and the heavy derived CSVs are excluded here
+!data/processed/
+data/processed/*.csv
+!data/processed/cetane_pure_curated.csv
+
+# archive kept out except the manifests that pin the baseline state
+archive/*
+!archive/baseline_manifest.json
+!archive/v2_manifest.json
+
+# pre-v2 scratch outputs
+results/t0_repro/reference_backup/
+results/t0_repro/rerun_outputs/

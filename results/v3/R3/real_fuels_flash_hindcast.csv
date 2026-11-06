@@ -1,0 +1,71 @@
+fuel_id,fuel_name,fuel_family,composition_type,method,measured_flash_C,predicted_flash_C,error_C,abs_error_C,is_over_predicted_gt_5C
+CRC647_101,CRC 647 Dartmouth / Halifax,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,37.97,-10.33,10.33,False
+CRC647_104,CRC 647 Toronto,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),62.8,50.49,-12.31,12.31,False
+CRC647_105,CRC 647 Richmond / Vancouver,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,39.28,-7.92,7.92,False
+CRC647_108,CRC 647 Edmonton,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),50.0,40.91,-9.09,9.09,False
+CRC647_109,"CRC 647 Ontario, Canada",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),49.4,41.6,-7.8,7.8,False
+CRC647_110,"CRC 647 Ontario, Canada",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),61.7,53.9,-7.8,7.8,False
+CRC647_111,"CRC 647 Edmonton, Oil Sands",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),35.6,33.07,-2.53,2.53,False
+CRC647_14,"CRC 647 Pittsburg, PA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),54.4,44.8,-9.6,9.6,False
+CRC647_17,"CRC 647 Seattle, WA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),43.3,34.51,-8.79,8.79,False
+CRC647_18,"CRC 647 Seattle/Boeing, WA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),42.8,37.12,-5.68,5.68,False
+CRC647_2,"CRC 647 Boston, MA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.8,38.69,-9.11,9.11,False
+CRC647_20,"CRC 647 Shell Martinez Refinery, CA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),45.0,35.8,-9.2,9.2,False
+CRC647_206,"CRC 647 Rio de Janiero, Brazil",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),46.1,36.7,-9.4,9.4,False
+CRC647_211,"CRC 647 Talara City, Peru",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,37.91,-10.39,10.39,False
+CRC647_3,"CRC 647 Chicago, IL",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),51.7,43.82,-7.88,7.88,False
+CRC647_30,"CRC 647 Lebanon, OH",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),46.7,38.54,-8.16,8.16,False
+CRC647_301,"CRC 647 Amsterdam, Netherlands",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),44.4,34.54,-9.86,9.86,False
+CRC647_304,"CRC 647 Brussels, Belgium",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),44.4,34.9,-9.5,9.5,False
+CRC647_306,"CRC 647 Dublin, Ireland",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),42.2,33.4,-8.8,8.8,False
+CRC647_31,"CRC 647 Langley AFB, VA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),45.0,38.16,-6.84,6.84,False
+CRC647_314,"CRC 647 London, England",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),43.3,34.04,-9.26,9.26,False
+CRC647_315,"CRC 647 London, England",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),41.7,35.09,-6.61,6.61,False
+CRC647_316,"CRC 647 Madrid, Spain",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),40.0,33.45,-6.55,6.55,False
+CRC647_318,"CRC 647 Munich, Germany",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,39.24,-9.06,9.06,False
+CRC647_32,"CRC 647 Shaw AFB, SC",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),51.1,41.6,-9.5,9.5,False
+CRC647_321,"CRC 647 Paris, France",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),42.8,33.34,-9.46,9.46,False
+CRC647_325,"CRC 647 Toulouse, France",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),46.1,36.15,-9.95,9.95,False
+CRC647_33,"CRC 647 Randolph AFB, TX",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),53.3,43.62,-9.68,9.68,False
+CRC647_334,"CRC 647 Bordeaux, France",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),46.1,36.16,-9.94,9.94,False
+CRC647_335,"CRC 647 Lyon, France",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,38.1,-10.2,10.2,False
+CRC647_336,"CRC 647 Montpellier, France",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,37.86,-9.34,9.34,False
+CRC647_34,"CRC 647 McConnell AFB, KS",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),53.3,41.54,-11.76,11.76,False
+CRC647_35,"CRC 647 Robins AFB, KS",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,36.31,-10.89,10.89,False
+CRC647_36,CRC 647 Stoddard Solvent,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),43.9,37.38,-6.52,6.52,False
+CRC647_37,"CRC 647 Seymour Johnson AFB, NC",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),50.0,42.56,-7.44,7.44,False
+CRC647_39,CRC 647 Valero Benicia Refinery,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),63.3,48.99,-14.31,14.31,False
+CRC647_4,CRC 647 Dallas/Ft. Worth,jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,38.43,-8.77,8.77,False
+CRC647_40,"CRC 647 Petro Star Valdez Refinery, AK",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),67.8,52.25,-15.55,15.55,False
+CRC647_403,"CRC 647 Praha (Prague), Czech Republic",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),52.8,43.6,-9.2,9.2,False
+CRC647_41,"CRC 647 Trend Western Fuels, Tyndall",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),51.7,39.32,-12.38,12.38,False
+CRC647_42,"CRC 647 Charleston AFB, SC",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),52.2,43.45,-8.75,8.75,False
+CRC647_43,"CRC 647 Placid Refining, LA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),59.4,49.58,-9.82,9.82,False
+CRC647_44,"CRC 647 Buckeye Pipeline, IN",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,40.94,-7.36,7.36,False
+CRC647_45,"CRC 647 Monee, IL (TEPPCO)",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,41.22,-5.98,5.98,False
+CRC647_507,CRC 647 South Africa (part synth),jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),55.0,43.47,-11.53,11.53,False
+CRC647_508,CRC 647 South Africa (100% synth),jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),60.6,51.0,-9.6,9.6,False
+CRC647_6,"CRC 647 Lebanon, OH",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),61.1,48.37,-12.73,12.73,False
+CRC647_606,"CRC 647 Abu Dhabi, UAE",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),42.8,35.78,-7.02,7.02,False
+CRC647_7,"CRC 647 Lima, OH",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),65.6,50.04,-15.56,15.56,False
+CRC647_704,"CRC 647 Beijing, China",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),44.4,34.68,-9.72,9.72,False
+CRC647_711,"CRC 647 Kuala Lumpur, Malaysia",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),41.1,34.29,-6.81,6.81,False
+CRC647_716,"CRC 647 Sydney, Australia",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),42.2,32.6,-9.6,9.6,False
+CRC647_717,"CRC 647 Tokyo, Japan",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),41.7,34.66,-7.04,7.04,False
+CRC647_718,"CRC 647 Oil Shale, Australia",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),40.6,35.42,-5.18,5.18,False
+CRC647_720,"CRC 647 Oil Shale, Australia (low nit.)",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),48.3,36.2,-12.1,12.1,False
+CRC647_721,"CRC 647 Oil Shale, Australia (high Nit.)",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),47.2,34.81,-12.39,12.39,False
+CRC647_8,"CRC 647 Los Angeles, CA",jet,reconstructed_composition,ASTM D93 (Pensky-Martens Closed Cup),45.0,37.38,-7.62,7.62,False
+POSF_10325_D93,Jet A Conventional Reference (POSF-10325 / A-2),jet,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),46.1,21.97,-24.13,24.13,False
+POSF_10325_D3828,Jet A Conventional Reference (POSF-10325 / A-2),jet,measured_dha_gcxgc,ASTM D3828 (Setaflash Closed Cup),47.0,21.97,-25.03,25.03,False
+POSF_10325_D56,Jet A Conventional Reference (POSF-10325 / A-2),jet,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),55.0,21.97,-33.03,33.03,False
+POSF_13511,IH2-CPK-0 Synthetic Kerosene (POSF 13511),jet,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),86.1,75.16,-10.94,10.94,False
+POSF_13516,IHI Bio-SPK Algal Kerosene (POSF 13516),jet,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),45.0,75.96,30.96,30.96,True
+SURR_Edwards_2comp,Edwards 2-Component Jet Surrogate (dodecane/tetralin),jet,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),66.94,74.06,7.12,7.12,True
+SURR_POSF10325_3comp,Bruno-Huber POSF-10325 3-Comp Jet A Surrogate,jet,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),56.58,59.01,2.43,2.43,False
+SURR_Dooley_2ndGen_4comp,Dooley 2nd Gen Jet A Surrogate (4-comp),jet,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),-1.05,3.19,4.24,4.24,False
+SURR_Peugeot_4comp,PSA Peugeot Citroen 4-Component Diesel Surrogate,diesel,measured_dha_gcxgc,ASTM D93 (Pensky-Martens Closed Cup),55.36,64.43,9.07,9.07,True
+SURR_TRF_70,Toluene Reference Fuel TRF-70,gasoline,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),-8.45,-5.34,3.11,3.11,False
+SURR_TRF_80,Toluene Reference Fuel TRF-80,gasoline,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),-9.47,-5.82,3.65,3.65,False
+SURR_TRF_90,Toluene Reference Fuel TRF-90,gasoline,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),-10.44,-6.3,4.14,4.14,False
+SURR_CoOptima_4comp,Co-Optima 4-Component Gasoline Surrogate,gasoline,measured_dha_gcxgc,ASTM D56 (Tag Closed Cup),-39.06,-35.25,3.81,3.81,False

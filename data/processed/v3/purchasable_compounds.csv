@@ -1,0 +1,22 @@
+compound_name,smiles,cas_number,supplier,catalog_number,purity_pct,price_usd_per_unit,unit,is_single_isomer,family,formula,mw,density_15C_kg_m3,tb_C,tm_C,flash_point_C,visc_40C_cSt,visc_m20C_cSt,nhoc_MJ_kg,dcn,ron,mon,notes
+n-octane,CCCCCCCC,111-65-9,Sigma-Aldrich,294365,99.0,75.0,L,True,n_paraffin,C8H18,114.23,707.0,125.7,-56.8,13.0,0.55,1.25,44.43,64.0,-10.0,-10.0,Single isomer pure alkane
+n-decane,CCCCCCCCCC,124-18-5,Sigma-Aldrich,D901,99.0,95.0,L,True,n_paraffin,C10H22,142.28,734.0,174.1,-29.7,46.0,0.95,2.70,44.25,76.0,-20.0,-20.0,Single isomer pure alkane
+n-dodecane,CCCCCCCCCCCC,112-40-3,Alfa Aesar,A14828,99.0,85.0,L,True,n_paraffin,C12H26,170.33,752.6,216.3,-9.6,74.0,1.48,4.20,44.15,80.0,-25.0,-25.0,Single isomer pure alkane
+n-tetradecane,CCCCCCCCCCCCCC,629-59-4,TCI America,T0087,99.0,110.0,L,True,n_paraffin,C14H30,198.39,767.0,253.6,5.9,100.0,2.15,6.80,44.10,95.0,-25.0,-25.0,Single isomer pure alkane
+n-hexadecane,CCCCCCCCCCCCCCCC,544-76-3,Sigma-Aldrich,H6703,99.0,90.0,L,True,n_paraffin,C16H34,226.44,773.4,287.0,18.2,135.0,3.03,,44.00,100.0,-30.0,-30.0,Single isomer primary reference fuel (cetane)
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,540-84-1,Sigma-Aldrich,270717,99.5,60.0,L,True,iso_paraffin,C8H18,114.23,692.0,99.2,-107.4,-12.0,0.51,1.10,44.30,15.0,100.0,100.0,Single isomer primary reference fuel (isooctane)
+methylcyclohexane,CC1CCCCC1,108-87-2,TCI America,M0191,99.0,55.0,L,True,cycloalkane,C7H14,98.19,774.0,100.9,-126.6,-4.0,0.67,1.35,43.40,20.0,75.0,71.0,Single isomer pure monocyclic naphthene
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,493-02-7,Sigma-Aldrich,D120,99.0,80.0,L,True,cycloalkane,C10H18,138.25,869.5,185.5,-30.4,57.0,1.90,5.10,42.85,38.0,45.0,40.0,Single pure trans isomer of decahydronaphthalene
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,493-01-6,Sigma-Aldrich,D110,99.0,95.0,L,True,cycloalkane,C10H18,138.25,896.5,195.7,-43.0,58.0,2.10,5.80,42.80,35.0,45.0,40.0,Single pure cis isomer of decahydronaphthalene
+toluene,Cc1ccccc1,108-88-3,Sigma-Aldrich,244511,99.8,40.0,L,True,aromatic,C7H8,92.14,867.0,110.6,-95.0,4.4,0.52,0.98,40.59,9.0,120.0,103.0,Single isomer pure monoaromatic
+o-xylene,Cc1ccccc1C,95-47-6,TCI America,X0017,98.0,45.0,L,True,aromatic,C8H10,106.17,880.0,144.4,-25.2,32.0,0.72,1.55,40.90,12.0,107.0,100.0,Single pure ortho-xylene isomer
+p-xylene,Cc1ccc(C)cc1,106-42-3,Alfa Aesar,A14890,99.0,45.0,L,True,aromatic,C8H10,106.17,861.0,138.3,13.3,27.0,0.60,1.25,40.95,15.0,117.0,102.0,Single pure para-xylene isomer
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,95-63-6,Sigma-Aldrich,T73601,98.0,65.0,L,True,aromatic,C9H12,120.19,876.0,169.4,-43.8,48.0,0.90,2.40,41.15,10.0,110.0,100.0,Single pure pseudocumene isomer
+tetralin,c1ccc2c(c1)CCCC2,119-64-2,Sigma-Aldrich,T2802,99.0,80.0,L,True,aromatic,C10H12,132.20,970.2,207.6,-35.8,77.0,1.55,6.80,41.60,15.0,100.0,90.0,Single pure bicyclic aromatic
+ethanol,CCO,64-17-5,Sigma-Aldrich,459844,99.5,35.0,L,True,oxygenate,C2H6O,46.07,789.0,78.4,-114.1,13.0,0.98,2.80,26.80,8.0,108.0,90.0,Single pure oxygenate (anhydrous)
+n-heptane,CCCCCCC,142-82-5,Sigma-Aldrich,H2198,99.0,50.0,L,True,n_paraffin,C7H16,100.20,688.0,98.4,-90.6,-4.0,0.48,0.85,44.56,56.0,0.0,0.0,Single isomer primary reference fuel (0 octane)
+isopentane,CCC(C)C,78-78-4,Sigma-Aldrich,277258,99.0,65.0,L,True,iso_paraffin,C5H12,72.15,620.0,27.8,-159.9,-51.0,0.22,0.38,45.00,20.0,92.0,90.0,Single isomer 2-methylbutane volatile light-end
+n-butane,CCCC,106-97-8,Sigma-Aldrich,293679,99.0,120.0,cylinder,True,n_paraffin,C4H10,58.12,584.0,-0.5,-138.4,-60.0,0.18,0.30,45.35,25.0,94.0,90.0,Single isomer pure pressurized alkane
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,31807-55-3,Ineos / TCI,I0290,85.0,30.0,L,False,iso_paraffin,C12H26,170.33,745.0,177.0,-81.0,43.0,1.15,3.20,44.20,20.0,98.0,95.0,Commercial isomer blend of pentamethylheptane isomers
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,4390-04-9,TCI America,H0078,90.0,140.0,L,False,iso_paraffin,C16H34,226.44,784.0,240.0,-80.0,96.0,2.85,12.50,44.10,15.0,40.0,40.0,Commercial highly-branched isomer mixture
+decalin_mixed,C1CCC2CCCCC2C1,91-17-8,Sigma-Aldrich,D100,98.0,55.0,L,False,cycloalkane,C10H18,138.25,896.0,190.0,-40.0,58.0,2.00,5.50,42.80,36.0,45.0,40.0,Commercial cis/trans stereoisomer mixture

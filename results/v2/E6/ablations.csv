@@ -1,0 +1,55 @@
+blend_id,fuel_family,model_type,uncertainty_regime,overall_passed,n_violations,failed_properties,computed_density,computed_flash,computed_freezing_point,computed_viscosity
+jet_v1_dodecane_tetralin,jet,Raw_Physics,M0_Zero_Margin,False,3,freezing_point_C; aromatics_wt_pct; T10_D86_C,798.25,66.94,-15.2,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Physics,M0_Zero_Margin,False,3,freezing_point_C; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,False,3,freezing_point_C; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v1_dodecane_tetralin,jet,Raw_Physics,M1_v1_Heuristic_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-15.2,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Physics,M1_v1_Heuristic_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v1_dodecane_tetralin,jet,Raw_Physics,M2_v2_Conformal_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-15.2,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Physics,M2_v2_Conformal_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v1_dodecane_tetralin,jet,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,False,4,freezing_point_C; viscosity_minus20C_recal_cSt; aromatics_wt_pct; T10_D86_C,798.25,66.94,-29.78,6.89
+jet_v2_designed_4comp,jet,Raw_Physics,M0_Zero_Margin,True,0,,796.34,48.61,-40.04,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Physics,M0_Zero_Margin,True,0,,796.34,48.61,-54.62,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,True,0,,796.34,48.61,-54.62,5.99
+jet_v2_designed_4comp,jet,Raw_Physics,M1_v1_Heuristic_Margin,True,0,,796.34,48.61,-40.04,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Physics,M1_v1_Heuristic_Margin,True,0,,796.34,48.61,-54.62,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,True,0,,796.34,48.61,-54.62,5.99
+jet_v2_designed_4comp,jet,Raw_Physics,M2_v2_Conformal_Margin,True,0,,796.34,48.61,-40.04,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Physics,M2_v2_Conformal_Margin,True,0,,796.34,48.61,-54.62,5.99
+jet_v2_designed_4comp,jet,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,True,0,,796.34,48.61,-54.62,5.99
+diesel_v1_hexadecane_biphenyl,diesel,Raw_Physics,M0_Zero_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Physics,M0_Zero_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Raw_Physics,M1_v1_Heuristic_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Physics,M1_v1_Heuristic_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Raw_Physics,M2_v2_Conformal_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Physics,M2_v2_Conformal_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v1_hexadecane_biphenyl,diesel,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,False,1,wat_C,839.46,78.55,26.5,2.35
+diesel_v2_designed_5comp,diesel,Raw_Physics,M0_Zero_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Physics,M0_Zero_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Raw_Physics,M1_v1_Heuristic_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Physics,M1_v1_Heuristic_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Raw_Physics,M2_v2_Conformal_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Physics,M2_v2_Conformal_Margin,True,0,,837.61,77.8,-3.42,2.0
+diesel_v2_designed_5comp,diesel,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,True,0,,837.61,77.8,-3.42,2.0
+gasoline_v1_infeasible,gasoline,Raw_Physics,M0_Zero_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Physics,M0_Zero_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Raw_Physics,M1_v1_Heuristic_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Physics,M1_v1_Heuristic_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,False,3,density_kg_m3; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Raw_Physics,M2_v2_Conformal_Margin,False,5,density_kg_m3; ron; mon; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Physics,M2_v2_Conformal_Margin,False,5,density_kg_m3; ron; mon; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v1_infeasible,gasoline,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,False,5,density_kg_m3; ron; mon; vapor_pressure_kPa; T50_D86_C,968.69,72.97,7.54,
+gasoline_v2_designed_5comp,gasoline,Raw_Physics,M0_Zero_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Physics,M0_Zero_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Plus_Shrunk_Residual,M0_Zero_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Raw_Physics,M1_v1_Heuristic_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Physics,M1_v1_Heuristic_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Plus_Shrunk_Residual,M1_v1_Heuristic_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Raw_Physics,M2_v2_Conformal_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Physics,M2_v2_Conformal_Margin,True,0,,726.33,-49.39,-128.49,
+gasoline_v2_designed_5comp,gasoline,Recalibrated_Plus_Shrunk_Residual,M2_v2_Conformal_Margin,True,0,,726.33,-49.39,-128.49,
