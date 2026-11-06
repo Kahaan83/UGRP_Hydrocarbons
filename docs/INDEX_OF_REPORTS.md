@@ -2,7 +2,7 @@
 
 **Project**: UGRP Hydrocarbons (`fuelblend`)  
 **Scope**: Complete directory of all technical reports, progress summaries, audit logs, and implementation plans across v1, v2, and v2.1.  
-**Last Updated**: 2026-11-05 (Release Tag `v2.1-2026-11-05`)  
+**Last Updated**: 2026-11-06 (Release Tag `v3-2026-11-06`)  
 
 ---
 
@@ -13,6 +13,7 @@ These documents synthesize the complete findings, architectural decisions, and f
 | Document Title | File Path | Generation | Primary Scope & Key Contents | Associated Deliverables |
 |---|---|---|---|---|
 | **Master Technical Report v2** | `docs/FULL_REPORT_v2.md` | v2.0 | Definitive 8-part scientific report documenting v1 audit, retractions, real-fuel corpus, evidence-driven model strategy, conformal uncertainty quantification, and hardened inverse designs. | All `results/v2/` CSVs |
+| **Master Technical Report v3** | `docs/FULL_REPORT_v3.md` | v3.0 | Definitive report for v3 "Closing the Validation Gaps": Phase 0 audit (CLM-12…CLM-19), 153-fuel real-fuel expansion, octane/DVPE/cetane/flash repairs, uncertainty margins, 6 inverse designs across 5 model variants, one-command reproduction with SHA-256 manifest. | All `results/v3/` CSVs, `SHA256SUMS.txt` |
 | **Complete Progress Summary (v1 to v2.1)** | `docs/progress/v2/COMPLETE_PROGRESS_SUMMARY_V1_TO_V2.1.md` | v2.1 | Exhaustive chronological narrative and technical summary of all developments from initial v1 baseline to v2.1 completion. | `results/v2/improvement/` |
 | **Thermodynamic Improvements Summary** | `docs/progress/v2/THERMODYNAMIC_IMPROVEMENTS_SUMMARY.md` | v2.1 | Traces the monotonic error reductions achieved by replacing empirical baselines with first-principles thermodynamics. | `paper_ablation_table.csv` |
 | **Model Strategy Decision Note** | `docs/model_decision.md` | v2.0 | Formal evidence-driven decision document designating recalibrated physics as primary on real fuels and scoping neural residuals to lab binaries. | `results/v2/D1`–`D7` |
