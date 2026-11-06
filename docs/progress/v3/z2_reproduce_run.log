@@ -1,0 +1,248 @@
+﻿Saved inventory_v3.csv (153 fuels) and compositions_v3.csv (3298 rows)
+Saved property coverage matrix v2 to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\S4\coverage_matrix.csv
+Saved zero-leakage splits to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\splits\v3\real_fuels_v3_splits.json
+Saved Phase 1 summary to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\PHASE_1_SUMMARY.md
+[R2] Starting Flash Anchoring Provenance Audit & Strict LOSO Verification...
+[R2] Loaded 126 mixture rows across 31 distinct systems.
+[R2] Identified 32 unique pure compounds in the 126 mixtures.
+[R2] Original sources in mixture set: {'webbook', 'refit_measured'}
+[R2] Anchored sources in mixture set: {'webbook', 'anchored_thermo_ambient', 'refit_measured'}
+[R2] Saved audit results to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R2\flash_anchoring_audit.csv
+[R2] Wrote comprehensive audit report to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R2.md
+Loading raw ThermoML data: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\data\processed\thermoml_hc.csv
+Loading clean ThermoML data: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\data\processed\v2\thermoml_clean_hc.csv
+Raw rows: 46,747 | Clean rows: 44,575 | Dropped: 2,172
+Saved breakdown to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R6\filter_drop_breakdown.csv
+Saved property distributions to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R6\property_distributions_before_after.csv
+
+Auditing dropped viscosity records...
+Viscosity rows: raw=12154, clean=11755, dropped=399
+Confirmed: All 60 non-positive viscosity rows originate from single publication file:
+  DOI/XML: 10.1016/j.jct.2005.10.011.xml (J. Chem. Thermodyn. 2006, 38, 1306-1316)
+  Article title: 'Excess molar enthalpies, excess molar volumes, and viscosity deviations of {toluene + n-alkanes}'
+  Reported values range: -7.540e-05 to -1.600e-06 Pa*s
+  All 60 values represent viscosity deviation Delta eta = eta - sum(x_i * eta_i), NOT absolute viscosity!
+
+Auditing liquid mixture negative ideality deviations in clean_df...
+Mixture points evaluated against matched pure components: 8,304
+Preserved mixtures with negative ideality deviation (Delta ln eta < 0): 5,055 (60.87%)
+Delta ln eta min: -0.2393, median: -0.0118, max: 1.0939
+Saved documentation to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R6.md
+
+Task R6 Audit Complete: All deliverables generated successfully.
+================================================================================
+TASK R7: Heat of Combustion Clarity & Design-Time Error Propagation
+================================================================================
+Loaded Base Metrics:
+  Group Additivity (Pure Structure Basis): MAE = 0.1792 MJ/kg, RMSE = 0.2242 MJ/kg
+  ASTM D3338 (Measured Inputs, LOO CV):   MAE = 0.0860 MJ/kg, RMSE = 0.1219 MJ/kg
+Empirical Sensitivities across 57 CRC fuels:
+  d(NCV)/d(density_15C) = -0.010268 MJ/kg per (kg/m3)
+  d(NCV)/d(aromatics)   = -0.011490 MJ/kg per vol%
+
+Design-Time Error Propagation Grid for ASTM D3338:
+  Low Error (sigma_rho=5.0 kg/m3, sigma_A=1.0 wt%):
+    Propagated Input Uncertainty: +/- 0.0526 MJ/kg
+    Total Design-Time RMSE:        0.1328 MJ/kg
+  Nominal Design-Time (sigma_rho=7.5 kg/m3, sigma_A=1.5 wt%):
+    Propagated Input Uncertainty: +/- 0.0789 MJ/kg
+    Total Design-Time RMSE:        0.1452 MJ/kg
+  High Error (sigma_rho=10.0 kg/m3, sigma_A=2.0 wt%):
+    Propagated Input Uncertainty: +/- 0.1052 MJ/kg
+    Total Design-Time RMSE:        0.1610 MJ/kg
+
+Saved final comparison table to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R7\hoc_propagation_error.csv:
+                                       evaluation_setting  base_model_mae_MJ_kg  base_model_rmse_MJ_kg  propagated_input_uncertainty_MJ_kg  total_design_time_rmse_MJ_kg                                                                                                                               recommendation
+                  Group Additivity (Pure Structure Basis)                0.1792                 0.2242                              0.0000                        0.2242                                        Recommended for Inverse Blend Design (Zero input error propagation, first-principles structure basis)
+                ASTM D3338 (Measured Density & Aromatics)                0.0860                 0.1219                              0.0000                        0.1219                                      Recommended for Quality Control / Lab Verification (Requires physically measured density and aromatics)
+ASTM D3338 (Predicted Density & Aromatics at Design Time)                0.0860                 0.1219                              0.0789                        0.1452 Not recommended for Inverse Design without explicit error propagation tracking (Vulnerable to correlated density/aromatic prediction errors)
+
+Generated progress documentation at C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R7.md
+================================================================================
+Task R1: Building Canonical Viscosity Leaderboard
+================================================================================
+Loaded 171 viscosity records across 57 unique CRC fuels.
+Preparing representation vectors for Bilinear Pairwise LOO...
+
+Computing metrics with cluster bootstrap (2,000 resamples)...
+
+Saved canonical viscosity leaderboard to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R1\viscosity_leaderboard.csv
+Saved progress report to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R1.md
+Executing Task 2 (R3): Real-fuel flash point hindcast with closed-cup method segregation...
+Saved 70 real fuel flash hindcast records to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R3\real_fuels_flash_hindcast.csv
+
+Metrics Summary:
+        Grouping                             Subgroup  N  Bias_C  MAE_C  RMSE_C  Over_Pred_gt_5C_pct  Worst_Abs_Error_C  Worst_Error_C  Max_Over_Pred_C  Max_Under_Pred_C
+         Overall                       All Real Fuels 70   -7.87   9.83   11.19                  4.3              33.03         -33.03            30.96            -33.03
+     Fuel Family                               diesel  1    9.07   9.07    9.07                100.0               9.07           9.07             9.07              9.07
+     Fuel Family                             gasoline  4    3.68   3.68    3.70                  0.0               4.14           4.14             4.14              3.11
+     Fuel Family                                  jet 65   -8.84  10.22   11.52                  3.1              33.03         -33.03            30.96            -33.03
+     Test Method    ASTM D3828 (Setaflash Closed Cup)  1  -25.03  25.03   25.03                  0.0              25.03         -25.03           -25.03            -25.03
+     Test Method            ASTM D56 (Tag Closed Cup)  6   -2.35   8.66   13.93                  0.0              33.03         -33.03             4.24            -33.03
+     Test Method ASTM D93 (Pensky-Martens Closed Cup) 63   -8.12   9.70   10.53                  4.8              30.96          30.96            30.96            -24.13
+Composition Type                   measured_dha_gcxgc 13   -1.89  12.44   16.62                 23.1              33.03         -33.03            30.96            -33.03
+Composition Type            reconstructed_composition 57   -9.23   9.23    9.53                  0.0              15.56         -15.56            -2.53            -15.56
+Saved comprehensive progress report to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R3.md
+Saved regime summary to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R5\freeze_regime_test.csv
+                               regime  n_points  mae_wat_minus_14C  rmse_wat_minus_14C  bias_wat_minus_14C  mae_coutinho_eutectic  rmse_coutinho_eutectic  bias_coutinho_eutectic
+            Simple Blends (2-5 comps)        56               9.81               10.05               -9.50                   6.05                    7.36                   -3.73
+Multicomponent Real Fuels (>20 comps)        57               4.99                7.08                3.14                   4.22                    6.34                    1.94
+                              Overall       113               7.38                8.68               -3.12                   5.12                    6.87                   -0.87
+Saved comprehensive report to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R5.md
+Saved audit CSV to: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\R4\surrogate_check.csv (14 rows)
+Saved Markdown report to: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\R4.md
+Loaded 55 expanded gasoline fuels for octane evaluation.
+Saved octane evaluation to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G2\octane_lump_model_eval.csv
+                       model  ron_mae  ron_rmse  mon_mae  mon_rmse  sensitivity_mae  n_fuels                                                                                 notes
+   Linear-by-Volume Baseline     9.69     12.51    10.69     12.80             4.12       55                    Standard uncalibrated linear-by-volume blending (ASTM D2699/D2700)
+     Linear-by-Mole Baseline     6.37      8.14     5.87      7.42             2.85       55      Linear-by-mole blending with pure component ON; fails on oxygenates/interactions
+Ghosh-Style Lump Model (LOO)     3.10      6.59     2.63      5.89             0.98       55 7-lump model with EtOH-paraffin, aromatics-olefins interactions and L2 regularization
+Saved blending octane values to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G2\blending_octane_values.csv
+Loaded 55 expanded gasoline fuels for DVPE evaluation.
+Saved DVPE evaluation to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G6\dvpe_activity_eval.csv
+                              model  dvpe_mae_kpa  dvpe_rmse_kpa  bias_kpa  n_fuels                                                                                 notes
+              Ideal Raoult Baseline         18.50          22.45    -16.80       55   Zero-parameter ideal Raoult law; fails on positive ethanol azeotrope and light ends
+Activity-Corrected DVPE Model (LOO)          4.39           5.46     -0.04       55 Margules non-ideal activity coefficient (gamma_EtOH ~ 4.5-6.0) + light-end speciation
+================================================================================
+STARTING TASK 10: PHASE 2 PROPERTY REPAIRS (G1 - G11)
+================================================================================
+
+--- Running G1-G4: Octane Diagnosis & Ghosh Lump Model ---
+Generated C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G2\octane_lump_model_eval.csv
+
+--- Running G5-G6: DVPE Diagnosis & Margules Activity Model ---
+Generated C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G6\dvpe_activity_eval.csv
+
+--- Running G7: Conformal Flash Margin Verification ---
+Verified C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\configs\uncertainty_v3.yaml
+
+--- Running G8-G9: Real-Fuel Cetane & Cold-Flow Hindcasts ---
+Generated C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G8\diesel_cetane_cold_flow_eval.csv
+Diesel DCN LOO MAE: 4.34
+Diesel Cloud Point MAE: 10.48 C
+Diesel Pour Point MAE: 10.69 C
+
+--- Running G10-G11: Viscosity & Density Integration with Cleaned ThermoML ---
+Integrated cleaned ThermoML database: 44,575 rows
+Generated C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\G10\thermoml_integration_eval.csv
+         property fuel_family  n_fuels   mae  rmse  relative_error_pct  thermoml_clean_rows_integrated                                                                                       notes
+    density_kg_m3    gasoline       55  6.62  8.44                0.89                           44575 Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
+    density_kg_m3      diesel       16 14.57 21.96                1.73                           44575 Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
+    density_kg_m3         jet       82 16.86 19.53                2.12                           44575 Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
+    density_kg_m3         all      153 12.94 16.75                1.64                           44575 Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
+viscosity_kin_cSt      diesel       16  0.26  0.33               10.50                           44575       Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows
+viscosity_kin_cSt         jet       82  0.18  0.22               11.20                           44575       Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows
+viscosity_kin_cSt         all       98  0.19  0.25               11.00                           44575       Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows
+
+--- Writing Technical Summary docs/progress/v3/PHASE_2_SUMMARY.md ---
+Generated C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\docs\progress\v3\PHASE_2_SUMMARY.md
+
+================================================================================
+TASK 10 COMPLETED SUCCESSFULLY
+================================================================================
+=== Phase 3 Task 11: Inverse Designs (U1-U7) ===
+Saved 6 v3 designs to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\U6\designs_v3.csv
+Saved 30 model robustness records to C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data\results\v3\U6\design_robustness_audit.csv
+=== Phase 3 Task U7: Independent Verification Harness ===
+Auditing 6 designs against independent thermodynamic ground truth...
+
+[jet_astm_d1655] Jet A (ASTM D1655 Lab Formulation) (ASTM D1655): PASS [VERIFIED]
+    rho=813.8 kg/m3, flash=56.9 C, visc=4.00 cSt, freeze=-55.1 C
+[jet_bis_is1571] Jet A-1 (BIS IS 1571:2014 Pure Isomers) (IS 1571:2014): PASS [VERIFIED]
+    rho=811.7 kg/m3, flash=56.0 C, visc=3.92 cSt, freeze=-53.1 C
+[diesel_astm_d975] Diesel No. 2-D (ASTM D975 Pure Isomers) (ASTM D975): PASS [VERIFIED]
+    rho=841.9 kg/m3, flash=79.7 C, visc=2.04 cSt, freeze=-18.3 C
+[diesel_bis_is1460] Diesel BS VI (BIS IS 1460:2017 High-Cetane) (IS 1460:2017): PASS [VERIFIED]
+    rho=835.2 kg/m3, flash=80.9 C, visc=2.05 cSt, freeze=-16.6 C
+[gasoline_astm_d4814] Gasoline Regular (ASTM D4814 Neat Isomers) (ASTM D4814): PASS [VERIFIED]
+    rho=739.6 kg/m3, flash=-11.7 C, visc=nan cSt, freeze=nan C
+[gasoline_bis_is2796_e10] Gasoline E10 BS VI (BIS IS 2796:2017 95 RON) (IS 2796:2017): PASS [VERIFIED]
+    rho=744.0 kg/m3, flash=-5.4 C, visc=nan cSt, freeze=nan C
+
+============================================================
+INDEPENDENT VERIFICATION SUCCESS: All 6 designs pass all physical constraints & safety margins.
+============================================================
+........................................................................ [ 24%]
+........................................................................ [ 49%]
+........................................................................ [ 74%]
+........................................................................ [ 99%]
+..                                                                       [100%]
+290 passed in 171.14s (0:02:51)
+***************************************************************************
+STARTING UGRP HYDROCARBONS v3 MASTER REPRODUCTION PIPELINE
+Working directory: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\fuelblend_data
+Python: C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\.venv\Scripts\python.exe
+***************************************************************************
+
+[1/13] EXECUTE: Phase S: Task S1-S6 (Real-fuel expansion + oxygenates)
+SUCCESS: ingest_phase1_expansion.py in 5.1s
+
+[2/13] EXECUTE: Phase 0/R: Task R2 (Flash anchoring audit)
+SUCCESS: audit_flash_anchoring.py in 2.8s
+
+[3/13] EXECUTE: Phase 0/R: Task R6 (Filter drop audit)
+SUCCESS: audit_thermoml_filters.py in 3.5s
+
+[4/13] EXECUTE: Phase R: Task R7 (HoC propagation)
+SUCCESS: analyze_hoc_propagation.py in 4.4s
+
+[5/13] EXECUTE: Phase R: Task R1 (Viscosity leaderboard)
+SUCCESS: build_viscosity_leaderboard.py in 30.8s
+
+[6/13] EXECUTE: Phase R: Task R3 (Real-fuel flash hindcast)
+SUCCESS: hindcast_real_fuels_flash.py in 2.7s
+
+[7/13] EXECUTE: Phase R: Task R5 (Freeze regimes)
+SUCCESS: test_freeze_regimes.py in 1.7s
+
+[8/13] EXECUTE: Phase R: Task R4 (Surrogate check)
+SUCCESS: summarize_surrogate_check.py in 1.4s
+
+[9/13] EXECUTE: Phase G: Task G2 (Octane lump model)
+SUCCESS: run_phase2_octane.py in 5.9s
+
+[10/13] EXECUTE: Phase G: Task G6 (DVPE activity model)
+SUCCESS: run_phase2_dvpe.py in 4.4s
+
+[11/13] EXECUTE: Phase G: Tasks G8/G10 (Cetane, cold flow, density)
+SUCCESS: run_phase2_repairs.py in 7.7s
+
+[12/13] EXECUTE: Phase U: Tasks U1-U5 (Inverse designs)
+SUCCESS: run_v3_inverse_designs.py in 3.0s
+
+[13/13] EXECUTE: Phase U: Task U7 (Independent design verification)
+SUCCESS: verify_designs_independent.py in 1.5s
+
+[TESTS] Running full pytest suite ...
+
+[OK] Pipeline steps + tests completed in 249.1s
+
+===========================================================================
+VERIFYING ALL v3 DELIVERABLES
+===========================================================================
+[PASS] Phase S4               coverage_matrix.csv              (20 rows, 1263 B)
+[PASS] Phase S (inventory)    inventory_v3.csv                 (153 rows, 40240 B)
+[PASS] Phase S (compositions) compositions_v3.csv              (3298 rows, 291048 B)
+[PASS] Phase S (splits)       real_fuels_v3_splits.json        (6 entries)
+[PASS] Phase R1               viscosity_leaderboard.csv        (32 rows, 5016 B)
+[PASS] Phase R2               flash_anchoring_audit.csv        (5 rows, 916 B)
+[PASS] Phase R3               real_fuels_flash_hindcast.csv    (70 rows, 9665 B)
+[PASS] Phase R4               surrogate_check.csv              (14 rows, 9427 B)
+[PASS] Phase R5               freeze_regime_details.csv        (113 rows, 16102 B)
+[PASS] Phase R5               freeze_regime_test.csv           (3 rows, 320 B)
+[PASS] Phase R6               filter_drop_breakdown.csv        (7 rows, 1301 B)
+[PASS] Phase R7               hoc_propagation_error.csv        (3 rows, 710 B)
+[PASS] Phase G2               octane_lump_model_eval.csv       (3 rows, 474 B)
+[PASS] Phase G6               dvpe_activity_eval.csv           (2 rows, 326 B)
+[PASS] Phase G8               diesel_cetane_cold_flow_eval.csv (16 rows, 1905 B)
+[PASS] Phase G10              thermoml_integration_eval.csv    (7 rows, 1058 B)
+[PASS] Phase U6               designs_v3.csv                   (6 rows, 2444 B)
+[PASS] Phase U7               design_robustness_audit.csv      (30 rows, 3907 B)
+[PASS] Report                 FULL_REPORT_v3.md                (226 rows, 28652 B)
+[PASS] Claims                 claims_register.md               (21 rows, 12610 B)
+===========================================================================
+ALL v3 DELIVERABLES VERIFIED.
+===========================================================================
+[MANIFEST] wrote 24 hashes to SHA256SUMS.txt
+
+MASTER v3 REPRODUCTION FINISHED.

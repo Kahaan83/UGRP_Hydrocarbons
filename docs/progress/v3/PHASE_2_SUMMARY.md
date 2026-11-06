@@ -16,7 +16,7 @@
 
 Phase 2 addresses the critical property modeling failures diagnosed in the baseline evaluation across the 153 expanded real fuels (Jet, Diesel, Gasoline):
 1. **Gasoline Octane Number (G1–G4)**: Linear-by-mole blending failed with **RON MAE 6.37** and **MON MAE 5.87** due to extreme non-ideality in oxygenated blends (ethanol synergetic boost) and aromatic-olefin interactions. A **Ghosh-style 7-lump model** with L2 shrinkage regularizer was implemented and evaluated under Leave-One-Fuel-Out (LOO) CV, reducing error down to **RON MAE 3.10** and **Sensitivity MAE 0.98**, cutting error by >50%.
-2. **Gasoline Vapor Pressure / DVPE (G5–G6)**: Ideal Raoult vapor pressure baseline exhibited a massive **18.50 kPa MAE** (and >50 kPa uncalibrated) due to positive ethanol-hydrocarbon azeotropy and omission of $C_4$–$C_5$ light ends. An **Activity-Corrected DVPE model** incorporating Margules activity coefficients ($\gamma_\text{EtOH} \approx 4.5$–$6.0$ at low dilution) and light-end speciation dropped error to **4.39 kPa MAE** under LOO CV.
+2. **Gasoline Vapor Pressure / DVPE (G5–G6)**: Ideal Raoult vapor pressure baseline exhibited a massive **18.50 kPa MAE** (and >50 kPa uncalibrated) due to positive ethanol-hydrocarbon azeotropy and omission of $C_4$–$C_5$ light ends. An **Activity-Corrected DVPE model** incorporating Margules activity coefficients ($\gamma_\\text{EtOH} \\approx 4.5$–$6.0$ at low dilution) and light-end speciation dropped error to **4.39 kPa MAE** under LOO CV.
 3. **Conformal Flash Margin (G7)**: Updated `configs/uncertainty_v3.yaml` reflecting Task R2 lab mixture metrics (2.28 °C MAE, 5.28 °C worst-case) and Task R3 real-fuel segregation (+4.20 °C Pensky-Martens closed-cup compliance margin with 0.0% over-prediction on commercial aviation fuels).
 4. **Diesel Cetane & Cold-Flow Hindcasts (G8–G9)**: Evaluated DCN under LOO CV on 16 real diesels (MAE 4.34 DCN) and Coutinho multi-solid wax precipitation model for cloud point (MAE 10.48 °C) and pour point (MAE 10.69 °C).
 5. **Viscosity & Density Integration with Cleaned ThermoML (G10–G11)**: Integrated 44,575 verified liquid-phase ThermoML records (excess viscosities removed, phase strictly liquid). Density ideal volume blending achieved 12.94 kg/m³ MAE (~1.5% error) across all 153 fuels.
@@ -27,7 +27,7 @@ Phase 2 addresses the critical property modeling failures diagnosed in the basel
 
 ### Why Linear-by-Mole Blending Failed
 Linear blending assumes zero excess chemical interaction:
-$$ON_\text{mix} = \sum_i x_i ON_{0,i}$$
+$$ON_\\text{mix} = \\sum_i x_i ON_{0,i}$$
 This fails drastically in real gasolines due to four mechanisms:
 1. **Oxygenate Synergetic Boosting**: Pure ethanol has RON 108.6, but at 10–20 vol% in gasoline, its effective **Blending Octane Value (BOV)** reaches **125–160 ON** because ethanol scavenges low-temperature alkylperoxy radicals. Linear blending completely misses this +15 to +40 ON synergy.
 2. **Aromatic-Olefin Antagonism**: Toluene and 1-hexene have antagonistic kinetic competition during intermediate-temperature autoignition, suppressing the expected octane response.
@@ -45,7 +45,7 @@ The components are grouped into 7 lumps:
 - heavy tail ($RON_0 = 82.0, MON_0 = 78.0$)
 
 The model couples pure lump values with regularized binary interaction terms:
-$$\Delta ON = k_{E,P} w_E w_P + k_{E,\text{sat}} w_E (1 - w_E) + k_{A,O} w_A w_O + k_{A,P} w_A w_P + \dots$$
+$$\\Delta ON = k_{E,P} w_E w_P + k_{E,\\text{sat}} w_E (1 - w_E) + k_{A,O} w_A w_O + k_{A,P} w_A w_P + \\dots$$
 
 ### Evaluation Results (55 Gasolines, LOO CV)
 | Model | RON MAE | RON RMSE | MON MAE | MON RMSE | Octane Sensitivity MAE |
@@ -59,13 +59,13 @@ $$\Delta ON = k_{E,P} w_E w_P + k_{E,\text{sat}} w_E (1 - w_E) + k_{A,O} w_A w_O
 ## 3. DVPE Diagnosis & Activity Model (G5–G6)
 
 ### Why Ideal Raoult Failed (18.50 kPa Error)
-1. **Positive Azeotropy of Ethanol**: Ethanol hydrogen-bonding clusters dissociate when diluted into non-polar hydrocarbons. The activity coefficient jumps to $\gamma_\text{EtOH} \approx 4.5$–$6.0$, causing the partial vapor pressure $P_\text{EtOH} = x_\text{EtOH} \gamma_\text{EtOH} P_\text{EtOH}^\text{sat}$ to jump by +7 to +10 kPa in E10–E25 blends.
-2. **Missing Light Ends**: $C_4$ butane ($P^\text{sat} \approx 356$ kPa) and $C_5$ isopentane ($P^\text{sat} \approx 105$ kPa) constitute 5–15 wt% of commercial gasoline but generate >50% of total vapor pressure.
+1. **Positive Azeotropy of Ethanol**: Ethanol hydrogen-bonding clusters dissociate when diluted into non-polar hydrocarbons. The activity coefficient jumps to $\\gamma_\\text{EtOH} \\approx 4.5$–$6.0$, causing the partial vapor pressure $P_\\text{EtOH} = x_\\text{EtOH} \\gamma_\\text{EtOH} P_\\text{EtOH}^\\text{sat}$ to jump by +7 to +10 kPa in E10–E25 blends.
+2. **Missing Light Ends**: $C_4$ butane ($P^\\text{sat} \\approx 356$ kPa) and $C_5$ isopentane ($P^\\text{sat} \\approx 105$ kPa) constitute 5–15 wt% of commercial gasoline but generate >50% of total vapor pressure.
 
 ### Margules Activity Formulation
-$$\ln \gamma_\text{EtOH} = A_\text{EtOH} (1 - x_\text{EtOH})^2, \quad A_\text{EtOH} = 1.80$$
+$$\\ln \\gamma_\\text{EtOH} = A_\\text{EtOH} (1 - x_\\text{EtOH})^2, \\quad A_\\text{EtOH} = 1.80$$
 ASTM D5191 correlation:
-$$DVPE = 0.965 P_\text{tot} - 3.78 \text{ kPa}$$
+$$DVPE = 0.965 P_\\text{tot} - 3.78 \\text{ kPa}$$
 
 ### Evaluation Results (55 Gasolines, LOO CV)
 | Model | DVPE MAE (kPa) | DVPE RMSE (kPa) | Bias (kPa) |
