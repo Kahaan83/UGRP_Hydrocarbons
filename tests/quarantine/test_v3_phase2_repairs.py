@@ -1,3 +1,9 @@
+"""QUARANTINED (v4 Task 3). Claims CLM-20 (G2 octane), CLM-21 (G6 DVPE), CLM-22 (G8 diesel cetane/cold flow), CLM-25 (G10 density/viscosity).
+
+These tests pin the v3 Phase-2 result files, whose inputs were the target-derived / placeholder
+rows listed in results/v4/P1/provenance_ledger.csv. They are excluded from the active suite
+(pytest.ini norecursedirs) until the claims are re-established on raw-file data.
+"""
 # tests/test_v3_phase2_repairs.py
 from pathlib import Path
 import pandas as pd
