@@ -110,7 +110,9 @@ PSAT_MIN_REF_KPA = 0.01
 # reference meaninglessly. Names containing these words, names in MIXTURE_NAMES, or a listed MW > 3 % off
 # the SMILES MW make a row kind="mixture_or_surrogate".
 MIXTURE_WORDS = ("commercial", "mixed", "surrogate")
-MIXTURE_NAMES = {"isododecane", "heptamethylnonane", "decalin"}
+# Only stereo-unspecified decalin (merges cis and trans, CAS 91-17-8 is the isomer mix) is listed by bare name.
+# Bare isododecane and heptamethylnonane are single-isomer SMILES whose listed MW matches, so they are compared.
+MIXTURE_NAMES = {"decalin"}
 
 
 def _lookup(smiles: str, prop: str):
@@ -159,10 +161,12 @@ def _lookup(smiles: str, prop: str):
             df = _cooptima()
             s = df[(df.cas == cas) & df[prop.lower()].notna()] if df is not None else None
             r = (float(s[prop.lower()].iloc[0]), SRC_COOPTIMA) if s is not None and len(s) else None
-        else:  # DCN
+        elif prop == "DCN":
             df = _nrel()
             s = df[(df._c == cs) & df.dcn.notna()] if df is not None else None
             r = (float(s.dcn.median()), SRC_NREL) if s is not None and len(s) else None
+        else:
+            raise ValueError(f"no lookup implemented for {prop}")
     except LOOKUP_ERRORS as e:
         return None, f"lookup_error:{type(e).__name__}", f"lookup_error:{type(e).__name__}"
     return (r[0], r[1], "ok") if r else (None, "", "no_reference")
@@ -278,13 +282,14 @@ def build_props(diffs: pd.DataFrame) -> pd.DataFrame:
     props = pd.DataFrame(out)
     # reference_only: pure compounds with a reference but no listed value for that property
     extra = []
-    for cs, g in d[d.kind == "pure"].groupby("_cs"):
+    pure_cs = set(d._cs) - set(d.loc[d.kind != "pure", "_cs"])
+    for cs, g in d[d._cs.isin(pure_cs)].groupby("_cs"):
         have = set(g.prop)
         for prop in THRESH:
             if prop in have:
                 continue
             val, src, state = _lookup(cs, prop)
-            if state == "ok":
+            if state == "ok" and not (prop == "Psat37_8" and val < PSAT_MIN_REF_KPA):
                 extra.append(dict(compound=g.compound.iloc[0], smiles=cs, prop=prop, value=val, listed_value=np.nan,
                                   listed_source="", listed_value_alt=np.nan, listed_source_alt="", ref_value=val,
                                   ref_source=src, delta=np.nan, kind="pure", status="reference_only",

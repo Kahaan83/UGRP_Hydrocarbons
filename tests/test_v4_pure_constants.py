@@ -64,6 +64,19 @@ def test_decalin_trans_density_stays_listed_and_disputed(res):
     assert r.ref_value == pytest.approx(846.9, abs=0.5)
 
 
+def test_heptamethylnonane_tm_disputed_not_hidden(res):
+    p = res["props"]
+    r = p[(p.compound == "heptamethylnonane") & (p.prop == "Tm")].iloc[0]
+    assert r.kind == "pure" and r.status == "disputed"
+    assert r.value == pytest.approx(-65.0)
+    assert not (res["props"][(res["props"].prop == "Psat37_8") & (res["props"].status == "reference_only")]
+                .ref_value < A.PSAT_MIN_REF_KPA).any()
+
+
+def test_unknown_prop_lookup_is_error_not_dcn():
+    assert A._lookup("CCCC", "bogus")[2] == "no_reference"  # unlisted prop never reaches the DCN branch
+
+
 def test_never_substituted(res):
     p = res["props"]
     listed = p[p.status != "reference_only"]
@@ -77,7 +90,7 @@ def test_never_substituted(res):
 
 def test_mixture_rows_not_comparable(res):
     d, p = res["diffs"], res["props"]
-    for name in ("isododecane_commercial", "heptamethylnonane_commercial", "decalin_mixed", "isododecane"):
+    for name in ("isododecane_commercial", "heptamethylnonane_commercial", "decalin_mixed", "decalin"):
         rows = d[d.compound == name]
         assert len(rows) > 0
         assert (rows.kind == "mixture_or_surrogate").all()
