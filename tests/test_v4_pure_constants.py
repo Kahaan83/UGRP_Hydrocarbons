@@ -1,4 +1,4 @@
-"""v4 Task 4: pure-component constant audit (F1).
+"""v4 Task 4: pure-component constant audit (F1), policy R16 (never auto-substitute).
 
 reference_value(smiles, prop) -> (value, source) | None, plus the audit of the listed tables
 (purchasable_compounds.csv, CANDIDATE_REGISTRY) against chemicals/thermo and the Co-Optima/NREL files.
@@ -18,25 +18,24 @@ _spec = importlib.util.spec_from_file_location("v4_apc", ROOT / "scripts" / "v4"
 A = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(A)
 
-DIFFS = ROOT / "results" / "v4" / "P1" / "pure_constant_diffs.csv"
-PROPS = ROOT / "data" / "processed" / "v4" / "pure_props_v4.csv"
+
+@pytest.fixture(scope="module")
+def res():
+    return A.run(write=False)
 
 
-def test_known_reference_values():
+def test_known_reference_values(res):
     tm = A.reference_value("CCCCCCCCCCCC", "Tm")
     assert tm is not None
     assert abs(tm[0] - (-9.6)) <= 0.5
     assert isinstance(tm[1], str) and tm[1]
-    # n-octane RON: listed -10 must be flagged against Co-Optima when the file exists
+    # the Co-Optima reference file must be on disk; n-octane RON listed -10 must be flagged
+    assert A.COOPTIMA.exists(), f"missing {A.COOPTIMA}"
     ref = A.reference_value("CCCCCCCC", "RON")
-    df = A.run(write=False)["diffs"]
+    assert ref is not None and abs(ref[0] - (-10.0)) > 3
+    df = res["diffs"]
     row = df[(df.smiles == "CCCCCCCC") & (df.prop == "RON") & (df.listed_value == -10.0)]
-    assert len(row) >= 1
-    if ref is not None:
-        assert abs(ref[0] - (-10.0)) > 3
-        assert (row.flag == "flagged").all()
-    else:
-        assert (row.flag == "no_reference").all()
+    assert len(row) >= 1 and (row.flag == "flagged").all()
 
 
 def test_unknown_returns_none():
@@ -50,21 +49,68 @@ def test_threshold_logic():
     assert A.is_flagged("rho15", None, 0.011) is True
     assert A.is_flagged("rho15", None, 0.009) is False
     assert A.is_flagged("DCN", 3.1, None) is True
-    assert A.is_flagged("Psat37_8", None, 0.06) is True
+    assert A.is_flagged("Psat37_8", None, 0.06, 0.5) is True
+    # relative Psat is noise below 0.01 kPa
+    assert A.is_flagged("Psat37_8", None, 3.39, 0.001) is False
 
 
-def test_outputs_written_and_consistent():
-    A.run(write=True)
-    d = pd.read_csv(DIFFS)
+def test_decalin_trans_density_stays_listed_and_disputed(res):
+    p = res["props"]
+    r = p[(p.compound == "decalin_trans") & (p.prop == "rho15")]
+    assert len(r) == 1
+    r = r.iloc[0]
+    assert r.value == pytest.approx(869.5) and r.listed_value == pytest.approx(869.5)
+    assert r.status == "disputed"
+    assert r.ref_value == pytest.approx(846.9, abs=0.5)
+
+
+def test_never_substituted(res):
+    p = res["props"]
+    listed = p[p.status != "reference_only"]
+    assert (listed.value == listed.listed_value).all()
+    ro = p[p.status == "reference_only"]
+    assert (ro.kind == "pure").all() and ro.listed_value.isna().all()
+    assert set(p.status) <= {"verified", "disputed", "unverified", "not_comparable", "lookup_error",
+                             "reference_only"}
+    assert not p.duplicated(["smiles", "prop"]).any()
+
+
+def test_mixture_rows_not_comparable(res):
+    d, p = res["diffs"], res["props"]
+    for name in ("isododecane_commercial", "heptamethylnonane_commercial", "decalin_mixed", "isododecane"):
+        rows = d[d.compound == name]
+        assert len(rows) > 0
+        assert (rows.kind == "mixture_or_surrogate").all()
+        assert (rows.flag == "not_comparable").all()
+        assert (p[p.compound == name].status == "not_comparable").all()
+    assert A.is_mixture("foo", "CCCCCCCCCCCC", 200.0)  # MW 170.3 vs 200: > 3 %
+    assert not A.is_mixture("n-dodecane", "CCCCCCCCCCCC", 170.33)
+
+
+def test_lookup_error_distinct_from_no_reference(monkeypatch):
+    import chemicals
+    # no data: a compound that search_chemical cannot resolve
+    assert A._lookup("not_a_smiles", "Tm")[2] == "no_reference"
+
+    def boom(cas, *a, **k):
+        raise KeyError(cas)
+
+    monkeypatch.setattr(chemicals, "Tm", boom)
+    val, src, state = A._lookup("CCCCCCCCCCCC", "Tm")
+    assert val is None and state == "lookup_error:KeyError" and src == "lookup_error:KeyError"
+    assert A.reference_value("CCCCCCCCCCCC", "Tm") is None
+
+
+def test_outputs_written_and_consistent(tmp_path):
+    d_path, p_path = tmp_path / "diffs.csv", tmp_path / "props.csv"
+    A.run(write=True, out_diffs=d_path, out_props=p_path)
+    d = pd.read_csv(d_path)
     assert list(d.columns[:9]) == ["compound", "smiles", "prop", "listed_value", "listed_source",
                                    "ref_value", "ref_source", "delta", "flag"]
-    assert set(d.flag) <= {"ok", "flagged", "no_reference"}
+    assert "kind" in d.columns
+    assert set(d.flag) <= {"ok", "flagged", "no_reference", "not_comparable", "not_assessed", "lookup_error"}
     assert (d.flag == "flagged").sum() > 0
-    p = pd.read_csv(PROPS)
-    assert {"smiles", "prop", "value", "source"} <= set(p.columns)
-    assert not p.duplicated(["smiles", "prop"]).any()
+    p = pd.read_csv(p_path)
+    assert {"smiles", "prop", "value", "source", "status", "listed_value", "listed_source", "ref_value",
+            "ref_source", "delta", "listed_value_alt", "kind"} <= set(p.columns)
     assert p.source.notna().all()
-    # a flagged row with a reference gets the reference value in v4
-    f = d[d.flag == "flagged"].iloc[0]
-    v = p[(p.smiles == f.smiles) & (p.prop == f["prop"])].iloc[0]
-    assert v.value == pytest.approx(f.ref_value)

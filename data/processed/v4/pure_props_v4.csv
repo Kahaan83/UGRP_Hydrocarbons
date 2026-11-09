@@ -1,386 +1,411 @@
-compound,smiles,prop,value,source,note
-n-octane,CCCCCCCC,MW,114.23,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-octane,CCCCCCCC,rho15,707.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-octane,CCCCCCCC,Tb,125.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-octane,CCCCCCCC,Tm,-56.8,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-octane,CCCCCCCC,flash,13.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-n-octane,CCCCCCCC,DCN,64.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-n-octane,CCCCCCCC,RON,-18.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value -10 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-octane,CCCCCCCC,MON,-10.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-decane,CCCCCCCCCC,MW,142.28,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-decane,CCCCCCCCCC,rho15,734.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-decane,CCCCCCCCCC,Tb,174.1,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-decane,CCCCCCCCCC,Tm,-29.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-decane,CCCCCCCCCC,flash,46.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-n-decane,CCCCCCCCCC,DCN,65.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 76 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-decane,CCCCCCCCCC,RON,-41.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value -20 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-decane,CCCCCCCCCC,MON,-38.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value -20 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-dodecane,CCCCCCCCCCCC,MW,170.33,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,rho15,752.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,Tb,216.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,Tm,-9.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,flash,74.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,DCN,72.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 80 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-dodecane,CCCCCCCCCCCC,RON,-85.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value -25 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-dodecane,CCCCCCCCCCCC,MON,-25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-tetradecane,CCCCCCCCCCCCCC,MW,198.39,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-tetradecane,CCCCCCCCCCCCCC,rho15,767.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-tetradecane,CCCCCCCCCCCCCC,Tb,253.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-tetradecane,CCCCCCCCCCCCCC,Tm,5.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-tetradecane,CCCCCCCCCCCCCC,flash,107.49573166079603,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 100 (purchasable_compounds.csv)
-n-tetradecane,CCCCCCCCCCCCCC,DCN,85.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 95 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-tetradecane,CCCCCCCCCCCCCC,RON,-25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-tetradecane,CCCCCCCCCCCCCC,MON,-25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-hexadecane,CCCCCCCCCCCCCCCC,MW,226.44,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,rho15,773.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,Tb,287.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,Tm,18.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,flash,126.59932071542403,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 135 (purchasable_compounds.csv)
-n-hexadecane,CCCCCCCCCCCCCCCC,DCN,100.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,RON,-30.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-hexadecane,CCCCCCCCCCCCCCCC,MON,-30.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isooctane,CC(C)CC(C)(C)C,MW,114.23,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,rho15,696.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,Tb,99.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,Tm,-107.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,flash,-12.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,DCN,15.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isooctane,CC(C)CC(C)(C)C,RON,100.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,MON,100.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,MW,98.19,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,rho15,774.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,Tb,100.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,Tm,-126.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,flash,-4.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,DCN,23.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 20 (inverse_design_v2.CANDIDATE_REGISTRY)
-methylcyclohexane,CC1CCCCC1,RON,75.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,MON,71.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,MW,138.25,purchasable_compounds.csv (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,rho15,846.9253346939707,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 869.5 (purchasable_compounds.csv)
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,Tb,185.5,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,Tm,-30.4,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,flash,54.0,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 57 (purchasable_compounds.csv)
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,DCN,31.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 38 (purchasable_compounds.csv)
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,RON,45.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,MON,40.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MW,138.25,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,rho15,896.5,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tb,195.7,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tm,-43.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,flash,58.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,DCN,35.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,RON,45.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MON,40.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-toluene,Cc1ccccc1,MW,92.14,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-toluene,Cc1ccccc1,rho15,871.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-toluene,Cc1ccccc1,Tb,110.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-toluene,Cc1ccccc1,Tm,-95.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-toluene,Cc1ccccc1,flash,4.4,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-toluene,Cc1ccccc1,DCN,9.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-toluene,Cc1ccccc1,RON,120.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-toluene,Cc1ccccc1,MON,103.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-o-xylene,Cc1ccccc1C,MW,106.17,purchasable_compounds.csv (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-o-xylene,Cc1ccccc1C,rho15,880.0,purchasable_compounds.csv (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-o-xylene,Cc1ccccc1C,Tb,144.4,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-o-xylene,Cc1ccccc1C,Tm,-25.2,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-o-xylene,Cc1ccccc1C,flash,32.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-o-xylene,Cc1ccccc1C,DCN,8.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 12 (purchasable_compounds.csv)
-o-xylene,Cc1ccccc1C,RON,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value 107 (purchasable_compounds.csv)
-o-xylene,Cc1ccccc1C,MON,100.0,"purchasable_compounds.csv (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,MW,106.17,purchasable_compounds.csv (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,rho15,861.0,purchasable_compounds.csv (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,Tb,138.3,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,Tm,13.3,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,flash,27.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-p-xylene,Cc1ccc(C)cc1,DCN,6.2,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 15 (purchasable_compounds.csv)
-p-xylene,Cc1ccc(C)cc1,RON,117.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-p-xylene,Cc1ccc(C)cc1,MON,102.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MW,120.19,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,rho15,880.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tb,169.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tm,-43.8,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,flash,44.50057963388201,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 48 (purchasable_compounds.csv)
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,DCN,11.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,RON,108.6,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value 120 (inverse_design_v2.CANDIDATE_REGISTRY)
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MON,104.4,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value 110 (inverse_design_v2.CANDIDATE_REGISTRY)
-tetralin,c1ccc2c(c1)CCCC2,MW,132.21,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-tetralin,c1ccc2c(c1)CCCC2,rho15,970.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-tetralin,c1ccc2c(c1)CCCC2,Tb,207.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-tetralin,c1ccc2c(c1)CCCC2,Tm,-35.8,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-tetralin,c1ccc2c(c1)CCCC2,flash,70.85000000000002,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 77 (purchasable_compounds.csv)
-tetralin,c1ccc2c(c1)CCCC2,DCN,9.15,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 15 (inverse_design_v2.CANDIDATE_REGISTRY)
-tetralin,c1ccc2c(c1)CCCC2,RON,100.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-tetralin,c1ccc2c(c1)CCCC2,MON,90.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-ethanol,CCO,MW,46.07,purchasable_compounds.csv (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-ethanol,CCO,rho15,789.0,purchasable_compounds.csv (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-ethanol,CCO,Tb,78.4,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-ethanol,CCO,Tm,-114.1,purchasable_compounds.csv (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-ethanol,CCO,flash,13.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-ethanol,CCO,DCN,8.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-ethanol,CCO,RON,108.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-ethanol,CCO,MON,90.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-n-heptane,CCCCCCC,MW,100.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-heptane,CCCCCCC,rho15,688.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-heptane,CCCCCCC,Tb,98.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-heptane,CCCCCCC,Tm,-90.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-heptane,CCCCCCC,flash,-7.0,chemicals 1.5.2 (T_flash),reference replaces flagged listed value -4 (purchasable_compounds.csv)
-n-heptane,CCCCCCC,DCN,56.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-n-heptane,CCCCCCC,RON,0.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-n-heptane,CCCCCCC,MON,0.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-isopentane,CCC(C)C,MW,72.15,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-isopentane,CCC(C)C,rho15,624.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-isopentane,CCC(C)C,Tb,27.8,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-isopentane,CCC(C)C,Tm,-159.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-isopentane,CCC(C)C,flash,-55.99999999999997,chemicals 1.5.2 (T_flash),reference replaces flagged listed value -51 (purchasable_compounds.csv)
-isopentane,CCC(C)C,DCN,15.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isopentane,CCC(C)C,RON,93.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isopentane,CCC(C)C,MON,90.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-butane,CCCC,MW,58.12,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-butane,CCCC,rho15,584.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-butane,CCCC,Tb,-0.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-butane,CCCC,Tm,-138.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-butane,CCCC,flash,-60.0,purchasable_compounds.csv (verified vs chemicals 1.5.2 (T_flash)),listed value within threshold of reference
-n-butane,CCCC,DCN,20.62,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 25 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-butane,CCCC,RON,94.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-butane,CCCC,MON,90.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MW,156.30826,chemicals 1.5.2 (search_chemical.MW),reference replaces flagged listed value 170.33 (purchasable_compounds.csv)
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,rho15,745.0,purchasable_compounds.csv (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tb,164.0,chemicals 1.5.2 (Tb),reference replaces flagged listed value 177 (purchasable_compounds.csv)
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tm,-86.99999999999997,chemicals 1.5.2 (Tm),reference replaces flagged listed value -81 (purchasable_compounds.csv)
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,flash,43.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,DCN,20.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,RON,98.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MON,95.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MW,226.44,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,rho15,784.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tb,240.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tm,-80.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,flash,96.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,DCN,15.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,RON,40.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MON,40.0,unverified,"listed in purchasable_compounds.csv, no reference found"
-decalin,C1CCC2CCCCC2C1,MW,138.25,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-decalin,C1CCC2CCCCC2C1,rho15,863.8839789924094,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 896.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-decalin,C1CCC2CCCCC2C1,Tb,195.8,chemicals 1.5.2 (Tb),reference replaces flagged listed value 190 (inverse_design_v2.CANDIDATE_REGISTRY)
-decalin_mixed,C1CCC2CCCCC2C1,Tm,-42.94999999999999,chemicals 1.5.2 (Tm),reference replaces flagged listed value -40 (purchasable_compounds.csv)
-decalin_mixed,C1CCC2CCCCC2C1,flash,61.0,chemicals 1.5.2 (T_flash),reference replaces flagged listed value 58 (purchasable_compounds.csv)
-decalin,C1CCC2CCCCC2C1,DCN,38.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-decalin,C1CCC2CCCCC2C1,RON,45.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-decalin,C1CCC2CCCCC2C1,MON,40.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-butane,CCCC,dHfus,4.66,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-butane,CCCC,Psat37_8,350.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-n-pentane,CCCCC,MW,72.15,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-pentane,CCCCC,rho15,631.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-pentane,CCCCC,Tm,-129.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-pentane,CCCCC,Tb,36.1,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-pentane,CCCCC,dHfus,8.42,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-pentane,CCCCC,Psat37_8,105.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-n-pentane,CCCCC,DCN,30.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-n-pentane,CCCCC,RON,62.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-n-pentane,CCCCC,MON,61.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-n-hexane,CCCCCC,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-hexane,CCCCCC,rho15,664.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-hexane,CCCCCC,Tm,-95.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-hexane,CCCCCC,Tb,68.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-hexane,CCCCCC,dHfus,13.08,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-hexane,CCCCCC,Psat37_8,33.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-n-hexane,CCCCCC,DCN,50.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 45 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-hexane,CCCCCC,RON,25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-hexane,CCCCCC,MON,26.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-heptane,CCCCCCC,dHfus,14.12,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-heptane,CCCCCCC,Psat37_8,11.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-n-octane,CCCCCCCC,dHfus,20.73,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-octane,CCCCCCCC,Psat37_8,3.717144109263914,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 4.1 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-decane,CCCCCCCCCC,dHfus,28.72,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-decane,CCCCCCCCCC,Psat37_8,0.42448951407047414,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.55 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-undecane,CCCCCCCCCCC,MW,156.31,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-undecane,CCCCCCCCCCC,rho15,744.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-undecane,CCCCCCCCCCC,Tm,-25.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-undecane,CCCCCCCCCCC,Tb,195.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-undecane,CCCCCCCCCCC,dHfus,22.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-undecane,CCCCCCCCCCC,Psat37_8,0.145954805825549,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.2 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-undecane,CCCCCCCCCCC,DCN,71.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 80 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-undecane,CCCCCCCCCCC,RON,-22.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-undecane,CCCCCCCCCCC,MON,-22.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-dodecane,CCCCCCCCCCCC,dHfus,36.84,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-dodecane,CCCCCCCCCCCC,Psat37_8,0.049197168588538044,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.08 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-tridecane,CCCCCCCCCCCCC,MW,184.36,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,rho15,760.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,Tm,-5.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,Tb,235.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,dHfus,28.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,Psat37_8,0.017570654041399868,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.03 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-tridecane,CCCCCCCCCCCCC,DCN,88.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-n-tridecane,CCCCCCCCCCCCC,RON,-25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-tridecane,CCCCCCCCCCCCC,MON,-25.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-tetradecane,CCCCCCCCCCCCCC,dHfus,45.1,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-tetradecane,CCCCCCCCCCCCCC,Psat37_8,0.00621343445269921,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.01 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-hexadecane,CCCCCCCCCCCCCCCC,dHfus,53.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-hexadecane,CCCCCCCCCCCCCCCC,Psat37_8,0.0007624916389457882,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.002 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-octadecane,CCCCCCCCCCCCCCCCCC,MW,254.49,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-n-octadecane,CCCCCCCCCCCCCCCCCC,rho15,777.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-n-octadecane,CCCCCCCCCCCCCCCCCC,Tm,28.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-n-octadecane,CCCCCCCCCCCCCCCCCC,Tb,316.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-n-octadecane,CCCCCCCCCCCCCCCCCC,dHfus,61.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-n-octadecane,CCCCCCCCCCCCCCCCCC,Psat37_8,0.0001138522555250335,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.0005 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-octadecane,CCCCCCCCCCCCCCCCCC,DCN,110.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 105 (inverse_design_v2.CANDIDATE_REGISTRY)
-n-octadecane,CCCCCCCCCCCCCCCCCC,RON,-35.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-n-octadecane,CCCCCCCCCCCCCCCCCC,MON,-35.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isobutane,CC(C)C,MW,58.12,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-isobutane,CC(C)C,rho15,563.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-isobutane,CC(C)C,Tm,-148.95,chemicals 1.5.2 (Tm),reference replaces flagged listed value -159.6 (inverse_design_v2.CANDIDATE_REGISTRY)
-isobutane,CC(C)C,Tb,-11.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-isobutane,CC(C)C,dHfus,4.54,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-isobutane,CC(C)C,Psat37_8,490.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-isobutane,CC(C)C,DCN,20.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isobutane,CC(C)C,RON,102.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isobutane,CC(C)C,MON,97.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isopentane,CCC(C)C,dHfus,5.15,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-isopentane,CCC(C)C,Psat37_8,141.25886796016695,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 112 (inverse_design_v2.CANDIDATE_REGISTRY)
-2-methylpentane,CCCC(C)C,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,rho15,653.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,Tm,-153.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,Tb,60.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,dHfus,6.27,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,Psat37_8,45.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-2-methylpentane,CCCC(C)C,DCN,34.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 22 (inverse_design_v2.CANDIDATE_REGISTRY)
-2-methylpentane,CCCC(C)C,RON,73.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-2-methylpentane,CCCC(C)C,MON,73.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-"2,3-dimethylbutane",CC(C)C(C)C,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-"2,3-dimethylbutane",CC(C)C(C)C,rho15,662.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-"2,3-dimethylbutane",CC(C)C(C)C,Tm,-128.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-"2,3-dimethylbutane",CC(C)C(C)C,Tb,58.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-"2,3-dimethylbutane",CC(C)C(C)C,dHfus,0.8,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-"2,3-dimethylbutane",CC(C)C(C)C,Psat37_8,50.94217857668046,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 48 (inverse_design_v2.CANDIDATE_REGISTRY)
-"2,3-dimethylbutane",CC(C)C(C)C,DCN,10.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-"2,3-dimethylbutane",CC(C)C(C)C,RON,103.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-"2,3-dimethylbutane",CC(C)C(C)C,MON,94.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isooctane,CC(C)CC(C)(C)C,dHfus,9.22,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-isooctane,CC(C)CC(C)(C)C,Psat37_8,11.79897159312447,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 6.8 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,MW,170.33,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,rho15,760.124158685881,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 749 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,Tm,-66.99999999999997,chemicals 1.5.2 (Tm),reference replaces flagged listed value -81 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,Tb,177.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,dHfus,8.485,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 15 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,Psat37_8,0.5812303516812672,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.45 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,DCN,16.3,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 28 (inverse_design_v2.CANDIDATE_REGISTRY)
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,RON,90.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-isododecane,CC(CC(C)(C)C)CC(C)(C)C,MON,88.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,MW,226.44,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,rho15,741.2144780181519,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 785 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Tm,-10.810000000000002,chemicals 1.5.2 (Tm),reference replaces flagged listed value -65 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Tb,246.0,chemicals 1.5.2 (Tb),reference replaces flagged listed value 240 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,dHfus,11.431,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 18 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Psat37_8,0.016525985737018266,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.02 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,DCN,15.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,RON,95.2,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value 40 (inverse_design_v2.CANDIDATE_REGISTRY)
-heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,MON,35.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-cyclopentane,C1CCCC1,MW,70.13,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-cyclopentane,C1CCCC1,rho15,750.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-cyclopentane,C1CCCC1,Tm,-93.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-cyclopentane,C1CCCC1,Tb,49.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-cyclopentane,C1CCCC1,dHfus,0.61,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-cyclopentane,C1CCCC1,Psat37_8,68.44044231440137,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 53 (inverse_design_v2.CANDIDATE_REGISTRY)
-cyclopentane,C1CCCC1,DCN,6.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 25 (inverse_design_v2.CANDIDATE_REGISTRY)
-cyclopentane,C1CCCC1,RON,101.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-cyclopentane,C1CCCC1,MON,85.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-cyclohexane,C1CCCCC1,MW,84.16,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-cyclohexane,C1CCCCC1,rho15,783.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-cyclohexane,C1CCCCC1,Tm,6.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-cyclohexane,C1CCCCC1,Tb,80.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-cyclohexane,C1CCCCC1,dHfus,2.68,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-cyclohexane,C1CCCCC1,Psat37_8,22.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-cyclohexane,C1CCCCC1,DCN,19.95,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 16 (inverse_design_v2.CANDIDATE_REGISTRY)
-cyclohexane,C1CCCCC1,RON,83.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-cyclohexane,C1CCCCC1,MON,77.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,dHfus,6.74,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-methylcyclohexane,CC1CCCCC1,Psat37_8,11.096957588798993,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 10.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-butylcyclohexane,CCCCC1CCCCC1,MW,140.27,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-butylcyclohexane,CCCCC1CCCCC1,rho15,802.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-butylcyclohexane,CCCCC1CCCCC1,Tm,-75.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-butylcyclohexane,CCCCC1CCCCC1,Tb,181.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-butylcyclohexane,CCCCC1CCCCC1,dHfus,15.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-butylcyclohexane,CCCCC1CCCCC1,Psat37_8,0.3767284613553515,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.4 (inverse_design_v2.CANDIDATE_REGISTRY)
-butylcyclohexane,CCCCC1CCCCC1,DCN,47.6,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 35 (inverse_design_v2.CANDIDATE_REGISTRY)
-butylcyclohexane,CCCCC1CCCCC1,RON,63.8,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",reference replaces flagged listed value 45 (inverse_design_v2.CANDIDATE_REGISTRY)
-butylcyclohexane,CCCCC1CCCCC1,MON,40.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-decalin,C1CCC2CCCCC2C1,dHfus,9.49,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 13.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-decalin,C1CCC2CCCCC2C1,Psat37_8,0.25,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,MW,166.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,rho15,902.0464538931006,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 886 (inverse_design_v2.CANDIDATE_REGISTRY)
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,Tm,3.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,Tb,239.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,dHfus,10.506,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 17.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,Psat37_8,0.046289694274041726,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.03 (inverse_design_v2.CANDIDATE_REGISTRY)
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,DCN,53.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 42 (inverse_design_v2.CANDIDATE_REGISTRY)
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,RON,40.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-bicyclohexyl,C1CCC(C2CCCCC2)CC1,MON,35.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-toluene,Cc1ccccc1,dHfus,6.64,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-toluene,Cc1ccccc1,Psat37_8,7.1271418439673955,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 4.9 (inverse_design_v2.CANDIDATE_REGISTRY)
-ethylbenzene,CCc1ccccc1,MW,106.17,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,rho15,872.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,Tm,-94.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,Tb,136.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,dHfus,9.16,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,Psat37_8,2.567644340045808,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 2.2 (inverse_design_v2.CANDIDATE_REGISTRY)
-ethylbenzene,CCc1ccccc1,DCN,6.29,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 10 (inverse_design_v2.CANDIDATE_REGISTRY)
-ethylbenzene,CCc1ccccc1,RON,107.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-ethylbenzene,CCc1ccccc1,MON,98.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,MW,106.17,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,rho15,868.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,Tm,-47.9,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,Tb,139.1,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,dHfus,11.57,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,Psat37_8,2.260329507745115,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 2 (inverse_design_v2.CANDIDATE_REGISTRY)
-m-xylene,Cc1cccc(C)c1,DCN,10.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-m-xylene,Cc1cccc(C)c1,RON,118.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-m-xylene,Cc1cccc(C)c1,MON,115.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-mesitylene,Cc1cc(C)cc(C)c1,MW,120.19,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,rho15,869.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,Tm,-44.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,Tb,164.7,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,dHfus,9.51,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,Psat37_8,0.75,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,DCN,11.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-mesitylene,Cc1cc(C)cc(C)c1,RON,120.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-mesitylene,Cc1cc(C)cc(C)c1,MON,112.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,dHfus,12.3,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Psat37_8,0.65,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-tetralin,c1ccc2c(c1)CCCC2,dHfus,10.272,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 12.4 (inverse_design_v2.CANDIDATE_REGISTRY)
-tetralin,c1ccc2c(c1)CCCC2,Psat37_8,0.12,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.Psat @310.95K),listed value within threshold of reference
-1-methylnaphthalene,Cc1cccc2ccccc12,MW,142.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-1-methylnaphthalene,Cc1cccc2ccccc12,rho15,1025.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-1-methylnaphthalene,Cc1cccc2ccccc12,Tm,-21.99999999999997,chemicals 1.5.2 (Tm),reference replaces flagged listed value -30.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-1-methylnaphthalene,Cc1cccc2ccccc12,Tb,244.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-1-methylnaphthalene,Cc1cccc2ccccc12,dHfus,6.95,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 14.8 (inverse_design_v2.CANDIDATE_REGISTRY)
-1-methylnaphthalene,Cc1cccc2ccccc12,Psat37_8,0.03202667105453825,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.02 (inverse_design_v2.CANDIDATE_REGISTRY)
-1-methylnaphthalene,Cc1cccc2ccccc12,DCN,0.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv)",listed value within threshold of reference
-1-methylnaphthalene,Cc1cccc2ccccc12,RON,105.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-1-methylnaphthalene,Cc1cccc2ccccc12,MON,95.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-hexylbenzene,CCCCCCc1ccccc1,MW,162.27,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-hexylbenzene,CCCCCCc1ccccc1,rho15,861.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs thermo 0.6.1 Chemical.rhol @288.15K),listed value within threshold of reference
-hexylbenzene,CCCCCCc1ccccc1,Tm,-61.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-hexylbenzene,CCCCCCc1ccccc1,Tb,226.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-hexylbenzene,CCCCCCc1ccccc1,dHfus,20.877,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 17.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-hexylbenzene,CCCCCCc1ccccc1,Psat37_8,0.03920543321280973,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.05 (inverse_design_v2.CANDIDATE_REGISTRY)
-hexylbenzene,CCCCCCc1ccccc1,DCN,33.3,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 25 (inverse_design_v2.CANDIDATE_REGISTRY)
-hexylbenzene,CCCCCCc1ccccc1,RON,80.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-hexylbenzene,CCCCCCc1ccccc1,MON,75.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-biphenyl,c1ccc(-c2ccccc2)cc1,MW,154.21,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-biphenyl,c1ccc(-c2ccccc2)cc1,rho15,1028.5623748054286,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 1040 (inverse_design_v2.CANDIDATE_REGISTRY)
-biphenyl,c1ccc(-c2ccccc2)cc1,Tm,69.2,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-biphenyl,c1ccc(-c2ccccc2)cc1,Tb,255.0,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-biphenyl,c1ccc(-c2ccccc2)cc1,dHfus,18.6,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Hfus)),listed value within threshold of reference
-biphenyl,c1ccc(-c2ccccc2)cc1,Psat37_8,0.012326363859731378,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 0.015 (inverse_design_v2.CANDIDATE_REGISTRY)
-biphenyl,c1ccc(-c2ccccc2)cc1,DCN,12.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 5 (inverse_design_v2.CANDIDATE_REGISTRY)
-biphenyl,c1ccc(-c2ccccc2)cc1,RON,110.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-biphenyl,c1ccc(-c2ccccc2)cc1,MON,100.0,unverified,"listed in inverse_design_v2.CANDIDATE_REGISTRY, no reference found"
-diisobutylene,C=C(C)CC(C)(C)C,MW,112.21,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (search_chemical.MW)),listed value within threshold of reference
-diisobutylene,C=C(C)CC(C)(C)C,rho15,746.5276382775946,thermo 0.6.1 Chemical.rhol @288.15K,reference replaces flagged listed value 720 (inverse_design_v2.CANDIDATE_REGISTRY)
-diisobutylene,C=C(C)CC(C)(C)C,Tm,-93.5,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tm)),listed value within threshold of reference
-diisobutylene,C=C(C)CC(C)(C)C,Tb,101.4,inverse_design_v2.CANDIDATE_REGISTRY (verified vs chemicals 1.5.2 (Tb)),listed value within threshold of reference
-diisobutylene,C=C(C)CC(C)(C)C,dHfus,6.472,chemicals 1.5.2 (Hfus),reference replaces flagged listed value 10.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-diisobutylene,C=C(C)CC(C)(C)C,Psat37_8,10.756230041966747,thermo 0.6.1 Chemical.Psat @310.95K,reference replaces flagged listed value 6.5 (inverse_design_v2.CANDIDATE_REGISTRY)
-diisobutylene,C=C(C)CC(C)(C)C,DCN,8.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",reference replaces flagged listed value 12 (inverse_design_v2.CANDIDATE_REGISTRY)
-diisobutylene,C=C(C)CC(C)(C)C,RON,103.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
-diisobutylene,C=C(C)CC(C)(C)C,MON,87.0,"inverse_design_v2.CANDIDATE_REGISTRY (verified vs DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv)",listed value within threshold of reference
+compound,smiles,prop,value,listed_value,listed_source,listed_value_alt,listed_source_alt,ref_value,ref_source,delta,kind,status,source,note
+n-octane,CCCCCCCC,MW,114.23,114.23,inverse_design_v2.CANDIDATE_REGISTRY,,,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,rho15,707.0,707.0,inverse_design_v2.CANDIDATE_REGISTRY,,,706.7358568530447,thermo 0.6.1 Chemical.rhol @288.15K,0.0003737508779185557,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,Tb,125.7,125.7,inverse_design_v2.CANDIDATE_REGISTRY,,,125.64375513500005,chemicals 1.5.2 (Tb),0.05624486499995385,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,Tm,-56.8,-56.8,inverse_design_v2.CANDIDATE_REGISTRY,,,-56.849999999999966,chemicals 1.5.2 (Tm),0.049999999999968736,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,flash,13.0,13.0,purchasable_compounds.csv,,,13.0,chemicals 1.5.2 (T_flash),0.0,pure,verified,purchasable_compounds.csv,
+n-octane,CCCCCCCC,DCN,64.0,64.0,inverse_design_v2.CANDIDATE_REGISTRY,,,64.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,RON,-10.0,-10.0,inverse_design_v2.CANDIDATE_REGISTRY,-10.0,purchasable_compounds.csv,-18.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",8.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-octane,CCCCCCCC,MON,-10.0,-10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,MW,142.28,142.28,inverse_design_v2.CANDIDATE_REGISTRY,,,142.28168,chemicals 1.5.2 (search_chemical.MW),-1.1807563700353008e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,rho15,734.0,734.0,inverse_design_v2.CANDIDATE_REGISTRY,,,734.3897782845405,thermo 0.6.1 Chemical.rhol @288.15K,-0.0005307512387372739,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,Tb,174.1,174.1,inverse_design_v2.CANDIDATE_REGISTRY,,,174.12022938200005,chemicals 1.5.2 (Tb),-0.02022938200005342,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,Tm,-29.7,-29.7,inverse_design_v2.CANDIDATE_REGISTRY,,,-29.924999999999983,chemicals 1.5.2 (Tm),0.22499999999998366,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,flash,46.0,46.0,purchasable_compounds.csv,,,46.0,chemicals 1.5.2 (T_flash),0.0,pure,verified,purchasable_compounds.csv,
+n-decane,CCCCCCCCCC,DCN,76.0,76.0,inverse_design_v2.CANDIDATE_REGISTRY,76.0,purchasable_compounds.csv,65.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",10.5,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-decane,CCCCCCCCCC,RON,-20.0,-20.0,inverse_design_v2.CANDIDATE_REGISTRY,-20.0,purchasable_compounds.csv,-41.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",21.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-decane,CCCCCCCCCC,MON,-20.0,-20.0,inverse_design_v2.CANDIDATE_REGISTRY,-20.0,purchasable_compounds.csv,-38.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",18.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-dodecane,CCCCCCCCCCCC,MW,170.33,170.33,inverse_design_v2.CANDIDATE_REGISTRY,,,170.33484,chemicals 1.5.2 (search_chemical.MW),-2.841462145971728e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,rho15,752.6,752.6,inverse_design_v2.CANDIDATE_REGISTRY,,,753.2349521885411,thermo 0.6.1 Chemical.rhol @288.15K,-0.000842966974243859,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,Tb,216.3,216.3,inverse_design_v2.CANDIDATE_REGISTRY,,,216.29158964000004,chemicals 1.5.2 (Tb),0.008410359999970751,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,Tm,-9.6,-9.6,inverse_design_v2.CANDIDATE_REGISTRY,,,-9.599999999999966,chemicals 1.5.2 (Tm),-3.375077994860476e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,flash,74.0,74.0,purchasable_compounds.csv,,,74.0,chemicals 1.5.2 (T_flash),0.0,pure,verified,purchasable_compounds.csv,
+n-dodecane,CCCCCCCCCCCC,DCN,80.0,80.0,inverse_design_v2.CANDIDATE_REGISTRY,80.0,purchasable_compounds.csv,72.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",7.099999999999994,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-dodecane,CCCCCCCCCCCC,RON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,-25.0,purchasable_compounds.csv,-85.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",60.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-dodecane,CCCCCCCCCCCC,MON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,MW,198.39,198.39,inverse_design_v2.CANDIDATE_REGISTRY,,,198.388,chemicals 1.5.2 (search_chemical.MW),1.0081254914516644e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,rho15,767.0,767.0,inverse_design_v2.CANDIDATE_REGISTRY,,,765.5950516289131,thermo 0.6.1 Chemical.rhol @288.15K,0.0018351063895954837,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,Tb,253.6,253.6,inverse_design_v2.CANDIDATE_REGISTRY,,,253.5,chemicals 1.5.2 (Tb),0.09999999999999432,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,Tm,5.9,5.9,inverse_design_v2.CANDIDATE_REGISTRY,,,5.900000000000034,chemicals 1.5.2 (Tm),-3.375077994860476e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,flash,100.0,100.0,purchasable_compounds.csv,,,107.49573166079603,chemicals 1.5.2 (T_flash),-7.495731660796025,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+n-tetradecane,CCCCCCCCCCCCCC,DCN,95.0,95.0,inverse_design_v2.CANDIDATE_REGISTRY,95.0,purchasable_compounds.csv,85.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",9.900000000000006,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-tetradecane,CCCCCCCCCCCCCC,RON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,MON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,MW,226.44,226.44,inverse_design_v2.CANDIDATE_REGISTRY,,,226.44116,chemicals 1.5.2 (search_chemical.MW),-5.122743586010236e-06,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,rho15,773.4,773.4,inverse_design_v2.CANDIDATE_REGISTRY,,,777.3164471099847,thermo 0.6.1 Chemical.rhol @288.15K,-0.005038420484406061,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,Tb,287.0,287.0,inverse_design_v2.CANDIDATE_REGISTRY,,,286.75336533000007,chemicals 1.5.2 (Tb),0.24663466999993489,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,Tm,18.2,18.2,inverse_design_v2.CANDIDATE_REGISTRY,,,18.0,chemicals 1.5.2 (Tm),0.1999999999999993,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,flash,135.0,135.0,purchasable_compounds.csv,,,126.59932071542403,chemicals 1.5.2 (T_flash),8.400679284575972,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+n-hexadecane,CCCCCCCCCCCCCCCC,DCN,100.0,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,100.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,RON,-30.0,-30.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,MON,-30.0,-30.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,MW,114.23,114.23,inverse_design_v2.CANDIDATE_REGISTRY,,,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,rho15,696.0,696.0,inverse_design_v2.CANDIDATE_REGISTRY,,,696.2482824687801,thermo 0.6.1 Chemical.rhol @288.15K,-0.00035660047576664407,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,Tb,99.2,99.2,inverse_design_v2.CANDIDATE_REGISTRY,,,99.208308267,chemicals 1.5.2 (Tb),-0.008308267000003866,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,Tm,-107.4,-107.4,inverse_design_v2.CANDIDATE_REGISTRY,,,-106.99999999999997,chemicals 1.5.2 (Tm),-0.4000000000000341,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,flash,-12.0,-12.0,purchasable_compounds.csv,,,-12.0,chemicals 1.5.2 (T_flash),0.0,pure,verified,purchasable_compounds.csv,
+isooctane,CC(C)CC(C)(C)C,DCN,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,RON,100.0,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,MON,100.0,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,MW,98.19,98.19,inverse_design_v2.CANDIDATE_REGISTRY,,,98.18606,chemicals 1.5.2 (search_chemical.MW),4.012789595590305e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,rho15,774.0,774.0,inverse_design_v2.CANDIDATE_REGISTRY,,,773.8613733409056,thermo 0.6.1 Chemical.rhol @288.15K,0.0001791362947809284,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,Tb,100.9,100.9,inverse_design_v2.CANDIDATE_REGISTRY,,,100.85994596500001,chemicals 1.5.2 (Tb),0.04005403499999716,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,Tm,-126.6,-126.6,inverse_design_v2.CANDIDATE_REGISTRY,,,-126.79999999999998,chemicals 1.5.2 (Tm),0.19999999999998863,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,flash,-4.0,-4.0,purchasable_compounds.csv,,,-4.0,chemicals 1.5.2 (T_flash),0.0,pure,verified,purchasable_compounds.csv,
+methylcyclohexane,CC1CCCCC1,DCN,20.0,20.0,inverse_design_v2.CANDIDATE_REGISTRY,20.0,purchasable_compounds.csv,23.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-3.5,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+methylcyclohexane,CC1CCCCC1,RON,75.0,75.0,inverse_design_v2.CANDIDATE_REGISTRY,,,74.1,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.9000000000000057,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,MON,71.0,71.0,inverse_design_v2.CANDIDATE_REGISTRY,,,71.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,MW,138.25,138.25,purchasable_compounds.csv,,,138.24992,chemicals 1.5.2 (search_chemical.MW),5.786621793124465e-07,pure,verified,purchasable_compounds.csv,
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,rho15,869.5,869.5,purchasable_compounds.csv,,,846.9253346939707,thermo 0.6.1 Chemical.rhol @288.15K,0.026654847105484717,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,Tb,185.5,185.5,purchasable_compounds.csv,,,187.3,chemicals 1.5.2 (Tb),-1.8000000000000114,pure,verified,purchasable_compounds.csv,
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,Tm,-30.4,-30.4,purchasable_compounds.csv,,,-30.349999999999966,chemicals 1.5.2 (Tm),-0.050000000000032685,pure,verified,purchasable_compounds.csv,
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,flash,57.0,57.0,purchasable_compounds.csv,,,54.0,chemicals 1.5.2 (T_flash),3.0,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,DCN,38.0,38.0,purchasable_compounds.csv,,,31.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",6.199999999999999,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,RON,45.0,45.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,MON,40.0,40.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MW,138.25,138.25,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,rho15,896.5,896.5,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tb,195.7,195.7,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tm,-43.0,-43.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,flash,58.0,58.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,DCN,35.0,35.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,RON,45.0,45.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MON,40.0,40.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+toluene,Cc1ccccc1,MW,92.14,92.14,inverse_design_v2.CANDIDATE_REGISTRY,,,92.13842,chemicals 1.5.2 (search_chemical.MW),1.7148112589776704e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,rho15,871.0,871.0,inverse_design_v2.CANDIDATE_REGISTRY,,,871.6335114189827,thermo 0.6.1 Chemical.rhol @288.15K,-0.0007268093879862317,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,Tb,110.6,110.6,inverse_design_v2.CANDIDATE_REGISTRY,,,110.59575314600005,chemicals 1.5.2 (Tb),0.004246853999944733,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,Tm,-95.0,-95.0,inverse_design_v2.CANDIDATE_REGISTRY,,,-93.94999999999999,chemicals 1.5.2 (Tm),-1.0500000000000114,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,flash,4.4,4.4,purchasable_compounds.csv,,,4.0,chemicals 1.5.2 (T_flash),0.40000000000000036,pure,verified,purchasable_compounds.csv,
+toluene,Cc1ccccc1,DCN,9.0,9.0,inverse_design_v2.CANDIDATE_REGISTRY,,,6.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,RON,120.0,120.0,inverse_design_v2.CANDIDATE_REGISTRY,,,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,MON,103.0,103.0,inverse_design_v2.CANDIDATE_REGISTRY,,,104.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-1.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+o-xylene,Cc1ccccc1C,MW,106.17,106.17,purchasable_compounds.csv,,,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,pure,verified,purchasable_compounds.csv,
+o-xylene,Cc1ccccc1C,rho15,880.0,880.0,purchasable_compounds.csv,,,884.5279403636267,thermo 0.6.1 Chemical.rhol @288.15K,-0.005119047298568436,pure,verified,purchasable_compounds.csv,
+o-xylene,Cc1ccccc1C,Tb,144.4,144.4,purchasable_compounds.csv,,,144.37102478900005,chemicals 1.5.2 (Tb),0.0289752109999597,pure,verified,purchasable_compounds.csv,
+o-xylene,Cc1ccccc1C,Tm,-25.2,-25.2,purchasable_compounds.csv,,,-24.99999999999997,chemicals 1.5.2 (Tm),-0.2000000000000277,pure,verified,purchasable_compounds.csv,
+o-xylene,Cc1ccccc1C,flash,32.0,32.0,purchasable_compounds.csv,,,30.0,chemicals 1.5.2 (T_flash),2.0,pure,verified,purchasable_compounds.csv,
+o-xylene,Cc1ccccc1C,DCN,12.0,12.0,purchasable_compounds.csv,,,8.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",4.0,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+o-xylene,Cc1ccccc1C,RON,107.0,107.0,purchasable_compounds.csv,,,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-13.0,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+o-xylene,Cc1ccccc1C,MON,100.0,100.0,purchasable_compounds.csv,,,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,MW,106.17,106.17,purchasable_compounds.csv,,,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,rho15,861.0,861.0,purchasable_compounds.csv,,,865.4930914991145,thermo 0.6.1 Chemical.rhol @288.15K,-0.005191366104762353,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,Tb,138.3,138.3,purchasable_compounds.csv,,,138.32047182600002,chemicals 1.5.2 (Tb),-0.020471826000004967,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,Tm,13.3,13.3,purchasable_compounds.csv,,,13.0,chemicals 1.5.2 (Tm),0.3000000000000007,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,flash,27.0,27.0,purchasable_compounds.csv,,,25.0,chemicals 1.5.2 (T_flash),2.0,pure,verified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,DCN,15.0,15.0,purchasable_compounds.csv,,,6.2,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",8.8,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+p-xylene,Cc1ccc(C)cc1,RON,117.0,117.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+p-xylene,Cc1ccc(C)cc1,MON,102.0,102.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MW,120.19,120.19,inverse_design_v2.CANDIDATE_REGISTRY,,,120.19158,chemicals 1.5.2 (search_chemical.MW),-1.3145679589236897e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,rho15,880.0,880.0,inverse_design_v2.CANDIDATE_REGISTRY,,,880.067162142147,thermo 0.6.1 Chemical.rhol @288.15K,-7.63147916842492e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tb,169.4,169.4,inverse_design_v2.CANDIDATE_REGISTRY,,,169.40000000000003,chemicals 1.5.2 (Tb),-2.842170943040401e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tm,-43.8,-43.8,inverse_design_v2.CANDIDATE_REGISTRY,,,-43.89999999999998,chemicals 1.5.2 (Tm),0.0999999999999801,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,flash,48.0,48.0,purchasable_compounds.csv,,,44.50057963388201,chemicals 1.5.2 (T_flash),3.499420366117988,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,DCN,11.0,11.0,inverse_design_v2.CANDIDATE_REGISTRY,,,8.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",2.0999999999999996,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,RON,120.0,120.0,inverse_design_v2.CANDIDATE_REGISTRY,110.0,purchasable_compounds.csv,108.6,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",11.400000000000006,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,two listed values disagree
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MON,110.0,110.0,inverse_design_v2.CANDIDATE_REGISTRY,100.0,purchasable_compounds.csv,104.4,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",5.599999999999994,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,two listed values disagree
+tetralin,c1ccc2c(c1)CCCC2,MW,132.21,132.21,inverse_design_v2.CANDIDATE_REGISTRY,,,132.20228,chemicals 1.5.2 (search_chemical.MW),5.839536201649598e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,rho15,970.2,970.2,inverse_design_v2.CANDIDATE_REGISTRY,,,974.191921275275,thermo 0.6.1 Chemical.rhol @288.15K,-0.004097674378216285,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,Tb,207.6,207.6,inverse_design_v2.CANDIDATE_REGISTRY,,,207.20000000000005,chemicals 1.5.2 (Tb),0.39999999999994884,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,Tm,-35.8,-35.8,inverse_design_v2.CANDIDATE_REGISTRY,,,-35.349999999999966,chemicals 1.5.2 (Tm),-0.45000000000003126,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,flash,77.0,77.0,purchasable_compounds.csv,,,70.85000000000002,chemicals 1.5.2 (T_flash),6.149999999999977,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+tetralin,c1ccc2c(c1)CCCC2,DCN,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,15.0,purchasable_compounds.csv,9.15,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",5.85,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+tetralin,c1ccc2c(c1)CCCC2,RON,100.0,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,MON,90.0,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethanol,CCO,MW,46.07,46.07,purchasable_compounds.csv,,,46.06844,chemicals 1.5.2 (search_chemical.MW),3.386266172672192e-05,pure,verified,purchasable_compounds.csv,
+ethanol,CCO,rho15,789.0,789.0,purchasable_compounds.csv,,,793.7195168478439,thermo 0.6.1 Chemical.rhol @288.15K,-0.005946076350228706,pure,verified,purchasable_compounds.csv,
+ethanol,CCO,Tb,78.4,78.4,purchasable_compounds.csv,,,78.420441659,chemicals 1.5.2 (Tb),-0.02044165899999939,pure,verified,purchasable_compounds.csv,
+ethanol,CCO,Tm,-114.1,-114.1,purchasable_compounds.csv,,,-114.09999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,pure,verified,purchasable_compounds.csv,
+ethanol,CCO,flash,13.0,13.0,purchasable_compounds.csv,,,12.0,chemicals 1.5.2 (T_flash),1.0,pure,verified,purchasable_compounds.csv,
+ethanol,CCO,DCN,8.0,8.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+ethanol,CCO,RON,108.0,108.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+ethanol,CCO,MON,90.0,90.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+n-heptane,CCCCCCC,MW,100.2,100.2,inverse_design_v2.CANDIDATE_REGISTRY,,,100.20194,chemicals 1.5.2 (search_chemical.MW),-1.9360902593208325e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,rho15,688.0,688.0,inverse_design_v2.CANDIDATE_REGISTRY,,,688.1761742850964,thermo 0.6.1 Chemical.rhol @288.15K,-0.00025600172118632973,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,Tb,98.4,98.4,inverse_design_v2.CANDIDATE_REGISTRY,,,98.40036048300004,chemicals 1.5.2 (Tb),-0.00036048300003699296,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,Tm,-90.6,-90.6,inverse_design_v2.CANDIDATE_REGISTRY,,,-90.99999999999997,chemicals 1.5.2 (Tm),0.39999999999997726,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,flash,-4.0,-4.0,purchasable_compounds.csv,,,-7.0,chemicals 1.5.2 (T_flash),3.0,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+n-heptane,CCCCCCC,DCN,56.0,56.0,inverse_design_v2.CANDIDATE_REGISTRY,,,53.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",2.200000000000003,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,RON,0.0,0.0,inverse_design_v2.CANDIDATE_REGISTRY,,,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,MON,0.0,0.0,inverse_design_v2.CANDIDATE_REGISTRY,,,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,MW,72.15,72.15,inverse_design_v2.CANDIDATE_REGISTRY,,,72.14878,chemicals 1.5.2 (search_chemical.MW),1.690950283571741e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,rho15,624.0,624.0,inverse_design_v2.CANDIDATE_REGISTRY,,,625.137425072749,thermo 0.6.1 Chemical.rhol @288.15K,-0.0018194800489134775,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,Tb,27.8,27.8,inverse_design_v2.CANDIDATE_REGISTRY,,,27.82637425500002,chemicals 1.5.2 (Tb),-0.02637425500001811,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,Tm,-159.9,-159.9,inverse_design_v2.CANDIDATE_REGISTRY,,,-159.99999999999997,chemicals 1.5.2 (Tm),0.0999999999999659,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,flash,-51.0,-51.0,purchasable_compounds.csv,,,-55.99999999999997,chemicals 1.5.2 (T_flash),4.999999999999972,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
+isopentane,CCC(C)C,DCN,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,20.0,purchasable_compounds.csv,,,,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,two listed values disagree
+isopentane,CCC(C)C,RON,93.0,93.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,MON,90.0,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,MW,58.12,58.12,inverse_design_v2.CANDIDATE_REGISTRY,,,58.1222,chemicals 1.5.2 (search_chemical.MW),-3.785128573939008e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,rho15,584.0,584.0,inverse_design_v2.CANDIDATE_REGISTRY,,,584.2514749187153,thermo 0.6.1 Chemical.rhol @288.15K,-0.00043042239431280796,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,Tb,-0.5,-0.5,inverse_design_v2.CANDIDATE_REGISTRY,,,-0.490099473999976,chemicals 1.5.2 (Tb),-0.009900526000024001,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,Tm,-138.4,-138.4,inverse_design_v2.CANDIDATE_REGISTRY,,,-138.09999999999997,chemicals 1.5.2 (Tm),-0.3000000000000398,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,flash,-60.0,-60.0,purchasable_compounds.csv,,,-59.99999999999997,chemicals 1.5.2 (T_flash),-2.842170943040401e-14,pure,verified,purchasable_compounds.csv,
+n-butane,CCCC,DCN,25.0,25.0,inverse_design_v2.CANDIDATE_REGISTRY,25.0,purchasable_compounds.csv,20.62,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",4.379999999999999,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,second listing flagged against reference
+n-butane,CCCC,RON,94.0,94.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,MON,90.0,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MW,170.33,170.33,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,rho15,745.0,745.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tb,177.0,177.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tm,-81.0,-81.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,flash,43.0,43.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,DCN,20.0,20.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,RON,98.0,98.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MON,95.0,95.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MW,226.44,226.44,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,rho15,784.0,784.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tb,240.0,240.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tm,-80.0,-80.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,flash,96.0,96.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,DCN,15.0,15.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,RON,40.0,40.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MON,40.0,40.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+decalin,C1CCC2CCCCC2C1,MW,138.25,138.25,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,rho15,896.5,896.5,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,Tb,190.0,190.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,Tm,-43.0,-43.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin_mixed,C1CCC2CCCCC2C1,flash,58.0,58.0,purchasable_compounds.csv,,,,,,mixture_or_surrogate,not_comparable,purchasable_compounds.csv,
+decalin,C1CCC2CCCCC2C1,DCN,38.0,38.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,RON,45.0,45.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,MON,40.0,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,dHfus,4.66,4.66,inverse_design_v2.CANDIDATE_REGISTRY,,,4.66,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-butane,CCCC,Psat37_8,350.0,350.0,inverse_design_v2.CANDIDATE_REGISTRY,,,355.7668843042457,thermo 0.6.1 Chemical.Psat @310.95K,-0.016209727657827668,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,MW,72.15,72.15,inverse_design_v2.CANDIDATE_REGISTRY,,,72.14878,chemicals 1.5.2 (search_chemical.MW),1.690950283571741e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,rho15,631.0,631.0,inverse_design_v2.CANDIDATE_REGISTRY,,,631.2021474007591,thermo 0.6.1 Chemical.rhol @288.15K,-0.0003202577836459717,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,Tm,-129.7,-129.7,inverse_design_v2.CANDIDATE_REGISTRY,,,-129.99999999999997,chemicals 1.5.2 (Tm),0.29999999999998295,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,Tb,36.1,36.1,inverse_design_v2.CANDIDATE_REGISTRY,,,36.05934582000003,chemicals 1.5.2 (Tb),0.040654179999968676,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,dHfus,8.42,8.42,inverse_design_v2.CANDIDATE_REGISTRY,,,8.4,chemicals 1.5.2 (Hfus),0.00238095238095233,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,Psat37_8,105.0,105.0,inverse_design_v2.CANDIDATE_REGISTRY,,,107.48529817418144,thermo 0.6.1 Chemical.Psat @310.95K,-0.023122215004269486,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,DCN,30.0,30.0,inverse_design_v2.CANDIDATE_REGISTRY,,,30.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,RON,62.0,62.0,inverse_design_v2.CANDIDATE_REGISTRY,,,62.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-pentane,CCCCC,MON,61.0,61.0,inverse_design_v2.CANDIDATE_REGISTRY,,,62.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-1.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,MW,86.18,86.18,inverse_design_v2.CANDIDATE_REGISTRY,,,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,rho15,664.0,664.0,inverse_design_v2.CANDIDATE_REGISTRY,,,663.9924945287721,thermo 0.6.1 Chemical.rhol @288.15K,1.1303548292686012e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,Tm,-95.3,-95.3,inverse_design_v2.CANDIDATE_REGISTRY,,,-95.07499999999999,chemicals 1.5.2 (Tm),-0.22500000000000853,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,Tb,68.7,68.7,inverse_design_v2.CANDIDATE_REGISTRY,,,68.71561663400001,chemicals 1.5.2 (Tb),-0.015616634000011231,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,dHfus,13.08,13.08,inverse_design_v2.CANDIDATE_REGISTRY,,,13.08,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,Psat37_8,33.0,33.0,inverse_design_v2.CANDIDATE_REGISTRY,,,34.20796183006424,thermo 0.6.1 Chemical.Psat @310.95K,-0.03531230057099177,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,DCN,45.0,45.0,inverse_design_v2.CANDIDATE_REGISTRY,,,50.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-5.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-hexane,CCCCCC,RON,25.0,25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexane,CCCCCC,MON,26.0,26.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,dHfus,14.12,14.12,inverse_design_v2.CANDIDATE_REGISTRY,,,14.03,chemicals 1.5.2 (Hfus),0.006414825374198137,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-heptane,CCCCCCC,Psat37_8,11.5,11.5,inverse_design_v2.CANDIDATE_REGISTRY,,,11.185886929962745,thermo 0.6.1 Chemical.Psat @310.95K,0.02808119481306979,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,dHfus,20.73,20.73,inverse_design_v2.CANDIDATE_REGISTRY,,,20.73,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octane,CCCCCCCC,Psat37_8,4.1,4.1,inverse_design_v2.CANDIDATE_REGISTRY,,,3.717144109263914,thermo 0.6.1 Chemical.Psat @310.95K,0.10299732253638678,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-decane,CCCCCCCCCC,dHfus,28.72,28.72,inverse_design_v2.CANDIDATE_REGISTRY,,,28.72,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-decane,CCCCCCCCCC,Psat37_8,0.55,0.55,inverse_design_v2.CANDIDATE_REGISTRY,,,0.42448951407047414,thermo 0.6.1 Chemical.Psat @310.95K,0.29567393720988017,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-undecane,CCCCCCCCCCC,MW,156.31,156.31,inverse_design_v2.CANDIDATE_REGISTRY,,,156.30826,chemicals 1.5.2 (search_chemical.MW),1.1131849334208489e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,rho15,744.0,744.0,inverse_design_v2.CANDIDATE_REGISTRY,,,744.2035424330417,thermo 0.6.1 Chemical.rhol @288.15K,-0.0002735037142879162,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,Tm,-25.6,-25.6,inverse_design_v2.CANDIDATE_REGISTRY,,,-25.99999999999997,chemicals 1.5.2 (Tm),0.39999999999997016,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,Tb,195.9,195.9,inverse_design_v2.CANDIDATE_REGISTRY,,,195.78423437000004,chemicals 1.5.2 (Tb),0.11576562999997009,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,dHfus,22.2,22.2,inverse_design_v2.CANDIDATE_REGISTRY,,,22.2,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,Psat37_8,0.2,0.2,inverse_design_v2.CANDIDATE_REGISTRY,,,0.145954805825549,thermo 0.6.1 Chemical.Psat @310.95K,0.37028718491837787,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-undecane,CCCCCCCCCCC,DCN,80.0,80.0,inverse_design_v2.CANDIDATE_REGISTRY,,,71.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",9.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-undecane,CCCCCCCCCCC,RON,-22.0,-22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-undecane,CCCCCCCCCCC,MON,-22.0,-22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,dHfus,36.84,36.84,inverse_design_v2.CANDIDATE_REGISTRY,,,36.8,chemicals 1.5.2 (Hfus),0.0010869565217393005,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-dodecane,CCCCCCCCCCCC,Psat37_8,0.08,0.08,inverse_design_v2.CANDIDATE_REGISTRY,,,0.049197168588538044,thermo 0.6.1 Chemical.Psat @310.95K,0.62610984117973,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-tridecane,CCCCCCCCCCCCC,MW,184.36,184.36,inverse_design_v2.CANDIDATE_REGISTRY,,,184.36142,chemicals 1.5.2 (search_chemical.MW),-7.702262219481604e-06,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,rho15,760.0,760.0,inverse_design_v2.CANDIDATE_REGISTRY,,,757.4110804971223,thermo 0.6.1 Chemical.rhol @288.15K,0.0034181167526338638,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,Tm,-5.4,-5.4,inverse_design_v2.CANDIDATE_REGISTRY,,,-5.0,chemicals 1.5.2 (Tm),-0.40000000000000036,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,Tb,235.4,235.4,inverse_design_v2.CANDIDATE_REGISTRY,,,235.40000000000003,chemicals 1.5.2 (Tb),-2.842170943040401e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,dHfus,28.5,28.5,inverse_design_v2.CANDIDATE_REGISTRY,,,28.5,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,Psat37_8,0.03,0.03,inverse_design_v2.CANDIDATE_REGISTRY,,,0.017570654041399868,thermo 0.6.1 Chemical.Psat @310.95K,0.7073923332230082,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-tridecane,CCCCCCCCCCCCC,DCN,88.0,88.0,inverse_design_v2.CANDIDATE_REGISTRY,,,89.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-1.5,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,RON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tridecane,CCCCCCCCCCCCC,MON,-25.0,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,dHfus,45.1,45.1,inverse_design_v2.CANDIDATE_REGISTRY,,,45.07,chemicals 1.5.2 (Hfus),0.000665631240292903,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-tetradecane,CCCCCCCCCCCCCC,Psat37_8,0.01,0.01,inverse_design_v2.CANDIDATE_REGISTRY,,,0.00621343445269921,thermo 0.6.1 Chemical.Psat @310.95K,0.6094158675248998,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,dHfus,53.3,53.3,inverse_design_v2.CANDIDATE_REGISTRY,,,53.36,chemicals 1.5.2 (Hfus),-0.001124437781109488,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-hexadecane,CCCCCCCCCCCCCCCC,Psat37_8,0.002,0.002,inverse_design_v2.CANDIDATE_REGISTRY,,,0.0007624916389457882,thermo 0.6.1 Chemical.Psat @310.95K,1.6229795814747239,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,MW,254.49,254.49,inverse_design_v2.CANDIDATE_REGISTRY,,,254.49432,chemicals 1.5.2 (search_chemical.MW),-1.697483857391616e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,rho15,777.0,777.0,inverse_design_v2.CANDIDATE_REGISTRY,,,782.3053531816225,thermo 0.6.1 Chemical.rhol @288.15K,-0.006781691011119578,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,Tm,28.2,28.2,inverse_design_v2.CANDIDATE_REGISTRY,,,28.0,chemicals 1.5.2 (Tm),0.1999999999999993,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,Tb,316.0,316.0,inverse_design_v2.CANDIDATE_REGISTRY,,,316.0,chemicals 1.5.2 (Tb),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,dHfus,61.7,61.7,inverse_design_v2.CANDIDATE_REGISTRY,,,61.7,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,Psat37_8,0.0005,0.0005,inverse_design_v2.CANDIDATE_REGISTRY,,,0.0001138522555250335,thermo 0.6.1 Chemical.Psat @310.95K,3.3916565174245625,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,DCN,105.0,105.0,inverse_design_v2.CANDIDATE_REGISTRY,,,110.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-5.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+n-octadecane,CCCCCCCCCCCCCCCCCC,RON,-35.0,-35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+n-octadecane,CCCCCCCCCCCCCCCCCC,MON,-35.0,-35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,MW,58.12,58.12,inverse_design_v2.CANDIDATE_REGISTRY,,,58.1222,chemicals 1.5.2 (search_chemical.MW),-3.785128573939008e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,rho15,563.0,563.0,inverse_design_v2.CANDIDATE_REGISTRY,,,562.9479566986275,thermo 0.6.1 Chemical.rhol @288.15K,9.244780224031505e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,Tm,-159.6,-159.6,inverse_design_v2.CANDIDATE_REGISTRY,,,-148.95,chemicals 1.5.2 (Tm),-10.650000000000006,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+isobutane,CC(C)C,Tb,-11.7,-11.7,inverse_design_v2.CANDIDATE_REGISTRY,,,-11.748985356999981,chemicals 1.5.2 (Tb),0.04898535699998163,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,dHfus,4.54,4.54,inverse_design_v2.CANDIDATE_REGISTRY,,,4.54,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,Psat37_8,490.0,490.0,inverse_design_v2.CANDIDATE_REGISTRY,,,501.1605514296986,thermo 0.6.1 Chemical.Psat @310.95K,-0.02226941326060095,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,DCN,20.0,20.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,RON,102.0,102.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isobutane,CC(C)C,MON,97.0,97.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,dHfus,5.15,5.15,inverse_design_v2.CANDIDATE_REGISTRY,,,5.15,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isopentane,CCC(C)C,Psat37_8,112.0,112.0,inverse_design_v2.CANDIDATE_REGISTRY,,,141.25886796016695,thermo 0.6.1 Chemical.Psat @310.95K,-0.20712942403316972,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+2-methylpentane,CCCC(C)C,MW,86.18,86.18,inverse_design_v2.CANDIDATE_REGISTRY,,,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,rho15,653.0,653.0,inverse_design_v2.CANDIDATE_REGISTRY,,,657.8293418331326,thermo 0.6.1 Chemical.rhol @288.15K,-0.007341329317532396,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,Tm,-153.7,-153.7,inverse_design_v2.CANDIDATE_REGISTRY,,,-153.99999999999997,chemicals 1.5.2 (Tm),0.29999999999998295,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,Tb,60.3,60.3,inverse_design_v2.CANDIDATE_REGISTRY,,,60.21209862300003,chemicals 1.5.2 (Tb),0.08790137699996592,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,dHfus,6.27,6.27,inverse_design_v2.CANDIDATE_REGISTRY,,,6.27,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,Psat37_8,45.0,45.0,inverse_design_v2.CANDIDATE_REGISTRY,,,46.730005863683964,thermo 0.6.1 Chemical.Psat @310.95K,-0.03702130636855817,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,DCN,22.0,22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,34.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-12.5,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+2-methylpentane,CCCC(C)C,RON,73.0,73.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+2-methylpentane,CCCC(C)C,MON,73.0,73.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,MW,86.18,86.18,inverse_design_v2.CANDIDATE_REGISTRY,,,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,rho15,662.0,662.0,inverse_design_v2.CANDIDATE_REGISTRY,,,666.0552892310342,thermo 0.6.1 Chemical.rhol @288.15K,-0.006088517419801653,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,Tm,-128.5,-128.5,inverse_design_v2.CANDIDATE_REGISTRY,,,-128.89999999999998,chemicals 1.5.2 (Tm),0.39999999999997726,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,Tb,58.0,58.0,inverse_design_v2.CANDIDATE_REGISTRY,,,58.026540925000006,chemicals 1.5.2 (Tb),-0.026540925000006155,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,dHfus,0.8,0.8,inverse_design_v2.CANDIDATE_REGISTRY,,,0.79,chemicals 1.5.2 (Hfus),0.012658227848101276,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,Psat37_8,48.0,48.0,inverse_design_v2.CANDIDATE_REGISTRY,,,50.94217857668046,thermo 0.6.1 Chemical.Psat @310.95K,-0.057755256231371455,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+"2,3-dimethylbutane",CC(C)C(C)C,DCN,10.0,10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,RON,103.0,103.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+"2,3-dimethylbutane",CC(C)C(C)C,MON,94.0,94.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,dHfus,9.22,9.22,inverse_design_v2.CANDIDATE_REGISTRY,,,9.2,chemicals 1.5.2 (Hfus),0.002173913043478408,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+isooctane,CC(C)CC(C)(C)C,Psat37_8,6.8,6.8,inverse_design_v2.CANDIDATE_REGISTRY,,,11.79897159312447,thermo 0.6.1 Chemical.Psat @310.95K,-0.42367858534700475,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,MW,170.33,170.33,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,rho15,749.0,749.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,Tm,-81.0,-81.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,Tb,177.0,177.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,dHfus,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,Psat37_8,0.45,0.45,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,DCN,28.0,28.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,RON,90.0,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+isododecane,CC(CC(C)(C)C)CC(C)(C)C,MON,88.0,88.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,MW,226.44,226.44,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,rho15,785.0,785.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Tm,-65.0,-65.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Tb,240.0,240.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,dHfus,18.0,18.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,Psat37_8,0.02,0.02,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,DCN,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,RON,40.0,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+heptamethylnonane,CC(CC(C)(C)C)CC(C)(C)CC(C)(C)C,MON,35.0,35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,MW,70.13,70.13,inverse_design_v2.CANDIDATE_REGISTRY,,,70.1329,chemicals 1.5.2 (search_chemical.MW),-4.135006537603614e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,rho15,750.0,750.0,inverse_design_v2.CANDIDATE_REGISTRY,,,750.360598970938,thermo 0.6.1 Chemical.rhol @288.15K,-0.0004805675716882248,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,Tm,-93.9,-93.9,inverse_design_v2.CANDIDATE_REGISTRY,,,-93.99999999999997,chemicals 1.5.2 (Tm),0.0999999999999659,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,Tb,49.3,49.3,inverse_design_v2.CANDIDATE_REGISTRY,,,49.24988227100005,chemicals 1.5.2 (Tb),0.05011772899995037,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,dHfus,0.61,0.61,inverse_design_v2.CANDIDATE_REGISTRY,,,0.61,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,Psat37_8,53.0,53.0,inverse_design_v2.CANDIDATE_REGISTRY,,,68.44044231440137,thermo 0.6.1 Chemical.Psat @310.95K,-0.22560406964454055,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+cyclopentane,C1CCCC1,DCN,25.0,25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,6.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",18.9,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+cyclopentane,C1CCCC1,RON,101.0,101.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclopentane,C1CCCC1,MON,85.0,85.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,MW,84.16,84.16,inverse_design_v2.CANDIDATE_REGISTRY,,,84.15948,chemicals 1.5.2 (search_chemical.MW),6.17874540092839e-06,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,rho15,783.0,783.0,inverse_design_v2.CANDIDATE_REGISTRY,,,783.4717786168428,thermo 0.6.1 Chemical.rhol @288.15K,-0.0006021641490082765,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,Tm,6.5,6.5,inverse_design_v2.CANDIDATE_REGISTRY,,,7.0,chemicals 1.5.2 (Tm),-0.5,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,Tb,80.7,80.7,inverse_design_v2.CANDIDATE_REGISTRY,,,80.71494836800002,chemicals 1.5.2 (Tb),-0.014948368000020196,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,dHfus,2.68,2.68,inverse_design_v2.CANDIDATE_REGISTRY,,,2.68,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,Psat37_8,22.0,22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,22.543341319815138,thermo 0.6.1 Chemical.Psat @310.95K,-0.024102075735221728,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,DCN,16.0,16.0,inverse_design_v2.CANDIDATE_REGISTRY,,,19.95,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-3.9499999999999993,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+cyclohexane,C1CCCCC1,RON,83.0,83.0,inverse_design_v2.CANDIDATE_REGISTRY,,,83.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+cyclohexane,C1CCCCC1,MON,77.0,77.0,inverse_design_v2.CANDIDATE_REGISTRY,,,77.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,dHfus,6.74,6.74,inverse_design_v2.CANDIDATE_REGISTRY,,,6.75,chemicals 1.5.2 (Hfus),-0.00148148148148145,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+methylcyclohexane,CC1CCCCC1,Psat37_8,10.5,10.5,inverse_design_v2.CANDIDATE_REGISTRY,,,11.096957588798993,thermo 0.6.1 Chemical.Psat @310.95K,-0.05379470760540242,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+butylcyclohexane,CCCCC1CCCCC1,MW,140.27,140.27,inverse_design_v2.CANDIDATE_REGISTRY,,,140.2658,chemicals 1.5.2 (search_chemical.MW),2.9943150789410653e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+butylcyclohexane,CCCCC1CCCCC1,rho15,802.0,802.0,inverse_design_v2.CANDIDATE_REGISTRY,,,803.4194047263978,thermo 0.6.1 Chemical.rhol @288.15K,-0.0017667045605914925,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+butylcyclohexane,CCCCC1CCCCC1,Tm,-75.0,-75.0,inverse_design_v2.CANDIDATE_REGISTRY,,,-74.99999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+butylcyclohexane,CCCCC1CCCCC1,Tb,181.0,181.0,inverse_design_v2.CANDIDATE_REGISTRY,,,180.90000000000003,chemicals 1.5.2 (Tb),0.0999999999999659,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+butylcyclohexane,CCCCC1CCCCC1,dHfus,15.0,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,14.16,chemicals 1.5.2 (Hfus),0.05932203389830507,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+butylcyclohexane,CCCCC1CCCCC1,Psat37_8,0.4,0.4,inverse_design_v2.CANDIDATE_REGISTRY,,,0.3767284613553515,thermo 0.6.1 Chemical.Psat @310.95K,0.061772711732277406,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+butylcyclohexane,CCCCC1CCCCC1,DCN,35.0,35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,47.6,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-12.600000000000001,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+butylcyclohexane,CCCCC1CCCCC1,RON,45.0,45.0,inverse_design_v2.CANDIDATE_REGISTRY,,,63.8,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-18.799999999999997,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+butylcyclohexane,CCCCC1CCCCC1,MON,40.0,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,dHfus,13.5,13.5,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+decalin,C1CCC2CCCCC2C1,Psat37_8,0.25,0.25,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,mixture_or_surrogate,not_comparable,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,MW,166.3,166.3,inverse_design_v2.CANDIDATE_REGISTRY,,,166.30308,chemicals 1.5.2 (search_chemical.MW),-1.8520402628639676e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,rho15,886.0,886.0,inverse_design_v2.CANDIDATE_REGISTRY,,,902.0464538931006,thermo 0.6.1 Chemical.rhol @288.15K,-0.017788944043675908,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,Tm,3.5,3.5,inverse_design_v2.CANDIDATE_REGISTRY,,,4.0,chemicals 1.5.2 (Tm),-0.5,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,Tb,239.0,239.0,inverse_design_v2.CANDIDATE_REGISTRY,,,239.0,chemicals 1.5.2 (Tb),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,dHfus,17.5,17.5,inverse_design_v2.CANDIDATE_REGISTRY,,,10.506,chemicals 1.5.2 (Hfus),0.6657148296211688,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,Psat37_8,0.03,0.03,inverse_design_v2.CANDIDATE_REGISTRY,,,0.046289694274041726,thermo 0.6.1 Chemical.Psat @310.95K,-0.3519075796354231,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,DCN,42.0,42.0,inverse_design_v2.CANDIDATE_REGISTRY,,,53.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-11.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,RON,40.0,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,MON,35.0,35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,dHfus,6.64,6.64,inverse_design_v2.CANDIDATE_REGISTRY,,,6.64,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+toluene,Cc1ccccc1,Psat37_8,4.9,4.9,inverse_design_v2.CANDIDATE_REGISTRY,,,7.1271418439673955,thermo 0.6.1 Chemical.Psat @310.95K,-0.3124873747044207,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+ethylbenzene,CCc1ccccc1,MW,106.17,106.17,inverse_design_v2.CANDIDATE_REGISTRY,,,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,rho15,872.0,872.0,inverse_design_v2.CANDIDATE_REGISTRY,,,871.352263294972,thermo 0.6.1 Chemical.rhol @288.15K,0.0007433695100287477,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,Tm,-94.9,-94.9,inverse_design_v2.CANDIDATE_REGISTRY,,,-94.94999999999999,chemicals 1.5.2 (Tm),0.04999999999998295,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,Tb,136.2,136.2,inverse_design_v2.CANDIDATE_REGISTRY,,,136.16422579700003,chemicals 1.5.2 (Tb),0.035774202999959925,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,dHfus,9.16,9.16,inverse_design_v2.CANDIDATE_REGISTRY,,,9.18,chemicals 1.5.2 (Hfus),-0.0021786492374727207,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,Psat37_8,2.2,2.2,inverse_design_v2.CANDIDATE_REGISTRY,,,2.567644340045808,thermo 0.6.1 Chemical.Psat @310.95K,-0.14318351428658102,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+ethylbenzene,CCc1ccccc1,DCN,10.0,10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,6.29,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.71,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+ethylbenzene,CCc1ccccc1,RON,107.0,107.0,inverse_design_v2.CANDIDATE_REGISTRY,,,107.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+ethylbenzene,CCc1ccccc1,MON,98.0,98.0,inverse_design_v2.CANDIDATE_REGISTRY,,,97.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",1.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,MW,106.17,106.17,inverse_design_v2.CANDIDATE_REGISTRY,,,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,rho15,868.0,868.0,inverse_design_v2.CANDIDATE_REGISTRY,,,868.5791636188084,thermo 0.6.1 Chemical.rhol @288.15K,-0.0006667942808982028,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,Tm,-47.9,-47.9,inverse_design_v2.CANDIDATE_REGISTRY,,,-47.79999999999998,chemicals 1.5.2 (Tm),-0.10000000000001563,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,Tb,139.1,139.1,inverse_design_v2.CANDIDATE_REGISTRY,,,139.064002577,chemicals 1.5.2 (Tb),0.03599742299999775,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,dHfus,11.57,11.57,inverse_design_v2.CANDIDATE_REGISTRY,,,11.6,chemicals 1.5.2 (Hfus),-0.002586206896551669,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,Psat37_8,2.0,2.0,inverse_design_v2.CANDIDATE_REGISTRY,,,2.260329507745115,thermo 0.6.1 Chemical.Psat @310.95K,-0.11517325542717767,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+m-xylene,Cc1cccc(C)c1,DCN,10.0,10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,7.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,RON,118.0,118.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+m-xylene,Cc1cccc(C)c1,MON,115.0,115.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,MW,120.19,120.19,inverse_design_v2.CANDIDATE_REGISTRY,,,120.19158,chemicals 1.5.2 (search_chemical.MW),-1.3145679589236897e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,rho15,869.0,869.0,inverse_design_v2.CANDIDATE_REGISTRY,,,869.9432877525979,thermo 0.6.1 Chemical.rhol @288.15K,-0.001084309478419931,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,Tm,-44.7,-44.7,inverse_design_v2.CANDIDATE_REGISTRY,,,-44.99999999999997,chemicals 1.5.2 (Tm),0.29999999999996874,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,Tb,164.7,164.7,inverse_design_v2.CANDIDATE_REGISTRY,,,164.70000000000005,chemicals 1.5.2 (Tb),-5.684341886080802e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,dHfus,9.51,9.51,inverse_design_v2.CANDIDATE_REGISTRY,,,9.51,chemicals 1.5.2 (Hfus),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,Psat37_8,0.75,0.75,inverse_design_v2.CANDIDATE_REGISTRY,,,0.7823529346354624,thermo 0.6.1 Chemical.Psat @310.95K,-0.0413533754437021,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,DCN,11.0,11.0,inverse_design_v2.CANDIDATE_REGISTRY,,,8.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,RON,120.0,120.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+mesitylene,Cc1cc(C)cc(C)c1,MON,112.0,112.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,dHfus,12.3,12.3,inverse_design_v2.CANDIDATE_REGISTRY,,,13.19,chemicals 1.5.2 (Hfus),-0.06747536012130392,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Psat37_8,0.65,0.65,inverse_design_v2.CANDIDATE_REGISTRY,,,0.6656049282023695,thermo 0.6.1 Chemical.Psat @310.95K,-0.02344473056188817,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+tetralin,c1ccc2c(c1)CCCC2,dHfus,12.4,12.4,inverse_design_v2.CANDIDATE_REGISTRY,,,10.272,chemicals 1.5.2 (Hfus),0.2071651090342679,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+tetralin,c1ccc2c(c1)CCCC2,Psat37_8,0.12,0.12,inverse_design_v2.CANDIDATE_REGISTRY,,,0.12174244315930205,thermo 0.6.1 Chemical.Psat @310.95K,-0.014312536483451687,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,MW,142.2,142.2,inverse_design_v2.CANDIDATE_REGISTRY,,,142.1971,chemicals 1.5.2 (search_chemical.MW),2.0394227448960512e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,rho15,1025.0,1025.0,inverse_design_v2.CANDIDATE_REGISTRY,,,1024.2353968905768,thermo 0.6.1 Chemical.rhol @288.15K,0.0007465111162379515,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,Tm,-30.5,-30.5,inverse_design_v2.CANDIDATE_REGISTRY,,,-21.99999999999997,chemicals 1.5.2 (Tm),-8.500000000000028,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+1-methylnaphthalene,Cc1cccc2ccccc12,Tb,244.6,244.6,inverse_design_v2.CANDIDATE_REGISTRY,,,244.39999999999998,chemicals 1.5.2 (Tb),0.20000000000001705,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,dHfus,14.8,14.8,inverse_design_v2.CANDIDATE_REGISTRY,,,6.95,chemicals 1.5.2 (Hfus),1.129496402877698,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+1-methylnaphthalene,Cc1cccc2ccccc12,Psat37_8,0.02,0.02,inverse_design_v2.CANDIDATE_REGISTRY,,,0.03202667105453825,thermo 0.6.1 Chemical.Psat @310.95K,-0.3755204852248933,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+1-methylnaphthalene,Cc1cccc2ccccc12,DCN,0.0,0.0,inverse_design_v2.CANDIDATE_REGISTRY,,,0.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,RON,105.0,105.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+1-methylnaphthalene,Cc1cccc2ccccc12,MON,95.0,95.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,MW,162.27,162.27,inverse_design_v2.CANDIDATE_REGISTRY,,,162.27132,chemicals 1.5.2 (search_chemical.MW),-8.134524326249766e-06,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,rho15,861.0,861.0,inverse_design_v2.CANDIDATE_REGISTRY,,,862.1531217297046,thermo 0.6.1 Chemical.rhol @288.15K,-0.001337490639007524,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,Tm,-61.0,-61.0,inverse_design_v2.CANDIDATE_REGISTRY,,,-60.99999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,Tb,226.0,226.0,inverse_design_v2.CANDIDATE_REGISTRY,,,226.0,chemicals 1.5.2 (Tb),0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,dHfus,17.5,17.5,inverse_design_v2.CANDIDATE_REGISTRY,,,20.877,chemicals 1.5.2 (Hfus),-0.1617569574172534,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+hexylbenzene,CCCCCCc1ccccc1,Psat37_8,0.05,0.05,inverse_design_v2.CANDIDATE_REGISTRY,,,0.03920543321280973,thermo 0.6.1 Chemical.Psat @310.95K,0.2753334398473965,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+hexylbenzene,CCCCCCc1ccccc1,DCN,25.0,25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,33.3,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-8.299999999999997,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+hexylbenzene,CCCCCCc1ccccc1,RON,80.0,80.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+hexylbenzene,CCCCCCc1ccccc1,MON,75.0,75.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,MW,154.21,154.21,inverse_design_v2.CANDIDATE_REGISTRY,,,154.2078,chemicals 1.5.2 (search_chemical.MW),1.4266463823595104e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,rho15,1040.0,1040.0,inverse_design_v2.CANDIDATE_REGISTRY,,,1028.5623748054286,thermo 0.6.1 Chemical.rhol @288.15K,0.01112001126498045,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+biphenyl,c1ccc(-c2ccccc2)cc1,Tm,69.2,69.2,inverse_design_v2.CANDIDATE_REGISTRY,,,69.42500000000001,chemicals 1.5.2 (Tm),-0.22500000000000853,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,Tb,255.0,255.0,inverse_design_v2.CANDIDATE_REGISTRY,,,255.20000000000005,chemicals 1.5.2 (Tb),-0.20000000000004547,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,dHfus,18.6,18.6,inverse_design_v2.CANDIDATE_REGISTRY,,,18.57,chemicals 1.5.2 (Hfus),0.0016155088852989304,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,Psat37_8,0.015,0.015,inverse_design_v2.CANDIDATE_REGISTRY,,,0.012326363859731378,thermo 0.6.1 Chemical.Psat @310.95K,0.21690387941597616,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+biphenyl,c1ccc(-c2ccccc2)cc1,DCN,5.0,5.0,inverse_design_v2.CANDIDATE_REGISTRY,,,12.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-7.0,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+biphenyl,c1ccc(-c2ccccc2)cc1,RON,110.0,110.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+biphenyl,c1ccc(-c2ccccc2)cc1,MON,100.0,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,,,pure,unverified,inverse_design_v2.CANDIDATE_REGISTRY,
+diisobutylene,C=C(C)CC(C)(C)C,MW,112.21,112.21,inverse_design_v2.CANDIDATE_REGISTRY,,,112.21264,chemicals 1.5.2 (search_chemical.MW),-2.35267613345478e-05,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+diisobutylene,C=C(C)CC(C)(C)C,rho15,720.0,720.0,inverse_design_v2.CANDIDATE_REGISTRY,,,746.5276382775946,thermo 0.6.1 Chemical.rhol @288.15K,-0.035534703495773846,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+diisobutylene,C=C(C)CC(C)(C)C,Tm,-93.5,-93.5,inverse_design_v2.CANDIDATE_REGISTRY,,,-93.74999999999997,chemicals 1.5.2 (Tm),0.24999999999997158,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+diisobutylene,C=C(C)CC(C)(C)C,Tb,101.4,101.4,inverse_design_v2.CANDIDATE_REGISTRY,,,101.30000000000001,chemicals 1.5.2 (Tb),0.09999999999999432,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+diisobutylene,C=C(C)CC(C)(C)C,dHfus,10.5,10.5,inverse_design_v2.CANDIDATE_REGISTRY,,,6.472,chemicals 1.5.2 (Hfus),0.622373300370828,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+diisobutylene,C=C(C)CC(C)(C)C,Psat37_8,6.5,6.5,inverse_design_v2.CANDIDATE_REGISTRY,,,10.756230041966747,thermo 0.6.1 Chemical.Psat @310.95K,-0.3956990530474474,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+diisobutylene,C=C(C)CC(C)(C)C,DCN,12.0,12.0,inverse_design_v2.CANDIDATE_REGISTRY,,,8.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.1999999999999993,pure,disputed,inverse_design_v2.CANDIDATE_REGISTRY,listed value differs from reference beyond threshold; value kept as listed
+diisobutylene,C=C(C)CC(C)(C)C,RON,103.0,103.0,inverse_design_v2.CANDIDATE_REGISTRY,,,106.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-3.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+diisobutylene,C=C(C)CC(C)(C)C,MON,87.0,87.0,inverse_design_v2.CANDIDATE_REGISTRY,,,87.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,pure,verified,inverse_design_v2.CANDIDATE_REGISTRY,
+bicyclohexyl,C1CCC(C2CCCCC2)CC1,flash,85.0,,,,,85.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+cyclopentane,C1CCCC1,flash,-36.99999999999997,,,,,-36.99999999999997,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+cyclohexane,C1CCCCC1,flash,-17.0,,,,,-17.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,Psat37_8,0.38772643700969656,,,,,0.38772643700969656,thermo 0.6.1 Chemical.Psat @310.95K,,pure,reference_only,thermo 0.6.1 Chemical.Psat @310.95K,no listed value; filled from reference
+decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,dHfus,14.41,,,,,14.41,chemicals 1.5.2 (Hfus),,pure,reference_only,chemicals 1.5.2 (Hfus),no listed value; filled from reference
+diisobutylene,C=C(C)CC(C)(C)C,flash,-5.0,,,,,-5.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",,pure,reference_only,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",no listed value; filled from reference
+"2,3-dimethylbutane",CC(C)C(C)C,flash,-19.99999999999997,,,,,-19.99999999999997,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+n-pentane,CCCCC,flash,-39.99999999999997,,,,,-39.99999999999997,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+butylcyclohexane,CCCCC1CCCCC1,flash,52.5,,,,,52.5,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+n-hexane,CCCCCC,flash,-21.99999999999997,,,,,-21.99999999999997,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+n-undecane,CCCCCCCCCCC,flash,65.90000000000003,,,,,65.90000000000003,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+n-tridecane,CCCCCCCCCCCCC,flash,90.0,,,,,90.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+n-octadecane,CCCCCCCCCCCCCCCCCC,flash,166.0,,,,,166.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",,pure,reference_only,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",no listed value; filled from reference
+hexylbenzene,CCCCCCc1ccccc1,flash,83.0,,,,,83.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+ethanol,CCO,Psat37_8,15.94700049478383,,,,,15.94700049478383,thermo 0.6.1 Chemical.Psat @310.95K,,pure,reference_only,thermo 0.6.1 Chemical.Psat @310.95K,no listed value; filled from reference
+ethanol,CCO,dHfus,4.931,,,,,4.931,chemicals 1.5.2 (Hfus),,pure,reference_only,chemicals 1.5.2 (Hfus),no listed value; filled from reference
+ethylbenzene,CCc1ccccc1,flash,15.0,,,,,15.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+mesitylene,Cc1cc(C)cc(C)c1,flash,44.0,,,,,44.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+p-xylene,Cc1ccc(C)cc1,Psat37_8,2.370621660988953,,,,,2.370621660988953,thermo 0.6.1 Chemical.Psat @310.95K,,pure,reference_only,thermo 0.6.1 Chemical.Psat @310.95K,no listed value; filled from reference
+p-xylene,Cc1ccc(C)cc1,dHfus,17.12,,,,,17.12,chemicals 1.5.2 (Hfus),,pure,reference_only,chemicals 1.5.2 (Hfus),no listed value; filled from reference
+m-xylene,Cc1cccc(C)c1,flash,25.0,,,,,25.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+1-methylnaphthalene,Cc1cccc2ccccc12,flash,94.0,,,,,94.0,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference
+o-xylene,Cc1ccccc1C,Psat37_8,1.834551686052531,,,,,1.834551686052531,thermo 0.6.1 Chemical.Psat @310.95K,,pure,reference_only,thermo 0.6.1 Chemical.Psat @310.95K,no listed value; filled from reference
+o-xylene,Cc1ccccc1C,dHfus,13.6,,,,,13.6,chemicals 1.5.2 (Hfus),,pure,reference_only,chemicals 1.5.2 (Hfus),no listed value; filled from reference
+biphenyl,c1ccc(-c2ccccc2)cc1,flash,112.77778,,,,,112.77778,chemicals 1.5.2 (T_flash),,pure,reference_only,chemicals 1.5.2 (T_flash),no listed value; filled from reference

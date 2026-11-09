@@ -17,9 +17,11 @@ Psat37_8 in kPa (vapour pressure at 37.8 C = 310.95 K), RON/MON/DCN dimensionles
 Flag thresholds (|listed - reference|): Tm, Tb, flash > 2 C; rho15 > 1 %; RON, MON, DCN > 3 ON;
 Psat37_8 > 5 %; MW > 1 %; dHfus > 10 %.  A row with no reference is flag="no_reference" (never silently ok).
 
-pure_props_v4.csv rule (one row per canonical smiles and property): the reference value if one exists and the
-listed value was flagged; the listed value if it agrees with the reference (source notes the verification);
-the listed value with source="unverified" when there is no reference at all.
+pure_props_v4.csv rule (R16, one row per canonical smiles and property): `value` is ALWAYS the listed value;
+the reference never overwrites it. status: verified (within threshold) | disputed (flagged, or two listings
+disagree; listed_value_alt records the second) | unverified (no reference, or Psat reference < 0.01 kPa where the
+relative metric is noise) | not_comparable (mixture/commercial/surrogate) | lookup_error (library raised; error
+class in ref_source) | reference_only (pure compound, no listed value, value filled from the reference).
 """
 from __future__ import annotations
 
@@ -98,70 +100,98 @@ def _finite(x):
     return x if np.isfinite(x) else None
 
 
-def reference_value(smiles: str, prop: str):
-    """Reference (value, source) for one pure compound and property, or None if unavailable."""
+# Exceptions the libraries raise for "cannot compute this property for this compound" at the
+# call level; anything outside this tuple is a bug and propagates.
+LOOKUP_ERRORS = (ValueError, KeyError, TypeError, AttributeError, IndexError, ZeroDivisionError,
+                 OverflowError, NotImplementedError, RuntimeError)
+# Psat: below this reference value (kPa) a relative comparison is noise (R16)
+PSAT_MIN_REF_KPA = 0.01
+# R16: isomer mixtures / commercial grades / stereo-unspecified compounds would be compared against a pure
+# reference meaninglessly. Names containing these words, names in MIXTURE_NAMES, or a listed MW > 3 % off
+# the SMILES MW make a row kind="mixture_or_surrogate".
+MIXTURE_WORDS = ("commercial", "mixed", "surrogate")
+MIXTURE_NAMES = {"isododecane", "heptamethylnonane", "decalin"}
+
+
+def _lookup(smiles: str, prop: str):
+    """Return (value, source, state); state in ok | no_reference | lookup_error:<ExceptionClass>."""
     if prop not in THRESH:
-        return None
+        return None, "", "no_reference"
     cs = canon(smiles)
     if cs is None:
-        return None
+        return None, "", "no_reference"
     import chemicals
     import thermo
     chem = _resolve(cs)
     if chem is None:
-        return None
+        return None, "", "no_reference"
     cas = chem.CASs
     cv = chemicals.__version__
     try:
         if prop == "Tm":
             v = _finite(chemicals.Tm(cas))
-            return (v - 273.15, SRC_CHEM.format(v=cv, fn="Tm")) if v is not None else None
-        if prop == "Tb":
+            r = (v - 273.15, SRC_CHEM.format(v=cv, fn="Tm")) if v is not None else None
+        elif prop == "Tb":
             v = _finite(chemicals.Tb(cas))
-            return (v - 273.15, SRC_CHEM.format(v=cv, fn="Tb")) if v is not None else None
-        if prop == "MW":
+            r = (v - 273.15, SRC_CHEM.format(v=cv, fn="Tb")) if v is not None else None
+        elif prop == "MW":
             v = _finite(chem.MW)
-            return (v, SRC_CHEM.format(v=cv, fn="search_chemical.MW")) if v is not None else None
-        if prop == "dHfus":
+            r = (v, SRC_CHEM.format(v=cv, fn="search_chemical.MW")) if v is not None else None
+        elif prop == "dHfus":
             v = _finite(chemicals.Hfus(cas))
-            return (v / 1000.0, SRC_CHEM.format(v=cv, fn="Hfus")) if v is not None else None
-        if prop == "flash":
+            r = (v / 1000.0, SRC_CHEM.format(v=cv, fn="Hfus")) if v is not None else None
+        elif prop == "flash":
             v = _finite(chemicals.T_flash(cas))
-            if v is not None:
-                return (v - 273.15, SRC_CHEM.format(v=cv, fn="T_flash"))
-            df = _cooptima()
-            if df is not None:
-                s = df[(df.cas == cas) & df.flash_point_C.notna()]
-                if len(s):
-                    return (float(s.flash_point_C.iloc[0]), SRC_COOPTIMA)
-            return None
-        if prop == "rho15":
+            r = (v - 273.15, SRC_CHEM.format(v=cv, fn="T_flash")) if v is not None else None
+            if r is None:
+                df = _cooptima()
+                if df is not None:
+                    s = df[(df.cas == cas) & df.flash_point_C.notna()]
+                    if len(s):
+                        r = (float(s.flash_point_C.iloc[0]), SRC_COOPTIMA)
+        elif prop == "rho15":
             v = _finite(thermo.Chemical(cas, T=T_RHO).rhol)
-            return (v, SRC_THERMO.format(v=thermo.__version__, fn="rhol @288.15K")) if v and v > 0 else None
-        if prop == "Psat37_8":
+            r = (v, SRC_THERMO.format(v=thermo.__version__, fn="rhol @288.15K")) if v and v > 0 else None
+        elif prop == "Psat37_8":
             v = _finite(thermo.Chemical(cas, T=T_PSAT).Psat)
-            return (v / 1000.0, SRC_THERMO.format(v=thermo.__version__, fn="Psat @310.95K")) if v and v > 0 else None
-        if prop in ("RON", "MON"):
+            r = (v / 1000.0, SRC_THERMO.format(v=thermo.__version__, fn="Psat @310.95K")) if v and v > 0 else None
+        elif prop in ("RON", "MON"):
             df = _cooptima()
-            if df is None:
-                return None
-            s = df[(df.cas == cas) & df[prop.lower()].notna()]
-            return (float(s[prop.lower()].iloc[0]), SRC_COOPTIMA) if len(s) else None
-        if prop == "DCN":
+            s = df[(df.cas == cas) & df[prop.lower()].notna()] if df is not None else None
+            r = (float(s[prop.lower()].iloc[0]), SRC_COOPTIMA) if s is not None and len(s) else None
+        else:  # DCN
             df = _nrel()
-            if df is None:
-                return None
-            s = df[(df._c == cs) & df.dcn.notna()]
-            return (float(s.dcn.median()), SRC_NREL) if len(s) else None
-    except Exception:
-        return None
-    return None
+            s = df[(df._c == cs) & df.dcn.notna()] if df is not None else None
+            r = (float(s.dcn.median()), SRC_NREL) if s is not None and len(s) else None
+    except LOOKUP_ERRORS as e:
+        return None, f"lookup_error:{type(e).__name__}", f"lookup_error:{type(e).__name__}"
+    return (r[0], r[1], "ok") if r else (None, "", "no_reference")
 
 
-def is_flagged(prop: str, abs_delta, rel_delta) -> bool:
+def reference_value(smiles: str, prop: str):
+    """Reference (value, source) for one pure compound and property, or None if unavailable
+    (no data or a lookup error; use _lookup() to tell the two apart)."""
+    v, src, state = _lookup(smiles, prop)
+    return (v, src) if state == "ok" else None
+
+
+def is_flagged(prop: str, abs_delta, rel_delta, ref_value=None) -> bool:
     kind, thr = THRESH[prop]
+    if prop == "Psat37_8" and ref_value is not None and ref_value < PSAT_MIN_REF_KPA:
+        return False
     d = abs_delta if kind == "abs" else rel_delta
     return d is not None and abs(d) > thr
+
+
+def is_mixture(name: str, smiles: str, listed_mw) -> bool:
+    from rdkit import Chem
+    from rdkit.Chem import Descriptors
+    n = str(name).lower()
+    if any(w in n for w in MIXTURE_WORDS) or n in MIXTURE_NAMES:
+        return True
+    m = Chem.MolFromSmiles(smiles)
+    lm = _finite(listed_mw)
+    return bool(m is not None and lm and abs(lm - Descriptors.MolWt(m)) / Descriptors.MolWt(m) > 0.03)
 
 
 def _listed_rows() -> list:
@@ -174,7 +204,7 @@ def _listed_rows() -> list:
             v = _finite(r[col])
             if v is not None:
                 rows.append(dict(compound=r.compound_name, smiles=r.smiles, prop=prop, listed_value=v,
-                                 listed_source="purchasable_compounds.csv"))
+                                 listed_source="purchasable_compounds.csv", listed_mw=r.mw))
     from fuelblend.design.inverse_design_v2 import CANDIDATE_REGISTRY as R
     rmap = {"mw": "MW", "rho_15": "rho15", "tm_C": "Tm", "tb_C": "Tb", "hfus_kJ_mol": "dHfus",
             "psat_378_kpa": "Psat37_8", "dcn": "DCN", "ron": "RON", "mon": "MON"}
@@ -183,70 +213,105 @@ def _listed_rows() -> list:
             v = _finite(d.get(key))
             if v is not None:
                 rows.append(dict(compound=name, smiles=d["smiles"], prop=prop, listed_value=v,
-                                 listed_source="inverse_design_v2.CANDIDATE_REGISTRY"))
+                                 listed_source="inverse_design_v2.CANDIDATE_REGISTRY", listed_mw=d.get("mw")))
     return rows
 
 
 def audit() -> pd.DataFrame:
     out = []
     for r in _listed_rows():
-        ref = reference_value(r["smiles"], r["prop"])
         r = dict(r)
         kind = THRESH[r["prop"]][0]
-        if ref is None:
-            r.update(ref_value=np.nan, ref_source="", delta=np.nan, flag="no_reference")
+        r["kind"] = "mixture_or_surrogate" if is_mixture(r["compound"], r["smiles"], r.pop("listed_mw")) else "pure"
+        if r["kind"] != "pure":
+            r.update(ref_value=np.nan, ref_source="", delta=np.nan, flag="not_comparable")
         else:
-            absd = r["listed_value"] - ref[0]
-            reld = absd / ref[0] if ref[0] else None
-            delta = absd if kind == "abs" else reld
-            r.update(ref_value=ref[0], ref_source=ref[1], delta=delta,
-                     flag="flagged" if is_flagged(r["prop"], absd, reld) else "ok")
+            val, src, state = _lookup(r["smiles"], r["prop"])
+            if state != "ok":
+                r.update(ref_value=np.nan, ref_source=src,
+                         delta=np.nan, flag="no_reference" if state == "no_reference" else "lookup_error")
+            else:
+                absd = r["listed_value"] - val
+                reld = absd / val if val else None
+                if r["prop"] == "Psat37_8" and val < PSAT_MIN_REF_KPA:
+                    flag = "not_assessed"
+                else:
+                    flag = "flagged" if is_flagged(r["prop"], absd, reld, val) else "ok"
+                r.update(ref_value=val, ref_source=src, delta=absd if kind == "abs" else reld, flag=flag)
         r["delta_kind"] = "absolute" if kind == "abs" else "relative"
         out.append(r)
     cols = ["compound", "smiles", "prop", "listed_value", "listed_source", "ref_value", "ref_source",
-            "delta", "flag", "delta_kind"]
+            "delta", "flag", "delta_kind", "kind"]
     return pd.DataFrame(out)[cols]
 
 
+_STATUS = {"ok": "verified", "flagged": "disputed", "no_reference": "unverified", "not_assessed": "unverified",
+           "lookup_error": "lookup_error", "not_comparable": "not_comparable"}
+REGISTRY_TAG = "inverse_design_v2.CANDIDATE_REGISTRY"
+
+
 def build_props(diffs: pd.DataFrame) -> pd.DataFrame:
+    """One row per (canonical smiles, prop). value is ALWAYS the listed value (R16, never auto-substituted),
+    except status=reference_only (no listed value anywhere, pure compound, reference exists)."""
     d = diffs.copy()
     d["_cs"] = d.smiles.map(canon)
     out = []
     for (cs, prop), g in d.groupby(["_cs", "prop"], sort=False):
-        # registry row first when both tables list the compound
-        g = g.sort_values("listed_source", key=lambda s: s.ne("inverse_design_v2.CANDIDATE_REGISTRY"),
-                          kind="stable")
-        fl = g[g.flag == "flagged"]
-        first = fl.iloc[0] if len(fl) else g.iloc[0]
-        if first.flag == "no_reference":
-            val, src = first.listed_value, "unverified"
-            note = f"listed in {first.listed_source}, no reference found"
-        elif first.flag == "flagged":
-            val, src = first.ref_value, first.ref_source
-            note = f"reference replaces flagged listed value {first.listed_value:g} ({first.listed_source})"
-        else:
-            val, src = first.listed_value, f"{first.listed_source} (verified vs {first.ref_source})"
-            note = "listed value within threshold of reference"
-        out.append(dict(compound=first.compound, smiles=cs, prop=prop, value=float(val), source=src, note=note))
-    return pd.DataFrame(out)
+        g = g.sort_values("listed_source", key=lambda s: s.ne(REGISTRY_TAG), kind="stable")
+        a = g.iloc[0]
+        row = dict(compound=a.compound, smiles=cs, prop=prop, value=a.listed_value, listed_value=a.listed_value,
+                   listed_source=a.listed_source, listed_value_alt=np.nan, listed_source_alt="",
+                   ref_value=a.ref_value, ref_source=a.ref_source, delta=a.delta, kind=a.kind,
+                   status=_STATUS[a.flag], source=a.listed_source, note="")
+        if len(g) > 1 and a.kind == "pure":
+            b = g.iloc[1]
+            diff = b.listed_value - a.listed_value
+            kd, thr = THRESH[prop]
+            dis = abs(diff) > thr if kd == "abs" else abs(diff) > thr * abs(a.listed_value or 1)
+            if dis or b.flag == "flagged":
+                row.update(listed_value_alt=b.listed_value, listed_source_alt=b.listed_source,
+                           status="disputed",
+                           note="two listed values disagree" if dis else "second listing flagged against reference")
+        if row["status"] == "disputed" and not row["note"]:
+            row["note"] = "listed value differs from reference beyond threshold; value kept as listed"
+        out.append(row)
+    props = pd.DataFrame(out)
+    # reference_only: pure compounds with a reference but no listed value for that property
+    extra = []
+    for cs, g in d[d.kind == "pure"].groupby("_cs"):
+        have = set(g.prop)
+        for prop in THRESH:
+            if prop in have:
+                continue
+            val, src, state = _lookup(cs, prop)
+            if state == "ok":
+                extra.append(dict(compound=g.compound.iloc[0], smiles=cs, prop=prop, value=val, listed_value=np.nan,
+                                  listed_source="", listed_value_alt=np.nan, listed_source_alt="", ref_value=val,
+                                  ref_source=src, delta=np.nan, kind="pure", status="reference_only",
+                                  source=src, note="no listed value; filled from reference"))
+    if extra:
+        props = pd.concat([props, pd.DataFrame(extra)], ignore_index=True)
+    return props
 
 
-def run(write: bool = True) -> dict:
+def run(write: bool = True, out_diffs: Path = OUT_DIFFS, out_props: Path = OUT_PROPS) -> dict:
     diffs = audit()
     props = build_props(diffs)
     if write:
-        OUT_DIFFS.parent.mkdir(parents=True, exist_ok=True)
-        OUT_PROPS.parent.mkdir(parents=True, exist_ok=True)
-        diffs.to_csv(OUT_DIFFS, index=False)
-        props.to_csv(OUT_PROPS, index=False)
+        out_diffs.parent.mkdir(parents=True, exist_ok=True)
+        out_props.parent.mkdir(parents=True, exist_ok=True)
+        diffs.to_csv(out_diffs, index=False)
+        props.to_csv(out_props, index=False)
     return {"diffs": diffs, "props": props}
 
 
 def main() -> int:
     res = run(write=True)
-    d = res["diffs"]
+    d, p = res["diffs"], res["props"]
     print(f"audited rows: {len(d)}  compounds: {d.smiles.map(canon).nunique()}")
     print(d.groupby(["prop", "flag"]).size().unstack(fill_value=0).to_string())
+    print("lookup_error rows:", int((d.flag == "lookup_error").sum()))
+    print(p.status.value_counts().to_string())
     print(f"files: {OUT_DIFFS}\n       {OUT_PROPS}")
     return 0
 
