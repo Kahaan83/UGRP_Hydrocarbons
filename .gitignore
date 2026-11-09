@@ -16,6 +16,7 @@ data/*
 !data/MISSING.md
 !data/antoine_sources.csv
 !data/real_fuels/
+!data/quarantine/
 # NOTE: git can only re-include inside a directory that is itself re-included,
 # so data/processed is re-included and the heavy derived CSVs are excluded here
 !data/processed/
