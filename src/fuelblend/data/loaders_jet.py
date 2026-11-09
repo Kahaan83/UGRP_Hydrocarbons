@@ -15,6 +15,8 @@ Carbon-number rule (task brief): a class's carbon-number split is
   * ``source``          - bins given by the cited table (scaled to the class total if they cover >= 98 % of it);
   * ``D86/D2887_same_fuel`` - otherwise, the measured boiling curve of THE SAME fuel in a raw file
                           (class-independent n-alkane-Tb mapping = ``fuel_hindcast.carbon_distribution``);
+  NOTE: the distillation rows of such a fuel (POSF-10325) are role=descriptor in the property table AND drive its
+  carbon-number split; do not feed them to a model as features alongside the derived composition (leakage).
   * ``assumed_cn_split`` - otherwise (cn = None, never invented).  Such a fuel is ``headline_ok = False``.
 """
 from __future__ import annotations
@@ -55,7 +57,7 @@ _TOL = 0.02
 
 COLUMNS = ["fuel_id", "fuel_name", "source_ref", "basis", "class_fractions", "components", "n_pseudo_components",
            "class_sum_raw", "unresolved_fraction", "composition_complete", "corpus_status", "cn_split_method",
-           "cn_assumed_classes", "headline_ok", "headline_reason", "composition_provenance",
+           "cn_assumed_classes", "cn_split_class_independent", "headline_ok", "headline_reason", "composition_provenance",
            "property_provenance", "inventory_fuel_id", "n_target_props"]
 
 
@@ -157,6 +159,11 @@ def load_gc_fuels(gc_csv: str | Path, av2718_csv: str | Path) -> pd.DataFrame:
         srcs = {c["cn_source"] for c in comps}
         method = ("assumed_cn_split" if assumed else "+".join(sorted(srcs - {"source"})) or "source")
         reasons = []
+        indep = any(c["cn_source"].endswith("_same_fuel") for c in comps)
+        if indep:
+            reasons.append("cn_split_class_independent: one n-alkane-Tb-mapped distillation distribution applied to every "
+                           "class (aromatics/cycloalkanes get the n-paraffin shape); vector partly formula_derived; "
+                           "descriptor distillation rows also drive it (leakage if used as features)")
         if not complete:
             reasons.append(f"partial_composition (listed {total:.3f} of the fuel; unresolved {1 - total:.3f})")
         if assumed:
@@ -169,10 +176,18 @@ def load_gc_fuels(gc_csv: str | Path, av2718_csv: str | Path) -> pd.DataFrame:
             "composition_complete": complete,
             "corpus_status": "included" if complete else "excluded_partial_composition",
             "cn_split_method": method, "cn_assumed_classes": json.dumps(sorted(set(assumed))),
+            "cn_split_class_independent": indep,
             "headline_ok": complete and not assumed, "headline_reason": "; ".join(reasons),
             "composition_provenance": "cited_typed", "property_provenance": "raw_file",
             "inventory_fuel_id": np.nan, "n_target_props": 0})
     return pd.DataFrame(rows, columns=COLUMNS)
+
+
+def included_jet_fuel_ids(path: str | Path | pd.DataFrame) -> list[str]:
+    """Fuel ids with corpus_status == "included".  Task 7 splits MUST use this, not every row of the CSV:
+    the ATSDR JP-5/JP-8 rows (excluded_partial_composition) are not compositions."""
+    df = path if isinstance(path, pd.DataFrame) else pd.read_csv(path)
+    return df.loc[df.corpus_status == "included", "fuel_id"].tolist()
 
 
 # --------------------------------------------------------------------------- properties
