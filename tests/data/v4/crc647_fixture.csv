@@ -1,0 +1,33 @@
+fuel_code,fuel_name,property,value_raw,unit_raw,value_std,unit_std,T_C,method,source_pdf,page
+2,"Boston, MA",density_kg_m3,0.8031,g/cm3 (60F),803.1,kg/m3,,ASTM D4052,CRC_647_world_fuel_sampling.pdf,89
+2,"Boston, MA",flash_point_C,118,oF,47.8,C,,ASTM D93,CRC_647_world_fuel_sampling.pdf,89
+2,"Boston, MA",freezing_point_C,-52.6,oC,-52.6,C,,ASTM D5972,CRC_647_world_fuel_sampling.pdf,89
+2,"Boston, MA",pour_point_C,-70,oC,-70.0,C,,ASTM D5949,CRC_647_world_fuel_sampling.pdf,89
+3,"Chicago, IL",density_kg_m3,0.8134,g/cm3 (60F),813.4,kg/m3,,ASTM D4052,CRC_647_world_fuel_sampling.pdf,89
+3,"Chicago, IL",flash_point_C,125,oF,51.7,C,,ASTM D93,CRC_647_world_fuel_sampling.pdf,89
+3,"Chicago, IL",freezing_point_C,-46.7,oC,-46.7,C,,ASTM D5972,CRC_647_world_fuel_sampling.pdf,89
+3,"Chicago, IL",pour_point_C,-70,oC,-70.0,C,,ASTM D5949,CRC_647_world_fuel_sampling.pdf,89
+2,"Boston, MA",aromatics_vol_pct,20.63,vol%,20.63,vol%,,ASTM D6379,CRC_647_world_fuel_sampling.pdf,92
+2,"Boston, MA",aromatics_vol_pct,18.7,vol%,18.7,vol%,,ASTM D1319,CRC_647_world_fuel_sampling.pdf,92
+3,"Chicago, IL",aromatics_vol_pct,21.10,vol%,21.1,vol%,,ASTM D6379,CRC_647_world_fuel_sampling.pdf,92
+3,"Chicago, IL",aromatics_vol_pct,19.3,vol%,19.3,vol%,,ASTM D1319,CRC_647_world_fuel_sampling.pdf,92
+2,"Boston, MA",viscosity_kin_cSt,1.7,cSt,1.7,cSt,20.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+2,"Boston, MA",viscosity_kin_cSt,4.1,cSt,4.1,cSt,-20.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+2,"Boston, MA",viscosity_kin_cSt,8.5,cSt,8.5,cSt,-40.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+3,"Chicago, IL",viscosity_kin_cSt,2.1,cSt,2.1,cSt,20.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+3,"Chicago, IL",viscosity_kin_cSt,5.5,cSt,5.5,cSt,-20.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+3,"Chicago, IL",viscosity_kin_cSt,11.9,cSt,11.9,cSt,-40.0,ASTM D455,CRC_647_world_fuel_sampling.pdf,93
+2,"Boston, MA",net_heat_content_btu_lb,18509,Btu/lb,18509.0,Btu/lb,,ASTM D4809,CRC_647_world_fuel_sampling.pdf,94
+3,"Chicago, IL",net_heat_content_btu_lb,18499,Btu/lb,18499.0,Btu/lb,,ASTM D4809,CRC_647_world_fuel_sampling.pdf,94
+2,"Boston, MA",density_kg_m3,0.840227,g/ml,840.2,kg/m3,-35.0,Solartron,CRC_647_world_fuel_sampling.pdf,97
+2,"Boston, MA",density_kg_m3,0.827218,g/ml,827.2,kg/m3,-18.4,Solartron,CRC_647_world_fuel_sampling.pdf,97
+2,"Boston, MA",density_kg_m3,0.813484,g/ml,813.5,kg/m3,-0.4,Solartron,CRC_647_world_fuel_sampling.pdf,97
+3,"Chicago, IL",density_kg_m3,0.851075,g/ml,851.1,kg/m3,-36.6,Solartron,CRC_647_world_fuel_sampling.pdf,97
+3,"Chicago, IL",density_kg_m3,0.838587,g/ml,838.6,kg/m3,-19.6,Solartron,CRC_647_world_fuel_sampling.pdf,97
+3,"Chicago, IL",density_kg_m3,0.823787,g/ml,823.8,kg/m3,0.1,Solartron,CRC_647_world_fuel_sampling.pdf,97
+2,"Boston, MA",density_kg_m3,0.799228,g/ml,799.2,kg/m3,19.8,Solartron,CRC_647_world_fuel_sampling.pdf,98
+2,"Boston, MA",density_kg_m3,0.784820,g/ml,784.8,kg/m3,39.6,Solartron,CRC_647_world_fuel_sampling.pdf,98
+2,"Boston, MA",density_kg_m3,0.763608,g/ml,763.6,kg/m3,69.4,Solartron,CRC_647_world_fuel_sampling.pdf,98
+3,"Chicago, IL",density_kg_m3,0.809706,g/ml,809.7,kg/m3,19.8,Solartron,CRC_647_world_fuel_sampling.pdf,98
+3,"Chicago, IL",density_kg_m3,0.795379,g/ml,795.4,kg/m3,39.7,Solartron,CRC_647_world_fuel_sampling.pdf,98
+3,"Chicago, IL",density_kg_m3,0.774375,g/ml,774.4,kg/m3,69.5,Solartron,CRC_647_world_fuel_sampling.pdf,98

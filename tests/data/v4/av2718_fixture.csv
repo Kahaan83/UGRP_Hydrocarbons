@@ -1,0 +1,46 @@
+fuel_code,fuel_name,property,value_raw,unit_raw,value_std,unit_std,T_C,method,source_pdf,page
+10325,Jet A,aromatics_vol_pct,17.5,vol%,17.5,vol%,,Aromatics (%vol) per sample list,CRC_AV-27-18_fuel_properties.pdf,6
+10289,JP-5,aromatics_vol_pct,18.6,vol%,18.6,vol%,,Aromatics (%vol) per sample list,CRC_AV-27-18_fuel_properties.pdf,6
+10325,Jet A,distillation_T0_C,107,C,107.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T5_C,147,C,147.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T10_C,162,C,162.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T15_C,171,C,171.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T20_C,177,C,177.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T25_C,183,C,183.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T30_C,190,C,190.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T35_C,196,C,196.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T40_C,199,C,199.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T45_C,205,C,205.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T50_C,211,C,211.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T55_C,217,C,217.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T60_C,220,C,220.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T65_C,228,C,228.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T70_C,233,C,233.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T75_C,238,C,238.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T80_C,246,C,246.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T85_C,255,C,255.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T90_C,262,C,262.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T95_C,274,C,274.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,distillation_T100_C,310,C,310.0,C,,ASTM D2887 (SIMDIST),CRC_AV-27-18_fuel_properties.pdf,11
+10325,Jet A,viscosity_kin_cSt,1.51,mm2/s,1.51,cSt,30.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,viscosity_kin_cSt,1.93,mm2/s,1.93,cSt,15.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,viscosity_kin_cSt,2.61,mm2/s,2.61,cSt,0.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,viscosity_kin_cSt,4.44,mm2/s,4.44,cSt,-20.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,viscosity_kin_cSt,9.12,mm2/s,9.12,cSt,-40.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,density_kg_m3,0.7921,g/cm3,792.1,kg/m3,30.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,density_kg_m3,0.8033,g/cm3,803.3,kg/m3,15.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,density_kg_m3,0.8143,g/cm3,814.3,kg/m3,0.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,density_kg_m3,0.8290,g/cm3,829.0,kg/m3,-20.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,density_kg_m3,0.8439,g/cm3,843.9,kg/m3,-40.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,viscosity_kin_cSt,1.83,mm2/s,1.83,cSt,30.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,viscosity_kin_cSt,2.41,mm2/s,2.41,cSt,15.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,viscosity_kin_cSt,3.38,mm2/s,3.38,cSt,0.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,viscosity_kin_cSt,6.11,mm2/s,6.11,cSt,-20.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,viscosity_kin_cSt,14.12,mm2/s,14.12,cSt,-40.0,ASTM D7042,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,density_kg_m3,0.8154,g/cm3,815.4,kg/m3,30.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,density_kg_m3,0.8266,g/cm3,826.6,kg/m3,15.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,density_kg_m3,0.8374,g/cm3,837.4,kg/m3,0.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,density_kg_m3,0.8519,g/cm3,851.9,kg/m3,-20.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10289,JP-5,density_kg_m3,0.8666,g/cm3,866.6,kg/m3,-40.0,ASTM D4052,CRC_AV-27-18_fuel_properties.pdf,12
+10325,Jet A,flash_point_C,55.0,C,55.0,C,,ASTM D56,CRC_AV-27-18_fuel_properties.pdf,14
+10289,JP-5,flash_point_C,58.5,C,58.5,C,,ASTM D56,CRC_AV-27-18_fuel_properties.pdf,14
