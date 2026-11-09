@@ -18,18 +18,29 @@ import numpy as np
 
 
 class BilinearPairwiseInteraction(nn.Module):
-    def __init__(self, in_features: int, rank: int = 16, num_tasks: int = 3):
+    def __init__(self, in_features: int, rank: int = 16, num_tasks: int = 3, seed: int = 0):
         super().__init__()
         self.in_features = in_features
         self.rank = rank
         self.num_tasks = num_tasks
+        self.seed = seed
+
+        # Local generator: initialization is deterministic given `seed` and independent of
+        # (and does not consume) the global torch RNG (v4 Task 0 / CLM-19 fix).
+        gen = torch.Generator().manual_seed(int(seed))
 
         # Projection matrix U: (in_features, rank)
-        self.U = nn.Parameter(torch.randn(in_features, rank) * (1.0 / np.sqrt(in_features)))
+        self.U = nn.Parameter(torch.randn(in_features, rank, generator=gen) * (1.0 / np.sqrt(in_features)))
         # Task-specific eigenvalues lambda: (num_tasks, rank)
-        self.lambdas = nn.Parameter(torch.randn(num_tasks, rank) * 0.05)
-        # Linear self-term (single-component contribution)
+        self.lambdas = nn.Parameter(torch.randn(num_tasks, rank, generator=gen) * 0.05)
+        # Linear self-term (single-component contribution). nn.Linear's default init draws from
+        # the global RNG, so re-draw its weight from `gen` with the same U(-b, b), b = 1/sqrt(fan_in).
         self.linear_self = nn.Linear(in_features, num_tasks, bias=False)
+        bound = 1.0 / np.sqrt(in_features)
+        with torch.no_grad():
+            self.linear_self.weight.copy_(
+                (torch.rand(num_tasks, in_features, generator=gen) * 2.0 - 1.0) * bound
+            )
 
     def forward_linear_O_N(self, z: torch.Tensor, w: torch.Tensor) -> torch.Tensor:
         """Compute interaction in O(N * d * r) linear time.
