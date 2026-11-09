@@ -11,7 +11,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from fuelblend.data.loaders_jet import load_gc_fuels, load_jet_properties
+from fuelblend.data.loaders_jet import included_jet_fuel_ids, load_gc_fuels, load_jet_properties
 
 ROOT = Path(__file__).resolve().parents[1]
 FIX = ROOT / "tests" / "data" / "v4"
@@ -66,10 +66,27 @@ def test_cn_split_flags(corpus):
         assert not bool(by.loc[f, "headline_ok"]), f
         assert "assumed_cn_split" in by.loc[f, "headline_reason"], f
     # ATSDR JP-5/JP-8 tables list only ~41-42 % of the fuel -> not a composition
+    assert "JP5_PotterSimmons" in by.index                        # non-vacuous
     for f in ("JP5_PotterSimmons", "JP8_PotterSimmons"):
-        if f in by.index:
-            assert not bool(by.loc[f, "composition_complete"])
-            assert by.loc[f, "unresolved_fraction"] > 0.5 and not bool(by.loc[f, "headline_ok"])
+        if f == "JP8_PotterSimmons" and f not in by.index:        # fixture slice holds JP-5 only
+            continue
+        assert not bool(by.loc[f, "composition_complete"])
+        assert by.loc[f, "unresolved_fraction"] > 0.5 and not bool(by.loc[f, "headline_ok"])
+        s = sum(json.loads(by.loc[f, "class_fractions"]).values())
+        assert 0.05 < s < 0.5
+        if len(comp) == 7:                                        # real file
+            assert s == pytest.approx({"JP5_PotterSimmons": 0.409, "JP8_PotterSimmons": 0.423}[f], abs=0.005)
+    # class-independent CN split is flagged and stated
+    r = by.loc["POSF-10325"]
+    assert bool(r["cn_split_class_independent"]) and "cn_split_class_independent" in r["headline_reason"]
+    assert not by.drop("POSF-10325")["cn_split_class_independent"].any()
+
+
+def test_included_jet_fuel_ids_excludes_partial(corpus):
+    comp, _ = corpus
+    ids = included_jet_fuel_ids(comp)
+    assert "POSF-10325" in ids and not {"JP5_PotterSimmons", "JP8_PotterSimmons"} & set(ids)
+    assert set(ids) == set(comp[comp.corpus_status == "included"].fuel_id)
 
 
 def test_components_consistent(corpus):

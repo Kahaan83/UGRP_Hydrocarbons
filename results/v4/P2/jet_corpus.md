@@ -14,9 +14,15 @@ Built by `scripts/v4/build_jet_corpus.py` (loader `src/fuelblend/data/loaders_je
 | JP5_PotterSimmons | False | source | False | 27 | 0 | partial_composition (listed 0.409 of the fuel; unresolved 0.591) |
 | JP8_PotterSimmons | False | source | False | 29 | 0 | partial_composition (listed 0.423 of the fuel; unresolved 0.577) |
 | UDRI_HTA_repfuel | True | assumed_cn_split | False | 20 | 0 | assumed_cn_split: ['aromatic', 'cycloalkane', 'n_paraffin'] |
-| POSF-10325 | True | D2887_same_fuel | True | 48 | 3 |  |
+| POSF-10325 | True | D2887_same_fuel | True | 48 | 3 | cn_split_class_independent: one n-alkane-Tb-mapped distillation distribution applied to every class (aromatics/cycloalkanes get the n-paraffin shape); vector partly formula_derived; descriptor distillation rows also drive it (leakage if used as features) |
 | POSF-13511 | True | assumed_cn_split | False | 4 | 0 | assumed_cn_split: ['aromatic', 'cycloalkane', 'iso_paraffin', 'n_paraffin'] |
 | POSF-13516 | True | assumed_cn_split | False | 3 | 0 | assumed_cn_split: ['cycloalkane', 'iso_paraffin', 'n_paraffin'] |
+
+## READ BEFORE USE
+
+* **Task 7 / any split must use `included_jet_fuel_ids()` (loaders_jet.py): only `corpus_status == included` fuels.  JP5_PotterSimmons and JP8_PotterSimmons are `excluded_partial_composition` (41-42 % of mass listed) and must NOT enter splits.**
+* The headline set is n=1 (POSF-10325) and its class x carbon-number vector is partly `formula_derived` (`cn_split_class_independent=True`): no statistics may be reported over it.
+* POSF-10325's distillation rows are `role=descriptor` in jet_properties_v4.csv AND drive its carbon-number split: do not use them as model features alongside the derived composition (leakage).
 
 ## Properties present per source (raw files only)
 

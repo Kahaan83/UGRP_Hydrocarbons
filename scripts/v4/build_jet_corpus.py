@@ -32,12 +32,12 @@ BEGIN, END = "<!-- v4-task6:begin -->", "<!-- v4-task6:end -->"
 
 DOC = {
     "POSF-10325": "CRC AV-27-18 lists POSF 10325 but not freezing/pour/heat of combustion; fetch the AFRL/CRC property sheet "
-                  "for POSF 10325 (e.g. Edwards, 'Reference Jet Fuels for Combustion Testing', AIAA 2017-0146, or the "
+                  "for POSF 10325 (UNVERIFIED SUGGESTION: Edwards, 'Reference Jet Fuels for Combustion Testing', AIAA 2017-0146, or the "
                   "ASCENT 31a deck's property slide). AJFTD fuel_id 2 (label '10325': freezing -50 C, D86) is NOT linked: "
                   "its identity with POSF 10325 is unconfirmed and its flash (48 C) disagrees with AV-27-18 (55 C)",
-    "POSF-13511": "no row in av2718/crc647/AJFTD; fetch POSF 13511 property sheet (Edwards AIAA 2017-0146 / AFRL "
+    "POSF-13511": "no row in av2718/crc647/AJFTD; fetch POSF 13511 property sheet (UNVERIFIED SUGGESTION: Edwards AIAA 2017-0146 / AFRL "
                   "'Alternative Jet Fuels' tables) and a D86 or D2887 curve (needed for the carbon-number split)",
-    "POSF-13516": "no row in av2718/crc647/AJFTD; fetch POSF 13516 property sheet (Edwards AIAA 2017-0146 / AFRL) "
+    "POSF-13516": "no row in av2718/crc647/AJFTD; fetch POSF 13516 property sheet (UNVERIFIED SUGGESTION: Edwards AIAA 2017-0146 / AFRL) "
                   "and a D86 or D2887 curve (needed for the carbon-number split)",
     "UDRI_HTA_repfuel": "UDRI 'HTA representative fuel' (ASCENT 31a deck slide 12) has no property rows locally; fetch the "
                         "fuel's specification-property table from the same ASCENT 31a report and a D86/D2887 curve",
@@ -103,7 +103,15 @@ def main() -> None:
     for _, r in comp.iterrows():
         L.append(f"| {r.fuel_id} | {r.composition_complete} | {r.cn_split_method} | {r.headline_ok} | "
                  f"{r.n_pseudo_components} | {r.n_target_props} | {r.headline_reason} |")
-    L += ["", "## Properties present per source (raw files only)", "",
+    L += ["", "## READ BEFORE USE", "",
+          "* **Task 7 / any split must use `included_jet_fuel_ids()` (loaders_jet.py): only `corpus_status == included` "
+          "fuels.  JP5_PotterSimmons and JP8_PotterSimmons are `excluded_partial_composition` (41-42 % of mass listed) "
+          "and must NOT enter splits.**",
+          f"* The headline set is n={int(comp.headline_ok.sum())} (POSF-10325) and its class x carbon-number vector is partly "
+          "`formula_derived` (`cn_split_class_independent=True`): no statistics may be reported over it.",
+          "* POSF-10325's distillation rows are `role=descriptor` in jet_properties_v4.csv AND drive its carbon-number "
+          "split: do not use them as model features alongside the derived composition (leakage).", "",
+          "## Properties present per source (raw files only)", "",
           "| source | fuels | rows | target rows | targets present (fuels with it) |", "|---|---|---|---|---|"]
     for src, g in props.groupby("source_file"):
         t = g[g.role == "target"]
