@@ -23,7 +23,7 @@ def _synthetic():
         "system_id": ["fuel:A", "fuel:A", "fuel:A", "fuel:B", "fuel:C", "fuel:C", "fuel:D",
                       "fuel:E", "fuel:E", "fuel:F", "fuel:F"],
         "inchikey": ["K1", "K2", "LUMP_X", "K1", "K1", "K1", "K3", "K1", "K2", "K1", "LUMP_Y"],
-        "smiles": ["C", "CC", "", "C", "C", "C", "CCC", "C", "CC", "C", "CCC"[:0]],
+        "smiles": ["C", "CC", "", "C", "C", "C", "CCC", "C", "CC", "C", ""],
         "fraction": [0.4, 0.5, 0.1, 1.0, 0.97, 0.03, 1.0, 0.5, 0.5, 0.8, 0.2],
         "basis": "mass", "is_lumped": [False, False, True, False, False, False, False,
                                        False, False, False, True],
@@ -192,7 +192,9 @@ def test_real_gate_and_completeness(real):
     # every fuel with a quarantined composition row is flagged unverified
     assert not inv.loc[inv["n_composition_rows_quarantined"] > 0, "verified"].astype(bool).any()
     # the 8 partially-quarantined fuels found in review are dropped, with their kept share in the reason
-    for f in ("SURR_Mueller_4comp", "BrunoHuber2010_3comp", "Chen2016_JI", "Honnet2009_Aachen"):
+    eight = ("SURR_Mueller_4comp", "SURR_IDEAL_4comp", "SURR_Peugeot_4comp", "SURR_EN590_European_Diesel",
+             "ASTM_D975_ULSD_Reference", "BrunoHuber2010_3comp", "Chen2016_JI", "Honnet2009_Aachen")
+    for f in eight:
         assert f in real["dropped"] and "incomplete composition" in real["dropped"][f]
     # NIST_RP1 keeps its legitimate lumped tail
     assert "NIST_RP1" in set(inv["fuel_id"])
@@ -200,7 +202,25 @@ def test_real_gate_and_completeness(real):
 
 def test_real_quarantine_compositions_deduped(real):
     cq = real["comp_quar"]
-    key = ["system_id", "smiles", "inchikey"]
-    k = cq[key].fillna("").assign(_o=cq.groupby(key, dropna=False).cumcount())
-    assert not k.duplicated().any()
     assert "also_in" in cq.columns
+    # every distinct quarantined value of every source table survives: nothing but exact duplicates collapsed
+    key = ["system_id", "smiles", "inchikey", "fraction"]
+    out = set(map(tuple, cq[key].fillna("").astype(str).values))
+    for comp_p in [p[1] for p in Q.PAIRS]:
+        ann_q = real["comp_quar_by_table"][comp_p]
+        src = set(map(tuple, ann_q[key].fillna("").astype(str).values))
+        assert src <= out, (comp_p, sorted(src - out)[:3])
+    # and exact duplicates did collapse
+    assert len(cq) < sum(len(v) for v in real["comp_quar_by_table"].values())
+    # NASA_LFP3 decane: differing fractions across tables are kept as separate rows
+    d = cq[(cq["system_id"] == "fuel:NASA_LFP3") & (cq["smiles"] == "CCCCCCCCCC")]
+    assert sorted(d["fraction"]) == [0.023, 0.025]
+
+
+def test_dedupe_keeps_rows_with_different_fraction():
+    a = pd.DataFrame({"table": ["t1", "t2", "t3"], "row_id": [0, 0, 0], "system_id": "fuel:X",
+                      "smiles": "C", "inchikey": "K", "fraction": [0.023, 0.03, 0.03], "reason": "r",
+                      "evidence": ["e1", "e2", "e3"]})
+    out = Q.dedupe_quarantined(a)
+    assert sorted(out["fraction"]) == [0.023, 0.03]
+    assert out.set_index("fraction").loc[0.03, "also_in"] == "t2;t3"
