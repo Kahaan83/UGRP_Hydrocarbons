@@ -39,7 +39,7 @@ def test_face_prf10_parses(paths):
     members = {m.lower() for m in json.loads(r.unresolved_members)}
     assert {"n-heptane", "iso-octane"} <= members
     eth = [c for c in comps if c["name"].lower() == "ethanol"]
-    assert len(eth) == 1 and eth[0]["frac"] == pytest.approx(0.10) and eth[0]["basis"] == "volume"
+    assert len(eth) == 1 and eth[0]["frac"] == pytest.approx(0.10) and eth[0]["basis"] == "volume_inferred"
     assert sum(c["frac"] for c in comps) == pytest.approx(1.0, abs=0.01)
     assert any(str(c["inchikey"]).startswith("LUMP:") for c in comps)
     assert not r.target_ok and not r.composition_resolved
@@ -63,7 +63,7 @@ def test_face_rules(paths):
     assert "1,2,4-Trimethylbenzene" in json.loads(df.loc["TMB+10", "unresolved_members"])
     # every fraction in every row has a basis; no row claims to be a resolved target
     for _, r in df.iterrows():
-        assert all(c["basis"] in ("volume", "unresolved") for c in _comps(r))
+        assert all(c["basis"] in ("volume_inferred", "unresolved") for c in _comps(r))
         assert not r.target_ok
 
 
@@ -93,7 +93,35 @@ def test_bron_units_and_basis(path):
         blendstock_frac = [c["frac"] for c in comps if not c["inchikey"].startswith("LUMP:BRON_BASE")][0]
         assert 0.05 < blendstock_frac < 0.55           # volume fractions, not percent
         assert r.provenance == "raw_file" and r.composition_provenance == "raw_file"
-        assert not r.target_ok and r.base_lump_input_only
+        assert r.base_lump_input_only
+        assert r.target_ok_ron == (pd.notna(r.ron) and pd.notna(r.base_ron))
+        assert r.target_ok_mon == (pd.notna(r.mon) and pd.notna(r.base_mon))
+        assert r.target_ok == (r.target_ok_ron or r.target_ok_mon)
     # methyl furan: first RON point is 98.1 at 10.29 vol%
     mf = df[df.blend_id.str.contains("534-22-5")].sort_values("blend_id").iloc[0]
     assert mf.ron == pytest.approx(98.1) and mf.base_ron == pytest.approx(90.3)
+
+
+@pytest.mark.parametrize("paths", [FACE_FIX, pytest.param(
+    FACE_REAL, marks=pytest.mark.skipif(not all(p.exists() for p in FACE_REAL), reason="raw FACE absent"))])
+def test_face_unknown_ethanol_share_is_kept(paths):
+    r = load_face_sets(paths).set_index("blend_id").loc["TPRF 4+4"]
+    comps = _comps(r)
+    eth = [c for c in comps if c["name"] == "Ethanol"]
+    assert len(eth) == 1 and eth[0]["frac"] is None and eth[0]["basis"] == "unresolved"
+    assert "Ethanol" in json.loads(r.unresolved_members)
+    assert {"n-Heptane", "iso-Octane", "Toluene"} <= set(json.loads(r.unresolved_members))
+    assert r.ron == 66.6 and r.mon == 64.0 and not r.target_ok
+
+
+@pytest.mark.parametrize("path", [BRON_FIX, pytest.param(
+    BRON_REAL, marks=pytest.mark.skipif(not BRON_REAL.exists(), reason="raw bRON absent"))])
+def test_bron_single_base_lump_id_and_mon_only_row(path):
+    df = load_cooptima_bron(path)
+    mf = df[df.blend_id.str.contains("534-22-5")]
+    assert mf.base_fuel.nunique() == 1 and mf.base_fuel.iloc[0] == "BRON_BASE_RON90.3_MON84.7"
+    mon_only = mf[mf.ron.isna()].iloc[0]          # third methyl-furan point has MON only
+    assert mon_only.blend_id.endswith(":0.3109")
+    assert mon_only.target_ok_mon and not mon_only.target_ok_ron and mon_only.target_ok
+    both = mf[mf.ron.notna()].iloc[0]
+    assert both.target_ok_ron and both.target_ok_mon

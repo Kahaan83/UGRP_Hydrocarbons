@@ -34,8 +34,11 @@ One row per pure blendstock (CAS, NAME) with up to 5 data points per property, c
 ``base_RON_bRON_i, vol_frac_bRON_i, blend_RON_bRON_i`` (same for MON): a base gasoline of RON
 ``base_RON`` is blended with ``vol_frac`` (a 0-1 VOLUME fraction) of the blendstock and the blend
 RON/MON is measured.  The base gasoline has no composition -> ``LUMP:BRON_BASE_RON<base_RON>``,
-carried as an input (``base_ron``/``base_mon``); ``target_ok`` is False under the lump rule while
-``base_lump_input_only`` marks that the base RON/MON are inputs.  One output row per distinct
+carried as an input (``base_ron``/``base_mon``).  Ruling R17: blend RON (MON) may be a target when
+the measured base RON (MON) is supplied as an input -> ``target_ok_ron``/``target_ok_mon`` per property,
+``target_ok`` is their OR.  The lump id uses the row's base RON and base MON (one id per base gasoline).
+Rows with an Ethanol cell but unknown share (``TPRF 4+N``, N not a percentage) keep Ethanol as a
+component with ``frac=None, basis="unresolved"`` and in ``unresolved_members``.  One output row per distinct
 (blendstock, vol_frac) over the RON and MON data points.
 """
 from __future__ import annotations
@@ -49,7 +52,7 @@ import pandas as pd
 
 COLUMNS = ["blend_id", "base_fuel", "components", "ron", "mon", "provenance",
            "composition_provenance", "unresolved_members", "composition_resolved",
-           "target_ok", "target_ok_reason", "source", "base_ron", "base_mon",
+           "target_ok", "target_ok_ron", "target_ok_mon", "target_ok_reason", "source", "base_ron", "base_mon",
            "base_lump_input_only"]
 
 # CAS of the pure components that appear by NAME in the FACE files (typed here; the InChIKey
@@ -94,10 +97,16 @@ def load_face_sets(paths: Iterable[str | Path]) -> pd.DataFrame:
             comps: list[dict] = []
             if eth_frac:
                 comps.append({"name": "Ethanol", "inchikey": _inchikey(_ETHANOL_CAS),
-                              "frac": eth_frac, "basis": "volume"})
+                              "frac": eth_frac, "basis": "volume_inferred"})
+            elif eth_cell and not face:
+                # Ethanol is present but its share is unknown (e.g. TPRF 4+4): keep it, never drop it
+                comps.append({"name": "Ethanol", "inchikey": _inchikey(_ETHANOL_CAS),
+                              "frac": None, "basis": "unresolved"})
+                lump_members = lump_members + ["Ethanol"]
             comps.append({"name": lump_key, "inchikey": lump_key,
-                          "frac": 1.0 - (eth_frac or 0.0),
-                          "basis": "volume" if eth_frac is not None else "unresolved"})
+                          "frac": 1.0 - (eth_frac or 0.0) if not (eth_cell and eth_frac is None)
+                          else None,
+                          "basis": "volume_inferred" if eth_frac is not None else "unresolved"})
             rows.append({
                 "blend_id": name, "base_fuel": base_fuel, "components": json.dumps(comps),
                 "ron": pd.to_numeric(r["RON"], errors="coerce"),
@@ -105,6 +114,7 @@ def load_face_sets(paths: Iterable[str | Path]) -> pd.DataFrame:
                 "provenance": "raw_file", "composition_provenance": "unknown",
                 "unresolved_members": json.dumps(lump_members),
                 "composition_resolved": False, "target_ok": False,
+                "target_ok_ron": False, "target_ok_mon": False,
                 "target_ok_reason": "contains lump pseudo-component (no fractions in file)",
                 "source": f"face:{Path(path).name}", "base_ron": float("nan"),
                 "base_mon": float("nan"), "base_lump_input_only": True,
@@ -121,6 +131,13 @@ def load_cooptima_bron(path: str | Path) -> pd.DataFrame:
         name = str(r["NAME"]).strip()
         key = _inchikey(cas) if cas else None
         stock_key = key or "LUMP:" + re.sub(r"\W+", "_", name).strip("_").upper()
+        bases = {}
+        for prop in ("RON", "MON"):
+            vals = [r.get(f"base_{prop}_b{prop}_{i}") for i in range(5)]
+            vals = sorted({float(v) for v in vals if pd.notna(v)})
+            bases[prop] = vals[0] if vals else None
+        base_id = "BRON_BASE_" + "_".join(
+            f"{p}{bases[p]:g}" for p in ("RON", "MON") if bases[p] is not None)
         pts: dict[float, dict] = {}
         for prop in ("RON", "MON"):
             for i in range(5):
@@ -132,10 +149,6 @@ def load_cooptima_bron(path: str | Path) -> pd.DataFrame:
                 d[prop.lower()] = float(b)
                 d[f"base_{prop.lower()}"] = float(r[f"base_{prop}_b{prop}_{i}"])
         for _, d in sorted(pts.items()):
-            if "base_ron" in d:
-                base_id = f"BRON_BASE_RON{d['base_ron']:g}"
-            else:
-                base_id = f"BRON_BASE_MON{d['base_mon']:g}"
             comps = [
                 {"name": name, "inchikey": stock_key, "frac": d["frac"], "basis": "volume"},
                 {"name": f"LUMP:{base_id}", "inchikey": f"LUMP:{base_id}",
@@ -146,8 +159,12 @@ def load_cooptima_bron(path: str | Path) -> pd.DataFrame:
                 "components": json.dumps(comps), "ron": d.get("ron", float("nan")),
                 "mon": d.get("mon", float("nan")), "provenance": "raw_file",
                 "composition_provenance": "raw_file", "unresolved_members": json.dumps([]),
-                "composition_resolved": False, "target_ok": False,
-                "target_ok_reason": "base gasoline is a lump (RON/MON are inputs only)",
+                "composition_resolved": False,
+                "target_ok": ("ron" in d and "base_ron" in d) or ("mon" in d and "base_mon" in d),
+                "target_ok_ron": "ron" in d and "base_ron" in d,
+                "target_ok_mon": "mon" in d and "base_mon" in d,
+                "target_ok_reason": "R17: base gasoline is a lump; blend RON/MON usable as target "
+                                    "only with the measured base RON/MON supplied as input",
                 "source": f"cooptima_bron:{Path(path).name}",
                 "base_ron": d.get("base_ron", float("nan")),
                 "base_mon": d.get("base_mon", float("nan")), "base_lump_input_only": True,
