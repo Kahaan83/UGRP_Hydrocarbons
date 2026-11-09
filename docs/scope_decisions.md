@@ -29,3 +29,18 @@ This document records formal scoping decisions governed by empirical data availa
 ### Scientific Justification:
 - Pour point (ASTM D97 / D5949) is an empirical, non-equilibrium standard test measuring the temperature at which a gelled wax crystal network halts gravity-driven fluid movement. Unlike thermodynamic phase transitions (e.g., freezing point, cloud point, or wax appearance temperature), pour point depends heavily on cooling rate, shear history, and trace wax crystal modifiers/pour point depressants (PPDs) rather than pure equilibrium solution thermodynamics.
 - For low-temperature aviation and diesel fuel modeling, **freezing point (ASTM D5972 / D2386)**, **cloud point (ASTM D2500)**, and **wax appearance temperature (SLE Schroeder-van Laar)** are retained as the authoritative, thermodynamically grounded cold-flow targets.
+
+---
+
+## 2. Decision SD-02: Diesel real-fuel evaluation waits on Task 8 documents
+
+- **Date:** 2026-11-10
+- **Task ID:** v4 Task 7 (diesel corpus decision and splits)
+- **Governing rule:** "Include only fuels with raw-file composition. If fewer than 5 qualify, record that the diesel real-fuel evaluation waits on Task 8 documents."
+
+### Data audit findings:
+- Searched `data/raw/pour_point`, `data/raw/gc_composition`, `extras/fuelblend_data/data/raw/pour_point` and `.../wax` for diesel fuels with a raw-file class/component composition (`diesel|LFP|ULSD|EN590` in `fuel_code`/`fuel_name`). **0 qualify** (threshold: 5).
+- The only diesel fuels in the repo (NASA LFP-3, LFP-5; the Kirgina diesels; FACE diesels; surrogate diesels) have their compositions and properties typed into v3 scripts or in a non-raw table. Task 3 dropped them (`fuel_dropped:no_clean_composition`) and the CRC 647 / AV-27-18 raw property files hold jet fuels only. The wax folder holds only SLE/Coutinho model outputs, not fuel compositions.
+
+### Formal Decision:
+**The diesel real-fuel corpus is empty in v4.** `splits/v4/real_fuels_v4_splits.json` contains no diesel fuel, and no diesel real-fuel evaluation is reported. It resumes once Task 8 documents (raw diesel composition tables, e.g. Kirgina et al. and the NASA LFP report) are obtained and transcribed into a raw file.
