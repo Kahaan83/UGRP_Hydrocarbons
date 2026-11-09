@@ -1,0 +1,484 @@
+compound,smiles,prop,listed_value,listed_source,ref_value,ref_source,delta,flag,delta_kind
+n-octane,CCCCCCCC,MW,114.23,purchasable_compounds.csv,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,ok,relative
+n-octane,CCCCCCCC,rho15,707.0,purchasable_compounds.csv,706.7358568530447,thermo 0.6.1 Chemical.rhol @288.15K,0.0003737508779185557,ok,relative
+n-octane,CCCCCCCC,Tb,125.7,purchasable_compounds.csv,125.64375513500005,chemicals 1.5.2 (Tb),0.05624486499995385,ok,absolute
+n-octane,CCCCCCCC,Tm,-56.8,purchasable_compounds.csv,-56.849999999999966,chemicals 1.5.2 (Tm),0.049999999999968736,ok,absolute
+n-octane,CCCCCCCC,flash,13.0,purchasable_compounds.csv,13.0,chemicals 1.5.2 (T_flash),0.0,ok,absolute
+n-octane,CCCCCCCC,DCN,64.0,purchasable_compounds.csv,64.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+n-octane,CCCCCCCC,RON,-10.0,purchasable_compounds.csv,-18.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",8.0,flagged,absolute
+n-octane,CCCCCCCC,MON,-10.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-decane,CCCCCCCCCC,MW,142.28,purchasable_compounds.csv,142.28168,chemicals 1.5.2 (search_chemical.MW),-1.1807563700353008e-05,ok,relative
+n-decane,CCCCCCCCCC,rho15,734.0,purchasable_compounds.csv,734.3897782845405,thermo 0.6.1 Chemical.rhol @288.15K,-0.0005307512387372739,ok,relative
+n-decane,CCCCCCCCCC,Tb,174.1,purchasable_compounds.csv,174.12022938200005,chemicals 1.5.2 (Tb),-0.02022938200005342,ok,absolute
+n-decane,CCCCCCCCCC,Tm,-29.7,purchasable_compounds.csv,-29.924999999999983,chemicals 1.5.2 (Tm),0.22499999999998366,ok,absolute
+n-decane,CCCCCCCCCC,flash,46.0,purchasable_compounds.csv,46.0,chemicals 1.5.2 (T_flash),0.0,ok,absolute
+n-decane,CCCCCCCCCC,DCN,76.0,purchasable_compounds.csv,65.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",10.5,flagged,absolute
+n-decane,CCCCCCCCCC,RON,-20.0,purchasable_compounds.csv,-41.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",21.0,flagged,absolute
+n-decane,CCCCCCCCCC,MON,-20.0,purchasable_compounds.csv,-38.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",18.0,flagged,absolute
+n-dodecane,CCCCCCCCCCCC,MW,170.33,purchasable_compounds.csv,170.33484,chemicals 1.5.2 (search_chemical.MW),-2.841462145971728e-05,ok,relative
+n-dodecane,CCCCCCCCCCCC,rho15,752.6,purchasable_compounds.csv,753.2349521885411,thermo 0.6.1 Chemical.rhol @288.15K,-0.000842966974243859,ok,relative
+n-dodecane,CCCCCCCCCCCC,Tb,216.3,purchasable_compounds.csv,216.29158964000004,chemicals 1.5.2 (Tb),0.008410359999970751,ok,absolute
+n-dodecane,CCCCCCCCCCCC,Tm,-9.6,purchasable_compounds.csv,-9.599999999999966,chemicals 1.5.2 (Tm),-3.375077994860476e-14,ok,absolute
+n-dodecane,CCCCCCCCCCCC,flash,74.0,purchasable_compounds.csv,74.0,chemicals 1.5.2 (T_flash),0.0,ok,absolute
+n-dodecane,CCCCCCCCCCCC,DCN,80.0,purchasable_compounds.csv,72.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",7.099999999999994,flagged,absolute
+n-dodecane,CCCCCCCCCCCC,RON,-25.0,purchasable_compounds.csv,-85.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",60.0,flagged,absolute
+n-dodecane,CCCCCCCCCCCC,MON,-25.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-tetradecane,CCCCCCCCCCCCCC,MW,198.39,purchasable_compounds.csv,198.388,chemicals 1.5.2 (search_chemical.MW),1.0081254914516644e-05,ok,relative
+n-tetradecane,CCCCCCCCCCCCCC,rho15,767.0,purchasable_compounds.csv,765.5950516289131,thermo 0.6.1 Chemical.rhol @288.15K,0.0018351063895954837,ok,relative
+n-tetradecane,CCCCCCCCCCCCCC,Tb,253.6,purchasable_compounds.csv,253.5,chemicals 1.5.2 (Tb),0.09999999999999432,ok,absolute
+n-tetradecane,CCCCCCCCCCCCCC,Tm,5.9,purchasable_compounds.csv,5.900000000000034,chemicals 1.5.2 (Tm),-3.375077994860476e-14,ok,absolute
+n-tetradecane,CCCCCCCCCCCCCC,flash,100.0,purchasable_compounds.csv,107.49573166079603,chemicals 1.5.2 (T_flash),-7.495731660796025,flagged,absolute
+n-tetradecane,CCCCCCCCCCCCCC,DCN,95.0,purchasable_compounds.csv,85.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",9.900000000000006,flagged,absolute
+n-tetradecane,CCCCCCCCCCCCCC,RON,-25.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-tetradecane,CCCCCCCCCCCCCC,MON,-25.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,MW,226.44,purchasable_compounds.csv,226.44116,chemicals 1.5.2 (search_chemical.MW),-5.122743586010236e-06,ok,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,rho15,773.4,purchasable_compounds.csv,777.3164471099847,thermo 0.6.1 Chemical.rhol @288.15K,-0.005038420484406061,ok,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,Tb,287.0,purchasable_compounds.csv,286.75336533000007,chemicals 1.5.2 (Tb),0.24663466999993489,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,Tm,18.2,purchasable_compounds.csv,18.0,chemicals 1.5.2 (Tm),0.1999999999999993,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,flash,135.0,purchasable_compounds.csv,126.59932071542403,chemicals 1.5.2 (T_flash),8.400679284575972,flagged,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,DCN,100.0,purchasable_compounds.csv,100.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,RON,-30.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,MON,-30.0,purchasable_compounds.csv,,,,no_reference,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,MW,114.23,purchasable_compounds.csv,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,ok,relative
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,rho15,692.0,purchasable_compounds.csv,696.2482824687801,thermo 0.6.1 Chemical.rhol @288.15K,-0.006101677484526606,ok,relative
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,Tb,99.2,purchasable_compounds.csv,99.208308267,chemicals 1.5.2 (Tb),-0.008308267000003866,ok,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,Tm,-107.4,purchasable_compounds.csv,-106.99999999999997,chemicals 1.5.2 (Tm),-0.4000000000000341,ok,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,flash,-12.0,purchasable_compounds.csv,-12.0,chemicals 1.5.2 (T_flash),0.0,ok,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,DCN,15.0,purchasable_compounds.csv,,,,no_reference,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,RON,100.0,purchasable_compounds.csv,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+"2,2,4-trimethylpentane",CC(C)CC(C)(C)C,MON,100.0,purchasable_compounds.csv,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+methylcyclohexane,CC1CCCCC1,MW,98.19,purchasable_compounds.csv,98.18606,chemicals 1.5.2 (search_chemical.MW),4.012789595590305e-05,ok,relative
+methylcyclohexane,CC1CCCCC1,rho15,774.0,purchasable_compounds.csv,773.8613733409056,thermo 0.6.1 Chemical.rhol @288.15K,0.0001791362947809284,ok,relative
+methylcyclohexane,CC1CCCCC1,Tb,100.9,purchasable_compounds.csv,100.85994596500001,chemicals 1.5.2 (Tb),0.04005403499999716,ok,absolute
+methylcyclohexane,CC1CCCCC1,Tm,-126.6,purchasable_compounds.csv,-126.79999999999998,chemicals 1.5.2 (Tm),0.19999999999998863,ok,absolute
+methylcyclohexane,CC1CCCCC1,flash,-4.0,purchasable_compounds.csv,-4.0,chemicals 1.5.2 (T_flash),0.0,ok,absolute
+methylcyclohexane,CC1CCCCC1,DCN,20.0,purchasable_compounds.csv,23.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-3.5,flagged,absolute
+methylcyclohexane,CC1CCCCC1,RON,75.0,purchasable_compounds.csv,74.1,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.9000000000000057,ok,absolute
+methylcyclohexane,CC1CCCCC1,MON,71.0,purchasable_compounds.csv,71.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,MW,138.25,purchasable_compounds.csv,138.24992,chemicals 1.5.2 (search_chemical.MW),5.786621793124465e-07,ok,relative
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,rho15,869.5,purchasable_compounds.csv,846.9253346939707,thermo 0.6.1 Chemical.rhol @288.15K,0.026654847105484717,flagged,relative
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,Tb,185.5,purchasable_compounds.csv,187.3,chemicals 1.5.2 (Tb),-1.8000000000000114,ok,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,Tm,-30.4,purchasable_compounds.csv,-30.349999999999966,chemicals 1.5.2 (Tm),-0.050000000000032685,ok,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,flash,57.0,purchasable_compounds.csv,54.0,chemicals 1.5.2 (T_flash),3.0,flagged,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,DCN,38.0,purchasable_compounds.csv,31.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",6.199999999999999,flagged,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,RON,45.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_trans,C1CC[C@@H]2CCCC[C@H]2C1,MON,40.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MW,138.25,purchasable_compounds.csv,,,,no_reference,relative
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,rho15,896.5,purchasable_compounds.csv,,,,no_reference,relative
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tb,195.7,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tm,-43.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,flash,58.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,DCN,35.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,RON,45.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MON,40.0,purchasable_compounds.csv,,,,no_reference,absolute
+toluene,Cc1ccccc1,MW,92.14,purchasable_compounds.csv,92.13842,chemicals 1.5.2 (search_chemical.MW),1.7148112589776704e-05,ok,relative
+toluene,Cc1ccccc1,rho15,867.0,purchasable_compounds.csv,871.6335114189827,thermo 0.6.1 Chemical.rhol @288.15K,-0.00531589407506781,ok,relative
+toluene,Cc1ccccc1,Tb,110.6,purchasable_compounds.csv,110.59575314600005,chemicals 1.5.2 (Tb),0.004246853999944733,ok,absolute
+toluene,Cc1ccccc1,Tm,-95.0,purchasable_compounds.csv,-93.94999999999999,chemicals 1.5.2 (Tm),-1.0500000000000114,ok,absolute
+toluene,Cc1ccccc1,flash,4.4,purchasable_compounds.csv,4.0,chemicals 1.5.2 (T_flash),0.40000000000000036,ok,absolute
+toluene,Cc1ccccc1,DCN,9.0,purchasable_compounds.csv,6.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,ok,absolute
+toluene,Cc1ccccc1,RON,120.0,purchasable_compounds.csv,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+toluene,Cc1ccccc1,MON,103.0,purchasable_compounds.csv,104.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-1.0,ok,absolute
+o-xylene,Cc1ccccc1C,MW,106.17,purchasable_compounds.csv,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,ok,relative
+o-xylene,Cc1ccccc1C,rho15,880.0,purchasable_compounds.csv,884.5279403636267,thermo 0.6.1 Chemical.rhol @288.15K,-0.005119047298568436,ok,relative
+o-xylene,Cc1ccccc1C,Tb,144.4,purchasable_compounds.csv,144.37102478900005,chemicals 1.5.2 (Tb),0.0289752109999597,ok,absolute
+o-xylene,Cc1ccccc1C,Tm,-25.2,purchasable_compounds.csv,-24.99999999999997,chemicals 1.5.2 (Tm),-0.2000000000000277,ok,absolute
+o-xylene,Cc1ccccc1C,flash,32.0,purchasable_compounds.csv,30.0,chemicals 1.5.2 (T_flash),2.0,ok,absolute
+o-xylene,Cc1ccccc1C,DCN,12.0,purchasable_compounds.csv,8.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",4.0,flagged,absolute
+o-xylene,Cc1ccccc1C,RON,107.0,purchasable_compounds.csv,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-13.0,flagged,absolute
+o-xylene,Cc1ccccc1C,MON,100.0,purchasable_compounds.csv,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+p-xylene,Cc1ccc(C)cc1,MW,106.17,purchasable_compounds.csv,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,ok,relative
+p-xylene,Cc1ccc(C)cc1,rho15,861.0,purchasable_compounds.csv,865.4930914991145,thermo 0.6.1 Chemical.rhol @288.15K,-0.005191366104762353,ok,relative
+p-xylene,Cc1ccc(C)cc1,Tb,138.3,purchasable_compounds.csv,138.32047182600002,chemicals 1.5.2 (Tb),-0.020471826000004967,ok,absolute
+p-xylene,Cc1ccc(C)cc1,Tm,13.3,purchasable_compounds.csv,13.0,chemicals 1.5.2 (Tm),0.3000000000000007,ok,absolute
+p-xylene,Cc1ccc(C)cc1,flash,27.0,purchasable_compounds.csv,25.0,chemicals 1.5.2 (T_flash),2.0,ok,absolute
+p-xylene,Cc1ccc(C)cc1,DCN,15.0,purchasable_compounds.csv,6.2,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",8.8,flagged,absolute
+p-xylene,Cc1ccc(C)cc1,RON,117.0,purchasable_compounds.csv,,,,no_reference,absolute
+p-xylene,Cc1ccc(C)cc1,MON,102.0,purchasable_compounds.csv,,,,no_reference,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MW,120.19,purchasable_compounds.csv,120.19158,chemicals 1.5.2 (search_chemical.MW),-1.3145679589236897e-05,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,rho15,876.0,purchasable_compounds.csv,880.067162142147,thermo 0.6.1 Chemical.rhol @288.15K,-0.004621422451722048,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tb,169.4,purchasable_compounds.csv,169.40000000000003,chemicals 1.5.2 (Tb),-2.842170943040401e-14,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tm,-43.8,purchasable_compounds.csv,-43.89999999999998,chemicals 1.5.2 (Tm),0.0999999999999801,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,flash,48.0,purchasable_compounds.csv,44.50057963388201,chemicals 1.5.2 (T_flash),3.499420366117988,flagged,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,DCN,10.0,purchasable_compounds.csv,8.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",1.0999999999999996,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,RON,110.0,purchasable_compounds.csv,108.6,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",1.4000000000000057,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MON,100.0,purchasable_compounds.csv,104.4,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-4.400000000000006,flagged,absolute
+tetralin,c1ccc2c(c1)CCCC2,MW,132.2,purchasable_compounds.csv,132.20228,chemicals 1.5.2 (search_chemical.MW),-1.72462986267193e-05,ok,relative
+tetralin,c1ccc2c(c1)CCCC2,rho15,970.2,purchasable_compounds.csv,974.191921275275,thermo 0.6.1 Chemical.rhol @288.15K,-0.004097674378216285,ok,relative
+tetralin,c1ccc2c(c1)CCCC2,Tb,207.6,purchasable_compounds.csv,207.20000000000005,chemicals 1.5.2 (Tb),0.39999999999994884,ok,absolute
+tetralin,c1ccc2c(c1)CCCC2,Tm,-35.8,purchasable_compounds.csv,-35.349999999999966,chemicals 1.5.2 (Tm),-0.45000000000003126,ok,absolute
+tetralin,c1ccc2c(c1)CCCC2,flash,77.0,purchasable_compounds.csv,70.85000000000002,chemicals 1.5.2 (T_flash),6.149999999999977,flagged,absolute
+tetralin,c1ccc2c(c1)CCCC2,DCN,15.0,purchasable_compounds.csv,9.15,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",5.85,flagged,absolute
+tetralin,c1ccc2c(c1)CCCC2,RON,100.0,purchasable_compounds.csv,,,,no_reference,absolute
+tetralin,c1ccc2c(c1)CCCC2,MON,90.0,purchasable_compounds.csv,,,,no_reference,absolute
+ethanol,CCO,MW,46.07,purchasable_compounds.csv,46.06844,chemicals 1.5.2 (search_chemical.MW),3.386266172672192e-05,ok,relative
+ethanol,CCO,rho15,789.0,purchasable_compounds.csv,793.7195168478439,thermo 0.6.1 Chemical.rhol @288.15K,-0.005946076350228706,ok,relative
+ethanol,CCO,Tb,78.4,purchasable_compounds.csv,78.420441659,chemicals 1.5.2 (Tb),-0.02044165899999939,ok,absolute
+ethanol,CCO,Tm,-114.1,purchasable_compounds.csv,-114.09999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,ok,absolute
+ethanol,CCO,flash,13.0,purchasable_compounds.csv,12.0,chemicals 1.5.2 (T_flash),1.0,ok,absolute
+ethanol,CCO,DCN,8.0,purchasable_compounds.csv,,,,no_reference,absolute
+ethanol,CCO,RON,108.0,purchasable_compounds.csv,,,,no_reference,absolute
+ethanol,CCO,MON,90.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-heptane,CCCCCCC,MW,100.2,purchasable_compounds.csv,100.20194,chemicals 1.5.2 (search_chemical.MW),-1.9360902593208325e-05,ok,relative
+n-heptane,CCCCCCC,rho15,688.0,purchasable_compounds.csv,688.1761742850964,thermo 0.6.1 Chemical.rhol @288.15K,-0.00025600172118632973,ok,relative
+n-heptane,CCCCCCC,Tb,98.4,purchasable_compounds.csv,98.40036048300004,chemicals 1.5.2 (Tb),-0.00036048300003699296,ok,absolute
+n-heptane,CCCCCCC,Tm,-90.6,purchasable_compounds.csv,-90.99999999999997,chemicals 1.5.2 (Tm),0.39999999999997726,ok,absolute
+n-heptane,CCCCCCC,flash,-4.0,purchasable_compounds.csv,-7.0,chemicals 1.5.2 (T_flash),3.0,flagged,absolute
+n-heptane,CCCCCCC,DCN,56.0,purchasable_compounds.csv,53.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",2.200000000000003,ok,absolute
+n-heptane,CCCCCCC,RON,0.0,purchasable_compounds.csv,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+n-heptane,CCCCCCC,MON,0.0,purchasable_compounds.csv,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+isopentane,CCC(C)C,MW,72.15,purchasable_compounds.csv,72.14878,chemicals 1.5.2 (search_chemical.MW),1.690950283571741e-05,ok,relative
+isopentane,CCC(C)C,rho15,620.0,purchasable_compounds.csv,625.137425072749,thermo 0.6.1 Chemical.rhol @288.15K,-0.008218073125523006,ok,relative
+isopentane,CCC(C)C,Tb,27.8,purchasable_compounds.csv,27.82637425500002,chemicals 1.5.2 (Tb),-0.02637425500001811,ok,absolute
+isopentane,CCC(C)C,Tm,-159.9,purchasable_compounds.csv,-159.99999999999997,chemicals 1.5.2 (Tm),0.0999999999999659,ok,absolute
+isopentane,CCC(C)C,flash,-51.0,purchasable_compounds.csv,-55.99999999999997,chemicals 1.5.2 (T_flash),4.999999999999972,flagged,absolute
+isopentane,CCC(C)C,DCN,20.0,purchasable_compounds.csv,,,,no_reference,absolute
+isopentane,CCC(C)C,RON,92.0,purchasable_compounds.csv,,,,no_reference,absolute
+isopentane,CCC(C)C,MON,90.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-butane,CCCC,MW,58.12,purchasable_compounds.csv,58.1222,chemicals 1.5.2 (search_chemical.MW),-3.785128573939008e-05,ok,relative
+n-butane,CCCC,rho15,584.0,purchasable_compounds.csv,584.2514749187153,thermo 0.6.1 Chemical.rhol @288.15K,-0.00043042239431280796,ok,relative
+n-butane,CCCC,Tb,-0.5,purchasable_compounds.csv,-0.490099473999976,chemicals 1.5.2 (Tb),-0.009900526000024001,ok,absolute
+n-butane,CCCC,Tm,-138.4,purchasable_compounds.csv,-138.09999999999997,chemicals 1.5.2 (Tm),-0.3000000000000398,ok,absolute
+n-butane,CCCC,flash,-60.0,purchasable_compounds.csv,-59.99999999999997,chemicals 1.5.2 (T_flash),-2.842170943040401e-14,ok,absolute
+n-butane,CCCC,DCN,25.0,purchasable_compounds.csv,20.62,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",4.379999999999999,flagged,absolute
+n-butane,CCCC,RON,94.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-butane,CCCC,MON,90.0,purchasable_compounds.csv,,,,no_reference,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MW,170.33,purchasable_compounds.csv,156.30826,chemicals 1.5.2 (search_chemical.MW),0.08970568797835779,flagged,relative
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,rho15,745.0,purchasable_compounds.csv,750.5504124895783,thermo 0.6.1 Chemical.rhol @288.15K,-0.007395122828815166,ok,relative
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tb,177.0,purchasable_compounds.csv,164.0,chemicals 1.5.2 (Tb),13.0,flagged,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,Tm,-81.0,purchasable_compounds.csv,-86.99999999999997,chemicals 1.5.2 (Tm),5.999999999999972,flagged,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,flash,43.0,purchasable_compounds.csv,,,,no_reference,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,DCN,20.0,purchasable_compounds.csv,,,,no_reference,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,RON,98.0,purchasable_compounds.csv,,,,no_reference,absolute
+isododecane_commercial,CC(C)CC(C)(C)CC(C)C,MON,95.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MW,226.44,purchasable_compounds.csv,,,,no_reference,relative
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,rho15,784.0,purchasable_compounds.csv,,,,no_reference,relative
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tb,240.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,Tm,-80.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,flash,96.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,DCN,15.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,RON,40.0,purchasable_compounds.csv,,,,no_reference,absolute
+heptamethylnonane_commercial,CC(C)CC(C)(C)CC(C)CC(C)(C)C,MON,40.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_mixed,C1CCC2CCCCC2C1,MW,138.25,purchasable_compounds.csv,138.24992,chemicals 1.5.2 (search_chemical.MW),5.786621793124465e-07,ok,relative
+decalin_mixed,C1CCC2CCCCC2C1,rho15,896.0,purchasable_compounds.csv,863.8839789924094,thermo 0.6.1 Chemical.rhol @288.15K,0.037176312778770454,flagged,relative
+decalin_mixed,C1CCC2CCCCC2C1,Tb,190.0,purchasable_compounds.csv,195.8,chemicals 1.5.2 (Tb),-5.800000000000011,flagged,absolute
+decalin_mixed,C1CCC2CCCCC2C1,Tm,-40.0,purchasable_compounds.csv,-42.94999999999999,chemicals 1.5.2 (Tm),2.9499999999999886,flagged,absolute
+decalin_mixed,C1CCC2CCCCC2C1,flash,58.0,purchasable_compounds.csv,61.0,chemicals 1.5.2 (T_flash),-3.0,flagged,absolute
+decalin_mixed,C1CCC2CCCCC2C1,DCN,36.0,purchasable_compounds.csv,37.4,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-1.3999999999999986,ok,absolute
+decalin_mixed,C1CCC2CCCCC2C1,RON,45.0,purchasable_compounds.csv,,,,no_reference,absolute
+decalin_mixed,C1CCC2CCCCC2C1,MON,40.0,purchasable_compounds.csv,,,,no_reference,absolute
+n-butane,CCCC,MW,58.12,inverse_design_v2.CANDIDATE_REGISTRY,58.1222,chemicals 1.5.2 (search_chemical.MW),-3.785128573939008e-05,ok,relative
+n-butane,CCCC,rho15,584.0,inverse_design_v2.CANDIDATE_REGISTRY,584.2514749187153,thermo 0.6.1 Chemical.rhol @288.15K,-0.00043042239431280796,ok,relative
+n-butane,CCCC,Tm,-138.4,inverse_design_v2.CANDIDATE_REGISTRY,-138.09999999999997,chemicals 1.5.2 (Tm),-0.3000000000000398,ok,absolute
+n-butane,CCCC,Tb,-0.5,inverse_design_v2.CANDIDATE_REGISTRY,-0.490099473999976,chemicals 1.5.2 (Tb),-0.009900526000024001,ok,absolute
+n-butane,CCCC,dHfus,4.66,inverse_design_v2.CANDIDATE_REGISTRY,4.66,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-butane,CCCC,Psat37_8,350.0,inverse_design_v2.CANDIDATE_REGISTRY,355.7668843042457,thermo 0.6.1 Chemical.Psat @310.95K,-0.016209727657827668,ok,relative
+n-butane,CCCC,DCN,25.0,inverse_design_v2.CANDIDATE_REGISTRY,20.62,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",4.379999999999999,flagged,absolute
+n-butane,CCCC,RON,94.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-butane,CCCC,MON,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-pentane,CCCCC,MW,72.15,inverse_design_v2.CANDIDATE_REGISTRY,72.14878,chemicals 1.5.2 (search_chemical.MW),1.690950283571741e-05,ok,relative
+n-pentane,CCCCC,rho15,631.0,inverse_design_v2.CANDIDATE_REGISTRY,631.2021474007591,thermo 0.6.1 Chemical.rhol @288.15K,-0.0003202577836459717,ok,relative
+n-pentane,CCCCC,Tm,-129.7,inverse_design_v2.CANDIDATE_REGISTRY,-129.99999999999997,chemicals 1.5.2 (Tm),0.29999999999998295,ok,absolute
+n-pentane,CCCCC,Tb,36.1,inverse_design_v2.CANDIDATE_REGISTRY,36.05934582000003,chemicals 1.5.2 (Tb),0.040654179999968676,ok,absolute
+n-pentane,CCCCC,dHfus,8.42,inverse_design_v2.CANDIDATE_REGISTRY,8.4,chemicals 1.5.2 (Hfus),0.00238095238095233,ok,relative
+n-pentane,CCCCC,Psat37_8,105.0,inverse_design_v2.CANDIDATE_REGISTRY,107.48529817418144,thermo 0.6.1 Chemical.Psat @310.95K,-0.023122215004269486,ok,relative
+n-pentane,CCCCC,DCN,30.0,inverse_design_v2.CANDIDATE_REGISTRY,30.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+n-pentane,CCCCC,RON,62.0,inverse_design_v2.CANDIDATE_REGISTRY,62.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+n-pentane,CCCCC,MON,61.0,inverse_design_v2.CANDIDATE_REGISTRY,62.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-1.0,ok,absolute
+n-hexane,CCCCCC,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,ok,relative
+n-hexane,CCCCCC,rho15,664.0,inverse_design_v2.CANDIDATE_REGISTRY,663.9924945287721,thermo 0.6.1 Chemical.rhol @288.15K,1.1303548292686012e-05,ok,relative
+n-hexane,CCCCCC,Tm,-95.3,inverse_design_v2.CANDIDATE_REGISTRY,-95.07499999999999,chemicals 1.5.2 (Tm),-0.22500000000000853,ok,absolute
+n-hexane,CCCCCC,Tb,68.7,inverse_design_v2.CANDIDATE_REGISTRY,68.71561663400001,chemicals 1.5.2 (Tb),-0.015616634000011231,ok,absolute
+n-hexane,CCCCCC,dHfus,13.08,inverse_design_v2.CANDIDATE_REGISTRY,13.08,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-hexane,CCCCCC,Psat37_8,33.0,inverse_design_v2.CANDIDATE_REGISTRY,34.20796183006424,thermo 0.6.1 Chemical.Psat @310.95K,-0.03531230057099177,ok,relative
+n-hexane,CCCCCC,DCN,45.0,inverse_design_v2.CANDIDATE_REGISTRY,50.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-5.0,flagged,absolute
+n-hexane,CCCCCC,RON,25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-hexane,CCCCCC,MON,26.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-heptane,CCCCCCC,MW,100.2,inverse_design_v2.CANDIDATE_REGISTRY,100.20194,chemicals 1.5.2 (search_chemical.MW),-1.9360902593208325e-05,ok,relative
+n-heptane,CCCCCCC,rho15,688.0,inverse_design_v2.CANDIDATE_REGISTRY,688.1761742850964,thermo 0.6.1 Chemical.rhol @288.15K,-0.00025600172118632973,ok,relative
+n-heptane,CCCCCCC,Tm,-90.6,inverse_design_v2.CANDIDATE_REGISTRY,-90.99999999999997,chemicals 1.5.2 (Tm),0.39999999999997726,ok,absolute
+n-heptane,CCCCCCC,Tb,98.4,inverse_design_v2.CANDIDATE_REGISTRY,98.40036048300004,chemicals 1.5.2 (Tb),-0.00036048300003699296,ok,absolute
+n-heptane,CCCCCCC,dHfus,14.12,inverse_design_v2.CANDIDATE_REGISTRY,14.03,chemicals 1.5.2 (Hfus),0.006414825374198137,ok,relative
+n-heptane,CCCCCCC,Psat37_8,11.5,inverse_design_v2.CANDIDATE_REGISTRY,11.185886929962745,thermo 0.6.1 Chemical.Psat @310.95K,0.02808119481306979,ok,relative
+n-heptane,CCCCCCC,DCN,56.0,inverse_design_v2.CANDIDATE_REGISTRY,53.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",2.200000000000003,ok,absolute
+n-heptane,CCCCCCC,RON,0.0,inverse_design_v2.CANDIDATE_REGISTRY,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+n-heptane,CCCCCCC,MON,0.0,inverse_design_v2.CANDIDATE_REGISTRY,0.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+n-octane,CCCCCCCC,MW,114.23,inverse_design_v2.CANDIDATE_REGISTRY,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,ok,relative
+n-octane,CCCCCCCC,rho15,707.0,inverse_design_v2.CANDIDATE_REGISTRY,706.7358568530447,thermo 0.6.1 Chemical.rhol @288.15K,0.0003737508779185557,ok,relative
+n-octane,CCCCCCCC,Tm,-56.8,inverse_design_v2.CANDIDATE_REGISTRY,-56.849999999999966,chemicals 1.5.2 (Tm),0.049999999999968736,ok,absolute
+n-octane,CCCCCCCC,Tb,125.7,inverse_design_v2.CANDIDATE_REGISTRY,125.64375513500005,chemicals 1.5.2 (Tb),0.05624486499995385,ok,absolute
+n-octane,CCCCCCCC,dHfus,20.73,inverse_design_v2.CANDIDATE_REGISTRY,20.73,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-octane,CCCCCCCC,Psat37_8,4.1,inverse_design_v2.CANDIDATE_REGISTRY,3.717144109263914,thermo 0.6.1 Chemical.Psat @310.95K,0.10299732253638678,flagged,relative
+n-octane,CCCCCCCC,DCN,64.0,inverse_design_v2.CANDIDATE_REGISTRY,64.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+n-octane,CCCCCCCC,RON,-10.0,inverse_design_v2.CANDIDATE_REGISTRY,-18.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",8.0,flagged,absolute
+n-octane,CCCCCCCC,MON,-10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-decane,CCCCCCCCCC,MW,142.28,inverse_design_v2.CANDIDATE_REGISTRY,142.28168,chemicals 1.5.2 (search_chemical.MW),-1.1807563700353008e-05,ok,relative
+n-decane,CCCCCCCCCC,rho15,734.0,inverse_design_v2.CANDIDATE_REGISTRY,734.3897782845405,thermo 0.6.1 Chemical.rhol @288.15K,-0.0005307512387372739,ok,relative
+n-decane,CCCCCCCCCC,Tm,-29.7,inverse_design_v2.CANDIDATE_REGISTRY,-29.924999999999983,chemicals 1.5.2 (Tm),0.22499999999998366,ok,absolute
+n-decane,CCCCCCCCCC,Tb,174.1,inverse_design_v2.CANDIDATE_REGISTRY,174.12022938200005,chemicals 1.5.2 (Tb),-0.02022938200005342,ok,absolute
+n-decane,CCCCCCCCCC,dHfus,28.72,inverse_design_v2.CANDIDATE_REGISTRY,28.72,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-decane,CCCCCCCCCC,Psat37_8,0.55,inverse_design_v2.CANDIDATE_REGISTRY,0.42448951407047414,thermo 0.6.1 Chemical.Psat @310.95K,0.29567393720988017,flagged,relative
+n-decane,CCCCCCCCCC,DCN,76.0,inverse_design_v2.CANDIDATE_REGISTRY,65.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",10.5,flagged,absolute
+n-decane,CCCCCCCCCC,RON,-20.0,inverse_design_v2.CANDIDATE_REGISTRY,-41.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",21.0,flagged,absolute
+n-decane,CCCCCCCCCC,MON,-20.0,inverse_design_v2.CANDIDATE_REGISTRY,-38.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",18.0,flagged,absolute
+n-undecane,CCCCCCCCCCC,MW,156.31,inverse_design_v2.CANDIDATE_REGISTRY,156.30826,chemicals 1.5.2 (search_chemical.MW),1.1131849334208489e-05,ok,relative
+n-undecane,CCCCCCCCCCC,rho15,744.0,inverse_design_v2.CANDIDATE_REGISTRY,744.2035424330417,thermo 0.6.1 Chemical.rhol @288.15K,-0.0002735037142879162,ok,relative
+n-undecane,CCCCCCCCCCC,Tm,-25.6,inverse_design_v2.CANDIDATE_REGISTRY,-25.99999999999997,chemicals 1.5.2 (Tm),0.39999999999997016,ok,absolute
+n-undecane,CCCCCCCCCCC,Tb,195.9,inverse_design_v2.CANDIDATE_REGISTRY,195.78423437000004,chemicals 1.5.2 (Tb),0.11576562999997009,ok,absolute
+n-undecane,CCCCCCCCCCC,dHfus,22.2,inverse_design_v2.CANDIDATE_REGISTRY,22.2,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-undecane,CCCCCCCCCCC,Psat37_8,0.2,inverse_design_v2.CANDIDATE_REGISTRY,0.145954805825549,thermo 0.6.1 Chemical.Psat @310.95K,0.37028718491837787,flagged,relative
+n-undecane,CCCCCCCCCCC,DCN,80.0,inverse_design_v2.CANDIDATE_REGISTRY,71.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",9.0,flagged,absolute
+n-undecane,CCCCCCCCCCC,RON,-22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-undecane,CCCCCCCCCCC,MON,-22.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-dodecane,CCCCCCCCCCCC,MW,170.33,inverse_design_v2.CANDIDATE_REGISTRY,170.33484,chemicals 1.5.2 (search_chemical.MW),-2.841462145971728e-05,ok,relative
+n-dodecane,CCCCCCCCCCCC,rho15,752.6,inverse_design_v2.CANDIDATE_REGISTRY,753.2349521885411,thermo 0.6.1 Chemical.rhol @288.15K,-0.000842966974243859,ok,relative
+n-dodecane,CCCCCCCCCCCC,Tm,-9.6,inverse_design_v2.CANDIDATE_REGISTRY,-9.599999999999966,chemicals 1.5.2 (Tm),-3.375077994860476e-14,ok,absolute
+n-dodecane,CCCCCCCCCCCC,Tb,216.3,inverse_design_v2.CANDIDATE_REGISTRY,216.29158964000004,chemicals 1.5.2 (Tb),0.008410359999970751,ok,absolute
+n-dodecane,CCCCCCCCCCCC,dHfus,36.84,inverse_design_v2.CANDIDATE_REGISTRY,36.8,chemicals 1.5.2 (Hfus),0.0010869565217393005,ok,relative
+n-dodecane,CCCCCCCCCCCC,Psat37_8,0.08,inverse_design_v2.CANDIDATE_REGISTRY,0.049197168588538044,thermo 0.6.1 Chemical.Psat @310.95K,0.62610984117973,flagged,relative
+n-dodecane,CCCCCCCCCCCC,DCN,80.0,inverse_design_v2.CANDIDATE_REGISTRY,72.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",7.099999999999994,flagged,absolute
+n-dodecane,CCCCCCCCCCCC,RON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,-85.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",60.0,flagged,absolute
+n-dodecane,CCCCCCCCCCCC,MON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-tridecane,CCCCCCCCCCCCC,MW,184.36,inverse_design_v2.CANDIDATE_REGISTRY,184.36142,chemicals 1.5.2 (search_chemical.MW),-7.702262219481604e-06,ok,relative
+n-tridecane,CCCCCCCCCCCCC,rho15,760.0,inverse_design_v2.CANDIDATE_REGISTRY,757.4110804971223,thermo 0.6.1 Chemical.rhol @288.15K,0.0034181167526338638,ok,relative
+n-tridecane,CCCCCCCCCCCCC,Tm,-5.4,inverse_design_v2.CANDIDATE_REGISTRY,-5.0,chemicals 1.5.2 (Tm),-0.40000000000000036,ok,absolute
+n-tridecane,CCCCCCCCCCCCC,Tb,235.4,inverse_design_v2.CANDIDATE_REGISTRY,235.40000000000003,chemicals 1.5.2 (Tb),-2.842170943040401e-14,ok,absolute
+n-tridecane,CCCCCCCCCCCCC,dHfus,28.5,inverse_design_v2.CANDIDATE_REGISTRY,28.5,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-tridecane,CCCCCCCCCCCCC,Psat37_8,0.03,inverse_design_v2.CANDIDATE_REGISTRY,0.017570654041399868,thermo 0.6.1 Chemical.Psat @310.95K,0.7073923332230082,flagged,relative
+n-tridecane,CCCCCCCCCCCCC,DCN,88.0,inverse_design_v2.CANDIDATE_REGISTRY,89.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-1.5,ok,absolute
+n-tridecane,CCCCCCCCCCCCC,RON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-tridecane,CCCCCCCCCCCCC,MON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-tetradecane,CCCCCCCCCCCCCC,MW,198.39,inverse_design_v2.CANDIDATE_REGISTRY,198.388,chemicals 1.5.2 (search_chemical.MW),1.0081254914516644e-05,ok,relative
+n-tetradecane,CCCCCCCCCCCCCC,rho15,767.0,inverse_design_v2.CANDIDATE_REGISTRY,765.5950516289131,thermo 0.6.1 Chemical.rhol @288.15K,0.0018351063895954837,ok,relative
+n-tetradecane,CCCCCCCCCCCCCC,Tm,5.9,inverse_design_v2.CANDIDATE_REGISTRY,5.900000000000034,chemicals 1.5.2 (Tm),-3.375077994860476e-14,ok,absolute
+n-tetradecane,CCCCCCCCCCCCCC,Tb,253.6,inverse_design_v2.CANDIDATE_REGISTRY,253.5,chemicals 1.5.2 (Tb),0.09999999999999432,ok,absolute
+n-tetradecane,CCCCCCCCCCCCCC,dHfus,45.1,inverse_design_v2.CANDIDATE_REGISTRY,45.07,chemicals 1.5.2 (Hfus),0.000665631240292903,ok,relative
+n-tetradecane,CCCCCCCCCCCCCC,Psat37_8,0.01,inverse_design_v2.CANDIDATE_REGISTRY,0.00621343445269921,thermo 0.6.1 Chemical.Psat @310.95K,0.6094158675248998,flagged,relative
+n-tetradecane,CCCCCCCCCCCCCC,DCN,95.0,inverse_design_v2.CANDIDATE_REGISTRY,85.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",9.900000000000006,flagged,absolute
+n-tetradecane,CCCCCCCCCCCCCC,RON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-tetradecane,CCCCCCCCCCCCCC,MON,-25.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,MW,226.44,inverse_design_v2.CANDIDATE_REGISTRY,226.44116,chemicals 1.5.2 (search_chemical.MW),-5.122743586010236e-06,ok,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,rho15,773.4,inverse_design_v2.CANDIDATE_REGISTRY,777.3164471099847,thermo 0.6.1 Chemical.rhol @288.15K,-0.005038420484406061,ok,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,Tm,18.2,inverse_design_v2.CANDIDATE_REGISTRY,18.0,chemicals 1.5.2 (Tm),0.1999999999999993,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,Tb,287.0,inverse_design_v2.CANDIDATE_REGISTRY,286.75336533000007,chemicals 1.5.2 (Tb),0.24663466999993489,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,dHfus,53.3,inverse_design_v2.CANDIDATE_REGISTRY,53.36,chemicals 1.5.2 (Hfus),-0.001124437781109488,ok,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,Psat37_8,0.002,inverse_design_v2.CANDIDATE_REGISTRY,0.0007624916389457882,thermo 0.6.1 Chemical.Psat @310.95K,1.6229795814747239,flagged,relative
+n-hexadecane,CCCCCCCCCCCCCCCC,DCN,100.0,inverse_design_v2.CANDIDATE_REGISTRY,100.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,RON,-30.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-hexadecane,CCCCCCCCCCCCCCCC,MON,-30.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-octadecane,CCCCCCCCCCCCCCCCCC,MW,254.49,inverse_design_v2.CANDIDATE_REGISTRY,254.49432,chemicals 1.5.2 (search_chemical.MW),-1.697483857391616e-05,ok,relative
+n-octadecane,CCCCCCCCCCCCCCCCCC,rho15,777.0,inverse_design_v2.CANDIDATE_REGISTRY,782.3053531816225,thermo 0.6.1 Chemical.rhol @288.15K,-0.006781691011119578,ok,relative
+n-octadecane,CCCCCCCCCCCCCCCCCC,Tm,28.2,inverse_design_v2.CANDIDATE_REGISTRY,28.0,chemicals 1.5.2 (Tm),0.1999999999999993,ok,absolute
+n-octadecane,CCCCCCCCCCCCCCCCCC,Tb,316.0,inverse_design_v2.CANDIDATE_REGISTRY,316.0,chemicals 1.5.2 (Tb),0.0,ok,absolute
+n-octadecane,CCCCCCCCCCCCCCCCCC,dHfus,61.7,inverse_design_v2.CANDIDATE_REGISTRY,61.7,chemicals 1.5.2 (Hfus),0.0,ok,relative
+n-octadecane,CCCCCCCCCCCCCCCCCC,Psat37_8,0.0005,inverse_design_v2.CANDIDATE_REGISTRY,0.0001138522555250335,thermo 0.6.1 Chemical.Psat @310.95K,3.3916565174245625,flagged,relative
+n-octadecane,CCCCCCCCCCCCCCCCCC,DCN,105.0,inverse_design_v2.CANDIDATE_REGISTRY,110.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-5.0,flagged,absolute
+n-octadecane,CCCCCCCCCCCCCCCCCC,RON,-35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+n-octadecane,CCCCCCCCCCCCCCCCCC,MON,-35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isobutane,CC(C)C,MW,58.12,inverse_design_v2.CANDIDATE_REGISTRY,58.1222,chemicals 1.5.2 (search_chemical.MW),-3.785128573939008e-05,ok,relative
+isobutane,CC(C)C,rho15,563.0,inverse_design_v2.CANDIDATE_REGISTRY,562.9479566986275,thermo 0.6.1 Chemical.rhol @288.15K,9.244780224031505e-05,ok,relative
+isobutane,CC(C)C,Tm,-159.6,inverse_design_v2.CANDIDATE_REGISTRY,-148.95,chemicals 1.5.2 (Tm),-10.650000000000006,flagged,absolute
+isobutane,CC(C)C,Tb,-11.7,inverse_design_v2.CANDIDATE_REGISTRY,-11.748985356999981,chemicals 1.5.2 (Tb),0.04898535699998163,ok,absolute
+isobutane,CC(C)C,dHfus,4.54,inverse_design_v2.CANDIDATE_REGISTRY,4.54,chemicals 1.5.2 (Hfus),0.0,ok,relative
+isobutane,CC(C)C,Psat37_8,490.0,inverse_design_v2.CANDIDATE_REGISTRY,501.1605514296986,thermo 0.6.1 Chemical.Psat @310.95K,-0.02226941326060095,ok,relative
+isobutane,CC(C)C,DCN,20.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isobutane,CC(C)C,RON,102.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isobutane,CC(C)C,MON,97.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isopentane,CCC(C)C,MW,72.15,inverse_design_v2.CANDIDATE_REGISTRY,72.14878,chemicals 1.5.2 (search_chemical.MW),1.690950283571741e-05,ok,relative
+isopentane,CCC(C)C,rho15,624.0,inverse_design_v2.CANDIDATE_REGISTRY,625.137425072749,thermo 0.6.1 Chemical.rhol @288.15K,-0.0018194800489134775,ok,relative
+isopentane,CCC(C)C,Tm,-159.9,inverse_design_v2.CANDIDATE_REGISTRY,-159.99999999999997,chemicals 1.5.2 (Tm),0.0999999999999659,ok,absolute
+isopentane,CCC(C)C,Tb,27.8,inverse_design_v2.CANDIDATE_REGISTRY,27.82637425500002,chemicals 1.5.2 (Tb),-0.02637425500001811,ok,absolute
+isopentane,CCC(C)C,dHfus,5.15,inverse_design_v2.CANDIDATE_REGISTRY,5.15,chemicals 1.5.2 (Hfus),0.0,ok,relative
+isopentane,CCC(C)C,Psat37_8,112.0,inverse_design_v2.CANDIDATE_REGISTRY,141.25886796016695,thermo 0.6.1 Chemical.Psat @310.95K,-0.20712942403316972,flagged,relative
+isopentane,CCC(C)C,DCN,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isopentane,CCC(C)C,RON,93.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isopentane,CCC(C)C,MON,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+2-methylpentane,CCCC(C)C,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,ok,relative
+2-methylpentane,CCCC(C)C,rho15,653.0,inverse_design_v2.CANDIDATE_REGISTRY,657.8293418331326,thermo 0.6.1 Chemical.rhol @288.15K,-0.007341329317532396,ok,relative
+2-methylpentane,CCCC(C)C,Tm,-153.7,inverse_design_v2.CANDIDATE_REGISTRY,-153.99999999999997,chemicals 1.5.2 (Tm),0.29999999999998295,ok,absolute
+2-methylpentane,CCCC(C)C,Tb,60.3,inverse_design_v2.CANDIDATE_REGISTRY,60.21209862300003,chemicals 1.5.2 (Tb),0.08790137699996592,ok,absolute
+2-methylpentane,CCCC(C)C,dHfus,6.27,inverse_design_v2.CANDIDATE_REGISTRY,6.27,chemicals 1.5.2 (Hfus),0.0,ok,relative
+2-methylpentane,CCCC(C)C,Psat37_8,45.0,inverse_design_v2.CANDIDATE_REGISTRY,46.730005863683964,thermo 0.6.1 Chemical.Psat @310.95K,-0.03702130636855817,ok,relative
+2-methylpentane,CCCC(C)C,DCN,22.0,inverse_design_v2.CANDIDATE_REGISTRY,34.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-12.5,flagged,absolute
+2-methylpentane,CCCC(C)C,RON,73.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+2-methylpentane,CCCC(C)C,MON,73.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+"2,3-dimethylbutane",CC(C)C(C)C,MW,86.18,inverse_design_v2.CANDIDATE_REGISTRY,86.17536,chemicals 1.5.2 (search_chemical.MW),5.384369731683258e-05,ok,relative
+"2,3-dimethylbutane",CC(C)C(C)C,rho15,662.0,inverse_design_v2.CANDIDATE_REGISTRY,666.0552892310342,thermo 0.6.1 Chemical.rhol @288.15K,-0.006088517419801653,ok,relative
+"2,3-dimethylbutane",CC(C)C(C)C,Tm,-128.5,inverse_design_v2.CANDIDATE_REGISTRY,-128.89999999999998,chemicals 1.5.2 (Tm),0.39999999999997726,ok,absolute
+"2,3-dimethylbutane",CC(C)C(C)C,Tb,58.0,inverse_design_v2.CANDIDATE_REGISTRY,58.026540925000006,chemicals 1.5.2 (Tb),-0.026540925000006155,ok,absolute
+"2,3-dimethylbutane",CC(C)C(C)C,dHfus,0.8,inverse_design_v2.CANDIDATE_REGISTRY,0.79,chemicals 1.5.2 (Hfus),0.012658227848101276,ok,relative
+"2,3-dimethylbutane",CC(C)C(C)C,Psat37_8,48.0,inverse_design_v2.CANDIDATE_REGISTRY,50.94217857668046,thermo 0.6.1 Chemical.Psat @310.95K,-0.057755256231371455,flagged,relative
+"2,3-dimethylbutane",CC(C)C(C)C,DCN,10.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+"2,3-dimethylbutane",CC(C)C(C)C,RON,103.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+"2,3-dimethylbutane",CC(C)C(C)C,MON,94.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isooctane,CC(C)CC(C)(C)C,MW,114.23,inverse_design_v2.CANDIDATE_REGISTRY,114.22852,chemicals 1.5.2 (search_chemical.MW),1.2956484072461185e-05,ok,relative
+isooctane,CC(C)CC(C)(C)C,rho15,696.0,inverse_design_v2.CANDIDATE_REGISTRY,696.2482824687801,thermo 0.6.1 Chemical.rhol @288.15K,-0.00035660047576664407,ok,relative
+isooctane,CC(C)CC(C)(C)C,Tm,-107.4,inverse_design_v2.CANDIDATE_REGISTRY,-106.99999999999997,chemicals 1.5.2 (Tm),-0.4000000000000341,ok,absolute
+isooctane,CC(C)CC(C)(C)C,Tb,99.2,inverse_design_v2.CANDIDATE_REGISTRY,99.208308267,chemicals 1.5.2 (Tb),-0.008308267000003866,ok,absolute
+isooctane,CC(C)CC(C)(C)C,dHfus,9.22,inverse_design_v2.CANDIDATE_REGISTRY,9.2,chemicals 1.5.2 (Hfus),0.002173913043478408,ok,relative
+isooctane,CC(C)CC(C)(C)C,Psat37_8,6.8,inverse_design_v2.CANDIDATE_REGISTRY,11.79897159312447,thermo 0.6.1 Chemical.Psat @310.95K,-0.42367858534700475,flagged,relative
+isooctane,CC(C)CC(C)(C)C,DCN,15.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isooctane,CC(C)CC(C)(C)C,RON,100.0,inverse_design_v2.CANDIDATE_REGISTRY,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+isooctane,CC(C)CC(C)(C)C,MON,100.0,inverse_design_v2.CANDIDATE_REGISTRY,100.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,MW,170.33,inverse_design_v2.CANDIDATE_REGISTRY,170.33484,chemicals 1.5.2 (search_chemical.MW),-2.841462145971728e-05,ok,relative
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,rho15,749.0,inverse_design_v2.CANDIDATE_REGISTRY,760.124158685881,thermo 0.6.1 Chemical.rhol @288.15K,-0.014634660086468824,flagged,relative
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,Tm,-81.0,inverse_design_v2.CANDIDATE_REGISTRY,-66.99999999999997,chemicals 1.5.2 (Tm),-14.000000000000028,flagged,absolute
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,Tb,177.0,inverse_design_v2.CANDIDATE_REGISTRY,178.0,chemicals 1.5.2 (Tb),-1.0,ok,absolute
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,dHfus,15.0,inverse_design_v2.CANDIDATE_REGISTRY,8.485,chemicals 1.5.2 (Hfus),0.7678255745433118,flagged,relative
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,Psat37_8,0.45,inverse_design_v2.CANDIDATE_REGISTRY,0.5812303516812672,thermo 0.6.1 Chemical.Psat @310.95K,-0.22578028023084176,flagged,relative
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,DCN,28.0,inverse_design_v2.CANDIDATE_REGISTRY,16.3,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",11.7,flagged,absolute
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,RON,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+isododecane,CC(C)(C)CC(C)CC(C)(C)C,MON,88.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,MW,226.44,inverse_design_v2.CANDIDATE_REGISTRY,226.44116,chemicals 1.5.2 (search_chemical.MW),-5.122743586010236e-06,ok,relative
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,rho15,785.0,inverse_design_v2.CANDIDATE_REGISTRY,741.2144780181519,thermo 0.6.1 Chemical.rhol @288.15K,0.059072675022378354,flagged,relative
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,Tm,-65.0,inverse_design_v2.CANDIDATE_REGISTRY,-10.810000000000002,chemicals 1.5.2 (Tm),-54.19,flagged,absolute
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,Tb,240.0,inverse_design_v2.CANDIDATE_REGISTRY,246.0,chemicals 1.5.2 (Tb),-6.0,flagged,absolute
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,dHfus,18.0,inverse_design_v2.CANDIDATE_REGISTRY,11.431,chemicals 1.5.2 (Hfus),0.5746653836059838,flagged,relative
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,Psat37_8,0.02,inverse_design_v2.CANDIDATE_REGISTRY,0.016525985737018266,thermo 0.6.1 Chemical.Psat @310.95K,0.21021525240699745,flagged,relative
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,DCN,15.0,inverse_design_v2.CANDIDATE_REGISTRY,15.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,RON,40.0,inverse_design_v2.CANDIDATE_REGISTRY,95.2,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-55.2,flagged,absolute
+heptamethylnonane,CC(C)(C)CC(C)(C)CC(C)CC(C)(C)C,MON,35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+cyclopentane,C1CCCC1,MW,70.13,inverse_design_v2.CANDIDATE_REGISTRY,70.1329,chemicals 1.5.2 (search_chemical.MW),-4.135006537603614e-05,ok,relative
+cyclopentane,C1CCCC1,rho15,750.0,inverse_design_v2.CANDIDATE_REGISTRY,750.360598970938,thermo 0.6.1 Chemical.rhol @288.15K,-0.0004805675716882248,ok,relative
+cyclopentane,C1CCCC1,Tm,-93.9,inverse_design_v2.CANDIDATE_REGISTRY,-93.99999999999997,chemicals 1.5.2 (Tm),0.0999999999999659,ok,absolute
+cyclopentane,C1CCCC1,Tb,49.3,inverse_design_v2.CANDIDATE_REGISTRY,49.24988227100005,chemicals 1.5.2 (Tb),0.05011772899995037,ok,absolute
+cyclopentane,C1CCCC1,dHfus,0.61,inverse_design_v2.CANDIDATE_REGISTRY,0.61,chemicals 1.5.2 (Hfus),0.0,ok,relative
+cyclopentane,C1CCCC1,Psat37_8,53.0,inverse_design_v2.CANDIDATE_REGISTRY,68.44044231440137,thermo 0.6.1 Chemical.Psat @310.95K,-0.22560406964454055,flagged,relative
+cyclopentane,C1CCCC1,DCN,25.0,inverse_design_v2.CANDIDATE_REGISTRY,6.1,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",18.9,flagged,absolute
+cyclopentane,C1CCCC1,RON,101.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+cyclopentane,C1CCCC1,MON,85.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+cyclohexane,C1CCCCC1,MW,84.16,inverse_design_v2.CANDIDATE_REGISTRY,84.15948,chemicals 1.5.2 (search_chemical.MW),6.17874540092839e-06,ok,relative
+cyclohexane,C1CCCCC1,rho15,783.0,inverse_design_v2.CANDIDATE_REGISTRY,783.4717786168428,thermo 0.6.1 Chemical.rhol @288.15K,-0.0006021641490082765,ok,relative
+cyclohexane,C1CCCCC1,Tm,6.5,inverse_design_v2.CANDIDATE_REGISTRY,7.0,chemicals 1.5.2 (Tm),-0.5,ok,absolute
+cyclohexane,C1CCCCC1,Tb,80.7,inverse_design_v2.CANDIDATE_REGISTRY,80.71494836800002,chemicals 1.5.2 (Tb),-0.014948368000020196,ok,absolute
+cyclohexane,C1CCCCC1,dHfus,2.68,inverse_design_v2.CANDIDATE_REGISTRY,2.68,chemicals 1.5.2 (Hfus),0.0,ok,relative
+cyclohexane,C1CCCCC1,Psat37_8,22.0,inverse_design_v2.CANDIDATE_REGISTRY,22.543341319815138,thermo 0.6.1 Chemical.Psat @310.95K,-0.024102075735221728,ok,relative
+cyclohexane,C1CCCCC1,DCN,16.0,inverse_design_v2.CANDIDATE_REGISTRY,19.95,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-3.9499999999999993,flagged,absolute
+cyclohexane,C1CCCCC1,RON,83.0,inverse_design_v2.CANDIDATE_REGISTRY,83.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+cyclohexane,C1CCCCC1,MON,77.0,inverse_design_v2.CANDIDATE_REGISTRY,77.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+methylcyclohexane,CC1CCCCC1,MW,98.19,inverse_design_v2.CANDIDATE_REGISTRY,98.18606,chemicals 1.5.2 (search_chemical.MW),4.012789595590305e-05,ok,relative
+methylcyclohexane,CC1CCCCC1,rho15,774.0,inverse_design_v2.CANDIDATE_REGISTRY,773.8613733409056,thermo 0.6.1 Chemical.rhol @288.15K,0.0001791362947809284,ok,relative
+methylcyclohexane,CC1CCCCC1,Tm,-126.6,inverse_design_v2.CANDIDATE_REGISTRY,-126.79999999999998,chemicals 1.5.2 (Tm),0.19999999999998863,ok,absolute
+methylcyclohexane,CC1CCCCC1,Tb,100.9,inverse_design_v2.CANDIDATE_REGISTRY,100.85994596500001,chemicals 1.5.2 (Tb),0.04005403499999716,ok,absolute
+methylcyclohexane,CC1CCCCC1,dHfus,6.74,inverse_design_v2.CANDIDATE_REGISTRY,6.75,chemicals 1.5.2 (Hfus),-0.00148148148148145,ok,relative
+methylcyclohexane,CC1CCCCC1,Psat37_8,10.5,inverse_design_v2.CANDIDATE_REGISTRY,11.096957588798993,thermo 0.6.1 Chemical.Psat @310.95K,-0.05379470760540242,flagged,relative
+methylcyclohexane,CC1CCCCC1,DCN,20.0,inverse_design_v2.CANDIDATE_REGISTRY,23.5,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-3.5,flagged,absolute
+methylcyclohexane,CC1CCCCC1,RON,75.0,inverse_design_v2.CANDIDATE_REGISTRY,74.1,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.9000000000000057,ok,absolute
+methylcyclohexane,CC1CCCCC1,MON,71.0,inverse_design_v2.CANDIDATE_REGISTRY,71.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+butylcyclohexane,CCCCC1CCCCC1,MW,140.27,inverse_design_v2.CANDIDATE_REGISTRY,140.2658,chemicals 1.5.2 (search_chemical.MW),2.9943150789410653e-05,ok,relative
+butylcyclohexane,CCCCC1CCCCC1,rho15,802.0,inverse_design_v2.CANDIDATE_REGISTRY,803.4194047263978,thermo 0.6.1 Chemical.rhol @288.15K,-0.0017667045605914925,ok,relative
+butylcyclohexane,CCCCC1CCCCC1,Tm,-75.0,inverse_design_v2.CANDIDATE_REGISTRY,-74.99999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,ok,absolute
+butylcyclohexane,CCCCC1CCCCC1,Tb,181.0,inverse_design_v2.CANDIDATE_REGISTRY,180.90000000000003,chemicals 1.5.2 (Tb),0.0999999999999659,ok,absolute
+butylcyclohexane,CCCCC1CCCCC1,dHfus,15.0,inverse_design_v2.CANDIDATE_REGISTRY,14.16,chemicals 1.5.2 (Hfus),0.05932203389830507,ok,relative
+butylcyclohexane,CCCCC1CCCCC1,Psat37_8,0.4,inverse_design_v2.CANDIDATE_REGISTRY,0.3767284613553515,thermo 0.6.1 Chemical.Psat @310.95K,0.061772711732277406,flagged,relative
+butylcyclohexane,CCCCC1CCCCC1,DCN,35.0,inverse_design_v2.CANDIDATE_REGISTRY,47.6,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-12.600000000000001,flagged,absolute
+butylcyclohexane,CCCCC1CCCCC1,RON,45.0,inverse_design_v2.CANDIDATE_REGISTRY,63.8,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-18.799999999999997,flagged,absolute
+butylcyclohexane,CCCCC1CCCCC1,MON,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+decalin,C1CCC2CCCCC2C1,MW,138.25,inverse_design_v2.CANDIDATE_REGISTRY,138.24992,chemicals 1.5.2 (search_chemical.MW),5.786621793124465e-07,ok,relative
+decalin,C1CCC2CCCCC2C1,rho15,896.5,inverse_design_v2.CANDIDATE_REGISTRY,863.8839789924094,thermo 0.6.1 Chemical.rhol @288.15K,0.037755094203312176,flagged,relative
+decalin,C1CCC2CCCCC2C1,Tm,-43.0,inverse_design_v2.CANDIDATE_REGISTRY,-42.94999999999999,chemicals 1.5.2 (Tm),-0.05000000000001137,ok,absolute
+decalin,C1CCC2CCCCC2C1,Tb,190.0,inverse_design_v2.CANDIDATE_REGISTRY,195.8,chemicals 1.5.2 (Tb),-5.800000000000011,flagged,absolute
+decalin,C1CCC2CCCCC2C1,dHfus,13.5,inverse_design_v2.CANDIDATE_REGISTRY,9.49,chemicals 1.5.2 (Hfus),0.42255005268703894,flagged,relative
+decalin,C1CCC2CCCCC2C1,Psat37_8,0.25,inverse_design_v2.CANDIDATE_REGISTRY,0.26160221917311116,thermo 0.6.1 Chemical.Psat @310.95K,-0.04435061449319577,ok,relative
+decalin,C1CCC2CCCCC2C1,DCN,38.0,inverse_design_v2.CANDIDATE_REGISTRY,37.4,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.6000000000000014,ok,absolute
+decalin,C1CCC2CCCCC2C1,RON,45.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+decalin,C1CCC2CCCCC2C1,MON,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,MW,166.3,inverse_design_v2.CANDIDATE_REGISTRY,166.30308,chemicals 1.5.2 (search_chemical.MW),-1.8520402628639676e-05,ok,relative
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,rho15,886.0,inverse_design_v2.CANDIDATE_REGISTRY,902.0464538931006,thermo 0.6.1 Chemical.rhol @288.15K,-0.017788944043675908,flagged,relative
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,Tm,3.5,inverse_design_v2.CANDIDATE_REGISTRY,4.0,chemicals 1.5.2 (Tm),-0.5,ok,absolute
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,Tb,239.0,inverse_design_v2.CANDIDATE_REGISTRY,239.0,chemicals 1.5.2 (Tb),0.0,ok,absolute
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,dHfus,17.5,inverse_design_v2.CANDIDATE_REGISTRY,10.506,chemicals 1.5.2 (Hfus),0.6657148296211688,flagged,relative
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,Psat37_8,0.03,inverse_design_v2.CANDIDATE_REGISTRY,0.046289694274041726,thermo 0.6.1 Chemical.Psat @310.95K,-0.3519075796354231,flagged,relative
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,DCN,42.0,inverse_design_v2.CANDIDATE_REGISTRY,53.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-11.0,flagged,absolute
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,RON,40.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+bicyclohexyl,C1CCC(CC1)C1CCCCC1,MON,35.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+toluene,Cc1ccccc1,MW,92.14,inverse_design_v2.CANDIDATE_REGISTRY,92.13842,chemicals 1.5.2 (search_chemical.MW),1.7148112589776704e-05,ok,relative
+toluene,Cc1ccccc1,rho15,871.0,inverse_design_v2.CANDIDATE_REGISTRY,871.6335114189827,thermo 0.6.1 Chemical.rhol @288.15K,-0.0007268093879862317,ok,relative
+toluene,Cc1ccccc1,Tm,-95.0,inverse_design_v2.CANDIDATE_REGISTRY,-93.94999999999999,chemicals 1.5.2 (Tm),-1.0500000000000114,ok,absolute
+toluene,Cc1ccccc1,Tb,110.6,inverse_design_v2.CANDIDATE_REGISTRY,110.59575314600005,chemicals 1.5.2 (Tb),0.004246853999944733,ok,absolute
+toluene,Cc1ccccc1,dHfus,6.64,inverse_design_v2.CANDIDATE_REGISTRY,6.64,chemicals 1.5.2 (Hfus),0.0,ok,relative
+toluene,Cc1ccccc1,Psat37_8,4.9,inverse_design_v2.CANDIDATE_REGISTRY,7.1271418439673955,thermo 0.6.1 Chemical.Psat @310.95K,-0.3124873747044207,flagged,relative
+toluene,Cc1ccccc1,DCN,9.0,inverse_design_v2.CANDIDATE_REGISTRY,6.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,ok,absolute
+toluene,Cc1ccccc1,RON,120.0,inverse_design_v2.CANDIDATE_REGISTRY,120.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+toluene,Cc1ccccc1,MON,103.0,inverse_design_v2.CANDIDATE_REGISTRY,104.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-1.0,ok,absolute
+ethylbenzene,CCc1ccccc1,MW,106.17,inverse_design_v2.CANDIDATE_REGISTRY,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,ok,relative
+ethylbenzene,CCc1ccccc1,rho15,872.0,inverse_design_v2.CANDIDATE_REGISTRY,871.352263294972,thermo 0.6.1 Chemical.rhol @288.15K,0.0007433695100287477,ok,relative
+ethylbenzene,CCc1ccccc1,Tm,-94.9,inverse_design_v2.CANDIDATE_REGISTRY,-94.94999999999999,chemicals 1.5.2 (Tm),0.04999999999998295,ok,absolute
+ethylbenzene,CCc1ccccc1,Tb,136.2,inverse_design_v2.CANDIDATE_REGISTRY,136.16422579700003,chemicals 1.5.2 (Tb),0.035774202999959925,ok,absolute
+ethylbenzene,CCc1ccccc1,dHfus,9.16,inverse_design_v2.CANDIDATE_REGISTRY,9.18,chemicals 1.5.2 (Hfus),-0.0021786492374727207,ok,relative
+ethylbenzene,CCc1ccccc1,Psat37_8,2.2,inverse_design_v2.CANDIDATE_REGISTRY,2.567644340045808,thermo 0.6.1 Chemical.Psat @310.95K,-0.14318351428658102,flagged,relative
+ethylbenzene,CCc1ccccc1,DCN,10.0,inverse_design_v2.CANDIDATE_REGISTRY,6.29,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.71,flagged,absolute
+ethylbenzene,CCc1ccccc1,RON,107.0,inverse_design_v2.CANDIDATE_REGISTRY,107.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
+ethylbenzene,CCc1ccccc1,MON,98.0,inverse_design_v2.CANDIDATE_REGISTRY,97.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",1.0,ok,absolute
+m-xylene,Cc1cccc(C)c1,MW,106.17,inverse_design_v2.CANDIDATE_REGISTRY,106.165,chemicals 1.5.2 (search_chemical.MW),4.709650072995292e-05,ok,relative
+m-xylene,Cc1cccc(C)c1,rho15,868.0,inverse_design_v2.CANDIDATE_REGISTRY,868.5791636188084,thermo 0.6.1 Chemical.rhol @288.15K,-0.0006667942808982028,ok,relative
+m-xylene,Cc1cccc(C)c1,Tm,-47.9,inverse_design_v2.CANDIDATE_REGISTRY,-47.79999999999998,chemicals 1.5.2 (Tm),-0.10000000000001563,ok,absolute
+m-xylene,Cc1cccc(C)c1,Tb,139.1,inverse_design_v2.CANDIDATE_REGISTRY,139.064002577,chemicals 1.5.2 (Tb),0.03599742299999775,ok,absolute
+m-xylene,Cc1cccc(C)c1,dHfus,11.57,inverse_design_v2.CANDIDATE_REGISTRY,11.6,chemicals 1.5.2 (Hfus),-0.002586206896551669,ok,relative
+m-xylene,Cc1cccc(C)c1,Psat37_8,2.0,inverse_design_v2.CANDIDATE_REGISTRY,2.260329507745115,thermo 0.6.1 Chemical.Psat @310.95K,-0.11517325542717767,flagged,relative
+m-xylene,Cc1cccc(C)c1,DCN,10.0,inverse_design_v2.CANDIDATE_REGISTRY,7.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,ok,absolute
+m-xylene,Cc1cccc(C)c1,RON,118.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+m-xylene,Cc1cccc(C)c1,MON,115.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+mesitylene,Cc1cc(C)cc(C)c1,MW,120.19,inverse_design_v2.CANDIDATE_REGISTRY,120.19158,chemicals 1.5.2 (search_chemical.MW),-1.3145679589236897e-05,ok,relative
+mesitylene,Cc1cc(C)cc(C)c1,rho15,869.0,inverse_design_v2.CANDIDATE_REGISTRY,869.9432877525979,thermo 0.6.1 Chemical.rhol @288.15K,-0.001084309478419931,ok,relative
+mesitylene,Cc1cc(C)cc(C)c1,Tm,-44.7,inverse_design_v2.CANDIDATE_REGISTRY,-44.99999999999997,chemicals 1.5.2 (Tm),0.29999999999996874,ok,absolute
+mesitylene,Cc1cc(C)cc(C)c1,Tb,164.7,inverse_design_v2.CANDIDATE_REGISTRY,164.70000000000005,chemicals 1.5.2 (Tb),-5.684341886080802e-14,ok,absolute
+mesitylene,Cc1cc(C)cc(C)c1,dHfus,9.51,inverse_design_v2.CANDIDATE_REGISTRY,9.51,chemicals 1.5.2 (Hfus),0.0,ok,relative
+mesitylene,Cc1cc(C)cc(C)c1,Psat37_8,0.75,inverse_design_v2.CANDIDATE_REGISTRY,0.7823529346354624,thermo 0.6.1 Chemical.Psat @310.95K,-0.0413533754437021,ok,relative
+mesitylene,Cc1cc(C)cc(C)c1,DCN,11.0,inverse_design_v2.CANDIDATE_REGISTRY,8.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.0,ok,absolute
+mesitylene,Cc1cc(C)cc(C)c1,RON,120.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+mesitylene,Cc1cc(C)cc(C)c1,MON,112.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MW,120.19,inverse_design_v2.CANDIDATE_REGISTRY,120.19158,chemicals 1.5.2 (search_chemical.MW),-1.3145679589236897e-05,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,rho15,880.0,inverse_design_v2.CANDIDATE_REGISTRY,880.067162142147,thermo 0.6.1 Chemical.rhol @288.15K,-7.63147916842492e-05,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tm,-43.8,inverse_design_v2.CANDIDATE_REGISTRY,-43.89999999999998,chemicals 1.5.2 (Tm),0.0999999999999801,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Tb,169.4,inverse_design_v2.CANDIDATE_REGISTRY,169.40000000000003,chemicals 1.5.2 (Tb),-2.842170943040401e-14,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,dHfus,12.3,inverse_design_v2.CANDIDATE_REGISTRY,13.19,chemicals 1.5.2 (Hfus),-0.06747536012130392,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,Psat37_8,0.65,inverse_design_v2.CANDIDATE_REGISTRY,0.6656049282023695,thermo 0.6.1 Chemical.Psat @310.95K,-0.02344473056188817,ok,relative
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,DCN,11.0,inverse_design_v2.CANDIDATE_REGISTRY,8.9,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",2.0999999999999996,ok,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,RON,120.0,inverse_design_v2.CANDIDATE_REGISTRY,108.6,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",11.400000000000006,flagged,absolute
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,MON,110.0,inverse_design_v2.CANDIDATE_REGISTRY,104.4,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",5.599999999999994,flagged,absolute
+tetralin,c1ccc2c(c1)CCCC2,MW,132.21,inverse_design_v2.CANDIDATE_REGISTRY,132.20228,chemicals 1.5.2 (search_chemical.MW),5.839536201649598e-05,ok,relative
+tetralin,c1ccc2c(c1)CCCC2,rho15,970.2,inverse_design_v2.CANDIDATE_REGISTRY,974.191921275275,thermo 0.6.1 Chemical.rhol @288.15K,-0.004097674378216285,ok,relative
+tetralin,c1ccc2c(c1)CCCC2,Tm,-35.8,inverse_design_v2.CANDIDATE_REGISTRY,-35.349999999999966,chemicals 1.5.2 (Tm),-0.45000000000003126,ok,absolute
+tetralin,c1ccc2c(c1)CCCC2,Tb,207.6,inverse_design_v2.CANDIDATE_REGISTRY,207.20000000000005,chemicals 1.5.2 (Tb),0.39999999999994884,ok,absolute
+tetralin,c1ccc2c(c1)CCCC2,dHfus,12.4,inverse_design_v2.CANDIDATE_REGISTRY,10.272,chemicals 1.5.2 (Hfus),0.2071651090342679,flagged,relative
+tetralin,c1ccc2c(c1)CCCC2,Psat37_8,0.12,inverse_design_v2.CANDIDATE_REGISTRY,0.12174244315930205,thermo 0.6.1 Chemical.Psat @310.95K,-0.014312536483451687,ok,relative
+tetralin,c1ccc2c(c1)CCCC2,DCN,15.0,inverse_design_v2.CANDIDATE_REGISTRY,9.15,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",5.85,flagged,absolute
+tetralin,c1ccc2c(c1)CCCC2,RON,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+tetralin,c1ccc2c(c1)CCCC2,MON,90.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+1-methylnaphthalene,Cc1cccc2ccccc12,MW,142.2,inverse_design_v2.CANDIDATE_REGISTRY,142.1971,chemicals 1.5.2 (search_chemical.MW),2.0394227448960512e-05,ok,relative
+1-methylnaphthalene,Cc1cccc2ccccc12,rho15,1025.0,inverse_design_v2.CANDIDATE_REGISTRY,1024.2353968905768,thermo 0.6.1 Chemical.rhol @288.15K,0.0007465111162379515,ok,relative
+1-methylnaphthalene,Cc1cccc2ccccc12,Tm,-30.5,inverse_design_v2.CANDIDATE_REGISTRY,-21.99999999999997,chemicals 1.5.2 (Tm),-8.500000000000028,flagged,absolute
+1-methylnaphthalene,Cc1cccc2ccccc12,Tb,244.6,inverse_design_v2.CANDIDATE_REGISTRY,244.39999999999998,chemicals 1.5.2 (Tb),0.20000000000001705,ok,absolute
+1-methylnaphthalene,Cc1cccc2ccccc12,dHfus,14.8,inverse_design_v2.CANDIDATE_REGISTRY,6.95,chemicals 1.5.2 (Hfus),1.129496402877698,flagged,relative
+1-methylnaphthalene,Cc1cccc2ccccc12,Psat37_8,0.02,inverse_design_v2.CANDIDATE_REGISTRY,0.03202667105453825,thermo 0.6.1 Chemical.Psat @310.95K,-0.3755204852248933,flagged,relative
+1-methylnaphthalene,Cc1cccc2ccccc12,DCN,0.0,inverse_design_v2.CANDIDATE_REGISTRY,0.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",0.0,ok,absolute
+1-methylnaphthalene,Cc1cccc2ccccc12,RON,105.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+1-methylnaphthalene,Cc1cccc2ccccc12,MON,95.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+hexylbenzene,CCCCCCc1ccccc1,MW,162.27,inverse_design_v2.CANDIDATE_REGISTRY,162.27132,chemicals 1.5.2 (search_chemical.MW),-8.134524326249766e-06,ok,relative
+hexylbenzene,CCCCCCc1ccccc1,rho15,861.0,inverse_design_v2.CANDIDATE_REGISTRY,862.1531217297046,thermo 0.6.1 Chemical.rhol @288.15K,-0.001337490639007524,ok,relative
+hexylbenzene,CCCCCCc1ccccc1,Tm,-61.0,inverse_design_v2.CANDIDATE_REGISTRY,-60.99999999999997,chemicals 1.5.2 (Tm),-2.842170943040401e-14,ok,absolute
+hexylbenzene,CCCCCCc1ccccc1,Tb,226.0,inverse_design_v2.CANDIDATE_REGISTRY,226.0,chemicals 1.5.2 (Tb),0.0,ok,absolute
+hexylbenzene,CCCCCCc1ccccc1,dHfus,17.5,inverse_design_v2.CANDIDATE_REGISTRY,20.877,chemicals 1.5.2 (Hfus),-0.1617569574172534,flagged,relative
+hexylbenzene,CCCCCCc1ccccc1,Psat37_8,0.05,inverse_design_v2.CANDIDATE_REGISTRY,0.03920543321280973,thermo 0.6.1 Chemical.Psat @310.95K,0.2753334398473965,flagged,relative
+hexylbenzene,CCCCCCc1ccccc1,DCN,25.0,inverse_design_v2.CANDIDATE_REGISTRY,33.3,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-8.299999999999997,flagged,absolute
+hexylbenzene,CCCCCCc1ccccc1,RON,80.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+hexylbenzene,CCCCCCc1ccccc1,MON,75.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+biphenyl,c1ccc(-c2ccccc2)cc1,MW,154.21,inverse_design_v2.CANDIDATE_REGISTRY,154.2078,chemicals 1.5.2 (search_chemical.MW),1.4266463823595104e-05,ok,relative
+biphenyl,c1ccc(-c2ccccc2)cc1,rho15,1040.0,inverse_design_v2.CANDIDATE_REGISTRY,1028.5623748054286,thermo 0.6.1 Chemical.rhol @288.15K,0.01112001126498045,flagged,relative
+biphenyl,c1ccc(-c2ccccc2)cc1,Tm,69.2,inverse_design_v2.CANDIDATE_REGISTRY,69.42500000000001,chemicals 1.5.2 (Tm),-0.22500000000000853,ok,absolute
+biphenyl,c1ccc(-c2ccccc2)cc1,Tb,255.0,inverse_design_v2.CANDIDATE_REGISTRY,255.20000000000005,chemicals 1.5.2 (Tb),-0.20000000000004547,ok,absolute
+biphenyl,c1ccc(-c2ccccc2)cc1,dHfus,18.6,inverse_design_v2.CANDIDATE_REGISTRY,18.57,chemicals 1.5.2 (Hfus),0.0016155088852989304,ok,relative
+biphenyl,c1ccc(-c2ccccc2)cc1,Psat37_8,0.015,inverse_design_v2.CANDIDATE_REGISTRY,0.012326363859731378,thermo 0.6.1 Chemical.Psat @310.95K,0.21690387941597616,flagged,relative
+biphenyl,c1ccc(-c2ccccc2)cc1,DCN,5.0,inverse_design_v2.CANDIDATE_REGISTRY,12.0,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",-7.0,flagged,absolute
+biphenyl,c1ccc(-c2ccccc2)cc1,RON,110.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+biphenyl,c1ccc(-c2ccccc2)cc1,MON,100.0,inverse_design_v2.CANDIDATE_REGISTRY,,,,no_reference,absolute
+diisobutylene,CC(=C)CC(C)(C)C,MW,112.21,inverse_design_v2.CANDIDATE_REGISTRY,112.21264,chemicals 1.5.2 (search_chemical.MW),-2.35267613345478e-05,ok,relative
+diisobutylene,CC(=C)CC(C)(C)C,rho15,720.0,inverse_design_v2.CANDIDATE_REGISTRY,746.5276382775946,thermo 0.6.1 Chemical.rhol @288.15K,-0.035534703495773846,flagged,relative
+diisobutylene,CC(=C)CC(C)(C)C,Tm,-93.5,inverse_design_v2.CANDIDATE_REGISTRY,-93.74999999999997,chemicals 1.5.2 (Tm),0.24999999999997158,ok,absolute
+diisobutylene,CC(=C)CC(C)(C)C,Tb,101.4,inverse_design_v2.CANDIDATE_REGISTRY,101.30000000000001,chemicals 1.5.2 (Tb),0.09999999999999432,ok,absolute
+diisobutylene,CC(=C)CC(C)(C)C,dHfus,10.5,inverse_design_v2.CANDIDATE_REGISTRY,6.472,chemicals 1.5.2 (Hfus),0.622373300370828,flagged,relative
+diisobutylene,CC(=C)CC(C)(C)C,Psat37_8,6.5,inverse_design_v2.CANDIDATE_REGISTRY,10.756230041966747,thermo 0.6.1 Chemical.Psat @310.95K,-0.3956990530474474,flagged,relative
+diisobutylene,CC(=C)CC(C)(C)C,DCN,12.0,inverse_design_v2.CANDIDATE_REGISTRY,8.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",3.1999999999999993,flagged,absolute
+diisobutylene,CC(=C)CC(C)(C)C,RON,103.0,inverse_design_v2.CANDIDATE_REGISTRY,106.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",-3.0,ok,absolute
+diisobutylene,CC(=C)CC(C)(C)C,MON,87.0,inverse_design_v2.CANDIDATE_REGISTRY,87.0,"DOE Co-Optima database (2018), data/processed/v2/octane_co_optima.csv",0.0,ok,absolute
