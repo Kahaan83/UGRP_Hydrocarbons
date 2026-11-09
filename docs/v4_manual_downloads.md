@@ -14,7 +14,7 @@ Written 2026-11-10 for v4 Task 8. Nothing here is required: every task runs on t
 
 Two raw-data roots exist, checked on disk 2026-11-10:
 - **Repo root `data/raw/`** holds only `gc_composition/`, `pour_point/`, `surrogates/`, `git/`. The v4 scripts and loaders read these.
-- **`extras/fuelblend_data/data/raw/`** holds everything older (ajftd, flash_mixtures, vozka2019, pires2018, rp1, octane, pdfs, thermoml, ...) and the only `MANIFEST.json`.
+- **`extras/fuelblend_data/data/raw/`** holds everything older (ajftd, flash_mixtures, vozka2019, pires2018, rp1, octane, pdfs, thermoml, ...) and the top-level `MANIFEST.json` (per-source manifests such as `webbook/MANIFEST.json` also exist).
 
 Rule used in this file: a *new* document goes in a new folder under repo-root `data/raw/<name>/`. Where an existing extras folder is the natural home (M10, M11, M12), the path is written in full as `extras/fuelblend_data/data/raw/...`. Every path below is complete from the repo root. Plain-language terms: "headline" = the fuel set allowed into headline statistics; "same-fuel D86/D2887 check" = comparing a measured D86 distillation curve with the simulated-distillation (D2887) curve the carbon-number split was built from.
 
@@ -37,7 +37,7 @@ Priority: **A** = closes a named MISSING row or SD-02 and unblocks a headline cl
 | M11 | Liaw et al. and other measured ternary/quaternary flash tables (JCED 2017, Korean Gas Society 2016) | more multi-component HC flash rows; Task 9 | `extras/fuelblend_data/data/raw/flash_mixtures/` (exists) | Task 9 evaluates the 126 mixtures (123 binary, 3 ternary) plus the 9 Ha & Lee ternaries. Claim: binary only | B |
 | M12 | AJFTD full database with the filters cleared | "of N entries" check; the >160 GCxGC fuel records; Tasks 9, 11, 14 | `extras/fuelblend_data/data/raw/ajftd/` | The 81 scraped fuels only; no composition-based AJFTD claim | B |
 | M13 | SLE sources: ACS Omega 2022 quaternary wax data (open); Coutinho 1995/1996 (paywalled) | Task 13 (and the Task 12 freezing margin) | `sle_papers/` | Task 13 runs on the ThermoML SLE records only | C |
-| M14 | JPCRD 29, 1 (2000) n-alkane vapour pressure to C36 | Antoine/Cox for C21-C24, whose refit status is disputed (see M14 body); Task 9 Psat | `psat_alkanes/` | C21-C24 keep the `check` flag; Task 9 reports the heavy-alkane Psat as low confidence | C |
+| M14 | JPCRD 29, 1 (2000) n-alkane vapour pressure to C36 | Antoine/Cox for C21-C24, whose refit status is disputed (see M14 body); Task 9 Psat | `psat_alkanes/` | C21-C24 keep their current refit status (C21-C23 ok, C12/C20/C24 `check` per AGENTS.md section 8.5; the leads doc disagrees); Task 9 reports the heavy-alkane Psat as low confidence | C |
 | M15 | Newer ThermoML release | Task 13 | n/a | None exists (checked, section 4) | closed |
 | M16 | No source identified in repo (MISSING.md fuels listed in M16) | nothing specific; Tasks 9, 11, 12, 16 | `unsourced_fuels/` if you find any | They stay dropped; claims cover only the fuels in `data/real_fuels/v4/` | C |
 
@@ -57,13 +57,13 @@ Format: **contains / unblocks / folder + expected filename / identifiers / fallb
 - **Contains:** the source already cited in `data/raw/gc_composition/fuel_gc_compositions.csv` for POSF-10325 (slides 16, 18), POSF-13511 (slide 16) and UDRI_HTA_repfuel (slide 12). The Task 6 MISSING row asks for the "fuel's specification-property table from the same ASCENT 31a report and a D86/D2887 curve". Whether such a table exists in the deck is **UNVERIFIED**.
 - **Unblocks:** UDRI_HTA_repfuel properties (it is the locked jet GC fuel from Task 7); POSF-13511 properties and D86 (carbon-number split); Tasks 9, 11, 12.
 - **Folder / filename:** `data/raw/ascent_31a/april-2019-ascent-031.pdf`
-- **Identifier in repo:** `https://ascent.aero/documents/2019/04/april-2019-ascent-031.pdf` (composition CSV). Not opened by me.
+- **Identifier in repo:** `https://ascent.aero/documents/2019/04/april-2019-ascent-031.pdf` (`data/raw/gc_composition/fuel_gc_compositions.csv`, `reference` column; also `data/real_fuels/v4/jet_class_compositions.csv`). Not opened by me.
 - **Fallback:** UDRI_HTA stays composition-only, so locked-set jet metrics have no scored GC fuel. POSF-13511 stays `assumed_cn_split` and outside headline metrics.
 
 ### M3. ATSDR TP-121 Ch. 4 and the API (2010b) Jet A source
 - **Contains:** ATSDR Table 4-2 compiles 14 API Jet A samples (this is the JetA_API14avg composition source). The MISSING row asks for the original API fuel-property table and a mean D86 curve. The exact API document title is **not in the repo: UNVERIFIED**. Search "API 2010 Jet A kerosene category assessment" and confirm.
 - **Unblocks:** JetA_API14avg density, viscosity, flash, freezing, pour, heat of combustion; Tasks 9, 11, 12.
-- **Folder / filename:** `data/raw/atsdr_tp121/tp121-c4.pdf` (ATSDR chapter, URL in repo: `https://www.atsdr.cdc.gov/toxprofiles/tp121-c4.pdf`); the API document as `data/raw/atsdr_tp121/api_2010b_jet_a.pdf`.
+- **Folder / filename:** `data/raw/atsdr_tp121/tp121-c4.pdf` (ATSDR chapter, URL in the `reference` column of `data/raw/gc_composition/fuel_gc_compositions.csv`: `https://www.atsdr.cdc.gov/toxprofiles/tp121-c4.pdf`); the API document as `data/raw/atsdr_tp121/api_2010b_jet_a.pdf`.
 - **Fallback:** JetA_API14avg stays composition-only and unscored. The v4 jet claim loses one more fuel.
 
 ### M4. POSF property sheets
@@ -76,7 +76,6 @@ Format: **contains / unblocks / folder + expected filename / identifiers / fallb
 - **Contains:** the MISSING row says ATSDR TP-121 Tables 3/4 list identified compounds only (JP-5 40.9 %, JP-8 42.3 % of mass). It asks for Potter & Simmons (1998) full GC tables, or a DHA/GCxGC-type analysis of the same two fuels. The journal and title are **not in the repo: UNVERIFIED**.
 - **Unblocks:** JP-5/JP-8 composition (currently `excluded_partial_composition`, never normalised) and anything that needs it (Tasks 9, 11, 12, 16).
 - **Folder / filename:** `data/raw/potter_simmons_1998/potter_simmons_1998.pdf`
-- **Also dropped for incomplete composition (kept fraction below 0.95): BrunoHuber2010_3comp [0.69], Chen2016_JI [0.341], Honnet2009_Aachen [0.80].** These are surrogate definitions from papers; the repo names no source for the missing fractions (the original papers by those authors and years are search hints only, **UNVERIFIED**). Listed in M16.
 - **MISSING.md ids:** JP5_PotterSimmons, JP8_PotterSimmons.
 - **Fallback:** JP-5 and JP-8 stay excluded. No JP-5/JP-8 claim.
 
@@ -103,11 +102,11 @@ The **NASA CR-179472 text is already local** (`extras/fuelblend_data/data/raw/pd
 - **Fallback:** the diesel real-fuel evaluation stays nil. **Claim narrowed:** no diesel result of any kind; the BIS/ASTM diesel designs in Task 17 are reported as unvalidated against real fuels.
 
 ### M9. FACE gasoline detailed hydrocarbon analysis
-- **Contains:** FACE set I/II CSVs hold component names but no fractions (Task 5), so all 144 FACE rows are `target_ok=False` (`data/real_fuels/v4/gasoline_octane_blends.csv`). A DHA table (CRC "AVFL-24" report and/or a Sarathy et al. paper, both **from the brief only: UNVERIFIED**) would give per-component fractions. Ethanol volume percentages in FACE rows are inferred from the "+N" suffix and have unknown provenance (Task 5 ledger). The gasoline MISSING.md fuels beyond FACE A-J (CoOptima_4comp and its E10/E20/E30/M10/M20 variants, NREL_BOB_01, PRF_E10 to PRF_E90, SURR_TRF_60/70/80/90, TIGAS_Green_Gasoline) have no source identified in the repo and are listed in M16.
+- **Contains:** FACE set I/II CSVs hold component names but no fractions (Task 5), so all 144 FACE rows are `target_ok=False` (`data/real_fuels/v4/gasoline_octane_blends.csv`). A DHA table (CRC "AVFL-24" report and/or a Sarathy et al. paper, both **from the brief only: UNVERIFIED**) would give per-component fractions. Ethanol volume percentages in FACE rows are inferred from the "+N" suffix and have unknown provenance (`results/v4/P2/gasoline_corpus.md`, "Ethanol share basis for FACE is `volume_inferred`"). The gasoline MISSING.md fuels beyond FACE A-J (CoOptima_4comp and its E10/E20/E30/M10/M20 variants, NREL_BOB_01, PRF_E10 to PRF_E90, SURR_TRF_60/70/80/90, TIGAS_Green_Gasoline) have no source identified in the repo and are listed in M16.
 - **MISSING.md fuels covered (gasoline, no clean composition):** CRC_FACE_A, CRC_FACE_B, CRC_FACE_C, CRC_FACE_D, CRC_FACE_E, CRC_FACE_F, CRC_FACE_G, CRC_FACE_H, CRC_FACE_I, CRC_FACE_J, CRC_FACE_A_E10, CRC_FACE_A_E25, CRC_FACE_A_E40, CRC_FACE_A_E60, CRC_FACE_C_E10, CRC_FACE_C_E25, CRC_FACE_C_E40, CRC_FACE_C_E60, CRC_FACE_F_E10, CRC_FACE_F_E25, CRC_FACE_F_E40, CRC_FACE_F_E60, CRC_FACE_G_E10, CRC_FACE_G_E25, CRC_FACE_G_E40, CRC_FACE_G_E60, CRC_FACE_I_E10, CRC_FACE_I_E25, CRC_FACE_I_E40, CRC_FACE_I_E60, CRC_FACE_J_E10, CRC_FACE_J_E25, CRC_FACE_J_E40, CRC_FACE_J_E60.
 - **Unblocks:** FACE rows as octane targets (Task 15), their use in Tasks 9 and 17 (gasoline), 16.
 - **Folder / filename:** `data/raw/face_gasoline_dha/face_dha.pdf` (and any supplementary spreadsheet as `face_dha_supplement.xlsx`).
-- **Fallback:** Task 15 uses only the bRON blends (66 blends, 21 blendstock groups, 65 RON / 66 MON targets; `data/real_fuels/v4/gasoline_octane_blends.csv`), and the locked octane set stays thin (12 fuels in 4 groups; `splits/v4/real_fuels_v4_splits.json`). **Claim narrowed:** no octane-from-composition claim for FACE gasoline.
+- **Fallback:** Task 15 uses only the bRON blends (66 blends and 65 RON / 66 MON targets per `results/v4/P2/gasoline_corpus.md`; 21 blendstock groups per `counts.groups_by_family.cooptima_bron` in `splits/v4/real_fuels_v4_splits.json`), and the locked octane set stays thin (12 fuels in 4 groups per the Task 7 ledger, not re-derived here: **UNVERIFIED**; check the `locked` section of `splits/v4/real_fuels_v4_splits.json`). **Claim narrowed:** no octane-from-composition claim for FACE gasoline.
 
 ### M10. Vozka et al. 2019 main article and Purdue GCxGC jet studies
 - **Contains:** *Energy & Fuels* 33(4) 3275 (2019). Only the SI is ingested (freezing for 25 Jet A blends; heat of combustion for the neat blendstocks; class compositions for 11 blends). The main article has density, viscosity and flash of the blends (leads doc: still needed). The ACS figshare record `https://acs.figshare.com/articles/journal_contribution/Impact_of_Alternative_Fuel_Blending_Components_on_Fuel_Composition_and_Properties_in_Blends_with_Jet_A/7844741` may hold free SI (leads doc, SNIPPET). The brief also names "Purdue GCxGC jet-fuel studies (Vozka, Kilaz et al.)". No further paper is identified in the repo, so any other Purdue paper is **UNVERIFIED**; the HEFA-feedstock companion paper (E&F 2018) is mentioned in the leads doc without a citation.
@@ -144,14 +143,15 @@ The **NASA CR-179472 text is already local** (`extras/fuelblend_data/data/raw/pd
 No document is named for these; they are listed so none is orphaned. If you know a source, drop it in `data/raw/unsourced_fuels/` and tell me which fuels it covers.
 - Gasoline (21): CoOptima_4comp, CoOptima_4comp_E10, CoOptima_4comp_E20, CoOptima_4comp_E30, CoOptima_4comp_M10, CoOptima_4comp_M20, NREL_BOB_01, PRF_E10, PRF_E20, PRF_E30, PRF_E40, PRF_E50, PRF_E60, PRF_E70, PRF_E80, PRF_E90, SURR_TRF_60, SURR_TRF_70, SURR_TRF_80, SURR_TRF_90, TIGAS_Green_Gasoline.
 - Jet: POSF_10264, POSF_10289, POSF_11498, POSF_12344, POSF_12345, Dooley2010_1stGen, Dooley2012_2ndGen, KimVioli2014_UM1, KimVioli2014_UM2, Violi2002_JP8_6comp, NASA_LFPA3, NASA_Shale_JP5, BrunoHuber2010_3comp, Chen2016_JI, Honnet2009_Aachen, HyChem_NJFCP_A1, HyChem_NJFCP_A2, HyChem_NJFCP_A3 (only the A2 specification web page is named in the repo, see M1).
+- BrunoHuber2010_3comp [kept fraction 0.69], Chen2016_JI [0.341], Honnet2009_Aachen [0.80] were dropped for incomplete composition (below the 0.95 gate). They are surrogate definitions from papers; the repo names no source for the missing fractions (the original papers by those authors and years are search hints only, **UNVERIFIED**).
 - Fallback: these stay dropped. The v4 claims cover only the fuels in `data/real_fuels/v4/`.
 
 ## 3. Cross-reference: every `data/MISSING.md` row maps to an entry or is marked out of scope
 
 | MISSING.md row (date) | Checklist entry |
 |---|---|
-| NREL Cetane Compendium, 56 unmeasured isomers (2026-11-04) | Not in the repo as a raw file; out of scope for Tasks 9-19 (cetane/DCN is not a target). A processed copy is at `data/processed/v2/cetane_nrel_compendium.csv`. No entry |
-| 8 unverified Antoine sets (2026-11-04) | No download exists (NIST WebBook tables do not exist for these compounds). Not blocking. Affects Task 9 only via M14 (C21-C24). No entry needed |
+| NREL Cetane Compendium, 56 unmeasured isomers (2026-11-04) | A raw merged CSV exists at `extras/fuelblend_data/data/raw/cetane/nrel_cn_merged_210831.csv` (its reference column cites Yanowitz et al. 2017, NREL/TP-5400-67585); its coverage of the 56 unmeasured isomers is unchecked. Out of scope for Tasks 9-19 (cetane/DCN is not a target). A processed copy is at `data/processed/v2/cetane_nrel_compendium.csv`. No entry |
+| 8 unverified Antoine sets (2026-11-04) | MISSING.md states the primary NIST WebBook tables do not exist for these compounds. Not blocking. Affects Task 9 only via M14 (C21-C24). No entry needed |
 | RP-1 11-blend speciated compositions (2026-11-04) | M6 (confidential; not obtainable by download). Fallback in M6 |
 | v4 Task 3 dropped: diesel (5 incomplete + 11 no clean) | M8 (all 16 named) |
 | v4 Task 3 dropped: gasoline (55 no clean composition) | CRC_FACE_* : M9. The 21 others: M16 |
