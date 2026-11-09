@@ -24,3 +24,19 @@ Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= 0.
   - jet (18): Dooley2010_1stGen, Dooley2012_2ndGen, HyChem_NJFCP_A1, HyChem_NJFCP_A2, HyChem_NJFCP_A3, KimVioli2014_UM1, KimVioli2014_UM2, NASA_LFPA3, NASA_Shale_JP5, POSF_10264, POSF_10289, POSF_10325, POSF_11498, POSF_12344, POSF_12345, POSF_13511, POSF_13516, Violi2002_JP8_6comp
 
 <!-- v4-task3-dropped:end -->
+
+<!-- v4-task6:begin -->
+
+### v4 Task 6: jet properties with no local source (2026-11-10)
+
+| Date Logged | Item / Source | Expected Content | Current Status & Mitigation |
+|---|---|---|---|
+| 2026-11-10 | v4 Task 6: JetA_API14avg property targets | missing: density_kg_m3, viscosity_kin_cSt, flash_point_C, freezing_point_C, pour_point_C, net_heat_of_combustion_MJ_kg; carbon-number split assumed (no same-fuel distillation) | API 2010 'Jet A' 14-sample average: fetch API (2010b) Table of fuel properties cited by ATSDR TP-121 Table 4-2, and a mean D86 curve |
+| 2026-11-10 | v4 Task 6: UDRI_HTA_repfuel property targets | missing: density_kg_m3, viscosity_kin_cSt, flash_point_C, freezing_point_C, pour_point_C, net_heat_of_combustion_MJ_kg; carbon-number split assumed (no same-fuel distillation) | UDRI 'HTA representative fuel' (ASCENT 31a deck slide 12) has no property rows locally; fetch the fuel's specification-property table from the same ASCENT 31a report and a D86/D2887 curve |
+| 2026-11-10 | v4 Task 6: POSF-10325 property targets | missing: freezing_point_C, pour_point_C, net_heat_of_combustion_MJ_kg | CRC AV-27-18 lists POSF 10325 but not freezing/pour/heat of combustion; fetch the AFRL/CRC property sheet for POSF 10325 (e.g. Edwards, 'Reference Jet Fuels for Combustion Testing', AIAA 2017-0146, or the ASCENT 31a deck's property slide). AJFTD fuel_id 2 (label '10325': freezing -50 C, D86) is NOT linked: its identity with POSF 10325 is unconfirmed and its flash (48 C) disagrees with AV-27-18 (55 C) |
+| 2026-11-10 | v4 Task 6: POSF-13511 property targets | missing: density_kg_m3, viscosity_kin_cSt, flash_point_C, freezing_point_C, pour_point_C, net_heat_of_combustion_MJ_kg; carbon-number split assumed (no same-fuel distillation) | no row in av2718/crc647/AJFTD; fetch POSF 13511 property sheet (Edwards AIAA 2017-0146 / AFRL 'Alternative Jet Fuels' tables) and a D86 or D2887 curve (needed for the carbon-number split) |
+| 2026-11-10 | v4 Task 6: POSF-13516 property targets | missing: density_kg_m3, viscosity_kin_cSt, flash_point_C, freezing_point_C, pour_point_C, net_heat_of_combustion_MJ_kg; carbon-number split assumed (no same-fuel distillation) | no row in av2718/crc647/AJFTD; fetch POSF 13516 property sheet (Edwards AIAA 2017-0146 / AFRL) and a D86 or D2887 curve (needed for the carbon-number split) |
+| 2026-11-10 | v4 Task 6: JP5_PotterSimmons / JP8_PotterSimmons composition | ATSDR TP-121 Tables 3/4 list identified compounds only (JP-5 40.9 %, JP-8 42.3 % of mass); rows kept as `excluded_partial_composition`, never normalised | fetch Potter & Simmons (1998) full GC tables (or a DHA/GCxGC type analysis) for the same two fuels |
+| 2026-11-10 | v4 Task 6: inventory_v4 RP-1 fuels (NIST_RP1, RP1_Binary_2comp, RP1_Edwards_3comp, RP1_NIST_14comp) property targets | no linked measured properties; `rp1_properties.csv` (NISTIR 6646) describes 'RP-1 original sample', whose identity with SRM 4572 (`NIST_RP1`) is unconfirmed; surrogates have no measurements | fetch the SRM 4572 certificate / Fortin et al. 2012 property table |
+
+<!-- v4-task6:end -->
