@@ -6,15 +6,7 @@ Universe (ruling R1): fuel_ids of inventory_v4.csv  UNION  included jet-GC fuels
 drops the partial JP5/JP8 Potter-Simmons rows)  UNION  gasoline blend_ids.  Disjointness of the inventory and
 jet-GC ids is asserted, never assumed.
 
-GROUPS
-  The leakage unit; a group is never split across locked/folds.
-  * CRC647_<n>, jet-GC fuels: one group per fuel_id.
-  * NIST_RP1 + its 3 RP-1 surrogates (Binary_2comp, Edwards_3comp, NIST_14comp): ONE group "RP1" - the surrogates
-    are models of the same physical fuel and share its property targets.
-  * gasoline: group = ``base_fuel``.  FACE ethanol blends share their base gasoline (FACE_A x4 ...); the 66 bRON
-    blends are a blendstock added to ONE of two base-gasoline lumps (63 / 3 blends), so per-blend random splitting
-    would leak the base (R17: base RON/MON is a model input).  Grouping by base keeps a base family on one side.
-    Cost: the 63-blend bRON family is a single fold-sized group and bRON contributes no locked group.
+GROUPS: see GROUP_DEFINITION.
 
 LOCKED SET
   20 % of GROUPS (seed 20261030), chosen FIRST, stratified by source family (largest remainder; families with < 5
@@ -43,6 +35,15 @@ N_FOLDS = 5
 LOCKED_FRAC = 0.20
 OUT_SPLITS = ROOT / "splits" / "v4" / "real_fuels_v4_splits.json"
 OUT_COV = ROOT / "results" / "v4" / "P2" / "coverage_matrix.csv"
+GROUP_DEFINITION = (
+    "The leakage unit; a group is never split across locked/folds. CRC647_<n> and jet-GC fuels: one group per "
+    "fuel_id. NIST_RP1 + its 3 RP-1 surrogates (Binary_2comp, Edwards_3comp, NIST_14comp): ONE group 'RP1' "
+    "(surrogates model the same physical fuel). FACE gasolines: group = base_fuel (ethanol blends stay with their "
+    "base). Co-Optima bRON blends (blend_id BRON:<CAS>:<frac>): group = 'BRON:<CAS>' of the blendstock, across both "
+    "base-gasoline lumps (R19): all fractions of one blendstock stay together, so locked/fold bRON blendstocks are "
+    "unseen at train time. The base lump's RON/MON stays a model INPUT (R17); this is a stricter unseen-blendstock "
+    "test, and a blendstock tested on both bases is held out for both."
+)
 RP1_GROUP = ["NIST_RP1", "RP1_Binary_2comp", "RP1_Edwards_3comp", "RP1_NIST_14comp"]
 DIESEL_RE = re.compile(r"diesel|lfp|ulsd|en590", re.I)
 DIESEL_RAW_DIRS = [ROOT / "data" / "raw" / "pour_point", ROOT / "data" / "raw" / "gc_composition",
@@ -50,14 +51,20 @@ DIESEL_RAW_DIRS = [ROOT / "data" / "raw" / "pour_point", ROOT / "data" / "raw" /
                    ROOT / "extras" / "fuelblend_data" / "data" / "raw" / "wax"]
 
 
+DIESEL_SKIPPED_FILES: list[str] = []
+
+
 def diesel_qualifying_fuels() -> list[str]:
     """Diesel fuels with a raw-file CLASS/COMPONENT composition (``class_or_component`` + ``pct`` columns)."""
     found: set[str] = set()
+    DIESEL_SKIPPED_FILES.clear()
     for d in DIESEL_RAW_DIRS:
         for f in sorted(d.glob("*.csv")) if d.exists() else []:
             try:
                 df = pd.read_csv(f, dtype=str)
-            except Exception:
+            except (pd.errors.ParserError, UnicodeDecodeError, OSError) as exc:
+                DIESEL_SKIPPED_FILES.append(f"{f.name}: {type(exc).__name__}")
+                print(f"[diesel scan] skipped unreadable {f}: {exc}", file=sys.stderr)
                 continue
             if not {"fuel_code", "class_or_component", "pct"} <= set(df.columns):
                 continue
@@ -96,7 +103,8 @@ def _units(inv, gas, included) -> pd.DataFrame:
     for fid in included:
         rows.append((fid, fid, "jet_gc", "jet_class_compositions"))
     for bid, base, src in zip(gas.blend_id, gas.base_fuel, gas.source):
-        rows.append((bid, base, _family(src), "gasoline_octane_blends"))
+        grp = ":".join(bid.split(":")[:2]) if bid.startswith("BRON:") else base
+        rows.append((bid, grp, _family(src), "gasoline_octane_blends"))
     u = pd.DataFrame(rows, columns=["fuel_id", "group", "family", "corpus"])
     assert u.fuel_id.is_unique, "duplicate fuel_id in the universe"
     norm = u.fuel_id.str.replace(r"[-_\s]", "", regex=True).str.upper()
@@ -107,7 +115,7 @@ def _units(inv, gas, included) -> pd.DataFrame:
     return u
 
 
-def _choose_locked(groups: pd.DataFrame) -> list[str]:
+def _choose_locked(groups: pd.DataFrame, seed: int = SEED) -> list[str]:
     n_lock = int(round(LOCKED_FRAC * len(groups)))
     fam_n = groups.groupby("family").size()
     elig = fam_n[fam_n >= 5]
@@ -116,7 +124,7 @@ def _choose_locked(groups: pd.DataFrame) -> list[str]:
     rem = (quota - alloc).sort_values(ascending=False, kind="stable")
     for fam in rem.index[: n_lock - int(alloc.sum())]:
         alloc[fam] += 1
-    rng = np.random.default_rng(SEED)
+    rng = np.random.default_rng(seed)
     out: list[str] = []
     for fam in sorted(alloc.index):
         gl = sorted(groups.loc[groups.family == fam, "group"])
@@ -158,14 +166,14 @@ def _coverage(u, jet, gas) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["fuel_id", "property"], kind="stable").reset_index(drop=True)
 
 
-def build() -> dict:
+def build(seed: int = SEED) -> dict:
     inv, jet, gas, included = _load()
     u = _units(inv, gas, included)
     groups = u.drop_duplicates("group")[["group", "family"]].reset_index(drop=True)
-    locked_groups = _choose_locked(groups)
+    locked_groups = _choose_locked(groups, seed)
     dev = u[~u.group.isin(locked_groups)].sort_values("fuel_id").reset_index(drop=True)
     role = {f: "locked" for f in u.fuel_id[u.group.isin(locked_groups)]}
-    gkf = GroupKFold(n_splits=N_FOLDS, shuffle=True, random_state=SEED)
+    gkf = GroupKFold(n_splits=N_FOLDS, shuffle=True, random_state=seed)
     for k, (_, te) in enumerate(gkf.split(dev, groups=dev.group)):
         for f in dev.fuel_id.iloc[te]:
             role[f] = f"fold{k}"
@@ -173,10 +181,18 @@ def build() -> dict:
     members = {g: sorted(s.fuel_id) for g, s in u.groupby("group")}
     hl = sorted(jet.loc[jet.headline_ok & jet.fuel_id.isin(included), "fuel_id"])
     meta = u.set_index("fuel_id")
-    gdef = __doc__.split("GROUPS\n")[1].split("LOCKED SET")[0]
+    cov = _coverage(u, jet, gas)
+    cov["split_role"] = cov.fuel_id.map(role)
+    tgt = cov[(cov.role == "target") & cov.present]
+    tcount = {sp: {k: int(v) for k, v in tgt[tgt.split_role == sp].groupby("property").fuel_id.nunique().items()}
+              for sp in ["locked"] + [f"fold{k}" for k in range(N_FOLDS)]}
+    fsz = sorted(len(v) for v in folds.values())
+    med = float(np.median(fsz))
+    locked_set = [g for g in hl if role[g] == "locked"]
+    gc_locked = sorted(f for f in included if role[f] == "locked")
     splits = {
-        "seed": SEED, "n_folds": N_FOLDS, "locked_fraction_of_groups": LOCKED_FRAC,
-        "group_definition": re.sub(r"\s+", " ", gdef).strip(),
+        "seed": seed, "n_folds": N_FOLDS, "locked_fraction_of_groups": LOCKED_FRAC,
+        "group_definition": GROUP_DEFINITION,
         "procedure": "locked groups chosen first (family-stratified, largest remainder, families < 5 groups "
                      "contribute none); GroupKFold(shuffle=True, random_state=seed) over the remaining fuel_ids "
                      "grouped by `group`",
@@ -186,6 +202,11 @@ def build() -> dict:
                      "gasoline_octane_blends": int((u.corpus == "gasoline_octane_blends").sum())},
         "counts": {"fuels": len(u), "groups": len(members),
                    "locked_fuels": sum(r == "locked" for r in role.values()), "locked_groups": len(locked_groups),
+                   "locked_fraction_of_fuels": round(sum(r == "locked" for r in role.values()) / len(u), 4),
+                   "locked_fraction_of_groups_actual": round(len(locked_groups) / len(members), 4),
+                   "fold_size_max_over_median": round(max(fsz) / med, 3),
+                   "target_fuels_by_split_and_property": tcount,
+                   "diesel_scan_skipped_files": list(DIESEL_SKIPPED_FILES),
                    "fold_fuels": {k: len(v) for k, v in folds.items()},
                    "groups_by_family": groups.family.value_counts().sort_index().to_dict(),
                    "fuels_by_family": u.family.value_counts().sort_index().to_dict()},
@@ -198,10 +219,12 @@ def build() -> dict:
         "groups": members,
         "headline_set": hl,
         "headline_statistics_allowed": False,
-        "headline_note": f"headline_ok has n={len(hl)} (cn_split_class_independent=True); report no statistics over it.",
+        "headline_note": f"headline_ok has n={len(hl)} (cn_split_class_independent=True); report no statistics over it. "
+                         f"Headline fuel(s) in locked set: {locked_set or 'none'} (headline fuel POSF-10325 is in dev "
+                         f"fold {role.get('POSF-10325')}, NOT held out); jet-GC fuels locked: {gc_locked}.",
         "diesel": {"qualifying_fuels": diesel_qualifying_fuels(), "decision": "SD-02 (docs/scope_decisions.md)"},
     }
-    return {"splits": splits, "coverage": _coverage(u, jet, gas)}
+    return {"splits": splits, "coverage": cov.drop(columns="split_role")}
 
 
 def main() -> None:
@@ -210,7 +233,17 @@ def main() -> None:
     OUT_COV.parent.mkdir(parents=True, exist_ok=True)
     OUT_SPLITS.write_text(json.dumps(r["splits"], indent=1, sort_keys=True) + "\n", encoding="utf-8")
     r["coverage"].to_csv(OUT_COV, index=False)
-    print(json.dumps(r["splits"]["counts"], indent=1))
+    c = r["splits"]["counts"]
+    md = ["# Coverage matrix summary (v4 splits)", "", "Locked-set / per-fold TARGET fuels by property "
+          "(fuels with role=target in coverage_matrix.csv):", ""]
+    for sp, d in c["target_fuels_by_split_and_property"].items():
+        md.append(f"- **{sp}**: " + (", ".join(f"{k}={v}" for k, v in sorted(d.items())) or "none"))
+    md += ["", f"Fold sizes (fuels): {c['fold_fuels']}; max/median = {c['fold_size_max_over_median']}.",
+           f"Locked: {c['locked_groups']} groups, {c['locked_fuels']} fuels "
+           f"({c['locked_fraction_of_fuels']:.1%} of fuels, {c['locked_fraction_of_groups_actual']:.1%} of groups).", "",
+           r["splits"]["headline_note"], ""]
+    (OUT_COV.parent / "coverage_matrix_summary.md").write_text(chr(10).join(md), encoding="utf-8")
+    print(json.dumps(c, indent=1))
 
 
 if __name__ == "__main__":

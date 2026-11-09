@@ -87,12 +87,46 @@ def test_surrogates_stay_with_real_rp1(built):
     assert len({g[f] for f in ["NIST_RP1", "RP1_Binary_2comp", "RP1_Edwards_3comp", "RP1_NIST_14comp"]}) == 1
 
 
-def test_bron_base_family_not_split(built):
+def test_bron_blendstock_family_not_split(built):
     sp = built["splits"]
     gas = pd.read_csv(V4 / "gasoline_octane_blends.csv")
-    for base, sub in gas.groupby("base_fuel"):
-        assert len({sp["fuel_group"][b] for b in sub.blend_id}) == 1, base
+    bron = gas[gas.blend_id.str.startswith("BRON:")]
+    for cas, sub in bron.groupby(bron.blend_id.str.split(":").str[1]):
+        assert {sp["fuel_group"][b] for b in sub.blend_id} == {f"BRON:{cas}"}, cas
+        assert len({_roles(sp)[b] for b in sub.blend_id}) == 1, cas
+    for base, sub in gas[~gas.blend_id.str.startswith("BRON:")].groupby("base_fuel"):
         assert len({_roles(sp)[b] for b in sub.blend_id}) == 1, base
+
+
+def test_locked_fraction_recorded_and_bounded(built):
+    c = built["splits"]["counts"]
+    assert 0.15 <= c["locked_groups"] / c["groups"] <= 0.25
+    assert c["locked_fraction_of_fuels"] == pytest.approx(c["locked_fuels"] / c["fuels"], abs=1e-3)
+    assert c["fold_size_max_over_median"] <= 2.0
+
+
+def test_locked_has_ron_and_mon_targets(built):
+    cov, sp = built["coverage"], built["splits"]
+    lk = cov[cov.fuel_id.isin(sp["locked"]) & (cov.role == "target") & cov.present]
+    assert lk[lk.property == "ron"].fuel_id.nunique() >= 1
+    assert lk[lk.property == "mon"].fuel_id.nunique() >= 1
+    assert sp["counts"]["target_fuels_by_split_and_property"]["locked"].get("ron", 0) >= 1
+
+
+def test_different_seed_changes_locked_and_stored_json_matches(built):
+    other = S.build(seed=1)["splits"]
+    assert other["locked"] != built["splits"]["locked"]
+    stored = S.OUT_SPLITS
+    if stored.exists():
+        js = json.loads(stored.read_text(encoding="utf-8"))
+        assert js["locked"] == built["splits"]["locked"]
+        assert js["folds"] == built["splits"]["folds"]
+
+
+def test_headline_note_states_dev_fold(built):
+    sp = built["splits"]
+    assert "NOT held out" in sp["headline_note"] or "locked set" in sp["headline_note"]
+    assert "POSF-10325" in sp["headline_note"]
 
 
 def test_headline_flags_carried(built):
