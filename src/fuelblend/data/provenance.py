@@ -161,7 +161,9 @@ def _safe_eval(node: ast.AST, env: dict) -> Any:
                 return _UNK
     try:
         code = compile(ast.Expression(body=node), "<replay>", "eval")
-        val = eval(code, {"__builtins__": _SAFE_BUILTINS}, env)  # noqa: S307 - whitelisted AST only
+        # env goes into *globals*: before Python 3.12 (PEP 709) a comprehension runs in its own scope
+        # and cannot see eval() locals, which made the replay depend on the interpreter version.
+        val = eval(code, {**env, "__builtins__": _SAFE_BUILTINS})  # noqa: S307 - whitelisted AST only
     except Exception:  # noqa: BLE001 - any failure means "not evaluable"
         return _UNK
     return val
@@ -281,12 +283,30 @@ class _Replayer:
         return out
 
     def _index_property_vars(self) -> None:
-        """Per-fuel loop variables that hold a fuel *property* (by the script's own variable name)."""
+        """Per-fuel loop variables that hold a fuel *property*.
+
+        Three independent routes (any one suffices, so a rename does not silently drop the taint):
+        (1) the variable is written to exactly one property column of a row dict inside the loop
+            (``"density_kg_m3": rho``); a variable written to two different property columns
+            (TRF ``"ron": v_iso, "mon": v_iso``) is a definitional identity, not an input;
+        (2) the script's own variable name (``PROPERTY_VAR_NAMES``);
+        (3) subscripted reads of a property key (``face_map[b]["dens"]``) -- handled in ``_deps``.
+        """
         for node in ast.walk(self.tree):
             if not isinstance(node, ast.For):
                 continue
-            for n in _names(node.target):
-                if n in PROPERTY_VAR_NAMES:
+            tnames = _names(node.target)
+            written: dict[str, set[str]] = {}
+            for sub in ast.walk(node):
+                if isinstance(sub, ast.Dict):
+                    for k, v in zip(sub.keys, sub.values):
+                        if (isinstance(k, ast.Constant) and k.value in PROPERTY_FIELDS
+                                and isinstance(v, ast.Name) and v.id in tnames):
+                            written.setdefault(v.id, set()).add(k.value)
+            for n in tnames:
+                if n in written and len(written[n]) == 1:
+                    self.prop_tags[f"{n}@{node.lineno}"] = next(iter(written[n]))
+                elif n in PROPERTY_VAR_NAMES and n not in written:
                     self.prop_tags[f"{n}@{node.lineno}"] = PROPERTY_VAR_NAMES[n]
 
     def seg(self, node: ast.AST) -> str:
@@ -305,6 +325,16 @@ class _Replayer:
         out: set = set()
         for n in _names(node):
             out |= deps.get(n, frozenset())
+        # route (3): a read like face_map[b]["dens"] / row["density_kg_m3"] is a property input
+        for sub in ast.walk(node):
+            if isinstance(sub, ast.Subscript) and isinstance(sub.slice, ast.Constant) \
+                    and isinstance(sub.slice.value, str):
+                key = sub.slice.value
+                prop = key if key in PROPERTY_FIELDS else PROPERTY_VAR_NAMES.get(key)
+                if prop:
+                    tag = f"prop:{prop}"
+                    self.prop_tags[tag] = prop
+                    out.add(tag)
         return frozenset(out)
 
     def _origin(self, node: ast.AST, origins: dict) -> str | None:
@@ -707,6 +737,7 @@ class _Ctx:
     relations: dict[tuple[str, str], str]
     inv_match: dict[str, CodeRecord | None] = field(default_factory=dict)
     groups: dict | None = None
+    fam_groups: dict | None = None
 
 
 def _record_value(rec: CodeRecord, key: str, fuel_id: str) -> Any:
@@ -791,6 +822,25 @@ def _group_size(ctx: _Ctx, rec: CodeRecord, key: str, value: Any) -> int:
     return ctx.groups.get((rec.template_id, key, _fmt(value)), 0)
 
 
+DATA_CONST_MIN_FUELS = 3
+
+
+def _family_group(ctx: _Ctx, fid: str, key: str, value: Any) -> tuple[int, str]:
+    """(number of fuels of fid's family in this table with the same value for key, family)."""
+    if ctx.fam_groups is None:
+        ctx.fam_groups = {}
+        fam_col = "fuel_family" if "fuel_family" in ctx.inv.columns else None
+        for _, r in ctx.inv.iterrows():
+            fam = str(r[fam_col]) if fam_col else ""
+            for k in PROPERTY_FIELDS:
+                if k in r.index and _num(r[k]) is not None:
+                    g = (fam, k, _fmt(r[k]))
+                    ctx.fam_groups[g] = ctx.fam_groups.get(g, 0) + 1
+    row = ctx.inv[ctx.inv["fuel_id"] == fid]
+    fam = str(row["fuel_family"].iloc[0]) if len(row) and "fuel_family" in row.columns else ""
+    return ctx.fam_groups.get((fam, key, _fmt(value)), 0), fam
+
+
 def _classify_inventory_value(ctx: _Ctx, fid: str, key: str, value: Any) -> tuple[str, str]:
     rec = ctx.inv_match.get(fid)
     kind, code_ev = _const_kind(rec, key, fid) if rec is not None else ("none", "")
@@ -828,6 +878,15 @@ def _classify_inventory_value(ctx: _Ctx, fid: str, key: str, value: Any) -> tupl
             elif raw:
                 parts.append(raw_ev)
             return "formula_derived", ev(*parts)
+    if kind in ("none", "carry") and key in PROPERTY_FIELDS:
+        # pure data rule -- stands without any code evidence
+        n_fam, fam = _family_group(ctx, fid, key, value)
+        if n_fam >= DATA_CONST_MIN_FUELS:
+            note = (f"data: the same {key} = {_fmt(value)} is stored for {n_fam} `{fam}` fuels of this table "
+                    f"(rule: one value on >= {DATA_CONST_MIN_FUELS} fuels of a family)")
+            if raw and raw[0] == "match":
+                note += " (coincides with the raw value for this fuel)"
+            return "placeholder_constant", ev(code_ev, note, raw_ev)
     if raw and raw[0] == "match":
         return "raw_file", ev(raw_ev, code_ev)
     if kind == "loopvar":
@@ -845,15 +904,31 @@ def _source_of(ctx: _Ctx, fid: str) -> str:
     return str(r["source"].iloc[0]) if len(r) and "source" in r.columns else ""
 
 
-def _classify_claims(ctx: _Ctx, fid: str, claims: str) -> list[tuple[str, str, str, str]]:
+def _classify_claims(ctx: _Ctx, fid: str, claims: str, row: pd.Series,
+                     value_cls: dict[str, str]) -> list[tuple[str, str, str, str]]:
+    """``claim:<prop>`` rows. A claim is ``raw_file`` only when THIS table stores a value for the
+    property and that stored value matches the raw file; a raw value existing elsewhere is not enough
+    (the evidence then says ``raw exists: <path> -> <value>`` and the class is ``unknown``)."""
     out = []
     for prop in sorted({c.strip() for c in str(claims).split(";") if c.strip()}):
         got = ctx.raw.scalar(fid, prop)
         if got is not None and got[1]:
             path, vals = got
             notes = "; ".join(n for _, n in vals[:3])
-            out.append((f"claim:{prop}", "listed", "raw_file",
-                        f"claim in available_properties verified: {path} has {prop} for {fid} -> {notes}"))
+            stored = row[prop] if prop in row.index else None
+            if _num(stored) is not None:
+                vcls = value_cls.get(prop, "unknown")
+                if vcls == "raw_file":
+                    out.append((f"claim:{prop}", "listed", "raw_file",
+                                f"claim verified: the stored {prop} = {_fmt(stored)} is itself raw_file | "
+                                f"{path} -> {notes}"))
+                else:
+                    out.append((f"claim:{prop}", "listed", "unknown",
+                                f"the stored {prop} = {_fmt(stored)} is {vcls}, not a raw-file value | "
+                                f"raw exists: {path} -> {notes}"))
+            else:
+                out.append((f"claim:{prop}", "listed", "unknown",
+                            f"no stored value for {prop} in this table | raw exists: {path} -> {notes}"))
         elif got is not None:
             out.append((f"claim:{prop}", "listed", "unknown", f"claim NOT found in {got[0]} for {fid}"))
         else:
@@ -956,6 +1031,24 @@ def _classify_compositions(ctx: _Ctx) -> list[dict]:
                         "properties); this row is its normaliser/remainder | " + e) for i, c, e in results]
         per_system[sid] = results
 
+    # pure data rule: a blend system X_E<n> whose non-oxygenate fractions are a constant multiple of
+    # base system X's fractions inherits X's target-derived class
+    for sid in sorted(per_system):
+        m = re.fullmatch(r"fuel:(.+)_[EM]\d+", sid)
+        base = f"fuel:{m.group(1)}" if m else None
+        if base not in per_system or not all(c == "target_derived_composition" for _, c, _ in per_system[base]):
+            continue
+        if all(c == "target_derived_composition" for _, c, _ in per_system[sid]):
+            continue
+        b = comp[comp["system_id"] == base].groupby("inchikey")["fraction"].sum()
+        s = comp[comp["system_id"] == sid].groupby("inchikey")["fraction"].sum()
+        common = [k for k in b.index if k in s.index and not str(k).startswith("LUMP_") and b[k] > 0]
+        ratios = [float(s[k]) / float(b[k]) for k in common]
+        if len(ratios) >= 2 and max(ratios) - min(ratios) <= 2e-3 * max(ratios) + 2e-4:
+            note = (f"data: the {len(common)} hydrocarbon fractions are {_fmt(round(float(np.median(ratios)), 5))} x "
+                    f"those of {base}, whose vector is target-derived")
+            per_system[sid] = [(i, "target_derived_composition", note + " | " + e) for i, _, e in per_system[sid]]
+
     for sid, results in per_system.items():
         for idx, cls, evid in results:
             row = comp.loc[idx]
@@ -1006,6 +1099,19 @@ def _classify_one_fraction(ctx, fid, row, ik, o, val, g, rec, crecs, inv_rec, ra
             f"{_fmt(round(pct.sum(), 2))}, including sub-totals and `*_total` rows, so classes are double-counted); "
             f"each class pct was rescaled by (1 - hardcoded unresolved) / sum and assigned to one representative "
             f"molecule `{smi}` by a substring rule on the class label -- the molecule identity is not in the raw file")
+
+    # (2b) pure data rule: the allocation replayed from this fuel's own stored properties
+    #      (stands without any code evidence; code evidence is added when it agrees)
+    if not lumped and inv_row is not None:
+        data_rel = _composition_relation_text(fid, ik, val, inv_row, None)
+        if data_rel:
+            code_part = ""
+            if rec is not None and _same(rec.values.get("fraction"), val):
+                rep = ctx.reps[rec.script]
+                d = rec.deps.get("fraction", frozenset())
+                code_part = (f" | code: {rec.script}:L{rec.nodes['fraction'].lineno} `{rec.segs['fraction']}` "
+                             f"via {'; '.join(rep.explain(d))}")
+            return "target_derived_composition", data_rel + code_part
 
     # (3) replayed code record for this exact row
     if rec is not None and _same(rec.values.get("fraction"), val):
@@ -1072,6 +1178,8 @@ def _classify_one_fraction(ctx, fid, row, ik, o, val, g, rec, crecs, inv_rec, ra
 def _composition_relation_text(fid, ik, val, inv_row, rec) -> str:
     """Explicit data relation (independent of the replay) when the inventory row carries the inputs."""
     if inv_row is None:
+        if rec is None:
+            return ""
         env = rec.env
         get = lambda k: _num(env.get(k, _UNK)) if env.get(k, _UNK) is not _UNK else None  # noqa: E731
         ron, mon, dens, dcn, unres = get("ron"), get("mon"), get("dens"), get("dcn"), get("unres")
@@ -1116,14 +1224,16 @@ def classify_fuel_rows(inventory: pd.DataFrame, compositions: pd.DataFrame, sour
     out: list[dict] = []
     for _, r in ctx.inv.iterrows():
         fid = str(r["fuel_id"])
+        vcls: dict[str, str] = {}
         for key in NUMERIC_FIELDS:
             if key not in r.index or _num(r[key]) is None:
                 continue
             cls, evid = _classify_inventory_value(ctx, fid, key, r[key])
+            vcls[key] = cls
             out.append({"fuel_id": fid, "field": key, "value": _fmt(r[key]), "provenance_class": cls,
                         "evidence": evid})
         if "available_properties" in r.index and isinstance(r["available_properties"], str):
-            for f, v, c, e in _classify_claims(ctx, fid, r["available_properties"]):
+            for f, v, c, e in _classify_claims(ctx, fid, r["available_properties"], r, vcls):
                 out.append({"fuel_id": fid, "field": f, "value": v, "provenance_class": c, "evidence": e})
     out.extend(_classify_compositions(ctx))
     df = pd.DataFrame(out, columns=LEDGER_COLUMNS)
