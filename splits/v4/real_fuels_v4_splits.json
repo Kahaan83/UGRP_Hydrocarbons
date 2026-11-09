@@ -1,0 +1,1878 @@
+{
+ "counts": {
+  "fold_fuels": {
+   "fold0": 37,
+   "fold1": 37,
+   "fold2": 96,
+   "fold3": 30,
+   "fold4": 35
+  },
+  "fuels": 276,
+  "fuels_by_family": {
+   "cooptima_bron": 66,
+   "crc647": 57,
+   "face_set_I": 69,
+   "face_set_II": 75,
+   "jet_gc": 5,
+   "nist_rp1": 4
+  },
+  "groups": 191,
+  "groups_by_family": {
+   "cooptima_bron": 2,
+   "crc647": 57,
+   "face_set_I": 69,
+   "face_set_II": 57,
+   "jet_gc": 5,
+   "nist_rp1": 1
+  },
+  "locked_fuels": 41,
+  "locked_groups": 38
+ },
+ "diesel": {
+  "decision": "SD-02 (docs/scope_decisions.md)",
+  "qualifying_fuels": []
+ },
+ "folds": {
+  "fold0": [
+   "CRC647_101",
+   "CRC647_17",
+   "CRC647_31",
+   "CRC647_316",
+   "CRC647_318",
+   "CRC647_33",
+   "CRC647_44",
+   "CRC647_508",
+   "CRC647_6",
+   "CRC647_721",
+   "CRC647_8",
+   "FACE G+10",
+   "FACE G+25",
+   "FACE G+40",
+   "FACE G+60",
+   "FACE I+10",
+   "FACE I+25",
+   "FACE I+40",
+   "FACE I+60",
+   "Hex+40",
+   "MC 10",
+   "MC 19",
+   "MC 20",
+   "MC 22",
+   "MC 23",
+   "MC 25",
+   "MC 26",
+   "MC 8",
+   "PRF+10",
+   "TPRF 2+40",
+   "TPRF 20",
+   "TPRF 22",
+   "TPRF 3+20",
+   "TPRF 4+1",
+   "TPRF 4+3",
+   "TPRF 42",
+   "TPRF 43"
+  ],
+  "fold1": [
+   "CP+10",
+   "CP+60",
+   "CRC647_206",
+   "CRC647_30",
+   "CRC647_32",
+   "CRC647_4",
+   "CRC647_403",
+   "CRC647_41",
+   "CRC647_507",
+   "CRC647_716",
+   "FACE J+10",
+   "FACE J+25",
+   "FACE J+40",
+   "FACE J+60",
+   "MC 11",
+   "MC 12",
+   "MC 4",
+   "MC 9",
+   "NIST_RP1",
+   "POSF-13511",
+   "POSF-13516",
+   "PRF+60",
+   "RP1_Binary_2comp",
+   "RP1_Edwards_3comp",
+   "RP1_NIST_14comp",
+   "TMB+60",
+   "TPRF 1+20",
+   "TPRF 1+60",
+   "TPRF 13",
+   "TPRF 16",
+   "TPRF 2+20",
+   "TPRF 32",
+   "TPRF 4",
+   "TPRF 4+11",
+   "TPRF 4+14",
+   "TPRF 4+2",
+   "TPRF 4+6"
+  ],
+  "fold2": [
+   "BRON:100-66-3:0.1039",
+   "BRON:100-66-3:0.2104",
+   "BRON:100-66-3:0.3205",
+   "BRON:105-54-4:0.0982",
+   "BRON:105-54-4:0.1960",
+   "BRON:105-54-4:0.3100",
+   "BRON:107-39-1:0.0968",
+   "BRON:107-39-1:0.1941",
+   "BRON:107-39-1:0.2927",
+   "BRON:107-87-9:0.1018",
+   "BRON:107-87-9:0.2028",
+   "BRON:107-87-9:0.3025",
+   "BRON:120-92-3:0.0993",
+   "BRON:120-92-3:0.2013",
+   "BRON:120-92-3:0.2993",
+   "BRON:123-51-3:0.0993",
+   "BRON:123-51-3:0.1939",
+   "BRON:123-51-3:0.2955",
+   "BRON:123-86-4:0.0900",
+   "BRON:123-86-4:0.1864",
+   "BRON:123-86-4:0.2776",
+   "BRON:137-32-6:0.0954",
+   "BRON:137-32-6:0.1896",
+   "BRON:137-32-6:0.2843",
+   "BRON:141-78-6:0.1011",
+   "BRON:141-78-6:0.1980",
+   "BRON:141-78-6:0.3045",
+   "BRON:534-22-5:0.1029",
+   "BRON:534-22-5:0.2043",
+   "BRON:534-22-5:0.3109",
+   "BRON:565-80-0:0.0900",
+   "BRON:565-80-0:0.1903",
+   "BRON:565-80-0:0.2800",
+   "BRON:6032-29-7:0.0998",
+   "BRON:6032-29-7:0.1937",
+   "BRON:6032-29-7:0.2971",
+   "BRON:64-17-5:0.0998",
+   "BRON:64-17-5:0.1952",
+   "BRON:64-17-5:0.3058",
+   "BRON:67-56-1:0.0908",
+   "BRON:67-56-1:0.1818",
+   "BRON:67-56-1:0.2792",
+   "BRON:71-36-3:0.0990",
+   "BRON:71-36-3:0.1939",
+   "BRON:71-36-3:0.3041",
+   "BRON:78-83-1:0.0958",
+   "BRON:78-83-1:0.1874",
+   "BRON:78-83-1:0.2922",
+   "BRON:78-92-2:0.1059",
+   "BRON:78-92-2:0.1950",
+   "BRON:78-92-2:0.2942",
+   "BRON:78-93-3:0.0960",
+   "BRON:78-93-3:0.1970",
+   "BRON:78-93-3:0.2862",
+   "BRON:79-20-9:0.1007",
+   "BRON:79-20-9:0.1933",
+   "BRON:79-20-9:0.3084",
+   "BRON:LUMP:FURAN_MIXTURE:0.0975",
+   "BRON:LUMP:FURAN_MIXTURE:0.1997",
+   "BRON:LUMP:FURAN_MIXTURE:0.3065",
+   "BRON:LUMP:KETONE_MIXTURE:0.1051",
+   "BRON:LUMP:KETONE_MIXTURE:0.1974",
+   "BRON:LUMP:KETONE_MIXTURE:0.2905",
+   "CRC647_109",
+   "CRC647_306",
+   "CRC647_314",
+   "CRC647_334",
+   "CRC647_35",
+   "CRC647_36",
+   "CRC647_42",
+   "CRC647_43",
+   "CRC647_45",
+   "CRC647_606",
+   "FACE C+10",
+   "FACE C+25",
+   "FACE C+40",
+   "FACE C+60",
+   "Hex+10",
+   "MC 5",
+   "PRF+20",
+   "PRF+70",
+   "TPRF 1",
+   "TPRF 1+0",
+   "TPRF 12",
+   "TPRF 15",
+   "TPRF 17",
+   "TPRF 2",
+   "TPRF 2+0",
+   "TPRF 29",
+   "TPRF 3+10",
+   "TPRF 31",
+   "TPRF 38",
+   "TPRF 4+15",
+   "TPRF 4+4",
+   "TPRF 41",
+   "UDRI_HTA_repfuel"
+  ],
+  "fold3": [
+   "CRC647_108",
+   "CRC647_111",
+   "CRC647_18",
+   "CRC647_301",
+   "CRC647_40",
+   "CRC647_704",
+   "CRC647_717",
+   "CRC647_720",
+   "MC 13",
+   "POSF-10325",
+   "PRF+30",
+   "TMB+40",
+   "TPRF 10",
+   "TPRF 18",
+   "TPRF 2+10",
+   "TPRF 21",
+   "TPRF 24",
+   "TPRF 26",
+   "TPRF 27",
+   "TPRF 3+0",
+   "TPRF 34",
+   "TPRF 35",
+   "TPRF 39",
+   "TPRF 4+12",
+   "TPRF 4+13",
+   "TPRF 4+5",
+   "TPRF 4+8",
+   "TPRF 40",
+   "TPRF 8",
+   "TPRF28"
+  ],
+  "fold4": [
+   "BRON:464-06-2:0.1000",
+   "BRON:464-06-2:0.2500",
+   "BRON:464-06-2:0.5000",
+   "CP+40",
+   "CRC647_104",
+   "CRC647_14",
+   "CRC647_20",
+   "CRC647_304",
+   "CRC647_325",
+   "CRC647_335",
+   "CRC647_34",
+   "CRC647_7",
+   "FACE F+10",
+   "FACE F+25",
+   "FACE F+40",
+   "FACE F+60",
+   "MC 15",
+   "MC 16",
+   "MC 2",
+   "MC 24",
+   "MC 3",
+   "MC 6",
+   "TMB+25",
+   "TPRF 1+10",
+   "TPRF 11",
+   "TPRF 14",
+   "TPRF 23",
+   "TPRF 25",
+   "TPRF 3",
+   "TPRF 33",
+   "TPRF 4+7",
+   "TPRF 4+9",
+   "TPRF 5",
+   "TPRF 6",
+   "TPRF 7"
+  ]
+ },
+ "fuel_group": {
+  "BRON:100-66-3:0.1039": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:100-66-3:0.2104": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:100-66-3:0.3205": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:105-54-4:0.0982": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:105-54-4:0.1960": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:105-54-4:0.3100": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-39-1:0.0968": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-39-1:0.1941": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-39-1:0.2927": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-87-9:0.1018": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-87-9:0.2028": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:107-87-9:0.3025": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:120-92-3:0.0993": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:120-92-3:0.2013": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:120-92-3:0.2993": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-51-3:0.0993": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-51-3:0.1939": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-51-3:0.2955": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-86-4:0.0900": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-86-4:0.1864": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:123-86-4:0.2776": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:137-32-6:0.0954": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:137-32-6:0.1896": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:137-32-6:0.2843": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:141-78-6:0.1011": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:141-78-6:0.1980": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:141-78-6:0.3045": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:464-06-2:0.1000": "BRON_BASE_RON87.7_MON80.8",
+  "BRON:464-06-2:0.2500": "BRON_BASE_RON87.7_MON80.8",
+  "BRON:464-06-2:0.5000": "BRON_BASE_RON87.7_MON80.8",
+  "BRON:534-22-5:0.1029": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:534-22-5:0.2043": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:534-22-5:0.3109": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:565-80-0:0.0900": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:565-80-0:0.1903": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:565-80-0:0.2800": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:6032-29-7:0.0998": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:6032-29-7:0.1937": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:6032-29-7:0.2971": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:64-17-5:0.0998": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:64-17-5:0.1952": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:64-17-5:0.3058": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:67-56-1:0.0908": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:67-56-1:0.1818": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:67-56-1:0.2792": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:71-36-3:0.0990": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:71-36-3:0.1939": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:71-36-3:0.3041": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-83-1:0.0958": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-83-1:0.1874": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-83-1:0.2922": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-92-2:0.1059": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-92-2:0.1950": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-92-2:0.2942": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-93-3:0.0960": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-93-3:0.1970": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:78-93-3:0.2862": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:79-20-9:0.1007": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:79-20-9:0.1933": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:79-20-9:0.3084": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:FURAN_MIXTURE:0.0975": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:FURAN_MIXTURE:0.1997": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:FURAN_MIXTURE:0.3065": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:KETONE_MIXTURE:0.1051": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:KETONE_MIXTURE:0.1974": "BRON_BASE_RON90.3_MON84.7",
+  "BRON:LUMP:KETONE_MIXTURE:0.2905": "BRON_BASE_RON90.3_MON84.7",
+  "CP+10": "CP+10",
+  "CP+25": "CP+25",
+  "CP+40": "CP+40",
+  "CP+60": "CP+60",
+  "CRC647_101": "CRC647_101",
+  "CRC647_104": "CRC647_104",
+  "CRC647_105": "CRC647_105",
+  "CRC647_108": "CRC647_108",
+  "CRC647_109": "CRC647_109",
+  "CRC647_110": "CRC647_110",
+  "CRC647_111": "CRC647_111",
+  "CRC647_14": "CRC647_14",
+  "CRC647_17": "CRC647_17",
+  "CRC647_18": "CRC647_18",
+  "CRC647_2": "CRC647_2",
+  "CRC647_20": "CRC647_20",
+  "CRC647_206": "CRC647_206",
+  "CRC647_211": "CRC647_211",
+  "CRC647_3": "CRC647_3",
+  "CRC647_30": "CRC647_30",
+  "CRC647_301": "CRC647_301",
+  "CRC647_304": "CRC647_304",
+  "CRC647_306": "CRC647_306",
+  "CRC647_31": "CRC647_31",
+  "CRC647_314": "CRC647_314",
+  "CRC647_315": "CRC647_315",
+  "CRC647_316": "CRC647_316",
+  "CRC647_318": "CRC647_318",
+  "CRC647_32": "CRC647_32",
+  "CRC647_321": "CRC647_321",
+  "CRC647_325": "CRC647_325",
+  "CRC647_33": "CRC647_33",
+  "CRC647_334": "CRC647_334",
+  "CRC647_335": "CRC647_335",
+  "CRC647_336": "CRC647_336",
+  "CRC647_34": "CRC647_34",
+  "CRC647_35": "CRC647_35",
+  "CRC647_36": "CRC647_36",
+  "CRC647_37": "CRC647_37",
+  "CRC647_39": "CRC647_39",
+  "CRC647_4": "CRC647_4",
+  "CRC647_40": "CRC647_40",
+  "CRC647_403": "CRC647_403",
+  "CRC647_41": "CRC647_41",
+  "CRC647_42": "CRC647_42",
+  "CRC647_43": "CRC647_43",
+  "CRC647_44": "CRC647_44",
+  "CRC647_45": "CRC647_45",
+  "CRC647_507": "CRC647_507",
+  "CRC647_508": "CRC647_508",
+  "CRC647_6": "CRC647_6",
+  "CRC647_606": "CRC647_606",
+  "CRC647_7": "CRC647_7",
+  "CRC647_704": "CRC647_704",
+  "CRC647_711": "CRC647_711",
+  "CRC647_716": "CRC647_716",
+  "CRC647_717": "CRC647_717",
+  "CRC647_718": "CRC647_718",
+  "CRC647_720": "CRC647_720",
+  "CRC647_721": "CRC647_721",
+  "CRC647_8": "CRC647_8",
+  "FACE A+10": "FACE_A",
+  "FACE A+25": "FACE_A",
+  "FACE A+40": "FACE_A",
+  "FACE A+60": "FACE_A",
+  "FACE C+10": "FACE_C",
+  "FACE C+25": "FACE_C",
+  "FACE C+40": "FACE_C",
+  "FACE C+60": "FACE_C",
+  "FACE F+10": "FACE_F",
+  "FACE F+25": "FACE_F",
+  "FACE F+40": "FACE_F",
+  "FACE F+60": "FACE_F",
+  "FACE G+10": "FACE_G",
+  "FACE G+25": "FACE_G",
+  "FACE G+40": "FACE_G",
+  "FACE G+60": "FACE_G",
+  "FACE I+10": "FACE_I",
+  "FACE I+25": "FACE_I",
+  "FACE I+40": "FACE_I",
+  "FACE I+60": "FACE_I",
+  "FACE J+10": "FACE_J",
+  "FACE J+25": "FACE_J",
+  "FACE J+40": "FACE_J",
+  "FACE J+60": "FACE_J",
+  "Hex+10": "Hex+10",
+  "Hex+25": "Hex+25",
+  "Hex+40": "Hex+40",
+  "Hex+60": "Hex+60",
+  "JetA_API14avg": "JetA_API14avg",
+  "MC 1": "MC 1",
+  "MC 10": "MC 10",
+  "MC 11": "MC 11",
+  "MC 12": "MC 12",
+  "MC 13": "MC 13",
+  "MC 14": "MC 14",
+  "MC 15": "MC 15",
+  "MC 16": "MC 16",
+  "MC 17": "MC 17",
+  "MC 18": "MC 18",
+  "MC 19": "MC 19",
+  "MC 2": "MC 2",
+  "MC 20": "MC 20",
+  "MC 21": "MC 21",
+  "MC 22": "MC 22",
+  "MC 23": "MC 23",
+  "MC 24": "MC 24",
+  "MC 25": "MC 25",
+  "MC 26": "MC 26",
+  "MC 3": "MC 3",
+  "MC 4": "MC 4",
+  "MC 5": "MC 5",
+  "MC 6": "MC 6",
+  "MC 7": "MC 7",
+  "MC 8": "MC 8",
+  "MC 9": "MC 9",
+  "NIST_RP1": "RP1",
+  "POSF-10325": "POSF-10325",
+  "POSF-13511": "POSF-13511",
+  "POSF-13516": "POSF-13516",
+  "PRF+10": "PRF+10",
+  "PRF+20": "PRF+20",
+  "PRF+30": "PRF+30",
+  "PRF+40": "PRF+40",
+  "PRF+50": "PRF+50",
+  "PRF+60": "PRF+60",
+  "PRF+70": "PRF+70",
+  "PRF+80": "PRF+80",
+  "PRF+90": "PRF+90",
+  "RP1_Binary_2comp": "RP1",
+  "RP1_Edwards_3comp": "RP1",
+  "RP1_NIST_14comp": "RP1",
+  "TMB+10": "TMB+10",
+  "TMB+25": "TMB+25",
+  "TMB+40": "TMB+40",
+  "TMB+60": "TMB+60",
+  "TPRF 1": "TPRF 1",
+  "TPRF 1+0": "TPRF 1+0",
+  "TPRF 1+10": "TPRF 1+10",
+  "TPRF 1+20": "TPRF 1+20",
+  "TPRF 1+40": "TPRF 1+40",
+  "TPRF 1+60": "TPRF 1+60",
+  "TPRF 10": "TPRF 10",
+  "TPRF 11": "TPRF 11",
+  "TPRF 12": "TPRF 12",
+  "TPRF 13": "TPRF 13",
+  "TPRF 14": "TPRF 14",
+  "TPRF 15": "TPRF 15",
+  "TPRF 16": "TPRF 16",
+  "TPRF 17": "TPRF 17",
+  "TPRF 18": "TPRF 18",
+  "TPRF 19": "TPRF 19",
+  "TPRF 2": "TPRF 2",
+  "TPRF 2+0": "TPRF 2+0",
+  "TPRF 2+10": "TPRF 2+10",
+  "TPRF 2+20": "TPRF 2+20",
+  "TPRF 2+40": "TPRF 2+40",
+  "TPRF 2+60": "TPRF 2+60",
+  "TPRF 20": "TPRF 20",
+  "TPRF 21": "TPRF 21",
+  "TPRF 22": "TPRF 22",
+  "TPRF 23": "TPRF 23",
+  "TPRF 24": "TPRF 24",
+  "TPRF 25": "TPRF 25",
+  "TPRF 26": "TPRF 26",
+  "TPRF 27": "TPRF 27",
+  "TPRF 29": "TPRF 29",
+  "TPRF 3": "TPRF 3",
+  "TPRF 3+0": "TPRF 3+0",
+  "TPRF 3+10": "TPRF 3+10",
+  "TPRF 3+20": "TPRF 3+20",
+  "TPRF 3+40": "TPRF 3+40",
+  "TPRF 3+60": "TPRF 3+60",
+  "TPRF 30": "TPRF 30",
+  "TPRF 31": "TPRF 31",
+  "TPRF 32": "TPRF 32",
+  "TPRF 33": "TPRF 33",
+  "TPRF 34": "TPRF 34",
+  "TPRF 35": "TPRF 35",
+  "TPRF 36": "TPRF 36",
+  "TPRF 37": "TPRF 37",
+  "TPRF 38": "TPRF 38",
+  "TPRF 39": "TPRF 39",
+  "TPRF 4": "TPRF 4",
+  "TPRF 4+1": "TPRF 4+1",
+  "TPRF 4+10": "TPRF 4+10",
+  "TPRF 4+11": "TPRF 4+11",
+  "TPRF 4+12": "TPRF 4+12",
+  "TPRF 4+13": "TPRF 4+13",
+  "TPRF 4+14": "TPRF 4+14",
+  "TPRF 4+15": "TPRF 4+15",
+  "TPRF 4+2": "TPRF 4+2",
+  "TPRF 4+3": "TPRF 4+3",
+  "TPRF 4+4": "TPRF 4+4",
+  "TPRF 4+5": "TPRF 4+5",
+  "TPRF 4+6": "TPRF 4+6",
+  "TPRF 4+7": "TPRF 4+7",
+  "TPRF 4+8": "TPRF 4+8",
+  "TPRF 4+9": "TPRF 4+9",
+  "TPRF 40": "TPRF 40",
+  "TPRF 41": "TPRF 41",
+  "TPRF 42": "TPRF 42",
+  "TPRF 43": "TPRF 43",
+  "TPRF 5": "TPRF 5",
+  "TPRF 6": "TPRF 6",
+  "TPRF 7": "TPRF 7",
+  "TPRF 8": "TPRF 8",
+  "TPRF 9": "TPRF 9",
+  "TPRF28": "TPRF28",
+  "UDRI_HTA_repfuel": "UDRI_HTA_repfuel"
+ },
+ "fuel_role": {
+  "BRON:100-66-3:0.1039": "fold2",
+  "BRON:100-66-3:0.2104": "fold2",
+  "BRON:100-66-3:0.3205": "fold2",
+  "BRON:105-54-4:0.0982": "fold2",
+  "BRON:105-54-4:0.1960": "fold2",
+  "BRON:105-54-4:0.3100": "fold2",
+  "BRON:107-39-1:0.0968": "fold2",
+  "BRON:107-39-1:0.1941": "fold2",
+  "BRON:107-39-1:0.2927": "fold2",
+  "BRON:107-87-9:0.1018": "fold2",
+  "BRON:107-87-9:0.2028": "fold2",
+  "BRON:107-87-9:0.3025": "fold2",
+  "BRON:120-92-3:0.0993": "fold2",
+  "BRON:120-92-3:0.2013": "fold2",
+  "BRON:120-92-3:0.2993": "fold2",
+  "BRON:123-51-3:0.0993": "fold2",
+  "BRON:123-51-3:0.1939": "fold2",
+  "BRON:123-51-3:0.2955": "fold2",
+  "BRON:123-86-4:0.0900": "fold2",
+  "BRON:123-86-4:0.1864": "fold2",
+  "BRON:123-86-4:0.2776": "fold2",
+  "BRON:137-32-6:0.0954": "fold2",
+  "BRON:137-32-6:0.1896": "fold2",
+  "BRON:137-32-6:0.2843": "fold2",
+  "BRON:141-78-6:0.1011": "fold2",
+  "BRON:141-78-6:0.1980": "fold2",
+  "BRON:141-78-6:0.3045": "fold2",
+  "BRON:464-06-2:0.1000": "fold4",
+  "BRON:464-06-2:0.2500": "fold4",
+  "BRON:464-06-2:0.5000": "fold4",
+  "BRON:534-22-5:0.1029": "fold2",
+  "BRON:534-22-5:0.2043": "fold2",
+  "BRON:534-22-5:0.3109": "fold2",
+  "BRON:565-80-0:0.0900": "fold2",
+  "BRON:565-80-0:0.1903": "fold2",
+  "BRON:565-80-0:0.2800": "fold2",
+  "BRON:6032-29-7:0.0998": "fold2",
+  "BRON:6032-29-7:0.1937": "fold2",
+  "BRON:6032-29-7:0.2971": "fold2",
+  "BRON:64-17-5:0.0998": "fold2",
+  "BRON:64-17-5:0.1952": "fold2",
+  "BRON:64-17-5:0.3058": "fold2",
+  "BRON:67-56-1:0.0908": "fold2",
+  "BRON:67-56-1:0.1818": "fold2",
+  "BRON:67-56-1:0.2792": "fold2",
+  "BRON:71-36-3:0.0990": "fold2",
+  "BRON:71-36-3:0.1939": "fold2",
+  "BRON:71-36-3:0.3041": "fold2",
+  "BRON:78-83-1:0.0958": "fold2",
+  "BRON:78-83-1:0.1874": "fold2",
+  "BRON:78-83-1:0.2922": "fold2",
+  "BRON:78-92-2:0.1059": "fold2",
+  "BRON:78-92-2:0.1950": "fold2",
+  "BRON:78-92-2:0.2942": "fold2",
+  "BRON:78-93-3:0.0960": "fold2",
+  "BRON:78-93-3:0.1970": "fold2",
+  "BRON:78-93-3:0.2862": "fold2",
+  "BRON:79-20-9:0.1007": "fold2",
+  "BRON:79-20-9:0.1933": "fold2",
+  "BRON:79-20-9:0.3084": "fold2",
+  "BRON:LUMP:FURAN_MIXTURE:0.0975": "fold2",
+  "BRON:LUMP:FURAN_MIXTURE:0.1997": "fold2",
+  "BRON:LUMP:FURAN_MIXTURE:0.3065": "fold2",
+  "BRON:LUMP:KETONE_MIXTURE:0.1051": "fold2",
+  "BRON:LUMP:KETONE_MIXTURE:0.1974": "fold2",
+  "BRON:LUMP:KETONE_MIXTURE:0.2905": "fold2",
+  "CP+10": "fold1",
+  "CP+25": "locked",
+  "CP+40": "fold4",
+  "CP+60": "fold1",
+  "CRC647_101": "fold0",
+  "CRC647_104": "fold4",
+  "CRC647_105": "locked",
+  "CRC647_108": "fold3",
+  "CRC647_109": "fold2",
+  "CRC647_110": "locked",
+  "CRC647_111": "fold3",
+  "CRC647_14": "fold4",
+  "CRC647_17": "fold0",
+  "CRC647_18": "fold3",
+  "CRC647_2": "locked",
+  "CRC647_20": "fold4",
+  "CRC647_206": "fold1",
+  "CRC647_211": "locked",
+  "CRC647_3": "locked",
+  "CRC647_30": "fold1",
+  "CRC647_301": "fold3",
+  "CRC647_304": "fold4",
+  "CRC647_306": "fold2",
+  "CRC647_31": "fold0",
+  "CRC647_314": "fold2",
+  "CRC647_315": "locked",
+  "CRC647_316": "fold0",
+  "CRC647_318": "fold0",
+  "CRC647_32": "fold1",
+  "CRC647_321": "locked",
+  "CRC647_325": "fold4",
+  "CRC647_33": "fold0",
+  "CRC647_334": "fold2",
+  "CRC647_335": "fold4",
+  "CRC647_336": "locked",
+  "CRC647_34": "fold4",
+  "CRC647_35": "fold2",
+  "CRC647_36": "fold2",
+  "CRC647_37": "locked",
+  "CRC647_39": "locked",
+  "CRC647_4": "fold1",
+  "CRC647_40": "fold3",
+  "CRC647_403": "fold1",
+  "CRC647_41": "fold1",
+  "CRC647_42": "fold2",
+  "CRC647_43": "fold2",
+  "CRC647_44": "fold0",
+  "CRC647_45": "fold2",
+  "CRC647_507": "fold1",
+  "CRC647_508": "fold0",
+  "CRC647_6": "fold0",
+  "CRC647_606": "fold2",
+  "CRC647_7": "fold4",
+  "CRC647_704": "fold3",
+  "CRC647_711": "locked",
+  "CRC647_716": "fold1",
+  "CRC647_717": "fold3",
+  "CRC647_718": "locked",
+  "CRC647_720": "fold3",
+  "CRC647_721": "fold0",
+  "CRC647_8": "fold0",
+  "FACE A+10": "locked",
+  "FACE A+25": "locked",
+  "FACE A+40": "locked",
+  "FACE A+60": "locked",
+  "FACE C+10": "fold2",
+  "FACE C+25": "fold2",
+  "FACE C+40": "fold2",
+  "FACE C+60": "fold2",
+  "FACE F+10": "fold4",
+  "FACE F+25": "fold4",
+  "FACE F+40": "fold4",
+  "FACE F+60": "fold4",
+  "FACE G+10": "fold0",
+  "FACE G+25": "fold0",
+  "FACE G+40": "fold0",
+  "FACE G+60": "fold0",
+  "FACE I+10": "fold0",
+  "FACE I+25": "fold0",
+  "FACE I+40": "fold0",
+  "FACE I+60": "fold0",
+  "FACE J+10": "fold1",
+  "FACE J+25": "fold1",
+  "FACE J+40": "fold1",
+  "FACE J+60": "fold1",
+  "Hex+10": "fold2",
+  "Hex+25": "locked",
+  "Hex+40": "fold0",
+  "Hex+60": "locked",
+  "JetA_API14avg": "locked",
+  "MC 1": "locked",
+  "MC 10": "fold0",
+  "MC 11": "fold1",
+  "MC 12": "fold1",
+  "MC 13": "fold3",
+  "MC 14": "locked",
+  "MC 15": "fold4",
+  "MC 16": "fold4",
+  "MC 17": "locked",
+  "MC 18": "locked",
+  "MC 19": "fold0",
+  "MC 2": "fold4",
+  "MC 20": "fold0",
+  "MC 21": "locked",
+  "MC 22": "fold0",
+  "MC 23": "fold0",
+  "MC 24": "fold4",
+  "MC 25": "fold0",
+  "MC 26": "fold0",
+  "MC 3": "fold4",
+  "MC 4": "fold1",
+  "MC 5": "fold2",
+  "MC 6": "fold4",
+  "MC 7": "locked",
+  "MC 8": "fold0",
+  "MC 9": "fold1",
+  "NIST_RP1": "fold1",
+  "POSF-10325": "fold3",
+  "POSF-13511": "fold1",
+  "POSF-13516": "fold1",
+  "PRF+10": "fold0",
+  "PRF+20": "fold2",
+  "PRF+30": "fold3",
+  "PRF+40": "locked",
+  "PRF+50": "locked",
+  "PRF+60": "fold1",
+  "PRF+70": "fold2",
+  "PRF+80": "locked",
+  "PRF+90": "locked",
+  "RP1_Binary_2comp": "fold1",
+  "RP1_Edwards_3comp": "fold1",
+  "RP1_NIST_14comp": "fold1",
+  "TMB+10": "locked",
+  "TMB+25": "fold4",
+  "TMB+40": "fold3",
+  "TMB+60": "fold1",
+  "TPRF 1": "fold2",
+  "TPRF 1+0": "fold2",
+  "TPRF 1+10": "fold4",
+  "TPRF 1+20": "fold1",
+  "TPRF 1+40": "locked",
+  "TPRF 1+60": "fold1",
+  "TPRF 10": "fold3",
+  "TPRF 11": "fold4",
+  "TPRF 12": "fold2",
+  "TPRF 13": "fold1",
+  "TPRF 14": "fold4",
+  "TPRF 15": "fold2",
+  "TPRF 16": "fold1",
+  "TPRF 17": "fold2",
+  "TPRF 18": "fold3",
+  "TPRF 19": "locked",
+  "TPRF 2": "fold2",
+  "TPRF 2+0": "fold2",
+  "TPRF 2+10": "fold3",
+  "TPRF 2+20": "fold1",
+  "TPRF 2+40": "fold0",
+  "TPRF 2+60": "locked",
+  "TPRF 20": "fold0",
+  "TPRF 21": "fold3",
+  "TPRF 22": "fold0",
+  "TPRF 23": "fold4",
+  "TPRF 24": "fold3",
+  "TPRF 25": "fold4",
+  "TPRF 26": "fold3",
+  "TPRF 27": "fold3",
+  "TPRF 29": "fold2",
+  "TPRF 3": "fold4",
+  "TPRF 3+0": "fold3",
+  "TPRF 3+10": "fold2",
+  "TPRF 3+20": "fold0",
+  "TPRF 3+40": "locked",
+  "TPRF 3+60": "locked",
+  "TPRF 30": "locked",
+  "TPRF 31": "fold2",
+  "TPRF 32": "fold1",
+  "TPRF 33": "fold4",
+  "TPRF 34": "fold3",
+  "TPRF 35": "fold3",
+  "TPRF 36": "locked",
+  "TPRF 37": "locked",
+  "TPRF 38": "fold2",
+  "TPRF 39": "fold3",
+  "TPRF 4": "fold1",
+  "TPRF 4+1": "fold0",
+  "TPRF 4+10": "locked",
+  "TPRF 4+11": "fold1",
+  "TPRF 4+12": "fold3",
+  "TPRF 4+13": "fold3",
+  "TPRF 4+14": "fold1",
+  "TPRF 4+15": "fold2",
+  "TPRF 4+2": "fold1",
+  "TPRF 4+3": "fold0",
+  "TPRF 4+4": "fold2",
+  "TPRF 4+5": "fold3",
+  "TPRF 4+6": "fold1",
+  "TPRF 4+7": "fold4",
+  "TPRF 4+8": "fold3",
+  "TPRF 4+9": "fold4",
+  "TPRF 40": "fold3",
+  "TPRF 41": "fold2",
+  "TPRF 42": "fold0",
+  "TPRF 43": "fold0",
+  "TPRF 5": "fold4",
+  "TPRF 6": "fold4",
+  "TPRF 7": "fold4",
+  "TPRF 8": "fold3",
+  "TPRF 9": "locked",
+  "TPRF28": "fold3",
+  "UDRI_HTA_repfuel": "fold2"
+ },
+ "fuel_source_family": {
+  "BRON:100-66-3:0.1039": "cooptima_bron",
+  "BRON:100-66-3:0.2104": "cooptima_bron",
+  "BRON:100-66-3:0.3205": "cooptima_bron",
+  "BRON:105-54-4:0.0982": "cooptima_bron",
+  "BRON:105-54-4:0.1960": "cooptima_bron",
+  "BRON:105-54-4:0.3100": "cooptima_bron",
+  "BRON:107-39-1:0.0968": "cooptima_bron",
+  "BRON:107-39-1:0.1941": "cooptima_bron",
+  "BRON:107-39-1:0.2927": "cooptima_bron",
+  "BRON:107-87-9:0.1018": "cooptima_bron",
+  "BRON:107-87-9:0.2028": "cooptima_bron",
+  "BRON:107-87-9:0.3025": "cooptima_bron",
+  "BRON:120-92-3:0.0993": "cooptima_bron",
+  "BRON:120-92-3:0.2013": "cooptima_bron",
+  "BRON:120-92-3:0.2993": "cooptima_bron",
+  "BRON:123-51-3:0.0993": "cooptima_bron",
+  "BRON:123-51-3:0.1939": "cooptima_bron",
+  "BRON:123-51-3:0.2955": "cooptima_bron",
+  "BRON:123-86-4:0.0900": "cooptima_bron",
+  "BRON:123-86-4:0.1864": "cooptima_bron",
+  "BRON:123-86-4:0.2776": "cooptima_bron",
+  "BRON:137-32-6:0.0954": "cooptima_bron",
+  "BRON:137-32-6:0.1896": "cooptima_bron",
+  "BRON:137-32-6:0.2843": "cooptima_bron",
+  "BRON:141-78-6:0.1011": "cooptima_bron",
+  "BRON:141-78-6:0.1980": "cooptima_bron",
+  "BRON:141-78-6:0.3045": "cooptima_bron",
+  "BRON:464-06-2:0.1000": "cooptima_bron",
+  "BRON:464-06-2:0.2500": "cooptima_bron",
+  "BRON:464-06-2:0.5000": "cooptima_bron",
+  "BRON:534-22-5:0.1029": "cooptima_bron",
+  "BRON:534-22-5:0.2043": "cooptima_bron",
+  "BRON:534-22-5:0.3109": "cooptima_bron",
+  "BRON:565-80-0:0.0900": "cooptima_bron",
+  "BRON:565-80-0:0.1903": "cooptima_bron",
+  "BRON:565-80-0:0.2800": "cooptima_bron",
+  "BRON:6032-29-7:0.0998": "cooptima_bron",
+  "BRON:6032-29-7:0.1937": "cooptima_bron",
+  "BRON:6032-29-7:0.2971": "cooptima_bron",
+  "BRON:64-17-5:0.0998": "cooptima_bron",
+  "BRON:64-17-5:0.1952": "cooptima_bron",
+  "BRON:64-17-5:0.3058": "cooptima_bron",
+  "BRON:67-56-1:0.0908": "cooptima_bron",
+  "BRON:67-56-1:0.1818": "cooptima_bron",
+  "BRON:67-56-1:0.2792": "cooptima_bron",
+  "BRON:71-36-3:0.0990": "cooptima_bron",
+  "BRON:71-36-3:0.1939": "cooptima_bron",
+  "BRON:71-36-3:0.3041": "cooptima_bron",
+  "BRON:78-83-1:0.0958": "cooptima_bron",
+  "BRON:78-83-1:0.1874": "cooptima_bron",
+  "BRON:78-83-1:0.2922": "cooptima_bron",
+  "BRON:78-92-2:0.1059": "cooptima_bron",
+  "BRON:78-92-2:0.1950": "cooptima_bron",
+  "BRON:78-92-2:0.2942": "cooptima_bron",
+  "BRON:78-93-3:0.0960": "cooptima_bron",
+  "BRON:78-93-3:0.1970": "cooptima_bron",
+  "BRON:78-93-3:0.2862": "cooptima_bron",
+  "BRON:79-20-9:0.1007": "cooptima_bron",
+  "BRON:79-20-9:0.1933": "cooptima_bron",
+  "BRON:79-20-9:0.3084": "cooptima_bron",
+  "BRON:LUMP:FURAN_MIXTURE:0.0975": "cooptima_bron",
+  "BRON:LUMP:FURAN_MIXTURE:0.1997": "cooptima_bron",
+  "BRON:LUMP:FURAN_MIXTURE:0.3065": "cooptima_bron",
+  "BRON:LUMP:KETONE_MIXTURE:0.1051": "cooptima_bron",
+  "BRON:LUMP:KETONE_MIXTURE:0.1974": "cooptima_bron",
+  "BRON:LUMP:KETONE_MIXTURE:0.2905": "cooptima_bron",
+  "CP+10": "face_set_I",
+  "CP+25": "face_set_I",
+  "CP+40": "face_set_I",
+  "CP+60": "face_set_I",
+  "CRC647_101": "crc647",
+  "CRC647_104": "crc647",
+  "CRC647_105": "crc647",
+  "CRC647_108": "crc647",
+  "CRC647_109": "crc647",
+  "CRC647_110": "crc647",
+  "CRC647_111": "crc647",
+  "CRC647_14": "crc647",
+  "CRC647_17": "crc647",
+  "CRC647_18": "crc647",
+  "CRC647_2": "crc647",
+  "CRC647_20": "crc647",
+  "CRC647_206": "crc647",
+  "CRC647_211": "crc647",
+  "CRC647_3": "crc647",
+  "CRC647_30": "crc647",
+  "CRC647_301": "crc647",
+  "CRC647_304": "crc647",
+  "CRC647_306": "crc647",
+  "CRC647_31": "crc647",
+  "CRC647_314": "crc647",
+  "CRC647_315": "crc647",
+  "CRC647_316": "crc647",
+  "CRC647_318": "crc647",
+  "CRC647_32": "crc647",
+  "CRC647_321": "crc647",
+  "CRC647_325": "crc647",
+  "CRC647_33": "crc647",
+  "CRC647_334": "crc647",
+  "CRC647_335": "crc647",
+  "CRC647_336": "crc647",
+  "CRC647_34": "crc647",
+  "CRC647_35": "crc647",
+  "CRC647_36": "crc647",
+  "CRC647_37": "crc647",
+  "CRC647_39": "crc647",
+  "CRC647_4": "crc647",
+  "CRC647_40": "crc647",
+  "CRC647_403": "crc647",
+  "CRC647_41": "crc647",
+  "CRC647_42": "crc647",
+  "CRC647_43": "crc647",
+  "CRC647_44": "crc647",
+  "CRC647_45": "crc647",
+  "CRC647_507": "crc647",
+  "CRC647_508": "crc647",
+  "CRC647_6": "crc647",
+  "CRC647_606": "crc647",
+  "CRC647_7": "crc647",
+  "CRC647_704": "crc647",
+  "CRC647_711": "crc647",
+  "CRC647_716": "crc647",
+  "CRC647_717": "crc647",
+  "CRC647_718": "crc647",
+  "CRC647_720": "crc647",
+  "CRC647_721": "crc647",
+  "CRC647_8": "crc647",
+  "FACE A+10": "face_set_II",
+  "FACE A+25": "face_set_II",
+  "FACE A+40": "face_set_II",
+  "FACE A+60": "face_set_II",
+  "FACE C+10": "face_set_II",
+  "FACE C+25": "face_set_II",
+  "FACE C+40": "face_set_II",
+  "FACE C+60": "face_set_II",
+  "FACE F+10": "face_set_II",
+  "FACE F+25": "face_set_II",
+  "FACE F+40": "face_set_II",
+  "FACE F+60": "face_set_II",
+  "FACE G+10": "face_set_II",
+  "FACE G+25": "face_set_II",
+  "FACE G+40": "face_set_II",
+  "FACE G+60": "face_set_II",
+  "FACE I+10": "face_set_II",
+  "FACE I+25": "face_set_II",
+  "FACE I+40": "face_set_II",
+  "FACE I+60": "face_set_II",
+  "FACE J+10": "face_set_II",
+  "FACE J+25": "face_set_II",
+  "FACE J+40": "face_set_II",
+  "FACE J+60": "face_set_II",
+  "Hex+10": "face_set_I",
+  "Hex+25": "face_set_I",
+  "Hex+40": "face_set_I",
+  "Hex+60": "face_set_I",
+  "JetA_API14avg": "jet_gc",
+  "MC 1": "face_set_II",
+  "MC 10": "face_set_II",
+  "MC 11": "face_set_II",
+  "MC 12": "face_set_II",
+  "MC 13": "face_set_II",
+  "MC 14": "face_set_II",
+  "MC 15": "face_set_II",
+  "MC 16": "face_set_II",
+  "MC 17": "face_set_II",
+  "MC 18": "face_set_II",
+  "MC 19": "face_set_II",
+  "MC 2": "face_set_II",
+  "MC 20": "face_set_II",
+  "MC 21": "face_set_II",
+  "MC 22": "face_set_II",
+  "MC 23": "face_set_II",
+  "MC 24": "face_set_II",
+  "MC 25": "face_set_II",
+  "MC 26": "face_set_II",
+  "MC 3": "face_set_II",
+  "MC 4": "face_set_II",
+  "MC 5": "face_set_II",
+  "MC 6": "face_set_II",
+  "MC 7": "face_set_II",
+  "MC 8": "face_set_II",
+  "MC 9": "face_set_II",
+  "NIST_RP1": "nist_rp1",
+  "POSF-10325": "jet_gc",
+  "POSF-13511": "jet_gc",
+  "POSF-13516": "jet_gc",
+  "PRF+10": "face_set_I",
+  "PRF+20": "face_set_I",
+  "PRF+30": "face_set_I",
+  "PRF+40": "face_set_I",
+  "PRF+50": "face_set_I",
+  "PRF+60": "face_set_I",
+  "PRF+70": "face_set_I",
+  "PRF+80": "face_set_I",
+  "PRF+90": "face_set_I",
+  "RP1_Binary_2comp": "nist_rp1",
+  "RP1_Edwards_3comp": "nist_rp1",
+  "RP1_NIST_14comp": "nist_rp1",
+  "TMB+10": "face_set_I",
+  "TMB+25": "face_set_I",
+  "TMB+40": "face_set_I",
+  "TMB+60": "face_set_I",
+  "TPRF 1": "face_set_I",
+  "TPRF 1+0": "face_set_I",
+  "TPRF 1+10": "face_set_I",
+  "TPRF 1+20": "face_set_I",
+  "TPRF 1+40": "face_set_I",
+  "TPRF 1+60": "face_set_I",
+  "TPRF 10": "face_set_I",
+  "TPRF 11": "face_set_I",
+  "TPRF 12": "face_set_I",
+  "TPRF 13": "face_set_I",
+  "TPRF 14": "face_set_I",
+  "TPRF 15": "face_set_I",
+  "TPRF 16": "face_set_I",
+  "TPRF 17": "face_set_I",
+  "TPRF 18": "face_set_I",
+  "TPRF 19": "face_set_II",
+  "TPRF 2": "face_set_I",
+  "TPRF 2+0": "face_set_I",
+  "TPRF 2+10": "face_set_I",
+  "TPRF 2+20": "face_set_I",
+  "TPRF 2+40": "face_set_I",
+  "TPRF 2+60": "face_set_I",
+  "TPRF 20": "face_set_II",
+  "TPRF 21": "face_set_II",
+  "TPRF 22": "face_set_II",
+  "TPRF 23": "face_set_II",
+  "TPRF 24": "face_set_II",
+  "TPRF 25": "face_set_II",
+  "TPRF 26": "face_set_II",
+  "TPRF 27": "face_set_II",
+  "TPRF 29": "face_set_II",
+  "TPRF 3": "face_set_I",
+  "TPRF 3+0": "face_set_I",
+  "TPRF 3+10": "face_set_I",
+  "TPRF 3+20": "face_set_I",
+  "TPRF 3+40": "face_set_I",
+  "TPRF 3+60": "face_set_I",
+  "TPRF 30": "face_set_II",
+  "TPRF 31": "face_set_II",
+  "TPRF 32": "face_set_II",
+  "TPRF 33": "face_set_II",
+  "TPRF 34": "face_set_II",
+  "TPRF 35": "face_set_II",
+  "TPRF 36": "face_set_II",
+  "TPRF 37": "face_set_II",
+  "TPRF 38": "face_set_II",
+  "TPRF 39": "face_set_II",
+  "TPRF 4": "face_set_I",
+  "TPRF 4+1": "face_set_I",
+  "TPRF 4+10": "face_set_I",
+  "TPRF 4+11": "face_set_I",
+  "TPRF 4+12": "face_set_I",
+  "TPRF 4+13": "face_set_I",
+  "TPRF 4+14": "face_set_I",
+  "TPRF 4+15": "face_set_I",
+  "TPRF 4+2": "face_set_I",
+  "TPRF 4+3": "face_set_I",
+  "TPRF 4+4": "face_set_I",
+  "TPRF 4+5": "face_set_I",
+  "TPRF 4+6": "face_set_I",
+  "TPRF 4+7": "face_set_I",
+  "TPRF 4+8": "face_set_I",
+  "TPRF 4+9": "face_set_I",
+  "TPRF 40": "face_set_II",
+  "TPRF 41": "face_set_II",
+  "TPRF 42": "face_set_II",
+  "TPRF 43": "face_set_II",
+  "TPRF 5": "face_set_I",
+  "TPRF 6": "face_set_I",
+  "TPRF 7": "face_set_I",
+  "TPRF 8": "face_set_I",
+  "TPRF 9": "face_set_I",
+  "TPRF28": "face_set_II",
+  "UDRI_HTA_repfuel": "jet_gc"
+ },
+ "group_definition": "The leakage unit; a group is never split across locked/folds. * CRC647_<n>, jet-GC fuels: one group per fuel_id. * NIST_RP1 + its 3 RP-1 surrogates (Binary_2comp, Edwards_3comp, NIST_14comp): ONE group \"RP1\" - the surrogates are models of the same physical fuel and share its property targets. * gasoline: group = ``base_fuel``. FACE ethanol blends share their base gasoline (FACE_A x4 ...); the 66 bRON blends are a blendstock added to ONE of two base-gasoline lumps (63 / 3 blends), so per-blend random splitting would leak the base (R17: base RON/MON is a model input). Grouping by base keeps a base family on one side. Cost: the 63-blend bRON family is a single fold-sized group and bRON contributes no locked group.",
+ "groups": {
+  "BRON_BASE_RON87.7_MON80.8": [
+   "BRON:464-06-2:0.1000",
+   "BRON:464-06-2:0.2500",
+   "BRON:464-06-2:0.5000"
+  ],
+  "BRON_BASE_RON90.3_MON84.7": [
+   "BRON:100-66-3:0.1039",
+   "BRON:100-66-3:0.2104",
+   "BRON:100-66-3:0.3205",
+   "BRON:105-54-4:0.0982",
+   "BRON:105-54-4:0.1960",
+   "BRON:105-54-4:0.3100",
+   "BRON:107-39-1:0.0968",
+   "BRON:107-39-1:0.1941",
+   "BRON:107-39-1:0.2927",
+   "BRON:107-87-9:0.1018",
+   "BRON:107-87-9:0.2028",
+   "BRON:107-87-9:0.3025",
+   "BRON:120-92-3:0.0993",
+   "BRON:120-92-3:0.2013",
+   "BRON:120-92-3:0.2993",
+   "BRON:123-51-3:0.0993",
+   "BRON:123-51-3:0.1939",
+   "BRON:123-51-3:0.2955",
+   "BRON:123-86-4:0.0900",
+   "BRON:123-86-4:0.1864",
+   "BRON:123-86-4:0.2776",
+   "BRON:137-32-6:0.0954",
+   "BRON:137-32-6:0.1896",
+   "BRON:137-32-6:0.2843",
+   "BRON:141-78-6:0.1011",
+   "BRON:141-78-6:0.1980",
+   "BRON:141-78-6:0.3045",
+   "BRON:534-22-5:0.1029",
+   "BRON:534-22-5:0.2043",
+   "BRON:534-22-5:0.3109",
+   "BRON:565-80-0:0.0900",
+   "BRON:565-80-0:0.1903",
+   "BRON:565-80-0:0.2800",
+   "BRON:6032-29-7:0.0998",
+   "BRON:6032-29-7:0.1937",
+   "BRON:6032-29-7:0.2971",
+   "BRON:64-17-5:0.0998",
+   "BRON:64-17-5:0.1952",
+   "BRON:64-17-5:0.3058",
+   "BRON:67-56-1:0.0908",
+   "BRON:67-56-1:0.1818",
+   "BRON:67-56-1:0.2792",
+   "BRON:71-36-3:0.0990",
+   "BRON:71-36-3:0.1939",
+   "BRON:71-36-3:0.3041",
+   "BRON:78-83-1:0.0958",
+   "BRON:78-83-1:0.1874",
+   "BRON:78-83-1:0.2922",
+   "BRON:78-92-2:0.1059",
+   "BRON:78-92-2:0.1950",
+   "BRON:78-92-2:0.2942",
+   "BRON:78-93-3:0.0960",
+   "BRON:78-93-3:0.1970",
+   "BRON:78-93-3:0.2862",
+   "BRON:79-20-9:0.1007",
+   "BRON:79-20-9:0.1933",
+   "BRON:79-20-9:0.3084",
+   "BRON:LUMP:FURAN_MIXTURE:0.0975",
+   "BRON:LUMP:FURAN_MIXTURE:0.1997",
+   "BRON:LUMP:FURAN_MIXTURE:0.3065",
+   "BRON:LUMP:KETONE_MIXTURE:0.1051",
+   "BRON:LUMP:KETONE_MIXTURE:0.1974",
+   "BRON:LUMP:KETONE_MIXTURE:0.2905"
+  ],
+  "CP+10": [
+   "CP+10"
+  ],
+  "CP+25": [
+   "CP+25"
+  ],
+  "CP+40": [
+   "CP+40"
+  ],
+  "CP+60": [
+   "CP+60"
+  ],
+  "CRC647_101": [
+   "CRC647_101"
+  ],
+  "CRC647_104": [
+   "CRC647_104"
+  ],
+  "CRC647_105": [
+   "CRC647_105"
+  ],
+  "CRC647_108": [
+   "CRC647_108"
+  ],
+  "CRC647_109": [
+   "CRC647_109"
+  ],
+  "CRC647_110": [
+   "CRC647_110"
+  ],
+  "CRC647_111": [
+   "CRC647_111"
+  ],
+  "CRC647_14": [
+   "CRC647_14"
+  ],
+  "CRC647_17": [
+   "CRC647_17"
+  ],
+  "CRC647_18": [
+   "CRC647_18"
+  ],
+  "CRC647_2": [
+   "CRC647_2"
+  ],
+  "CRC647_20": [
+   "CRC647_20"
+  ],
+  "CRC647_206": [
+   "CRC647_206"
+  ],
+  "CRC647_211": [
+   "CRC647_211"
+  ],
+  "CRC647_3": [
+   "CRC647_3"
+  ],
+  "CRC647_30": [
+   "CRC647_30"
+  ],
+  "CRC647_301": [
+   "CRC647_301"
+  ],
+  "CRC647_304": [
+   "CRC647_304"
+  ],
+  "CRC647_306": [
+   "CRC647_306"
+  ],
+  "CRC647_31": [
+   "CRC647_31"
+  ],
+  "CRC647_314": [
+   "CRC647_314"
+  ],
+  "CRC647_315": [
+   "CRC647_315"
+  ],
+  "CRC647_316": [
+   "CRC647_316"
+  ],
+  "CRC647_318": [
+   "CRC647_318"
+  ],
+  "CRC647_32": [
+   "CRC647_32"
+  ],
+  "CRC647_321": [
+   "CRC647_321"
+  ],
+  "CRC647_325": [
+   "CRC647_325"
+  ],
+  "CRC647_33": [
+   "CRC647_33"
+  ],
+  "CRC647_334": [
+   "CRC647_334"
+  ],
+  "CRC647_335": [
+   "CRC647_335"
+  ],
+  "CRC647_336": [
+   "CRC647_336"
+  ],
+  "CRC647_34": [
+   "CRC647_34"
+  ],
+  "CRC647_35": [
+   "CRC647_35"
+  ],
+  "CRC647_36": [
+   "CRC647_36"
+  ],
+  "CRC647_37": [
+   "CRC647_37"
+  ],
+  "CRC647_39": [
+   "CRC647_39"
+  ],
+  "CRC647_4": [
+   "CRC647_4"
+  ],
+  "CRC647_40": [
+   "CRC647_40"
+  ],
+  "CRC647_403": [
+   "CRC647_403"
+  ],
+  "CRC647_41": [
+   "CRC647_41"
+  ],
+  "CRC647_42": [
+   "CRC647_42"
+  ],
+  "CRC647_43": [
+   "CRC647_43"
+  ],
+  "CRC647_44": [
+   "CRC647_44"
+  ],
+  "CRC647_45": [
+   "CRC647_45"
+  ],
+  "CRC647_507": [
+   "CRC647_507"
+  ],
+  "CRC647_508": [
+   "CRC647_508"
+  ],
+  "CRC647_6": [
+   "CRC647_6"
+  ],
+  "CRC647_606": [
+   "CRC647_606"
+  ],
+  "CRC647_7": [
+   "CRC647_7"
+  ],
+  "CRC647_704": [
+   "CRC647_704"
+  ],
+  "CRC647_711": [
+   "CRC647_711"
+  ],
+  "CRC647_716": [
+   "CRC647_716"
+  ],
+  "CRC647_717": [
+   "CRC647_717"
+  ],
+  "CRC647_718": [
+   "CRC647_718"
+  ],
+  "CRC647_720": [
+   "CRC647_720"
+  ],
+  "CRC647_721": [
+   "CRC647_721"
+  ],
+  "CRC647_8": [
+   "CRC647_8"
+  ],
+  "FACE_A": [
+   "FACE A+10",
+   "FACE A+25",
+   "FACE A+40",
+   "FACE A+60"
+  ],
+  "FACE_C": [
+   "FACE C+10",
+   "FACE C+25",
+   "FACE C+40",
+   "FACE C+60"
+  ],
+  "FACE_F": [
+   "FACE F+10",
+   "FACE F+25",
+   "FACE F+40",
+   "FACE F+60"
+  ],
+  "FACE_G": [
+   "FACE G+10",
+   "FACE G+25",
+   "FACE G+40",
+   "FACE G+60"
+  ],
+  "FACE_I": [
+   "FACE I+10",
+   "FACE I+25",
+   "FACE I+40",
+   "FACE I+60"
+  ],
+  "FACE_J": [
+   "FACE J+10",
+   "FACE J+25",
+   "FACE J+40",
+   "FACE J+60"
+  ],
+  "Hex+10": [
+   "Hex+10"
+  ],
+  "Hex+25": [
+   "Hex+25"
+  ],
+  "Hex+40": [
+   "Hex+40"
+  ],
+  "Hex+60": [
+   "Hex+60"
+  ],
+  "JetA_API14avg": [
+   "JetA_API14avg"
+  ],
+  "MC 1": [
+   "MC 1"
+  ],
+  "MC 10": [
+   "MC 10"
+  ],
+  "MC 11": [
+   "MC 11"
+  ],
+  "MC 12": [
+   "MC 12"
+  ],
+  "MC 13": [
+   "MC 13"
+  ],
+  "MC 14": [
+   "MC 14"
+  ],
+  "MC 15": [
+   "MC 15"
+  ],
+  "MC 16": [
+   "MC 16"
+  ],
+  "MC 17": [
+   "MC 17"
+  ],
+  "MC 18": [
+   "MC 18"
+  ],
+  "MC 19": [
+   "MC 19"
+  ],
+  "MC 2": [
+   "MC 2"
+  ],
+  "MC 20": [
+   "MC 20"
+  ],
+  "MC 21": [
+   "MC 21"
+  ],
+  "MC 22": [
+   "MC 22"
+  ],
+  "MC 23": [
+   "MC 23"
+  ],
+  "MC 24": [
+   "MC 24"
+  ],
+  "MC 25": [
+   "MC 25"
+  ],
+  "MC 26": [
+   "MC 26"
+  ],
+  "MC 3": [
+   "MC 3"
+  ],
+  "MC 4": [
+   "MC 4"
+  ],
+  "MC 5": [
+   "MC 5"
+  ],
+  "MC 6": [
+   "MC 6"
+  ],
+  "MC 7": [
+   "MC 7"
+  ],
+  "MC 8": [
+   "MC 8"
+  ],
+  "MC 9": [
+   "MC 9"
+  ],
+  "POSF-10325": [
+   "POSF-10325"
+  ],
+  "POSF-13511": [
+   "POSF-13511"
+  ],
+  "POSF-13516": [
+   "POSF-13516"
+  ],
+  "PRF+10": [
+   "PRF+10"
+  ],
+  "PRF+20": [
+   "PRF+20"
+  ],
+  "PRF+30": [
+   "PRF+30"
+  ],
+  "PRF+40": [
+   "PRF+40"
+  ],
+  "PRF+50": [
+   "PRF+50"
+  ],
+  "PRF+60": [
+   "PRF+60"
+  ],
+  "PRF+70": [
+   "PRF+70"
+  ],
+  "PRF+80": [
+   "PRF+80"
+  ],
+  "PRF+90": [
+   "PRF+90"
+  ],
+  "RP1": [
+   "NIST_RP1",
+   "RP1_Binary_2comp",
+   "RP1_Edwards_3comp",
+   "RP1_NIST_14comp"
+  ],
+  "TMB+10": [
+   "TMB+10"
+  ],
+  "TMB+25": [
+   "TMB+25"
+  ],
+  "TMB+40": [
+   "TMB+40"
+  ],
+  "TMB+60": [
+   "TMB+60"
+  ],
+  "TPRF 1": [
+   "TPRF 1"
+  ],
+  "TPRF 1+0": [
+   "TPRF 1+0"
+  ],
+  "TPRF 1+10": [
+   "TPRF 1+10"
+  ],
+  "TPRF 1+20": [
+   "TPRF 1+20"
+  ],
+  "TPRF 1+40": [
+   "TPRF 1+40"
+  ],
+  "TPRF 1+60": [
+   "TPRF 1+60"
+  ],
+  "TPRF 10": [
+   "TPRF 10"
+  ],
+  "TPRF 11": [
+   "TPRF 11"
+  ],
+  "TPRF 12": [
+   "TPRF 12"
+  ],
+  "TPRF 13": [
+   "TPRF 13"
+  ],
+  "TPRF 14": [
+   "TPRF 14"
+  ],
+  "TPRF 15": [
+   "TPRF 15"
+  ],
+  "TPRF 16": [
+   "TPRF 16"
+  ],
+  "TPRF 17": [
+   "TPRF 17"
+  ],
+  "TPRF 18": [
+   "TPRF 18"
+  ],
+  "TPRF 19": [
+   "TPRF 19"
+  ],
+  "TPRF 2": [
+   "TPRF 2"
+  ],
+  "TPRF 2+0": [
+   "TPRF 2+0"
+  ],
+  "TPRF 2+10": [
+   "TPRF 2+10"
+  ],
+  "TPRF 2+20": [
+   "TPRF 2+20"
+  ],
+  "TPRF 2+40": [
+   "TPRF 2+40"
+  ],
+  "TPRF 2+60": [
+   "TPRF 2+60"
+  ],
+  "TPRF 20": [
+   "TPRF 20"
+  ],
+  "TPRF 21": [
+   "TPRF 21"
+  ],
+  "TPRF 22": [
+   "TPRF 22"
+  ],
+  "TPRF 23": [
+   "TPRF 23"
+  ],
+  "TPRF 24": [
+   "TPRF 24"
+  ],
+  "TPRF 25": [
+   "TPRF 25"
+  ],
+  "TPRF 26": [
+   "TPRF 26"
+  ],
+  "TPRF 27": [
+   "TPRF 27"
+  ],
+  "TPRF 29": [
+   "TPRF 29"
+  ],
+  "TPRF 3": [
+   "TPRF 3"
+  ],
+  "TPRF 3+0": [
+   "TPRF 3+0"
+  ],
+  "TPRF 3+10": [
+   "TPRF 3+10"
+  ],
+  "TPRF 3+20": [
+   "TPRF 3+20"
+  ],
+  "TPRF 3+40": [
+   "TPRF 3+40"
+  ],
+  "TPRF 3+60": [
+   "TPRF 3+60"
+  ],
+  "TPRF 30": [
+   "TPRF 30"
+  ],
+  "TPRF 31": [
+   "TPRF 31"
+  ],
+  "TPRF 32": [
+   "TPRF 32"
+  ],
+  "TPRF 33": [
+   "TPRF 33"
+  ],
+  "TPRF 34": [
+   "TPRF 34"
+  ],
+  "TPRF 35": [
+   "TPRF 35"
+  ],
+  "TPRF 36": [
+   "TPRF 36"
+  ],
+  "TPRF 37": [
+   "TPRF 37"
+  ],
+  "TPRF 38": [
+   "TPRF 38"
+  ],
+  "TPRF 39": [
+   "TPRF 39"
+  ],
+  "TPRF 4": [
+   "TPRF 4"
+  ],
+  "TPRF 4+1": [
+   "TPRF 4+1"
+  ],
+  "TPRF 4+10": [
+   "TPRF 4+10"
+  ],
+  "TPRF 4+11": [
+   "TPRF 4+11"
+  ],
+  "TPRF 4+12": [
+   "TPRF 4+12"
+  ],
+  "TPRF 4+13": [
+   "TPRF 4+13"
+  ],
+  "TPRF 4+14": [
+   "TPRF 4+14"
+  ],
+  "TPRF 4+15": [
+   "TPRF 4+15"
+  ],
+  "TPRF 4+2": [
+   "TPRF 4+2"
+  ],
+  "TPRF 4+3": [
+   "TPRF 4+3"
+  ],
+  "TPRF 4+4": [
+   "TPRF 4+4"
+  ],
+  "TPRF 4+5": [
+   "TPRF 4+5"
+  ],
+  "TPRF 4+6": [
+   "TPRF 4+6"
+  ],
+  "TPRF 4+7": [
+   "TPRF 4+7"
+  ],
+  "TPRF 4+8": [
+   "TPRF 4+8"
+  ],
+  "TPRF 4+9": [
+   "TPRF 4+9"
+  ],
+  "TPRF 40": [
+   "TPRF 40"
+  ],
+  "TPRF 41": [
+   "TPRF 41"
+  ],
+  "TPRF 42": [
+   "TPRF 42"
+  ],
+  "TPRF 43": [
+   "TPRF 43"
+  ],
+  "TPRF 5": [
+   "TPRF 5"
+  ],
+  "TPRF 6": [
+   "TPRF 6"
+  ],
+  "TPRF 7": [
+   "TPRF 7"
+  ],
+  "TPRF 8": [
+   "TPRF 8"
+  ],
+  "TPRF 9": [
+   "TPRF 9"
+  ],
+  "TPRF28": [
+   "TPRF28"
+  ],
+  "UDRI_HTA_repfuel": [
+   "UDRI_HTA_repfuel"
+  ]
+ },
+ "headline_note": "headline_ok has n=1 (cn_split_class_independent=True); report no statistics over it.",
+ "headline_set": [
+  "POSF-10325"
+ ],
+ "headline_statistics_allowed": false,
+ "locked": [
+  "CP+25",
+  "CRC647_105",
+  "CRC647_110",
+  "CRC647_2",
+  "CRC647_211",
+  "CRC647_3",
+  "CRC647_315",
+  "CRC647_321",
+  "CRC647_336",
+  "CRC647_37",
+  "CRC647_39",
+  "CRC647_711",
+  "CRC647_718",
+  "FACE A+10",
+  "FACE A+25",
+  "FACE A+40",
+  "FACE A+60",
+  "Hex+25",
+  "Hex+60",
+  "JetA_API14avg",
+  "MC 1",
+  "MC 14",
+  "MC 17",
+  "MC 18",
+  "MC 21",
+  "MC 7",
+  "PRF+40",
+  "PRF+50",
+  "PRF+80",
+  "PRF+90",
+  "TMB+10",
+  "TPRF 1+40",
+  "TPRF 19",
+  "TPRF 2+60",
+  "TPRF 3+40",
+  "TPRF 3+60",
+  "TPRF 30",
+  "TPRF 36",
+  "TPRF 37",
+  "TPRF 4+10",
+  "TPRF 9"
+ ],
+ "locked_fraction_of_groups": 0.2,
+ "locked_groups": [
+  "CP+25",
+  "CRC647_105",
+  "CRC647_110",
+  "CRC647_2",
+  "CRC647_211",
+  "CRC647_3",
+  "CRC647_315",
+  "CRC647_321",
+  "CRC647_336",
+  "CRC647_37",
+  "CRC647_39",
+  "CRC647_711",
+  "CRC647_718",
+  "FACE_A",
+  "Hex+25",
+  "Hex+60",
+  "JetA_API14avg",
+  "MC 1",
+  "MC 14",
+  "MC 17",
+  "MC 18",
+  "MC 21",
+  "MC 7",
+  "PRF+40",
+  "PRF+50",
+  "PRF+80",
+  "PRF+90",
+  "TMB+10",
+  "TPRF 1+40",
+  "TPRF 19",
+  "TPRF 2+60",
+  "TPRF 3+40",
+  "TPRF 3+60",
+  "TPRF 30",
+  "TPRF 36",
+  "TPRF 37",
+  "TPRF 4+10",
+  "TPRF 9"
+ ],
+ "n_folds": 5,
+ "procedure": "locked groups chosen first (family-stratified, largest remainder, families < 5 groups contribute none); GroupKFold(shuffle=True, random_state=seed) over the remaining fuel_ids grouped by `group`",
+ "seed": 20261030,
+ "universe": {
+  "gasoline_octane_blends": 210,
+  "inventory_v4": 61,
+  "jet_class_compositions_excluded": [
+   "JP5_PotterSimmons",
+   "JP8_PotterSimmons"
+  ],
+  "jet_class_compositions_included": 5
+ }
+}
