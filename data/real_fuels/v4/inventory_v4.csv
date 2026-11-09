@@ -1,0 +1,62 @@
+fuel_id,fuel_name,source,fuel_family,composition_type,number_of_resolved_components,unresolved_fraction,unresolved_handling,available_properties,real_fuel,ethanol_vol_pct,ethanol_mass_pct,oxygenate_pct,cetane_test_type,ron,mon,dvpe_kpa,density_kg_m3,viscosity_kin_cSt,flash_point_C,freezing_point_C,cloud_point_C,pour_point_C,dcn,heat_of_combustion_MJ_kg,provenance,unverified_fields,n_composition_rows_quarantined,kept_composition_fraction,verified
+NIST_RP1,Rocket Propellant RP-1 (NIST Standard Sample 4572),nist_rp1_nistir6646,jet,measured_dha_gcxgc,,0.0,lumped_heavy_tail,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+RP1_Binary_2comp,RP-1 2-Component Binary Baseline (MCH/n-dodecane 50/50),nist_rp1_nistir6646,jet,measured_dha_gcxgc,,0.0,fully_resolved,,False,,,,none,,,,,,,,,,,,{},,0,1.0,False
+RP1_Edwards_3comp,Edwards/Stanford 3-Component RP-1 Pyrolysis Surrogate,nist_rp1_nistir6646,jet,measured_dha_gcxgc,,0.0,fully_resolved,,False,,,,none,,,,,,,,,,,,{},,0,1.0,False
+RP1_NIST_14comp,NISTIR 6646 14-Component Surrogate (Table 2),nist_rp1_nistir6646,jet,measured_dha_gcxgc,,0.0,fully_resolved,,False,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_2,"Boston, MA",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_3,"Chicago, IL",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00004,False
+CRC647_4,Dallas/Ft. Worth,crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_6,"Lebanon, OH",crc647,jet,reconstructed_composition,,2e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99998,False
+CRC647_7,"Lima, OH",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_8,"Los Angeles, CA",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_14,"Pittsburg, PA",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_17,"Seattle, WA",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_18,"Seattle/Boeing, WA",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00002,False
+CRC647_20,"Shell Martinez Refinery, CA",crc647,jet,reconstructed_composition,,2e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99998,False
+CRC647_30,"Lebanon, OH",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00002,False
+CRC647_31,"Langley AFB, VA",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_32,"Shaw AFB, SC",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_33,"Randolph AFB, TX",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_34,"McConnell AFB, KS",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_35,"Robins AFB, KS",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_36,Stoddard Solvent,crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_37,"Seymour Johnson AFB, NC",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_39,Valero Benicia Refinery,crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_40,"Petro Star Valdez Refinery, AK",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_41,"Trend Western Fuels, Tyndall",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_42,"Charleston AFB, SC",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_43,"Placid Refining, LA",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_44,"Buckeye Pipeline, IN",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_45,"Monee, IL (TEPPCO)",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_101,Dartmouth / Halifax,crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_104,Toronto,crc647,jet,reconstructed_composition,,3e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99997,False
+CRC647_105,Richmond / Vancouver,crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_108,Edmonton,crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_109,"Ontario, Canada",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_110,"Ontario, Canada",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_111,"Edmonton, Oil Sands",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00002,False
+CRC647_206,"Rio de Janiero, Brazil",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_211,"Talara City, Peru",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_301,"Amsterdam, Netherlands",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_304,"Brussels, Belgium",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_306,"Dublin, Ireland",crc647,jet,reconstructed_composition,,4e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99996,False
+CRC647_314,"London, England",crc647,jet,reconstructed_composition,,2e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99998,False
+CRC647_315,"London, England",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_316,"Madrid, Spain",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_318,"Munich, Germany",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_321,"Paris, France",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00002,False
+CRC647_325,"Toulouse, France",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_334,"Bordeaux, France",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_335,"Lyon, France",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_336,"Montpellier, France",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_403,"Praha (Prague), Czech Republic",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00002,False
+CRC647_507,South Africa (part synth),crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00003,False
+CRC647_508,South Africa (100% synth),crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_606,"Abu Dhabi, UAE",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_704,"Beijing, China",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_711,"Kuala Lumpur, Malaysia",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_716,"Sydney, Australia",crc647,jet,reconstructed_composition,,1e-05,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,0.99999,False
+CRC647_717,"Tokyo, Japan",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_718,"Oil Shale, Australia",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
+CRC647_720,"Oil Shale, Australia (low nit.)",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.0,False
+CRC647_721,"Oil Shale, Australia (high Nit.)",crc647,jet,reconstructed_composition,,0.0,reconstructed_d86_pseudo_components,,True,,,,none,,,,,,,,,,,,{},,0,1.00001,False
