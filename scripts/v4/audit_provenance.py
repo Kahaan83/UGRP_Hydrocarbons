@@ -185,7 +185,9 @@ def claim_checks(L: pd.DataFrame, invs: dict[str, pd.DataFrame]) -> list[tuple[s
         f"{po5['fuel_id'].nunique()} systems, identical vector, placeholder_constant")
     c = L[L["table"].str.endswith("inventory_reconstructed.csv") & (L["field"] == "claim:freezing_point_C")]
     add("CRC 647 measured freezing points exist in the raw PDF table (crc647_fuel_properties.csv)",
-        len(c) == 57 and (c["provenance_class"] == "raw_file").all(), f"{len(c)}/57 claims verified raw_file")
+        len(c) == 57 and c["evidence"].str.contains("raw exists: .*crc647_fuel_properties.csv").all(),
+        f"{len(c)}/57 `claim:freezing_point_C` rows name the raw value (`raw exists:`); they stay `unknown` because "
+        "inventory_reconstructed.csv stores no value for it")
     cv = v3[v3["fuel_id"].str.startswith("CRC647_") & (v3["field"] == "freezing_point_C")]
     add("...but inventory_v3.csv stores one constant (-48.0) for all 57 CRC 647 fuels instead",
         len(cv) == 57 and (cv["provenance_class"] == "placeholder_constant").all(),
@@ -269,8 +271,20 @@ def main() -> None:
               "\"value appears somewhere\" search.\n")
     md.append("## Class definitions as applied\n")
     md.append("* `raw_file` — matches the raw value for this fuel and property (or the raw molecule list with the same "
-              "SMILES and basis, up to one common renormalisation factor). A `claim:` row is `raw_file` when the raw "
-              "file holds that property for that fuel (the raw value is quoted in the evidence).\n"
+              "SMILES and basis, up to one common renormalisation factor). A `claim:` row (value `listed`) is "
+              "`raw_file` **only** when the same table stores a value for that property and that stored value is "
+              "itself `raw_file`; when a raw value exists but the table stores nothing (v2 inventories) or stores a "
+              "placeholder/formula value, the claim is `unknown` and its evidence reads `raw exists: <path> -> "
+              "<value>`. Claims carry no data; a keep-filter should use the value rows.\n"
+              "* Two independent detection routes: the code replay, and pure data rules that need no code (the "
+              "FACE gasoline/diesel allocation replayed from the stored RON/MON/density/DCN, E-blend fractions "
+              "proportional to a target-derived base, `freeze == cloud-3`, `pour == freeze-4`, the diesel flash "
+              "formula, E-blend DVPE/density, and one property value on >= 3 fuels of a family -> "
+              "`placeholder_constant`). `classify_fuel_rows(inv, comp, {})` still flags the FACE compositions, the "
+              "43.5 HoC and the CRC 647 constants (tested).\n"
+              "* Property inputs of the replay are found three ways: the variable is written to exactly one property "
+              "column of a row dict in its loop, its name (list above), or a subscripted read of a property key "
+              "(`face_map[b][\"dens\"]`).\n"
               "* `cited_typed` — narrow: a per-fuel literal typed in the script (or copied from a `data/processed` "
               "table that carries a per-row literature reference) with **no** formula, no sharing with other fuels "
               "and no conflict with a mapped raw file. Not verified.\n"
@@ -355,7 +369,9 @@ def main() -> None:
     md.append("* `cited_typed` values are typed literals that were **not** verified; only the raw files listed above "
               "are mapped. FACE base gasoline RON/MON/density/DVPE, FACE diesel DCN/density/viscosity/cloud/pour, "
               "POSF additional properties and the diesel surrogate properties have no raw file in the repo.\n"
-              "* Property inputs in the replay are identified by the scripts' variable names (listed above).\n"
+              "* A property bound under a new name that is never written to a property column nor read by a "
+              "property key would not taint the replay; the pure data rules still catch the FACE/diesel cases on "
+              "the v3 tables, but not on the v2 tables, which store no property values.\n"
               "* The v2 inventories hold no property values; for them only `claim:` rows and metadata are audited.\n"
               "* The replay covers the dict literals in the two ingest scripts' `main()`; rows produced elsewhere "
               "would show as `unknown`.\n")

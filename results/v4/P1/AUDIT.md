@@ -16,7 +16,9 @@ Ledger rows per table: one per numeric inventory value (`ron, mon, dvpe_kpa, den
 
 ## Class definitions as applied
 
-* `raw_file` — matches the raw value for this fuel and property (or the raw molecule list with the same SMILES and basis, up to one common renormalisation factor). A `claim:` row is `raw_file` when the raw file holds that property for that fuel (the raw value is quoted in the evidence).
+* `raw_file` — matches the raw value for this fuel and property (or the raw molecule list with the same SMILES and basis, up to one common renormalisation factor). A `claim:` row (value `listed`) is `raw_file` **only** when the same table stores a value for that property and that stored value is itself `raw_file`; when a raw value exists but the table stores nothing (v2 inventories) or stores a placeholder/formula value, the claim is `unknown` and its evidence reads `raw exists: <path> -> <value>`. Claims carry no data; a keep-filter should use the value rows.
+* Two independent detection routes: the code replay, and pure data rules that need no code (the FACE gasoline/diesel allocation replayed from the stored RON/MON/density/DCN, E-blend fractions proportional to a target-derived base, `freeze == cloud-3`, `pour == freeze-4`, the diesel flash formula, E-blend DVPE/density, and one property value on >= 3 fuels of a family -> `placeholder_constant`). `classify_fuel_rows(inv, comp, {})` still flags the FACE compositions, the 43.5 HoC and the CRC 647 constants (tested).
+* Property inputs of the replay are found three ways: the variable is written to exactly one property column of a row dict in its loop, its name (list above), or a subscripted read of a property key (`face_map[b]["dens"]`).
 * `cited_typed` — narrow: a per-fuel literal typed in the script (or copied from a `data/processed` table that carries a per-row literature reference) with **no** formula, no sharing with other fuels and no conflict with a mapped raw file. Not verified.
 * `formula_derived` — reproduced by a formula / replayed expression, including vol→mass conversions with assumed densities, counts derived from the composition table, and model reconstructions.
 * `target_derived_composition` — a fraction that depends (through the replayed code) on the same fuel's RON/MON/density/DCN/...; a composition vector is one object, so all rows of such a system (including its lump/normaliser) carry the class.
@@ -40,17 +42,17 @@ They are mapped to **`formula_derived`** with evidence starting `reconstructed:`
 | data/real_fuels/compositions_reconstructed.csv | jet | 0 | 0 | 2782 | 0 | 0 | 0 |
 | data/real_fuels/inventory.csv | diesel | 0 | 0 | 2 | 0 | 20 | 60 |
 | data/real_fuels/inventory.csv | gasoline | 0 | 0 | 0 | 0 | 24 | 84 |
-| data/real_fuels/inventory.csv | jet | 399 | 2 | 76 | 0 | 5 | 146 |
+| data/real_fuels/inventory.csv | jet | 0 | 2 | 76 | 0 | 5 | 545 |
 | data/real_fuels/inventory_measured.csv | diesel | 0 | 0 | 2 | 0 | 20 | 60 |
 | data/real_fuels/inventory_measured.csv | gasoline | 0 | 0 | 0 | 0 | 24 | 84 |
 | data/real_fuels/inventory_measured.csv | jet | 0 | 2 | 19 | 0 | 5 | 89 |
-| data/real_fuels/inventory_reconstructed.csv | jet | 399 | 0 | 57 | 0 | 0 | 57 |
+| data/real_fuels/inventory_reconstructed.csv | jet | 0 | 0 | 57 | 0 | 0 | 456 |
 | data/real_fuels/v3/compositions_v3.csv | diesel | 0 | 20 | 0 | 45 | 18 | 0 |
 | data/real_fuels/v3/compositions_v3.csv | gasoline | 0 | 0 | 65 | 194 | 15 | 0 |
 | data/real_fuels/v3/compositions_v3.csv | jet | 31 | 36 | 2820 | 0 | 20 | 34 |
 | data/real_fuels/v3/inventory_v3.csv | diesel | 0 | 85 | 21 | 0 | 40 | 147 |
-| data/real_fuels/v3/inventory_v3.csv | gasoline | 103 | 145 | 176 | 0 | 99 | 311 |
-| data/real_fuels/v3/inventory_v3.csv | jet | 399 | 24 | 82 | 0 | 473 | 423 |
+| data/real_fuels/v3/inventory_v3.csv | gasoline | 56 | 145 | 176 | 0 | 99 | 358 |
+| data/real_fuels/v3/inventory_v3.csv | jet | 0 | 24 | 82 | 0 | 473 | 822 |
 
 ## Counts per class by row kind
 
@@ -59,14 +61,14 @@ They are mapped to **`formula_derived`** with evidence starting `reconstructed:`
 | data/real_fuels/compositions.csv | composition | 31 | 38 | 2844 | 95 | 0 | 34 |
 | data/real_fuels/compositions_measured.csv | composition | 31 | 38 | 62 | 95 | 0 | 34 |
 | data/real_fuels/compositions_reconstructed.csv | composition | 0 | 0 | 2782 | 0 | 0 | 0 |
-| data/real_fuels/inventory.csv | claim | 399 | 0 | 0 | 0 | 0 | 215 |
+| data/real_fuels/inventory.csv | claim | 0 | 0 | 0 | 0 | 0 | 614 |
 | data/real_fuels/inventory.csv | value | 0 | 2 | 78 | 0 | 49 | 75 |
 | data/real_fuels/inventory_measured.csv | claim | 0 | 0 | 0 | 0 | 0 | 215 |
 | data/real_fuels/inventory_measured.csv | value | 0 | 2 | 21 | 0 | 49 | 18 |
-| data/real_fuels/inventory_reconstructed.csv | claim | 399 | 0 | 0 | 0 | 0 | 0 |
+| data/real_fuels/inventory_reconstructed.csv | claim | 0 | 0 | 0 | 0 | 0 | 399 |
 | data/real_fuels/inventory_reconstructed.csv | value | 0 | 0 | 57 | 0 | 0 | 57 |
 | data/real_fuels/v3/compositions_v3.csv | composition | 31 | 56 | 2885 | 239 | 53 | 34 |
-| data/real_fuels/v3/inventory_v3.csv | claim | 474 | 0 | 0 | 0 | 0 | 403 |
+| data/real_fuels/v3/inventory_v3.csv | claim | 28 | 0 | 0 | 0 | 0 | 849 |
 | data/real_fuels/v3/inventory_v3.csv | value | 28 | 254 | 279 | 0 | 612 | 478 |
 
 ## v3 composition systems by majority class
@@ -94,7 +96,7 @@ They are mapped to **`formula_derived`** with evidence starting `reconstructed:`
 | NASA flash is the constant 58.0 | CONFIRMED | 2 fuels (NASA_LFP3, NASA_LFP5), value 58.0, placeholder_constant |
 | RP-1/POSF densities are 804.0 if "RP1" else 795.0 | CONFIRMED | 20 carried-over jet fuels: 4 x 804, 16 x 795 |
 | All five POSF additional fuels get the same 48/32/20 split | CONFIRMED | 5 systems, identical vector, placeholder_constant |
-| CRC 647 measured freezing points exist in the raw PDF table (crc647_fuel_properties.csv) | CONFIRMED | 57/57 claims verified raw_file |
+| CRC 647 measured freezing points exist in the raw PDF table (crc647_fuel_properties.csv) | CONFIRMED | 57/57 `claim:freezing_point_C` rows name the raw value (`raw exists:`); they stay `unknown` because inventory_reconstructed.csv stores no value for it |
 | ...but inventory_v3.csv stores one constant (-48.0) for all 57 CRC 647 fuels instead | CONFIRMED | 57 rows placeholder_constant; evidence lists the contradicting raw value per fuel |
 
 15/15 claims confirmed.
@@ -136,7 +138,7 @@ InChIKey/SMILES mismatches (all tables):
 
 ## v2/v3 deliverables that consume non-`raw_file` rows
 
-Rows that are neither `raw_file` nor `cited_typed` per table: `data/real_fuels/compositions.csv`: 2973, `data/real_fuels/compositions_measured.csv`: 191, `data/real_fuels/compositions_reconstructed.csv`: 2782, `data/real_fuels/inventory.csv`: 417, `data/real_fuels/inventory_measured.csv`: 303, `data/real_fuels/inventory_reconstructed.csv`: 114, `data/real_fuels/v3/compositions_v3.csv`: 3211, `data/real_fuels/v3/inventory_v3.csv`: 1772. `raw_file` alone: `data/real_fuels/compositions.csv`: 31/3042, `data/real_fuels/compositions_measured.csv`: 31/260, `data/real_fuels/compositions_reconstructed.csv`: 0/2782, `data/real_fuels/inventory.csv`: 399/818, `data/real_fuels/inventory_measured.csv`: 0/305, `data/real_fuels/inventory_reconstructed.csv`: 399/513, `data/real_fuels/v3/compositions_v3.csv`: 31/3298, `data/real_fuels/v3/inventory_v3.csv`: 502/2528.
+Rows that are neither `raw_file` nor `cited_typed` per table: `data/real_fuels/compositions.csv`: 2973, `data/real_fuels/compositions_measured.csv`: 191, `data/real_fuels/compositions_reconstructed.csv`: 2782, `data/real_fuels/inventory.csv`: 816, `data/real_fuels/inventory_measured.csv`: 303, `data/real_fuels/inventory_reconstructed.csv`: 513, `data/real_fuels/v3/compositions_v3.csv`: 3211, `data/real_fuels/v3/inventory_v3.csv`: 2218. `raw_file` alone: `data/real_fuels/compositions.csv`: 31/3042, `data/real_fuels/compositions_measured.csv`: 31/260, `data/real_fuels/compositions_reconstructed.csv`: 0/2782, `data/real_fuels/inventory.csv`: 0/818, `data/real_fuels/inventory_measured.csv`: 0/305, `data/real_fuels/inventory_reconstructed.csv`: 0/513, `data/real_fuels/v3/compositions_v3.csv`: 31/3298, `data/real_fuels/v3/inventory_v3.csv`: 56/2528.
 
 Every table below contains non-`raw_file` rows, so every reader consumes them unless it filters by fuel. Readers found by grepping `scripts/` and `src/` for the file name:
 
@@ -152,7 +154,7 @@ Every table below contains non-`raw_file` rows, so every reader consumes them un
 ## Limitations
 
 * `cited_typed` values are typed literals that were **not** verified; only the raw files listed above are mapped. FACE base gasoline RON/MON/density/DVPE, FACE diesel DCN/density/viscosity/cloud/pour, POSF additional properties and the diesel surrogate properties have no raw file in the repo.
-* Property inputs in the replay are identified by the scripts' variable names (listed above).
+* A property bound under a new name that is never written to a property column nor read by a property key would not taint the replay; the pure data rules still catch the FACE/diesel cases on the v3 tables, but not on the v2 tables, which store no property values.
 * The v2 inventories hold no property values; for them only `claim:` rows and metadata are audited.
 * The replay covers the dict literals in the two ingest scripts' `main()`; rows produced elsewhere would show as `unknown`.
 

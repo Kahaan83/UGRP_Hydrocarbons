@@ -99,12 +99,16 @@ def test_ledger_flags_posf_48_32_20(v3):
 
 
 def test_ledger_keeps_crc647_measured(recon, v3):
-    # The v2 CRC 647 inventory claims freezing_point_C per fuel; the claim is
-    # verified against the PDF-ingested raw table.
+    # The v2 CRC 647 inventory only *claims* freezing_point_C (no stored value). The measured values
+    # exist in the PDF-ingested raw table, and the evidence says so -- but a claim without a stored,
+    # matching value is never raw_file.
     r = recon[recon["fuel_id"].str.startswith("CRC647_") & (recon["field"] == "claim:freezing_point_C")]
     assert len(r) == 57
-    assert (r["provenance_class"] == "raw_file").all(), r.to_string()
+    assert (r["provenance_class"] == "unknown").all(), r.to_string()
+    assert r["evidence"].str.contains("raw exists:").all()
     assert r["evidence"].str.contains("crc647_fuel_properties.csv").all()
+    vc = v3[v3["fuel_id"].str.startswith("CRC647_") & (v3["field"] == "claim:freezing_point_C")]
+    assert len(vc) == 57 and (vc["provenance_class"] != "raw_file").all()
     # The v3 copy of those fuels carries one constant (-48.0) instead of the
     # measured values: that is a placeholder, not a measurement.
     v = v3[v3["fuel_id"].str.startswith("CRC647_") & (v3["field"] == "freezing_point_C")]
@@ -121,3 +125,58 @@ def test_ledger_is_deterministic_and_covers_every_row(v3):
     assert set(inv["fuel_id"]) <= set(v3["fuel_id"])
     assert (v3["field"].str.startswith("fraction:")).sum() == len(comp)
     assert not v3.duplicated(["fuel_id", "field"]).any()
+
+
+# --------------------------------------------------------------------------- fix round 1
+def test_replayed_comprehension_sees_env_variables():
+    """Interpreter-independent replay: a comprehension must see the replay env (pre-3.12 scoping)."""
+    import ast
+    from fuelblend.data.provenance import _safe_eval
+    node = ast.parse("[f * norm_factor for f in raw_fracs]", mode="eval").body
+    assert _safe_eval(node, {"raw_fracs": [1.0, 2.0], "norm_factor": 0.5}) == [0.5, 1.0]
+
+
+def test_data_rules_stand_without_code():
+    """Detection (b) alone: no source code at all, real v3 files."""
+    inv = pd.read_csv(RF / "v3" / "inventory_v3.csv")
+    comp = pd.read_csv(RF / "v3" / "compositions_v3.csv")
+    led = classify_fuel_rows(inv, comp, {})
+    face = _fractions(led, r"CRC_FACE_[A-J]")
+    assert face["fuel_id"].nunique() == 10
+    assert (face["provenance_class"] == "target_derived_composition").all(), face.to_string()
+    diesel = _fractions(led, r"CRC_FACE_Diesel_\d")
+    assert (diesel["provenance_class"] == "target_derived_composition").all()
+    hoc = led[led["fuel_id"].str.fullmatch(r"CRC_FACE_[A-J]") & (led["field"] == "heat_of_combustion_MJ_kg")]
+    assert len(hoc) == 10 and (hoc["provenance_class"] == "placeholder_constant").all()
+    fz = led[(led["fuel_id"] == "CRC647_335") & (led["field"] == "freezing_point_C")]
+    assert fz["provenance_class"].tolist() == ["placeholder_constant"]
+
+
+_SNIPPET = '''
+def main():
+    table = [("F_A", "fuel a", 700.0), ("F_B", "fuel b", 740.0)]
+    props = {"G_A": {"dens": 705.0}, "G_B": {"dens": 745.0}}
+    inv, comp = [], []
+    for fuel, label, rho in table:                      # renamed property variable
+        aro = min(0.45, max(0.05, (rho - 680.0) / 200.0))
+        inv.append({"fuel_id": fuel, "fuel_name": label, "density_kg_m3": rho})
+        comp.append({"system_id": "fuel:" + fuel, "inchikey": "TOLUENE", "smiles": "Cc1ccccc1",
+                     "fraction": round(aro, 5), "basis": "mass", "is_lumped": False})
+    for fuel in ["G_A", "G_B"]:
+        q = props[fuel]["dens"]                         # property unpacked by subscript
+        comp.append({"system_id": "fuel:" + fuel, "inchikey": "TOLUENE", "smiles": "Cc1ccccc1",
+                     "fraction": round((q - 680.0) / 200.0, 5), "basis": "mass", "is_lumped": False})
+'''
+
+
+def test_renamed_or_unpacked_property_still_target_derived():
+    inv = pd.DataFrame({"fuel_id": ["F_A", "F_B", "G_A", "G_B"], "fuel_name": ["fuel a", "fuel b", "g", "g"],
+                        "fuel_family": "gasoline", "density_kg_m3": [700.0, 740.0, None, None]})
+    comp = pd.DataFrame({"system_id": ["fuel:F_A", "fuel:F_B", "fuel:G_A", "fuel:G_B"],
+                         "inchikey": "TOLUENE", "smiles": "Cc1ccccc1",
+                         "fraction": [0.1, 0.3, 0.125, 0.325], "basis": "mass", "is_lumped": False,
+                         "unexplained_fraction": 0.0})
+    led = classify_fuel_rows(inv, comp, {"synthetic/ingest.py": _SNIPPET})
+    fr = led[led["field"].str.startswith("fraction:")].set_index("fuel_id")
+    assert (fr["provenance_class"] == "target_derived_composition").all(), fr.to_string()
+    assert fr.loc["F_A", "evidence"].count("density_kg_m3") >= 1
