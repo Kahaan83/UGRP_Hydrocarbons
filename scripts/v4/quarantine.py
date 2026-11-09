@@ -185,7 +185,7 @@ def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame
         out["n_composition_rows_quarantined"] = nq
         out["kept_composition_fraction"] = round(float(sums[fid]), 6)
         if nq or "unresolved_fraction" not in kept_fields:
-            # share not covered by kept rows (lumped rows count as covered); never NaN
+            # quarantined or never kept: share not covered by kept rows (lumped rows count as covered); never NaN
             out["unresolved_fraction"] = round(max(0.0, 1.0 - float(sums[fid])), 6)
         if nq:
             out["unresolved_handling"] = "partial_after_quarantine"
@@ -198,22 +198,28 @@ def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame
 
 
 def dedupe_quarantined(cq: pd.DataFrame) -> pd.DataFrame:
-    """compositions.csv / compositions_measured.csv / compositions_v3.csv overlap: keep one row per
-    (system_id, smiles, stored key, occurrence), last table wins (v3 is authoritative); ``also_in`` lists all."""
+    """compositions.csv / compositions_measured.csv / compositions_v3.csv overlap. Collapse only rows that are
+    EXACTLY equal in every value-bearing column (everything except ``table``, ``row_id``, ``evidence``), counting
+    repeated identical rows per table as separate occurrences; rows that differ in any value (e.g. fraction)
+    stay separate. ``also_in`` lists every table holding the row; the last table (v3) is the one recorded."""
     cq = cq.copy()
-    cq["_sm"] = cq["smiles"].fillna("")
-    cq["_occ"] = cq.groupby(["table", "system_id", "_sm", "inchikey"]).cumcount()
-    key = ["system_id", "_sm", "inchikey", "_occ"]
-    also = cq.groupby(key)["table"].agg(lambda s: ";".join(sorted(set(s))))
-    out = cq.drop_duplicates(key, keep="last").copy()
-    out["also_in"] = [also[k] for k in out[key].itertuples(index=False, name=None)]
-    return out.drop(columns=["_occ", "_sm"]).reset_index(drop=True)
+    vcols = [c for c in cq.columns if c not in ("table", "row_id", "evidence")]
+    key = [f"_k{i}" for i in range(len(vcols))]
+    for k, c in zip(key, vcols):
+        cq[k] = cq[c].astype(object).where(cq[c].notna(), "<NA>").astype(str)  # equal NaNs compare equal
+    cq["_occ"] = cq.groupby(["table"] + key).cumcount()
+    gk = key + ["_occ"]
+    also = cq.groupby(gk)["table"].agg(lambda s: ";".join(sorted(set(s))))
+    out = cq.drop_duplicates(gk, keep="last").copy()
+    out["also_in"] = [also[k] for k in out[gk].itertuples(index=False, name=None)]
+    return out.drop(columns=gk).reset_index(drop=True)
 
 
 def run(root: Path = ROOT, write: bool = True) -> dict:
     ledger = pd.read_csv(root / LEDGER, dtype={"value": str})
     mism = pd.read_csv(root / MISMATCH)
     inv_qs, comp_qs, summary = [], [], []
+    by_table: dict[str, pd.DataFrame] = {}
     v4 = None
     for inv_p, comp_p in PAIRS:
         inv = pd.read_csv(root / inv_p)
@@ -226,18 +232,19 @@ def run(root: Path = ROOT, write: bool = True) -> dict:
         comp_q.insert(0, "table", comp_p)
         inv_qs.append(inv_q)
         comp_qs.append(comp_q)
+        by_table[comp_p] = comp_q
         summary.append({"inventory": inv_p, "compositions": comp_p, "comp_rows": len(comp),
                         "comp_kept": len(comp_v4), "comp_quarantined": len(comp_q),
                         "inv_ledger_rows": len(inv_led), "inv_kept": int(len(inv_led) - len(inv_q)),
                         "inv_quarantined": len(inv_q), "fuels": len(inv), "fuels_kept": len(inv_v4),
                         "fuels_dropped": len(dropped)})
         if inv_p == V3_INV:
-            v4 = (inv_v4, comp_v4, dropped, inv)
-    inv_v4, comp_v4, dropped, inv3 = v4
+            v4 = (inv_v4, comp_v4, dropped, inv, kept_fraction_sums(ann))
+    inv_v4, comp_v4, dropped, inv3, sums3 = v4
     inv_quar = pd.concat(inv_qs, ignore_index=True)
     comp_quar = dedupe_quarantined(pd.concat(comp_qs, ignore_index=True))
     result = {"inv_v4": inv_v4, "comp_v4": comp_v4, "inv_quar": inv_quar, "comp_quar": comp_quar,
-              "dropped": dropped, "summary": pd.DataFrame(summary), "inv_v3": inv3}
+              "dropped": dropped, "kept_sums": sums3, "comp_quar_by_table": by_table, "summary": pd.DataFrame(summary), "inv_v3": inv3}
     if write:
         _write(root, result)
     return result
@@ -254,10 +261,10 @@ def _write(root: Path, res: dict) -> None:
                   "reason": list(res["dropped"].values())}).to_csv(root / QDIR / "dropped_fuels.csv", index=False)
     res["inv_v4"].to_csv(root / VDIR / "inventory_v4.csv", index=False)
     res["comp_v4"].to_csv(root / VDIR / "compositions_v4.csv", index=False)
-    _update_missing(root, res["dropped"], fam)
+    _update_missing(root, res["dropped"], fam, res["kept_sums"])
 
 
-def _update_missing(root: Path, dropped: dict[str, str], fam: dict) -> None:
+def _update_missing(root: Path, dropped: dict[str, str], fam: dict, sums: pd.Series) -> None:
     p = root / "data" / "MISSING.md"
     text = p.read_text(encoding="utf-8")
     groups: dict[str, list[str]] = {}
@@ -273,7 +280,7 @@ def _update_missing(root: Path, dropped: dict[str, str], fam: dict) -> None:
         lines.append(f"- **{g}** ({len(ids)} fuels):")
         by_fam: dict[str, list[str]] = {}
         for f in ids:
-            tag = f"{f} [{dropped[f].split('=')[-1].rstrip(')')}]" if "incomplete" in g else f
+            tag = f"{f} [{float(sums[f]):.3f}]" if "incomplete" in g else f
             by_fam.setdefault(str(fam[f]), []).append(tag)
         for k, v in sorted(by_fam.items()):
             lines.append(f"  - {k} ({len(v)}): {', '.join(v)}")
