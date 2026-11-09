@@ -11,8 +11,9 @@ Keep rule (per ledger row):
 Everything else (formula_derived, target_derived_composition, placeholder_constant, unknown) is
 quarantined. A composition row whose InChIKey does not belong to its SMILES (identity_mismatches.csv,
 joined on (table, row_id)) is quarantined too, whatever its provenance class. Fuels left with no
-clean non-lump composition row are dropped from v4 (all their rows are quarantined with reason
-``fuel_dropped:no_clean_composition``) and listed in data/MISSING.md and
+clean non-lump composition row, or whose kept fractions (lumped share included) sum to less than
+MIN_KEPT_FRACTION (R15), are dropped from v4 (all their rows are quarantined with reason
+``fuel_dropped:no_clean_composition`` / ``fuel_dropped:incomplete_composition``) and listed in data/MISSING.md and
 data/quarantine/dropped_fuels.csv.
 
 Outputs
@@ -50,6 +51,11 @@ VDIR = "data/real_fuels/v4"
 MARK_BEGIN = "<!-- v4-task3-dropped:begin -->"
 MARK_END = "<!-- v4-task3-dropped:end -->"
 NO_CLEAN = "fuel_dropped:no_clean_composition"
+INCOMPLETE = "fuel_dropped:incomplete_composition"
+# R15: a fuel stays in v4 only if its kept composition fractions (lumped share included) sum to at least this
+MIN_KEPT_FRACTION = 0.95
+# below this the kept fractions are not a clean, complete composition: verified is forced False
+CLEAN_SUM_TOL = 0.99
 
 
 def keep_label(cls: str, evidence: str) -> str | None:
@@ -102,18 +108,34 @@ def split_composition(comp: pd.DataFrame, comp_ledger: pd.DataFrame, mismatches:
     return out
 
 
-def clean_systems(ann: pd.DataFrame) -> set[str]:
-    """Fuel ids with at least one clean, non-lumped composition row."""
+def kept_fraction_sums(ann: pd.DataFrame) -> pd.Series:
+    """Per fuel id: sum of the fractions of its clean composition rows (lumped rows included)."""
+    fid = ann["system_id"].astype(str).str.replace(r"^fuel:", "", regex=True)
+    ok = ann["label"].notna()
+    return ann.loc[ok, "fraction"].astype(float).groupby(fid[ok]).sum()
+
+
+def classify_fuels(inv_ids: set[str], ann: pd.DataFrame) -> tuple[set[str], dict[str, str], pd.Series]:
+    """(kept fuel ids, {dropped id: reason text}, kept fraction sums)."""
+    sums = kept_fraction_sums(ann)
     lump = ann["is_lumped"].astype(str).str.lower() == "true"
-    ok = ann[ann["label"].notna() & ~lump]
-    return set(ok["system_id"].astype(str).str.replace(r"^fuel:", "", regex=True))
+    fid = ann["system_id"].astype(str).str.replace(r"^fuel:", "", regex=True)
+    has_clean = set(fid[ann["label"].notna() & ~lump])
+    keep, dropped = set(), {}
+    for f in sorted(inv_ids):
+        if f not in has_clean:
+            dropped[f] = "no clean composition"
+        elif float(sums.get(f, 0.0)) < MIN_KEPT_FRACTION:
+            dropped[f] = f"incomplete composition after quarantine (kept fraction={float(sums[f]):.3f})"
+        else:
+            keep.add(f)
+    return keep, dropped, sums
 
 
 def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame):
-    """Return (inv_v4, comp_v4, inv_quarantined, comp_quarantined, dropped_ids) for one table pair."""
+    """Return (inv_v4, comp_v4, inv_quarantined, comp_quarantined, dropped {id: reason}) for one table pair."""
     inv_ids = set(inv["fuel_id"].astype(str))
-    keep_ids = clean_systems(comp_ann) & inv_ids
-    dropped = sorted(inv_ids - keep_ids)
+    keep_ids, dropped, sums = classify_fuels(inv_ids, comp_ann)
     fid_of_row = comp_ann["system_id"].astype(str).str.replace(r"^fuel:", "", regex=True)
     in_keep = fid_of_row.isin(keep_ids)
 
@@ -123,7 +145,8 @@ def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame
     comp_keep = comp_keep.drop(columns=["label", "reason", "provenance_class", "evidence", "row_id"])
 
     comp_q = comp_ann[~(comp_ann["label"].notna() & in_keep)].copy()
-    comp_q["reason"] = [r if r else NO_CLEAN for r in comp_q["reason"]]
+    comp_q["reason"] = [r if r else (INCOMPLETE if dropped.get(f, "").startswith("incomplete") else NO_CLEAN)
+                        for r, f in zip(comp_q["reason"], fid_of_row[comp_q.index])]
     comp_q = comp_q.drop(columns=["label"])
 
     led = inv_ledger.copy()
@@ -131,14 +154,16 @@ def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame
     led["label"] = labs
     led["_keep"] = [l is not None and f in keep_ids for l, f in zip(labs, led["fuel_id"].astype(str))]
     inv_q = led[~led["_keep"]].copy()
-    inv_q["reason"] = [f"provenance:{c}" if l is None else NO_CLEAN
-                       for c, l in zip(inv_q["provenance_class"], inv_q["label"])]
+    inv_q["reason"] = [f"provenance:{c}" if l is None else
+                       (INCOMPLETE if dropped.get(str(f), "").startswith("incomplete") else NO_CLEAN)
+                       for c, l, f in zip(inv_q["provenance_class"], inv_q["label"], inv_q["fuel_id"])]
     inv_q = inv_q.drop(columns=["label", "_keep"])
 
     # wide v4 inventory
     kept_led = led[led["_keep"]]
     by_fuel = {f: g for f, g in kept_led.groupby(kept_led["fuel_id"].astype(str))}
-    n_q = comp_ann[in_keep & comp_ann["label"].isna()].groupby(fid_of_row[in_keep & comp_ann["label"].isna()]).size()
+    n_q = fid_of_row[in_keep & comp_ann["label"].isna()].value_counts()
+    comp_unverified = set(fid_of_row[in_keep & comp_ann["label"].notna() & (comp_ann["label"] != "raw_file")])
     ledger_value_fields = set(led.loc[~led["field"].str.startswith("claim:"), "field"])
     rows = []
     for _, r in inv[inv["fuel_id"].astype(str).isin(keep_ids)].iterrows():
@@ -156,11 +181,33 @@ def build_v4(inv: pd.DataFrame, comp_ann: pd.DataFrame, inv_ledger: pd.DataFrame
         out["provenance"] = json.dumps(vals, sort_keys=True)
         unv = sorted(f for f, l in vals.items() if l != "raw_file")
         out["unverified_fields"] = ";".join(unv)
-        out["verified"] = not unv
-        out["n_composition_rows_quarantined"] = int(n_q.get(fid, 0))
+        nq = int(n_q.get(fid, 0))
+        out["n_composition_rows_quarantined"] = nq
+        out["kept_composition_fraction"] = round(float(sums[fid]), 6)
+        if nq or "unresolved_fraction" not in kept_fields:
+            # share not covered by kept rows (lumped rows count as covered); never NaN
+            out["unresolved_fraction"] = round(max(0.0, 1.0 - float(sums[fid])), 6)
+        if nq:
+            out["unresolved_handling"] = "partial_after_quarantine"
+        # verified = every kept value and composition row is raw_file, nothing quarantined, sum clean
+        out["verified"] = (not unv and nq == 0 and fid not in comp_unverified
+                           and float(sums[fid]) >= CLEAN_SUM_TOL)
         rows.append(out)
     inv_v4 = pd.DataFrame(rows).reset_index(drop=True)
     return inv_v4, comp_keep.reset_index(drop=True), inv_q, comp_q, dropped
+
+
+def dedupe_quarantined(cq: pd.DataFrame) -> pd.DataFrame:
+    """compositions.csv / compositions_measured.csv / compositions_v3.csv overlap: keep one row per
+    (system_id, smiles, stored key, occurrence), last table wins (v3 is authoritative); ``also_in`` lists all."""
+    cq = cq.copy()
+    cq["_sm"] = cq["smiles"].fillna("")
+    cq["_occ"] = cq.groupby(["table", "system_id", "_sm", "inchikey"]).cumcount()
+    key = ["system_id", "_sm", "inchikey", "_occ"]
+    also = cq.groupby(key)["table"].agg(lambda s: ";".join(sorted(set(s))))
+    out = cq.drop_duplicates(key, keep="last").copy()
+    out["also_in"] = [also[k] for k in out[key].itertuples(index=False, name=None)]
+    return out.drop(columns=["_occ", "_sm"]).reset_index(drop=True)
 
 
 def run(root: Path = ROOT, write: bool = True) -> dict:
@@ -175,8 +222,7 @@ def run(root: Path = ROOT, write: bool = True) -> dict:
         comp_led = ledger[(ledger["table"] == comp_p) & is_frac]
         inv_led = ledger[(ledger["table"] == inv_p) & ~is_frac]
         ann = split_composition(comp, comp_led, mism, comp_p)
-        res = build_v4(inv, ann, inv_led)
-        inv_v4, comp_v4, inv_q, comp_q, dropped = res
+        inv_v4, comp_v4, inv_q, comp_q, dropped = build_v4(inv, ann, inv_led)
         comp_q.insert(0, "table", comp_p)
         inv_qs.append(inv_q)
         comp_qs.append(comp_q)
@@ -186,10 +232,10 @@ def run(root: Path = ROOT, write: bool = True) -> dict:
                         "inv_quarantined": len(inv_q), "fuels": len(inv), "fuels_kept": len(inv_v4),
                         "fuels_dropped": len(dropped)})
         if inv_p == V3_INV:
-            v4 = (inv_v4, comp_v4, dropped, inv, comp_led, inv_led)
-    inv_v4, comp_v4, dropped, inv3, comp_led3, inv_led3 = v4
+            v4 = (inv_v4, comp_v4, dropped, inv)
+    inv_v4, comp_v4, dropped, inv3 = v4
     inv_quar = pd.concat(inv_qs, ignore_index=True)
-    comp_quar = pd.concat(comp_qs, ignore_index=True)
+    comp_quar = dedupe_quarantined(pd.concat(comp_qs, ignore_index=True))
     result = {"inv_v4": inv_v4, "comp_v4": comp_v4, "inv_quar": inv_quar, "comp_quar": comp_quar,
               "dropped": dropped, "summary": pd.DataFrame(summary), "inv_v3": inv3}
     if write:
@@ -204,33 +250,41 @@ def _write(root: Path, res: dict) -> None:
     res["comp_quar"].to_csv(root / QDIR / "compositions_quarantined.csv", index=False)
     inv3 = res["inv_v3"]
     fam = dict(zip(inv3["fuel_id"].astype(str), inv3["fuel_family"]))
-    pd.DataFrame({"fuel_id": res["dropped"], "fuel_family": [fam[f] for f in res["dropped"]],
-                  "reason": NO_CLEAN}).to_csv(root / QDIR / "dropped_fuels.csv", index=False)
+    pd.DataFrame({"fuel_id": list(res["dropped"]), "fuel_family": [fam[f] for f in res["dropped"]],
+                  "reason": list(res["dropped"].values())}).to_csv(root / QDIR / "dropped_fuels.csv", index=False)
     res["inv_v4"].to_csv(root / VDIR / "inventory_v4.csv", index=False)
     res["comp_v4"].to_csv(root / VDIR / "compositions_v4.csv", index=False)
     _update_missing(root, res["dropped"], fam)
 
 
-def _update_missing(root: Path, dropped: list[str], fam: dict) -> None:
+def _update_missing(root: Path, dropped: dict[str, str], fam: dict) -> None:
     p = root / "data" / "MISSING.md"
     text = p.read_text(encoding="utf-8")
-    by_fam: dict[str, list[str]] = {}
-    for f in dropped:
-        by_fam.setdefault(str(fam[f]), []).append(f)
-    lst = "; ".join(f"{k} ({len(v)}): {', '.join(v)}" for k, v in sorted(by_fam.items()))
-    block = (f"{MARK_BEGIN}\n"
-             f"| 2026-11-10 | v4 Task 3: fuels with no clean composition ({len(dropped)} fuels dropped from "
-             f"`data/real_fuels/v4/`) | A raw-file, cited or reconstructed (R10) molecule list for each fuel; "
-             f"the v2/v3 compositions of these fuels are target-derived, placeholder or identity-mismatched "
-             f"(see `results/v4/P1/AUDIT.md`) | Rows moved to `data/quarantine/`; no replacement data. "
-             f"Dropped, by family: {lst}. List also in `data/quarantine/dropped_fuels.csv`. |\n"
-             f"{MARK_END}")
+    groups: dict[str, list[str]] = {}
+    for f, why in dropped.items():
+        g = ("no clean composition" if why.startswith("no clean") else
+             f"incomplete composition after quarantine (kept fraction < {MIN_KEPT_FRACTION})")
+        groups.setdefault(g, []).append(f)
+    lines = [MARK_BEGIN, "", "### v4 Task 3: fuels dropped from `data/real_fuels/v4/` (2026-11-10)", "",
+             "Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= "
+             f"{MIN_KEPT_FRACTION} for each fuel. Rows are in `data/quarantine/`; full list with reasons in "
+             "`data/quarantine/dropped_fuels.csv`; cause in `results/v4/P1/AUDIT.md`.", ""]
+    for g, ids in sorted(groups.items()):
+        lines.append(f"- **{g}** ({len(ids)} fuels):")
+        by_fam: dict[str, list[str]] = {}
+        for f in ids:
+            tag = f"{f} [{dropped[f].split('=')[-1].rstrip(')')}]" if "incomplete" in g else f
+            by_fam.setdefault(str(fam[f]), []).append(tag)
+        for k, v in sorted(by_fam.items()):
+            lines.append(f"  - {k} ({len(v)}): {', '.join(v)}")
+    lines += ["", MARK_END]
+    block = "\n".join(lines)
     if MARK_BEGIN in text:
         a = text.index(MARK_BEGIN)
         b = text.index(MARK_END) + len(MARK_END)
-        text = text[:a] + block + text[b:]
+        text = text[:a].rstrip("\n") + "\n\n" + block + text[b:]
     else:
-        text = text.rstrip("\n") + "\n" + block + "\n"
+        text = text.rstrip("\n") + "\n\n" + block + "\n"
     p.write_text(text, encoding="utf-8")
 
 

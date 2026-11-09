@@ -20,11 +20,13 @@ KEEP = {"raw_file", "cited_typed", "reconstructed"}
 
 def _synthetic():
     comp = pd.DataFrame({
-        "system_id": ["fuel:A", "fuel:A", "fuel:A", "fuel:B", "fuel:C", "fuel:C", "fuel:D"],
-        "inchikey": ["K1", "K2", "LUMP_X", "K1", "K1", "K1", "K3"],
-        "smiles": ["C", "CC", "", "C", "C", "C", "CCC"],
-        "fraction": [0.4, 0.5, 0.1, 1.0, 0.5, 0.5, 1.0],
-        "basis": "mass", "is_lumped": [False, False, True, False, False, False, False],
+        "system_id": ["fuel:A", "fuel:A", "fuel:A", "fuel:B", "fuel:C", "fuel:C", "fuel:D",
+                      "fuel:E", "fuel:E", "fuel:F", "fuel:F"],
+        "inchikey": ["K1", "K2", "LUMP_X", "K1", "K1", "K1", "K3", "K1", "K2", "K1", "LUMP_Y"],
+        "smiles": ["C", "CC", "", "C", "C", "C", "CCC", "C", "CC", "C", "CCC"[:0]],
+        "fraction": [0.4, 0.5, 0.1, 1.0, 0.97, 0.03, 1.0, 0.5, 0.5, 0.8, 0.2],
+        "basis": "mass", "is_lumped": [False, False, True, False, False, False, False,
+                                       False, False, False, True],
         "unexplained_fraction": 0.0,
     })
     led = pd.DataFrame([
@@ -32,18 +34,25 @@ def _synthetic():
         ("A", "fraction:K2#0", "0.5", "cited_typed", "cited"),
         ("A", "fraction:LUMP_X#0", "0.1", "raw_file", "raw"),
         ("B", "fraction:K1#0", "1.0", "target_derived_composition", "t"),
-        ("C", "fraction:K1#0", "0.5", "formula_derived", "reconstructed: crc"),
-        ("C", "fraction:K1#1", "0.5", "formula_derived", "other formula"),
+        ("C", "fraction:K1#0", "0.97", "formula_derived", "reconstructed: crc"),
+        ("C", "fraction:K1#1", "0.03", "formula_derived", "other formula"),
         ("D", "fraction:K3#0", "1.0", "raw_file", "raw"),
+        ("E", "fraction:K1#0", "0.5", "raw_file", "raw"),
+        ("E", "fraction:K2#0", "0.5", "unknown", "u"),
+        ("F", "fraction:K1#0", "0.8", "raw_file", "raw"),
+        ("F", "fraction:LUMP_Y#0", "0.2", "raw_file", "raw"),
     ], columns=["fuel_id", "field", "value", "provenance_class", "evidence"])
     led.insert(0, "table", "c.csv")
     mism = pd.DataFrame({"table": ["c.csv"], "row_id": [6], "kind": ["key_mismatch"]})  # fuel D row
-    inv = pd.DataFrame({"fuel_id": list("ABCD"), "fuel_family": "jet", "ron": [90.0, 91.0, 92.0, 93.0],
+    inv = pd.DataFrame({"fuel_id": list("ABCDEF"), "fuel_family": "jet", "ron": [90.0, 91.0, 92.0, 93.0, 94.0, 95.0],
+                        "unresolved_fraction": [0.0, 0.0, 0.0, 0.0, 0.0, 0.2],
+                        "unresolved_handling": ["fully_resolved"] * 5 + ["lumped_heavy_tail"],
                         "available_properties": "ron;mon"})
     inv_led = pd.DataFrame([
         ("A", "ron", "90", "raw_file", "r"), ("B", "ron", "91", "raw_file", "r"),
         ("C", "ron", "92", "unknown", "u"), ("D", "ron", "93", "raw_file", "r"),
         ("A", "claim:ron", "listed", "raw_file", "r"), ("A", "claim:mon", "listed", "unknown", "u"),
+        ("E", "ron", "94", "raw_file", "r"), ("F", "ron", "95", "raw_file", "r"),
     ], columns=["fuel_id", "field", "value", "provenance_class", "evidence"])
     inv_led.insert(0, "table", "i.csv")
     return inv, comp, led, inv_led, mism
@@ -67,27 +76,58 @@ def test_synthetic_partition_and_flags():
     # fuel A keeps K1(raw), K2(cited), lump(raw); B target-derived -> dropped; C: one reconstructed row kept; D identity -> dropped
     assert set(comp_v4["provenance"]) == {"raw_file", "cited_typed", "reconstructed"}
     assert set(comp_v4["provenance"]) <= KEEP
-    assert dropped == ["B", "D"]
-    assert list(inv_v4["fuel_id"]) == ["A", "C"]
+    assert sorted(dropped) == ["B", "D", "E"]
+    assert list(inv_v4["fuel_id"]) == ["A", "C", "F"]
     # cited_typed rows are unverified; raw_file verified
     v = dict(zip(comp_v4["provenance"], comp_v4["verified"]))
-    assert v["cited_typed"] is False or v["cited_typed"] == False  # noqa: E712
-    assert v["raw_file"] == True  # noqa: E712
+    assert not v["cited_typed"]
+    assert v["raw_file"]
     # quarantine reasons
     reasons = " ".join(comp_q["reason"])
     assert "provenance:target_derived_composition" in reasons and "provenance:formula_derived" in reasons
     assert "identity:key_mismatch" in reasons
-    # no row appears in both
-    assert not (set(map(tuple, comp_v4[["system_id", "inchikey", "fraction"]].values))
-                & set(map(tuple, comp_q[["system_id", "inchikey", "fraction"]].values if False else [])))
+    # no row appears in both (compare against the input rows by position-independent key)
+    cols = ["system_id", "inchikey", "fraction"]
+    kept_keys = set(map(tuple, comp_v4[cols].values))
+    quar_keys = set(map(tuple, comp_q[cols].values))
+    assert not (kept_keys & quar_keys)
+    assert kept_keys | quar_keys == set(map(tuple, comp[cols].values))
     # inventory: quarantined cell is NaN, the available_properties claim list is rebuilt from kept claims
     a = inv_v4.set_index("fuel_id")
     assert a.loc["A", "ron"] == 90.0 and pd.isna(a.loc["C", "ron"])
     assert a.loc["A", "available_properties"] == "ron"
     assert a.loc["A", "n_composition_rows_quarantined"] == 0
     assert a.loc["C", "n_composition_rows_quarantined"] == 1
+    # partially quarantined fuel C: unresolved share is 1 - kept sum (not NaN), never verified
+    assert abs(a.loc["C", "unresolved_fraction"] - 0.03) < 1e-9
+    assert a.loc["C", "unresolved_handling"] == "partial_after_quarantine"
+    assert not a.loc["C", "verified"]
     # dropped fuels' otherwise-clean values go to quarantine with the drop reason
     assert (inv_q[inv_q["fuel_id"] == "B"]["reason"] == Q.NO_CLEAN).all()
+
+
+def test_completeness_gate():
+    """R15: kept sum < MIN_KEPT_FRACTION -> dropped, listed with the sum, rows go to quarantine."""
+    inv, comp, led, inv_led, mism = _synthetic()
+    ann = Q.split_composition(comp, led, mism, "c.csv")
+    inv_v4, comp_v4, inv_q, comp_q, dropped = Q.build_v4(inv, ann, inv_led)
+    assert Q.MIN_KEPT_FRACTION == 0.95
+    assert "incomplete composition after quarantine (kept fraction=0.500)" == dropped["E"]
+    assert "E" not in set(inv_v4["fuel_id"]) and "E" not in set(comp_v4["system_id"].str.replace("fuel:", ""))
+    # E's raw_file row is clean but is quarantined with the incomplete reason (partition stays exact)
+    e = comp_q[comp_q["system_id"] == "fuel:E"]
+    assert len(e) == 2 and (e["reason"].str.contains("incomplete_composition|provenance:unknown")).all()
+    assert (e["reason"] == Q.INCOMPLETE).sum() == 1
+    assert (inv_q[inv_q["fuel_id"] == "E"]["reason"] == Q.INCOMPLETE).all()
+    # lumped fuel F: resolved 0.8 + kept lump 0.2 = 1.0 -> kept, no row lost, unresolved = 1 - kept = 0, verified
+    f = inv_v4.set_index("fuel_id").loc["F"]
+    assert f["unresolved_handling"] == "lumped_heavy_tail" and f["unresolved_fraction"] == 0.0
+    assert f["verified"]
+    # a lumped fuel whose lump is quarantined and whose resolved sum is < 0.95 is dropped
+    led2 = led.copy()
+    led2.loc[led2["field"] == "fraction:LUMP_Y#0", "provenance_class"] = "unknown"
+    ann2 = Q.split_composition(comp, led2, mism, "c.csv")
+    assert "F" in Q.classify_fuels(set(inv["fuel_id"]), ann2)[1]
 
 
 def test_cited_typed_inventory_value_unverified():
@@ -96,7 +136,7 @@ def test_cited_typed_inventory_value_unverified():
     ann = Q.split_composition(comp, led, mism, "c.csv")
     inv_v4, *_ = Q.build_v4(inv, ann, inv_led)
     a = inv_v4.set_index("fuel_id").loc["A"]
-    assert a["verified"] == False and a["unverified_fields"] == "ron"  # noqa: E712
+    assert not a["verified"] and a["unverified_fields"] == "ron"
 
 
 @pytest.fixture(scope="module")
@@ -118,8 +158,8 @@ def test_real_v4_only_clean_rows(real):
     c = real["comp_v4"]
     assert set(c["provenance"]) <= KEEP
     assert len(c) > 0
-    assert (c.loc[c["provenance"] == "cited_typed", "verified"] == False).all()  # noqa: E712
-    assert (c.loc[c["provenance"] == "raw_file", "verified"] == True).all()  # noqa: E712
+    assert (~c.loc[c["provenance"] == "cited_typed", "verified"].astype(bool)).all()
+    assert c.loc[c["provenance"] == "raw_file", "verified"].astype(bool).all()
     # no identity-mismatched row survives
     mm = pd.read_csv(ROOT / Q.MISMATCH)
     mm = mm[mm["table"] == Q.V3_COMP]
@@ -143,3 +183,24 @@ def test_real_dropped_fuels_listed_in_missing(real):
     c = real["comp_v4"]
     have = set(c.loc[c["is_lumped"].astype(str).str.lower() != "true", "system_id"].str.replace("fuel:", "", regex=False))
     assert inv4 <= have
+
+
+def test_real_gate_and_completeness(real):
+    inv = real["inv_v4"]
+    assert (inv["kept_composition_fraction"] >= Q.MIN_KEPT_FRACTION).all()
+    assert inv["unresolved_fraction"].notna().all()
+    # every fuel with a quarantined composition row is flagged unverified
+    assert not inv.loc[inv["n_composition_rows_quarantined"] > 0, "verified"].astype(bool).any()
+    # the 8 partially-quarantined fuels found in review are dropped, with their kept share in the reason
+    for f in ("SURR_Mueller_4comp", "BrunoHuber2010_3comp", "Chen2016_JI", "Honnet2009_Aachen"):
+        assert f in real["dropped"] and "incomplete composition" in real["dropped"][f]
+    # NIST_RP1 keeps its legitimate lumped tail
+    assert "NIST_RP1" in set(inv["fuel_id"])
+
+
+def test_real_quarantine_compositions_deduped(real):
+    cq = real["comp_quar"]
+    key = ["system_id", "smiles", "inchikey"]
+    k = cq[key].fillna("").assign(_o=cq.groupby(key, dropna=False).cumcount())
+    assert not k.duplicated().any()
+    assert "also_in" in cq.columns

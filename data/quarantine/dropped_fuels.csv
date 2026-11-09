@@ -1,85 +1,93 @@
 fuel_id,fuel_family,reason
-CRC_FACE_A,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_A_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_A_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_A_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_A_E60,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_B,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_C,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_C_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_C_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_C_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_C_E60,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_D,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_1,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_2,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_3,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_4,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_5,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_6,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_7,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_8,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_Diesel_9,diesel,fuel_dropped:no_clean_composition
-CRC_FACE_E,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_F,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_F_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_F_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_F_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_F_E60,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_G,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_G_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_G_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_G_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_G_E60,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_H,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_I,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_I_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_I_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_I_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_I_E60,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_J,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_J_E10,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_J_E25,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_J_E40,gasoline,fuel_dropped:no_clean_composition
-CRC_FACE_J_E60,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp_E10,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp_E20,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp_E30,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp_M10,gasoline,fuel_dropped:no_clean_composition
-CoOptima_4comp_M20,gasoline,fuel_dropped:no_clean_composition
-Dooley2010_1stGen,jet,fuel_dropped:no_clean_composition
-Dooley2012_2ndGen,jet,fuel_dropped:no_clean_composition
-HyChem_NJFCP_A1,jet,fuel_dropped:no_clean_composition
-HyChem_NJFCP_A2,jet,fuel_dropped:no_clean_composition
-HyChem_NJFCP_A3,jet,fuel_dropped:no_clean_composition
-KimVioli2014_UM1,jet,fuel_dropped:no_clean_composition
-KimVioli2014_UM2,jet,fuel_dropped:no_clean_composition
-NASA_LFP3,diesel,fuel_dropped:no_clean_composition
-NASA_LFP5,diesel,fuel_dropped:no_clean_composition
-NASA_LFPA3,jet,fuel_dropped:no_clean_composition
-NASA_Shale_JP5,jet,fuel_dropped:no_clean_composition
-NREL_BOB_01,gasoline,fuel_dropped:no_clean_composition
-POSF_10264,jet,fuel_dropped:no_clean_composition
-POSF_10289,jet,fuel_dropped:no_clean_composition
-POSF_10325,jet,fuel_dropped:no_clean_composition
-POSF_11498,jet,fuel_dropped:no_clean_composition
-POSF_12344,jet,fuel_dropped:no_clean_composition
-POSF_12345,jet,fuel_dropped:no_clean_composition
-POSF_13511,jet,fuel_dropped:no_clean_composition
-POSF_13516,jet,fuel_dropped:no_clean_composition
-PRF_E10,gasoline,fuel_dropped:no_clean_composition
-PRF_E20,gasoline,fuel_dropped:no_clean_composition
-PRF_E30,gasoline,fuel_dropped:no_clean_composition
-PRF_E40,gasoline,fuel_dropped:no_clean_composition
-PRF_E50,gasoline,fuel_dropped:no_clean_composition
-PRF_E60,gasoline,fuel_dropped:no_clean_composition
-PRF_E70,gasoline,fuel_dropped:no_clean_composition
-PRF_E80,gasoline,fuel_dropped:no_clean_composition
-PRF_E90,gasoline,fuel_dropped:no_clean_composition
-SURR_TRF_60,gasoline,fuel_dropped:no_clean_composition
-SURR_TRF_70,gasoline,fuel_dropped:no_clean_composition
-SURR_TRF_80,gasoline,fuel_dropped:no_clean_composition
-SURR_TRF_90,gasoline,fuel_dropped:no_clean_composition
-TIGAS_Green_Gasoline,gasoline,fuel_dropped:no_clean_composition
-Violi2002_JP8_6comp,jet,fuel_dropped:no_clean_composition
+ASTM_D975_ULSD_Reference,diesel,incomplete composition after quarantine (kept fraction=0.540)
+BrunoHuber2010_3comp,jet,incomplete composition after quarantine (kept fraction=0.690)
+CRC_FACE_A,gasoline,no clean composition
+CRC_FACE_A_E10,gasoline,no clean composition
+CRC_FACE_A_E25,gasoline,no clean composition
+CRC_FACE_A_E40,gasoline,no clean composition
+CRC_FACE_A_E60,gasoline,no clean composition
+CRC_FACE_B,gasoline,no clean composition
+CRC_FACE_C,gasoline,no clean composition
+CRC_FACE_C_E10,gasoline,no clean composition
+CRC_FACE_C_E25,gasoline,no clean composition
+CRC_FACE_C_E40,gasoline,no clean composition
+CRC_FACE_C_E60,gasoline,no clean composition
+CRC_FACE_D,gasoline,no clean composition
+CRC_FACE_Diesel_1,diesel,no clean composition
+CRC_FACE_Diesel_2,diesel,no clean composition
+CRC_FACE_Diesel_3,diesel,no clean composition
+CRC_FACE_Diesel_4,diesel,no clean composition
+CRC_FACE_Diesel_5,diesel,no clean composition
+CRC_FACE_Diesel_6,diesel,no clean composition
+CRC_FACE_Diesel_7,diesel,no clean composition
+CRC_FACE_Diesel_8,diesel,no clean composition
+CRC_FACE_Diesel_9,diesel,no clean composition
+CRC_FACE_E,gasoline,no clean composition
+CRC_FACE_F,gasoline,no clean composition
+CRC_FACE_F_E10,gasoline,no clean composition
+CRC_FACE_F_E25,gasoline,no clean composition
+CRC_FACE_F_E40,gasoline,no clean composition
+CRC_FACE_F_E60,gasoline,no clean composition
+CRC_FACE_G,gasoline,no clean composition
+CRC_FACE_G_E10,gasoline,no clean composition
+CRC_FACE_G_E25,gasoline,no clean composition
+CRC_FACE_G_E40,gasoline,no clean composition
+CRC_FACE_G_E60,gasoline,no clean composition
+CRC_FACE_H,gasoline,no clean composition
+CRC_FACE_I,gasoline,no clean composition
+CRC_FACE_I_E10,gasoline,no clean composition
+CRC_FACE_I_E25,gasoline,no clean composition
+CRC_FACE_I_E40,gasoline,no clean composition
+CRC_FACE_I_E60,gasoline,no clean composition
+CRC_FACE_J,gasoline,no clean composition
+CRC_FACE_J_E10,gasoline,no clean composition
+CRC_FACE_J_E25,gasoline,no clean composition
+CRC_FACE_J_E40,gasoline,no clean composition
+CRC_FACE_J_E60,gasoline,no clean composition
+Chen2016_JI,jet,incomplete composition after quarantine (kept fraction=0.341)
+CoOptima_4comp,gasoline,no clean composition
+CoOptima_4comp_E10,gasoline,no clean composition
+CoOptima_4comp_E20,gasoline,no clean composition
+CoOptima_4comp_E30,gasoline,no clean composition
+CoOptima_4comp_M10,gasoline,no clean composition
+CoOptima_4comp_M20,gasoline,no clean composition
+Dooley2010_1stGen,jet,no clean composition
+Dooley2012_2ndGen,jet,no clean composition
+Honnet2009_Aachen,jet,incomplete composition after quarantine (kept fraction=0.800)
+HyChem_NJFCP_A1,jet,no clean composition
+HyChem_NJFCP_A2,jet,no clean composition
+HyChem_NJFCP_A3,jet,no clean composition
+KimVioli2014_UM1,jet,no clean composition
+KimVioli2014_UM2,jet,no clean composition
+NASA_LFP3,diesel,no clean composition
+NASA_LFP5,diesel,no clean composition
+NASA_LFPA3,jet,no clean composition
+NASA_Shale_JP5,jet,no clean composition
+NREL_BOB_01,gasoline,no clean composition
+POSF_10264,jet,no clean composition
+POSF_10289,jet,no clean composition
+POSF_10325,jet,no clean composition
+POSF_11498,jet,no clean composition
+POSF_12344,jet,no clean composition
+POSF_12345,jet,no clean composition
+POSF_13511,jet,no clean composition
+POSF_13516,jet,no clean composition
+PRF_E10,gasoline,no clean composition
+PRF_E20,gasoline,no clean composition
+PRF_E30,gasoline,no clean composition
+PRF_E40,gasoline,no clean composition
+PRF_E50,gasoline,no clean composition
+PRF_E60,gasoline,no clean composition
+PRF_E70,gasoline,no clean composition
+PRF_E80,gasoline,no clean composition
+PRF_E90,gasoline,no clean composition
+SURR_EN590_European_Diesel,diesel,incomplete composition after quarantine (kept fraction=0.580)
+SURR_IDEAL_4comp,diesel,incomplete composition after quarantine (kept fraction=0.500)
+SURR_Mueller_4comp,diesel,incomplete composition after quarantine (kept fraction=0.520)
+SURR_Peugeot_4comp,diesel,incomplete composition after quarantine (kept fraction=0.500)
+SURR_TRF_60,gasoline,no clean composition
+SURR_TRF_70,gasoline,no clean composition
+SURR_TRF_80,gasoline,no clean composition
+SURR_TRF_90,gasoline,no clean composition
+TIGAS_Green_Gasoline,gasoline,no clean composition
+Violi2002_JP8_6comp,jet,no clean composition
