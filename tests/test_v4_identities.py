@@ -59,10 +59,28 @@ def test_nasa_diesel_identity_mismatch_detected():
 
 
 def test_canonical_registry_clean():
-    reg = ROOT / "data/unified/compounds.csv"          # registry used by src/fuelblend (untracked, rebuildable)
-    if not reg.exists():
-        pytest.skip("data/unified/compounds.csv not present (gitignored, rebuildable)")
-    out = inchikey_mismatches(pd.read_csv(reg))
+    """Tracked registry (in git, so present on a fresh clone): ALWAYS runs, never skips."""
+    path = ROOT / "data/processed/v2/compounds_anchored_vp.csv"   # tracked copy used by v3 flash code
+    assert path.exists(), "tracked registry missing: data/processed/v2/compounds_anchored_vp.csv"
+    anch = pd.read_csv(path)
+    assert len(anch) > 500                                     # guard against an empty/vacuous table
+    out = inchikey_mismatches(anch)
     assert len(out) == 0, out.head().to_string()
-    anch = pd.read_csv(ROOT / "data/processed/v2/compounds_anchored_vp.csv")   # tracked copy used by v3 flash code
-    assert len(inchikey_mismatches(anch)) == 0
+
+
+def test_canonical_registry_checker_is_not_vacuous():
+    """The registry check must fail if a key is wrong (in-memory corruption, data untouched)."""
+    anch = pd.read_csv(ROOT / "data/processed/v2/compounds_anchored_vp.csv")
+    bad = anch.copy()
+    bad.loc[bad.index[0], "inchikey"] = bad.loc[bad.index[1], "inchikey"]
+    assert len(inchikey_mismatches(bad)) >= 1
+
+
+def test_untracked_registries_clean():
+    """Gitignored, rebuildable registries: checked when present, skipped only when absent."""
+    present = [p for p in ("data/unified/compounds.csv",) if (ROOT / p).exists()]
+    if not present:
+        pytest.skip("data/unified/compounds.csv not present (gitignored, rebuildable)")
+    for p in present:
+        out = inchikey_mismatches(pd.read_csv(ROOT / p))
+        assert len(out) == 0, f"{p}: {out.head().to_string()}"

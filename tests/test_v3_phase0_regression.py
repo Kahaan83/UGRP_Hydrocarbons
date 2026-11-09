@@ -17,11 +17,12 @@ def test_r2_flash_anchoring_regression():
     assert float(row["over_prediction_rate_gt_5C"]) <= 0.05
     assert float(row["max_over_prediction_C"]) <= 5.5
 
-def test_r3_real_fuels_flash_regression():
+def test_r3_real_fuels_flash_crc647_subset():
+    """CRC 647 aviation fuels only (measured D93 flash + reconstructed compositions, kept in v4)."""
     r3 = pd.read_csv(ROOT / "results" / "v3" / "R3" / "real_fuels_flash_hindcast.csv")
-    assert len(r3) >= 50
-    # Pensky-Martens closed-cup negative bias check
-    pm = r3[r3["method"].str.contains("D93|Pensky", na=False)]
+    crc = r3[r3["fuel_id"].astype(str).str.startswith("CRC647")]
+    assert len(crc) == 57
+    pm = crc[crc["method"].str.contains("D93|Pensky", na=False)]
     assert len(pm) >= 40
     assert pm["error_C"].mean() < -5.0  # conservative negative bias
 
