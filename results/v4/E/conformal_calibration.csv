@@ -1,0 +1,3 @@
+model,head,alpha,kind,n_dev_groups,conformal_rank_k,margin_ln,margin_multiplicative,dev_cross_conformal_row_cov,dev_cross_conformal_rows,dev_cross_conformal_group_cov,dev_cross_conformal_groups,locked_groups_covered,locked_rows_covered,ensemble_sd_mean_dev,applied_margin_C
+Set encoder (attention),viscosity,0.1,"two-sided |ln residual|, group=fuel",45,42,0.16978922486305237,1.1850550448554245,0.9703703703703703,131/135,0.9111111111111111,41/45,8/12,31/36,0.007613584770193734,
+Set encoder (attention),flash (D93 CRC fuels),0.1,"one-sided over-prediction, group=fuel",45,42,2.8197462081909173,,,,,,8/12,,,2.8197462081909173
