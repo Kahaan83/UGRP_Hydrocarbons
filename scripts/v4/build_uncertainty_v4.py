@@ -33,7 +33,10 @@ HEADER = ("# GENERATED - do not edit. Produced by scripts/v4/build_uncertainty_v
           "# Regenerate: .venv/Scripts/python.exe scripts/v4/build_uncertainty_v4.py\n"
           "# Residual convention: predicted - measured.  Margins are group-level split-conformal quantiles set on DEV\n"
           "# groups; value 'inf' means no valid margin exists at this alpha (too few independent groups) and is\n"
-          "# deliberately NOT replaced by a typed number.  See results/v4/U/README.md.\n")
+          "# deliberately NOT replaced by a typed number.  See results/v4/U/README.md.\n"
+          "# CONSUMERS MUST read applied_margin (never the raw quantile in 'value'; a negative quantile is not extra safety).\n"
+          "# Entries whose value is the string 'inf' mean NO VALID MARGIN: check isinstance(value, str) and treat as unusable;\n"
+          "# do not substitute a number.  Two-sided entries: applied_margin == value (log space for viscosity).\n")
 ENTRIES: dict[str, dict] = {}
 LOCKED_ROWS: list[dict] = []
 
@@ -67,7 +70,9 @@ def add(key, resid, groups, *, kind, direction, unit, model, residual_file, scop
     if math.isinf(val):
         e["reason"] = (f"only {n} independent groups; a {int((1 - ALPHA) * 100)} % conformal margin needs "
                        f"ceil((n+1)(1-alpha)) = {k} <= n. No valid margin; no substitute number is given.")
-    elif kind == "one":
+    elif kind == "two":
+        e["applied_margin"] = float(val)
+    else:
         e["applied_margin"] = max(0.0, float(val))
         if val < 0:
             e["applied_margin_note"] = ("computed margin is negative: no/few groups were ever over-predicted at this level; "
@@ -150,7 +155,7 @@ def bulk():
         model="ideal volume mixing, rho = 1/sum(w_i/rho_i(T))", residual_file=f,
         scope="CRC 647 fuels (45 dev), every temperature (-0.2..69.5 C), per-fuel max |err| over its rows",
         group_unit="fuel", bias=dev.err_kg_m3.mean(), locked=(lk.err_kg_m3, lk.fuel_id),
-        caveats=caveat_common + ["Resolves the v3 '12.94 vs 2.50' inconsistency: 12.94 kg/m3 was the v3 MAE over 153 mostly-synthetic-composition fuels (results/v3/G10); 2.50 was a hand-typed design margin that no residual supports. The v4 conformal margin is computed from the 45 real CRC647 dev fuels."])
+        caveats=caveat_common + ["Resolves the v3 '12.94 vs 2.50' inconsistency: 12.94 kg/m3 was the v3 MAE over 153 fuels (results/v3/G10: MAE 12.94, RMSE 16.75); the 2.50 design margin is unsupported by those residuals (a 90 % quantile below the MAE is impossible). The v4 conformal margin is computed from the 45 real CRC647 dev fuels."])
     d15 = d[np.isclose(d.T_C, 15.56)]
     dev15, lk15 = d15[d15.slice == "dev"], d15[d15.slice == "locked"]
     add("density_kg_m3.crc647_ideal_volume.T15_56C", dev15.err_kg_m3, dev15.fuel_id, kind="two", direction="over", unit="kg/m3",
@@ -322,7 +327,56 @@ def smoke():
 
 
 # ----------------------------------------------------------------------------------------------- output
+FLASH_REC = ("RECOMMENDATION (not a measured result): the D93 reconstructed-CRC entry floors at 0 because every CRC fuel is under-predicted by a "
+             "closed-cup/reconstruction offset (about -9.4 C). The lab ideal entry (31 systems) is the only margin with a real over-prediction exposure "
+             "(one lab system over-predicts by +10.6 C). Optimizer-designed novel blends must NOT use 0 as the flash margin; use the larger of the lab "
+             "applied_margin and the D93 applied_margin unless a different choice is documented.")
+
+
+def FILT(*w):
+    return [list(x) for x in w]
+
+
+RECOMPUTE = {
+    "flash_point_C.lab_mixtures.ideal": dict(column="ideal_err_C", group="system_id", where=[]),
+    "flash_point_C.lab_mixtures.unifac": dict(column="unifac_err_C", group="system_id", where=[]),
+    "flash_point_C.real_fuels_D93_reconstructed.ideal": dict(column="ideal_err_C", group="fuel_id", where=FILT(("method", "eq", "D93"), ("split_role", "ne", "locked"))),
+    "flash_point_C.real_fuels_D93_reconstructed.unifac": dict(column="unifac_err_C", group="fuel_id", where=FILT(("method", "eq", "D93"), ("split_role", "ne", "locked"))),
+    "density_kg_m3.crc647_ideal_volume.all_T": dict(column="err_kg_m3", group="fuel_id", where=FILT(("slice", "eq", "dev"))),
+    "density_kg_m3.crc647_ideal_volume.T15_56C": dict(column="err_kg_m3", group="fuel_id", where=FILT(("slice", "eq", "dev"), ("T_C", "close", 15.56))),
+    "heat_of_combustion_net_MJ_kg.crc647.group_additivity_composition_H": dict(column="err_comp_H", group="fuel_id", where=FILT(("split_role", "ne", "locked"))),
+    "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8": dict(column="err_v2_const_H", group="fuel_id", where=FILT(("split_role", "ne", "locked"))),
+    "freezing_point_C.crc647.coutinho_library": dict(column="err_coutinho", group="fuel_id", where=FILT(("split_role", "ne", "locked"))),
+}
+for _p in ("ron", "mon"):
+    for _m in ("constant_mean", "base_unchanged", "linear_volume_pooled_bov", "ghosh_lumps", "gbm_resid", "gp_resid"):
+        RECOMPUTE[f"{_p}.{_m}"] = dict(column="resid", group="group", where=FILT(("prop", "eq", _p), ("model", "eq", _m), ("view", "eq", "dev_leave_one_blendstock_out")))
+for _m in ("selected_in_fold", "const_mean"):
+    RECOMPUTE[f"smoke_point_mm.ajftd100_bulk.{_m}"] = dict(column=f"resid_{_m}", group="tgroup", where=[])
+DERIVATION = {
+    "freezing_point_C.crc647.wat_ideal_minus_loo_offset": "residual_i = err_wat_ideal_i - mean(err_wat_ideal of the other dev fuels); source column err_wat_ideal in residual_file (dev rows, split_role != locked)",
+    "freezing_point_C.crc647.constant_mean_loo": "residual_i = mean(measured_C of the other dev fuels) - measured_C_i; source column measured_C in residual_file (dev rows)",
+    "freezing_point_C.sle_alkane_blends.ideal_svl": "residual = ideal_svl_K - T_obs_K on scored rows where ideal_svl_K exists; group = system_id",
+    "freezing_point_C.sle_alkane_blends.coutinho_lib_common8": "residual = coutinho_lib_K - T_obs_K on scored rows where both ideal_svl_K and coutinho_lib_K exist; group = system_id",
+    "freezing_point_C.sle_alkane_blends.coutinho_lib_all": "residual = coutinho_lib_K - T_obs_K on scored rows where coutinho_lib_K exists; group = system_id",
+}
+for _m, _c in (("structured_ridge", "pred_Structured ridge"), ("recalibrated_refutas", "pred_Recalibrated Refutas")):
+    for _s in ("all_T", "minus40C"):
+        DERIVATION[f"viscosity_kin_cSt.crc647.{_m}.{_s}"] = (f"residual = ln({_c}) - ln(y) on rows with locked == False"
+                                                              + (" and T_C == -40" if _s == "minus40C" else "") + "; group = fuel_id")
+
+
+def apply_specs():
+    for k, e in ENTRIES.items():
+        if k in RECOMPUTE:
+            e["recompute"] = RECOMPUTE[k]
+        if k in DERIVATION:
+            e["residual_derivation"] = DERIVATION[k]
+
+
 def write():
+    ENTRIES["flash_point_C.lab_mixtures.ideal"]["recommendation"] = FLASH_REC
+    ENTRIES["flash_point_C.real_fuels_D93_reconstructed.ideal"]["recommendation"] = FLASH_REC
     doc = dict(version="4.0", generated_by="scripts/v4/build_uncertainty_v4.py", alpha=ALPHA,
                residual_convention="predicted - measured; one-sided margins use the unsafe side named in 'direction'",
                margin_rule="conformal quantile k=ceil((n+1)(1-alpha)) of per-group max unsafe-side residuals over n groups; 'inf' if k>n",
@@ -368,10 +422,13 @@ def readme():
           f"Transfer check on CRC D93 fuels: {fl['transfer_check']['groups_covered']}/{fl['transfer_check']['n_groups']} covered.",
           f"- Real fuels, D93, CRC647 reconstructed compositions, {fr['n_groups']} dev fuels: computed margin {fmt(fr['value'])} C (negative: every fuel is under-predicted, bias {fmt(fr['mean_signed_residual_bias'], 2)} C), applied_margin {fmt(fr.get('applied_margin', 0), 2)} C; "
           f"locked {fr['locked_check']['groups_covered']}/{fr['locked_check']['n_locked_groups']} covered. This is a statement about reconstructed compositions and a closed-cup test; it does not show the model is safe on measured compositions or other fuel types.",
-          "- D56 (Tag closed cup): one fuel, margin `inf` (no valid margin).", ""]
+          "- D56 (Tag closed cup): one fuel, margin `inf` (no valid margin).",
+          "- **Recommendation for consumers (Task 17), not a measured result:** the D93 reconstructed-CRC entry floors at 0 only because every CRC fuel is under-predicted by a closed-cup/reconstruction offset (about -9.4 C); that offset is not a safety property of the model. "
+          f"The lab ideal entry ({fmt(fl['value'], 2)} C, {fl['n_groups']} systems) is the only margin with a real over-prediction exposure (one lab system over-predicts by +10.6 C). "
+          "Optimizer-designed novel blends must NOT use 0 as the flash margin; use the larger of the lab applied_margin and the D93 applied_margin unless a different choice is documented.", ""]
     dn, d15 = g("density_kg_m3.crc647_ideal_volume.all_T"), g("density_kg_m3.crc647_ideal_volume.T15_56C")
     L += ["### Density (Task 12) and the 12.94 vs 2.50 inconsistency",
-          f"- v3 reported MAE 12.94 kg/m3 (`results/v3/G10`, 153 fuels, mostly formula-derived compositions) next to a **hand-typed** design margin of 2.50 kg/m3. They were never reconciled: 2.50 is smaller than the MAE it claims to bound. "
+          f"- v3 reported MAE 12.94 kg/m3 (`results/v3/G10`: MAE 12.94, RMSE 16.75 on 153 fuels) next to a v3 design margin of 2.50 kg/m3 that the G10 residuals do not support: a 90 % quantile of 2.50 is impossible when the MAE is 12.94. "
           f"The v4 margin is derived from real CRC647 residuals: {fmt(d15['value'], 2)} kg/m3 at 15.56 C (45 dev fuels) and {fmt(dn['value'], 2)} kg/m3 over all temperatures.",
           f"- The ideal-volume model is biased low (dev mean residual {fmt(d15['mean_signed_residual_bias'], 2)} kg/m3 at 15.56 C), so the two-sided margin is wide; the bias alone accounts for {100 * abs(d15['mean_signed_residual_bias']) / d15['value']:.0f} % of the 15.56 C margin. Locked coverage: {d15['locked_check']['groups_covered']}/{d15['locked_check']['n_locked_groups']} (15.56 C), {dn['locked_check']['groups_covered']}/{dn['locked_check']['n_locked_groups']} (all T).", ""]
     L += ["### Heat of combustion (Task 12)",
@@ -383,7 +440,7 @@ def readme():
                  + (f" Task 13 indicative (point quantiles, NOT conformal): q90 {fmt(e['indicative_not_conformal']['point_q90_K'], 2)} K, q95 {fmt(e['indicative_not_conformal']['point_q95_K'], 2)} K." if 'indicative_not_conformal' in e else ""))
     fo, fc = g("freezing_point_C.crc647.wat_ideal_minus_loo_offset"), g("freezing_point_C.crc647.constant_mean_loo")
     L += [f"- Task 12: the CRC freezing models show no skill over a constant mean. Consistent with that, the conformal margin of the offset physics model ({fmt(fo['value'], 2)} K) is not tighter than the composition-blind constant-mean comparator ({fmt(fc['value'], 2)} K). "
-          "Task 13's 7 K / 4 K values rested on about 8 clusters and are kept only under `indicative_not_conformal`; the ideal-SvL conformal margin is `inf` (8 systems < 9).", ""]
+          f"Task 13's '7 K / 4 K' shorthand corresponds to the stored ideal-SvL point quantiles q95 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.ideal_svl']['indicative_not_conformal']['point_q95_K'], 2)} K / q90 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.ideal_svl']['indicative_not_conformal']['point_q90_K'], 2)} K (Coutinho on the same rows: q90 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.coutinho_lib_common8']['indicative_not_conformal']['point_q90_K'], 2)} K / q95 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.coutinho_lib_common8']['indicative_not_conformal']['point_q95_K'], 2)} K). They rest on about 8 clusters, are point-level (not group) quantiles, and are kept only under `indicative_not_conformal`; the ideal-SvL conformal margin is `inf` (8 systems < 9).", ""]
     L += ["### Viscosity (Task 11), two-sided in ln space"]
     for k in [k for k in ENTRIES if k.startswith("viscosity")]:
         e = ENTRIES[k]
@@ -395,6 +452,7 @@ def readme():
         L.append(f"- `{k}`: {fmt(e['value'])} ON over {e['n_groups']} blendstock groups; locked {e['locked_check']['groups_covered']}/{e['locked_check']['n_locked_groups']}.")
     L += ["- With 18 dev groups the conformal rank is 18, i.e. the margin equals the **largest** group over-prediction: the finite-sample correction leaves no slack.",
           "- DVPE is excluded: units unconfirmed (SD-03).", ""]
+    L += [f"- Smoke point groups: the NOCODE group pools {int((pd.read_csv(OUT / 'smoke_point_oof_residuals.csv').tgroup == 'NOCODE').sum())} fuels with no parseable T-code, so n_groups = 6 is an upper bound on independent units; the result is `inf` either way."]
     for k in [k for k in ENTRIES if k.startswith("smoke_point")]:
         e = ENTRIES[k]
         L.append(f"- `{k}`: {fmt(e['value'])} mm over {e['n_groups']} T-code groups" + (f" -- {e['reason']}" if isinstance(e['value'], str) else "") + ".")
@@ -418,7 +476,7 @@ def readme():
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     flash(); bulk(); sle(); viscosity(); octane(); smoke()
-    write(); readme()
+    apply_specs(); write(); readme()
     for k, e in ENTRIES.items():
         print(f"{k:70s} {e['value'] if isinstance(e['value'], str) else round(e['value'], 3)!s:>8} n={e['n_groups']}")
 
