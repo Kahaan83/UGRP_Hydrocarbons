@@ -12,6 +12,7 @@ Outputs (results/v4/D/): designs_v4.csv, constraints_v4.csv, robustness_v4.csv, 
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -86,7 +87,10 @@ def category(res, viol, nopred):
     return "B_meets_at_point_estimate_not_certifiable"
 
 
-def main():
+def main(out=None):
+    global OUT
+    if out is not None:
+        OUT = Path(out) if Path(out).is_absolute() else ROOT / out
     OUT.mkdir(parents=True, exist_ok=True)
     L = M.library()
     models = M.build_models(L)
@@ -165,4 +169,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    ap.add_argument("--out", default=None, help="output folder (default results/v4/D)")
+    main(ap.parse_args().out)

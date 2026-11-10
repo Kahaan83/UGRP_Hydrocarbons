@@ -1,0 +1,7 @@
+pool,w,T_C,ridge_unguarded_cSt,ridge_guarded_cSt,ridge_guard_note,recalibrated_refutas_cSt,raw_refutas_cSt
+"[""n-decane""]",[1.0],-20.0,0.12571877441733212,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac",3.2645023357545733,2.297587025844833
+"[""n-decane""]",[1.0],20.0,0.1442402240816554,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac",1.250973486468123,1.319999504451159
+"[""n-hexadecane""]",[1.0],-20.0,1.5747138277166157,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac",11.607671939851352,8.16958718551538
+"[""n-hexadecane""]",[1.0],20.0,0.6581026950817094,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac",3.8252453686007595,4.036314154996888
+"[""n-decane"", ""1,2,4-trimethylbenzene""]","[0.5, 0.5]",-20.0,0.2603599661107956,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.5, (0.0604398359389885, 0.2409538136282322)), 'frac",2.7444153520844776,1.9315449823445088
+"[""n-decane"", ""1,2,4-trimethylbenzene""]","[0.5, 0.5]",20.0,0.22407309868960995,,"structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.5, (0.0604398359389885, 0.2409538136282322)), 'frac",1.0893910504125917,1.1495012981914154

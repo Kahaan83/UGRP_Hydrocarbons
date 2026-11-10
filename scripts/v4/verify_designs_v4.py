@@ -15,6 +15,7 @@ Usage: python scripts/v4/verify_designs_v4.py  ->  results/v4/D/verification_v4.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -86,7 +87,10 @@ def _liquidus_ideal(chs, x):
     return best - 273.15
 
 
-def main():
+def main(out=None):
+    global OUT
+    if out is not None:
+        OUT = Path(out) if Path(out).is_absolute() else ROOT / out
     designs = pd.read_csv(OUT / "designs_v4.csv")
     cons = pd.read_csv(OUT / "constraints_v4.csv")
     smi = pd.read_csv(PURE).drop_duplicates("compound").set_index("compound")["smiles"].to_dict()
@@ -149,4 +153,6 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    ap.add_argument("--out", default=None, help="folder holding designs_v4.csv / constraints_v4.csv (default results/v4/D)")
+    sys.exit(main(ap.parse_args().out))
