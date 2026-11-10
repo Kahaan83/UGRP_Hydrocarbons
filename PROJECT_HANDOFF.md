@@ -442,3 +442,14 @@ Data-collection-era commands (live only in `extras\fuelblend_data`): `python fet
 - Inner-repo-era peripherals: `extras\fuelblend_data\{FILE_MAP.md, PROJECT_HANDOFF.md, T8_T9_INTERFACE_SPEC.md, FULL_REPORT.md, PROGRESS_REPORT.md, AUDIT.md, DATA_LOG.md, SOURCE_CHECK.md, CHANGES.md, SHA256SUMS.txt, BASELINE_VISCOSITY_REPORT.md, DATA_ACQUISITION_TASKS.md}`.
 - The build script with all edits: `C:\Users\kahaa\Downloads\files (3)\build_core_dir.py`.
 - Scratch notes (reports\tasks in `extras\`): `ANALYSIS_PLAN.md`, `WP0.md`, `plan.md`, `todo.md`.
+
+---
+
+## 15. v4 status (appended in v4 Task 19, branch `v4-integrity`)
+
+* The v3 real-fuel corpus and design optimizer were formula-derived; they are quarantined (`data/quarantine/`, `results/v4/P1/`) and the dependent v3 claims are retracted (`docs/claims_register.md` CLM-20..24, 29). v4 tables live in `data/real_fuels/v4/` (61 jet fuels; 57 CRC 647 with reconstructed compositions; 210 gasoline octane rows; diesel: none).
+* Read `docs/FULL_REPORT_v4.md` first (every number cited to a `results/v4` file), then `docs/claims_register.md` (v4-updated rows CLM-09..28, new CLM-30..37), `docs/model_decision.md` sections 5-6.
+* Reproduce: `python scripts/v4/reproduce_all.py` (use `.venv\Scripts\python.exe`; ~12 min plus pytest ~2.5 min). `--verify-only` checks row counts and rewrites `SHA256SUMS_v4.txt`; `--include-encoder` retrains the Task 16 encoder (slow). Steps that need `extras/` are skipped and reported when it is missing. Two consecutive runs gave an identical manifest.
+* Tests: `pytest tests -q` -> 308 passed, 42 failed. All 42 failures are pre-existing "deliverable file missing" asserts for v2/v3 files (the baseline was 45 failed; three were removed by the quarantine move); list in `results/v4/baseline_pytest.txt`.
+* Open items: ThermoML default-mode `phase_of()` reads only `ePhase` (CLM-37, not fixed, existing `thermoml_hc.csv` may be contaminated); mesitylene / n-hexylbenzene Psat inputs (CLM-36); density bias cause; no GPU run of the set encoder (`jobs/v4_gpu/` untested); diesel data; D1655 smoke limits and BIS spec values UNVERIFIED; DVPE units; IS 2796 DVPE minimum not citable.
+* Uncommitted user work (not part of v4 tasks): `results/v3/R1/viscosity_leaderboard.csv`, `splits/locked.json`, `src/fuelblend/data/model_table.py`, `scripts/v4/compare_antoine_cox_gate.py`, `results/v4/antoine_cox_gate/`.

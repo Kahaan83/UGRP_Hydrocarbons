@@ -87,3 +87,22 @@ The empirical data across blend complexity buckets $N \in [1, 40+]$ (`results/v2
 
 Uncertified (no valid margin; value None, interval NaN, `in_domain=False`): freezing, smoke point, RON/MON, DCN, DVPE (data units unconfirmed), pour point.
 The mixture-residual GBM is opt-in (`use_mixture_residual=True`), has no margin, and is never certified. `fuel_type='jet'` is trusted from the caller.
+
+---
+
+## 6. v4 decision summary (Task 19; extends section 5, does not replace it)
+
+Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 above are v2/v3-era decisions; where they disagree with this section, this section governs. The v3 corpus and design optimizer were formula-derived and are quarantined (`data/quarantine/`, `results/v4/P1/AUDIT.md`); decisions that rested on them are void. The routing table in section 5 is unchanged.
+
+| Property | v4 decision | Evidence | What it does NOT say |
+|---|---|---|---|
+| Viscosity | Production: recalibrated Refutas (margin 0.347 ln). Learned alternates (structured ridge 0.0826, bilinear 0.0901, GP 0.0888 dev log-RMSE) beat it with paired CI excluding 0 but are NOT ranked among themselves; the ridge is kept behind an envelope guard | `results/v4/V/README.md` | GP under-covers (0.77 dev / 0.69 locked); lab zero-shot does not fix -40 C; encoder lost (0.0862 vs 0.0833, CI includes 0) |
+| Flash | Ideal Le Chatelier (UNIFAC is worse: dMAE +0.45 [+0.11, +0.78]); margin = max(lab 3.70, D93 0.00) | `results/v4/F/README.md`, `results/v4/F/flash_input_sensitivity.csv` | Lab margin is set by the mesitylene system (0.31 C without it); D93 evidence is reconstructed compositions only; D56 n = 1 |
+| Density | Ideal volume mixing, margin 22.25 kg/m3 | `results/v4/B/README.md` | Bias -11 kg/m3, cause unknown |
+| Net HoC | Group additivity, margin 0.194 MJ/kg | `results/v4/B/README.md` | Possible error cancellation (measured-H diagnostic) |
+| Freezing | No model demonstrated; offset/Coutinho do not beat a constant mean on CRC fuels; ideal SvL is good only for n-alkane blends (8 systems, margin inf) | `results/v4/B/README.md`, `results/v4/SLE/README.md` | Not certifiable; model form changes design outcomes |
+| Smoke point | AJFTD bulk regression is a baseline only (1.29 vs 1.47 mm grouped; no skill on the broad set); margin inf | `results/v4/SP/README.md` | Spec limits secondary-source / UNVERIFIED |
+| RON/MON | bRON (base + one blendstock) only; learned models beat base-unchanged; no CI-supported winner among them | `results/v4/O/README.md` | Not for multi-component pools; locked thin (12 rows, 4 groups) |
+| DVPE, pour, cloud, DCN | Uncertified, no v4 model or margin | `configs/uncertainty_v4.yaml` | DVPE data units unconfirmed |
+| Diesel (any property) | Nothing validated: 0 qualifying fuels | `results/v4/P2/coverage_matrix_summary.md` | |
+| Designs | 0 of 13 certified; certification is jet-only | `results/v4/D/README.md` | 8 of 13 are undetermined, not failed |

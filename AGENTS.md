@@ -364,6 +364,12 @@ Viscosity: 17,020 of 18,322 HC records have all components with a measured pure 
 
 ---
 
+## 12. v4 status (read first; the plan below is the v1-era plan)
+
+v4 (branch `v4-integrity`) quarantined the formula-derived v3 corpus and designs and rebuilt the evidence on `data/real_fuels/v4/` (61 jet fuels, 210 gasoline octane rows, no diesel). Entry points: `docs/FULL_REPORT_v4.md`, `docs/claims_register.md`, `docs/model_decision.md` (sections 5-6), `PROJECT_HANDOFF.md` section 15. Reproduce with `python scripts/v4/reproduce_all.py` (venv python); pytest: 308 passed / 42 failed, all 42 pre-existing missing-deliverable asserts (`results/v4/baseline_pytest.txt`). Headline limits: CRC 647 compositions are reconstructed; 0 of 13 designs certified; diesel unvalidated; freezing models show no skill over a constant; open issues listed in the report section 11 (including the ThermoML `phase_of()` default-mode bug).
+
+---
+
 ## 12. Exactly where we stopped — do this next
 
 The last deliverable was `fuelblend_update.zip` (14 files: `thermoml_extract.py`, `build_unified.py`, `refit_antoine.py`, `ingest_ajftd.py`,
