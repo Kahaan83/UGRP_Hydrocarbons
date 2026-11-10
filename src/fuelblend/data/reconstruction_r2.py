@@ -136,12 +136,24 @@ def nominal_sat_split(jet_class_csv: Path) -> tuple[float, float, float]:
     return nominal_sat_split_detail(jet_class_csv)[0]
 
 
+def diaromatic_mass(row: Mapping) -> float:
+    """Mass fraction of the diaromatic lump (aromatic mass x D/A), 0 when the row cannot be reconstructed."""
+    A = float(row.get("aromatics_vol_pct", np.nan))
+    if not np.isfinite(A) or A <= 0:
+        return 0.0
+    get = lambda k: float(row[k]) if k in row and np.isfinite(row[k]) else 0.0
+    D, O = min(get("diaromatics_vol_pct"), A), get("olefins_vol_pct")
+    ma, mo, ms = A * RHO_CLASS["aromatic"], O * RHO_CLASS["olefin"], max(100.0 - A - O, 0.0) * RHO_CLASS["sat"]
+    return ma / (ma + mo + ms) * D / A
+
+
 def reconstruct(row: Mapping, sat_split, reps) -> tuple[pd.DataFrame, float]:
     cols = ["inchikey", "smiles", "fraction", "kind"]
     empty = pd.DataFrame(columns=cols)
     cd = carbon_distribution(row)
     A = float(row.get("aromatics_vol_pct", np.nan))
     if cd is None or not np.isfinite(A):
+        log.warning("reconstruct: skipped (%s)", "fewer than 4 distillation points" if cd is None else "no aromatics value")
         return empty, 1.0
     get = lambda k: float(row[k]) if k in row and np.isfinite(row[k]) else 0.0
     O, D = get("olefins_vol_pct"), min(get("diaromatics_vol_pct"), A)

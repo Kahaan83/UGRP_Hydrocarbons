@@ -2,7 +2,7 @@
 
 Descriptors only (D86 mean of tests 1 and 2, aromatics, olefins, naphthalenes); no target property is read.
 
-CRC fuels written: 57
+CRC fuels written: 57 (of 57); skipped: none (fewer than 4 D86 points or no aromatics; excluded from the CSV, the fallback stats and the shares below)
 
 ## Nominal saturates split (prior from GC jet fuels, not a fit to CRC)
 
@@ -84,3 +84,50 @@ Fallback mass: mean 0.0202, max 0.0538 (worst fuel CRC647_40)
 | n_paraffin | 18 | RZJRJXONCZWCBN-UHFFFAOYSA-N | CCCCCCCCCCCCCCCCCC |
 
 Candidates also require an Antoine set and LFL in the flash registry and valid pure eta/rho.
+
+## Known gaps
+
+- Kinds with no realistic representative at all: aromatic_di
+- Bicyclic cycloalkane (decalin-type) candidates available: 0 (none: all cycloalkane mass sits on single-ring compounds)
+- aromatic_di representatives available: 0 bin(s) (C# [])
+- Diaromatic (naphthalene) mass per fuel, mean 0.0130, max 0.0410; all of it goes to the fallback lump, i.e. 65% of the mean fallback mass (0.0202).
+- The nominal split is cyclo-heavy (cycloalkane 0.526) and comes from only 4 GC fuels; it is a prior, not a fit to CRC.
+- get() substitutes the nearest-carbon-number representative within max_gap=3 carbons; the table below shows the requested carbon number, the representative's carbon number and the gap (gap > 0 = substituted).
+
+## Carbon-number substitution (kinds other than aromatic_di)
+
+| kind | requested C# | representative C# | gap |
+|---|---|---|---|
+| n_paraffin | 19 | 18 | 1 |
+| n_paraffin | 20 | 18 | 2 |
+| iso_paraffin | 13 | 12 | 1 |
+| iso_paraffin | 14 | 12 | 2 |
+| iso_paraffin | 15 | 16 | 1 |
+| iso_paraffin | 18 | 17 | 1 |
+| iso_paraffin | 19 | 17 | 2 |
+| iso_paraffin | 20 | 17 | 3 |
+| cycloalkane | 17 | 16 | 1 |
+| cycloalkane | 19 | 18 | 1 |
+| cycloalkane | 20 | 18 | 2 |
+| aromatic_mono | 5 | 6 | 1 |
+| aromatic_mono | 11 | 10 | 1 |
+| aromatic_mono | 13 | 12 | 1 |
+| aromatic_mono | 15 | 14 | 1 |
+| aromatic_mono | 19 | 18 | 1 |
+| aromatic_mono | 20 | 18 | 2 |
+| alkene_alkyne | 5 | 6 | 1 |
+| alkene_alkyne | 7 | 6 | 1 |
+| alkene_alkyne | 9 | 8 | 1 |
+| alkene_alkyne | 10 | 8 | 2 |
+| alkene_alkyne | 11 | 8 | 3 |
+| alkene_alkyne | 12 | none | - |
+| alkene_alkyne | 13 | none | - |
+| alkene_alkyne | 14 | none | - |
+| alkene_alkyne | 15 | none | - |
+| alkene_alkyne | 16 | none | - |
+| alkene_alkyne | 17 | none | - |
+| alkene_alkyne | 18 | none | - |
+| alkene_alkyne | 19 | none | - |
+| alkene_alkyne | 20 | none | - |
+
+(Rows are listed only where the requested bin is empty: substituted or without representative.)

@@ -5,19 +5,20 @@ olefins vol% (D1319, else D1159), diaromatics = naphthalenes vol% (D1840).
 """
 from __future__ import annotations
 
-import json
+import logging
 import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+logging.basicConfig(level=logging.WARNING)
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 
 from fuelblend.baselines.flash_unifac import _lookup  # noqa: E402
-from fuelblend.data.loaders_jet import included_jet_fuel_ids  # noqa: E402
-from fuelblend.data.reconstruction_r2 import KINDS, RealisticReps, nominal_sat_split_detail, reconstruct  # noqa: E402
+from fuelblend.data.reconstruction_r2 import KINDS, RealisticReps, diaromatic_mass, nominal_sat_split_detail, reconstruct  # noqa: E402
 from fuelblend.mixture.common import CompoundRegistry, PurePropertyProvider  # noqa: E402
 
 PROPS = ROOT / "data/real_fuels/v4/jet_properties_v4.csv"
@@ -61,9 +62,13 @@ def main():
     split, used, skipped = nominal_sat_split_detail(JETCLASS)
     rows_by_fuel = descriptor_rows(pd.read_csv(PROPS))
 
-    out, stats, kind_mass = [], [], {k: [] for k in KINDS}
+    out, stats, kind_mass, skipped_fuels, diaro = [], [], {k: [] for k in KINDS}, [], []
     for fid in sorted(rows_by_fuel):
         fr, fb = reconstruct(rows_by_fuel[fid], split, reps)
+        if fr.empty and fb == 1.0:
+            skipped_fuels.append(fid)
+            continue
+        diaro.append(diaromatic_mass(rows_by_fuel[fid]))
         stats.append((fid, fb, len(fr)))
         for k in KINDS:
             kind_mass[k].append(float(fr.loc[fr.kind == k, "fraction"].sum()) if len(fr) else 0.0)
@@ -76,6 +81,7 @@ def main():
                         provenance="reconstructed_r2", verified=False))
     df = pd.DataFrame(out, columns=COLS)
     fbs = np.array([s[1] for s in stats])
+    print(f"skipped={skipped_fuels}")
     print(f"fuels={len(stats)} mean_fallback={fbs.mean():.4f} max_fallback={fbs.max():.4f} split={split}")
     if fbs.mean() > 0.20:
         print("STOP: mean fallback > 0.20; not writing CSV. Bins without a realistic representative:")
@@ -86,7 +92,9 @@ def main():
 
     md = ["# r2 CRC 647 reconstruction report", "",
           "Descriptors only (D86 mean of tests 1 and 2, aromatics, olefins, naphthalenes); no target property is read.", "",
-          f"CRC fuels written: {len(stats)}", "",
+          f"CRC fuels written: {len(stats)} (of {len(rows_by_fuel)}); skipped: "
+          + (", ".join(skipped_fuels) if skipped_fuels else "none")
+          + " (fewer than 4 D86 points or no aromatics; excluded from the CSV, the fallback stats and the shares below)", "",
           "## Nominal saturates split (prior from GC jet fuels, not a fit to CRC)", "",
           f"n-paraffin {split[0]:.4f}, iso-paraffin {split[1]:.4f}, cycloalkane {split[2]:.4f}", "",
           f"GC fuels used ({len(used)}): " + ", ".join(used), ""]
@@ -99,7 +107,39 @@ def main():
            "## Representative per (kind, carbon number) bin", "", "| kind | C# | inchikey | smiles |", "|---|---|---|---|"]
     for (k, n), v in sorted(reps.by.items()):
         md.append(f"| {k} | {n} | {reps.ik[v[0]]} | {reps.smiles[v[0]]} |")
-    md += ["", "Candidates also require an Antoine set and LFL in the flash registry and valid pure eta/rho."]
+    md += ["", "Candidates also require an Antoine set and LFL in the flash registry and valid pure eta/rho.", ""]
+    # known gaps
+    from rdkit import Chem
+    empty_kinds = [k for k in KINDS if not reps.ns[k]]
+    bicyc = [i for (k, n), v in reps.by.items() if k == "cycloalkane" for i in v
+             if Chem.MolFromSmiles(reps.smiles[i]).GetRingInfo().NumRings() == 2]
+    dmean = float(np.mean(diaro)) if diaro else 0.0
+    md += ["## Known gaps", "",
+           "- Kinds with no realistic representative at all: " + (", ".join(empty_kinds) if empty_kinds else "none"),
+           "- Bicyclic cycloalkane (decalin-type) candidates available: %d" % len(bicyc)
+           + (" (none: all cycloalkane mass sits on single-ring compounds)" if not bicyc else ""),
+           "- aromatic_di representatives available: %d bin(s) (C# %s)" % (len(reps.ns["aromatic_di"]), reps.ns["aromatic_di"]),
+           f"- Diaromatic (naphthalene) mass per fuel, mean {dmean:.4f}, max {max(diaro):.4f}; "
+           + ("all of it" if not reps.ns["aromatic_di"] else "the part without a representative")
+           + f" goes to the fallback lump, i.e. {dmean / fbs.mean() * 100:.0f}% of the mean fallback mass ({fbs.mean():.4f}).",
+           f"- The nominal split is cyclo-heavy (cycloalkane {split[2]:.3f}) and comes from only {len(used)} GC fuels; "
+           "it is a prior, not a fit to CRC.",
+           "- get() substitutes the nearest-carbon-number representative within max_gap=3 carbons; the table below shows "
+           "the requested carbon number, the representative's carbon number and the gap (gap > 0 = substituted).", "",
+           "## Carbon-number substitution (kinds other than aromatic_di)", "",
+           "| kind | requested C# | representative C# | gap |", "|---|---|---|---|"]
+    for k in KINDS:
+        if k == "aromatic_di":
+            continue
+        for n in range(5, 21):
+            i = reps.get(k, n)
+            if i is None:
+                md.append(f"| {k} | {n} | none | - |")
+                continue
+            rn = int(sum(a.GetSymbol() == "C" for a in Chem.MolFromSmiles(reps.smiles[i]).GetAtoms()))
+            if rn != n:
+                md.append(f"| {k} | {n} | {rn} | {abs(rn - n)} |")
+    md += ["", "(Rows are listed only where the requested bin is empty: substituted or without representative.)"]
     OUT_MD.write_text("\n".join(md) + "\n", encoding="utf8")
     print("wrote", OUT_CSV, OUT_MD)
 
