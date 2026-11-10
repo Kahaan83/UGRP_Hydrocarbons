@@ -26,8 +26,11 @@ Returns a dict::
 Property paths (documented in reports/T2_WRAPPER.md)
 ------------------------------------------------------
 v4 routing (Task 18). Intervals come ONLY from configs/uncertainty_v4.yaml `applied_margin`; 'inf' => (nan, nan).
-viscosity: recalibrated Refutas (-40..20 C; raw Refutas outside, uncertified) → GN mass → pure GBM fallback
-density  : ideal volume mixing (margin density_kg_m3.crc647_ideal_volume.all_T)
+composition_kind="known" (default): viscosity raw Refutas (any n_comp) with the lab_mixtures.raw_refutas margin of the
+           temperature bin; density ideal volume with side-specific lab_mixtures.ideal_volume over/under margins.
+           Hydrocarbons only; a bin without a valid margin is not certified.
+composition_kind="reconstructed": viscosity recalibrated Refutas (-40..20 C; raw Refutas outside, uncertified) → GN mass →
+           pure GBM fallback; density margin density_kg_m3.crc647_ideal_volume.all_T; fuel_type='jet' required.
 flash    : Le Chatelier + Raoult (Antoine, LFL); margin = max(lab ideal, D93 ideal) applied_margin; fallback GBM = uncertified
 The mixture-residual GBM is opt-in (use_mixture_residual=True) and has no margin. No model is ever trained at load:
 a missing bundle raises FileNotFoundError naming the command that builds it.
@@ -70,6 +73,7 @@ FLASH_LO_K, FLASH_HI_K = -150.0 + 273.15, 400.0 + 273.15
 VISC_RECAL_T_C = (-40.0, 20.0)       # CRC 647 window the Refutas recalibration + its yaml margin were validated on
 DENSITY_MARGIN_T_C = (-0.2, 69.5)    # CRC 647 density residual temperature range (yaml scope)
 CERTIFIED_FUEL_KIND = "jet"          # every yaml margin was validated on CRC 647 / AJFTD jet fuels only
+COMPOSITION_KINDS = ("known", "reconstructed")
 
 # v4 routing: (property, method) -> yaml margin keys combined with max(). Mirrors src/fuelblend/design/models_v4.py.
 MARGIN_KEYS = {
@@ -78,6 +82,12 @@ MARGIN_KEYS = {
     # yaml recommendation: NOT the 0-floored D93 margin alone; use the larger of the lab and D93 applied margins
     ("flash_point_C", "chat"): ["flash_point_C.lab_mixtures.ideal", "flash_point_C.real_fuels_D93_reconstructed.ideal"],
 }
+# composition_kind="known": raw Refutas / ideal volume + LAB-mixture margins (hydrocarbon-only, not jet specific).
+# Viscosity margins are binned by temperature (same bins as engine_v4.viscosity_t_bin); density margins are side-specific:
+# lo = value - over, hi = value + under.
+LAB_VISC_KEY = "viscosity_kin_cSt.lab_mixtures.raw_refutas.{bin}"
+LAB_DENSITY_KEYS = {"over": "density_kg_m3.lab_mixtures.ideal_volume.over",
+                    "under": "density_kg_m3.lab_mixtures.ideal_volume.under"}
 # properties with no valid margin: reported as (nan, nan) and in_domain False; never given a made-up number
 UNCERTIFIED_PROPERTIES = {
     "freezing_point_C": "yaml freezing margins are 'inf' / not carried for blends (no valid applied_margin)",
@@ -571,23 +581,29 @@ def _mix_residual_predict(prop: str, mix_row: dict) -> tuple[float | None, float
 # Per-property prediction paths
 # =============================================================================
 
-def _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual: bool = False) -> dict:
+def _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual: bool = False,
+                       composition_kind: str = "known") -> dict:
     warns = list(_check_T_domain(T_K))
     for ik in inchikeys:
         warns.extend(_check_pure_extrapolation(ik, T_K, "viscosity_dyn_mPas"))
 
-    # ── v4 primary: recalibrated Refutas (inside its -40..20 C validation window); raw Refutas outside it.
+    # ── known composition: raw Refutas for any number of components (a recalibration that switched on at n=2 made the
+    #    result discontinuous between a pure compound and a 99.9/0.1 blend).  reconstructed composition (CRC fuels):
+    #    recalibrated Refutas inside its -40..20 C validation window; raw Refutas outside it.
     eta_dyn, nu_mix, rho_mix = _refutas(inchikeys, w_mass, T_K)
     if eta_dyn is not None:
         lo_k, hi_k = VISC_RECAL_T_C[0] + 273.15, VISC_RECAL_T_C[1] + 273.15
-        if lo_k <= T_K <= hi_k and len(inchikeys) > 1:   # recalibration was fitted on fuel mixtures, never on pure compounds
+        if composition_kind == "known":
+            phys_val = eta_dyn
+            phys_method = "refutas_raw"
+        elif lo_k <= T_K <= hi_k:
             b0, b1 = _recal_beta()
             phys_val = eta_dyn * math.exp(b0 + b1 * 1000.0 / T_K)
             phys_method = "refutas_recalibrated"
         else:
             phys_val = eta_dyn
             phys_method = "refutas"
-            warns.append(f"recalibration_not_applied: single component or T={T_K - 273.15:.1f} C outside the CRC 647 recalibration window "
+            warns.append(f"recalibration_not_applied: T={T_K - 273.15:.1f} C outside the CRC 647 recalibration window "
                          f"{VISC_RECAL_T_C} C; raw Refutas returned, no certified margin")
     else:
         phys_val = _gn_mass(inchikeys, w_mass, T_K)
@@ -800,11 +816,22 @@ def interval_from_margin(value, margin, unit) -> tuple[float, float]:
     return float(value) - margin, float(value) + margin
 
 
-def _domain_reasons(prop: str, inchikeys, T_K: float, fuel_type) -> list[str]:
-    """Reasons the yaml margin does NOT apply (empty list -> in_domain True)."""
+def _lab_scope(prop: str, method: str, composition_kind: str) -> bool:
+    """True when the lab-mixture margins (hydrocarbon-only, not jet specific, not CRC-window limited) are the ones in use."""
+    return (composition_kind == "known" and (prop, method) in (("viscosity_dyn_mPas", "refutas_raw"),
+                                                               ("density_kg_m3", "dens_idvol")))
+
+
+def _domain_reasons(prop: str, inchikeys, T_K: float, fuel_type, lab: bool = False) -> list[str]:
+    """Reasons the yaml margin does NOT apply (empty list -> in_domain True).
+
+    ``lab`` = the lab-mixture margins are in use: they are not jet specific and not tied to the CRC temperature windows
+    (viscosity is binned by temperature; the bin's own margin decides), so those two checks are skipped."""
     from fuelblend.mixture.common import CLASSES as _CRC
     why = []
-    if fuel_type is None:
+    if lab:
+        pass
+    elif fuel_type is None:
         why.append("fuel_type not declared: margins were validated on CRC 647 jet fuels only (pass fuel_type='jet' if it is one)")
     elif str(fuel_type).lower() != CERTIFIED_FUEL_KIND:
         why.append(f"fuel_type={fuel_type!r}: margins validated on jet fuels only")
@@ -819,25 +846,52 @@ def _domain_reasons(prop: str, inchikeys, T_K: float, fuel_type) -> list[str]:
         if pd.isna(c) or str(c) not in _CRC:
             why.append(f"{ik}: class {c!r} outside the validated classes {_CRC}")
     tc = T_K - 273.15
-    if prop == "viscosity_dyn_mPas" and not (VISC_RECAL_T_C[0] <= tc <= VISC_RECAL_T_C[1]):
+    if prop == "viscosity_dyn_mPas" and not lab and not (VISC_RECAL_T_C[0] <= tc <= VISC_RECAL_T_C[1]):
         why.append(f"T={tc:.1f} C outside viscosity validation window {VISC_RECAL_T_C} C")
-    if prop == "density_kg_m3" and not (DENSITY_MARGIN_T_C[0] <= tc <= DENSITY_MARGIN_T_C[1]):
+    if prop == "density_kg_m3" and not lab and not (DENSITY_MARGIN_T_C[0] <= tc <= DENSITY_MARGIN_T_C[1]):
         why.append(f"T={tc:.1f} C outside density validation range {DENSITY_MARGIN_T_C} C")
     return why
 
 
-def _attach_uncertainty(prop: str, res: dict, inchikeys, T_K: float, fuel_type) -> dict:
+def _lab_non_hc(inchikeys) -> list[str]:
+    comp = _load_compounds()
+    return [ik for ik in inchikeys if ik not in comp.index or not bool(comp.loc[ik, "is_hc"])]
+
+
+def _attach_uncertainty(prop: str, res: dict, inchikeys, T_K: float, fuel_type, composition_kind: str = "reconstructed") -> dict:
     """Add lo/hi/model_name/in_domain/tuple to a property result using uncertainty_v4.yaml applied_margin only."""
-    keys = MARGIN_KEYS.get((prop, res["method"]))
-    if keys is None:
-        margin, unit, direction = None, "", None
-        reason = f"model {res['method']!r} has no uncertainty_v4.yaml margin"
+    lab = _lab_scope(prop, res["method"], composition_kind)
+    sided = None
+    if lab:
+        bad = _lab_non_hc(inchikeys)
+        if bad:
+            margin, unit, direction = None, "", None
+            reason = f"lab-mixture margins are hydrocarbon-only; non-hydrocarbon or unregistered component(s) {bad}"
+        elif prop == "viscosity_dyn_mPas":
+            from fuelblend.design.engine_v4 import viscosity_t_bin
+            margin, unit, direction, reason = _applied_margin([LAB_VISC_KEY.format(bin=viscosity_t_bin(T_K - 273.15))])
+        else:                                   # density: side-specific
+            m_over, unit, _, r1 = _applied_margin([LAB_DENSITY_KEYS["over"]])
+            m_under, _, _, r2 = _applied_margin([LAB_DENSITY_KEYS["under"]])
+            if m_over is None or m_under is None:
+                margin, unit, direction, reason = None, "", None, "; ".join(r for r in (r1, r2) if r)
+            else:
+                margin, direction, reason, sided = max(m_over, m_under), "sided", "", (m_over, m_under)
     else:
-        margin, unit, direction, reason = _applied_margin(keys)
-    dom = _domain_reasons(prop, inchikeys, T_K, fuel_type) if res.get("value") is not None else ["no value"]
+        keys = MARGIN_KEYS.get((prop, res["method"]))
+        if keys is None:
+            margin, unit, direction = None, "", None
+            reason = f"model {res['method']!r} has no uncertainty_v4.yaml margin"
+        else:
+            margin, unit, direction, reason = _applied_margin(keys)
+    dom = _domain_reasons(prop, inchikeys, T_K, fuel_type, lab=lab) if res.get("value") is not None else ["no value"]
     if margin is None:
         dom = dom + [reason]            # uncertified: in_domain must be False
-    lo, hi = interval_from_margin(res.get("value"), margin, unit)
+    if sided is not None:                # lo = value - over-prediction margin, hi = value + under-prediction margin
+        lo, hi = float(res["value"]) - sided[0], float(res["value"]) + sided[1]
+        res.update(margin_over=sided[0], margin_under=sided[1])
+    else:
+        lo, hi = interval_from_margin(res.get("value"), margin, unit)
     res.update(lo=lo, hi=hi, interval=[lo, hi], model_name=res["method"], in_domain=(not dom),
                margin=margin, margin_unit=unit, margin_direction=direction, domain_reasons=dom)
     if direction == "over":
@@ -857,6 +911,7 @@ def predict(
     mole_fractions=None,
     fuel_type: str | None = None,
     use_mixture_residual: bool = False,
+    composition_kind: str = "known",
 ) -> dict[str, Any]:
     """Predict viscosity, density, and flash point for a hydrocarbon blend.
 
@@ -876,6 +931,13 @@ def predict(
     use_mixture_residual : bool
         Default False. True adds the mixture-residual GBM correction (needs the joblib bundle, else FileNotFoundError);
         it has no uncertainty_v4.yaml margin, so the result is not certified.
+    composition_kind : {"known", "reconstructed"}
+        "known" (default): the composition is a list of known compounds (a lab blend or a design). Viscosity is raw
+        Refutas for any number of components and density is ideal volume mixing; both are judged by the hydrocarbon
+        lab-mixture margins (viscosity binned by temperature, density side-specific), which are not jet specific.
+        A temperature bin without a valid margin (below 10 C at present) is not certified.
+        "reconstructed": the composition was reconstructed from bulk fuel properties (CRC 647 style); the CRC
+        recalibrated-Refutas path and its CRC margins are used and fuel_type='jet' is still required for in_domain.
     mole_fractions : list of float, optional
         If given, the second element of each composition tuple is ignored and
         these mole fractions (aligned to composition order) are converted to
@@ -889,6 +951,8 @@ def predict(
         every property also has lo, hi (NaN if no valid margin), model_name, in_domain, tuple
         T_K (float), warnings (list of global warnings)
     """
+    if composition_kind not in COMPOSITION_KINDS:
+        raise ValueError(f"composition_kind must be one of {COMPOSITION_KINDS}, got {composition_kind!r}")
     if T_C is not None:
         T_K = float(T_C) + 273.15
     T_K = float(T_K)
@@ -906,11 +970,12 @@ def predict(
         x_mole = w_mass   # fallback (equal mole/mass only for equal MW — wrong but non-crashing)
         global_warn.append("mole_fraction_approx: could not compute exact mole fractions from MW; using mass fractions")
 
-    visc  = _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual)
+    visc  = _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual,
+                               composition_kind=composition_kind)
     dens  = _predict_density(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual)
     flash = _predict_flash(inchikeys, w_mass, x_mole, T_K)
     for prop, res in (("viscosity_dyn_mPas", visc), ("density_kg_m3", dens), ("flash_point_C", flash)):
-        _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type)
+        _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type, composition_kind)
 
     unc = {p: {"value": None, "lo": math.nan, "hi": math.nan, "model_name": "none", "in_domain": False,
                "reason": r, "tuple": (None, math.nan, math.nan, "none", False)}

@@ -178,7 +178,7 @@ def test_interval_from_v4_yaml(monkeypatch):
     pb = _pb()
     comp = [(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)]
     monkeypatch.setattr(pb, "_margins_cache", _fake_margins(flash_lab=4.0, flash_d93=0.0, visc=0.3, dens="inf"))
-    r = _predict(comp, T_K=293.15, fuel_type="jet")          # 20 C: inside the viscosity window
+    r = _predict(comp, T_K=293.15, fuel_type="jet", composition_kind="reconstructed")   # 20 C: inside the viscosity window
 
     f = r["flash_point_C"]
     assert f["method"] == "chat"
@@ -218,7 +218,7 @@ def test_not_certified_cases(monkeypatch):
         val, lo, hi, name, ok = t[prop]
         assert val is None and math.isnan(lo) and math.isnan(hi) and ok is False
     # temperature outside the viscosity window: raw Refutas, no certified interval
-    r = _predict(comp, T_K=310.0, fuel_type="jet")
+    r = _predict(comp, T_K=310.0, fuel_type="jet", composition_kind="reconstructed")
     assert r["viscosity_dyn_mPas"]["method"] != "refutas_recalibrated"
     assert r["viscosity_dyn_mPas"]["in_domain"] is False
 
@@ -231,12 +231,13 @@ def test_recal_beta_matches_models_v4_library():
     assert pb._recal_beta() == pytest.approx((float(b[0]), float(b[1])))
 
 
-def test_pure_component_viscosity_not_recalibrated():
-    """The CRC-fuel recalibration must not touch single components (common.py adapter uses this path)."""
+def test_pure_component_viscosity_follows_composition_kind():
+    """known: raw Refutas for any n_comp (no single-component special case).  reconstructed: recalibrated path, uniformly."""
     pb = _pb()
-    r = pb._predict_viscosity([DEC_IK], [1.0], [1.0], 293.15)
-    assert r["method"] == "refutas"
     raw = pb._refutas([DEC_IK], [1.0], 293.15)[0]
-    assert r["value"] == pytest.approx(raw)
+    r = pb._predict_viscosity([DEC_IK], [1.0], [1.0], 293.15)               # default composition_kind="known"
+    assert r["method"] == "refutas_raw" and r["value"] == pytest.approx(raw)
     mix = pb._predict_viscosity([DEC_IK, DOD_IK], [0.5, 0.5], [0.5, 0.5], 293.15)
-    assert mix["method"] == "refutas_recalibrated"
+    assert mix["method"] == "refutas_raw"
+    rec = pb._predict_viscosity([DEC_IK, DOD_IK], [0.5, 0.5], [0.5, 0.5], 293.15, composition_kind="reconstructed")
+    assert rec["method"] == "refutas_recalibrated"
