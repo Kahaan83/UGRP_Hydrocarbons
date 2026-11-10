@@ -16,17 +16,22 @@ Returns a dict::
     {
       "viscosity_dyn_mPas": {"value": x, "std": s, "method": str, "warnings": [...]},
       "density_kg_m3":      {"value": x, "std": s, "method": str, "warnings": [...]},
-      "flash_point_C":      {"value": x, "std": s, "interval": [lo, hi],
-                             "method": str, "warnings": [...]},
+      "flash_point_C":      {"value": x, "std": s, "method": str, "warnings": [...]},
+      # every property dict also carries (v4): lo, hi, interval, model_name, in_domain, margin, domain_reasons, tuple
+      "uncertified": {freezing_point_C|smoke_point_mm|ron|mon|dcn|dvpe_kpa|pour_point_C: no-margin placeholders},
       "T_K": float,
       "warnings": [global_warnings],
     }
 
 Property paths (documented in reports/T2_WRAPPER.md)
 ------------------------------------------------------
-viscosity: pure GBM ensemble → Grunberg–Nissan baseline → + mixture-residual GBM correction
-density  : pure GBM ensemble → ideal-volume baseline    → + mixture-residual GBM correction
-flash    : Le Chatelier + Raoult (Antoine, LFL) if available; else weighted pure GBM; else None
+v4 routing (Task 18). Intervals come ONLY from configs/uncertainty_v4.yaml `applied_margin`; 'inf' => (nan, nan).
+viscosity: recalibrated Refutas (-40..20 C; raw Refutas outside, uncertified) → GN mass → pure GBM fallback
+density  : ideal volume mixing (margin density_kg_m3.crc647_ideal_volume.all_T)
+flash    : Le Chatelier + Raoult (Antoine, LFL); margin = max(lab ideal, D93 ideal) applied_margin; fallback GBM = uncertified
+The mixture-residual GBM is opt-in (use_mixture_residual=True) and has no margin. No model is ever trained at load:
+a missing bundle raises FileNotFoundError naming the command that builds it.
+Margins were validated on CRC 647 jet fuels only: pass fuel_type='jet' or in_domain is False.
 """
 from __future__ import annotations
 
@@ -56,16 +61,36 @@ _PURE_MODEL_DIR = _BASE / "runs" / "pure_models"
 _MIX_MODEL_DIR  = _BASE / "runs" / "mixture_models"
 _COMPOUNDS_CSV  = _BASE / "data" / "unified" / "compounds.csv"
 _MODEL_TABLE    = _BASE / "data" / "processed" / "model_table.csv"
-_BASELINE_PREDS = _BASE / "data" / "runs" / "baseline_preds.csv"
 
 T_DOMAIN_LO, T_DOMAIN_HI = 230.0, 470.0   # K
 P_TOTAL = 101.325                           # kPa
 FLASH_LO_K, FLASH_HI_K = -150.0 + 273.15, 400.0 + 273.15
+VISC_RECAL_T_C = (-40.0, 20.0)       # CRC 647 window the Refutas recalibration + its yaml margin were validated on
+DENSITY_MARGIN_T_C = (-0.2, 69.5)    # CRC 647 density residual temperature range (yaml scope)
+CERTIFIED_FUEL_KIND = "jet"          # every yaml margin was validated on CRC 647 / AJFTD jet fuels only
 
-# split-conformal α=0.10 safety quantile on S1 flash over-prediction residuals
-# computed once here from baseline_preds.csv (see _load_flash_conformal())
-# stored as module-level to avoid repeated file reads
-_FLASH_CONF_Q: float | None = None
+# v4 routing: (property, method) -> yaml margin keys combined with max(). Mirrors src/fuelblend/design/models_v4.py.
+MARGIN_KEYS = {
+    ("viscosity_dyn_mPas", "refutas_recalibrated"): ["viscosity_kin_cSt.crc647.recalibrated_refutas.all_T"],
+    ("density_kg_m3", "dens_idvol"): ["density_kg_m3.crc647_ideal_volume.all_T"],
+    # yaml recommendation: NOT the 0-floored D93 margin alone; use the larger of the lab and D93 applied margins
+    ("flash_point_C", "chat"): ["flash_point_C.lab_mixtures.ideal", "flash_point_C.real_fuels_D93_reconstructed.ideal"],
+}
+# properties with no valid margin: reported as (nan, nan) and in_domain False; never given a made-up number
+UNCERTIFIED_PROPERTIES = {
+    "freezing_point_C": "yaml freezing margins are 'inf' / not carried for blends (no valid applied_margin)",
+    "smoke_point_mm": "yaml smoke_point margin is 'inf' (no valid applied_margin)",
+    "ron": "octane margins exist only for base gasoline + one blendstock; no multi-component model is certified",
+    "mon": "octane margins exist only for base gasoline + one blendstock; no multi-component model is certified",
+    "dcn": "no diesel residuals exist; no margin",
+    "dvpe_kpa": "DVPE data units are unconfirmed; excluded from uncertainty_v4.yaml (no margin)",
+    "pour_point_C": "no v4 task evaluated pour point (no margin)",
+}
+
+_BUILD_MIX_CMD = ".venv/Scripts/python.exe extras/fuelblend_data/scripts/train_mixture_residual.py   (run from the repo root)"
+_BUILD_PURE_CMD = ".venv/Scripts/python.exe extras/fuelblend_data/scripts/train_pure_models.py   (run from the repo root)"
+_UNCERTAINTY_YAML = _BASE / "configs" / "uncertainty_v4.yaml"
+_VISC_PRED = _BASE / "results" / "v4" / "V" / "viscosity_predictions_v4.csv"
 
 # ── lazy-loaded caches ────────────────────────────────────────────────────────
 _compounds: pd.DataFrame | None = None
@@ -74,6 +99,8 @@ _pure_models: dict | None = None      # prop -> list of 5 fitted models
 _mix_models:  dict | None = None      # prop -> list of 5 fitted models (or None if unavailable)
 _pure_fits:   dict | None = None      # {"eta": {ik: {a,b,lo,hi}}, "rho": {ik: ...}}
 _compounds_dict: dict | None = None   # {ik: {mw, n_carbon, cls}}
+_recal_b: tuple | None = None
+_margins_cache: dict | None = None
 
 
 # ── RDKit import (optional; degrades gracefully) ──────────────────────────────
@@ -120,137 +147,47 @@ def _load_pure_models() -> dict:
     if _pure_models is None:
         _pure_models = {}
         for prop in ("viscosity_dyn_mPas", "density_kg_m3", "flash_point_C", "vapor_pressure_kPa"):
-            models = []
+            models, missing = [], []
             for s in _SEEDS:
                 p = _PURE_MODEL_DIR / f"{prop}__seed_{s}.joblib"
                 if p.exists():
                     models.append(joblib.load(p))
-            _pure_models[prop] = models if len(models) == 5 else []
+                else:
+                    missing.append(p)
+            if missing:
+                _pure_models = None
+                raise _bundle_missing("pure-component", missing, _BUILD_PURE_CMD)
+            _pure_models[prop] = models
     return _pure_models
 
 
+def _bundle_missing(kind: str, paths: list, build_cmd: str) -> FileNotFoundError:
+    shown = ", ".join(sorted({p.parent.as_posix() for p in paths}))
+    return FileNotFoundError(
+        f"predict_blend: {kind} model bundle missing ({len(paths)} file(s) not found under {shown}). "
+        f"predict_blend never trains models at load time. Build the bundle with: {build_cmd}"
+    )
+
+
 def _load_mix_models() -> dict:
-    """Load mixture-residual models; train+save them on first use if missing."""
+    """Load the mixture-residual joblibs. NEVER trains: a missing file raises FileNotFoundError (v4 Task 18)."""
     global _mix_models
     if _mix_models is not None:
         return _mix_models
-
-    _mix_models = {}
+    missing, loaded = [], {}
     for prop in ("viscosity_dyn_mPas", "density_kg_m3"):
         models = []
         for s in _SEEDS:
             p = _MIX_MODEL_DIR / f"{prop}__seed_{s}.joblib"
             if p.exists():
                 models.append(joblib.load(p))
-        if len(models) == 5:
-            _mix_models[prop] = models
-        else:
-            _mix_models[prop] = None   # will be trained on demand
-
-    # Train any that are missing
-    _ensure_mix_models()
+            else:
+                missing.append(p)
+        loaded[prop] = models
+    if missing:
+        raise _bundle_missing("mixture-residual", missing, _BUILD_MIX_CMD)
+    _mix_models = loaded
     return _mix_models
-
-
-def _ensure_mix_models():
-    """Lazily train and save mixture-residual models if joblibs are absent.
-
-    Same hyperparams as train_mixture_residual.py (150 iters, seeds [11,23,37,41,59]).
-    Join preds ↔ model_table on (system_id, property, T_K rounded to 4dp) to recover
-    comp_inchikeys / w_mass / x_mole / quality_weight (not stored in baseline_preds.csv).
-    """
-    from sklearn.ensemble import HistGradientBoostingRegressor
-
-    need = [p for p, m in _mix_models.items() if m is None]
-    if not need:
-        return
-
-    print(f"[predict_blend] Mixture-residual models not found for {need}. Training now (< 1 min)...")
-
-    mt = pd.read_csv(_MODEL_TABLE, low_memory=False)
-    preds_df = pd.read_csv(_BASELINE_PREDS, low_memory=False)
-    locked = json.loads((_BASE / "splits" / "locked.json").read_text())
-    lk_sys = set(locked.get("multi_system_ids_locked", []))
-
-    # Build a lookup table from mt keyed by (system_id, property, T_K rounded to 4dp)
-    mt_clean = mt[~mt["system_id"].isin(lk_sys)].copy()
-    mt_clean["T_K_r4"] = mt_clean["T_K"].round(4).astype(str)
-    mt_lookup = (
-        mt_clean[["system_id", "property", "T_K_r4",
-                  "comp_inchikeys", "w_mass", "x_mole", "quality_weight"]]
-        .drop_duplicates(subset=["system_id", "property", "T_K_r4"])
-    )
-
-    preds_df = preds_df.copy()
-    preds_df["T_K_r4"] = pd.to_numeric(preds_df["T_K"], errors="coerce").round(4).astype(str)
-
-    preds_merged = preds_df.merge(
-        mt_lookup, on=["system_id", "property", "T_K_r4"], how="inner",
-    )
-    n_matched = len(preds_merged)
-    n_total = len(preds_df)
-
-    if n_matched < n_total * 0.8:
-        print(f"[predict_blend] Low join coverage ({n_matched}/{n_total}); "
-              "falling back to no mixture-residual correction.")
-        for p in need:
-            _mix_models[p] = []
-        return
-    if n_matched < n_total:
-        print(f"[predict_blend] Joined {n_matched}/{n_total} pred rows to model_table.")
-    preds_df = preds_merged
-
-    cd = _load_compounds_dict()
-    _MIX_MODEL_DIR.mkdir(parents=True, exist_ok=True)
-
-    cfgs = {
-        "viscosity_dyn_mPas": dict(baseline="gn_mass", residual="log",
-                                   max_depth=6, target_log=True),
-        "density_kg_m3":      dict(baseline="dens_idvol", residual="linear",
-                                   max_depth=5, target_log=False),
-    }
-
-    for prop in need:
-        cfg = cfgs[prop]
-        base_col = cfg["baseline"]
-        mask = (
-            (preds_df["property"] == prop)
-            & (preds_df["conflict"] == False)
-            & preds_df[base_col].notna()
-            & (preds_df[base_col] > 0 if cfg["target_log"] else True)
-            & (preds_df["value"] > 0 if cfg["target_log"] else True)
-            & preds_df["comp_inchikeys"].notna()
-        )
-        data = preds_df[mask].copy()
-
-        feats = [extract_mixture_features(r, cd) for _, r in data.iterrows()]
-        X = pd.DataFrame(feats)
-
-        if cfg["target_log"]:
-            residual = np.log(data["value"].values) - np.log(data[base_col].values)
-        else:
-            residual = data["value"].values - data[base_col].values
-
-        train_mask = (data["split"] == "S1").values
-        models = []
-        for s in _SEEDS:
-            gbr = HistGradientBoostingRegressor(
-                max_iter=150, max_depth=cfg["max_depth"],
-                min_samples_leaf=20, learning_rate=0.05, random_state=s,
-            )
-            sw = np.nan_to_num(data["quality_weight"].values[train_mask], nan=1.0)
-            gbr.fit(X[train_mask], residual[train_mask], sample_weight=sw)
-            joblib.dump(gbr, _MIX_MODEL_DIR / f"{prop}__seed_{s}.joblib")
-            models.append(gbr)
-
-        _mix_models[prop] = models
-        s2 = (data["split"] == "S2").values
-        if s2.sum() > 0:
-            s2_preds = np.mean([m.predict(X[s2]) for m in models], axis=0)
-            rmse_base = float(np.sqrt(np.mean(residual[s2] ** 2)))
-            rmse_mod  = float(np.sqrt(np.mean((residual[s2] - s2_preds) ** 2)))
-            print(f"  [{prop}] S2 residual RMSE: {rmse_base:.4f} -> {rmse_mod:.4f}")
-        print(f"  [{prop}] {len(models)} models saved to {_MIX_MODEL_DIR}")
 
 
 def _load_pure_fits() -> dict:
@@ -310,28 +247,6 @@ def _load_pure_fits() -> dict:
 
     _pure_fits = {"eta": fe, "rho": fr}
     return _pure_fits
-
-
-def _load_flash_conformal() -> float:
-    """Split-conformal safety quantile: 90th percentile of S1 over-prediction residuals.
-
-    over-prediction residual = chat_lflT - measured  (positive = model says safer than reality)
-    α = 0.10 → 1-α quantile = 90th percentile.
-    Returns the quantile value in °C (positive = conservative upper bound offset).
-    """
-    global _FLASH_CONF_Q
-    if _FLASH_CONF_Q is not None:
-        return _FLASH_CONF_Q
-
-    df = pd.read_csv(_BASELINE_PREDS, low_memory=False)
-    s1 = df[(df["property"] == "flash_point_C") & (df["split"] == "S1") & df["chat_lflT"].notna()]
-    if len(s1) == 0:
-        _FLASH_CONF_Q = float("nan")
-        return _FLASH_CONF_Q
-    # residual = pred - measured; positive = over-prediction (dangerous direction)
-    res = s1["chat_lflT"].values - s1["value"].values
-    _FLASH_CONF_Q = float(np.quantile(res, 0.90))  # 90th pct → 90% coverage
-    return _FLASH_CONF_Q
 
 
 # =============================================================================
@@ -654,16 +569,24 @@ def _mix_residual_predict(prop: str, mix_row: dict) -> tuple[float | None, float
 # Per-property prediction paths
 # =============================================================================
 
-def _predict_viscosity(inchikeys, w_mass, x_mole, T_K) -> dict:
+def _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual: bool = False) -> dict:
     warns = list(_check_T_domain(T_K))
     for ik in inchikeys:
         warns.extend(_check_pure_extrapolation(ik, T_K, "viscosity_dyn_mPas"))
 
-    # ── Physics baseline: try Refutas, fall back to GN mass ──────────────────
+    # ── v4 primary: recalibrated Refutas (inside its -40..20 C validation window); raw Refutas outside it.
     eta_dyn, nu_mix, rho_mix = _refutas(inchikeys, w_mass, T_K)
     if eta_dyn is not None:
-        phys_val = eta_dyn
-        phys_method = "refutas"
+        lo_k, hi_k = VISC_RECAL_T_C[0] + 273.15, VISC_RECAL_T_C[1] + 273.15
+        if lo_k <= T_K <= hi_k:
+            b0, b1 = _recal_beta()
+            phys_val = eta_dyn * math.exp(b0 + b1 * 1000.0 / T_K)
+            phys_method = "refutas_recalibrated"
+        else:
+            phys_val = eta_dyn
+            phys_method = "refutas"
+            warns.append(f"recalibration_not_applied: T={T_K - 273.15:.1f} C outside the CRC 647 recalibration window "
+                         f"{VISC_RECAL_T_C} C; raw Refutas returned, no certified margin")
     else:
         phys_val = _gn_mass(inchikeys, w_mass, T_K)
         phys_method = "gn_mass"
@@ -692,9 +615,11 @@ def _predict_viscosity(inchikeys, w_mass, x_mole, T_K) -> dict:
             warns.append("mixture_size_warning") if len(inchikeys) > 5 else None
             return {"value": None, "std": None, "method": "none", "warnings": warns}
 
-    # ── Mixture-residual GBM correction ──────────────────────────────────────
-    mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
-    res_mean, res_std = _mix_residual_predict("viscosity_dyn_mPas", mix_row)
+    # ── Optional (opt-in) mixture-residual GBM correction: no v4 margin exists for it ─────────────
+    res_mean, res_std = None, None
+    if use_residual:
+        mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
+        res_mean, res_std = _mix_residual_predict("viscosity_dyn_mPas", mix_row)
 
     if res_mean is not None:
         # residual is in ln-space; apply: ln(eta_corrected) = ln(phys) + residual
@@ -709,13 +634,13 @@ def _predict_viscosity(inchikeys, w_mass, x_mole, T_K) -> dict:
         std = None
         method = phys_method
 
-    if len(inchikeys) > 5:
+    if len(inchikeys) > 5 and use_residual:
         warns.append("mixture_size_warning: n_comp>5 is outside residual model training range")
 
     return {"value": val, "std": std, "method": method, "warnings": warns}
 
 
-def _predict_density(inchikeys, w_mass, x_mole, T_K) -> dict:
+def _predict_density(inchikeys, w_mass, x_mole, T_K, use_residual: bool = False) -> dict:
     warns = list(_check_T_domain(T_K))
     for ik in inchikeys:
         warns.extend(_check_pure_extrapolation(ik, T_K, "density_kg_m3"))
@@ -741,9 +666,11 @@ def _predict_density(inchikeys, w_mass, x_mole, T_K) -> dict:
             return {"value": val, "std": std, "method": "gn_fallback", "warnings": warns}
         return {"value": None, "std": None, "method": "none", "warnings": warns}
 
-    # Mixture-residual correction (density residual ≈ 0.7% S2 improvement — applied but noted)
-    mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
-    res_mean, res_std = _mix_residual_predict("density_kg_m3", mix_row)
+    # Optional (opt-in) mixture-residual correction: the v4 margin is for ideal volume mixing only
+    res_mean, res_std = None, None
+    if use_residual:
+        mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
+        res_mean, res_std = _mix_residual_predict("density_kg_m3", mix_row)
 
     if res_mean is not None:
         val = phys_val + res_mean   # residual in kg/m3 (linear)
@@ -754,7 +681,7 @@ def _predict_density(inchikeys, w_mass, x_mole, T_K) -> dict:
         std = None
         method = "dens_idvol"
 
-    if len(inchikeys) > 5:
+    if len(inchikeys) > 5 and use_residual:
         warns.append("mixture_size_warning: n_comp>5 is outside residual model training range")
 
     return {"value": val, "std": std, "method": method, "warnings": warns}
@@ -777,10 +704,7 @@ def _predict_flash(inchikeys, w_mass, x_mole, T_K) -> dict:
         method = "chat"
         warns.extend(flash_warns)
         warns.append("flash_data_thin: mixture flash training is sparse (123 binary + 3 multi rows)")
-        # Conformal interval
-        q = _load_flash_conformal()
-        interval = [val - abs(q), val + abs(q)] if math.isfinite(q) else [None, None]
-        return {"value": val, "std": None, "interval": interval, "method": method, "warnings": warns}
+        return {"value": val, "std": None, "method": method, "warnings": warns}
 
     warns.extend(flash_warns)
 
@@ -800,10 +724,124 @@ def _predict_flash(inchikeys, w_mass, x_mole, T_K) -> dict:
         warns.append("flash_data_thin: mixture flash training is sparse (123 binary + 3 multi rows)")
         warns.append("flash_fallback_gbm_mix: Le Chatelier unavailable (missing Antoine/LFL); "
                      "using mass-weighted average of pure-GBM flash — mixture non-ideality ignored")
-        return {"value": gbm_val, "std": gbm_std, "interval": [None, None], "method": "gbm_mix", "warnings": warns}
+        return {"value": gbm_val, "std": gbm_std, "method": "gbm_mix", "warnings": warns}
 
     warns.append("flash_none: cannot predict flash point (no Antoine/LFL and no pure GBM coverage)")
-    return {"value": None, "std": None, "interval": [None, None], "method": "none", "warnings": warns}
+    return {"value": None, "std": None, "method": "none", "warnings": warns}
+
+
+# =============================================================================
+# v4 recalibration + yaml margins (applied_margin ONLY)
+# =============================================================================
+
+def _recal_beta() -> tuple[float, float]:
+    """ln(nu_true/nu_Refutas) = b0 + b1*1000/T, least squares on CRC 647 DEV fuels (same fit as models_v4.Library)."""
+    global _recal_b
+    if _recal_b is None:
+        if not _VISC_PRED.exists():
+            raise FileNotFoundError(
+                f"predict_blend: {_VISC_PRED} missing (needed for the Refutas recalibration). Build it with: "
+                ".venv/Scripts/python.exe scripts/v4/build_viscosity_leaderboard_v4.py")
+        d = pd.read_csv(_VISC_PRED)
+        d = d[~d.locked.astype(bool)]
+        resid = np.log(d.y.to_numpy()) - np.log(d.nu_refutas.to_numpy())
+        B = np.column_stack([np.ones(len(d)), 1000.0 / d.T_K.to_numpy()])
+        b = np.linalg.lstsq(B, resid, rcond=None)[0]
+        _recal_b = (float(b[0]), float(b[1]))
+    return _recal_b
+
+
+def _load_margins() -> dict:
+    global _margins_cache
+    if _margins_cache is None:
+        import yaml
+        if not _UNCERTAINTY_YAML.exists():
+            raise FileNotFoundError(
+                f"predict_blend: {_UNCERTAINTY_YAML} missing. Build it with: "
+                ".venv/Scripts/python.exe scripts/v4/build_uncertainty_v4.py")
+        with open(_UNCERTAINTY_YAML, "r", encoding="utf-8") as fh:
+            _margins_cache = yaml.safe_load(fh)["margins"]
+    return _margins_cache
+
+
+def _applied_margin(keys, margins: dict | None = None):
+    """Combine yaml entries by max(applied_margin). -> (margin|None, unit, direction, reason).
+
+    Reads ONLY ``applied_margin``. An entry with no usable applied_margin (value 'inf') makes the whole result None:
+    no number is ever substituted.
+    """
+    margins = _load_margins() if margins is None else margins
+    vals, units, dirs = [], set(), set()
+    for k in keys:
+        e = margins.get(k)
+        if e is None:
+            return None, "", None, f"{k}: no such entry in uncertainty_v4.yaml"
+        m = e.get("applied_margin")
+        if m is None or isinstance(m, str) or not math.isfinite(float(m)):
+            return None, "", None, f"{k}: no valid margin (applied_margin absent / inf)"
+        vals.append(float(m))
+        units.add(e.get("unit"))
+        dirs.add(e.get("direction"))
+    if not vals:
+        return None, "", None, "no margin key for this model"
+    unit = "ln-ratio" if "ln-ratio" in units else next(iter(units))
+    direction = "over" if "over" in dirs else next(iter(dirs))
+    return max(vals), unit, direction, ""
+
+
+def interval_from_margin(value, margin, unit) -> tuple[float, float]:
+    """value -/+ margin (additive), or value*exp(-/+ margin) for ln-ratio margins. NaN pair when no margin."""
+    if value is None or margin is None or not math.isfinite(margin):
+        return math.nan, math.nan
+    if unit == "ln-ratio":
+        return float(value) * math.exp(-margin), float(value) * math.exp(margin)
+    return float(value) - margin, float(value) + margin
+
+
+def _domain_reasons(prop: str, inchikeys, T_K: float, fuel_type) -> list[str]:
+    """Reasons the yaml margin does NOT apply (empty list -> in_domain True)."""
+    from fuelblend.mixture.common import CLASSES as _CRC
+    why = []
+    if fuel_type is None:
+        why.append("fuel_type not declared: margins were validated on CRC 647 jet fuels only (pass fuel_type='jet' if it is one)")
+    elif str(fuel_type).lower() != CERTIFIED_FUEL_KIND:
+        why.append(f"fuel_type={fuel_type!r}: margins validated on jet fuels only")
+    comp = _load_compounds()
+    for ik in inchikeys:
+        if ik not in comp.index:
+            why.append(f"{ik}: not in compounds registry")
+            continue
+        if not bool(comp.loc[ik, "is_hc"]):
+            why.append(f"{ik}: not a hydrocarbon")
+        c = comp.loc[ik, "cls"]
+        if pd.isna(c) or str(c) not in _CRC:
+            why.append(f"{ik}: class {c!r} outside the validated classes {_CRC}")
+    tc = T_K - 273.15
+    if prop == "viscosity_dyn_mPas" and not (VISC_RECAL_T_C[0] <= tc <= VISC_RECAL_T_C[1]):
+        why.append(f"T={tc:.1f} C outside viscosity validation window {VISC_RECAL_T_C} C")
+    if prop == "density_kg_m3" and not (DENSITY_MARGIN_T_C[0] <= tc <= DENSITY_MARGIN_T_C[1]):
+        why.append(f"T={tc:.1f} C outside density validation range {DENSITY_MARGIN_T_C} C")
+    return why
+
+
+def _attach_uncertainty(prop: str, res: dict, inchikeys, T_K: float, fuel_type) -> dict:
+    """Add lo/hi/model_name/in_domain/tuple to a property result using uncertainty_v4.yaml applied_margin only."""
+    keys = MARGIN_KEYS.get((prop, res["method"]))
+    if keys is None:
+        margin, unit, direction = None, "", None
+        reason = f"model {res['method']!r} has no uncertainty_v4.yaml margin"
+    else:
+        margin, unit, direction, reason = _applied_margin(keys)
+    dom = _domain_reasons(prop, inchikeys, T_K, fuel_type) if res.get("value") is not None else ["no value"]
+    if margin is None:
+        dom = dom + [reason]            # uncertified: in_domain must be False
+    lo, hi = interval_from_margin(res.get("value"), margin, unit)
+    res.update(lo=lo, hi=hi, interval=[lo, hi], model_name=res["method"], in_domain=(not dom),
+               margin=margin, margin_unit=unit, margin_direction=direction, domain_reasons=dom)
+    if direction == "over":
+        res["safe_bound"] = lo          # over-prediction is the dangerous direction for flash: lo is the safe side
+    res["tuple"] = (res.get("value"), lo, hi, res["method"], res["in_domain"])
+    return res
 
 
 # =============================================================================
@@ -815,6 +853,8 @@ def predict(
     T_K: float = 298.15,
     T_C: float | None = None,
     mole_fractions=None,
+    fuel_type: str | None = None,
+    use_mixture_residual: bool = False,
 ) -> dict[str, Any]:
     """Predict viscosity, density, and flash point for a hydrocarbon blend.
 
@@ -838,7 +878,7 @@ def predict(
     dict with keys:
         viscosity_dyn_mPas, density_kg_m3, flash_point_C  — each a dict with
             value (float|None), std (float|None), method (str), warnings (list)
-        flash_point_C additionally has interval ([lo,hi] or [None,None])
+        every property also has lo, hi (NaN if no valid margin), model_name, in_domain, tuple
         T_K (float), warnings (list of global warnings)
     """
     if T_C is not None:
@@ -858,17 +898,36 @@ def predict(
         x_mole = w_mass   # fallback (equal mole/mass only for equal MW — wrong but non-crashing)
         global_warn.append("mole_fraction_approx: could not compute exact mole fractions from MW; using mass fractions")
 
-    visc  = _predict_viscosity(inchikeys, w_mass, x_mole, T_K)
-    dens  = _predict_density(inchikeys, w_mass, x_mole, T_K)
+    visc  = _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual)
+    dens  = _predict_density(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual)
     flash = _predict_flash(inchikeys, w_mass, x_mole, T_K)
+    for prop, res in (("viscosity_dyn_mPas", visc), ("density_kg_m3", dens), ("flash_point_C", flash)):
+        _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type)
+
+    unc = {p: {"value": None, "lo": math.nan, "hi": math.nan, "model_name": "none", "in_domain": False,
+               "reason": r, "tuple": (None, math.nan, math.nan, "none", False)}
+           for p, r in UNCERTIFIED_PROPERTIES.items()}
 
     return {
         "viscosity_dyn_mPas": visc,
         "density_kg_m3": dens,
         "flash_point_C": flash,
+        "uncertified": unc,
         "T_K": T_K,
         "warnings": global_warn,
     }
+
+
+def predict_tuples(*args, **kwargs) -> dict[str, tuple]:
+    """Same inputs as ``predict``; returns {property: (value, lo, hi, model_name, in_domain)}.
+
+    lo/hi are NaN when no valid yaml margin exists (never invented); in_domain is False for non-jet / undeclared fuel
+    types, out-of-window temperature, unresolved or non-validated compounds, and uncertified models/properties.
+    """
+    r = predict(*args, **kwargs)
+    out = {p: r[p]["tuple"] for p in ("viscosity_dyn_mPas", "density_kg_m3", "flash_point_C")}
+    out.update({p: v["tuple"] for p, v in r["uncertified"].items()})
+    return out
 
 
 # =============================================================================
@@ -921,7 +980,7 @@ def _demo():
     print(f"  Predicted density:   {r['density_kg_m3']['value']:.2f} kg/m3")
     fp = r["flash_point_C"]
     print(f"  Flash point:         {fp['value']:.1f} °C (method={fp['method']}, "
-          f"interval={[f'{v:.1f}' if v else None for v in fp['interval']]})")
+          f"interval=({fp['lo']:.1f}, {fp['hi']:.1f}), in_domain={fp['in_domain']})")
     if r["warnings"]:
         print(f"  Global warnings: {r['warnings']}")
 
