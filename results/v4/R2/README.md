@@ -1,0 +1,97 @@
+# r2 re-score: density, freezing, flash, viscosity on the realistic CRC 647 reconstruction
+
+The 12 locked fuels were already scored under the v4 reconstruction; r2 design choices were fixed on dev fuels and the GC-fuel prior only.
+
+Inputs: `data/real_fuels/v4/compositions_crc647_r2.csv` (Task 1: realistic representatives, nominal saturates split
+(n, iso, cyclo) = (0.1366, 0.3374, 0.5260) from 4 GC fuels, mean fallback 0.0202). Commands (venv python):
+
+```
+eval_bulk_props_v4.py             --compositions data/real_fuels/v4/compositions_crc647_r2.csv --out results/v4/R2/B
+eval_flash_v4.py                  --compositions data/real_fuels/v4/compositions_crc647_r2.csv --out results/v4/R2/F
+build_viscosity_leaderboard_v4.py --compositions data/real_fuels/v4/compositions_crc647_r2.csv --out results/v4/R2/V
+recon_sensitivity.py              -> results/v4/R2/sat_split_sensitivity.csv
+r2_readings.py                    -> results/v4/R2/readings.csv   (the v4-vs-r2 numbers below)
+```
+With default `--compositions` / `--out` the evaluators reproduce the v4 outputs byte-for-byte (`test_default_paths_unchanged`).
+The v4 folders (B, F, V, ...) are untouched. R2/B, R2/F, R2/V hold the same data files as the v4 folders; the hand-written v4 READMEs are not copied.
+
+## Handling of the unexplained-mass lump
+Each r2 fuel has one `LUMP_NO_REALISTIC_REP` row (empty smiles, `is_lumped=True`, mean mass 0.0202). All three evaluators drop it exactly as they
+drop `is_lumped` rows in v4 (and explicitly by inchikey) and **renormalise the remaining fractions to sum to 1**. In the viscosity script, r2 rows
+use their own registry compound directly (by InChIKey); the v4 path re-bins every component to the first compound of its (class, nC) bin, which would
+undo r2. A component without a usable registry entry or valid pure eta/rho would be dropped and counted; this run: unmappable mass = 0.0000 for every
+fuel. Flash uses the same non-lump rows (mass to mole by RDKit MW). Provenance `reconstructed_r2` is added to the bulk allow-list.
+
+## Pre-declared readings (written before the locked rows were looked at; judged on dev rows, locked shown for information)
+
+| property | declared reading |
+|---|---|
+| density | if dev bias at the nominal split is within +/-3 kg/m3, the v4 bias is attributed to the old reconstruction; otherwise report the remaining bias and the spread over draws (5th-95th percentile of the per-fuel prediction) |
+| freezing | ideal-SLE (mole fractions) bias at the nominal split next to v4 +14.69 C, and whether any model now beats the dev-mean constant |
+| viscosity | raw Refutas dev bias next to v4 -0.301 ln; if abs(bias) < 0.10 ln, the recalibration was correcting the reconstruction |
+| flash | MAE with a dev-fit constant offset (leave-one-fuel-out on dev, dev-fit applied to locked) next to the dev-mean constant |
+
+Sensitivity: 32 Dirichlet draws `default_rng(20261111).dirichlet(nominal*50)` (n 0.04-0.25, iso 0.19-0.46, cyclo 0.41-0.69), dev fuels only (45),
+plus the nominal split (draw = -1). Each draw rebuilds the reconstruction and re-scores density at 15.56 C (ideal volume), ideal-SLE freezing (mole
+fractions), raw Refutas at -20 C and ideal Le Chatelier flash. The nominal-split rows equal the evaluator outputs to 1e-13.
+
+### Density at 15.56 C (kg/m3, pred - meas, ideal volume)
+| slice | N | v4 bias | r2 bias [95% fuel bootstrap] | v4 MAE | r2 MAE |
+|---|---|---|---|---|---|
+| dev | 45 | -11.11 | **-4.69** [-7.89, -1.75] | 11.81 | 9.11 |
+| locked | 12 | -7.93 | -0.47 [-5.72, 4.18] | 8.39 | 6.43 |
+
+Outcome: dev bias -4.69 is outside +/-3, so the declared attribution is **not** made. About 6.4 of the 11.1 kg/m3 v4 bias went away with the new
+reconstruction; about 4.7 remains. Spread over draws: the per-fuel 5th-95th percentile width averages 9.2 kg/m3 (max 9.9); the dev-mean bias over
+the 32 draws has 5th/50th/95th percentile -8.6 / -3.7 / +0.6 and only 13 of 32 draws fall within +/-3. The saturates split alone moves the density bias
+from clearly biased to unbiased, so a single r2 number is not a stable accuracy claim.
+
+### Freezing point (C; pred - meas)
+| model | slice | v4 bias | r2 bias | v4 MAE | r2 MAE |
+|---|---|---|---|---|---|
+| ideal SLE, mole fractions | dev | +14.69 | **+0.32** | 14.69 | 4.09 |
+| ideal SLE, mole fractions | locked | +13.64 | -1.82 | 13.64 | 2.48 |
+| WAT ideal (mass-fraction ln) | dev / locked | +18.04 / +16.94 | +2.13 / -0.02 | 18.04 / 16.94 | 4.44 / 2.49 |
+| WAT - dev-fit offset (in-sample on dev) | dev / locked | 0 / -1.10 | 0 / -2.15 | 4.40 / 3.61 | 4.15 / 2.68 |
+| Coutinho library | dev / locked | +4.24 / +3.22 | -15.16 / -17.32 | 5.57 / 4.25 | 15.53 / 17.32 |
+| dev-mean constant | dev (leave-one-fuel-out) / locked | | | 5.02 / 3.32 | 5.02 / 3.32 |
+
+Outcome: the zero-parameter ideal-SLE bias at the nominal split is +0.32 C against v4's +14.69 C; most of the v4 freezing error came from the old
+reconstruction. Ideal-SLE point MAE (4.09) is below the leave-one-fuel-out dev-mean constant (5.02), and on locked 2.48 vs 3.32, but the fuel-bootstrap
+95% interval for MAE(ideal SLE) - MAE(constant) on dev is [-2.17, +0.25] (mean -0.93), so "beats the constant" is **not** established. Over the 32 split
+draws the dev bias is -4.9 / -0.7 / +4.0 (5th/50th/95th) with per-fuel width 8.9 C. The Coutinho library and the legacy 14.58 C offset were calibrated
+on the old reconstruction and now under-predict by 12-17 C; they should not be combined with r2.
+
+### Viscosity (ln cSt; raw Refutas, zero-parameter)
+| slice | condition | v4 bias | r2 bias | v4 log-RMSE | r2 log-RMSE |
+|---|---|---|---|---|---|
+| dev | overall | -0.301 | **-0.244** | 0.427 | 0.371 |
+| dev | 20 C | +0.025 | +0.056 | 0.068 | 0.080 |
+| dev | -20 C | -0.276 | -0.216 | 0.297 | 0.237 |
+| dev | -40 C | -0.652 | -0.573 | 0.674 | 0.592 |
+| locked | overall | -0.243 | -0.198 | 0.381 | 0.337 |
+
+Outcome: abs(bias) = 0.244 is not below 0.10 ln, so the recalibration was **not** merely correcting the reconstruction. The cold-temperature
+under-prediction survives r2 and is reduced only by about 20%. Recalibrated Refutas dev LOO log-RMSE 0.135 -> 0.123; structured ridge 0.083 -> 0.078;
+the model ranking is unchanged. The saturates split barely moves the -20 C result: dev bias over draws -0.25 / -0.21 / -0.18 ln, per-fuel width 0.075 ln.
+
+### Flash point (C; ideal Le Chatelier, pred - meas; 45 dev, 12 locked)
+| quantity | v4 | r2 |
+|---|---|---|
+| raw ideal bias, dev / locked | -9.44 / -8.44 | **+4.22 / +6.32** |
+| raw ideal MAE, dev / locked | 9.44 / 8.44 | 5.63 / 6.32 |
+| fraction over-predicted by >5 C, dev / locked | 0 / 0 | 0.53 / 0.50 |
+| dev-fit constant offset MAE: dev (leave-one-fuel-out) / locked | 1.71 / 1.92 | **4.12 / 3.29** |
+| dev-mean constant MAE: dev (leave-one-fuel-out) / locked | 5.51 / 5.90 | 5.51 / 5.90 |
+
+Outcome: with a dev-fit offset the MAE is 4.12 C (dev, leave-one-fuel-out) and 3.29 C (locked) against 5.51 / 5.90 for the dev-mean constant. The offset
+model still beats the constant, but by 1.4 / 2.6 C instead of v4's 3.8 / 4.0 C. The raw model changes sign: under v4 it under-predicted (the safe
+direction) by 9.4 C; under r2 it **over-predicts** by 4.2 C and about half the fuels are over-predicted by more than 5 C, the dangerous direction. The
+sign and size of the raw flash bias therefore depend on the reconstruction. Over the 32 split draws the dev bias is 3.5 / 4.3 / 5.2 C (5th/50th/95th) with
+per-fuel width 1.7 C: flash is insensitive to the saturates split.
+
+## Caveats
+* r2 reconstruction gaps (no aromatic_di or bicyclic representatives; naphthalene mass goes to the fallback lump) are listed in `reconstruction_report.md`.
+* Nothing here is tuned: no rule or threshold was changed after seeing results. The Coutinho parameters in particular were calibrated on the old reconstruction.
+* r2 does not make the compositions measured: they are still reconstructed from descriptors (D86, aromatics, naphthalenes), so every error mixes composition and physics.
+* Sensitivity covers only the saturates split (3 numbers); the choice of representative inside a bin is not varied.

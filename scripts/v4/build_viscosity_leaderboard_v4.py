@@ -13,6 +13,7 @@ Outputs: results/v4/V/viscosity_leaderboard_v4.csv, viscosity_predictions_v4.csv
 """
 from __future__ import annotations
 
+import argparse
 import ast
 import importlib.util
 import json
@@ -89,8 +90,10 @@ class Mapper:
     def __init__(self, reg, cls, nc, provider):
         self.reg, self.cls, self.nc = reg, cls, nc
         self.by = {}
+        self.valid_idx = set()
         for i in range(len(reg.ik)):
             if reg.usable[i] and provider.valid[i] and cls[i] in CLASSES and np.isfinite(nc[i]):
+                self.valid_idx.add(i)
                 self.by.setdefault((cls[i], int(nc[i])), []).append(i)
         self.ns = {c: sorted(n for (cc, n) in self.by if cc == c) for c in CLASSES}
 
@@ -110,13 +113,24 @@ class Mapper:
         return self.by[(c, b)][0] if abs(b - n) <= max_gap else None
 
 
-def fuel_composition(df_f, mp):
-    """-> (idx, w, descriptors dict, dropped_mass_fraction) for one fuel; lump removed, renormalised."""
-    df_f = df_f[~df_f.is_lumped.astype(bool) & (df_f.fraction > 0)]
+def direct_idx(mp, ik):
+    """r2 path: the row's OWN registry compound (by InChIKey) if usable with valid pure eta/rho, else None."""
+    j = mp.reg.ik2i.get(ik)
+    return None if j is None or j not in mp.valid_idx else j
+
+
+def fuel_composition(df_f, mp, direct=False):
+    """-> (idx, w, descriptors dict, dropped_mass_fraction) for one fuel; lump removed, renormalised.
+    direct=True (provenance reconstructed_r2): no re-binning to the first compound of a (class, nC) bin; invalid -> dropped+counted."""
+    df_f = df_f[~df_f.is_lumped.astype(bool) & (df_f.inchikey != "LUMP_NO_REALISTIC_REP") & (df_f.fraction > 0)]
     agg, cn, dropped = {}, [], 0.0
     for _, r in df_f.iterrows():
-        k = mp.class_nc(r.inchikey, r.smiles)
-        i = mp.rep(*k) if k else None
+        if direct:
+            i = direct_idx(mp, r.inchikey)
+            k = (mp.cls[i], int(mp.nc[i])) if i is not None else None
+        else:
+            k = mp.class_nc(r.inchikey, r.smiles)
+            i = mp.rep(*k) if k else None
         if k is None or i is None:
             dropped += r.fraction
             continue
@@ -198,7 +212,13 @@ def build_lab(reg, provider, cls, nc):
 
 
 # ------------------------------------------------------------------------ main
-def main():
+def main(argv=None):
+    global COMP, OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--compositions", type=Path, default=COMP, help="composition table (default: the v4 file)")
+    ap.add_argument("--out", type=Path, default=OUT, help="output directory (default: results/v4/V)")
+    a = ap.parse_args(argv)
+    COMP, OUT = a.compositions, a.out
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
     reg = CompoundRegistry(ROOT / "data" / "unified" / "compounds.csv")
@@ -210,6 +230,9 @@ def main():
     kv = props[(props.property == "viscosity_kin_cSt") & props.fuel_id.str.startswith("CRC647_")]
     assert set(kv.provenance) == {"raw_file"}
     comp = pd.read_csv(COMP)
+    direct = bool((comp.provenance == "reconstructed_r2").any())
+    if direct:
+        assert (comp.provenance == "reconstructed_r2").all(), "mixed r2 / non-r2 composition table"
     splits = json.load(open(SPLITS))
     locked = set(splits["locked"])
     fuels = sorted(kv.fuel_id.unique())
@@ -221,7 +244,7 @@ def main():
     rows, rec = [], []
     drop = {}
     for f in fuels:
-        idx, w, desc, dropped = fuel_composition(comp[comp.system_id == f"fuel:{f}"], mp)
+        idx, w, desc, dropped = fuel_composition(comp[comp.system_id == f"fuel:{f}"], mp, direct=direct)
         drop[f] = dropped
         for r in kv[kv.fuel_id == f].itertuples():
             T_K = r.T_C + 273.15

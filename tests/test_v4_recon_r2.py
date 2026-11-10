@@ -154,3 +154,16 @@ def test_skip_is_logged_and_excluded_end_to_end(caplog, tmp_path):
     lump = df[df.inchikey == "LUMP_NO_REALISTIC_REP"].fraction.iloc[0]
     assert lump == pytest.approx(stats[0][1]) and lump < 1.0
     assert df.fraction.sum() == pytest.approx(1.0, abs=1e-9)
+
+
+# ----------------------------------------------------------------------------- Task 2: evaluator CLI
+def test_default_paths_unchanged(tmp_path):
+    import filecmp
+    import subprocess
+    import sys
+    from pathlib import Path
+    root = Path(__file__).parents[1]
+    subprocess.run([sys.executable, str(root / "scripts/v4/eval_bulk_props_v4.py"), "--out", str(tmp_path)],
+                   check=True, cwd=root, capture_output=True)
+    for f in ("density_summary_v4.csv", "freezing_summary_v4.csv", "hoc_summary_v4.csv"):
+        assert filecmp.cmp(tmp_path / f, root / "results/v4/B" / f, shallow=False), f
