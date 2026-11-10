@@ -228,8 +228,9 @@ class GhoshBlendLumpModel:
     ``group`` (blendstock id, used only for the inner CV).
     """
 
-    def __init__(self, prop: str = "ron", alphas: Sequence[float] = (0.001, 0.01, 0.1, 1.0, 10.0, 100.0)):
-        self.prop, self.alphas = prop, tuple(alphas)
+    def __init__(self, prop: str = "ron", alphas: Sequence[float] = (0.001, 0.01, 0.1, 1.0, 10.0, 100.0),
+                 alpha: float | None = None):
+        self.prop, self.alphas, self.alpha = prop, tuple(alphas), alpha   # alpha given -> no selection
         self.alpha_ = None
         self.selection_groups_: set = set()
 
@@ -249,13 +250,10 @@ class GhoshBlendLumpModel:
     def fit(self, blends: pd.DataFrame) -> "GhoshBlendLumpModel":
         blends = blends.reset_index(drop=True)
         self.selection_groups_ = set(blends["group"])
-        if self.alpha_ is None or not getattr(self, "_fixed_alpha", False):
-            def factory(a):
-                m = GhoshBlendLumpModel(self.prop, (a,))
-                m._fixed_alpha = True
-                m.alpha_ = a
-                return m
-            sc = grouped_inner_scores(factory, self.alphas, blends)
+        if self.alpha is not None:
+            self.alpha_ = float(self.alpha)
+        else:                                   # select on `blends` (the training set) only
+            sc = grouped_inner_scores(lambda a: GhoshBlendLumpModel(self.prop, alpha=a), self.alphas, blends)
             self.alpha_ = float(self.alphas[int(np.argmin(sc))])
         self.lumps_ = sorted(set(blends["lump"]))
         self.ridge_ = Ridge(alpha=self.alpha_, fit_intercept=False).fit(self._design(blends), self._resid(blends))

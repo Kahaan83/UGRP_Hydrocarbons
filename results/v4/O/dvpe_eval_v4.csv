@@ -1,0 +1,16 @@
+record_type,view,model,ref_model,n,n_groups,mae,rmse,bias,ci_lo,ci_hi,excludes_zero,units,note
+metric,dev_cv5_stored_folds,constant_mean,,39,14,0.907818,1.29196,-0.0398106,0.506906,1.44317,,UNITS-UNCONFIRMED (inferred psi),
+metric,dev_cv5_stored_folds,linear_pooled_vol,,39,14,0.912753,1.28974,-0.0407965,0.514425,1.44247,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,dev_cv5_stored_folds,linear_pooled_vol,constant_mean,39,14,0.00493505,,,-0.000677965,0.0141602,False,UNITS-UNCONFIRMED (inferred psi),mae = MAE(model)-MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,raoult_ideal_mole,,39,14,0.644657,1.03147,-0.149117,0.34852,1.12762,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,dev_cv5_stored_folds,raoult_ideal_mole,constant_mean,39,14,-0.263161,,,-0.481191,-0.108724,True,UNITS-UNCONFIRMED (inferred psi),mae = MAE(model)-MAE(ref); negative = model better
+metric,dev_leave_one_oxygenate_out,constant_mean,,39,14,0.98704,1.35428,0.000753122,0.591183,1.52183,,UNITS-UNCONFIRMED (inferred psi),
+metric,dev_leave_one_oxygenate_out,linear_pooled_vol,,39,14,0.994494,1.35456,0.000159939,0.601093,1.52934,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,dev_leave_one_oxygenate_out,linear_pooled_vol,constant_mean,39,14,0.00745407,,,-7.40149e-16,0.0204344,False,UNITS-UNCONFIRMED (inferred psi),mae = MAE(model)-MAE(ref); negative = model better
+metric,dev_leave_one_oxygenate_out,raoult_ideal_mole,,39,14,0.66524,1.04507,-0.107713,0.371805,1.14373,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,dev_leave_one_oxygenate_out,raoult_ideal_mole,constant_mean,39,14,-0.3218,,,-0.534035,-0.167501,True,UNITS-UNCONFIRMED (inferred psi),mae = MAE(model)-MAE(ref); negative = model better
+metric,locked_thin_test,constant_mean,,12,4,0.625833,0.745082,0.1275,0.2325,0.891667,,UNITS-UNCONFIRMED (inferred psi),
+metric,locked_thin_test,linear_pooled_vol,,12,4,0.643761,0.731114,0.1275,0.286282,0.891667,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,locked_thin_test,linear_pooled_vol,constant_mean,12,4,0.0179274,,,0,0.0537821,False,UNITS-UNCONFIRMED (inferred psi),"mae = MAE(model)-MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable"
+metric,locked_thin_test,raoult_ideal_mole,,12,4,0.680723,0.848014,-0.0470701,0.34104,1.12125,,UNITS-UNCONFIRMED (inferred psi),
+paired_diff,locked_thin_test,raoult_ideal_mole,constant_mean,12,4,0.0548895,,,-0.237624,0.347403,False,UNITS-UNCONFIRMED (inferred psi),"mae = MAE(model)-MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable"

@@ -72,7 +72,7 @@ Rows in the corpus with a `frac=None` component: 10 (all FACE `TPRF 4+N`; handle
 | gbm_resid | 54 | 18 | 1.30 | [0.92, 1.73] | 1.73 | -0.22 | 48 | 1.34 |
 | gp_resid | 54 | 18 | 1.25 | [0.89, 1.66] | 1.64 | -0.15 | 48 | 1.30 |
 
-## Locked (thin; point estimates, fit on all dev) -- RON
+## Locked (thin; point estimates only; CIs unreliable) -- RON
 
 | model | N | groups | MAE | 95% cluster CI | RMSE | bias | N common | MAE common |
 |---|---|---|---|---|---|---|---|---|
@@ -85,7 +85,7 @@ Rows in the corpus with a `frac=None` component: 10 (all FACE `TPRF 4+N`; handle
 | gbm_resid | 12 | 4 | 1.61 | n/a | 1.94 | -1.02 | 12 | 1.61 |
 | gp_resid | 12 | 4 | 1.80 | n/a | 2.09 | -1.48 | 12 | 1.80 |
 
-## Locked (thin; point estimates, fit on all dev) -- MON
+## Locked (thin; point estimates only; CIs unreliable) -- MON
 
 | model | N | groups | MAE | 95% cluster CI | RMSE | bias | N common | MAE common |
 |---|---|---|---|---|---|---|---|---|
@@ -189,13 +189,58 @@ Rows in the corpus with a `frac=None` component: 10 (all FACE `TPRF 4+N`; handle
 
 ## Reading the result
 
-* dev_cv5_stored_folds RON: lowest MAE = `gp_resid` (2.29); references it beats with CI excluding 0: base_unchanged, constant_mean.
-* dev_cv5_stored_folds MON: lowest MAE = `gbm_resid` (1.11); references it beats with CI excluding 0: base_unchanged, constant_mean.
-* dev_leave_one_blendstock_out RON: lowest MAE = `linear_volume_pooled_bov` (2.69); references it beats with CI excluding 0: base_unchanged, constant_mean.
-* dev_leave_one_blendstock_out MON: lowest MAE = `gp_resid` (1.25); references it beats with CI excluding 0: base_unchanged, constant_mean.
+* dev_cv5_stored_folds RON: CI-supported differences (CI excludes 0): linear_volume_pooled_bov vs base_unchanged -2.37 [-3.60, -1.05]; linear_volume_pooled_bov vs constant_mean -0.49 [-0.81, -0.18]; ghosh_lumps vs base_unchanged -1.91 [-3.04, -0.81]; gbm_resid vs base_unchanged -2.55 [-3.62, -1.45]; gbm_resid vs constant_mean -0.67 [-1.12, -0.19]; gp_resid vs base_unchanged -2.81 [-3.80, -1.81]; gp_resid vs constant_mean -0.93 [-1.40, -0.44].
+* dev_cv5_stored_folds MON: CI-supported differences (CI excludes 0): linear_volume_pooled_bov vs base_unchanged -2.01 [-2.75, -1.15]; linear_volume_pooled_bov vs constant_mean -0.36 [-0.64, -0.11]; ghosh_lumps vs base_unchanged -1.52 [-2.28, -0.74]; gbm_resid vs base_unchanged -2.15 [-2.80, -1.37]; gbm_resid vs constant_mean -0.51 [-0.85, -0.19]; gp_resid vs base_unchanged -2.11 [-2.76, -1.37]; gp_resid vs constant_mean -0.47 [-0.73, -0.22].
+* dev_leave_one_blendstock_out RON: CI-supported differences (CI excludes 0): linear_volume_pooled_bov vs base_unchanged -2.41 [-3.72, -1.02]; linear_volume_pooled_bov vs constant_mean -0.56 [-0.93, -0.17]; ghosh_lumps vs base_unchanged -2.12 [-3.41, -0.89]; gbm_resid vs base_unchanged -1.96 [-3.31, -0.48]; gp_resid vs base_unchanged -2.23 [-3.52, -0.73].
+* dev_leave_one_blendstock_out MON: CI-supported differences (CI excludes 0): linear_volume_pooled_bov vs base_unchanged -1.98 [-2.72, -1.10]; linear_volume_pooled_bov vs constant_mean -0.37 [-0.62, -0.13]; ghosh_lumps vs base_unchanged -1.46 [-2.27, -0.61]; gbm_resid vs base_unchanged -1.96 [-2.61, -1.19]; gp_resid vs base_unchanged -2.01 [-2.69, -1.25]; gp_resid vs constant_mean -0.40 [-0.70, -0.09].
 
 A model is called a winner over a reference only where the paired CI excludes 0 (above). With 18 dev blendstock groups such CIs are wide; absence of a CI-supported win means the models are not distinguished, not that they are equal.
 
 ## Reproduce
 
 `.venv/Scripts/python.exe scripts/v4/eval_octane_v4.py`
+
+
+## DVPE diagnostic (UNITS-UNCONFIRMED)
+
+Source: Co-Optima `fuel_engine_co_optimization.csv`, `Blend_DVPE` on rows `N% <oxygenate> in 2016-NREL BOB-01` (source text `NREL NB6022 pg 016-017`). The units column is empty; DVPE temperature is filled (37.8 C on the rows used). Evidence: Vertifuel (35.4, source text `RVP 5.14 psi`) shows the column is kPa for some rows, but the NREL rows (4.2-8.8) are impossible as kPa for gasoline and match psi (E10 = 6.44). Unit for the NREL rows is therefore INFERRED to be psi, not documented; all numbers below are in the file's native numbers (psi if the inference holds) and are a diagnostic only.
+
+* Rows with a DVPE value: 68; resolvable BOB+oxygenate rows used: 51 (18 oxygenate CAS groups; dev 39 rows / 14 groups, locked 12 / 4).
+* Excluded and counted: not a BOB+oxygenate row 5, censored `<x` 1, DVPE temperature not 37.8 C 2 (methylfuran at 25 C), named mixtures 9 (ketone mix, furan mix, diisobutylene isomer mix).
+* No neat-BOB DVPE row exists (the real gap): the BOB constant is fitted in-fold. Nominal volume % from the row name is used as the composition (wt % given for most rows is not used); the Raoult baseline assumes a BOB of M=100 g/mol, rho=745 kg/m3 (typed) and 37.8 C oxygenate vapour pressures from `thermo`. Groups = oxygenate CAS; the same CAS dev/locked/fold assignment as the octane split.
+* Unmapped to the bRON split: none.
+
+### dev_cv5_stored_folds
+
+| model | N | groups | MAE | 95% cluster CI | RMSE | bias |
+|---|---|---|---|---|---|---|
+| constant_mean | 39 | 14 | 0.91 | [0.51, 1.44] | 1.29 | -0.04 |
+| linear_pooled_vol | 39 | 14 | 0.91 | [0.51, 1.44] | 1.29 | -0.04 |
+| raoult_ideal_mole | 39 | 14 | 0.64 | [0.35, 1.13] | 1.03 | -0.15 |
+
+### dev_leave_one_oxygenate_out
+
+| model | N | groups | MAE | 95% cluster CI | RMSE | bias |
+|---|---|---|---|---|---|---|
+| constant_mean | 39 | 14 | 0.99 | [0.59, 1.52] | 1.35 | 0.00 |
+| linear_pooled_vol | 39 | 14 | 0.99 | [0.60, 1.53] | 1.35 | 0.00 |
+| raoult_ideal_mole | 39 | 14 | 0.67 | [0.37, 1.14] | 1.05 | -0.11 |
+
+### locked_thin_test (thin; point estimates only; CIs unreliable)
+
+| model | N | groups | MAE | 95% cluster CI | RMSE | bias |
+|---|---|---|---|---|---|---|
+| constant_mean | 12 | 4 | 0.63 | n/a | 0.75 | 0.13 |
+| linear_pooled_vol | 12 | 4 | 0.64 | n/a | 0.73 | 0.13 |
+| raoult_ideal_mole | 12 | 4 | 0.68 | n/a | 0.85 | -0.05 |
+
+### Paired MAE differences vs constant_mean (negative = model better)
+
+| view | model | dMAE | 95% CI | CI excludes 0 |
+|---|---|---|---|---|
+| dev_cv5_stored_folds | linear_pooled_vol | 0.00 | [-0.00, 0.01] | False |
+| dev_cv5_stored_folds | raoult_ideal_mole | -0.26 | [-0.48, -0.11] | True |
+| dev_leave_one_oxygenate_out | linear_pooled_vol | 0.01 | [-0.00, 0.02] | False |
+| dev_leave_one_oxygenate_out | raoult_ideal_mole | -0.32 | [-0.53, -0.17] | True |
+
+Only CI-supported statements should be drawn from these tables. The pooled-slope linear model collapses to the constant mean (oxygenates raise or lower DVPE with opposite signs, so one slope averages to ~0). The ideal-Raoult model, with only the BOB constant fitted, is CI-separated from the constant mean on dev; because it needs absolute oxygenate vapour pressures, that is weak circumstantial support for the psi inference but does NOT confirm the unit. Non-ideality (alcohol/hydrocarbon) is not modelled, and the locked set (4 groups) cannot rank models.

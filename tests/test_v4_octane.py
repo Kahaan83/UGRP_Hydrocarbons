@@ -80,7 +80,15 @@ def _table(n_groups=8, per=3, seed=0):
 
 
 @pytest.mark.parametrize("make", [lambda: O.GBMResidual(), lambda: O.GPResidual(), lambda: O.GhoshLumps("ron")])
-def test_selection_inside_folds_ignores_test_labels_and_groups(make):
+def test_selection_inside_folds_ignores_test_labels_and_groups(make, monkeypatch):
+    seen = []
+    orig = G.grouped_inner_scores
+
+    def spy(factory, params, train, k=5):
+        seen.append(train.copy())
+        return orig(factory, params, train, k)
+
+    monkeypatch.setattr(G, "grouped_inner_scores", spy)
     t = _table()
     tr, te = t[t.group.isin([f"G{i}" for i in range(6)])], t[t.group.isin(["G6", "G7"])]
     p1 = O.fit_predict(make(), tr, te)
@@ -88,6 +96,11 @@ def test_selection_inside_folds_ignores_test_labels_and_groups(make):
     p2 = O.fit_predict(make(), tr, te_bad)
     assert np.allclose(p1, p2)
     m = make().fit(tr)
+    if not isinstance(m, O.GPResidual):          # GP selects by marginal likelihood on train inside fit()
+        assert seen, "selection routine was never called"
+    for s_ in seen:                              # every selection call saw training rows/groups only
+        assert set(s_.group) <= set(tr.group) and not (set(s_.group) & set(te.group))
+        assert len(s_) <= len(tr)
     assert m.selection_groups_ == set(tr.group) and not (m.selection_groups_ & set(te.group))
 
 
@@ -117,3 +130,38 @@ def test_cluster_bootstrap_paired_detects_clear_difference():
     a, b = np.full(30, 1.0), np.full(30, 3.0)
     d, lo, hi, ng = O.cluster_boot(g, a, b)
     assert d == pytest.approx(-2.0) and hi < 0 and ng == 10
+
+
+# ---- DVPE diagnostic (Task 15 fix) -------------------------------------------------------
+import sys  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts" / "v4"))
+import eval_dvpe_v4 as DV  # noqa: E402
+
+
+def test_dvpe_cas_typos_and_row_filters():
+    assert DV.fix_cas("137.32-6") == "137-32-6" and DV.fix_cas("141-78*-6") == "141-78-6" and DV.fix_cas("71.36-3") == "71-36-3"
+    df = pd.DataFrame([
+        dict(Blend_Name="10% ethanol in 2016-NREL BOB-01", Blend_DVPE="6.44", Blend_DVPE_temp=37.8, Blend_DVPE_source="s",
+             **{"Blend_Primary Component": "10.1 wt% ethanol", "Blend component primary CAS": "64-17-5"}),
+        dict(Blend_Name="10% methylfuran in 2016-NREL BOB-01", Blend_DVPE="5.71", Blend_DVPE_temp=25.0, Blend_DVPE_source="s",
+             **{"Blend_Primary Component": "10.7 wt% methylfuran", "Blend component primary CAS": "534-22-5"}),
+        dict(Blend_Name="Mixed ketones", Blend_DVPE="<6.89", Blend_DVPE_temp=37.8, Blend_DVPE_source="s",
+             **{"Blend_Primary Component": "2-pentanone", "Blend component primary CAS": "107-87-9"}),
+        dict(Blend_Name="10% ketone mix in 2016-NREL BOB-01", Blend_DVPE="4.97", Blend_DVPE_temp=37.8, Blend_DVPE_source="s",
+             **{"Blend_Primary Component": "2-pentanone", "Blend component primary CAS": "107-87-9"}),
+        dict(Blend_Name="Vertifuel", Blend_DVPE="35.4", Blend_DVPE_temp=38.0, Blend_DVPE_source="s",
+             **{"Blend_Primary Component": np.nan, "Blend component primary CAS": np.nan}),
+    ])
+    t, ex = DV.parse_rows(df)
+    assert list(t.cas) == ["64-17-5"] and t.f_vol.iloc[0] == 0.10 and t.y.iloc[0] == 6.44
+    assert ex["excluded_censored"] == 1 and ex["excluded_temp_not_37p8"] == 1
+    assert ex["excluded_named_mixture"] == 1 and ex["excluded_not_nrel_bob_oxygenate"] == 1
+
+
+@pytest.mark.skipif(not DV.RAW.exists(), reason="raw Co-Optima file absent")
+def test_dvpe_real_rows_map_to_bron_groups_and_have_no_neat_bob():
+    t, ex = DV.parse_rows(pd.read_csv(DV.RAW, low_memory=False, encoding="latin-1"))
+    sp = json.loads(SPLITS.read_text())
+    assert set(t.group) <= set(sp["fuel_group"].values())
+    assert (t.f_vol > 0).all()                      # no 0 % oxygenate (neat BOB) row exists
+    assert ex["n_resolvable"] == len(t) > 40
