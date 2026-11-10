@@ -1,6 +1,6 @@
 """v4 Task 13: solid-liquid equilibrium (liquidus) temperatures from ThermoML, ideal Schroeder-van Laar vs library Coutinho.
 
-Data      : data/processed/v4/thermoml_sle_hc.csv (extras/fuelblend_data/thermoml_extract.py --sle; all-hydrocarbon binaries/ternaries,
+Data      : data/processed/v4/thermoml_sle_hc.csv (committed output of extras/fuelblend_data/thermoml_extract.py --sle, see results/v4/SLE/thermoml_extract_sle.patch; this script needs only the CSV; all-hydrocarbon binaries/ternaries,
             LIQUID composition, ePresentation 'Direct value, X' only, P <= 150 kPa).
 Constants : data/processed/v4/pure_props_v4.csv, kind == 'pure' AND status == 'verified' only (R16: no disputed / unverified /
             reference_only / not_comparable values, no automatic substitution).  Tm in C, dHfus in kJ/mol.
@@ -20,7 +20,6 @@ Outputs   : results/v4/SLE/sle_eval.csv (one row per SLE point), sle_summary.csv
 from __future__ import annotations
 
 import hashlib
-import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -43,14 +42,20 @@ P_MAX_KPA = 150.0
 N_SPLITS = 5
 
 
-def _hc_class():
-    spec = importlib.util.spec_from_file_location("fb_common", ROOT / "extras" / "fuelblend_data" / "common.py")
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m.hc_class, m.carbon_number
+def HC_CLASS(m) -> str:
+    """aromatic | alkene_alkyne | cycloalkane | iso_paraffin | n_paraffin (same rule as extras/fuelblend_data/common.hc_class,
+    inlined so this script runs on a fresh clone without the git-ignored extras/ tree)."""
+    if any(a.GetIsAromatic() for a in m.GetAtoms()):
+        return "aromatic"
+    if any(b.GetBondType() != Chem.BondType.SINGLE for b in m.GetBonds()):
+        return "alkene_alkyne"
+    if m.GetRingInfo().NumRings() > 0:
+        return "cycloalkane"
+    return "iso_paraffin" if any(a.GetSymbol() == "C" and a.GetDegree() > 2 for a in m.GetAtoms()) else "n_paraffin"
 
 
-HC_CLASS, CARBON_NUMBER = _hc_class()
+def CARBON_NUMBER(m) -> int:
+    return sum(1 for a in m.GetAtoms() if a.GetSymbol() == "C")
 
 
 def verified_constants() -> dict[str, dict[str, float]]:
@@ -62,7 +67,7 @@ def verified_constants() -> dict[str, dict[str, float]]:
         m = Chem.MolFromSmiles(r.smiles)
         if m is None:
             continue
-        ik = Chem.inchi.MolToInchiKey(m)[:14]            # connectivity block: ignores stereo (decalin cis/trans stays distinct by smiles only if flat)
+        ik = Chem.inchi.MolToInchiKey(m)[:14]            # connectivity block only: stereoisomers share constants (no stereoisomer pair occurs in the SLE systems)
         d = out.setdefault(ik, {})
         if r.prop == "Tm":
             d["tm_K"] = float(r.value) + 273.15
@@ -173,7 +178,7 @@ def summarise(df: pd.DataFrame) -> pd.DataFrame:
     for subset, mask in (("all", slice(None)), ("common (ideal & coutinho both defined)", both)):
         sub = s if subset == "all" else s[mask]
         for m in ("ideal_svl", "ideal_svl_offset", "coutinho_lib", "coutinho_lib_offset", "coutinho_lib_x", "coutinho_lib_x_offset"):
-            col = f"{m}_K" if not m.endswith("offset") else f"{m}_K"
+            col = f"{m}_K"
             err = sub[col] - sub.T_obs_K                     # pred - obs, K (positive = predicts warmer liquidus than observed)
             for cls, g in [("ALL", sub)] + list(sub.groupby("system_class")):
                 e = err.loc[g.index]
@@ -186,14 +191,22 @@ def summarise(df: pd.DataFrame) -> pd.DataFrame:
 def margin_table(df: pd.DataFrame) -> pd.DataFrame:
     """Unsafe-side residual (observed liquidus - predicted, K; positive = the real mixture freezes WARMER than predicted)
     for the offset-free models on the rows where both models are defined.  A margin proposal is read off the point-level and
-    the system-level (mean per system) quantiles; no parameter is fitted here, so the residuals are out-of-fold by construction."""
+    the system-level (mean per system) quantiles; no parameter is fitted on these residuals."""
     s = df[df.scored & df.ideal_svl_K.notna() & df.coutinho_lib_K.notna()]
     rows = []
+    rng = np.random.default_rng(20261110)
+    sids = s.system_id.unique()
     for m in ("ideal_svl", "coutinho_lib"):
         r = s.T_obs_K - s[f"{m}_K"]
         per_sys = r.groupby(s.system_id).mean()
+        by = {k: v.to_numpy() for k, v in r.groupby(s.system_id)}
+        b90, b95 = [], []
+        for _ in range(2000):                      # system-level cluster bootstrap
+            x = np.concatenate([by[k] for k in rng.choice(sids, len(sids))])
+            b90.append(np.quantile(x, 0.9)); b95.append(np.quantile(x, 0.95))
         rows.append(dict(model=m, n_points=len(r), n_systems=per_sys.size,
                          point_q50=r.quantile(0.5), point_q90=r.quantile(0.9), point_q95=r.quantile(0.95), point_max=r.max(),
+                         q90_ci_lo=np.quantile(b90, .025), q90_ci_hi=np.quantile(b90, .975), q95_ci_lo=np.quantile(b95, .025), q95_ci_hi=np.quantile(b95, .975),
                          system_mean_max=per_sys.max(), system_mean_q90=per_sys.quantile(0.9)))
     return pd.DataFrame(rows)
 

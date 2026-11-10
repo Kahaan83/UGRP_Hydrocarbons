@@ -15,7 +15,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXTRAS = ROOT / "extras" / "fuelblend_data"
 sys.path.insert(0, str(EXTRAS))
-import thermoml_extract as tx  # noqa: E402
+import pytest  # noqa: E402
+
+try:
+    import thermoml_extract as tx  # noqa: E402
+    _HAS_SLE = hasattr(tx, "parse_file_sle") and hasattr(tx, "main_sle")
+except ImportError:
+    tx, _HAS_SLE = None, False
+_SKIP = pytest.mark.skipif(not _HAS_SLE, reason="extras/fuelblend_data/thermoml_extract.py missing or lacks --sle support "
+                           "(git-ignored nested repo): apply results/v4/SLE/thermoml_extract_sle.patch inside extras/fuelblend_data")
 
 FIX = ROOT / "tests" / "data" / "thermoml_sle_je5001389.xml"
 
@@ -30,6 +38,7 @@ def _binary_hc(comps, rows):
     return [r for r in rows if len(r["ids"]) == 2 and all(tx.hc_inchi(comps[i]["inchi"]) for i in r["ids"])]
 
 
+@_SKIP
 def test_sle_record_parsed():
     comps, rows, st = _parse()
     hc = _binary_hc(comps, rows)
@@ -55,6 +64,7 @@ def test_sle_record_parsed():
     assert st["sle: unsupported/ambiguous composition scale"] > 0
 
 
+@_SKIP
 def test_default_mode_unchanged():
     # (a) whitelist untouched
     assert tx.WANTED == {
@@ -72,6 +82,7 @@ def test_default_mode_unchanged():
 
 
 if __name__ == "__main__":
+    assert _HAS_SLE, "extras/fuelblend_data/thermoml_extract.py lacks --sle; apply results/v4/SLE/thermoml_extract_sle.patch"
     test_sle_record_parsed()
     test_default_mode_unchanged()
     print("test_v4_sle OK")
