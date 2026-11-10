@@ -1,0 +1,10 @@
+﻿Name,n-N,C_1,n-P,C_6,iso-P,C_2,C_5,C_4,C_3,FACE A gasoline,FACE C gasoline,FACE F gasoline,FACE G gasoline,FACE I gasoline,FACE J gasoline,C_7,RON,MON
+PRF+10,,n-Heptane,,,,iso-Octane,,,,,,,,,,Ethanol,55.6,53
+PRF+20,,n-Heptane,,,,iso-Octane,,,,,,,,,,Ethanol,69,64
+TPRF 1+0,,n-Heptane,,,,iso-Octane,,,Toluene,,,,,,,,60.8,58
+TPRF 1+10,,n-Heptane,,,,iso-Octane,,,Toluene,,,,,,,Ethanol,71.9,68
+TPRF 4+3,,n-Heptane,,,,iso-Octane,,,Toluene,,,,,,,,67.3,66.1
+TMB+10,,,,,,,,"1,2,4-Trimethylbenzene",,,,,,,,Ethanol,107,102
+TPRF 1,,n-Heptane,,,,,,,Toluene,,,,,,,,92.3,80.7
+Hex+10,,,,1-Hexene,,,,,,,,,,,,Ethanol,81,68.5
+TPRF 4+4,,n-Heptane,,,,iso-Octane,,,Toluene,,,,,,,Ethanol,66.6,64

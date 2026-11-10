@@ -47,17 +47,22 @@ def hazard_function(
     lfl_vol_pct: Sequence[float],
     lfl_temp: bool = False,
     P_total: float = P_TOTAL_KPA,
+    gamma_fn=None,
 ) -> float:
     """Compute Le Chatelier flammability hazard ratio H(T) - 1.0.
     
     H(T) = sum_i [ y_i / LFL_i ] = sum_i [ x_i * P_i^sat(T) / (P_total * LFL_i) ]
     Flash point occurs where H(T) = 1.0 (hazard_function == 0.0).
+
+    ``gamma_fn(T_K, x_mole) -> sequence of activity coefficients`` (optional, v4 Task 9) replaces the
+    ideal-solution assumption gamma_i = 1 (modified Raoult: y_i P = x_i gamma_i Psat_i).
     """
+    gammas = [1.0] * len(x_mole) if gamma_fn is None else list(gamma_fn(T_K, x_mole))
     total_ratio = 0.0
-    for xi, (A, B, C), lfl_val in zip(x_mole, antoine_params, lfl_vol_pct):
+    for xi, gi, (A, B, C), lfl_val in zip(x_mole, gammas, antoine_params, lfl_vol_pct):
         if xi <= 0.0:
             continue
-        p_sat = psat_antoine(T_K, A, B, C)
+        p_sat = psat_antoine(T_K, A, B, C) * float(gi)
         if lfl_temp:
             lfl_frac = lfl_temperature_correction(lfl_val, T_K)
         else:
@@ -76,6 +81,7 @@ def predict_flash_le_chatelier(
     lfl_temp: bool = False,
     lo_K: float = 150.0,
     hi_K: float = 650.0,
+    gamma_fn=None,
 ) -> Tuple[float, str]:
     """Solve for flash point in deg C using Le Chatelier's rule.
     
@@ -91,7 +97,7 @@ def predict_flash_le_chatelier(
     tot = sum(x_mole)
     x_norm = [xi / tot for xi in x_mole]
     
-    f = lambda T: hazard_function(T, x_norm, antoine_params, lfl_vol_pct, lfl_temp=lfl_temp)
+    f = lambda T: hazard_function(T, x_norm, antoine_params, lfl_vol_pct, lfl_temp=lfl_temp, gamma_fn=gamma_fn)
     
     try:
         f_lo = f(lo_K)
