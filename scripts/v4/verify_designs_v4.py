@@ -1,4 +1,4 @@
-"""v4 Task 17: INDEPENDENT verifier of results/v4/D/designs_v4.csv.
+"""v4 Task 17: INDEPENDENT verifier of results/v4/D2/designs_v4.csv.
 
 Recomputes, with the ``thermo`` / ``chemicals`` libraries only (their own Psat, Tm, Hfus, rho, LFL correlations),
   * Psat(T) of every component and the Le Chatelier flash point (ideal solution, gamma = 1, LFL by the library or
@@ -11,10 +11,11 @@ margin the engine used (margin 0 / missing -> the tolerance in TOL_FALLBACK is r
 This file deliberately imports NOTHING from ``fuelblend`` (tests/test_v4_verify_imports.py enforces it).  It reads the
 CSV outputs and data/processed/v4/pure_props_v4.csv (only for SMILES, to give the libraries an unambiguous identity).
 
-Usage: python scripts/v4/verify_designs_v4.py  ->  results/v4/D/verification_v4.csv (+ printed summary)
+Usage: python scripts/v4/verify_designs_v4.py  ->  results/v4/D2/verification_v4.csv (+ printed summary)
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -25,7 +26,7 @@ import pandas as pd
 from scipy.optimize import brentq
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "results" / "v4" / "D"
+OUT = ROOT / "results" / "v4" / "D2"
 PURE = ROOT / "data" / "processed" / "v4" / "pure_props_v4.csv"
 
 R_GAS = 8.314462618
@@ -86,7 +87,10 @@ def _liquidus_ideal(chs, x):
     return best - 273.15
 
 
-def main():
+def main(out=None):
+    global OUT
+    if out is not None:
+        OUT = Path(out) if Path(out).is_absolute() else ROOT / out
     designs = pd.read_csv(OUT / "designs_v4.csv")
     cons = pd.read_csv(OUT / "constraints_v4.csv")
     smi = pd.read_csv(PURE).drop_duplicates("compound").set_index("compound")["smiles"].to_dict()
@@ -149,4 +153,6 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    ap.add_argument("--out", default=None, help="folder holding designs_v4.csv / constraints_v4.csv (default results/v4/D2)")
+    sys.exit(main(ap.parse_args().out))

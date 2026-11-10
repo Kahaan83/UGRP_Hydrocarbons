@@ -8,10 +8,13 @@ comparison is like-for-like) and ``v4pool`` = a pool chosen so more inputs are v
 RE-SCORED with the v4 engine (same weights, v4 models and margins) to separate "the recipe was never good" from "the
 optimiser changed".
 
-Outputs (results/v4/D/): designs_v4.csv, constraints_v4.csv, robustness_v4.csv, comparison_v3_v4.csv
+Usage: python scripts/v4/run_designs_v4.py [--out DIR]   (default results/v4/D2; results/v4/D holds the original v4 evidence, reproducible at commit 65212cc)
+
+Outputs (results/v4/D2/ by default): designs_v4.csv, constraints_v4.csv, robustness_v4.csv, comparison_v3_v4.csv
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -25,7 +28,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from fuelblend.design import engine_v4 as E  # noqa: E402
 from fuelblend.design import models_v4 as M  # noqa: E402
 
-OUT = ROOT / "results" / "v4" / "D"
+OUT = ROOT / "results" / "v4" / "D2"
 V3 = ROOT / "results" / "v3" / "U6" / "designs_v3.csv"
 V3_ALIAS = {"2,2,4-trimethylpentane": "isooctane"}      # same molecule, the name that carries the v4 constants
 
@@ -86,7 +89,10 @@ def category(res, viol, nopred):
     return "B_meets_at_point_estimate_not_certifiable"
 
 
-def main():
+def main(out=None):
+    global OUT
+    if out is not None:
+        OUT = Path(out) if Path(out).is_absolute() else ROOT / out
     OUT.mkdir(parents=True, exist_ok=True)
     L = M.library()
     models = M.build_models(L)
@@ -165,4 +171,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    ap.add_argument("--out", default=None, help="output folder (default results/v4/D2)")
+    main(ap.parse_args().out)
