@@ -96,6 +96,11 @@ class PropertyModel:
     margin_missing_reason: str = ""                # why margin_keys is empty (surfaced as the reason)
     notes: str = ""
     certified_kinds: Optional[set] = None          # fuel kinds (jet/diesel/gasoline) the margin was validated on; None = any
+    # {"over": [...], "under": [...]}: the LOWER limit uses the "over" margin, the UPPER limit the "under" margin;
+    # when set, ``margin_keys`` is ignored for margins.
+    margin_keys_by_side: Optional[dict] = None
+    # margin_keys_fn(T_C of the constraint) -> keys; when set it replaces ``margin_keys`` (temperature-binned margins)
+    margin_keys_fn: Optional[Callable] = None
 
 
 @dataclass
@@ -194,12 +199,45 @@ def _scale(lo, hi) -> float:
     return abs(b) if b else 1.0
 
 
-def _combined_margin(pm: PropertyModel, margins: dict) -> tuple:
+def viscosity_t_bin(T_C: float) -> str:
+    """Temperature bin of the lab raw-Refutas viscosity margins (same bins as scripts/v4/eval_lab_known_composition.t_bin).
+
+    -10 C (263.15 K) and 10 C (283.15 K) belong to the WARMER bin.  The cut-offs are -10.0 C and 10.0 C
+    (bins T_lt_263K | T_263_283K | T_ge_283K).
+    """
+    if T_C < -10.0:
+        return "T_lt_263K"
+    if T_C < 10.0:
+        return "T_263_283K"
+    return "T_ge_283K"
+
+
+def _keys_for(pm: PropertyModel, T_C, side: Optional[str]):
+    """-> (keys list, reason).  ``side`` is 'over' / 'under' / None."""
+    if pm.margin_keys_by_side is not None:
+        keys = list(pm.margin_keys_by_side.get(side, [])) if side else []
+        return keys, pm.margin_missing_reason or "no uncertainty_v4.yaml margin exists for this side of the limit"
+    if pm.margin_keys_fn is not None:
+        if T_C is None:
+            return [], "margin is temperature-binned but the constraint has no temperature"
+        return list(pm.margin_keys_fn(T_C)), pm.margin_missing_reason
+    return list(pm.margin_keys), pm.margin_missing_reason
+
+
+def _resolved_keys(pm: PropertyModel, T_C: Optional[float]) -> tuple:
+    """The yaml keys this model is judged by at ``T_C`` (for reporting)."""
+    if pm.margin_keys_by_side is not None:
+        return tuple(pm.margin_keys_by_side.get("over", [])) + tuple(pm.margin_keys_by_side.get("under", []))
+    return tuple(_keys_for(pm, T_C, None)[0])
+
+
+def _combined_margin(pm: PropertyModel, margins: dict, T_C: Optional[float] = None, side: Optional[str] = None) -> tuple:
     """-> (margin, ln_space, directions set, reason).  Several keys are combined by max (flash rule)."""
-    if not pm.margin_keys:
-        return None, False, set(), pm.margin_missing_reason or "no uncertainty_v4.yaml margin exists for this model"
+    keys, why_empty = _keys_for(pm, T_C, side)
+    if not keys:
+        return None, False, set(), why_empty or "no uncertainty_v4.yaml margin exists for this model"
     vals, units, dirs = [], set(), set()
-    for k in pm.margin_keys:
+    for k in keys:
         m, unit, direction, why = read_applied_margin(margins.get(k))
         if m is None:
             return None, False, set(), f"{k}: {why}"
@@ -243,21 +281,34 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
         pred, ood = _call(pm, pool, w, T_C)
     except ModelUnavailable as e:
         return ConstraintResult(model=pm.name, prediction=float("nan"), applied_margin=None,
-                                margin_keys=tuple(pm.margin_keys), status=STATUS_UNCERTIFIED, slack=float("nan"),
+                                margin_keys=_resolved_keys(pm, T_C), status=STATUS_UNCERTIFIED, slack=float("nan"),
                                 reason=f"model unavailable: {e}", **base)
     if not math.isfinite(pred):
-        return ConstraintResult(model=pm.name, prediction=pred, applied_margin=None, margin_keys=tuple(pm.margin_keys),
+        return ConstraintResult(model=pm.name, prediction=pred, applied_margin=None, margin_keys=_resolved_keys(pm, T_C),
                                 status=STATUS_UNCERTIFIED, slack=float("nan"),
                                 reason="non-finite prediction", **base)
 
-    m, ln_space, dirs, why = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, margins)
-    m_eff = 0.0 if m is None else m
+    # per-side margins: lower limit <- "over" margin, upper limit <- "under" margin (same margin on both sides unless
+    # the model declares margin_keys_by_side)
+    sided = pm.margin_keys_by_side is not None
+    msides = {}
+    for bound, sd in ((lo, "lo"), (hi, "hi")):
+        if bound is None:
+            continue
+        if pm.by_construction:
+            msides[sd] = (0.0, False, set(), "")
+        else:
+            msides[sd] = _combined_margin(pm, margins, T_C, (("over" if sd == "lo" else "under") if sided else None))
+    finite = [v[0] for v in msides.values() if v[0] is not None]
+    m = None if (any(v[0] is None for v in msides.values()) or not finite) else max(finite)
     sc = _scale(lo, hi)
     slacks = []
     if lo is not None:
-        slacks.append((_adjust(pred, m_eff, ln_space, -1) - lo) / sc)
+        ml = msides["lo"]
+        slacks.append((_adjust(pred, 0.0 if ml[0] is None else ml[0], ml[1], -1) - lo) / sc)
     if hi is not None:
-        slacks.append((hi - _adjust(pred, m_eff, ln_space, +1)) / sc)
+        mh = msides["hi"]
+        slacks.append((hi - _adjust(pred, 0.0 if mh[0] is None else mh[0], mh[1], +1)) / sc)
     slack = min(slacks) if slacks else float("nan")
     nominal = []
     if lo is not None:
@@ -280,16 +331,20 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
         reasons.append(f"T={T_C:g} C outside the margin's validated range {pm.T_valid_C}")
     if not pm.by_construction:
         if m is None:
-            reasons.append(why)
+            for sd in ("lo", "hi"):
+                if sd in msides:
+                    m_sd, _ln, _dirs, why_sd = msides[sd]
+                    if m_sd is None:
+                        reasons.append(why_sd)
+            reasons = list(dict.fromkeys(reasons))
         else:
-            need = []
-            if lo is not None:
-                need.append("over")      # a minimum limit is endangered by over-prediction
-            if hi is not None:
-                need.append("under")     # a maximum limit is endangered by under-prediction
-            bad = [n for n in need if not all(d in (n, "two_sided") for d in dirs)]
+            bad = []
+            for sd, n in (("lo", "over"), ("hi", "under")):   # a minimum limit is endangered by over-prediction, a maximum by under-
+                if sd in msides and not all(d in (n, "two_sided") for d in msides[sd][2]):
+                    bad.append((n, sorted(map(str, msides[sd][2]))))
             if bad:
-                reasons.append(f"margin direction {sorted(map(str, dirs))} does not protect the {bad} side of the limit")
+                reasons.append("margin direction does not protect the side of the limit: "
+                               + "; ".join(f"{n} side has {d}" for n, d in bad))
     if (ver and ver.strip().lower() != "verified") or c.get("unverified") is True:
         reasons.append(f"spec limit verification: {ver or 'unverified: true'} (an unverified limit is never certified)")
 
@@ -311,7 +366,7 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
             status = STATUS_SCOPE
             reasons.append(f"margin validated on {sorted(pm.certified_kinds)} fuels only; this is a {kind or 'unknown'} spec, "
                            "so the pass is not a certification")
-    return ConstraintResult(model=pm.name, prediction=pred, applied_margin=m, margin_keys=tuple(pm.margin_keys),
+    return ConstraintResult(model=pm.name, prediction=pred, applied_margin=m, margin_keys=_resolved_keys(pm, T_C),
                             status=status, reason="; ".join(reasons), slack=float(slack), **base)
 
 
@@ -326,7 +381,7 @@ class _Sides:
 
     def __init__(self, spec, pool, models, margins):
         self.pool, self.models, self.margins, self.spec = list(pool), models, margins, spec
-        self.items = []                      # (key, c, pm, T_C, m, ln, sc)
+        self.items = []                      # (key, c, pm, T_C, (m, ln) lower side, (m, ln) upper side, sc)
         self.excluded = {}
         for key, c in spec["constraints"].items():
             prop, T_C = canonical_property(key)
@@ -342,8 +397,12 @@ class _Sides:
             except Exception as e:           # a wrapper bug must not silently drop a constraint
                 self.excluded[key] = f"error: {type(e).__name__}: {e}"
                 continue
-            m, ln, _, _ = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, margins)
-            self.items.append((key, c, pm, T_C, 0.0 if m is None else m, ln, _scale(c.get("min"), c.get("max"))))
+            sided = pm.margin_keys_by_side is not None
+            ms = {}
+            for sd, nm in (("lo", "over"), ("hi", "under")):
+                r = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, margins, T_C, nm if sided else None)
+                ms[sd] = (0.0 if r[0] is None else r[0], r[1])
+            self.items.append((key, c, pm, T_C, ms["lo"], ms["hi"], _scale(c.get("min"), c.get("max"))))
         self.extrap_sets = []                # distinct validated sets of the models in use (not forced)
         seen = []
         for key, c, pm, *_ in self.items:
@@ -364,7 +423,7 @@ class _Sides:
         if kb == self._k:
             return self._v
         out = []
-        for key, c, pm, T_C, m, ln, sc in self.items:
+        for key, c, pm, T_C, (m_lo, ln_lo), (m_hi, ln_hi), sc in self.items:
             try:
                 p = float(pm.fn(self.pool, w, T_C))
             except Exception:
@@ -376,9 +435,9 @@ class _Sides:
                 if not math.isfinite(p):
                     out.append(BAD_SLACK)
                 elif sgn < 0:
-                    out.append((_adjust(p, m, ln, -1) - bound) / sc)
+                    out.append((_adjust(p, m_lo, ln_lo, -1) - bound) / sc)
                 else:
-                    out.append((bound - _adjust(p, m, ln, +1)) / sc)
+                    out.append((bound - _adjust(p, m_hi, ln_hi, +1)) / sc)
         classes = self.models.get("classes", {})
         for v in self.extrap_sets:
             out.append((EXTRAP_WT_THRESHOLD - absent_fraction(self.pool, w, classes, v)) / EXTRAP_WT_THRESHOLD)

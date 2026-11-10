@@ -6,9 +6,10 @@ compound, property and status, which the engine reports as ``uncertified`` for t
 
 Primary model per property and the yaml margin it is judged by (all keys are in ``configs/uncertainty_v4.yaml``):
 
-  density     ideal volume mixing of verified rho15              density_kg_m3.crc647_ideal_volume.T15_56C (two-sided)
+  density     ideal volume mixing of verified rho15              density_kg_m3.lab_mixtures.ideal_volume.over / .under (side-specific; hydrocarbons only)
   flash       Le Chatelier + Antoine + LFL, gamma = 1 (Task 9)   flash_point_C.lab_mixtures.ideal  MAX  D93.ideal
-  viscosity   recalibrated Refutas (Task 11; ridge = alternate)  viscosity_kin_cSt.crc647.recalibrated_refutas.all_T
+  viscosity   raw Refutas (known compositions; review fix 4)    viscosity_kin_cSt.lab_mixtures.raw_refutas.<T bin> (cold bins inf -> uncertified;
+              recalibrated Refutas and ridge are alternates)    hydrocarbons only
   freezing    ideal Schroeder-van Laar (library, mass fractions) freezing_point_C.sle_alkane_blends.ideal_svl  (inf)
   nhoc        mass-weighted group-additivity GCV (Task 12)       heat_of_combustion_net_MJ_kg...constH13.8
   smoke       AJFTD bulk regression on aromatics (Task 14)       smoke_point_mm.ajftd100_bulk.selected_in_fold  (inf)
@@ -32,7 +33,7 @@ from rdkit.Chem import Descriptors, inchi as rdinchi
 from fuelblend.baselines import flash_unifac as fu
 from fuelblend.baselines import sooting
 from fuelblend.baselines.heat_of_combustion_v2 import GroupAdditivityGCVModel, mixture_heat_of_combustion_v2
-from fuelblend.design.engine_v4 import ModelUnavailable, PropertyModel
+from fuelblend.design.engine_v4 import ModelUnavailable, PropertyModel, viscosity_t_bin
 from fuelblend.mixture.cold_flow import compound_meta
 from fuelblend.mixture.common import CLASSES, CompoundRegistry, PurePropertyProvider
 from fuelblend.mixture.structured_residual import StructuredResidual
@@ -91,6 +92,18 @@ class Library:
 
     def classes(self, pool):
         return {n: self.cls(n) for n in pool}
+
+    def is_hydrocarbon(self, name) -> bool:
+        """True iff the compound contains only C and H (the lab margins were measured on hydrocarbon mixtures only)."""
+        mol = Chem.MolFromSmiles(self.smiles[name])
+        return mol is not None and all(a.GetSymbol() in ("C", "H") for a in Chem.AddHs(mol).GetAtoms())
+
+    def require_hydrocarbons(self, pool, w, prop):
+        """Lab margins are hydrocarbon-only: any component with w > 0 that is not a hydrocarbon -> ModelUnavailable."""
+        bad = [n for n, wi in zip(pool, np.asarray(w, float)) if wi > 0 and not self.is_hydrocarbon(n)]
+        if bad:
+            raise ModelUnavailable(f"{prop}: lab-mixture margins are hydrocarbon-only; non-hydrocarbon component(s) {bad} "
+                                   "have no validated margin")
 
     # ---------------------------------------------------------------- fits from stored Task 11 outputs
     def _fit_viscosity(self):
@@ -155,6 +168,7 @@ def _mole_frac(L, pool, w):
 # ------------------------------------------------------------------------------------------------ model fns
 def make_fns(L: Library) -> dict:
     def density(pool, w, T_C):
+        L.require_hydrocarbons(pool, w, "density")
         rho = np.array([L.v(n, "rho15") for n in pool])
         return float(1.0 / np.sum(_norm(w) / rho))
 
@@ -198,6 +212,7 @@ def make_fns(L: Library) -> dict:
         return nu, feats, T_K
 
     def visc_raw(pool, w, T_C):
+        L.require_hydrocarbons(pool, w, "viscosity")
         return _visc_inputs(pool, w, T_C)[0]
 
     def visc_recal(pool, w, T_C):
@@ -313,18 +328,25 @@ def build_models(L: Library | None = None) -> dict:
 
     def P(*a, **kw):
         m = PropertyModel(*a, **kw)
-        if not m.by_construction:
+        if not m.by_construction and "certified_kinds" not in kw:
             m.certified_kinds = JET
         return m
 
     props = {
-        "density": P("ideal_volume_rho15", f["density"], ["density_kg_m3.crc647_ideal_volume.T15_56C"],
-                     validated_classes=CRC_CLASSES),
+        # review fix 4: the pools are blends of KNOWN pure compounds, so the lab-mixture margins apply (not the CRC
+        # reconstruction margins); they are not jet specific (certified_kinds=None) and are hydrocarbon-only.
+        "density": P("ideal_volume_rho15", f["density"],
+                     margin_keys_by_side={"over": ["density_kg_m3.lab_mixtures.ideal_volume.over"],
+                                          "under": ["density_kg_m3.lab_mixtures.ideal_volume.under"]},
+                     validated_classes=CRC_CLASSES, certified_kinds=None,
+                     notes="lab-mixture side-specific margins; non-hydrocarbon component with w>0 -> unavailable"),
         "flash": P("le_chatelier_ideal", f["flash_ideal"], FL, validated_classes=CRC_CLASSES,
                    notes="margin = max(lab ideal, D93 ideal) applied_margin"),
-        "viscosity": P("refutas_recalibrated", f["visc_recal"], ["viscosity_kin_cSt.crc647.recalibrated_refutas.all_T"],
-                       T_valid_C=(-40.0, 20.0), validated_classes=CRC_CLASSES,
-                       notes="2-parameter physics recalibration; chosen as primary because the 7-feature ridge extrapolates"),
+        "viscosity": P("refutas_raw", f["visc_raw"],
+                       margin_keys_fn=lambda T_C: [f"viscosity_kin_cSt.lab_mixtures.raw_refutas.{viscosity_t_bin(T_C)}"],
+                       T_valid_C=None, validated_classes=CRC_CLASSES, certified_kinds=None,
+                       notes="raw Refutas of known pure compounds + lab-mixture margin of the temperature bin "
+                             "(cold bins have no valid margin -> uncertified); recalibration/ridge are alternates"),
         "freezing": P("ideal_svl_library", f["freezing_ideal"], ["freezing_point_C.sle_alkane_blends.ideal_svl"],
                       validated_classes=CRC_CLASSES),
         "nhoc": P("gcv_group_additivity_constH", f["nhoc_const_h"],
@@ -343,9 +365,11 @@ def build_models(L: Library | None = None) -> dict:
     }
     alternates = {
         "flash": [P("le_chatelier_unifac", f["flash_unifac"], FLU, validated_classes=CRC_CLASSES)],
-        "viscosity": [P("refutas+structured_ridge", f["visc_ridge"], ["viscosity_kin_cSt.crc647.structured_ridge.all_T"],
-                        T_valid_C=(-40.0, 20.0), validated_classes=CRC_CLASSES),
-                      P("refutas_raw", f["visc_raw"], margin_missing_reason="raw Refutas has no yaml margin entry")],
+        "viscosity": [P("refutas_recalibrated", f["visc_recal"], ["viscosity_kin_cSt.crc647.recalibrated_refutas.all_T"],
+                        T_valid_C=(-40.0, 20.0), validated_classes=CRC_CLASSES,
+                        notes="CRC 647 2-parameter recalibration (reconstructed-composition margin); alternate only"),
+                      P("refutas+structured_ridge", f["visc_ridge"], ["viscosity_kin_cSt.crc647.structured_ridge.all_T"],
+                        T_valid_C=(-40.0, 20.0), validated_classes=CRC_CLASSES)],
         "freezing": [P("coutinho_library", f["freezing_coutinho"], ["freezing_point_C.crc647.coutinho_library"],
                        validated_classes=CRC_CLASSES),
                      P("ideal_sle_mole_fraction", f["freezing_ideal_mole"],

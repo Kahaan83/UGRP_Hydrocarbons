@@ -325,6 +325,37 @@ def smoke():
                      "The YSI route for pure compounds / real-fuel speciation was not evaluated on real fuels and is excluded."]
             + (["Comparator only."] if m == "const_mean" else []))
 
+# ------------------------------------------------------------- known-composition lab residuals (review fix 3)
+LAB_BINS = ("T_lt_263K", "T_263_283K", "T_ge_283K")
+LAB_DENS_KEY = "density_kg_m3.lab_mixtures.ideal_volume"
+LAB_VISC_KEY = "viscosity_kin_cSt.lab_mixtures.raw_refutas"
+
+
+def lab_known():
+    """Residuals from scripts/v4/eval_lab_known_composition.py (split in splits/v4/lab_systems_splits.json written first).
+    Group = lab system (distinct InChIKey set); margins from DEV systems only; locked = counts-only coverage check."""
+    fd, fv = "results/v4/L/density_lab_residuals.csv", "results/v4/L/viscosity_lab_residuals.csv"
+    d, v = pd.read_csv(ROOT / fd), pd.read_csv(ROOT / fv)
+    dd, dl = d[d.split_role == "dev"], d[d.split_role == "locked"]
+    for direction in ("over", "under"):
+        add(f"{LAB_DENS_KEY}.{direction}", dd.resid, dd.system_id, kind="one", direction=direction, unit="kg/m3",
+            model="ideal volume mixing rho = 1/sum(w_i/rho_i(T)), pure rho_i(T) from measured ThermoML tier-1 fits only", residual_file=fd,
+            scope=("ThermoML liquid hydrocarbon mixtures with MEASURED composition (n_comp >= 2), all T; dev systems only; "
+                   + ("over-prediction (predicted > measured) side" if direction == "over" else "under-prediction (predicted < measured) side")),
+            group_unit="lab system (distinct InChIKey set)", bias=dd.resid.mean(), locked=(dl.resid, dl.system_id),
+            caveats=["Known compositions: isolates the physics error (excess volume) from the CRC647 reconstruction error; transfer to real fuels is not shown.",
+                     "Systems with a component lacking a measured tier-1 pure density are excluded (counted in results/v4/L/README.md), not filled from a class regression.",
+                     "One-sided: the margin is the conformal quantile of the per-system maximum on the named side; a negative value is floored at 0 in applied_margin."])
+    for b in LAB_BINS:
+        vd, vl = v[(v.split_role == "dev") & (v.t_bin == b)], v[(v.split_role == "locked") & (v.t_bin == b)]
+        add(f"{LAB_VISC_KEY}.{b}", vd.resid, vd.system_id, kind="two", direction="over", unit="ln-ratio",
+            model="raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, from measured pure-component viscosities",
+            residual_file=fv, scope=f"lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition, temperature bin {b} (edges belong to the warmer bin); dev systems only",
+            group_unit="lab system (distinct InChIKey set)", bias=vd.resid.mean() if len(vd) else None,
+            locked=(vl.resid, vl.system_id), log_space=True,
+            caveats=["Known compositions: isolates Refutas physics error; CRC647 fuels at -40 C are a different regime (Task 11 found raw Refutas collapses there).",
+                     "Two-sided ln-ratio margin: per-system max |ln(pred/meas)| conformal quantile; inf when fewer than 9 independent dev systems exist (no substitute number)."])
+
 
 # ----------------------------------------------------------------------------------------------- output
 FLASH_REC = ("RECOMMENDATION (not a measured result): the D93 reconstructed-CRC entry floors at 0 because every CRC fuel is under-predicted by a "
@@ -351,6 +382,10 @@ RECOMPUTE = {
 for _p in ("ron", "mon"):
     for _m in ("constant_mean", "base_unchanged", "linear_volume_pooled_bov", "ghosh_lumps", "gbm_resid", "gp_resid"):
         RECOMPUTE[f"{_p}.{_m}"] = dict(column="resid", group="group", where=FILT(("prop", "eq", _p), ("model", "eq", _m), ("view", "eq", "dev_leave_one_blendstock_out")))
+for _d in ("over", "under"):
+    RECOMPUTE[f"{LAB_DENS_KEY}.{_d}"] = dict(column="resid", group="system_id", where=FILT(("split_role", "ne", "locked")))
+for _b in LAB_BINS:
+    RECOMPUTE[f"{LAB_VISC_KEY}.{_b}"] = dict(column="resid", group="system_id", where=FILT(("split_role", "ne", "locked"), ("t_bin", "eq", _b)))
 for _m in ("selected_in_fold", "const_mean"):
     RECOMPUTE[f"smoke_point_mm.ajftd100_bulk.{_m}"] = dict(column=f"resid_{_m}", group="tgroup", where=[])
 DERIVATION = {
@@ -364,6 +399,13 @@ for _m, _c in (("structured_ridge", "pred_Structured ridge"), ("recalibrated_ref
     for _s in ("all_T", "minus40C"):
         DERIVATION[f"viscosity_kin_cSt.crc647.{_m}.{_s}"] = (f"residual = ln({_c}) - ln(y) on rows with locked == False"
                                                               + (" and T_C == -40" if _s == "minus40C" else "") + "; group = fuel_id")
+
+
+for _d in ("over", "under"):
+    DERIVATION[f"{LAB_DENS_KEY}.{_d}"] = ("residual = predicted - measured (kg/m3), column resid of the residual_file, dev systems (split_role != locked); "
+                                          "group = system_id; direction as named")
+for _b in LAB_BINS:
+    DERIVATION[f"{LAB_VISC_KEY}.{_b}"] = (f"residual = ln(raw Refutas) - ln(measured) = -(build_lab resid), column resid, dev systems in t_bin {_b}; group = system_id")
 
 
 def apply_specs():
@@ -442,10 +484,18 @@ def readme():
     L += [f"- Task 12: the CRC freezing models show no skill over a constant mean. Consistent with that, the conformal margin of the offset physics model ({fmt(fo['value'], 2)} K) is not tighter than the composition-blind constant-mean comparator ({fmt(fc['value'], 2)} K). "
           f"Task 13's '7 K / 4 K' shorthand corresponds to the stored ideal-SvL point quantiles q95 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.ideal_svl']['indicative_not_conformal']['point_q95_K'], 2)} K / q90 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.ideal_svl']['indicative_not_conformal']['point_q90_K'], 2)} K (Coutinho on the same rows: q90 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.coutinho_lib_common8']['indicative_not_conformal']['point_q90_K'], 2)} K / q95 {fmt(ENTRIES['freezing_point_C.sle_alkane_blends.coutinho_lib_common8']['indicative_not_conformal']['point_q95_K'], 2)} K). They rest on about 8 clusters, are point-level (not group) quantiles, and are kept only under `indicative_not_conformal`; the ideal-SvL conformal margin is `inf` (8 systems < 9).", ""]
     L += ["### Viscosity (Task 11), two-sided in ln space"]
-    for k in [k for k in ENTRIES if k.startswith("viscosity")]:
+    for k in [k for k in ENTRIES if k.startswith("viscosity_kin_cSt.crc647")]:
         e = ENTRIES[k]
         L.append(f"- `{k}`: ln-margin {fmt(e['value'])} (factor x{e['factor']:.3f}, i.e. about {100 * (e['factor'] - 1):.0f} %) over {e['n_groups']} fuels; locked {e['locked_check']['groups_covered']}/{e['locked_check']['n_locked_groups']}.")
     L += ["- The -40 C slice is reported separately because Task 11's finding is that raw/recalibrated Refutas collapse at -40 C; the structured ridge is linear in 1000/T by construction.", ""]
+    L += ["### Known-composition lab mixtures (review fix 3; residuals in `results/v4/L/`, split `splits/v4/lab_systems_splits.json`)"]
+    for k in [k for k in ENTRIES if ".lab_mixtures." in k and k.startswith(("density_kg_m3", "viscosity_kin_cSt"))]:
+        e = ENTRIES[k]
+        lc = e["locked_check"]
+        L.append(f"- `{k}`: {fmt(e['value'])} {e['unit']} over {e['n_groups']} dev systems (k={e['conformal_rank_k']})"
+                 + (f" -- {e['reason'].rstrip('.')}" if isinstance(e['value'], str) else "")
+                 + (f"; locked {lc['groups_covered']}/{lc['n_locked_groups']} systems covered (counts only)" if lc else "; no locked systems in this bin") + ".")
+    L += ["- A bin with fewer than 9 dev systems has no valid margin (`inf`); it is NOT replaced by a number.", ""]
     L += ["### Octane (Task 15) and smoke point (Task 14)"]
     for k in [k for k in ENTRIES if k.startswith(("ron.", "mon."))]:
         e = ENTRIES[k]
@@ -475,7 +525,7 @@ def readme():
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    flash(); bulk(); sle(); viscosity(); octane(); smoke()
+    flash(); bulk(); sle(); viscosity(); octane(); smoke(); lab_known()
     apply_specs(); write(); readme()
     for k, e in ENTRIES.items():
         print(f"{k:70s} {e['value'] if isinstance(e['value'], str) else round(e['value'], 3)!s:>8} n={e['n_groups']}")

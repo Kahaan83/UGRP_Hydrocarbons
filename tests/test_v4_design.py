@@ -90,9 +90,11 @@ def test_specs_read_from_yaml_only():
         if isinstance(node, ast.Assign) and all(isinstance(t, ast.Name) and t.id.isupper() for t in node.targets):
             named.update(id(n) for n in ast.walk(node.value))
     offenders = []
+    # -10.0 and 10.0 are the viscosity_t_bin edges (bins T_lt_263K | T_263_283K | T_ge_283K, review fix 4), not spec limits
+    bin_edges = (-10.0, 10.0)
     for n in ast.walk(tree):
         if isinstance(n, ast.Constant) and isinstance(n.value, (int, float)) and not isinstance(n.value, bool):
-            if id(n) in named or n.value in (0, 1, 2):
+            if id(n) in named or n.value in (0, 1, 2) or n.value in bin_edges:
                 continue
             if abs(float(n.value)) in nums:
                 offenders.append((n.lineno, n.value))
@@ -252,3 +254,92 @@ def test_ridge_envelope_guard_fires_for_pure_decane():
     chk = pd.read_csv(ROOT / "results/v4/D/viscosity_envelope_check_v4.csv")
     row = chk[(chk.pool == '["n-decane"]') & (chk.T_C == -20.0)].iloc[0]
     assert row.ridge_unguarded_cSt == pytest.approx(unguarded, rel=1e-6) and np.isnan(row.ridge_guarded_cSt)
+
+
+# ---------------------------------------------------------------------------------------------------- Task 4 (review fix 4)
+def test_bin_edge_in_engine():
+    assert E.viscosity_t_bin(-20.0) == "T_lt_263K"
+    assert E.viscosity_t_bin(-10.0) == "T_263_283K"     # the edges belong to the WARMER bin
+    assert E.viscosity_t_bin(0.0) == "T_263_283K"
+    assert E.viscosity_t_bin(10.0) == "T_ge_283K"
+    assert E.viscosity_t_bin(40.0) == "T_ge_283K"
+
+
+def _bin_keys(prefix="visc.raw"):
+    return lambda T_C: [f"{prefix}.{E.viscosity_t_bin(T_C)}"]
+
+
+def test_inf_bin_is_uncertified_not_borrowed():
+    """-20 C -> T_lt_263K has no applied_margin: the warm bin's 0.05 must NOT be borrowed."""
+    margins = {"visc.raw.T_lt_263K": {"value": "inf", "unit": "ln-ratio", "direction": "two_sided"},
+               "visc.raw.T_263_283K": {"value": "inf", "unit": "ln-ratio", "direction": "two_sided"},
+               "visc.raw.T_ge_283K": {"applied_margin": 0.05, "value": 0.05, "unit": "ln-ratio", "direction": "two_sided"}}
+    pm = E.PropertyModel(name="refutas_raw", fn=lambda p, w, T: 4.0, margin_keys_fn=_bin_keys())
+    models = _models({"viscosity": pm})
+    w = np.array([0.5, 0.5])
+    cr = E.evaluate_constraint("kin_visc_m20C_cSt", {"max": 8.0}, POOL, w, models, margins)
+    assert cr.status == E.STATUS_UNCERTIFIED and cr.applied_margin is None
+    assert "T_lt_263K" in cr.reason
+    cr0 = E.evaluate_constraint("kin_visc_0C_cSt", {"max": 8.0}, POOL, w, models, margins)
+    assert cr0.status == E.STATUS_UNCERTIFIED and "T_263_283K" in cr0.reason
+    crw = E.evaluate_constraint("kin_visc_40C_cSt", {"max": 8.0}, POOL, w, models, margins)
+    assert crw.status == E.STATUS_PASS and crw.applied_margin == pytest.approx(0.05)
+
+
+def test_real_yaml_jet_minus20_viscosity_uncertified():
+    from fuelblend.design import models_v4 as M
+    models = M.build_models()
+    pm = models["props"]["viscosity"]
+    assert pm.name == "refutas_raw" and pm.T_valid_C is None and pm.certified_kinds is None
+    cr = E.evaluate_constraint("kin_visc_m20C_cSt", {"max": 8.0}, ["n-decane", "n-dodecane"], np.array([0.5, 0.5]),
+                               models, E.load_margins(), kind="jet")
+    assert cr.status == E.STATUS_UNCERTIFIED and cr.applied_margin is None and "T_lt_263K" in cr.reason
+
+
+def test_side_specific_density_margin():
+    margins = {"d.over": {"applied_margin": 1.0, "unit": "kg/m3", "direction": "over"},
+               "d.under": {"applied_margin": 5.0, "unit": "kg/m3", "direction": "under"}}
+    pm = E.PropertyModel(name="dens", fn=lambda p, w, T: 780.0,
+                         margin_keys_by_side={"over": ["d.over"], "under": ["d.under"]})
+    models = _models({"density": pm})
+    w = np.array([0.5, 0.5])
+    cr = E.evaluate_constraint("density_15C_kg_m3", {"min": 775.0, "max": 840.0}, POOL, w, models, margins)
+    assert cr.slack == pytest.approx(min((780 - 1.0 - 775) / 65, (840 - 785.0) / 65))
+    assert cr.status == E.STATUS_PASS
+    # the lower limit uses ONLY the over margin, the upper ONLY the under margin
+    lo_only = E.evaluate_constraint("density_15C_kg_m3", {"min": 775.0}, POOL, w, models, margins)
+    assert lo_only.slack == pytest.approx((780 - 1.0 - 775) / 775)
+    hi_only = E.evaluate_constraint("density_15C_kg_m3", {"max": 840.0}, POOL, w, models, margins)
+    assert hi_only.slack == pytest.approx((840 - 785.0) / 840)
+
+
+def test_side_missing_margin_is_uncertified():
+    margins = {"d.over": {"applied_margin": 1.0, "unit": "kg/m3", "direction": "over"},
+               "d.under": {"value": "inf", "unit": "kg/m3", "direction": "under"}}
+    pm = E.PropertyModel(name="dens", fn=lambda p, w, T: 800.0,
+                         margin_keys_by_side={"over": ["d.over"], "under": ["d.under"]})
+    cr = E.evaluate_constraint("density_15C_kg_m3", {"min": 775.0, "max": 840.0}, POOL, np.array([0.5, 0.5]),
+                               _models({"density": pm}), margins)
+    assert cr.status == E.STATUS_UNCERTIFIED and "d.under" in cr.reason
+
+
+def test_design_density_and_viscosity_models_are_lab_margin_raw():
+    from fuelblend.design import models_v4 as M
+    models = M.build_models()
+    d = models["props"]["density"]
+    assert d.margin_keys_by_side == {"over": ["density_kg_m3.lab_mixtures.ideal_volume.over"],
+                                     "under": ["density_kg_m3.lab_mixtures.ideal_volume.under"]}
+    assert d.certified_kinds is None
+    alts = {a.name for a in models["alternates"]["viscosity"]}
+    assert {"refutas_recalibrated", "refutas+structured_ridge"} <= alts and "refutas_raw" not in alts
+    assert models["props"]["viscosity"].margin_keys_fn(25.0) == ["viscosity_kin_cSt.lab_mixtures.raw_refutas.T_ge_283K"]
+
+
+def test_non_hydrocarbon_makes_lab_margin_models_unavailable():
+    from fuelblend.design import models_v4 as M
+    fns = M.make_fns(M.library())
+    with pytest.raises(E.ModelUnavailable, match="hydrocarbon"):
+        fns["density"](["isooctane", "ethanol"], np.array([0.9, 0.1]), 15.0)
+    with pytest.raises(E.ModelUnavailable, match="hydrocarbon"):
+        fns["visc_raw"](["n-decane", "ethanol"], np.array([0.9, 0.1]), 40.0)
+    assert fns["density"](["isooctane", "ethanol"], np.array([1.0, 0.0]), 15.0) > 600   # w = 0 ethanol: no error

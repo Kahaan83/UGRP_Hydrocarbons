@@ -1,0 +1,66 @@
+property,slice,quantity,v4,r2
+density_15.56C_kg_m3,dev,N,45.0,45
+density_15.56C_kg_m3,dev,bias,-11.112524715664724,-4.692026023372546
+density_15.56C_kg_m3,dev,bias_lo95,-13.98040850310706,-7.887015770815196
+density_15.56C_kg_m3,dev,bias_hi95,-8.540279290229876,-1.7478459059774445
+density_15.56C_kg_m3,dev,MAE,11.810111104621935,9.108802125634192
+density_15.56C_kg_m3,locked,N,12.0,12
+density_15.56C_kg_m3,locked,bias,-7.930645896428653,-0.4717751331660622
+density_15.56C_kg_m3,locked,bias_lo95,-11.717705618411191,-5.72431351559488
+density_15.56C_kg_m3,locked,bias_hi95,-4.508107340818739,4.177290013403584
+density_15.56C_kg_m3,locked,MAE,8.389819247349228,6.430340360519845
+freezing_C,dev,ideal_sle_mole bias,14.686009337514408,0.3189788347919596
+freezing_C,dev,ideal_sle_mole MAE,14.686009337514408,4.0900812518984555
+freezing_C,dev,wat_ideal_mass_ln bias,18.040000000000003,2.1300000000000003
+freezing_C,dev,wat_ideal_mass_ln MAE,18.040000000000003,4.438000000000001
+freezing_C,dev,wat_minus_devfit_offset bias,1.2631870857957337e-15,-1.6579330501069005e-15
+freezing_C,dev,wat_minus_devfit_offset MAE,4.396,4.146666666666667
+freezing_C,dev,coutinho_library bias,4.242000000000001,-15.16
+freezing_C,dev,coutinho_library MAE,5.566000000000001,15.533333333333335
+freezing_C,dev,dev-mean constant MAE (dev: leave-one-fuel-out; locked: dev mean),5.016363636363637,5.016363636363637
+freezing_C,locked,ideal_sle_mole bias,13.639740775770834,-1.8241478681921421
+freezing_C,locked,ideal_sle_mole MAE,13.639740775770834,2.4778447070268306
+freezing_C,locked,wat_ideal_mass_ln bias,16.94,-0.016666666666666902
+freezing_C,locked,wat_ideal_mass_ln MAE,16.94,2.4883333333333333
+freezing_C,locked,wat_minus_devfit_offset bias,-1.099999999999999,-2.1466666666666696
+freezing_C,locked,wat_minus_devfit_offset MAE,3.608333333333332,2.676666666666668
+freezing_C,locked,coutinho_library bias,3.221666666666666,-17.3175
+freezing_C,locked,coutinho_library MAE,4.249999999999999,17.3175
+freezing_C,locked,dev-mean constant MAE (dev: leave-one-fuel-out; locked: dev mean),3.3166666666666664,3.3166666666666664
+freezing_C,dev,"MAE(ideal SLE) - MAE(dev-mean const), fuel bootstrap lo95/mean/hi95",,-2.170/-0.926/0.250
+viscosity_ln,dev,raw Refutas bias_log [overall (all T)],-0.3011,-0.2442
+viscosity_ln,dev,raw Refutas log_rmse [overall (all T)],0.4267,0.3708
+viscosity_ln,dev,raw Refutas bias_log [T = 20 C],0.0247,0.0559
+viscosity_ln,dev,raw Refutas log_rmse [T = 20 C],0.0678,0.08
+viscosity_ln,dev,raw Refutas bias_log [T = -20 C],-0.2762,-0.2159
+viscosity_ln,dev,raw Refutas log_rmse [T = -20 C],0.2966,0.237
+viscosity_ln,dev,raw Refutas bias_log [T = -40 C],-0.6519,-0.5725
+viscosity_ln,dev,raw Refutas log_rmse [T = -40 C],0.6735,0.5916
+viscosity_ln,dev,Recalibrated Refutas log_rmse [overall],0.1351,0.1225
+viscosity_ln,dev,Structured ridge log_rmse [overall],0.0826,0.0784
+viscosity_ln,locked,raw Refutas bias_log [overall (all T)],-0.2428,-0.1976
+viscosity_ln,locked,raw Refutas log_rmse [overall (all T)],0.3806,0.337
+viscosity_ln,locked,raw Refutas bias_log [T = 20 C],0.0191,0.0399
+viscosity_ln,locked,raw Refutas log_rmse [T = 20 C],0.196,0.2031
+viscosity_ln,locked,raw Refutas bias_log [T = -20 C],-0.1819,-0.1337
+viscosity_ln,locked,raw Refutas log_rmse [T = -20 C],0.2181,0.1692
+viscosity_ln,locked,raw Refutas bias_log [T = -40 C],-0.5654,-0.4991
+viscosity_ln,locked,raw Refutas log_rmse [T = -40 C],0.5903,0.5204
+viscosity_ln,locked,Recalibrated Refutas log_rmse [overall],0.1939,0.1821
+viscosity_ln,locked,Structured ridge log_rmse [overall],0.1497,0.15
+flash_C,dev,N,45.0,45
+flash_C,locked,N,12.0,12
+flash_C,dev,raw ideal bias,-9.441063670589717,4.220728850259752
+flash_C,locked,raw ideal bias,-8.441748150245676,6.324503935804336
+flash_C,dev,raw ideal MAE,9.441063670589717,5.626924154884851
+flash_C,locked,raw ideal MAE,8.441748150245676,6.324503935804336
+flash_C,dev,over-prediction rate >5 C (raw),0.0,0.5333333333333333
+flash_C,locked,over-prediction rate >5 C (raw),0.0,0.5
+flash_C,dev,dev-fit constant offset MAE (leave-one-fuel-out),1.7109335844115738,4.118465070483302
+flash_C,locked,dev-fit constant offset MAE (offset from all dev),1.9225072416711573,3.290085079462678
+flash_C,dev,dev-mean constant MAE (leave-one-fuel-out),5.511818181818177,5.511818181818177
+flash_C,locked,dev-mean constant MAE (dev mean),5.895370370370368,5.895370370370368
+flash_C,dev,dev-fit offset value (C),-9.441063670589717,4.220728850259752
+flash_C,dev,"corr(raw ideal err, aromatics_vol_pct)",-0.006765584938087037,0.32327666011879547
+flash_C,dev,"corr(raw ideal err, D86_T10)",-0.43448037438133247,-0.37391561813352525
+flash_C,dev,"corr(raw ideal err, dropped_lump_mass)",0.17357402443031605,-0.21054091853669588

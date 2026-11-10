@@ -22,6 +22,7 @@ Outputs: results/v4/B/{density,hoc,freezing}_v4.csv (per fuel [x T]) and {densit
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -54,7 +55,7 @@ BOOT_B = 2000
 T_REF_K = 288.71          # 15.56 C (60 F), the ASTM D4052 reference of the CRC647 densities
 OFFSET_C = 14.58          # v3 R5 empirical WAT offset (kept for the like-for-like comparison)
 DROPPED = ROOT / "data" / "quarantine" / "dropped_fuels.csv"
-ALLOWED_COMPOSITION_PROVENANCE = {"raw_file", "reconstructed", "cited_typed"}   # anything else (e.g. quarantined) fails
+ALLOWED_COMPOSITION_PROVENANCE = {"raw_file", "reconstructed", "cited_typed", "reconstructed_r2"}   # anything else (e.g. quarantined) fails
 
 
 # ----------------------------------------------------------------------------- metrics (same set as v2 C1 / v3 R5)
@@ -115,7 +116,7 @@ def select_fuels() -> tuple[list[str], dict]:
 def load_inputs():
     allowed, role = select_fuels()
     comp = pd.read_csv(COMP)
-    comp = comp[~comp.is_lumped.astype(bool)].copy()
+    comp = comp[~comp.is_lumped.astype(bool) & (comp.inchikey != "LUMP_NO_REALISTIC_REP")].copy()   # lump = unexplained mass, renormalised away
     comp["fuel_id"] = comp.system_id.str.replace("fuel:", "", regex=False)
     props = pd.read_csv(PROPS)
     props = props[props.provenance == "raw_file"]
@@ -362,7 +363,13 @@ def freeze_extra(d, ecol):
                 n_optimistic_gt3C=int(np.sum(e < -3.0)), worst_optimistic_C=float(e.min()) if e.size else np.nan)
 
 
-def main():
+def main(argv=None):
+    global COMP, OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--compositions", type=Path, default=COMP, help="composition table (default: the v4 file)")
+    ap.add_argument("--out", type=Path, default=OUT, help="output directory (default: results/v4/B)")
+    a = ap.parse_args(argv)
+    COMP, OUT = a.compositions, a.out
     OUT.mkdir(parents=True, exist_ok=True)
     fuels, role, comp, props, unex = load_inputs()
     print(f"{len(fuels)} v4 CRC647 fuels with composition + raw_file targets; "
