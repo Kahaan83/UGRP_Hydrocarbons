@@ -33,7 +33,7 @@ CRC 647 (N=57, **ASTM D93**; composition provenance = `reconstructed`, i.e. form
 and renormalised; ~3.0 % mass (1.3-5.2 %) in UNIFAC-fallback species). Only the flash value is raw-file; the composition is derived.
 | slice | model | N | MAE | bias | over>5 C | worst over |
 |---|---|---|---|---|---|---|
-| D93 dev folds | ideal / UNIFAC | 45 | 9.44 / 10.06 | -9.44 / -10.06 | 0 / 0 | -2.53 / -2.89 (all under-predicted) |
+| D93 dev folds | ideal / UNIFAC | 45 | 9.44 / 10.05 | -9.44 / -10.05 | 0 / 0 | -2.53 / -2.89 (all under-predicted) |
 | D93 locked | ideal / UNIFAC | 12 | 8.44 / 9.03 | -8.44 / -9.03 | 0 / 0 | -5.68 / -6.17 |
 | D93 all (57) | ideal / UNIFAC | 57 | 9.23 / 9.84 | -9.23 / -9.84 | 0 / 0 | -2.53 / -2.89 |
 Locked fuels were scored only as a never-tuned slice (nothing was tuned). Ideal D93 bias -9.23 C matches CLM-26 (-9.23). ASTM D56: no CRC fuel has D56 -> N=0.
