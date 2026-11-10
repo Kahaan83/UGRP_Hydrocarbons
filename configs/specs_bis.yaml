@@ -63,6 +63,16 @@ families:
       aromatics_vol_pct:
         max: 25.0
         test_method: "IS 1448 [P:23] / ASTM D1319"
+      # v4 Task 14. UNVERIFIED: IS 1571 text not read. BIS lab-scope listing confirms smoke point and
+      # naphthalenes are Table 1 requirements but gives no numbers; values below assume the usual
+      # Jet A-1 pair (>= 25 mm, or >= 18 mm with naphthalenes <= 3.0 % v/v) seen in other Jet A-1 specs.
+      smoke_point_mm:
+        min: 25.0
+        alt_min: 18.0
+        alt_requires: {naphthalenes_vol_pct_max: 3.0}
+        test_method: "IS 1448 [P:31] / ASTM D1322"  # UNVERIFIED method number
+        verification: "UNVERIFIED"
+        uncertainty_margin: null
 
   diesel_bs6:
     standard: "IS 1460:2017"

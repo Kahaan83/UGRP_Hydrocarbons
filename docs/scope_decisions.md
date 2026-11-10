@@ -44,3 +44,20 @@ This document records formal scoping decisions governed by empirical data availa
 
 ### Formal Decision:
 **The diesel real-fuel corpus is empty in v4.** `splits/v4/real_fuels_v4_splits.json` contains no diesel fuel, and no diesel real-fuel evaluation is reported. It resumes once Task 8 documents (raw diesel composition tables, e.g. Kirgina et al. and the NASA LFP report) are obtained and transcribed into a raw file.
+
+---
+
+## 3. Decision SD-03: DVPE evaluation is a units-unconfirmed diagnostic; neat-BOB DVPE missing
+
+- **Date:** 2026-11-10 (corrected after Task 15 review)
+- **Task ID:** v4 Task 15 (octane refit; DVPE re-derivation clause)
+- **Governing rule:** "Re-derive the DVPE evaluation only if a raw file with measured DVPE exists. Otherwise record SD-03 (DVPE evaluation pending data)."
+
+### Data audit findings:
+- `data/real_fuels/*/inventory*.csv` list `dvpe_kpa` only as a property tag; the v3 values were formula-derived (CLM-21, RETRACTED). `extras/fuelblend_data/data/raw/octane/gasoline_fuel_properties.csv` (82 rows) holds only density, MW and group-contribution fractions (no DVPE column).
+- A raw measured-DVPE file DOES exist: `extras/fuelblend_data/data/raw/cooptima/fuel_engine_co_optimization.csv`, `Blend_DVPE` (68 of 527 rows). `Blend_DVPE_temp` is filled (37.8 C on 63 rows, 38.0 on 2, 25.0 on 2, empty on 1); the units column is EMPTY. Of the 68 rows, 51 are resolvable `N% <oxygenate> in 2016-NREL BOB-01` rows (17 pure oxygenates plus cyclopentanone, 18 CAS groups, all mapped to the bRON split, CAS typos normalised); excluded and counted: 1 censored (`<6.89`), 2 methylfuran rows at 25 C, 9 named-mixture rows (ketone mix, furan mix, diisobutylene isomers), 5 non-BOB rows (PNNL iso-olefin, Vertifuel, IBu24, Cool Planet bioreformate, TIGAS).
+- Units: other rows of the same column are kPa (Vertifuel 35.4 with source text "RVP 5.14 psi"), but the NREL rows (4.2-8.8) are impossible as kPa for gasoline blends and match psi (E10 = 6.44). The psi unit is INFERRED, not documented.
+- The real gap: no neat-BOB (0 % oxygenate) DVPE row exists, so the BOB constant must be fitted.
+
+### Formal Decision:
+**A DVPE evaluation is reported only as a UNITS-UNCONFIRMED diagnostic** (`results/v4/O/dvpe_eval_v4.csv`, README DVPE section): constant-mean, pooled linear-by-volume and ideal-Raoult baselines, grouped by oxygenate CAS (same dev/locked/folds as bRON; locked = 4 groups, point estimates only). CLM-21 stays RETRACTED and no DVPE claim enters the claims register until the unit is confirmed from NREL NB6022 / the NREL BOB report and a neat-BOB DVPE is obtained. Octane (Task 15) is unaffected.

@@ -146,6 +146,12 @@ No document is named for these; they are listed so none is orphaned. If you know
 - BrunoHuber2010_3comp [kept fraction 0.69], Chen2016_JI [0.341], Honnet2009_Aachen [0.80] were dropped for incomplete composition (below the 0.95 gate). They are surrogate definitions from papers; the repo names no source for the missing fractions (the original papers by those authors and years are search hints only, **UNVERIFIED**).
 - Fallback: these stay dropped. The v4 claims cover only the fuels in `data/real_fuels/v4/`.
 
+### M17. Smoke point with speciation, and the pure-compound smoke-point SI (Task 14)
+- **Contains:** (a) Boehm et al. 2022 (Energy & Fuels 36:1916, doi 10.1021/acs.energyfuels.1c03794) Supporting Information with the measured pure-compound smoke points (Tables S1/S2); the 28 pure smoke points used in v4 are `cited_typed` and cannot be checked without it. (b) Any jet/diesel fuel with BOTH a detailed hydrocarbon speciation (GC x GC / DHA) AND an ASTM D1322 smoke point (the AJFTD fuels have smoke point but no molecule list; the GC fuels POSF-10325 and UDRI have no smoke point). Possible source: Boehm et al. 2022 Table 5 / Mensch 2010 surrogate comparison fuels (UNVERIFIED that they list compositions).
+- **Unblocks:** verification of the YSI-route pure-compound fit and the first real-fuel test of `ysi_mix` + `smoke_point_from_ysi`.
+- **Folder / filename:** `extras/fuelblend_data/data/raw/sooting/boehm2022_SI.pdf`; `extras/fuelblend_data/data/raw/sooting/speciated_fuels_smoke_point.csv`
+- **Fallback:** YSI route stays "not evaluated on real fuels"; only the bulk (aromatics) route is used for the D1655 smoke-point screen.
+
 ## 3. Cross-reference: every `data/MISSING.md` row maps to an entry or is marked out of scope
 
 | MISSING.md row (date) | Checklist entry |
