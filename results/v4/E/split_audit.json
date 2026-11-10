@@ -1,9 +1,8 @@
 {
- "n_locked_fuels": 56,
  "n_real_visc_rows_locked": 36,
  "n_outer_folds": 9,
  "n_fold_leak_checks": 9,
- "locked_in_any_train_or_calibration_index": 0,
+ "locked_in_any_train_or_calibration_index": "0 (assert_no_locked passed for every fold; value hard-coded in the original run, computed in the script from later runs)",
  "seeds": 5,
  "epochs": 40,
  "threads": 3,
@@ -13,5 +12,7 @@
  "n_real_visc": 171,
  "n_real_flash": 57,
  "elapsed_s": 1605.5,
- "torch": "2.15.0+cpu"
+ "torch": "2.15.0+cpu",
+ "n_locked_fuels_whole_split": 56,
+ "n_locked_crc647_fuels": 12
 }

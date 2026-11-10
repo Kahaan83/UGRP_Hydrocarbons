@@ -231,6 +231,22 @@ def rmse(e): return float(np.sqrt(np.mean(np.square(e))))
 def mae(e): return float(np.mean(np.abs(e)))
 
 
+def build_real_folds(fid, locked, n_folds):
+    """The script's own outer-fold construction (also used by the unit test)."""
+    return dev_group_folds(fid, locked, n_folds, seed=SEED)
+
+
+def lab_flash_offset_errors(lv, lf, n_folds):
+    """Constant-offset baseline for lab flash on the SAME system folds as the lab evaluation (offset = mean training-fold residual)."""
+    sysids = np.array(sorted(set(lv.group) | set(lf.group)))
+    perm = np.random.default_rng(SEED).permutation(len(sysids))
+    e = np.full(len(lf), np.nan)
+    for p in np.array_split(sysids[perm], n_folds):
+        te = np.isin(lf.group, p)
+        e[te] = lf.y[~te].mean() - lf.y[te]            # (ideal + offset) - measured
+    return e
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--device", default="cpu")
@@ -269,9 +285,14 @@ def main(argv=None):
     dev_rows = np.where(~is_lock)[0]; lock_rows = np.where(is_lock)[0]
     fid_f = rf.group
     flock_rows = np.where(np.isin(fid_f, list(locked)))[0]
-    audit = dict(n_locked_fuels=len(locked), n_real_visc_rows_locked=int(is_lock.sum()))
+    audit = dict(n_locked_crc647_fuels=len(set(fid) & locked), n_locked_fuels_whole_split=len(locked),
+                 n_real_visc_rows_locked=int(is_lock.sum()))
+    leak = {'n': 0}
 
-    folds = dev_group_folds(fid, locked, a.folds, seed=SEED)
+    def count_leak(idx, groups):
+        leak['n'] += int(np.isin(np.asarray(groups)[np.asarray(idx, int)], list(locked)).sum())
+
+    folds = build_real_folds(fid, locked, a.folds)
     assert sorted(np.concatenate([te for _, te in folds]).tolist()) == dev_rows.tolist()
     n_train_checks = 0
 
@@ -291,6 +312,7 @@ def main(argv=None):
             assert_no_locked(dict(train_flash=trf, test_flash=tef), fid_f, locked)
             assert not (set(fid[tr]) & set(fid[te])), "fold leak"
             n_train_checks += 1
+            count_leak(tr, fid); count_leak(trf, fid_f)
             tasks = [lv, lf, sub(rv, tr), sub(rf, trf)]
             ms = train_ensemble(tasks, d, pool, seeds, a.epochs, dev_)
             oof_v[:, te] = predict_residual(ms, sub(rv, te), dev_)
@@ -300,6 +322,7 @@ def main(argv=None):
             print(f"  [{pool}] fold {k+1}/{len(folds)} done ({time.time()-t0:.0f}s)", flush=True)
         # final dev -> locked
         tr_all = dev_rows; trf_all = np.where(~np.isin(fid_f, list(locked)))[0]
+        count_leak(tr_all, fid); count_leak(trf_all, fid_f)
         assert_no_locked(dict(train_visc=tr_all), fid, locked)
         assert_no_locked(dict(train_flash=trf_all), fid_f, locked)
         ms = train_ensemble([lv, lf, sub(rv, tr_all), sub(rf, trf_all)], d, pool, seeds, a.epochs, dev_)
@@ -402,7 +425,7 @@ def main(argv=None):
         cl, nl = coverage(el, fid[lock_rows], m_all, two_sided=True)
         cal.append(dict(model=f"Set encoder ({pool})", head="viscosity", alpha=0.10, kind="two-sided |ln residual|, group=fuel",
                         n_dev_groups=len(set(fid[dev_rows])), conformal_rank_k=conformal_rank(len(set(fid[dev_rows])), 0.10),
-                        margin_ln=m_all, margin_multiplicative=float(np.exp(m_all)) if np.isfinite(m_all) else np.inf,
+                        margin=m_all, margin_unit='ln', margin_multiplicative=float(np.exp(m_all)) if np.isfinite(m_all) else np.inf,
                         dev_cross_conformal_row_cov=cov_rows / n_rows, dev_cross_conformal_rows=f"{cov_rows}/{n_rows}",
                         dev_cross_conformal_group_cov=cov_grp / n_grp, dev_cross_conformal_groups=f"{cov_grp}/{n_grp}",
                         locked_groups_covered=f"{cl}/{nl}", locked_rows_covered=f"{int(np.sum(np.abs(el) <= m_all))}/{len(el)}",
@@ -417,7 +440,7 @@ def main(argv=None):
         cl, nl = coverage(rl, fid_f[flock_rows], applied, direction="over")
         cal.append(dict(model=f"Set encoder ({pool})", head="flash (D93 CRC fuels)", alpha=0.10, kind="one-sided over-prediction, group=fuel",
                         n_dev_groups=len(set(fid_f[dev_f])), conformal_rank_k=conformal_rank(len(set(fid_f[dev_f])), 0.10),
-                        margin_ln=q, applied_margin_C=applied, locked_groups_covered=f"{cl}/{nl}"))
+                        margin=q, margin_unit='degC', applied_margin_C=applied, locked_groups_covered=f"{cl}/{nl}"))
     pd.DataFrame(cal).to_csv(out / "conformal_calibration.csv", index=False)
 
     # ------------------------------------------------------------------ flash + lab tables
@@ -470,7 +493,8 @@ def main(argv=None):
             lrows.append(dict(property="viscosity (ln dyn)", model=nm, n=len(e), n_systems=len(set(lv.group)),
                               rmse=round(pt, 4), rmse_ci95=f"[{lo:.4f}, {hi:.4f}]", mae=round(mae(e), 4), bias=round(float(e.mean()), 4)))
         ef = pf.mean(0) - lf.y
-        for nm, e in (("Task 9 ideal", -lf.y), ("Set encoder (attention)", ef)):
+        for nm, e in (("Task 9 ideal", -lf.y), ("ideal + constant offset (training-fold mean)", lab_flash_offset_errors(lv, lf, a.lab_folds)),
+                      ("Set encoder (attention)", ef)):
             lrows.append(dict(property="flash (degC)", model=nm, n=len(e), n_systems=len(set(lf.group)), rmse=round(rmse(e), 4),
                               rmse_ci95="", mae=round(mae(e), 4), bias=round(float(e.mean()), 4)))
         pd.DataFrame(lrows).to_csv(out / "lab_groupkfold_system.csv", index=False)
@@ -486,7 +510,7 @@ def main(argv=None):
         pr[f"encoder_{pool}_seed_sd"] = sd
     pr.to_csv(out / "viscosity_encoder_predictions.csv", index=False)
     audit.update(n_outer_folds=len(folds), n_fold_leak_checks=n_train_checks,
-                 locked_in_any_train_or_calibration_index=0,
+                 locked_in_any_train_or_calibration_index=leak['n'],
                  seeds=a.seeds, epochs=a.epochs, threads=int(torch.get_num_threads()), device=a.device,
                  n_lab_visc=len(lv), n_lab_flash=len(lf), n_real_visc=len(rv), n_real_flash=len(rf),
                  elapsed_s=round(time.time() - t0, 1), torch=torch.__version__)
@@ -501,8 +525,10 @@ def main(argv=None):
         g = g.iloc[0]
         wins = bool(g.get("ci_excludes_0_vs_t11loo")) and g.get("d_rmse_vs_t11loo", 1) < 0 and \
             bool(g.get("ci_excludes_0_vs_samefold")) and g.get("d_rmse_vs_samefold", 1) < 0
-        covok = ca[0]["dev_cross_conformal_row_cov"] >= 0.85
-        dec = dict(beats_task11_both_protocols_ci_excl0=wins, dev_cross_conformal_row_coverage=ca[0]["dev_cross_conformal_row_cov"],
+        covok = ca[0]["dev_cross_conformal_group_cov"] >= 0.85          # FUEL-level (conformal score is per fuel)
+        dec = dict(beats_task11_both_protocols_ci_excl0=wins, dev_cross_conformal_row_coverage_inflated=ca[0]["dev_cross_conformal_row_cov"],
+                   dev_cross_conformal_fuel_coverage=ca[0]["dev_cross_conformal_group_cov"],
+                   locked_fuel_coverage=ca[0]["locked_groups_covered"],
                    coverage_ge_085=covok, PROMOTE_TO_MODEL_DECISION=bool(wins and covok))
     json.dump(dec, open(out / "promotion_decision.json", "w"), indent=1, default=lambda o: o.item() if hasattr(o, "item") else str(o))
     print("decision:", dec, f"\ntotal {time.time()-t0:.0f}s", flush=True)

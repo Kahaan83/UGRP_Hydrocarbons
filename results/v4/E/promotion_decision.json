@@ -1,6 +1,9 @@
 {
  "beats_task11_both_protocols_ci_excl0": false,
- "dev_cross_conformal_row_coverage": 0.9703703703703703,
  "coverage_ge_085": true,
- "PROMOTE_TO_MODEL_DECISION": false
+ "PROMOTE_TO_MODEL_DECISION": false,
+ "dev_cross_conformal_row_coverage_inflated": 0.9703703703703703,
+ "dev_cross_conformal_fuel_coverage": 0.9111111111111112,
+ "locked_fuel_coverage": "8/12",
+ "note": "coverage gate is FUEL-level; row coverage is inflated (3 rows/fuel, per-fuel conformal score). Locked fuel coverage 8/12 = 0.67 < 0.85."
 }
