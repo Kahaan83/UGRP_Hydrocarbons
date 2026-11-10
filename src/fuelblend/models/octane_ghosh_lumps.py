@@ -135,3 +135,136 @@ def compute_blending_octane_value(
     if blendstock_vol_fraction <= 0.0 or blendstock_vol_fraction >= 1.0:
         return blend_on
     return float((blend_on - (1.0 - blendstock_vol_fraction) * base_on) / blendstock_vol_fraction)
+
+
+# ---------------------------------------------------------------------------------------------
+# v4 Task 15: fit(blends) path -- base-fuel lump + one measured blendstock (Co-Optima bRON).
+# ---------------------------------------------------------------------------------------------
+# Blendstock classes that the original 7-lump table does not have.  The repo holds no
+# literature RON/MON prior for them, so their prior is the 'tail' lump and the whole
+# class offset is LEARNED from training blends (ridge-shrunk toward that prior).
+BLENDSTOCK_EXTRA_LUMPS = {
+    "alcohol": "tail", "ester": "tail", "ketone": "tail", "oxygenate_other": "tail",
+}
+
+
+def blendstock_lump(smiles: str | None, name: str | None = None) -> str:
+    """Map a pure blendstock (or a named mixture) to a lump for the blend-fit path.
+
+    Unlike :func:`classify_component_to_lump` (a crude string heuristic kept unchanged for the
+    v3 scripts) this uses RDKit substructures, so oxygenates are separated into
+    ethanol / alcohol / ester / ketone / other oxygenate.
+    """
+    if not isinstance(smiles, str) or not smiles:
+        n = (name or "").lower()
+        for key, lump in (("ketone", "ketone"), ("furan", "oxygenate_other")):
+            if key in n:
+                return lump
+        return "tail"
+    from rdkit import Chem
+
+    m = Chem.MolFromSmiles(smiles)
+    if m is None:
+        return "tail"
+    if Chem.MolToSmiles(m) == "CCO":
+        return "ethanol"
+    has_o = any(a.GetSymbol() == "O" for a in m.GetAtoms())
+    arom = any(a.GetIsAromatic() for a in m.GetAtoms())
+    if has_o:
+        if arom:
+            return "oxygenate_other"          # anisole etc.
+        for lump, patt in (("ester", "[CX3](=O)[OX2][#6]"), ("ketone", "[#6][CX3](=O)[#6]"),
+                           ("alcohol", "[CX4][OX2H]")):
+            if m.HasSubstructMatch(Chem.MolFromSmarts(patt)):
+                return lump
+        return "oxygenate_other"             # furans, ethers
+    if arom:
+        return "toluene"
+    if m.HasSubstructMatch(Chem.MolFromSmarts("C=C")):
+        return "olefin"
+    if m.GetRingInfo().NumRings() > 0:
+        return "naphthene"
+    branched = any(a.GetDegree() >= 3 for a in m.GetAtoms())
+    return "isooctane" if branched else "n_heptane"
+
+
+def lump_prior(lump: str, prop: str) -> float:
+    """Prior blending RON/MON of a lump (extra lumps inherit the 'tail' prior)."""
+    base = BLENDSTOCK_EXTRA_LUMPS.get(lump, lump)
+    return float(PURE_LUMP_PROPERTIES[base][prop])
+
+
+def grouped_inner_scores(factory, params, train: pd.DataFrame, k: int = 5) -> list:
+    """Mean absolute error of ``factory(param).fit(tr).predict(va)`` over group folds of
+    ``train`` only (never sees anything outside ``train``)."""
+    from sklearn.model_selection import GroupKFold
+
+    groups = train["group"].to_numpy()
+    n_splits = min(k, len(set(groups)))
+    out = []
+    for p in params:
+        errs = []
+        if n_splits >= 2:
+            for tr, va in GroupKFold(n_splits=n_splits).split(train, groups=groups):
+                mdl = factory(p).fit(train.iloc[tr])
+                pr = mdl.predict(train.iloc[va])
+                errs.append(np.abs(pr - train["y"].to_numpy()[va]))
+            errs = np.concatenate(errs)
+        else:
+            errs = np.array([np.inf])
+        out.append(float(np.nanmean(errs)))
+    return out
+
+
+class GhoshBlendLumpModel:
+    """Ghosh-style lump model fitted on blends of one blendstock into a base-fuel lump.
+
+    ``y = (1-f)*ON_base + f*(prior_g + delta_g) + kappa*f*(1-f)`` where g is the lump of the
+    blendstock, ``ON_base`` is the base gasoline's measured RON (MON) supplied as an INPUT
+    (ruling R17), ``prior_g`` the lump prior and ``delta_g``/``kappa`` are ridge-fitted.  The
+    ridge strength is chosen by group-CV inside the training set only (ruling R6).
+
+    ``blends`` columns: ``f`` (blendstock volume fraction), ``base_on``, ``y``, ``lump``,
+    ``group`` (blendstock id, used only for the inner CV).
+    """
+
+    def __init__(self, prop: str = "ron", alphas: Sequence[float] = (0.001, 0.01, 0.1, 1.0, 10.0, 100.0),
+                 alpha: float | None = None):
+        self.prop, self.alphas, self.alpha = prop, tuple(alphas), alpha   # alpha given -> no selection
+        self.alpha_ = None
+        self.selection_groups_: set = set()
+
+    def _prior(self, d: pd.DataFrame) -> np.ndarray:
+        return np.array([lump_prior(l, self.prop) for l in d["lump"]], float)
+
+    def _design(self, d: pd.DataFrame) -> np.ndarray:
+        f = d["f"].to_numpy(float)
+        cols = [f * (d["lump"].to_numpy() == g) for g in self.lumps_]
+        cols.append(f * (1.0 - f))
+        return np.column_stack(cols)
+
+    def _resid(self, d: pd.DataFrame) -> np.ndarray:
+        f = d["f"].to_numpy(float)
+        return d["y"].to_numpy(float) - (1 - f) * d["base_on"].to_numpy(float) - f * self._prior(d)
+
+    def fit(self, blends: pd.DataFrame) -> "GhoshBlendLumpModel":
+        blends = blends.reset_index(drop=True)
+        self.selection_groups_ = set(blends["group"])
+        if self.alpha is not None:
+            self.alpha_ = float(self.alpha)
+        else:                                   # select on `blends` (the training set) only
+            sc = grouped_inner_scores(lambda a: GhoshBlendLumpModel(self.prop, alpha=a), self.alphas, blends)
+            self.alpha_ = float(self.alphas[int(np.argmin(sc))])
+        self.lumps_ = sorted(set(blends["lump"]))
+        self.ridge_ = Ridge(alpha=self.alpha_, fit_intercept=False).fit(self._design(blends), self._resid(blends))
+        return self
+
+    def predict(self, blends: pd.DataFrame) -> np.ndarray:
+        f = blends["f"].to_numpy(float)
+        return (1 - f) * blends["base_on"].to_numpy(float) + f * self._prior(blends) + \
+            self.ridge_.predict(self._design(blends))
+
+
+def fit(blends: pd.DataFrame, prop: str = "ron", alphas: Sequence[float] | None = None) -> GhoshBlendLumpModel:
+    """Fit the Ghosh lump model on base-fuel-lump blends (see :class:`GhoshBlendLumpModel`)."""
+    return GhoshBlendLumpModel(prop, alphas or (0.001, 0.01, 0.1, 1.0, 10.0, 100.0)).fit(blends)

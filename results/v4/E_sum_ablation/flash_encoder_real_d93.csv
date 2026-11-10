@@ -1,0 +1,7 @@
+model,split,n,mae_C,bias_C,max_over_C,n_over_5C
+Task 9 ideal (zero parameter),dev (outer CV by fuel),45,9.4411,-9.4411,-2.5279,0
+ideal + constant offset (fold-trained mean),dev (outer CV by fuel),45,1.6728,0.0,7.0349,1
+Set encoder (sum),dev (outer CV by fuel),45,1.874,-0.0899,6.0805,1
+Task 9 ideal (zero parameter),locked (untouched),12,8.4417,-8.4417,-5.6797,0
+ideal + constant offset (fold-trained mean),locked (untouched),12,1.9225,0.9993,3.7613,0
+Set encoder (sum),locked (untouched),12,1.874,0.696,3.9004,0

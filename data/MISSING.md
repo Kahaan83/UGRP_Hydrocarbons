@@ -8,6 +8,7 @@ Per the project ground rules:
 | 2026-11-04 | NREL Cetane Compendium (Yanowitz et al. 2017, NREL/TP-5400-67585) | Digitized prioritized hydrocarbons for real-fuel components and candidate fuels | Updated `cetane_pure_curated.csv` to 88 pure hydrocarbons (covering 37/93 real-fuel components, 39.8%). Remaining unmeasured specialty isomers (56 components: C, C1=CCCCCCCCC1, C1C2CC3C4CC5CC(C14)C(C2)C3C5, C1CCCCCCCCCCC1, C1C[C@@H]2[C@H]3CC[C@H](C3)[C@@H]2C1, C=CCCCCCCCC=CC...) logged as unmeasured. |
 | 2026-11-04 | 8 Unverified Antoine Sets (Nov 3 expansion) | NIST WebBook saturation vapor pressure tables for hexylbenzene, isocetane, octylbenzene, dodecylbenzene, 2,3,3-trimethylpentane, trans/cis-1,4-dimethylcyclohexane, cis-1,2-dimethylcyclohexane | Primary NIST WebBook tables do not exist for these 8 compounds. Flagged in `data/antoine_sources.csv` as `needs-removal-candidate`. |
 | 2026-11-04 | RP-1 11-Blend Speciated Compositions (Fortin et al. 2012) | Speciated molecular formulations for the 11 orthogonal RP-1 blends | Confidential / proprietary blend recipes not published in open paper (only distillation curves published in Table 1-4). Reconstructed via POSF surrogates in hindcasts. |
+| 2026-11-10 | v4 Task 15 / SD-03: neat-BOB DVPE and DVPE unit documentation | DVPE of the 2016-NREL BOB-01 base fuel with no oxygenate, and the stated unit/convention of the NREL NB6022 `Blend_DVPE` values | Raw `Blend_DVPE` exists (Co-Optima `fuel_engine_co_optimization.csv`; temperature filled, mostly 37.8 C; units column empty; 51 resolvable BOB+oxygenate rows). Unit inferred as psi, NOT documented; no 0 % oxygenate row. DVPE reported only as a UNITS-UNCONFIRMED diagnostic (docs/scope_decisions.md SD-03). Needs NREL NB6022 / BOB report to confirm unit and base-fuel DVPE. Other non-BOB DVPE rows (PNNL, Vertifuel, TIGAS, ...) and 9 named-mixture rows are unresolvable. |
 
 <!-- v4-task3-dropped:begin -->
 
@@ -40,3 +41,10 @@ Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= 0.
 | 2026-11-10 | v4 Task 6: inventory_v4 RP-1 fuels (NIST_RP1, RP1_Binary_2comp, RP1_Edwards_3comp, RP1_NIST_14comp) property targets | no linked measured properties; `rp1_properties.csv` (NISTIR 6646) describes 'RP-1 original sample', whose identity with SRM 4572 (`NIST_RP1`) is unconfirmed; surrogates have no measurements | fetch the SRM 4572 certificate / Fortin et al. 2012 property table |
 
 <!-- v4-task6:end -->
+
+### v4 Task 14: sooting (2026-11-10)
+
+| Date Logged | Item / Source | Expected Content | Current Status & Mitigation |
+|---|---|---|---|
+| 2026-11-10 | v4 Task 14: fuel with speciation AND measured smoke point; Boehm 2022 SI pure smoke points | none in repo: AJFTD smoke point (100 fuels) has no molecule list; 28 pure smoke points are hand-typed (`cited_typed`), iso-octane 40.0 vs 42.8 mm in Boehm text; extras `tsi_table.csv` derived rows are circular and excluded | YSI route not evaluated on real fuels; see docs/v4_manual_downloads.md M17 |
+

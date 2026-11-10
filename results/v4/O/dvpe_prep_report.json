@@ -1,0 +1,15 @@
+{
+ "n_rows_with_dvpe": 68,
+ "excluded_not_nrel_bob_oxygenate": 5,
+ "excluded_censored": 1,
+ "excluded_temp_not_37p8": 2,
+ "excluded_named_mixture": 9,
+ "n_resolvable": 51,
+ "groups_total": 18,
+ "groups_unmapped_to_bron_split": [],
+ "n_dev": 39,
+ "n_locked": 12,
+ "groups_dev": 14,
+ "groups_locked": 4,
+ "n_dev_unmapped_dropped": 0
+}
