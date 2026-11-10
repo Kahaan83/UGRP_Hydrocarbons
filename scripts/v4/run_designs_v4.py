@@ -60,7 +60,30 @@ def v3_weights(design_id: str):
 
 def summarise(cons):
     st = [c.status for c in cons]
-    return {s: st.count(s) for s in (E.STATUS_PASS, E.STATUS_CONSTRUCTION, E.STATUS_FAIL, E.STATUS_UNCERTIFIED)}
+    return {s: st.count(s) for s in (E.STATUS_PASS, E.STATUS_CONSTRUCTION, E.STATUS_SCOPE, E.STATUS_FAIL, E.STATUS_UNCERTIFIED)}
+
+
+def point_estimate_view(cons):
+    """(n constraints whose point estimate violates a limit, n with no point estimate).  Margins ignored."""
+    viol = nopred = 0
+    for c in cons:
+        p = c.prediction
+        if p is None or not np.isfinite(p):
+            nopred += 1
+            continue
+        if (c.lo is not None and p < c.lo) or (c.hi is not None and p > c.hi):
+            viol += 1
+    return viol, nopred
+
+
+def category(res, viol, nopred):
+    if res.passed:
+        return "C_certified"
+    if viol:
+        return "A_fails_at_point_estimate"
+    if nopred:
+        return "D_undetermined_some_properties_have_no_point_estimate"
+    return "B_meets_at_point_estimate_not_certifiable"
 
 
 def main():
@@ -77,11 +100,13 @@ def main():
             print(f"[{did}] designing {pool} ...", flush=True)
             res = E.design(spec_name, pool, models, n_starts=30, seed=42)
             cnt = summarise(res.constraints)
+            viol, nopred = point_estimate_view(res.constraints)
             designs.append(dict(
                 design_id=did, v3_design_id=v3id, spec_name=spec_name, standard=spec.get("standard"),
                 grade=spec.get("grade"), pool_id=pool_id, pool=json.dumps(pool),
                 weights=json.dumps({k: round(v, 4) for k, v in res.weights.items()}), passed=res.passed,
-                extrapolating=res.extrapolating, **{f"n_{k}": v for k, v in cnt.items()},
+                meets_at_point_estimate=bool(viol == 0 and nopred == 0), n_point_violation=viol, n_no_point_estimate=nopred,
+                category=category(res, viol, nopred), extrapolating=res.extrapolating, **{f"n_{k}": v for k, v in cnt.items()},
                 best_min_slack=res.optimiser["best_min_slack"],
                 n_excluded_from_optimiser=len(res.optimiser["excluded_from_optimiser"]), n_converged=res.optimiser["n_converged"],
                 binding_constraints=json.dumps(res.binding_constraints, default=str),
@@ -116,6 +141,22 @@ def main():
                     v4_n_uncertified=cnt["uncertified"],
                     v4_blocking=json.dumps({c.key: f"{c.status}: {c.reason}" for c in res.constraints
                                             if c.status not in E.OK_STATUSES})))
+    # reproducible check of the ridge extrapolation claim (pure n-decane, -20 C)
+    fns = M.make_fns(L)
+    env_rows = []
+    for pool_, w_ in ((["n-decane"], [1.0]), (["n-hexadecane"], [1.0]), (["n-decane", "1,2,4-trimethylbenzene"], [0.5, 0.5])):
+        for T_ in (-20.0, 20.0):
+            try:
+                guarded = fns["visc_ridge"](pool_, np.array(w_), T_)
+                gnote = "ok"
+            except E.ModelUnavailable as e:
+                guarded, gnote = float("nan"), str(e)[:140]
+            env_rows.append(dict(pool=json.dumps(pool_), w=json.dumps(w_), T_C=T_,
+                                 ridge_unguarded_cSt=fns["visc_ridge_unguarded"](pool_, np.array(w_), T_),
+                                 ridge_guarded_cSt=guarded, ridge_guard_note=gnote,
+                                 recalibrated_refutas_cSt=fns["visc_recal"](pool_, np.array(w_), T_),
+                                 raw_refutas_cSt=fns["visc_raw"](pool_, np.array(w_), T_)))
+    pd.DataFrame(env_rows).to_csv(OUT / "viscosity_envelope_check_v4.csv", index=False)
     pd.DataFrame(designs).to_csv(OUT / "designs_v4.csv", index=False)
     pd.DataFrame(long_rows).to_csv(OUT / "constraints_v4.csv", index=False)
     pd.DataFrame(rob_rows).to_csv(OUT / "robustness_v4.csv", index=False)

@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import pytest
 import yaml
 
@@ -206,3 +207,48 @@ def test_model_unavailable_is_uncertified_not_exception(tmp_path):
 
     cr = _design(cdir, mp, _models({"flash": _pm("m", boom)})).constraints[0]
     assert cr.status == E.STATUS_UNCERTIFIED and "unverified constant" in cr.reason
+
+
+# ---------------------------------------------------------------------------------------------------- fix round 1
+def test_margin_validated_on_jet_only_is_not_certified_for_diesel(tmp_path):
+    (tmp_path / "specs_test.yaml").write_text(yaml.safe_dump({"families": {
+        "jet_x": {"constraints": {"flash_point_C": {"min": 38.0}}},
+        "diesel_x": {"constraints": {"flash_point_C": {"min": 38.0}}}}}))
+    mp = tmp_path / "unc.yaml"
+    mp.write_text(yaml.safe_dump({"margins": {"k": {"applied_margin": 1.0, "unit": "C", "direction": "over"}}}))
+    pm = _pm("m", lambda p, w, T: 60.0, ["k"])
+    pm.certified_kinds = {"jet"}
+    models = _models({"flash": pm})
+    jet = E.design("test:jet_x", POOL, models, n_starts=2, seed=1, margins_path=mp, configs_dir=tmp_path)
+    die = E.design("test:diesel_x", POOL, models, n_starts=2, seed=1, margins_path=mp, configs_dir=tmp_path)
+    assert jet.passed and jet.constraints[0].status == E.STATUS_PASS
+    assert die.constraints[0].status == E.STATUS_SCOPE and die.passed is False
+    assert E.STATUS_SCOPE not in E.OK_STATUSES
+
+
+@pytest.mark.parametrize("flag", [{"verification": "UNVERIFIED"}, {"verification": "secondary_sources_only"},
+                                  {"unverified": True}])
+def test_unverified_spec_limit_never_certified(tmp_path, flag):
+    cdir, mp = _write(tmp_path, {"flash_point_C": dict({"min": 38.0}, **flag),
+                                 "aromatics_wt_pct": dict({"max": 90.0}, **flag)},
+                      {"k": {"applied_margin": 1.0, "unit": "C", "direction": "over"}})
+    models = _models({"flash": _pm("m", lambda p, w, T: 60.0, ["k"]),
+                      "aromatics_wt": _pm("c", lambda p, w, T: 10.0, by_construction=True)})
+    res = _design(cdir, mp, models)
+    assert [c.status for c in res.constraints] == [E.STATUS_UNCERTIFIED, E.STATUS_UNCERTIFIED]
+    assert all("never certified" in c.reason for c in res.constraints) and res.passed is False
+
+
+def test_ridge_envelope_guard_fires_for_pure_decane():
+    from fuelblend.design import models_v4 as M
+    L = M.library()
+    fns = M.make_fns(L)
+    w = np.array([1.0])
+    with pytest.raises(E.ModelUnavailable, match="envelope"):
+        fns["visc_ridge"](["n-decane"], w, -20.0)
+    unguarded = fns["visc_ridge_unguarded"](["n-decane"], w, -20.0)
+    assert unguarded < 0.5                              # the nonphysical value the guard prevents (0.126 cSt)
+    assert fns["visc_recal"](["n-decane"], w, -20.0) > 2.0
+    chk = pd.read_csv(ROOT / "results/v4/D/viscosity_envelope_check_v4.csv")
+    row = chk[(chk.pool == '["n-decane"]') & (chk.T_C == -20.0)].iloc[0]
+    assert row.ridge_unguarded_cSt == pytest.approx(unguarded, rel=1e-6) and np.isnan(row.ridge_guarded_cSt)
