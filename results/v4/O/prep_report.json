@@ -1,0 +1,28 @@
+{
+ "ron": {
+  "n_rows": 210,
+  "n_flag_false": 145,
+  "n_flag_true": 65,
+  "n_dropped_frac_none": 0,
+  "n_dropped_shape": 0,
+  "n_dropped_nan": 0,
+  "n_used": 65,
+  "n_dev": 53,
+  "n_locked": 12,
+  "groups_dev": 18,
+  "groups_locked": 4
+ },
+ "mon": {
+  "n_rows": 210,
+  "n_flag_false": 144,
+  "n_flag_true": 66,
+  "n_dropped_frac_none": 0,
+  "n_dropped_shape": 0,
+  "n_dropped_nan": 0,
+  "n_used": 66,
+  "n_dev": 54,
+  "n_locked": 12,
+  "groups_dev": 18,
+  "groups_locked": 4
+ }
+}
