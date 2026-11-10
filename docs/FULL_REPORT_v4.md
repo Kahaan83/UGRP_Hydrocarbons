@@ -25,7 +25,7 @@ Reproduce everything with `python scripts/v4/reproduce_all.py` (section 10). Cla
 | corpus | N | provenance | source |
 |---|---|---|---|
 | v4 fuel inventory | 61 fuels (all jet: 57 CRC 647 reconstructed + 4) | none verified yet (`verified = False` for all 61) | `data/real_fuels/v4/inventory_v4.csv` (61 rows); `docs/claims_register.md` CLM-29 |
-| v4 compositions | 2,835 kept rows; 463 composition rows quarantined (quarantine file has 518 rows, exact-duplicate collapse only) | R15 gate: kept fraction >= 0.95 | `data/real_fuels/v4/compositions_v4.csv`; `data/quarantine/compositions_quarantined.csv` (518 rows) |
+| v4 compositions | 2,835 kept rows; 518 composition rows quarantined (463 from compositions_v3.csv and 55 from compositions_measured.csv; exact-duplicate collapse only) | R15 gate: kept fraction >= 0.95 | `data/real_fuels/v4/compositions_v4.csv`; `data/quarantine/compositions_quarantined.csv` (518 rows) |
 | CRC 647 targets | 57 fuels with `raw_file` flash, density, freezing, pour, kinematic viscosity (3 T), net HoC | targets raw_file; compositions `reconstructed` | `results/v4/P2/jet_corpus.md` (2,735 rows, 797 target rows) |
 | GC jet fuels | 7 listed; 5 complete; 1 headline (POSF-10325, n = 1, D2887-split, partly formula-derived) | headline set allows no statistics | `results/v4/P2/jet_corpus.md` |
 | Gasoline blends | 210 rows: 66 Co-Optima bRON (65 with RON, 66 with MON as targets), 144 FACE (never targets) | RON/MON `raw_file`; FACE compositions unresolved | `results/v4/P2/gasoline_corpus.md` |
@@ -33,7 +33,7 @@ Reproduce everything with `python scripts/v4/reproduce_all.py` (section 10). Cla
 | Lab mixtures (viscosity) | 14,237 dynamic-viscosity rows, 322 systems | measured | `results/v4/E/README.md` |
 | ThermoML SLE | 778 scored points, 59 systems (57 binary, 2 ternary) | measured | `results/v4/SLE/README.md` |
 | AJFTD smoke point | 100 fuels (849 in a broad sensitivity set) | measured, no molecule list | `results/v4/SP/README.md` |
-| Pure constants | 411 rows audited: verified 216, disputed 78, unverified 65, not_comparable 26, reference_only 26 (from the Task 4 ledger note) | external-library cross-check | `data/processed/v4/pure_props_v4.csv`, `results/v4/P1/pure_constant_diffs.csv` |
+| Pure constants | 411 rows audited: verified 216, disputed 78, unverified 65, not_comparable 26, reference_only 26 (counts of the status column in data/processed/v4/pure_props_v4.csv, 411 rows) | external-library cross-check | `data/processed/v4/pure_props_v4.csv`, `results/v4/P1/pure_constant_diffs.csv` |
 
 Splits: 276 fuels in 210 groups; locked 56 fuels (42 groups), dev folds 41/40/45/48/46; the locked set has 12 CRC jet target fuels for each
 CRC property and 12 RON / 12 MON fuels from only 4 blendstock CAS groups; **diesel has 0 qualifying fuels**
@@ -99,8 +99,7 @@ Dev, all temperatures, log-RMSE [95 % fuel-cluster CI] [`results/v4/V/viscosity_
   CRC fuel is under-predicted; floor); D56 `inf` (1 group) [`configs/uncertainty_v4.yaml`, `results/v4/U/README.md`]. The D93 entry is an offset
   artefact, not a safety property; novel blends must use the larger of lab and D93 applied margins (never 0).
 * **Suspect-input sensitivity (binding disclosure).** Two lab compounds have flagged anchored vapour pressures
-  [`results/v4/F/README.md`]: mesitylene (anchored Psat 0.52x the external reference, 9 records, 1 system) and n-hexylbenzene (1.20x, status
-  disputed, 9 records, 1 system). Recomputed by `scripts/v4/flash_input_sensitivity.py` -> `results/v4/F/flash_input_sensitivity.csv`:
+  [`results/v4/F/README.md`]: mesitylene (anchored Psat 0.52x the external reference, 9 records, 1 system) and n-hexylbenzene (anchored Psat 1.20x the reference, 9 records, 1 system; its 'disputed' status in pure_props_v4.csv refers to the hand-listed registry value, not necessarily the Antoine set used here, per results/v4/F/README.md). Recomputed by `scripts/v4/flash_input_sensitivity.py` -> `results/v4/F/flash_input_sensitivity.csv`:
 
 | subset (ideal model) | records | systems | MAE C | bias C | worst over C | 90 % margin C |
 |---|---|---|---|---|---|---|
@@ -149,7 +148,7 @@ Dev, all temperatures, log-RMSE [95 % fuel-cluster CI] [`results/v4/V/viscosity_
   Note the library Coutinho puts *mass* fractions into the Schroeder-van Laar log, and its parameters were calibrated on CRC/Dauphin data, so locked is not a clean holdout.
 * **ThermoML SLE (new):** ideal SvL with verified constants has MAE 2.02 K (bias -1.10) on **only 8 systems / 103 points** (n-alkane blends, C6-C18); library Coutinho 9.97 K on 44 systems / 525 points;
   on the common 8 systems ideal 2.06 K vs Coutinho 3.85 K [`results/v4/SLE/README.md`, `results/v4/SLE/sle_summary.csv`]. Outside n-alkane blends Coutinho errs by tens of K.
-* **Margins:** CRC offset model 10.115 C (45 groups), constant-mean comparator 6.914 C, Coutinho library 4.050 C; ideal-SvL margin is `inf` (8 groups < 9); indicative non-conformal point quantiles q90 4.05 K,
+* **Margins:** CRC offset model 10.115 C (45 groups), constant-mean comparator 6.914 C, Coutinho library 4.050 C; SLE Coutinho library 38.27 K over 44 systems (freezing_point_C.sle_alkane_blends.coutinho_lib_all); ideal-SvL margin is `inf` (8 groups < 9); indicative non-conformal point quantiles q90 4.05 K,
   q95 7.36 K with bootstrap 90th-percentile interval [+0.99, +7.40] K [`configs/uncertainty_v4.yaml`, `results/v4/SLE/README.md`].
 * **Still unverified:** freezing models carry no demonstrated composition information on real fuels; for jet design the freezing alternates disagree (Coutinho vs ideal SvL) so the result is not robust to model form
   [`results/v4/D/README.md`]; no SLE validation set for aromatic or heavy systems.
@@ -169,7 +168,7 @@ Dev, all temperatures, log-RMSE [95 % fuel-cluster CI] [`results/v4/V/viscosity_
   uninformative. FACE rows (144) are never targets.
 * Dev, stored 5 folds, RON MAE [95 % CI] (N = 53, 18 groups): base_unchanged 5.10, linear-by-volume prior 6.49, linear-by-mole 6.79, constant mean 3.22, pooled BOV 2.73 [2.02, 3.49], Ghosh lumps 3.19,
   GBM residual 2.55 [1.79, 3.38], GP residual 2.29 [1.61, 3.05]. MON (N = 54): base 3.26, constant 1.62, pooled 1.25, GBM 1.11, GP 1.15 [`results/v4/O/octane_eval_v4.csv`, `results/v4/O/README.md`].
-* **Supported:** the learned models beat "base unchanged" (CI excludes 0) and the linear volume/mole priors are *worse* than leaving the base unchanged (dMAE +1.39 [0.80, 1.75] RON). GBM and GP beat the constant mean on RON (stored folds);
+* **Supported:** the learned models beat "base unchanged" (CI excludes 0) and the linear volume/mole priors are *worse* than leaving the base unchanged (dMAE +1.39 [0.80, 1.75] RON). pooled-BOV beats the constant mean on RON in both views (stored folds -0.49 [-0.81, -0.18]; leave-one-blendstock-out -0.56 [-0.93, -0.17]); GBM and GP beat it on stored folds only (-0.67 [-1.12, -0.19] / -0.93 [-1.40, -0.44]); in leave-one-blendstock-out their CIs include 0 (GBM -0.10 [-0.78, 0.69], GP -0.37 [-1.21, 0.58], Ghosh -0.27 [-0.80, 0.28]);
   **no CI-supported winner among pooled-BOV / Ghosh / GBM / GP** (their paired CIs include 0). The locked set (12 rows, 4 CAS groups) gives point estimates only (RON MAE Ghosh 1.48, pooled 1.84, GBM 1.61, GP 1.80).
 * Margins are large: RON 6.4-9.4 ON for the learned models (0.83 for base_unchanged, 6.94 for the constant mean) and MON 4.0-8.4 ON for the learned models, all at rank 18 of 18 groups (the largest group over-prediction) [`configs/uncertainty_v4.yaml`, `results/v4/U/README.md`].
 * v3 vs v4: v3 reported RON MAE 3.10 on 55 FACE gasolines (CLM-20); that was circular and is retracted. v4 numbers are for base + one blendstock only and are not comparable. Multi-component pools have no validated octane model [`results/v4/D/README.md`].
@@ -194,7 +193,7 @@ Dev, all temperatures, log-RMSE [95 % fuel-cluster CI] [`results/v4/V/viscosity_
 
 ## 11. Open items and unverified list
 
-* ThermoML default-mode `phase_of()` reads only `ePhase`; real records use `eVarPhase` / `eConstraintPhase`, so vapour compositions of VLE data may leak into the default-mode extraction and `thermoml_hc.csv` may be contaminated.
+* ThermoML default-mode `phase_of()` reads only `ePhase`; real records use `eVarPhase` / `eConstraintPhase`, so vapour compositions of VLE data may leak into the default-mode extraction and `thermoml_hc.csv` may be contaminated. v4 density tier-1 pure inputs (data/processed/v2/thermoml_clean_hc.csv) come from the same default-mode extraction; pure rows are expected to be unaffected but this is unverified.
   **Recorded, not fixed** (out of v4 scope; SLE mode is unaffected) [`results/v4/SLE/README.md`].
 * CRC 647 compositions are reconstructed (formula-derived); locked set is thin (12 CRC fuels, 4 octane CAS groups).
 * Diesel: 0 qualifying fuels, nothing validated. Gasoline: octane only; no density/HoC/freezing/DVPE (units unconfirmed).

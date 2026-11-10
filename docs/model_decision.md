@@ -1,3 +1,5 @@
+> v4 NOTICE: Sections 1-4 are v2/v3-era and rely on the v3 corpus where noted; Section 6 governs; see docs/FULL_REPORT_v4.md and docs/claims_register.md
+
 # Master Model Strategy Decision Note
 
 **Project:** UGRP Hydrocarbons v3  

@@ -8,7 +8,7 @@ help:
 	@echo "  make reproduce  - Run complete v2 reproduction pipeline (Phases A-E)"
 	@echo "  make test       - Run all pytest test suites"
 	@echo "  make verify     - Verify presence and integrity of all v2 deliverables"
-	@echo "  make v4         - Run the v4 integrity reproduction (scripts/v4/reproduce_all.py, added in Task 19)"
+	@echo "  make v4         - Run the v4 integrity reproduction (scripts/v4/reproduce_all.py)"
 
 reproduce:
 	$(PYTHON) scripts/v2/reproduce_all.py

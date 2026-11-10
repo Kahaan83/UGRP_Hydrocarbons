@@ -370,7 +370,7 @@ v4 (branch `v4-integrity`) quarantined the formula-derived v3 corpus and designs
 
 ---
 
-## 12. Exactly where we stopped — do this next
+## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 
 The last deliverable was `fuelblend_update.zip` (14 files: `thermoml_extract.py`, `build_unified.py`, `refit_antoine.py`, `ingest_ajftd.py`,
 `ajftd_parse_html.py`, `ajftd_scraper.py`, `audit.py`, and tests). **Confirm those are applied**, then:
