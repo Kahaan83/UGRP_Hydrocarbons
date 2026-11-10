@@ -1314,6 +1314,339 @@ margins:
       column: resid_const_mean
       group: tgroup
       where: []
+  density_kg_m3.lab_mixtures.ideal_volume.over:
+    value: 4.5866
+    unit: kg/m3
+    direction: over
+    alpha: 0.1
+    n_groups: 167
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 152
+    n_rows: 8696
+    residual_file: results/v4/L/density_lab_residuals.csv
+    model: ideal volume mixing rho = 1/sum(w_i/rho_i(T)), pure rho_i(T) from measured ThermoML tier-1 fits only
+    scope: ThermoML liquid hydrocarbon mixtures with MEASURED composition (n_comp >= 2), all T; dev systems only; over-prediction (predicted >
+      measured) side
+    residual_convention: predicted - measured
+    applied_margin: 4.5866
+    mean_signed_residual_bias: 0.25933978381991946
+    locked_check:
+      groups_covered: 38
+      n_locked_groups: 41
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.5594
+      - -0.5146
+      - -0.4629
+      - -0.4223
+      - -0.3818
+      - -0.2439
+      - -0.1089
+      - 0.0757
+      - 0.0904
+      - 0.1086
+      - 0.1544
+      - 0.1668
+      - 0.2281
+      - 0.2419
+      - 0.3925
+      - 0.4811
+      - 0.5796
+      - 0.5842
+      - 0.602
+      - 0.6529
+      - 0.6689
+      - 0.7596
+      - 0.8438
+      - 0.8629
+      - 0.974
+      - 1.3383
+      - 1.3562
+      - 1.4286
+      - 1.4801
+      - 1.6982
+      - 2.0133
+      - 2.0834
+      - 2.3023
+      - 2.4092
+      - 3.2177
+      - 3.8546
+      - 4.1321
+      - 4.3735
+      - 5.0214
+      - 5.6889
+      - 5.7989
+      groups_covered_at_applied_margin: 38
+    caveats:
+    - 'Known compositions: isolates the physics error (excess volume) from the CRC647 reconstruction error; transfer to real fuels is not shown.'
+    - Systems with a component lacking a measured tier-1 pure density are excluded (counted in results/v4/L/README.md), not filled from a class
+      regression.
+    - 'One-sided: the margin is the conformal quantile of the per-system maximum on the named side; a negative value is floored at 0 in applied_margin.'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+    residual_derivation: residual = predicted - measured (kg/m3), column resid of the residual_file, dev systems (split_role != locked); group
+      = system_id; direction as named
+  density_kg_m3.lab_mixtures.ideal_volume.under:
+    value: 3.2498809
+    unit: kg/m3
+    direction: under
+    alpha: 0.1
+    n_groups: 167
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 152
+    n_rows: 8696
+    residual_file: results/v4/L/density_lab_residuals.csv
+    model: ideal volume mixing rho = 1/sum(w_i/rho_i(T)), pure rho_i(T) from measured ThermoML tier-1 fits only
+    scope: ThermoML liquid hydrocarbon mixtures with MEASURED composition (n_comp >= 2), all T; dev systems only; under-prediction (predicted
+      < measured) side
+    residual_convention: predicted - measured
+    applied_margin: 3.2498809
+    mean_signed_residual_bias: 0.25933978381991946
+    locked_check:
+      groups_covered: 36
+      n_locked_groups: 41
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -5.1427
+      - -1.0882
+      - -0.7427
+      - -0.613
+      - -0.4838
+      - -0.3398
+      - -0.2616
+      - -0.2532
+      - -0.2283
+      - -0.2045
+      - -0.0902
+      - 0.0428
+      - 0.0505
+      - 0.0521
+      - 0.0801
+      - 0.0878
+      - 0.1175
+      - 0.1202
+      - 0.1278
+      - 0.2041
+      - 0.2072
+      - 0.2346
+      - 0.4298
+      - 0.4726
+      - 0.6439
+      - 1.1141
+      - 1.449
+      - 1.4763
+      - 1.6852
+      - 1.888
+      - 2.0897
+      - 2.1492
+      - 2.1623
+      - 2.1709
+      - 2.4185
+      - 2.43
+      - 3.5375
+      - 4.1513
+      - 4.2176
+      - 5.2993
+      - 7.5939
+      groups_covered_at_applied_margin: 36
+    caveats:
+    - 'Known compositions: isolates the physics error (excess volume) from the CRC647 reconstruction error; transfer to real fuels is not shown.'
+    - Systems with a component lacking a measured tier-1 pure density are excluded (counted in results/v4/L/README.md), not filled from a class
+      regression.
+    - 'One-sided: the margin is the conformal quantile of the per-system maximum on the named side; a negative value is floored at 0 in applied_margin.'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+    residual_derivation: residual = predicted - measured (kg/m3), column resid of the residual_file, dev systems (split_role != locked); group
+      = system_id; direction as named
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_lt_263K:
+    value: inf
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 7
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 8
+    n_rows: 40
+    residual_file: results/v4/L/viscosity_lab_residuals.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, from measured pure-component viscosities
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition, temperature bin T_lt_263K (edges belong to the warmer
+      bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    reason: only 7 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 8 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -0.053854663367
+    locked_check: null
+    caveats:
+    - 'Known compositions: isolates Refutas physics error; CRC647 fuels at -40 C are a different regime (Task 11 found raw Refutas collapses there).'
+    - 'Two-sided ln-ratio margin: per-system max |ln(pred/meas)| conformal quantile; inf when fewer than 9 independent dev systems exist (no substitute
+      number).'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(raw Refutas) - ln(measured) = -(build_lab resid), column resid, dev systems in t_bin T_lt_263K; group =
+      system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_263_283K:
+    value: inf
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 2
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 3
+    n_rows: 9
+    residual_file: results/v4/L/viscosity_lab_residuals.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, from measured pure-component viscosities
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition, temperature bin T_263_283K (edges belong to the
+      warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    reason: only 2 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 3 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -0.25251972344444445
+    locked_check:
+      groups_covered: 1
+      n_locked_groups: 1
+      note: counts only; locked groups never used to set the margin; margin is inf so coverage is trivially complete and uninformative
+      locked_group_scores:
+      - 0.342
+    caveats:
+    - 'Known compositions: isolates Refutas physics error; CRC647 fuels at -40 C are a different regime (Task 11 found raw Refutas collapses there).'
+    - 'Two-sided ln-ratio margin: per-system max |ln(pred/meas)| conformal quantile; inf when fewer than 9 independent dev systems exist (no substitute
+      number).'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(raw Refutas) - ln(measured) = -(build_lab resid), column resid, dev systems in t_bin T_263_283K; group
+      = system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_ge_283K:
+    value: 0.1855823
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 255
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 231
+    n_rows: 11918
+    residual_file: results/v4/L/viscosity_lab_residuals.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, from measured pure-component viscosities
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition, temperature bin T_ge_283K (edges belong to the warmer
+      bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.2039192782545993
+    applied_margin: 0.1855823
+    mean_signed_residual_bias: 0.024370378209867163
+    locked_check:
+      groups_covered: 63
+      n_locked_groups: 67
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0093
+      - 0.0229
+      - 0.0245
+      - 0.0256
+      - 0.0262
+      - 0.0299
+      - 0.031
+      - 0.0361
+      - 0.0397
+      - 0.042
+      - 0.0448
+      - 0.0468
+      - 0.0483
+      - 0.0506
+      - 0.0531
+      - 0.0548
+      - 0.056
+      - 0.0581
+      - 0.0624
+      - 0.0752
+      - 0.0755
+      - 0.0773
+      - 0.0792
+      - 0.0793
+      - 0.0816
+      - 0.0822
+      - 0.0947
+      - 0.0964
+      - 0.0964
+      - 0.0964
+      - 0.0966
+      - 0.0969
+      - 0.0975
+      - 0.0976
+      - 0.0994
+      - 0.1004
+      - 0.1029
+      - 0.1048
+      - 0.1051
+      - 0.1053
+      - 0.1063
+      - 0.1085
+      - 0.1136
+      - 0.1147
+      - 0.1158
+      - 0.1162
+      - 0.1164
+      - 0.1216
+      - 0.1229
+      - 0.1274
+      - 0.1316
+      - 0.1342
+      - 0.1366
+      - 0.1381
+      - 0.1396
+      - 0.1415
+      - 0.1419
+      - 0.1427
+      - 0.1455
+      - 0.1456
+      - 0.146
+      - 0.1483
+      - 0.1562
+      - 0.1914
+      - 0.204
+      - 0.2757
+      - 0.3216
+    caveats:
+    - 'Known compositions: isolates Refutas physics error; CRC647 fuels at -40 C are a different regime (Task 11 found raw Refutas collapses there).'
+    - 'Two-sided ln-ratio margin: per-system max |ln(pred/meas)| conformal quantile; inf when fewer than 9 independent dev systems exist (no substitute
+      number).'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_ge_283K
+    residual_derivation: residual = ln(raw Refutas) - ln(measured) = -(build_lab resid), column resid, dev systems in t_bin T_ge_283K; group =
+      system_id
 excluded:
   dvpe_kpa: 'EXCLUDED: DVPE targets are UNITS-UNCONFIRMED (Task 15 / SD-03; psi inferred, 51 BOB+oxygenate rows). No margin is produced until
     units are confirmed from the source.'
