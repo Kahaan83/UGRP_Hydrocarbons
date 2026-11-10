@@ -1,0 +1,169 @@
+diff --git a/thermoml_extract.py b/thermoml_extract.py
+index 1e1016b..ac1c3b8 100644
+--- a/thermoml_extract.py
++++ b/thermoml_extract.py
+@@ -30,6 +30,7 @@ import pandas as pd
+ from common import is_hydrocarbon, mol_from
+ 
+ OUT = Path("data/processed/thermoml_hc.csv")
++OUT_SLE = Path("data/processed/thermoml_sle_hc.csv")
+ 
+ WANTED = {                       # exact ePropName -> keyword family used by --props
+     "Mass density, kg/m3": "density",
+@@ -187,6 +188,99 @@ def parse_file(root, fname: str, wanted: dict[str, str], max_p: float, stats: co
+     return compounds, rows
+ 
+ 
++# --------------------------------------------------------------------------------------------
++# --sle mode: solid-liquid equilibrium (liquidus) temperatures.  Separate code path; the default
++# mode (WANTED whitelist, parse_file, phase_of) is untouched.
++# Real-record facts (checked on 10.1007/s10765-010-0792-y.xml and the whole 2020-09-30 archive):
++#   * property name 'Solid-liquid equilibrium temperature, K' sits in Property-MethodID/PropertyGroup/PhaseTransition
++#   * the phase tags in real records are eVarPhase (Variable) / eConstraintPhase (Constraint) / ePhase (PhaseID);
++#     the default-mode helper phase_of() only looks for 'ePhase' and therefore never sees the first two.  SLE mode
++#     reads any descendant whose tag ends in 'Phase'.
++#   * PhaseID blocks list Liquid and the crystallising solid(s) (with RegNum); the solid(s) are recorded in `crystal_ids`.
++#   * ePresentation may be 'Difference with the reference state' (a depression, not an absolute T): such rows are kept
++#     but flagged (presentation column) and must not be used as liquidus temperatures.
++SLE_PROP = "Solid-liquid equilibrium temperature, K"
++
++
++def any_phase(parent, wrapper):
++    """Text of the first descendant of a <wrapper> child whose tag ends with 'Phase' (ePhase, eVarPhase, eConstraintPhase)."""
++    for w in kids(parent, wrapper):
++        for e in w.iter():
++            if ln(e).endswith("Phase") and ln(e).startswith("e") and e.text and e.text.strip():
++                return e.text.strip()
++    return None
++
++
++def parse_file_sle(root, fname: str, stats: collections.Counter):
++    compounds = {}
++    for c in kids(root, "Compound"):
++        compounds[first_text(c, "nOrgNum")] = dict(inchi=first_text(c, "sStandardInChI"), name=first_text(c, "sCommonName"))
++    rows = []
++    for d in kids(root, "PureOrMixtureData"):
++        ids = [first_text(c, "nOrgNum") for c in kids(d, "Component")]
++        props = {}
++        for p in kids(d, "Property"):
++            pn = first_text(p, "ePropName") or ""
++            if pn == SLE_PROP:
++                props[first_text(p, "nPropNumber")] = (pn, first_text(p, "ePresentation"), first_text(p, "ePropPhase"))
++        if not props:
++            continue
++        crystal_ids = []
++        for ph in kids(d, "PhaseID"):
++            t = first_text(ph, "ePhase")
++            if t and t.strip().lower().startswith("crystal"):
++                rn = [first_text(r, "nOrgNum") for r in kids(ph, "RegNum")]
++                crystal_ids.extend(rn if rn else ["?"])
++        defs, consts = {}, []
++        for v in kids(d, "Variable"):
++            vid = kids(v, "VariableID")
++            kind, text = type_of(vid[0]) if vid else (None, None)
++            defs[first_text(v, "nVarNumber")] = (kind, text, first_text(v, "nOrgNum"), any_phase(v, "VarPhaseID"))
++        for c in kids(d, "Constraint"):
++            cid = kids(c, "ConstraintID")
++            kind, text = type_of(cid[0]) if cid else (None, None)
++            consts.append((kind, text, first_text(c, "nOrgNum"), to_float(first_text(c, "nConstraintValue")),
++                           any_phase(c, "ConstraintPhaseID")))
++        for nv in kids(d, "NumValues"):
++            state, comp = {}, {}
++            for kind, text, org, val, ph in consts:
++                _assign(state, comp, kind, text, org, val, ph)
++            for vv in kids(nv, "VariableValue"):
++                kind, text, org, ph = defs.get(first_text(vv, "nVarNumber"), (None, None, None, None))
++                _assign(state, comp, kind, text, org, to_float(first_text(vv, "nVarValue")), ph)
++            for pv in kids(nv, "PropertyValue"):
++                if first_text(pv, "nPropNumber") not in props:
++                    continue
++                pname, pres, pphase = props[first_text(pv, "nPropNumber")]
++                val = to_float(first_text(pv, "nPropValue"))
++                if val is None:
++                    stats["sle: no numeric value"] += 1
++                    continue
++                n = len(ids)
++                c = dict(comp)
++                if n == 1:
++                    stats["sle: pure component (dropped)"] += 1
++                    continue
++                if state.get("bad_comp") or len(state.get("scales", ())) != 1:
++                    stats["sle: unsupported/ambiguous composition scale"] += 1
++                    continue
++                scale = next(iter(state["scales"]))
++                if len(c) == n - 1:
++                    missing = [i for i in ids if i not in c]
++                    rest = 1.0 - sum(c.values())
++                    if len(missing) != 1 or rest < -1e-6:
++                        stats["sle: inconsistent composition"] += 1
++                        continue
++                    c[missing[0]] = max(rest, 0.0)
++                elif len(c) != n:
++                    stats["sle: composition incomplete"] += 1
++                    continue
++                rows.append(dict(file=fname, prop=pname, prop_phase=pphase, presentation=pres, value=val,
++                                 T_K=state.get("T"), P_kPa=state.get("P"), ids=ids, comp=c, comp_type=scale,
++                                 crystal_ids=crystal_ids))
++    return compounds, rows
++
++
+ def iter_xml(path: Path):
+     if path.suffix in (".tgz", ".gz") or path.name.endswith(".tar.gz"):
+         with tarfile.open(path) as tar:
+@@ -203,7 +297,11 @@ def main(argv=None):
+     ap.add_argument("--props", nargs="+", default=["viscosity", "density", "vapor"], choices=["viscosity", "density", "vapor"])
+     ap.add_argument("--max-pressure-kpa", type=float, default=1000.0)
+     ap.add_argument("--debug", action="store_true")
++    ap.add_argument("--sle", action="store_true",
++                    help="extract solid-liquid equilibrium (liquidus) temperatures instead; writes data/processed/thermoml_sle_hc.csv")
+     a = ap.parse_args(argv)
++    if a.sle:
++        return main_sle(a)
+     wanted = {k: v for k, v in WANTED.items() if v in a.props}
+     path = Path(a.archive) if a.archive else next(Path("data/raw/thermoml").glob("*.tgz"), None)
+     if path is None or not path.exists():
+@@ -254,5 +352,44 @@ def main(argv=None):
+         print("\nfirst rows:\n" + df.head(8).to_string())
+ 
+ 
++def main_sle(a):
++    path = Path(a.archive) if a.archive else next(Path("data/raw/thermoml").glob("*.tgz"), None)
++    if path is None or not path.exists():
++        sys.exit("No ThermoML archive found. Run fetch.py thermoml or place the .tgz in data/raw/thermoml/")
++    out, n_files, n_bad = [], 0, 0
++    stats: collections.Counter = collections.Counter()
++    for fname, blob in iter_xml(path):
++        n_files += 1
++        if b"Solid-liquid equilibrium temperature" not in blob:
++            continue
++        try:
++            root = ET.parse(io.BytesIO(blob)).getroot()
++            comps, rows = parse_file_sle(root, fname, stats)
++        except Exception:  # noqa: BLE001
++            n_bad += 1
++            continue
++        for r in rows:
++            if not (r["ids"] and all(hc_inchi(comps.get(i, {}).get("inchi")) for i in r["ids"])):
++                stats["sle: not all-hydrocarbon / no InChI"] += 1
++                continue
++            out.append(dict(
++                file=r["file"], prop=r["prop"], prop_phase=r["prop_phase"], presentation=r["presentation"], value=r["value"],
++                T_K=r["T_K"], P_kPa=r["P_kPa"], n_comp=len(r["ids"]),
++                inchis=json.dumps([comps[i]["inchi"] for i in r["ids"]]),
++                names=json.dumps([comps[i]["name"] for i in r["ids"]]), comp_type=r["comp_type"],
++                comp_values=json.dumps([r["comp"].get(i) for i in r["ids"]]),
++                crystal_inchis=json.dumps([comps.get(i, {}).get("inchi") for i in r["crystal_ids"]]),
++                crystal_names=json.dumps([comps.get(i, {}).get("name") for i in r["crystal_ids"]])))
++    df = pd.DataFrame(out)
++    OUT_SLE.parent.mkdir(parents=True, exist_ok=True)
++    df.to_csv(OUT_SLE, index=False)
++    print(f"files read: {n_files}  errors: {n_bad}  SLE hydrocarbon rows kept: {len(df)}")
++    if len(df):
++        print(df.groupby(["n_comp", "presentation"], dropna=False).size().to_string())
++    print("\nrows NOT kept, by reason:")
++    for k, v in stats.most_common():
++        print(f"  {v:>9}  {k}")
++
++
+ if __name__ == "__main__":
+     main()
