@@ -229,3 +229,14 @@ def test_recal_beta_matches_models_v4_library():
     from fuelblend.design.models_v4 import library
     b = library().recal_beta
     assert pb._recal_beta() == pytest.approx((float(b[0]), float(b[1])))
+
+
+def test_pure_component_viscosity_not_recalibrated():
+    """The CRC-fuel recalibration must not touch single components (common.py adapter uses this path)."""
+    pb = _pb()
+    r = pb._predict_viscosity([DEC_IK], [1.0], [1.0], 293.15)
+    assert r["method"] == "refutas"
+    raw = pb._refutas([DEC_IK], [1.0], 293.15)[0]
+    assert r["value"] == pytest.approx(raw)
+    mix = pb._predict_viscosity([DEC_IK, DOD_IK], [0.5, 0.5], [0.5, 0.5], 293.15)
+    assert mix["method"] == "refutas_recalibrated"

@@ -72,3 +72,18 @@ The empirical data across blend complexity buckets $N \in [1, 40+]$ (`results/v2
 3. **Surrogate Cardinality Rule (from Task D6)**:
    - Inverse design blends must not use over-simplistic 2- or 3-component surrogates (e.g., dodecane + tetralin), which fail freezing point and boiling range constraints.
    - Per `results/v2/D6/truncation.csv`, a surrogate complexity of **$K = 10$ to $20$ components with a lumped heavy tail** captures $>95\%$ of blend mass and keeps bulk property drift below $0.3\%$.
+
+---
+
+## 5. v4 per-property routing of the prediction API (docs only)
+
+`src/fuelblend/api/predict_blend.py` routes as below; the table mirrors `MARGIN_KEYS` there. Intervals use `applied_margin` from `configs/uncertainty_v4.yaml` only; `inf` means no interval (NaN) and `in_domain=False`.
+
+| Property | Model | Margin key(s) (`MARGIN_KEYS`) | Certified scope |
+|---|---|---|---|
+| Kinematic/dynamic viscosity | Recalibrated Refutas (mixtures only; raw Refutas for single components and outside the window) | `viscosity_kin_cSt.crc647.recalibrated_refutas.all_T` (ln-ratio) | jet fuels only; -40..20 C |
+| Density | Ideal volume mixing | `density_kg_m3.crc647_ideal_volume.all_T` | jet fuels only; -0.2..69.5 C |
+| Flash point | Le Chatelier (ideal) + Antoine + LFL | max of `flash_point_C.lab_mixtures.ideal` and `flash_point_C.real_fuels_D93_reconstructed.ideal` (never the 0-floored D93 alone) | jet fuels only; `lo` is the safe bound |
+
+Uncertified (no valid margin; value None, interval NaN, `in_domain=False`): freezing, smoke point, RON/MON, DCN, DVPE (data units unconfirmed), pour point.
+The mixture-residual GBM is opt-in (`use_mixture_residual=True`), has no margin, and is never certified. `fuel_type='jet'` is trusted from the caller.

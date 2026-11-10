@@ -32,6 +32,8 @@ flash    : Le Chatelier + Raoult (Antoine, LFL); margin = max(lab ideal, D93 ide
 The mixture-residual GBM is opt-in (use_mixture_residual=True) and has no margin. No model is ever trained at load:
 a missing bundle raises FileNotFoundError naming the command that builds it.
 Margins were validated on CRC 647 jet fuels only: pass fuel_type='jet' or in_domain is False.
+Extra predict() kwargs: fuel_type (None|'jet'|...; 'jet' is TRUSTED from the caller, the composition is not checked
+against a jet specification) and use_mixture_residual (default False; opt-in GBM correction, no margin, needs the bundle).
 """
 from __future__ import annotations
 
@@ -578,14 +580,14 @@ def _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual: bool = Fals
     eta_dyn, nu_mix, rho_mix = _refutas(inchikeys, w_mass, T_K)
     if eta_dyn is not None:
         lo_k, hi_k = VISC_RECAL_T_C[0] + 273.15, VISC_RECAL_T_C[1] + 273.15
-        if lo_k <= T_K <= hi_k:
+        if lo_k <= T_K <= hi_k and len(inchikeys) > 1:   # recalibration was fitted on fuel mixtures, never on pure compounds
             b0, b1 = _recal_beta()
             phys_val = eta_dyn * math.exp(b0 + b1 * 1000.0 / T_K)
             phys_method = "refutas_recalibrated"
         else:
             phys_val = eta_dyn
             phys_method = "refutas"
-            warns.append(f"recalibration_not_applied: T={T_K - 273.15:.1f} C outside the CRC 647 recalibration window "
+            warns.append(f"recalibration_not_applied: single component or T={T_K - 273.15:.1f} C outside the CRC 647 recalibration window "
                          f"{VISC_RECAL_T_C} C; raw Refutas returned, no certified margin")
     else:
         phys_val = _gn_mass(inchikeys, w_mass, T_K)
@@ -868,6 +870,12 @@ def predict(
         Temperature in Kelvin (default 298.15). Use T_C= for Celsius.
     T_C : float, optional
         Temperature in Celsius. If given, T_K is ignored.
+    fuel_type : str, optional
+        Declared fuel kind. Only 'jet' can yield in_domain=True (margins validated on CRC 647 jet fuels). The value
+        is trusted from the caller; the composition is not checked to be a jet fuel. None -> in_domain False.
+    use_mixture_residual : bool
+        Default False. True adds the mixture-residual GBM correction (needs the joblib bundle, else FileNotFoundError);
+        it has no uncertainty_v4.yaml margin, so the result is not certified.
     mole_fractions : list of float, optional
         If given, the second element of each composition tuple is ignored and
         these mole fractions (aligned to composition order) are converted to
