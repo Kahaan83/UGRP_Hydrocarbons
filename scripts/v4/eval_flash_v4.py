@@ -9,6 +9,7 @@ Outputs: results/v4/F/flash_lab_loso.csv, flash_real_fuels.csv, flash_summary.cs
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import warnings
@@ -132,7 +133,7 @@ def real_fuels() -> pd.DataFrame:
         base = dict(fuel_id=fid, method=meth, measured_C=r.value, source_file=r.source_file, flash_provenance=r.provenance,
                     split_role=role.get(fid, "not_in_split"), family=family.get(fid, "jet_gc" if fid == "POSF-10325" else "?"))
         if fid.startswith("CRC647"):
-            d = comp[(comp.system_id == f"fuel:{fid}") & ~comp.is_lumped]
+            d = comp[(comp.system_id == f"fuel:{fid}") & ~comp.is_lumped.astype(bool) & (comp.inchikey != "LUMP_NO_REALISTIC_REP")]
             if d.empty:
                 continue
             smi, w = list(d.smiles), d.fraction.values
@@ -195,7 +196,13 @@ def pure_inputs(smiles_set) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def main():
+def main(argv=None):
+    global COMP_V4, OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--compositions", type=Path, default=COMP_V4, help="composition table (default: the v4 file)")
+    ap.add_argument("--out", type=Path, default=OUT, help="output directory (default: results/v4/F)")
+    a = ap.parse_args(argv)
+    COMP_V4, OUT = a.compositions, a.out
     OUT.mkdir(parents=True, exist_ok=True)
     lab = lab_loso()
     lab.to_csv(OUT / "flash_lab_loso.csv", index=False)
@@ -234,7 +241,7 @@ def main():
     for col in lab.comp_smiles:
         used.update(json.loads(col))
     comp = pd.read_csv(COMP_V4)
-    used.update(comp[comp.system_id.str.startswith("fuel:CRC647") & ~comp.is_lumped].smiles)
+    used.update(comp[comp.system_id.str.startswith("fuel:CRC647") & ~comp.is_lumped.astype(bool) & (comp.inchikey != "LUMP_NO_REALISTIC_REP")].smiles)
     used.update(posf_items()[0])
     pure_inputs(used).to_csv(OUT / "pure_inputs_used.csv", index=False)
     pd.set_option("display.width", 250)
