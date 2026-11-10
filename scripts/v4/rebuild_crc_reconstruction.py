@@ -55,13 +55,8 @@ def descriptor_rows(p: pd.DataFrame) -> dict:
     return out
 
 
-def main():
-    reg = CompoundRegistry(ROOT / "data/unified/compounds.csv")
-    prov = PurePropertyProvider(reg, ROOT / "data/cache/pure_grid.npz", verbose=False)
-    reps = RealisticReps(reg, prov, vp_lookup=lambda s: _lookup(s, None))
-    split, used, skipped = nominal_sat_split_detail(JETCLASS)
-    rows_by_fuel = descriptor_rows(pd.read_csv(PROPS))
-
+def build_compositions(rows_by_fuel, split, reps):
+    """-> (out_rows, stats[(fid, fallback, n_rows)], kind_mass{kind: [per-fuel share]}, skipped_fuels, diaro)."""
     out, stats, kind_mass, skipped_fuels, diaro = [], [], {k: [] for k in KINDS}, [], []
     for fid in sorted(rows_by_fuel):
         fr, fb = reconstruct(rows_by_fuel[fid], split, reps)
@@ -79,6 +74,17 @@ def main():
         out.append(dict(system_id=f"fuel:{fid}", inchikey="LUMP_NO_REALISTIC_REP", smiles="", fraction=fb,
                         basis="mass", is_lumped=True, unexplained_fraction=fb,
                         provenance="reconstructed_r2", verified=False))
+    return out, stats, kind_mass, skipped_fuels, diaro
+
+
+def main():
+    reg = CompoundRegistry(ROOT / "data/unified/compounds.csv")
+    prov = PurePropertyProvider(reg, ROOT / "data/cache/pure_grid.npz", verbose=False)
+    reps = RealisticReps(reg, prov, vp_lookup=lambda s: _lookup(s, None))
+    split, used, skipped = nominal_sat_split_detail(JETCLASS)
+    rows_by_fuel = descriptor_rows(pd.read_csv(PROPS))
+
+    out, stats, kind_mass, skipped_fuels, diaro = build_compositions(rows_by_fuel, split, reps)
     df = pd.DataFrame(out, columns=COLS)
     fbs = np.array([s[1] for s in stats])
     print(f"skipped={skipped_fuels}")

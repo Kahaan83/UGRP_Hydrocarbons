@@ -128,21 +128,29 @@ def test_realistic_reps_requires_pure_props_and_flash_entry():
     assert reps.get("n_paraffin", 20) is None          # beyond max_gap
 
 
-def test_skip_is_logged_and_excluded_end_to_end(caplog):
+def test_skip_is_logged_and_excluded_end_to_end(caplog, tmp_path):
     import importlib.util, pathlib
     spec = importlib.util.spec_from_file_location("rebuild", pathlib.Path(__file__).parents[1] / "scripts/v4/rebuild_crc_reconstruction.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    p = pd.DataFrame([
-        dict(fuel_id="CRC647_1", property="aromatics_vol_pct", value=18.0, method="ASTM D1319", role="descriptor"),
-        dict(fuel_id="CRC647_1", property="distillation_T0_C", value=157.0, method="ASTM D86 (test 1)", role="descriptor"),
-        dict(fuel_id="CRC647_1", property="distillation_T10_C", value=173.0, method="ASTM D86 (test 1)", role="descriptor"),
-        dict(fuel_id="CRC647_1", property="distillation_T50_C", value=199.0, method="ASTM D86 (test 1)", role="descriptor"),
-    ])
-    rows = mod.descriptor_rows(p)
+    recs = []
+    for fid, props in (("CRC647_1", {"distillation_T0_C": 157.0, "distillation_T10_C": 173.0, "distillation_T20_C": 180.0,
+                                     "distillation_T50_C": 199.0, "distillation_T90_C": 241.0, "distillation_T100_C": 257.0}),
+                       ("CRC647_2", {"distillation_T0_C": 157.0, "distillation_T10_C": 173.0, "distillation_T50_C": 199.0})):
+        recs.append(dict(fuel_id=fid, property="aromatics_vol_pct", value=18.0, method="ASTM D1319", role="descriptor"))
+        recs.append(dict(fuel_id=fid, property="naphthalenes_vol_pct", value=2.0, method="ASTM D1840", role="descriptor"))
+        for k, v in props.items():
+            recs.append(dict(fuel_id=fid, property=k, value=v, method="ASTM D86 (test 1)", role="descriptor"))
+    rows = mod.descriptor_rows(pd.DataFrame(recs))
     with caplog.at_level("WARNING"):
-        fr, fb = reconstruct(rows["CRC647_1"], SPLIT, StubReps())
-    assert fr.empty and fb == 1.0
+        out, stats, kind_mass, skipped, diaro = mod.build_compositions(rows, SPLIT, StubReps(missing=["aromatic_di"]))
+    assert skipped == ["CRC647_2"]
     assert any("fewer than 4 distillation points" in r.message for r in caplog.records)
-    assert r2.diaromatic_mass(ROW) == pytest.approx(r2.diaromatic_mass(ROW))
-    assert 0 < r2.diaromatic_mass(ROW) < 0.2
+    df = pd.DataFrame(out, columns=mod.COLS)
+    df.to_csv(tmp_path / "c.csv", index=False)
+    assert set(df.system_id) == {"fuel:CRC647_1"}                       # skipped fuel absent from CSV rows
+    assert [s[0] for s in stats] == ["CRC647_1"]                        # and from fallback mean/max inputs
+    assert all(len(v) == 1 for v in kind_mass.values()) and len(diaro) == 1   # and from per-kind shares
+    lump = df[df.inchikey == "LUMP_NO_REALISTIC_REP"].fraction.iloc[0]
+    assert lump == pytest.approx(stats[0][1]) and lump < 1.0
+    assert df.fraction.sum() == pytest.approx(1.0, abs=1e-9)
