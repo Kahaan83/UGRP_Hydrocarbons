@@ -110,7 +110,7 @@ designs while the ideal SvL and ideal-mole forms fail or are uncertified, so the
 
 ### Viscosity model choice (disclosure)
 
-The Task 11 winner was the structured ridge (margin 0.162 ln) against recalibrated Refutas (0.3465 ln).  The primary here is
+The Task 11 lowest-RMSE model (no pairwise ranking claimed) was the structured ridge (margin 0.162 ln) against recalibrated Refutas (0.3465 ln).  The primary here is
 recalibrated Refutas on purpose: it is the conservative choice (wider margin) and, as a 2-parameter physics model, does not
 extrapolate.  The ridge is linear in 7 class-fraction features fitted on CRC jet fuels.  It is kept as an alternate behind an
 envelope guard that raises `ModelUnavailable` when any feature lies outside the dev-fuel min/max.  That is why the ridge row is

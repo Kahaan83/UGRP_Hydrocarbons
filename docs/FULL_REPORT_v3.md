@@ -1,3 +1,5 @@
+> v4 NOTICE: sections relying on the v3 corpus or designs are retracted; see docs/FULL_REPORT_v4.md and docs/claims_register.md
+
 # Master Technical Report v3: Regime-Audited Physics, Repaired Property Models, and Dual ASTM/BIS Inverse Design
 
 **Project:** UGRP Hydrocarbons (`fuelblend`)
