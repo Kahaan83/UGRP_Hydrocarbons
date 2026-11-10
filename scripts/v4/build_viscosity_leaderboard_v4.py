@@ -13,6 +13,7 @@ Outputs: results/v4/V/viscosity_leaderboard_v4.csv, viscosity_predictions_v4.csv
 """
 from __future__ import annotations
 
+import ast
 import importlib.util
 import json
 import sys
@@ -315,7 +316,7 @@ def main():
     gp_res = run_nested("Structured GP", GP_GRID, gp_fp, "dev fuels (nested)", "nonparametric")
     # intervals: refit with the hyper-parameter chosen for that fold
     lo90 = np.full(len(D), np.nan); hi90 = np.full(len(D), np.nan)
-    gp_hp = {r["fold"]: eval(r["hp"]) for r in hp_log if r["model"] == "Structured GP"}
+    gp_hp = {r["fold"]: ast.literal_eval(r["hp"]) for r in hp_log if r["model"] == "Structured GP"}
     for f in dev:
         te = np.where(fid == f)[0]; tr = np.setdiff1d(dev_idx, te)
         mu, sd = gp_fit(tr, gp_hp[f]).predict(X[te], T_K[te], return_std=True)
