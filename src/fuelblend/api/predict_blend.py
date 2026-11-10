@@ -936,6 +936,10 @@ def predict(
         Refutas for any number of components and density is ideal volume mixing; both are judged by the hydrocarbon
         lab-mixture margins (viscosity binned by temperature, density side-specific), which are not jet specific.
         A temperature bin without a valid margin (below 10 C at present) is not certified.
+        Cold limit: below about 273 K the tier-1 pure densities do not cover the temperature, so known-composition
+        viscosity is NOT raw Refutas there; it falls to gn_mass / gn_fallback (e.g. at 253.15 K pure decane gn_mass
+        1.755 vs decane/dodecane 0.999/0.001 gn_fallback 1.966 mPa.s, a 12 % jump). Both are in_domain=False, so
+        nothing is certified from the cold path.
         "reconstructed": the composition was reconstructed from bulk fuel properties (CRC 647 style); the CRC
         recalibrated-Refutas path and its CRC margins are used and fuel_type='jet' is still required for in_domain.
     mole_fractions : list of float, optional

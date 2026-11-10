@@ -24,9 +24,13 @@ def test_binary_is_continuous_with_pure():
     near = predict([(DEC, 0.999), (DOD, 0.001)], T_K=283.15, composition_kind="known")["viscosity_dyn_mPas"]
     assert pure["method"] == near["method"] == "refutas_raw"
     assert abs(near["value"] / pure["value"] - 1) < 0.01
-    pure_c = predict([(DEC, 1.0)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]["value"]
-    near_c = predict([(DEC, 0.999), ("CCCCCCCC", 0.001)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]["value"]
-    assert abs(near_c / pure_c - 1) < 0.01
+    # Cold check (253.15 K): NOT Refutas (tier-1 densities start at 273.15 K). Pure decane takes gn_mass, the near-pure blend
+    # takes gn_fallback; we assert those methods explicitly and that both are uncertified (in_domain False).
+    pc = predict([(DEC, 1.0)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
+    nc = predict([(DEC, 0.999), ("CCCCCCCC", 0.001)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
+    assert pc["method"] != "refutas_raw" and nc["method"] != "refutas_raw"
+    assert pc["in_domain"] is False and nc["in_domain"] is False
+    assert abs(nc["value"] / pc["value"] - 1) < 0.01
 
 
 def test_known_composition_never_uses_recalibration():
