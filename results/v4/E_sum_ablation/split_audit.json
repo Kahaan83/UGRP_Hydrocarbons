@@ -1,0 +1,17 @@
+{
+ "n_locked_fuels": 56,
+ "n_real_visc_rows_locked": 36,
+ "n_outer_folds": 9,
+ "n_fold_leak_checks": 9,
+ "locked_in_any_train_or_calibration_index": 0,
+ "seeds": 5,
+ "epochs": 40,
+ "threads": 3,
+ "device": "cpu",
+ "n_lab_visc": 14237,
+ "n_lab_flash": 126,
+ "n_real_visc": 171,
+ "n_real_flash": 57,
+ "elapsed_s": 800.4,
+ "torch": "2.15.0+cpu"
+}

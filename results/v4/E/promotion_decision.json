@@ -1,0 +1,6 @@
+{
+ "beats_task11_both_protocols_ci_excl0": false,
+ "dev_cross_conformal_row_coverage": 0.9703703703703703,
+ "coverage_ge_085": true,
+ "PROMOTE_TO_MODEL_DECISION": false
+}
