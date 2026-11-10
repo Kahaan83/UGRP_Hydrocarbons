@@ -204,14 +204,19 @@ def make_fns(L: Library) -> dict:
         nu, _, T_K = _visc_inputs(pool, w, T_C)
         return float(nu * math.exp(L.recal_beta[0] + L.recal_beta[1] * 1000.0 / T_K))
 
+    def visc_ridge_unguarded(pool, w, T_C):
+        """DIAGNOSTIC ONLY (never a design model): the Task 11 ridge with no envelope check."""
+        nu, f, T_K = _visc_inputs(pool, w, T_C)
+        x = np.array([[f[k] for k in FEATS]])
+        return float(nu * math.exp(float(L.ridge.predict(x, np.array([T_K]))[0])))
+
     def visc_ridge(pool, w, T_C):
         nu, f, T_K = _visc_inputs(pool, w, T_C)
         out = {k: (round(f[k], 3), L.ridge_env[k]) for k in FEATS
                if not (L.ridge_env[k][0] - 1e-9 <= f[k] <= L.ridge_env[k][1] + 1e-9)}
         if out:       # a linear-in-features residual extrapolates without bound; no value is returned outside the envelope
             raise ModelUnavailable(f"structured ridge applied outside its CRC dev-fuel feature envelope: {out}")
-        x = np.array([[f[k] for k in FEATS]])
-        return float(nu * math.exp(float(L.ridge.predict(x, np.array([T_K]))[0])))
+        return visc_ridge_unguarded(pool, w, T_C)
 
     def freezing_ideal(pool, w, T_C):
         tmap = L.thermal_map(pool)
@@ -289,7 +294,7 @@ def make_fns(L: Library) -> dict:
         return float(sum(xi * L.v(n, "Psat37_8") for xi, n in zip(x, pool)))
 
     return dict(density=density, flash_ideal=flash_ideal, flash_unifac=flash_unifac, visc_raw=visc_raw,
-                visc_recal=visc_recal, visc_ridge=visc_ridge, freezing_ideal=freezing_ideal,
+                visc_recal=visc_recal, visc_ridge=visc_ridge, visc_ridge_unguarded=visc_ridge_unguarded, freezing_ideal=freezing_ideal,
                 freezing_coutinho=freezing_coutinho, freezing_ideal_mole=freezing_ideal_mole,
                 nhoc_const_h=nhoc_const_h, nhoc_comp_h=nhoc_comp_h, arom_wt=arom_wt, arom_vol=arom_vol,
                 ethanol_vol=ethanol_vol, smoke_bulk=smoke_bulk, smoke_ysi=smoke_ysi, ron=_lin_vol("RON"),
@@ -304,7 +309,14 @@ def build_models(L: Library | None = None) -> dict:
     FLU = ["flash_point_C.lab_mixtures.unifac", "flash_point_C.real_fuels_D93_reconstructed.unifac"]
     oct_why = ("octane margins exist only for base-gasoline + ONE blendstock models (Task 15, 18 blendstock groups); "
                "a multi-component pure-compound recipe has no validated octane model")
-    P = PropertyModel
+    JET = {"jet"}                   # every yaml margin below was validated on jet fuels (CRC 647 / AJFTD / jet-range lab blends)
+
+    def P(*a, **kw):
+        m = PropertyModel(*a, **kw)
+        if not m.by_construction:
+            m.certified_kinds = JET
+        return m
+
     props = {
         "density": P("ideal_volume_rho15", f["density"], ["density_kg_m3.crc647_ideal_volume.T15_56C"],
                      validated_classes=CRC_CLASSES),

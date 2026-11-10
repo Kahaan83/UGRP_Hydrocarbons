@@ -15,6 +15,8 @@ Contract (fixes F5 of the v3 audit: v3 hard-coded the spec limits and typed the 
 * A constraint status is one of
     ``pass``           finite margin from the yaml, margin-adjusted prediction satisfies the limit
     ``by_construction`` quantity fixed by the blend recipe itself (e.g. class mass fraction): no model error
+    ``pass_jet_derived_margin_only``  meets the limit with the margin, but the margin was validated on jet fuels only and
+                       this is a diesel/gasoline spec: NOT a certification, not counted as ok
     ``fail``           the (margin-adjusted, or nominal when no margin exists) prediction violates the limit
     ``uncertified``    cannot be certified: no valid margin, no model, unverified inputs, T/domain outside the
                        margin's validated scope, extrapolation, or a margin on the wrong side
@@ -54,6 +56,7 @@ STATUS_PASS = "pass"
 STATUS_CONSTRUCTION = "by_construction"
 STATUS_FAIL = "fail"
 STATUS_UNCERTIFIED = "uncertified"
+STATUS_SCOPE = "pass_jet_derived_margin_only"   # meets the limit with the margin, but the margin was not validated for this fuel kind
 OK_STATUSES = (STATUS_PASS, STATUS_CONSTRUCTION)
 
 # spec constraint key -> canonical property name (regexes are strings, not numeric spec values)
@@ -92,6 +95,7 @@ class PropertyModel:
     validated_classes: Optional[set] = None        # classes present in this model's validation data
     margin_missing_reason: str = ""                # why margin_keys is empty (surfaced as the reason)
     notes: str = ""
+    certified_kinds: Optional[set] = None          # fuel kinds (jet/diesel/gasoline) the margin was validated on; None = any
 
 
 @dataclass
@@ -133,7 +137,14 @@ def load_spec(spec_name: str, configs_dir: Optional[Path] = None) -> dict:
     cdir = CONFIGS if configs_dir is None else Path(configs_dir)
     with open(cdir / f"specs_{std}.yaml", "r", encoding="utf-8") as fh:
         doc = yaml.safe_load(fh)
-    return doc["families"][fam]
+    spec = dict(doc["families"][fam])
+    spec["_family"] = fam
+    return spec
+
+
+def fuel_kind(spec: dict) -> str:
+    """'jet' | 'diesel' | 'gasoline' from the spec family name (jet_a, diesel_no2, gasoline_e10, ...)."""
+    return str(spec.get("_family", "")).split("_")[0]
 
 
 def load_margins(path: Optional[Path] = None) -> dict:
@@ -215,8 +226,8 @@ def forced_extrapolation(pool, classes: dict, validated) -> bool:
     return not any(classes.get(n, "unknown") in validated for n in pool)
 
 
-def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None
-                        ) -> ConstraintResult:
+def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
+                        kind: Optional[str] = None) -> ConstraintResult:
     """Evaluate one spec constraint for blend ``w`` with the primary (or an override) property model."""
     lo, hi = c.get("min"), c.get("max")
     prop, T_C = canonical_property(key)
@@ -279,14 +290,16 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
             bad = [n for n in need if not all(d in (n, "two_sided") for d in dirs)]
             if bad:
                 reasons.append(f"margin direction {sorted(map(str, dirs))} does not protect the {bad} side of the limit")
-    if ver and ver not in ("verified",):
-        reasons.append(f"spec limit verification: {ver}")
+    if (ver and ver.strip().lower() != "verified") or c.get("unverified") is True:
+        reasons.append(f"spec limit verification: {ver or 'unverified: true'} (an unverified limit is never certified)")
 
-    blocking = [r for r in reasons if not r.startswith("spec limit verification")]
+    blocking = list(reasons)
     if pm.by_construction:
         status = STATUS_CONSTRUCTION if nominal_ok else STATUS_FAIL
         if not nominal_ok:
             reasons.append("recipe violates the limit")
+        elif blocking:                                   # unverified spec limit: never certified, even by construction
+            status = STATUS_UNCERTIFIED
     elif not nominal_ok or (slack == slack and slack < 0 and m is not None):
         status = STATUS_FAIL
         reasons.append("limit violated" + ("" if m is None else " after applying the margin"))
@@ -294,12 +307,17 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
         status = STATUS_UNCERTIFIED
     else:
         status = STATUS_PASS
+        if pm.certified_kinds is not None and kind not in pm.certified_kinds:
+            status = STATUS_SCOPE
+            reasons.append(f"margin validated on {sorted(pm.certified_kinds)} fuels only; this is a {kind or 'unknown'} spec, "
+                           "so the pass is not a certification")
     return ConstraintResult(model=pm.name, prediction=pred, applied_margin=m, margin_keys=tuple(pm.margin_keys),
                             status=status, reason="; ".join(reasons), slack=float(slack), **base)
 
 
 def evaluate_blend(spec: dict, pool, w, models: dict, margins: dict) -> list:
-    return [evaluate_constraint(k, c, pool, w, models, margins) for k, c in spec["constraints"].items()]
+    kind = fuel_kind(spec)
+    return [evaluate_constraint(k, c, pool, w, models, margins, kind=kind) for k, c in spec["constraints"].items()]
 
 
 # ----------------------------------------------------------------------------------------------- optimiser
@@ -474,7 +492,7 @@ def robustness_table(spec_name: str, pool: list, weights, models: dict, margins_
             forms.append((True, models["props"][prop]))
         forms += [(False, pm) for pm in models.get("alternates", {}).get(prop, [])]
         for primary, pm in forms:
-            cr = evaluate_constraint(key, c, pool, w, models, margins, pm_override=pm)
+            cr = evaluate_constraint(key, c, pool, w, models, margins, pm_override=pm, kind=fuel_kind(spec))
             rows.append(dict(spec=spec_name, constraint=key, model=pm.name, is_primary=primary,
                              prediction=cr.prediction, applied_margin=cr.applied_margin, lo=cr.lo, hi=cr.hi,
                              status=cr.status, reason=cr.reason))
