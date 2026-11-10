@@ -61,3 +61,6 @@ flash_C,locked,dev-fit constant offset MAE (offset from all dev),1.9225072416711
 flash_C,dev,dev-mean constant MAE (leave-one-fuel-out),5.511818181818177,5.511818181818177
 flash_C,locked,dev-mean constant MAE (dev mean),5.895370370370368,5.895370370370368
 flash_C,dev,dev-fit offset value (C),-9.441063670589717,4.220728850259752
+flash_C,dev,"corr(raw ideal err, aromatics_vol_pct)",-0.006765584938087037,0.32327666011879547
+flash_C,dev,"corr(raw ideal err, D86_T10)",-0.43448037438133247,-0.37391561813352525
+flash_C,dev,"corr(raw ideal err, dropped_lump_mass)",0.17357402443031605,-0.21054091853669588
