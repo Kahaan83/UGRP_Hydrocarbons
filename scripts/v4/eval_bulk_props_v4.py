@@ -55,7 +55,7 @@ BOOT_B = 2000
 T_REF_K = 288.71          # 15.56 C (60 F), the ASTM D4052 reference of the CRC647 densities
 OFFSET_C = 14.58          # v3 R5 empirical WAT offset (kept for the like-for-like comparison)
 DROPPED = ROOT / "data" / "quarantine" / "dropped_fuels.csv"
-ALLOWED_COMPOSITION_PROVENANCE = {"raw_file", "reconstructed", "cited_typed", "reconstructed_r2"}   # anything else (e.g. quarantined) fails
+ALLOWED_COMPOSITION_PROVENANCE = {"raw_file", "reconstructed", "cited_typed", "reconstructed_r2", "reconstructed_r3"}   # anything else (e.g. quarantined) fails
 
 
 # ----------------------------------------------------------------------------- metrics (same set as v2 C1 / v3 R5)
