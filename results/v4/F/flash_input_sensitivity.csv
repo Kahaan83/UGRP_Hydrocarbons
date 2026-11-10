@@ -1,0 +1,13 @@
+subset,model,n_records,n_systems,MAE_C,bias_C,worst_over_C,margin90_C,margin_n_groups
+all,ideal,126,31,3.74449,-3.30066,10.6039,3.69877,31
+all,unifac,126,31,4.1963,-3.91407,11.1034,1.55825,31
+excl_mesitylene,ideal,117,30,3.82757,-3.5017,10.6039,0.310645,30
+excl_mesitylene,unifac,117,30,4.31709,-4.089,11.1034,0.314407,30
+excl_n-hexylbenzene,ideal,117,30,3.46026,-2.9823,10.6039,3.69877,30
+excl_n-hexylbenzene,unifac,117,30,3.89463,-3.5907,11.1034,1.55825,30
+excl_both,ideal,108,29,3.52658,-3.17356,10.6039,0.310645,29
+excl_both,unifac,108,29,4.00035,-3.75325,11.1034,0.314407,29
+only_mesitylene_records,ideal,9,1,2.66444,-0.687152,3.69877,inf,1
+only_mesitylene_records,unifac,9,1,2.62598,-1.64005,2.78811,inf,1
+only_n-hexylbenzene_records,ideal,9,1,7.43936,-7.43936,-5.97292,inf,1
+only_n-hexylbenzene_records,unifac,9,1,8.11794,-8.11794,-7.2646,inf,1

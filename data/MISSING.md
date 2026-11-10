@@ -25,6 +25,11 @@ Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= 0.
   - jet (18): Dooley2010_1stGen, Dooley2012_2ndGen, HyChem_NJFCP_A1, HyChem_NJFCP_A2, HyChem_NJFCP_A3, KimVioli2014_UM1, KimVioli2014_UM2, NASA_LFPA3, NASA_Shale_JP5, POSF_10264, POSF_10289, POSF_10325, POSF_11498, POSF_12344, POSF_12345, POSF_13511, POSF_13516, Violi2002_JP8_6comp
 
 <!-- v4-task3-dropped:end -->
+### v4 Task 14: sooting (2026-11-10)
+
+| Date Logged | Item / Source | Expected Content | Current Status & Mitigation |
+|---|---|---|---|
+| 2026-11-10 | v4 Task 14: fuel with speciation AND measured smoke point; Boehm 2022 SI pure smoke points | none in repo: AJFTD smoke point (100 fuels) has no molecule list; 28 pure smoke points are hand-typed (`cited_typed`), iso-octane 40.0 vs 42.8 mm in Boehm text; extras `tsi_table.csv` derived rows are circular and excluded | YSI route not evaluated on real fuels; see docs/v4_manual_downloads.md M17 |
 
 <!-- v4-task6:begin -->
 
@@ -41,10 +46,3 @@ Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= 0.
 | 2026-11-10 | v4 Task 6: inventory_v4 RP-1 fuels (NIST_RP1, RP1_Binary_2comp, RP1_Edwards_3comp, RP1_NIST_14comp) property targets | no linked measured properties; `rp1_properties.csv` (NISTIR 6646) describes 'RP-1 original sample', whose identity with SRM 4572 (`NIST_RP1`) is unconfirmed; surrogates have no measurements | fetch the SRM 4572 certificate / Fortin et al. 2012 property table |
 
 <!-- v4-task6:end -->
-
-### v4 Task 14: sooting (2026-11-10)
-
-| Date Logged | Item / Source | Expected Content | Current Status & Mitigation |
-|---|---|---|---|
-| 2026-11-10 | v4 Task 14: fuel with speciation AND measured smoke point; Boehm 2022 SI pure smoke points | none in repo: AJFTD smoke point (100 fuels) has no molecule list; 28 pure smoke points are hand-typed (`cited_typed`), iso-octane 40.0 vs 42.8 mm in Boehm text; extras `tsi_table.csv` derived rows are circular and excluded | YSI route not evaluated on real fuels; see docs/v4_manual_downloads.md M17 |
-
