@@ -1,0 +1,140 @@
+model,fold,hp
+Bilinear pairwise,CRC647_101,"(4, 0.001)"
+Bilinear pairwise,CRC647_104,"(4, 0.001)"
+Bilinear pairwise,CRC647_105,"(2, 0.01)"
+Bilinear pairwise,CRC647_108,"(2, 0.01)"
+Bilinear pairwise,CRC647_110,"(4, 0.01)"
+Bilinear pairwise,CRC647_111,"(4, 0.01)"
+Bilinear pairwise,CRC647_14,"(4, 0.01)"
+Bilinear pairwise,CRC647_17,"(4, 0.01)"
+Bilinear pairwise,CRC647_2,"(4, 0.01)"
+Bilinear pairwise,CRC647_20,"(4, 0.001)"
+Bilinear pairwise,CRC647_211,"(4, 0.01)"
+Bilinear pairwise,CRC647_3,"(4, 0.01)"
+Bilinear pairwise,CRC647_30,"(4, 0.001)"
+Bilinear pairwise,CRC647_301,"(4, 0.01)"
+Bilinear pairwise,CRC647_304,"(4, 0.01)"
+Bilinear pairwise,CRC647_31,"(4, 0.001)"
+Bilinear pairwise,CRC647_314,"(4, 0.01)"
+Bilinear pairwise,CRC647_316,"(4, 0.01)"
+Bilinear pairwise,CRC647_318,"(4, 0.01)"
+Bilinear pairwise,CRC647_32,"(4, 0.01)"
+Bilinear pairwise,CRC647_321,"(4, 0.01)"
+Bilinear pairwise,CRC647_325,"(4, 0.01)"
+Bilinear pairwise,CRC647_33,"(4, 0.01)"
+Bilinear pairwise,CRC647_335,"(4, 0.01)"
+Bilinear pairwise,CRC647_34,"(4, 0.01)"
+Bilinear pairwise,CRC647_35,"(4, 0.001)"
+Bilinear pairwise,CRC647_36,"(4, 0.001)"
+Bilinear pairwise,CRC647_37,"(4, 0.001)"
+Bilinear pairwise,CRC647_4,"(4, 0.01)"
+Bilinear pairwise,CRC647_40,"(4, 0.01)"
+Bilinear pairwise,CRC647_403,"(4, 0.01)"
+Bilinear pairwise,CRC647_41,"(4, 0.01)"
+Bilinear pairwise,CRC647_42,"(4, 0.01)"
+Bilinear pairwise,CRC647_43,"(4, 0.01)"
+Bilinear pairwise,CRC647_44,"(4, 0.01)"
+Bilinear pairwise,CRC647_507,"(4, 0.01)"
+Bilinear pairwise,CRC647_508,"(4, 0.01)"
+Bilinear pairwise,CRC647_6,"(4, 0.001)"
+Bilinear pairwise,CRC647_7,"(4, 0.001)"
+Bilinear pairwise,CRC647_704,"(4, 0.01)"
+Bilinear pairwise,CRC647_717,"(4, 0.01)"
+Bilinear pairwise,CRC647_718,"(4, 0.01)"
+Bilinear pairwise,CRC647_720,"(4, 0.01)"
+Bilinear pairwise,CRC647_721,"(4, 0.01)"
+Bilinear pairwise,CRC647_8,"(4, 0.01)"
+Bilinear pairwise,FINAL(dev->locked),"(4, 0.01)"
+Structured ridge,CRC647_101,0.1
+Structured ridge,CRC647_104,0.1
+Structured ridge,CRC647_105,1.0
+Structured ridge,CRC647_108,0.1
+Structured ridge,CRC647_110,1.0
+Structured ridge,CRC647_111,1.0
+Structured ridge,CRC647_14,1.0
+Structured ridge,CRC647_17,1.0
+Structured ridge,CRC647_2,0.1
+Structured ridge,CRC647_20,0.1
+Structured ridge,CRC647_211,0.01
+Structured ridge,CRC647_3,0.01
+Structured ridge,CRC647_30,0.01
+Structured ridge,CRC647_301,0.01
+Structured ridge,CRC647_304,0.01
+Structured ridge,CRC647_31,0.01
+Structured ridge,CRC647_314,0.01
+Structured ridge,CRC647_316,0.01
+Structured ridge,CRC647_318,0.1
+Structured ridge,CRC647_32,0.01
+Structured ridge,CRC647_321,0.01
+Structured ridge,CRC647_325,0.01
+Structured ridge,CRC647_33,0.01
+Structured ridge,CRC647_335,0.01
+Structured ridge,CRC647_34,0.01
+Structured ridge,CRC647_35,0.01
+Structured ridge,CRC647_36,0.1
+Structured ridge,CRC647_37,0.1
+Structured ridge,CRC647_4,0.1
+Structured ridge,CRC647_40,0.1
+Structured ridge,CRC647_403,0.1
+Structured ridge,CRC647_41,0.1
+Structured ridge,CRC647_42,0.1
+Structured ridge,CRC647_43,0.1
+Structured ridge,CRC647_44,1.0
+Structured ridge,CRC647_507,1.0
+Structured ridge,CRC647_508,1.0
+Structured ridge,CRC647_6,0.1
+Structured ridge,CRC647_7,1.0
+Structured ridge,CRC647_704,1.0
+Structured ridge,CRC647_717,1.0
+Structured ridge,CRC647_718,1.0
+Structured ridge,CRC647_720,1.0
+Structured ridge,CRC647_721,1.0
+Structured ridge,CRC647_8,1.0
+Structured ridge,FINAL(dev->locked),1.0
+Structured GP,CRC647_101,"(8.0, 0.1)"
+Structured GP,CRC647_104,"(8.0, 0.1)"
+Structured GP,CRC647_105,"(8.0, 0.1)"
+Structured GP,CRC647_108,"(8.0, 0.1)"
+Structured GP,CRC647_110,"(8.0, 0.1)"
+Structured GP,CRC647_111,"(8.0, 0.1)"
+Structured GP,CRC647_14,"(8.0, 0.1)"
+Structured GP,CRC647_17,"(8.0, 0.1)"
+Structured GP,CRC647_2,"(8.0, 0.1)"
+Structured GP,CRC647_20,"(8.0, 0.1)"
+Structured GP,CRC647_211,"(8.0, 0.1)"
+Structured GP,CRC647_3,"(8.0, 0.1)"
+Structured GP,CRC647_30,"(8.0, 0.1)"
+Structured GP,CRC647_301,"(8.0, 0.1)"
+Structured GP,CRC647_304,"(8.0, 0.1)"
+Structured GP,CRC647_31,"(8.0, 0.1)"
+Structured GP,CRC647_314,"(8.0, 0.1)"
+Structured GP,CRC647_316,"(8.0, 0.1)"
+Structured GP,CRC647_318,"(8.0, 0.1)"
+Structured GP,CRC647_32,"(8.0, 0.1)"
+Structured GP,CRC647_321,"(8.0, 0.1)"
+Structured GP,CRC647_325,"(8.0, 0.1)"
+Structured GP,CRC647_33,"(8.0, 0.1)"
+Structured GP,CRC647_335,"(8.0, 0.1)"
+Structured GP,CRC647_34,"(8.0, 0.1)"
+Structured GP,CRC647_35,"(8.0, 0.1)"
+Structured GP,CRC647_36,"(8.0, 0.1)"
+Structured GP,CRC647_37,"(8.0, 0.1)"
+Structured GP,CRC647_4,"(8.0, 0.1)"
+Structured GP,CRC647_40,"(8.0, 0.1)"
+Structured GP,CRC647_403,"(8.0, 0.1)"
+Structured GP,CRC647_41,"(8.0, 0.1)"
+Structured GP,CRC647_42,"(8.0, 0.1)"
+Structured GP,CRC647_43,"(8.0, 0.1)"
+Structured GP,CRC647_44,"(8.0, 0.1)"
+Structured GP,CRC647_507,"(8.0, 0.1)"
+Structured GP,CRC647_508,"(8.0, 0.1)"
+Structured GP,CRC647_6,"(8.0, 0.1)"
+Structured GP,CRC647_7,"(8.0, 0.1)"
+Structured GP,CRC647_704,"(8.0, 0.1)"
+Structured GP,CRC647_717,"(8.0, 0.1)"
+Structured GP,CRC647_718,"(8.0, 0.1)"
+Structured GP,CRC647_720,"(8.0, 0.1)"
+Structured GP,CRC647_721,"(8.0, 0.1)"
+Structured GP,CRC647_8,"(8.0, 0.1)"
+Structured GP,FINAL(dev->locked),"(8.0, 0.1)"
+Lab-trained structured residual (zero-shot),lab grouped CV,1000.0
