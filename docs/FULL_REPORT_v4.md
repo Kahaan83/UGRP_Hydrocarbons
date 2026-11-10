@@ -208,3 +208,38 @@ Dev, all temperatures, log-RMSE [95 % fuel-cluster CI] [`results/v4/V/viscosity_
 skipped when not runnable: extras-dependent steps (when `extras/` is absent), encoder retraining (use `--include-encoder`), the one-off E-output docs patch, the Antoine/Cox comparison (separate uncommitted work), network downloads and the ThermoML SLE
 re-extraction. Two consecutive full runs produced identical `SHA256SUMS_v4.txt` (see `.superpowers/sdd/2026-11-09-v4-integrity-and-upgrade/task-19-report.md`). The pytest baseline of pre-existing failures (all "deliverable file missing" asserts for v2/v3
 files) is in `results/v4/baseline_pytest.txt`.
+
+## 13. Review fixes (2026-11-10, branch `v4-review-fixes`)
+
+Added after the v4 review; sections 0-12 above are unchanged. Claim rows: CLM-38, CLM-39, CLM-40; CLM-25 and CLM-33 carry dated notes.
+All numbers are transcribed from `results/v4/R2/README.md`, `results/v4/L/README.md` and `results/v4/D2/README.md`.
+
+**13.1 Realistic CRC 647 reconstruction (r2)** [`results/v4/R2/README.md`, `results/v4/R2/reconstruction_report.md`, CLM-38].
+r2 replaces the v4 representatives with realistic ones that also have an Antoine and an LFL entry; the nominal saturates split
+(n, iso, cyclo) = (0.1366, 0.3374, 0.5260) comes from 4 GC fuels. Mean fallback mass is 0.0202 (max 0.0538), 65% of it diaromatic mass
+(no naphthalene representative); there is no bicyclic cycloalkane representative. Disclosure: the 12 locked fuels were already scored under the v4
+reconstruction, so r2 choices were fixed on dev fuels and the GC-fuel prior only. Pre-declared readings on the 45 dev fuels:
+
+| property | v4 | r2 | reading |
+|---|---|---|---|
+| density bias at 15.56 C (kg/m3) | -11.11 | -4.69 | outside +/-3, so not attributed to the old reconstruction; 13 of 32 split draws within +/-3 |
+| freezing, ideal SLE (mole) bias (C) | +14.69 | +0.32 | beating the dev-mean constant not established (MAE difference CI [-2.17, +0.25]); 20 of 32 draws within +/-3 |
+| viscosity, raw Refutas dev bias (ln) | -0.301 | -0.244 | not below 0.10, so the recalibration was not just correcting the reconstruction |
+| flash, raw ideal bias (C) | -9.44 | +4.22 | sign flips to the unsafe (over-prediction) side; 53% of dev fuels over by more than 5 C (locked +6.32); cause not isolated |
+
+The flash flip is the safety-relevant result. The saturates split does not explain it (0 of 32 draws within +/-3 C of zero bias); representative
+choice and lump handling were not varied. Dev-fit offset flash MAE rises from 1.71 to 4.12 C (dev) and 1.92 to 3.29 C (locked), against 5.51 / 5.90 for the dev-mean
+constant. The Coutinho library and the legacy offset now under-predict by 12-17 C and should not be combined with r2. The compositions remain reconstructed.
+
+**13.2 Known-composition lab margins** [`results/v4/L/README.md`, `configs/uncertainty_v4.yaml`, CLM-39]. Lab mixtures have measured compositions, so their residuals
+isolate the physics from reconstruction error. Margins use dev systems only (84 of 419 systems locked). Density, ideal volume mixing: over 4.587 / under 3.250 kg/m3
+(167 dev systems). Raw Refutas viscosity: T_ge_283K 0.186 ln (255 groups); T_lt_263K (7 groups) and T_263_283K (2 groups) are `inf` with no `applied_margin`.
+Lab data are mostly binaries at 293-323 K; transfer to 100-component jet fuels is not demonstrated.
+
+**13.3 Design re-run with lab margins** [`results/v4/D2/README.md`, CLM-40]. Category counts A/B/C/D are 7/0/0/6 against v4's 5/0/0/8; 0 of 13 are certified. All four jet
+-20 C kinematic-viscosity constraints are uncertified, because the cold lab viscosity bin is `inf`. The gasoline E10 designs are now ethanol-free (the hydrocarbon-only density model
+is unavailable with ethanol) and fail density. Pools, margins and rules were not adjusted.
+
+**13.4 Open after these fixes.** Flash inputs (four `webbook` Antoine sets, Liaw formulation), the in-sample Coutinho margin, joint-coverage correction, measured-composition fuels and
+low-temperature lab viscosity (needed to make the cold bin finite) are out of scope here. Reproduction: `scripts/v4/reproduce_all.py` now also runs the r2 reconstruction and
+evaluations, the lab-residual build and the D2 design run, inserted in dependency order. The two default design steps (`run_designs_v4.py` / `verify_designs_v4.py` into `results/v4/D`) are no longer re-run: with the lab margins the default engine would overwrite the committed v4 D evidence (a first full run rewrote its five CSVs), so `results/v4/D` is frozen, verified and hashed, and `results/v4/D2` is regenerated instead. The pipeline now has 26 build/eval steps. Two consecutive full runs (`--skip-tests`) produced identical manifests apart from the five `results/v4/D` files that the first run had overwritten.

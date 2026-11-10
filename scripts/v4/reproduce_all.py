@@ -28,6 +28,7 @@ S4 = ROOT / "scripts" / "v4"
 EXTRAS = ROOT / "extras" / "fuelblend_data"
 
 # (title, script, extra args, required paths [skip if any missing])
+R2C = "data/real_fuels/v4/compositions_crc647_r2.csv"
 STEPS = [
     ("P1  Task 2  identity check", "check_identities.py", [], []),
     ("P1  Task 1  provenance audit", "audit_provenance.py", [], []),
@@ -36,18 +37,28 @@ STEPS = [
     ("P2  Task 5  gasoline octane corpus", "build_gasoline_octane.py", [], [EXTRAS]),
     ("P2  Task 6  jet corpus", "build_jet_corpus.py", [], []),
     ("P2  Task 7  v4 splits", "build_splits_v4.py", [], [EXTRAS]),
+    ("R2  review fix 1  realistic CRC 647 reconstruction", "rebuild_crc_reconstruction.py", [], []),
     ("F   Task 9  flash (ideal vs UNIFAC)", "eval_flash_v4.py", [], []),
     ("F   Task 19 flash input sensitivity (mesitylene / n-hexylbenzene)", "flash_input_sensitivity.py", [], []),
     ("B   Task 12 density/HoC/freezing", "eval_bulk_props_v4.py", [], [EXTRAS]),
     ("V   Task 11 viscosity nested CV", "build_viscosity_leaderboard_v4.py", [], []),
+    ("R2  review fix 2  bulk props on r2 compositions", "eval_bulk_props_v4.py",
+     ["--compositions", R2C, "--out", "results/v4/R2/B"], [EXTRAS]),
+    ("R2  review fix 2  flash on r2 compositions", "eval_flash_v4.py",
+     ["--compositions", R2C, "--out", "results/v4/R2/F"], []),
+    ("R2  review fix 2  viscosity on r2 compositions", "build_viscosity_leaderboard_v4.py",
+     ["--compositions", R2C, "--out", "results/v4/R2/V"], []),
+    ("R2  review fix 2  saturates-split sensitivity", "recon_sensitivity.py", [], []),
+    ("R2  review fix 2  v4-vs-r2 readings + README headline", "r2_readings.py", [], []),
     ("SLE Task 13 solid-liquid equilibrium", "eval_sle.py", [], []),
     ("SP  Task 14 sooting inputs", "build_sooting_inputs.py", [], [EXTRAS]),
     ("SP  Task 14 smoke point eval", "eval_smoke_point.py", [], []),
     ("O   Task 15 octane", "eval_octane_v4.py", [], []),
     ("O   Task 15 DVPE diagnostic", "eval_dvpe_v4.py", [], [EXTRAS]),
+    ("L   review fix 3  known-composition lab residuals", "eval_lab_known_composition.py", [], []),
     ("U   Task 10 conformal margins", "build_uncertainty_v4.py", [], []),
-    ("D   Task 17 designs", "run_designs_v4.py", [], []),
-    ("D   Task 17 independent verification", "verify_designs_v4.py", [], []),
+    ("D2  review fix 4  designs with lab margins", "run_designs_v4.py", ["--out", "results/v4/D2"], []),
+    ("D2  review fix 4  independent verification", "verify_designs_v4.py", ["--out", "results/v4/D2"], []),
 ]
 
 NOT_RUN = [
@@ -55,6 +66,9 @@ NOT_RUN = [
      "expensive; committed outputs results/v4/E are verified + hashed. Use --include-encoder to retrain"),
     ("E   Task 16 post-hoc docs patch", "e_posthoc_fixes.py",
      "one-off patch of the committed E outputs; re-running without retraining adds nothing"),
+    ("D   Task 17 designs + verification (results/v4/D)", "run_designs_v4.py / verify_designs_v4.py",
+     "frozen: since review fix 4 the default engine uses the lab margins, so re-running into results/v4/D would overwrite the committed v4 "
+     "evidence with D2-like content; results/v4/D is verified + hashed but not regenerated (D2 is regenerated instead)"),
     ("--  Antoine/Cox gate comparison", "compare_antoine_cox_gate.py",
      "separate uncommitted work, not a v4 plan deliverable"),
     ("--  ThermoML SLE re-extraction / downloads", "(extras thermoml_extract.py --sle, fetch.py)",
@@ -94,6 +108,18 @@ REQUIRED = [
     ("D constraints", "results/v4/D/constraints_v4.csv", 77),
     ("D robustness", "results/v4/D/robustness_v4.csv", 108),
     ("D verification", "results/v4/D/verification_v4.csv", 25),
+    ("R2 reconstruction", "data/real_fuels/v4/compositions_crc647_r2.csv", 1),
+    ("R2 bulk density", "results/v4/R2/B/density_v4.csv", 1),
+    ("R2 flash real", "results/v4/R2/F/flash_real_fuels.csv", 1),
+    ("R2 viscosity leaderboard", "results/v4/R2/V/viscosity_leaderboard_v4.csv", 1),
+    ("R2 split sensitivity", "results/v4/R2/sat_split_sensitivity.csv", 1),
+    ("R2 readings", "results/v4/R2/readings.csv", 1),
+    ("L density lab residuals", "results/v4/L/density_lab_residuals.csv", 1),
+    ("L viscosity lab residuals", "results/v4/L/viscosity_lab_residuals.csv", 1),
+    ("D2 designs", "results/v4/D2/designs_v4.csv", 13),
+    ("D2 constraints", "results/v4/D2/constraints_v4.csv", 1),
+    ("D2 verification", "results/v4/D2/verification_v4.csv", 1),
+    ("Lab splits", "splits/v4/lab_systems_splits.json", 0),
     ("Splits", "splits/v4/real_fuels_v4_splits.json", 0),
     ("Margins", "configs/uncertainty_v4.yaml", 0),
     ("Report", "docs/FULL_REPORT_v4.md", 0),
@@ -103,10 +129,10 @@ REQUIRED = [
 MANIFEST_FILES = [
     "docs/FULL_REPORT_v4.md", "docs/claims_register.md", "docs/model_decision.md",
     "configs/specs_astm.yaml", "configs/specs_bis.yaml", "configs/uncertainty_v4.yaml",
-    "splits/v4/real_fuels_v4_splits.json",
+    "splits/v4/real_fuels_v4_splits.json", "splits/v4/lab_systems_splits.json",
 ]
 MANIFEST_GLOBS = [
-    ("results/v4", ["*/*.csv", "*/*.json", "*/*.md"]),
+    ("results/v4", ["*/*.csv", "*/*.json", "*/*.md", "*/*/*.csv", "*/*/*.json"]),
     ("data/real_fuels/v4", ["*.csv"]),
     ("data/quarantine", ["*.csv"]),
     ("data/processed/v4", ["*.csv", "sooting/*.csv"]),
