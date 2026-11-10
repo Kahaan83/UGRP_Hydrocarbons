@@ -4,7 +4,9 @@ Same models and the same metric set as v3, but on v4 inputs only:
   * targets   : jet_properties_v4.csv rows with provenance == "raw_file" (CRC647, ASTM D4052/D4809-type tables)
   * mixtures  : compositions_v4.csv (CRC647 compositions are RECONSTRUCTED from measured aromatics + D86, R10, so
                 every error below mixes composition-reconstruction error and physics error)
-  * nothing is fitted on the fuels.  Pure-component inputs come from pure-compound data only (ThermoML pure-liquid
+  * nothing in THIS script is fitted on the locked fuels, but see caveats: the legacy -14.58 C offset (v2 eval_cold_flow_v2) was
+    fit on all 57 CRC fuels incl. locked and the library Coutinho parameters were calibrated on "Dauphin & CRC" data, so
+    neither is an out-of-sample test.  The dev-only offset below is the clean one.  Pure-component inputs come from pure-compound data only (ThermoML pure-liquid
     densities, the v2 pure-GCV table, the library Tm/dHfus table).  No threshold or margin is chosen here, and the
     locked fuels (splits/v4) are scored as a separate never-tuned slice.
 
@@ -314,17 +316,25 @@ def eval_freezing(comp, props, role, fuels):
         sle_mole = ideal_sle_mole_C(w, iks, g.mw.to_numpy(float), tmap)
         n_par = g.cls.eq("n_paraffin").to_numpy()
         rows.append(dict(**fuel_meta(f, role), measured_C=meas, wat_ideal_library_C=wat,
-                         wat_minus_offset_C=wat - OFFSET_C if np.isfinite(wat) else np.nan,
+                         wat_minus_legacy_offset_C=wat - OFFSET_C if np.isfinite(wat) else np.nan,
                          coutinho_C=np.nan if no_cryst else t_cout, ideal_sle_mole_C=sle_mole,
                          delta_eutectic_C=de, no_crystallizing_component=bool(no_cryst),
                          paraffin_mass_fraction=float(w[n_par].sum()), paraffin_std_nc=meta.get("paraffin_std_nc", np.nan),
-                         err_wat_ideal=wat - meas, err_wat_minus_offset=wat - OFFSET_C - meas,
+                         err_wat_ideal=wat - meas, err_wat_minus_legacy_offset=wat - OFFSET_C - meas,
                          err_coutinho=np.nan if no_cryst else t_cout - meas, err_ideal_sle_mole=sle_mole - meas,
                          source_file=tgt.loc[f, "source_file"], target_provenance=tgt.loc[f, "provenance"],
                          composition_provenance=",".join(sorted(set(g.provenance))), n_components=len(g),
                          unexplained_fraction_dropped=float(g.unexplained_fraction.iloc[0]),
                          mass_frac_deuterated_standin=float(w[g.deuterated.to_numpy()].sum())))
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    # Dev-only offset: mean (ideal WAT - measured) over the DEV fuels; locked fuels are scored with this constant and
+    # never contribute to it.  (Dev rows are then in-sample for this one constant; locked rows are out-of-sample.)
+    dv = df[df.slice == "dev"]
+    off = float((dv.wat_ideal_library_C - dv.measured_C).mean())
+    df["dev_fit_offset_C"] = off
+    df["wat_minus_devfit_offset_C"] = df.wat_ideal_library_C - off
+    df["err_wat_minus_devfit_offset"] = df.wat_minus_devfit_offset_C - df.measured_C
+    return df
 
 
 # ----------------------------------------------------------------------------- summaries
@@ -382,8 +392,9 @@ def main():
     assert_inputs_clean(fr)
     fr.to_csv(OUT / "freezing_v4.csv", index=False)
     fs = summarize(fr, {"wat_ideal_library (mass-fraction ln)": ("err_wat_ideal", "measured_C"),
-                        "wat_minus_14.58": ("err_wat_minus_offset", "measured_C"),
-                        "coutinho_library": ("err_coutinho", "measured_C"),
+                        "wat_minus_devfit_offset (fit on 45 dev only; locked out-of-sample)": ("err_wat_minus_devfit_offset", "measured_C"),
+                        "wat_minus_14.58 (LEGACY constant, fit on all 57 incl. locked; NOT out-of-sample)": ("err_wat_minus_legacy_offset", "measured_C"),
+                        "coutinho_library (params calibrated on Dauphin+CRC; locked NOT a clean holdout)": ("err_coutinho", "measured_C"),
                         "ideal_sle_mole_fraction": ("err_ideal_sle_mole", "measured_C")}, extra=freeze_extra)
     fs.to_csv(OUT / "freezing_summary_v4.csv", index=False)
 

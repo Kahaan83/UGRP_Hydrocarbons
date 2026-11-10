@@ -34,9 +34,40 @@ def test_v4_inputs_are_clean(run):
         ev.assert_inputs_clean(df)                       # raw_file targets, no quarantined provenance, no dropped fuel
         assert not df.composition_provenance.str.contains("quarantin").any()
     inv = set(pd.read_csv(ev.INV).fuel_id)
-    assert {f.replace("CRC647_", "CRC647_") for f in run["fuels"]} <= inv
+    assert set(run["fuels"]) <= inv
     assert all(f.startswith("CRC647") for f in run["fuels"])
     assert not (set(run["fuels"]) & set(pd.read_csv(ev.DROPPED).fuel_id))
+
+
+def _raw_value_exists(raw, fuel_id, prop, value, T_C=None, scale=1.0, col="value_std", tol=0.011):
+    code = int(fuel_id.split("_")[1])
+    r = raw[(raw.code == code) & (raw.property == prop)]
+    if T_C is not None:
+        r = r[r.T_C.isna() | ((r.T_C - T_C).abs() < 0.06)]   # D4052 rows carry no T in the raw file (60 F)
+    return bool(((r[col] * scale - value).abs() < tol).any())
+
+
+def test_evaluated_targets_equal_the_raw_csv_and_are_not_placeholders(run):
+    raw = pd.read_csv(ROOT / "data" / "raw" / "pour_point" / "crc647_fuel_properties.csv", dtype={"fuel_code": str})
+    raw["code"] = raw.fuel_code.astype(int)
+    for r in run["dens"].itertuples():
+        assert _raw_value_exists(raw, r.fuel_id, "density_kg_m3", r.measured_kg_m3, T_C=r.T_C), (r.fuel_id, r.T_C)
+        assert r.measured_kg_m3 not in (795.0, 804.0)          # v3 placeholder constants (CLM-25)
+    for r in run["fr"].itertuples():
+        assert _raw_value_exists(raw, r.fuel_id, "freezing_point_C", r.measured_C), r.fuel_id
+    for r in run["hoc"].itertuples():
+        assert _raw_value_exists(raw, r.fuel_id, "net_heat_content_btu_lb", r.measured_ncv_MJ_kg,
+                                 scale=0.002326, tol=0.01), r.fuel_id
+    assert run["dens"].measured_kg_m3.nunique() > 30            # not a handful of repeated constants
+
+
+def test_dev_only_offset_is_not_fit_on_locked(run):
+    fr = run["fr"]
+    dv = fr[fr.slice == "dev"]
+    assert fr.dev_fit_offset_C.iloc[0] == pytest.approx((dv.wat_ideal_library_C - dv.measured_C).mean())
+    lk = fr[fr.slice == "locked"]
+    # changing locked targets must not move the offset: recompute from dev rows only
+    assert (lk.wat_ideal_library_C - lk.measured_C).mean() != pytest.approx(fr.dev_fit_offset_C.iloc[0], abs=1e-6)
 
 
 def test_dev_locked_follow_v4_splits_and_never_mix(run):
