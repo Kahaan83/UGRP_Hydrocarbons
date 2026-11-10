@@ -3,4 +3,5 @@ viscosity (ln dyn),Raw Refutas,14237,322,0.3096,"[0.0662, 0.5431]",0.0673,0.0293
 viscosity (ln dyn),Lab structured ridge (system-grouped CV),14237,322,0.3093,"[0.0567, 0.5449]",0.0585,-0.0007
 viscosity (ln dyn),Set encoder (attention),14237,322,0.3081,"[0.0423, 0.5455]",0.0451,-0.0129
 flash (degC),Task 9 ideal,126,31,4.5539,,3.7445,-3.3007
+flash (degC),ideal + constant offset (training-fold mean),126,31,3.2791,,2.6809,0.0808
 flash (degC),Set encoder (attention),126,31,3.4279,,2.5001,-0.1941

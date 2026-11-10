@@ -115,6 +115,14 @@ def test_locked_fuels_never_in_training_or_calibration_indices():
     assert sorted(seen) == sorted(np.where(~np.isin(fuels, list(locked)))[0].tolist())   # every dev row tested once
     with pytest.raises(AssertionError):
         assert_no_locked({"calibration": np.where(fuels == "F3")[0]}, fuels, locked)
+    # the training script's own fold builder, on the real split's locked fuels
+    sys.path.insert(0, str(ROOT / "scripts" / "v4"))
+    import train_set_encoder as tse
+    sp0 = json.load(open(ROOT / "splits" / "v4" / "real_fuels_v4_splits.json"))
+    crc = np.array([f"CRC647_{i}" for i in range(60)] * 3)
+    lock_crc = {f for f in sp0["locked"] if f.startswith("CRC647_")}
+    for tr, te in tse.build_real_folds(crc, lock_crc, 9):
+        assert_no_locked({"train": tr, "test": te}, crc, lock_crc)
     # real split file: the 12 locked CRC fuels are excluded for the real inventory
     sp = json.load(open(ROOT / "splits" / "v4" / "real_fuels_v4_splits.json"))
     assert len(sp["locked"]) >= 12
