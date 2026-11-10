@@ -1,0 +1,13 @@
+slice,model,n,n_censored,note,mae_mm,rmse_mm,median_abs_mm,bias_mm,within_1mm,within_2mm,mae_diff_vs_const_ci_lo,mae_diff_vs_const_ci_hi
+pure_ysi_route,const_geomean,23,5,"pure compounds, leave-one-compound-out; smoke points cited_typed (not file-verifiable)",6.975018835617948,13.087497674434768,2.0896169528376065,-3.2804404468272774,0.17391304347826086,0.4782608695652174,,
+pure_ysi_route,MW/SP=c0+c1*YSI,23,5,"pure compounds, leave-one-compound-out; smoke points cited_typed (not file-verifiable)",5.065271115641414,10.428242817646698,1.2015641566205026,-3.692384726374067,0.4782608695652174,0.6956521739130435,-2.9503919571267185,-0.8802268572825247
+pure_ysi_route_no_isooctane,MW/SP=c0+c1*YSI,22,5,sensitivity: iso-octane excluded from eval (typed 40.0 vs 42.8 mm in Boehm text),4.144050235195044,9.193606659805761,1.0919343259705858,-2.708759919142817,0.5,0.7272727272727273,,
+pure_ysi_route_censored,MW/SP=c0+c1*YSI,0,5,"true SP > 50 mm; within_1mm column = fraction predicted >=50 mm; predictions: {'n-hexane': 14.8, 'n-heptane': 16.5, 'cyclohexane': 13.2, 'n-decane': 20.2, 'n-dodecane': 22.1}",,,,,0.0,,,
+pure_ysi_route_censored,const_geomean,0,5,constant geometric mean is <50 mm: no censored row consistent,,,,,0.0,,,
+ajftd100_bulk,const_mean,100,0,"y range 19.3-25.0 mm, sd 1.38",1.139450000000001,1.3930927822654169,0.8862500000000022,2.0961010704922954e-15,0.52,0.86,,
+ajftd100_bulk,arom+diarom_fixed,100,0,,0.9042502136430934,1.1447172412220505,0.7405740130940153,0.005813476083380991,0.68,0.93,-0.35994464377457425,-0.1162086140348411
+ajftd100_bulk,selected_in_fold,100,0,"feature sets chosen per fold: arom+diarom,arom+diarom,arom+diarom,arom+diarom,arom+diarom",0.9042502136430934,1.1447172412220505,0.7405740130940153,0.005813476083380991,0.68,0.93,-0.35674655648332854,-0.1186712735096318
+ajftd_broad_bulk,const_mean,849,0,"y range 18.4-45.0 mm, sd 3.10",1.649681418084701,3.1046671213706483,1.119145802650955,-5.772801999105591e-05,0.3250883392226148,0.7502944640753828,,
+ajftd_broad_bulk,arom+diarom_fixed,849,0,,1.6793911501813847,2.3004592134747655,1.1274746093423573,-0.0009232438177233895,0.3462897526501767,0.6808009422850412,-0.09226844593492589,0.15005889102097458
+ajftd_broad_bulk,selected_in_fold,849,0,"feature sets chosen per fold: arom,arom,arom+diarom,arom+diarom,arom+diarom",1.6827502295316021,2.307589805033139,1.1382156016137799,-1.6132445073995465e-05,0.375736160188457,0.6890459363957597,-0.09082548140392088,0.1498611028676352
+ysi_route_real_fuels,ysi_mix+smoke_point_from_ysi,0,0,NOT EVALUATED: no fuel in repo has both speciation and measured smoke point (AJFTD has smoke point but no molecule list; GC fuels POSF-10325/UDRI have no smoke point),,,,,,,,

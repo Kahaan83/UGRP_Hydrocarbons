@@ -40,3 +40,10 @@ Missing: a raw-file, cited or reconstructed (R10) molecule list summing to >= 0.
 | 2026-11-10 | v4 Task 6: inventory_v4 RP-1 fuels (NIST_RP1, RP1_Binary_2comp, RP1_Edwards_3comp, RP1_NIST_14comp) property targets | no linked measured properties; `rp1_properties.csv` (NISTIR 6646) describes 'RP-1 original sample', whose identity with SRM 4572 (`NIST_RP1`) is unconfirmed; surrogates have no measurements | fetch the SRM 4572 certificate / Fortin et al. 2012 property table |
 
 <!-- v4-task6:end -->
+
+### v4 Task 14: sooting (2026-11-10)
+
+| Date Logged | Item / Source | Expected Content | Current Status & Mitigation |
+|---|---|---|---|
+| 2026-11-10 | v4 Task 14: fuel with speciation AND measured smoke point; Boehm 2022 SI pure smoke points | none in repo: AJFTD smoke point (100 fuels) has no molecule list; 28 pure smoke points are hand-typed (`cited_typed`), iso-octane 40.0 vs 42.8 mm in Boehm text; extras `tsi_table.csv` derived rows are circular and excluded | YSI route not evaluated on real fuels; see docs/v4_manual_downloads.md M17 |
+

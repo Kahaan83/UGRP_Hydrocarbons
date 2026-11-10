@@ -1,0 +1,29 @@
+inchikey,smiles,compound_name,mw,smoke_point_mm,censored,ysi,source,provenance,note
+VLKZOEOYAKHREP-UHFFFAOYSA-N,CCCCCC,n-hexane,86.178,50.0,True,30.4,li_sunderland2012,cited_typed,Candle lamp limit (>50 mm)
+IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,n-heptane,100.205,50.0,True,36.0,li_sunderland2012,cited_typed,Candle lamp limit (>50 mm)
+XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,cyclohexane,84.162,50.0,True,42.7,li_sunderland2012,cited_typed,Candle lamp limit (>50 mm)
+UAEPNZWRGJTJPN-UHFFFAOYSA-N,CC1CCCCC1,methylcyclohexane,98.18900000000001,43.56,False,53.6,boehm2022,cited_typed,TSI anchor (5.0)
+DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,n-decane,142.286,50.0,True,57.2,mensch2010,cited_typed,Candle lamp limit (>50 mm)
+SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,n-dodecane,170.33999999999997,50.0,True,71.7,mensch2010,cited_typed,Candle lamp limit (>50 mm)
+NHTMVDHEPJAVLT-UHFFFAOYSA-N,CC(C)CC(C)(C)C,iso-octane,114.23199999999999,40.0,False,61.7,mensch2010,cited_typed,Mensch surrogate / ASTM D1322 referee
+GGBJHURWWWLEQH-UHFFFAOYSA-N,CCCCC1CCCCC1,butylcyclohexane,140.26999999999998,45.14,False,76.8,boehm2022,cited_typed,Validation fuel Table 5
+NNBZCPXTIHJBJL-UHFFFAOYSA-N,C1CCC2CCCCC2C1,decalin,138.254,22.7,False,105.5,mensch2010,cited_typed,Mensch recommended surrogate
+UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,benzene,78.11399999999999,9.1,False,100.3,mensch2010,cited_typed,Primary experimental smoke point
+YXFVVABEGXRONW-UHFFFAOYSA-N,Cc1ccccc1,toluene,92.14099999999999,8.4,False,170.9,mensch2010,cited_typed,ASTM D1322 referee / surrogate
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,Cc1ccccc1C,o-xylene,106.16799999999999,8.0,False,204.8,boehm2022,cited_typed,Table S2 experimental
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,Cc1cccc(C)c1,m-xylene,106.16799999999999,7.88,False,221.6,boehm2022,cited_typed,Table S2 experimental
+ODLMAHJVESYWTB-UHFFFAOYSA-N,CCCc1ccccc1,n-propylbenzene,120.19499999999995,8.5,False,235.7,mensch2010,cited_typed,Mensch recommended surrogate
+AUHZEENZYGFFBQ-UHFFFAOYSA-N,Cc1cc(C)cc(C)c1,"1,3,5-trimethylbenzene",120.19499999999998,7.19,False,310.9,boehm2022,cited_typed,Boehm referee fuel (58.9)
+GWHJZXXIDMPWGX-UHFFFAOYSA-N,Cc1ccc(C)c(C)c1,"1,2,4-trimethylbenzene",120.195,7.2,False,308.3,mensch2010,cited_typed,Mensch recommended surrogate
+YNQLUTRBYVCPMQ-UHFFFAOYSA-N,CCc1ccccc1,ethylbenzene,106.16799999999996,5.92,False,223.7,li_sunderland2012,cited_typed,Experimental smoke point
+KXUHSQYYJYAXGZ-UHFFFAOYSA-N,CC(C)Cc1ccccc1,isobutylbenzene,134.22199999999998,7.41,False,257.6,li_sunderland2012,cited_typed,Experimental smoke point
+OCKPCBLVNKHBMX-UHFFFAOYSA-N,CCCCc1ccccc1,n-butylbenzene,134.22199999999998,7.39,False,245.1,li_sunderland2012,cited_typed,Experimental smoke point
+ZJMWRROPUADPEA-UHFFFAOYSA-N,CCC(C)c1ccccc1,sec-butylbenzene,134.22199999999998,6.97,False,199.1,li_sunderland2012,cited_typed,Experimental smoke point
+RWGFKTVRMDUZSP-UHFFFAOYSA-N,CC(C)c1ccccc1,cumene,120.19499999999995,6.14,False,187.6,li_sunderland2012,cited_typed,Experimental smoke point
+CXWXQJXEFPUFDZ-UHFFFAOYSA-N,c1ccc2c(c1)CCCC2,tetralin,132.206,7.1,False,336.0,mensch2010,cited_typed,Mensch recommended surrogate
+PPBRXRYQALVLMV-UHFFFAOYSA-N,C=Cc1ccccc1,styrene,104.15199999999997,5.27,False,174.0,li_sunderland2012,cited_typed,Experimental smoke point
+IGARGHRYKHJQSM-UHFFFAOYSA-N,c1ccc(C2CCCCC2)cc1,cyclohexylbenzene,160.26,8.9,False,377.3,mensch2010,cited_typed,Mensch recommended surrogate
+KEIFWROAQVVDBN-UHFFFAOYSA-N,C1=Cc2ccccc2CC1,"1,2-dihydronaphthalene",130.18999999999997,5.8,False,466.1,mensch2010,cited_typed,Mensch recommended surrogate
+QPUYECUOLPXSFR-UHFFFAOYSA-N,Cc1cccc2ccccc12,1-methylnaphthalene,142.201,5.13,False,649.1,boehm2022,cited_typed,TSI anchor (100.0)
+QIMMUPPBPVKWKM-UHFFFAOYSA-N,Cc1ccc2ccccc2c1,2-methylnaphthalene,142.201,4.37,False,649.1,li_sunderland2012,cited_typed,Experimental smoke point
+UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,naphthalene,128.17399999999995,3.49,False,466.1,li_sunderland2012,cited_typed,Experimental smoke point

@@ -60,6 +60,17 @@ families:
       aromatics_wt_pct:
         max: 25.0
         test_method: "ASTM D1319"
+      # v4 Task 14. D1655 Table 1: smoke point >= 25.0 mm, OR >= 18.0 mm AND naphthalenes <= 3.00 vol %
+      # (D1322 / D1840). Limits confirmed only from secondary sources (supplier specification sheets that
+      # cite D1655-15/-19, found via web search 2026-11-10); the ASTM standard text itself was NOT read.
+      # Confirm against the current D1655 edition before relying on them.
+      smoke_point_mm:
+        min: 25.0
+        alt_min: 18.0
+        alt_requires: {naphthalenes_vol_pct_max: 3.0}
+        test_method: "ASTM D1322 / D1840"
+        verification: "secondary_sources_only"
+        uncertainty_margin: null  # model skill vs constant baseline not established (results/v4/SP)
 
   diesel_no2:
     standard: "ASTM D975"
