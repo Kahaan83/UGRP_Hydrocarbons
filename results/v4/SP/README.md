@@ -2,6 +2,10 @@
 
 All numbers below are read from `smoke_point_eval.csv` (regenerate: `scripts/v4/build_sooting_inputs.py` then `scripts/v4/eval_smoke_point.py`).
 
+## Headline
+
+Most conservative bulk-route result (AJFTD 100 fuels grouped by inferred T-code, an undocumented tank/producer code parsed from fuel_label; unmatched fuels pooled as one group): selected-in-fold MAE 1.29 mm vs constant-mean 1.47 mm. Grouping by fuel_id alone gives 0.90 vs 1.14; that gain is inflated by near-duplicate fuels. Grouped by test date: 0.89 vs 1.13.
+
 ## Results (mm; lower is better)
 
 | slice | model | N | MAE | RMSE | bias | MAE minus const MAE, 95% bootstrap CI |
@@ -12,8 +16,14 @@ All numbers below are read from `smoke_point_eval.csv` (regenerate: `scripts/v4/
 | ajftd100_bulk | const_mean | 100 | 1.14 | 1.39 | +0.00 |  |
 | ajftd100_bulk | arom+diarom_fixed | 100 | 0.90 | 1.14 | +0.01 | [-0.36, -0.12] |
 | ajftd100_bulk | selected_in_fold | 100 | 0.90 | 1.14 | +0.01 | [-0.36, -0.12] |
+| ajftd100_bulk_groupTcode | const_mean | 100 | 1.47 | 1.78 | -0.16 |  |
+| ajftd100_bulk_groupTcode | arom+diarom_fixed | 100 | 1.31 | 1.77 | -0.48 | [-0.23, -0.08] |
+| ajftd100_bulk_groupTcode | selected_in_fold | 100 | 1.29 | 1.70 | -0.45 | [-0.24, -0.11] |
+| ajftd100_bulk_groupTestDate | const_mean | 100 | 1.13 | 1.38 | +0.00 |  |
+| ajftd100_bulk_groupTestDate | arom+diarom_fixed | 100 | 0.89 | 1.14 | -0.01 | [-0.36, -0.12] |
+| ajftd100_bulk_groupTestDate | selected_in_fold | 100 | 0.89 | 1.14 | -0.01 | [-0.35, -0.12] |
 | ajftd_broad_bulk | const_mean | 849 | 1.65 | 3.10 | -0.00 |  |
-| ajftd_broad_bulk | arom+diarom_fixed | 849 | 1.68 | 2.30 | -0.00 | [-0.09, +0.15] |
+| ajftd_broad_bulk | arom+diarom_fixed | 849 | 1.68 | 2.30 | -0.00 | [-0.10, +0.15] |
 | ajftd_broad_bulk | selected_in_fold | 849 | 1.68 | 2.31 | -0.00 | [-0.09, +0.15] |
 
 ## Censoring
@@ -25,7 +35,7 @@ All numbers below are read from `smoke_point_eval.csv` (regenerate: `scripts/v4/
 
 * Bulk route (AJFTD 100 fuels, GroupKFold by fuel_id, feature set selected inside training folds): MAE 0.90 mm vs constant-mean 1.14 mm (y range 19.3-25.0 mm, sd 1.38). AJFTD smoke point resolution is ~0.5-1 mm and fuel_ids from one producer/batch are not grouped, so the CV is if anything optimistic. No fuel is below 19 mm or above 25 mm, so the 18/25 mm constraint boundaries are not probed.
 * Broad AJFTD sensitivity (N=849, D1322, 5<SP<50 filter): selected MAE 1.68 vs const 1.65.
-* YSI route, pure compounds (leave-one-out, N=23): MAE 5.07 vs geometric-mean baseline 6.98.
+* YSI route, pure compounds (leave-one-out, N=23): MAE 5.07 vs geometric-mean baseline 6.98. CAVEAT: unreliable for saturates; the five censored alkanes/cycloalkanes (true SP > 50 mm) are predicted 13-22 mm, i.e. error >= 28 mm each, and are excluded from this MAE.
 * The linear MW/SP-vs-YSI form fails on saturated hydrocarbons: every censored (SP > 50 mm) alkane/cycloalkane is predicted far below 50 mm (see Censoring), so the YSI route is not reliable for low-sooting components. On the broad AJFTD set the bulk model has no skill over the constant mean (CI spans 0).
 * YSI route on real fuels: NOT EVALUATED (no fuel with both speciation and measured smoke point). It must not be cited as evidence for fuel smoke point.
 
@@ -33,6 +43,9 @@ All numbers below are read from `smoke_point_eval.csv` (regenerate: `scripts/v4/
 
 * YSI: raw_file, verified equal to `UnifiedYSI` in Harvard Dataverse YSI Database Volume 2 (benzene 100.3, toluene 170.9, n-heptane 36.0).
 * Pure smoke points (28 rows, 23 uncensored): `cited_typed` from extras/build_tsi_table.py (Mensch 2010, Li & Sunderland 2012, Boehm 2022 SI); SI numbers are not in this repo and could not be checked. Known discrepancy: iso-octane typed 40.0 mm, Boehm 2022 text quotes 42.8 mm.
+* Config only: the `smoke_point_mm` keys added to configs/specs_astm.yaml and specs_bis.yaml (alt_min, alt_requires, uncertainty_margin) are NOT read by any code yet; nothing enforces them. BIS values are UNVERIFIED; D1655 values are from secondary sources only.
+* Data-quality note: raw YSI table gives identical values for naphthalene and 1,2-dihydronaphthalene (466.1) and for 1-/2-methylnaphthalene (649.1); they match the raw .tab as stored but look suspicious and should be checked against the primary source.
+* `ysi_mix` returns a YSI only; use `sooting.mixture_mw(smiles, x_mole)` for the mole-averaged MW needed by `smoke_point_from_ysi`.
 * EXCLUDED as circular: 175 rows of extras `tsi_table.csv` (derived=True), smoke point computed from YSI.
 * AJFTD smoke point/aromatics: raw_file (match `ajftd_fuels.csv`/`ajftd_composition.csv`); smoke point is not derived from aromatics.
 
