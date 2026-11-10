@@ -51,3 +51,19 @@ def test_smoke_point_censoring_respected():
 
 def test_bulk_model_direction():
     assert S.smoke_point_from_bulk(10.0, 1.0) > S.smoke_point_from_bulk(22.0, 1.0)
+
+
+def test_bulk_domain_guard_and_clamp():
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        S.smoke_point_from_bulk(18.0, 1.5)  # in domain: no warning
+    with pytest.warns(S.OutOfDomainWarning):
+        v = S.smoke_point_from_bulk(60.0, 1.0)
+    assert 0.0 <= v <= S.SP_CAP_MM
+    with pytest.warns(S.OutOfDomainWarning):
+        assert S.smoke_point_from_bulk(0.0, 0.0) <= S.SP_CAP_MM
+
+
+def test_mixture_mw():
+    assert S.mixture_mw(["c1ccccc1", "CCCCCCC"], [1, 1]) == pytest.approx((78.114 + 100.205) / 2, abs=0.01)

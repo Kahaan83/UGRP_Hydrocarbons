@@ -57,12 +57,12 @@ def select_inside(train):
     return best
 
 
-def bulk_cv(df, slice_name, rows):
+def bulk_cv(df, slice_name, rows, group_col="fuel_id"):
     df = df.reset_index(drop=True)
     y = df.value.to_numpy()
     preds = {k: np.zeros(len(df)) for k in ("const_mean", "arom+diarom_fixed", "selected_in_fold")}
     chosen = []
-    for tr, te in GroupKFold(5).split(df, groups=df.fuel_id):
+    for tr, te in GroupKFold(5).split(df, groups=df[group_col]):
         a, b = df.iloc[tr], df.iloc[te]
         preds["const_mean"][te] = a.value.mean()
         preds["arom+diarom_fixed"][te] = _pred(b, FSETS["arom+diarom"], _fit(a, FSETS["arom+diarom"]))
@@ -104,7 +104,7 @@ def main():
     rows.append(dict(slice="pure_ysi_route_no_isooctane", model="MW/SP=c0+c1*YSI", n=int(keep.sum()),
                      n_censored=len(cen),
                      note="sensitivity: iso-octane excluded from eval (typed 40.0 vs 42.8 mm in Boehm text)",
-                     **metrics(yl[keep], pl[keep] if False else np.array(pl)[keep])))
+                     **metrics(yl[keep], np.array(pl)[keep])))
     coef = S.fit_ysi_sp(pure)
     pcen = S.predict_ysi_sp(cen.ysi, cen.mw, coef)
     rows.append(dict(slice="pure_ysi_route_censored", model="MW/SP=c0+c1*YSI", n=0, n_censored=len(cen),
@@ -116,7 +116,12 @@ def main():
     # (B) AJFTD 100 fuels, bulk route
     a = pd.read_csv(S.DATA / "smoke_point_ajftd.csv")
     ncen = int(a.censored.sum())
-    bulk_cv(a[~a.censored], "ajftd100_bulk", rows)
+    a = a[~a.censored].copy()
+    bulk_cv(a, "ajftd100_bulk", rows)
+    # stricter groupings: inferred T-code (tank/producer code, not documented) and test date
+    tc = a.fuel_label.astype(str).str.extract(r"\)(T\d+)")[0].fillna("NOCODE")
+    bulk_cv(a.assign(tgroup=tc), "ajftd100_bulk_groupTcode", rows, "tgroup")
+    bulk_cv(a.assign(dgroup=a.test_date.astype(str).str.split(" ").str[0]), "ajftd100_bulk_groupTestDate", rows, "dgroup")
     # (C) broad AJFTD set, sensitivity
     bulk_cv(pd.read_csv(S.DATA / "smoke_point_ajftd_broad.csv"), "ajftd_broad_bulk", rows)
     # (D) YSI route on real fuels
@@ -136,6 +141,12 @@ def write_readme(df, ncen_ajftd):
     L = ["# Smoke point / sooting evaluation (v4 Task 14)", "",
          "All numbers below are read from `smoke_point_eval.csv` "
          "(regenerate: `scripts/v4/build_sooting_inputs.py` then `scripts/v4/eval_smoke_point.py`).", "",
+         "## Headline", "",
+         f"Most conservative bulk-route result (AJFTD 100 fuels grouped by inferred T-code, an undocumented tank/producer code parsed "
+         f"from fuel_label; unmatched fuels pooled as one group): selected-in-fold MAE {g('ajftd100_bulk_groupTcode', 'selected_in_fold', 'mae_mm'):.2f} mm vs "
+         f"constant-mean {g('ajftd100_bulk_groupTcode', 'const_mean', 'mae_mm'):.2f} mm. Grouping by fuel_id alone gives "
+         f"{g('ajftd100_bulk', 'selected_in_fold', 'mae_mm'):.2f} vs {g('ajftd100_bulk', 'const_mean', 'mae_mm'):.2f}; that gain is inflated by near-duplicate fuels. "
+         f"Grouped by test date: {g('ajftd100_bulk_groupTestDate', 'selected_in_fold', 'mae_mm'):.2f} vs {g('ajftd100_bulk_groupTestDate', 'const_mean', 'mae_mm'):.2f}.", "",
          "## Results (mm; lower is better)", "",
          "| slice | model | N | MAE | RMSE | bias | MAE minus const MAE, 95% bootstrap CI |",
          "|---|---|---|---|---|---|---|"]
@@ -160,7 +171,8 @@ def write_readme(df, ncen_ajftd):
           f"{g('ajftd_broad_bulk', 'const_mean', 'mae_mm'):.2f}.",
           f"* YSI route, pure compounds (leave-one-out, N={int(g('pure_ysi_route', 'const_geomean', 'n'))}): "
           f"MAE {g('pure_ysi_route', 'MW/SP=c0+c1*YSI', 'mae_mm'):.2f} vs geometric-mean baseline "
-          f"{g('pure_ysi_route', 'const_geomean', 'mae_mm'):.2f}.",
+          f"{g('pure_ysi_route', 'const_geomean', 'mae_mm'):.2f}. CAVEAT: unreliable for saturates; the five censored alkanes/cycloalkanes "
+          f"(true SP > 50 mm) are predicted 13-22 mm, i.e. error >= 28 mm each, and are excluded from this MAE.",
           "* The linear MW/SP-vs-YSI form fails on saturated hydrocarbons: every censored (SP > 50 mm) alkane/cycloalkane is predicted far "
           "below 50 mm (see Censoring), so the YSI route is not reliable for low-sooting components. On the broad AJFTD set the bulk model has no skill over the constant mean (CI spans 0).",
           "* YSI route on real fuels: NOT EVALUATED (no fuel with both speciation and measured smoke point). "
@@ -171,6 +183,11 @@ def write_readme(df, ncen_ajftd):
           "* Pure smoke points (28 rows, 23 uncensored): `cited_typed` from extras/build_tsi_table.py "
           "(Mensch 2010, Li & Sunderland 2012, Boehm 2022 SI); SI numbers are not in this repo and could not be checked. "
           "Known discrepancy: iso-octane typed 40.0 mm, Boehm 2022 text quotes 42.8 mm.",
+          "* Config only: the `smoke_point_mm` keys added to configs/specs_astm.yaml and specs_bis.yaml (alt_min, alt_requires, uncertainty_margin) "
+          "are NOT read by any code yet; nothing enforces them. BIS values are UNVERIFIED; D1655 values are from secondary sources only.",
+          "* Data-quality note: raw YSI table gives identical values for naphthalene and 1,2-dihydronaphthalene (466.1) and for 1-/2-methylnaphthalene (649.1); "
+          "they match the raw .tab as stored but look suspicious and should be checked against the primary source.",
+          "* `ysi_mix` returns a YSI only; use `sooting.mixture_mw(smiles, x_mole)` for the mole-averaged MW needed by `smoke_point_from_ysi`.",
           "* EXCLUDED as circular: 175 rows of extras `tsi_table.csv` (derived=True), smoke point computed from YSI.",
           "* AJFTD smoke point/aromatics: raw_file (match `ajftd_fuels.csv`/`ajftd_composition.csv`); smoke point is not derived from aromatics.",
           "", "## Claims-register ids that would update (not edited here)", "",

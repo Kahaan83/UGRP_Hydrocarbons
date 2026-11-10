@@ -18,6 +18,8 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 
+import warnings
+
 import numpy as np
 import pandas as pd
 from rdkit import Chem
@@ -55,6 +57,18 @@ def ysi_mix(smiles, x_mole, table: dict[str, float] | None = None) -> float:
     return float(np.dot(x, vals))
 
 
+def mixture_mw(smiles, x_mole) -> float:
+    """Mole-averaged molecular weight (g/mol), for smoke_point_from_ysi on a mixture."""
+    from rdkit.Chem import Descriptors
+    x = np.asarray(x_mole, float)
+    x = x / x.sum()
+    return float(sum(xi * Descriptors.MolWt(Chem.MolFromSmiles(s)) for xi, s in zip(x, smiles)))
+
+
+class OutOfDomainWarning(UserWarning):
+    """Input outside the training domain of a smoke-point model."""
+
+
 def exact_rows(df: pd.DataFrame, value_col: str = "smoke_point_mm") -> pd.DataFrame:
     """Rows usable as exact targets: not censored and strictly below the lamp limit."""
     ok = ~df["censored"].astype(bool) & (df[value_col] < SP_CAP_MM)
@@ -77,7 +91,7 @@ def predict_ysi_sp(ysi, mw, coef) -> np.ndarray:
     den = coef[0] + coef[1] * ysi
     with np.errstate(divide="ignore", invalid="ignore"):
         sp = np.where(den > 0, mw / den, SP_CAP_MM)
-    return np.minimum(sp, SP_CAP_MM)
+    return np.clip(sp, 0.0, SP_CAP_MM)
 
 
 @lru_cache(maxsize=1)
@@ -106,7 +120,7 @@ def fit_bulk(df: pd.DataFrame, features=BULK_FEATURES, value_col="value"):
 
 def predict_bulk(df: pd.DataFrame, coef, means, features=BULK_FEATURES) -> np.ndarray:
     X = df[list(features)].fillna(means)
-    return np.minimum(np.c_[np.ones(len(df)), X.to_numpy()] @ coef, SP_CAP_MM)
+    return np.clip(np.c_[np.ones(len(df)), X.to_numpy()] @ coef, 0.0, SP_CAP_MM)
 
 
 @lru_cache(maxsize=1)
@@ -117,8 +131,15 @@ def _bulk_model():
 def smoke_point_from_bulk(aromatics_vol: float, diaromatics_vol: float | None = None) -> float:
     """Smoke point (mm) of a jet fuel from D1319 aromatics and diaromatics (vol %).
 
-    Trained on 100 AJFTD jet fuels (aromatics 8-23 vol %, SP 19.3-25 mm); do not use outside."""
+    Trained on 100 AJFTD jet fuels (aromatics ~8-23 vol %, SP 19.3-25 mm); do not use outside.
+    Emits OutOfDomainWarning if aromatics is outside [8, 23] vol % or the result is outside
+    [19, 25] mm (trust range); the value is still returned. Clamped to [0, 50] mm."""
+    if not (8.0 <= aromatics_vol <= 23.0):
+        warnings.warn(f"aromatics {aromatics_vol} vol % outside training domain 8-23", OutOfDomainWarning)
     coef, means = _bulk_model()
     d = pd.DataFrame({BULK_FEATURES[0]: [aromatics_vol],
                       BULK_FEATURES[1]: [np.nan if diaromatics_vol is None else diaromatics_vol]})
-    return float(predict_bulk(d, coef, means)[0])
+    out = float(predict_bulk(d, coef, means)[0])
+    if not (19.0 <= out <= 25.0):
+        warnings.warn(f"predicted smoke point {out:.1f} mm outside trusted range 19-25 mm", OutOfDomainWarning)
+    return out
