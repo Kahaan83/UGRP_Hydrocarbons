@@ -126,3 +126,23 @@ def test_realistic_reps_requires_pure_props_and_flash_entry():
     assert reps.get("cycloalkane", 7) is None          # bicyclo[2.2.1]-type cage is rejected
     assert reps.get("n_paraffin", 8) != 4              # deuterated octane rejected
     assert reps.get("n_paraffin", 20) is None          # beyond max_gap
+
+
+def test_skip_is_logged_and_excluded_end_to_end(caplog):
+    import importlib.util, pathlib
+    spec = importlib.util.spec_from_file_location("rebuild", pathlib.Path(__file__).parents[1] / "scripts/v4/rebuild_crc_reconstruction.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    p = pd.DataFrame([
+        dict(fuel_id="CRC647_1", property="aromatics_vol_pct", value=18.0, method="ASTM D1319", role="descriptor"),
+        dict(fuel_id="CRC647_1", property="distillation_T0_C", value=157.0, method="ASTM D86 (test 1)", role="descriptor"),
+        dict(fuel_id="CRC647_1", property="distillation_T10_C", value=173.0, method="ASTM D86 (test 1)", role="descriptor"),
+        dict(fuel_id="CRC647_1", property="distillation_T50_C", value=199.0, method="ASTM D86 (test 1)", role="descriptor"),
+    ])
+    rows = mod.descriptor_rows(p)
+    with caplog.at_level("WARNING"):
+        fr, fb = reconstruct(rows["CRC647_1"], SPLIT, StubReps())
+    assert fr.empty and fb == 1.0
+    assert any("fewer than 4 distillation points" in r.message for r in caplog.records)
+    assert r2.diaromatic_mass(ROW) == pytest.approx(r2.diaromatic_mass(ROW))
+    assert 0 < r2.diaromatic_mass(ROW) < 0.2
