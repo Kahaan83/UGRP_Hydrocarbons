@@ -1,5 +1,8 @@
 """reproduce_all.py - Master One-Command Reproduction Pipeline for v3.
 
+v4 NOTICE: the v3 generators regenerate quarantined, formula-derived (fabricated) corpora and
+designs. Their outputs are retracted; use scripts/v4/reproduce_all.py instead.
+
 Mirrors scripts/v2/reproduce_all.py. Orchestrates the v3 validation-gap pipeline:
   - Phase S (data expansion + zero-leakage splits)
   - Phase R (audits R2/R6/R7, viscosity leaderboard, flash hindcast, freeze regimes, surrogates)
