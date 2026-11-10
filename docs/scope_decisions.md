@@ -44,3 +44,18 @@ This document records formal scoping decisions governed by empirical data availa
 
 ### Formal Decision:
 **The diesel real-fuel corpus is empty in v4.** `splits/v4/real_fuels_v4_splits.json` contains no diesel fuel, and no diesel real-fuel evaluation is reported. It resumes once Task 8 documents (raw diesel composition tables, e.g. Kirgina et al. and the NASA LFP report) are obtained and transcribed into a raw file.
+
+---
+
+## 3. Decision SD-03: DVPE evaluation pending data
+
+- **Date:** 2026-11-10
+- **Task ID:** v4 Task 15 (octane refit; DVPE re-derivation clause)
+- **Governing rule:** "Re-derive the DVPE evaluation only if a raw file with measured DVPE exists. Otherwise record SD-03 (DVPE evaluation pending data)."
+
+### Data audit findings:
+- `data/real_fuels/*/inventory*.csv` list `dvpe_kpa` only as a property tag; the v3 values were formula-derived (CLM-21, RETRACTED) and `extras/fuelblend_data/data/raw/octane/gasoline_fuel_properties.csv` (82 rows) holds only density, MW and group-contribution weight fractions (no DVPE/RVP column).
+- The only raw file with a measured DVPE column is `extras/fuelblend_data/data/raw/cooptima/fuel_engine_co_optimization.csv` (`Blend_DVPE`, 68 of 527 rows non-empty, `Pure_DVPE` empty). It is a free-text blend sheet: composition is prose (e.g. "10% 2-methyl-1-butanol in 2016-NREL-BOB-01", "TIGAS Green Gasoline"), the base fuels have no composition or vapour pressure in the file, some entries are censored ("<6.89"), `Blend_DVPE_units`/`temp` are empty, and values mix sources. No row can be turned into a resolved molecular composition without manual transcription, so a vapour-pressure model (Raoult/UNIFAC) cannot be evaluated on it honestly.
+
+### Formal Decision:
+**No DVPE evaluation is reported in v4.** CLM-21 stays RETRACTED. The evaluation resumes when a measured-DVPE table with a resolved composition (or a base-fuel DVPE plus oxygenate fraction usable like the bRON design) is transcribed into a raw file; the Co-Optima `Blend_DVPE` sheet is the candidate source for a manual, unit-checked transcription of the base+oxygenate rows. Octane (Task 15) is unaffected.

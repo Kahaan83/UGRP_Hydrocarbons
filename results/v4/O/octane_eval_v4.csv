@@ -1,0 +1,175 @@
+record_type,view,prop,model,ref_model,n,n_groups,mae,rmse,bias,ci_lo,ci_hi,n_common,mae_common,ci_lo_common,ci_hi_common,excludes_zero,note
+metric,dev_cv5_stored_folds,ron,constant_mean,,53,18,3.22459,3.77355,-0.115092,2.70926,3.76561,47,3.08135,2.60464,3.65279,,
+paired_diff,dev_cv5_stored_folds,ron,constant_mean,base_unchanged,53,18,-1.87795,,,-2.96604,-0.721951,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,constant_mean,linear_volume_pooled_bov,53,18,0.492106,,,0.17735,0.810779,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,base_unchanged,,53,18,5.10255,6.18389,-5.07123,3.86279,6.3937,47,5.01011,3.81846,6.24803,,
+paired_diff,dev_cv5_stored_folds,ron,base_unchanged,constant_mean,53,18,1.87795,,,0.721951,2.96604,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,base_unchanged,linear_volume_pooled_bov,53,18,2.37006,,,1.04706,3.60112,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,linear_volume_prior,,53,18,6.4886,7.68255,-6.45508,5.08142,7.9881,47,6.36177,4.90624,7.79603,,
+paired_diff,dev_cv5_stored_folds,ron,linear_volume_prior,base_unchanged,53,18,1.38606,,,0.80298,1.75472,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,linear_volume_prior,constant_mean,53,18,3.26401,,,1.83963,4.59259,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,linear_volume_prior,linear_volume_pooled_bov,53,18,3.75611,,,2.18178,5.20946,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,linear_mole_prior,,47,16,6.78915,8.02837,-6.76018,5.20047,8.38001,47,6.78915,5.20047,8.38001,,
+paired_diff,dev_cv5_stored_folds,ron,linear_mole_prior,base_unchanged,47,16,1.77904,,,1.01387,2.29027,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,linear_mole_prior,constant_mean,47,16,3.7078,,,2.06952,5.16933,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,linear_mole_prior,linear_volume_pooled_bov,47,16,4.25698,,,2.449,5.90648,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,linear_volume_pooled_bov,,53,18,2.73249,3.29187,-0.0146112,2.0152,3.49125,47,2.53217,1.7946,3.34305,,
+paired_diff,dev_cv5_stored_folds,ron,linear_volume_pooled_bov,base_unchanged,53,18,-2.37006,,,-3.60112,-1.04706,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,linear_volume_pooled_bov,constant_mean,53,18,-0.492106,,,-0.810779,-0.17735,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,ghosh_lumps,,53,18,3.19342,3.76757,-0.513514,2.45209,3.95788,47,3.0568,2.27675,3.91405,,
+paired_diff,dev_cv5_stored_folds,ron,ghosh_lumps,base_unchanged,53,18,-1.90913,,,-3.03676,-0.813983,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,ghosh_lumps,constant_mean,53,18,-0.0311758,,,-0.387234,0.388137,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,ghosh_lumps,linear_volume_pooled_bov,53,18,0.46093,,,-0.00188869,0.969974,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,gbm_resid,,53,18,2.55426,3.20151,-0.264463,1.78644,3.38399,47,2.33118,1.57636,3.15908,,
+paired_diff,dev_cv5_stored_folds,ron,gbm_resid,base_unchanged,53,18,-2.54829,,,-3.62168,-1.45187,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,gbm_resid,constant_mean,53,18,-0.670339,,,-1.12265,-0.186101,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,gbm_resid,linear_volume_pooled_bov,53,18,-0.178233,,,-0.704455,0.389791,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,ron,gp_resid,,53,18,2.29263,2.88229,-0.537248,1.61059,3.04504,47,2.03601,1.43603,2.7359,,
+paired_diff,dev_cv5_stored_folds,ron,gp_resid,base_unchanged,53,18,-2.80992,,,-3.79996,-1.81083,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,gp_resid,constant_mean,53,18,-0.931965,,,-1.39653,-0.442026,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,ron,gp_resid,linear_volume_pooled_bov,53,18,-0.439859,,,-1.00813,0.121571,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,constant_mean,,53,18,3.24812,3.77373,0.00331447,2.74516,3.76874,47,3.07458,2.61919,3.60697,,
+paired_diff,dev_leave_one_blendstock_out,ron,constant_mean,base_unchanged,53,18,-1.85443,,,-2.96359,-0.697545,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,constant_mean,linear_volume_pooled_bov,53,18,0.557171,,,0.17379,0.92684,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,base_unchanged,,53,18,5.10255,6.18389,-5.07123,3.86279,6.3937,47,5.01011,3.81846,6.24803,,
+paired_diff,dev_leave_one_blendstock_out,ron,base_unchanged,constant_mean,53,18,1.85443,,,0.697545,2.96359,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,base_unchanged,linear_volume_pooled_bov,53,18,2.4116,,,1.02352,3.72493,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,linear_volume_prior,,53,18,6.4886,7.68255,-6.45508,5.08142,7.9881,47,6.36177,4.90624,7.79603,,
+paired_diff,dev_leave_one_blendstock_out,ron,linear_volume_prior,base_unchanged,53,18,1.38606,,,0.80298,1.75472,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,linear_volume_prior,constant_mean,53,18,3.24049,,,1.80399,4.57843,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,linear_volume_prior,linear_volume_pooled_bov,53,18,3.79766,,,2.12135,5.31281,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,linear_mole_prior,,47,16,6.78915,8.02837,-6.76018,5.20047,8.38001,47,6.78915,5.20047,8.38001,,
+paired_diff,dev_leave_one_blendstock_out,ron,linear_mole_prior,base_unchanged,47,16,1.77904,,,1.01387,2.29027,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,linear_mole_prior,constant_mean,47,16,3.71457,,,2.059,5.21794,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,linear_mole_prior,linear_volume_pooled_bov,47,16,4.34259,,,2.40508,6.08652,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,linear_volume_pooled_bov,,53,18,2.69095,3.3235,0.159618,1.91224,3.49323,47,2.44656,1.64406,3.3037,,
+paired_diff,dev_leave_one_blendstock_out,ron,linear_volume_pooled_bov,base_unchanged,53,18,-2.4116,,,-3.72493,-1.02352,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,linear_volume_pooled_bov,constant_mean,53,18,-0.557171,,,-0.92684,-0.17379,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,ghosh_lumps,,53,18,2.97853,3.5921,-0.396444,2.25018,3.78408,47,2.91782,2.10883,3.83549,,
+paired_diff,dev_leave_one_blendstock_out,ron,ghosh_lumps,base_unchanged,53,18,-2.12402,,,-3.40656,-0.88525,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,ghosh_lumps,constant_mean,53,18,-0.269584,,,-0.795751,0.278061,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,ghosh_lumps,linear_volume_pooled_bov,53,18,0.287587,,,-0.325504,0.898956,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,gbm_resid,,53,18,3.14696,4.03958,0.0344533,2.0763,4.29141,47,2.53261,1.73459,3.4506,,
+paired_diff,dev_leave_one_blendstock_out,ron,gbm_resid,base_unchanged,53,18,-1.95559,,,-3.31312,-0.477705,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,gbm_resid,constant_mean,53,18,-0.101158,,,-0.78357,0.68691,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,gbm_resid,linear_volume_pooled_bov,53,18,0.456012,,,-0.147383,1.13559,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,ron,gp_resid,,53,18,2.87474,3.86919,-0.396073,1.79161,4.09715,47,2.17186,1.46876,2.98839,,
+paired_diff,dev_leave_one_blendstock_out,ron,gp_resid,base_unchanged,53,18,-2.2278,,,-3.51866,-0.728933,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,gp_resid,constant_mean,53,18,-0.373373,,,-1.20521,0.581402,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,ron,gp_resid,linear_volume_pooled_bov,53,18,0.183798,,,-0.694959,1.12644,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,locked_thin_test,ron,constant_mean,,12,4,2.74708,3.48445,-0.76636,2.00536,4.1612,12,2.74708,2.00536,4.1612,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,constant_mean,base_unchanged,12,4,-2.94333,,,-4.43937,-1.35063,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,constant_mean,linear_volume_pooled_bov,12,4,0.903174,,,0.0441951,1.76215,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,base_unchanged,,12,4,5.69042,6.62834,-5.69042,3.42667,8.57792,12,5.69042,3.42667,8.57792,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,base_unchanged,constant_mean,12,4,2.94333,,,1.35063,4.43937,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,base_unchanged,linear_volume_pooled_bov,12,4,3.84651,,,1.65758,5.07978,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,linear_volume_prior,,12,4,6.01807,6.57061,-6.01807,5.02007,6.73744,12,6.01807,5.02007,6.73744,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,linear_volume_prior,base_unchanged,12,4,0.32765,,,-2.33122,1.67077,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,linear_volume_prior,constant_mean,12,4,3.27098,,,1.8312,4.71077,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,linear_volume_prior,linear_volume_pooled_bov,12,4,4.17416,,,1.87539,6.47292,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,linear_mole_prior,,12,4,5.4962,6.22845,-5.4962,4.0184,6.97401,12,5.4962,4.0184,6.97401,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,linear_mole_prior,base_unchanged,12,4,-0.194212,,,-4.40556,2.02002,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,linear_mole_prior,constant_mean,12,4,2.74912,,,-0.0225249,4.94734,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,linear_mole_prior,linear_volume_pooled_bov,12,4,3.6523,,,0.595093,6.7095,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,linear_volume_pooled_bov,,12,4,1.84391,2.68107,-0.491846,0.264513,3.49813,12,1.84391,0.264513,3.49813,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,linear_volume_pooled_bov,base_unchanged,12,4,-3.84651,,,-5.07978,-1.65758,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,linear_volume_pooled_bov,constant_mean,12,4,-0.903174,,,-1.76215,-0.0441951,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,ghosh_lumps,,12,4,1.48258,1.827,-0.587879,1.32784,1.6634,12,1.48258,1.32784,1.6634,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,ghosh_lumps,base_unchanged,12,4,-4.20784,,,-7.2031,-1.7456,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,ghosh_lumps,constant_mean,12,4,-1.2645,,,-2.73638,-0.422311,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,ghosh_lumps,linear_volume_pooled_bov,12,4,-0.361329,,,-2.13732,1.12734,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,gbm_resid,,12,4,1.61381,1.94285,-1.0186,1.11425,2.50675,12,1.61381,1.11425,2.50675,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,gbm_resid,base_unchanged,12,4,-4.07661,,,-6.07116,-2.20625,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,gbm_resid,constant_mean,12,4,-1.13328,,,-1.63179,-0.828287,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,gbm_resid,linear_volume_pooled_bov,12,4,-0.230102,,,-1.30994,0.849741,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,ron,gp_resid,,12,4,1.80207,2.09436,-1.48473,1.06869,2.69657,12,1.80207,1.06869,2.69657,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,ron,gp_resid,base_unchanged,12,4,-3.88834,,,-6.84432,-1.9326,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,gp_resid,constant_mean,12,4,-0.94501,,,-2.67691,0.556301,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,ron,gp_resid,linear_volume_pooled_bov,12,4,-0.0418354,,,-2.35462,2.27094,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,dev_cv5_stored_folds,mon,constant_mean,,54,18,1.61506,2.00141,0.011968,1.31322,1.95667,48,1.69054,1.34717,2.04128,,
+paired_diff,dev_cv5_stored_folds,mon,constant_mean,base_unchanged,54,18,-1.6447,,,-2.27873,-0.920447,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,constant_mean,linear_volume_pooled_bov,54,18,0.363919,,,0.106367,0.637349,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,base_unchanged,,54,18,3.25976,3.74871,-3.25976,2.61403,3.84509,48,3.21587,2.51381,3.88943,,
+paired_diff,dev_cv5_stored_folds,mon,base_unchanged,constant_mean,54,18,1.6447,,,0.920447,2.27873,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,base_unchanged,linear_volume_pooled_bov,54,18,2.00862,,,1.15296,2.74661,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,linear_volume_prior,,54,18,4.50292,5.06502,-4.35773,3.73943,5.25465,48,4.44738,3.57229,5.33507,,
+paired_diff,dev_cv5_stored_folds,mon,linear_volume_prior,base_unchanged,54,18,1.24316,,,0.626283,1.77352,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,linear_volume_prior,constant_mean,54,18,2.88786,,,1.89205,3.80819,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,linear_volume_prior,linear_volume_pooled_bov,54,18,3.25178,,,2.24385,4.17118,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,linear_mole_prior,,48,16,4.77301,5.42047,-4.63971,3.82663,5.69593,48,4.77301,3.82663,5.69593,,
+paired_diff,dev_cv5_stored_folds,mon,linear_mole_prior,base_unchanged,48,16,1.55714,,,0.819972,2.10216,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,linear_mole_prior,constant_mean,48,16,3.08247,,,1.89674,4.17495,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,linear_mole_prior,linear_volume_pooled_bov,48,16,3.46047,,,2.28625,4.576,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,linear_volume_pooled_bov,,54,18,1.25114,1.60403,0.190442,0.939246,1.57965,48,1.31254,0.963349,1.66755,,
+paired_diff,dev_cv5_stored_folds,mon,linear_volume_pooled_bov,base_unchanged,54,18,-2.00862,,,-2.74661,-1.15296,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,linear_volume_pooled_bov,constant_mean,54,18,-0.363919,,,-0.637349,-0.106367,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,ghosh_lumps,,54,18,1.73893,2.26727,-0.103722,1.21624,2.34154,48,1.80514,1.22701,2.48757,,
+paired_diff,dev_cv5_stored_folds,mon,ghosh_lumps,base_unchanged,54,18,-1.52083,,,-2.28164,-0.743794,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,ghosh_lumps,constant_mean,54,18,0.123878,,,-0.36829,0.702684,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,ghosh_lumps,linear_volume_pooled_bov,54,18,0.487798,,,-0.0768357,1.11053,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,gbm_resid,,54,18,1.10776,1.51925,-0.119211,0.777224,1.47975,48,1.14425,0.784687,1.54047,,
+paired_diff,dev_cv5_stored_folds,mon,gbm_resid,base_unchanged,54,18,-2.152,,,-2.79641,-1.37201,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,gbm_resid,constant_mean,54,18,-0.507299,,,-0.846794,-0.193776,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,gbm_resid,linear_volume_pooled_bov,54,18,-0.143379,,,-0.372462,0.0934836,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_cv5_stored_folds,mon,gp_resid,,54,18,1.14706,1.49684,-0.0970804,0.823541,1.48475,48,1.19293,0.842674,1.53256,,
+paired_diff,dev_cv5_stored_folds,mon,gp_resid,base_unchanged,54,18,-2.1127,,,-2.7601,-1.37189,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,gp_resid,constant_mean,54,18,-0.467994,,,-0.732056,-0.216211,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_cv5_stored_folds,mon,gp_resid,linear_volume_pooled_bov,54,18,-0.104075,,,-0.307738,0.107477,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,constant_mean,,54,18,1.65046,2.02959,3.15797e-15,1.34235,1.99813,48,1.71523,1.36028,2.07339,,
+paired_diff,dev_leave_one_blendstock_out,mon,constant_mean,base_unchanged,54,18,-1.6093,,,-2.25791,-0.866961,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,constant_mean,linear_volume_pooled_bov,54,18,0.370024,,,0.13049,0.624694,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,base_unchanged,,54,18,3.25976,3.74871,-3.25976,2.61403,3.84509,48,3.21587,2.51381,3.88943,,
+paired_diff,dev_leave_one_blendstock_out,mon,base_unchanged,constant_mean,54,18,1.6093,,,0.866961,2.25791,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,base_unchanged,linear_volume_pooled_bov,54,18,1.97932,,,1.10446,2.71665,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,linear_volume_prior,,54,18,4.50292,5.06502,-4.35773,3.73943,5.25465,48,4.44738,3.57229,5.33507,,
+paired_diff,dev_leave_one_blendstock_out,mon,linear_volume_prior,base_unchanged,54,18,1.24316,,,0.626283,1.77352,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,linear_volume_prior,constant_mean,54,18,2.85245,,,1.86531,3.77123,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,linear_volume_prior,linear_volume_pooled_bov,54,18,3.22248,,,2.21016,4.15599,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,linear_mole_prior,,48,16,4.77301,5.42047,-4.63971,3.82663,5.69593,48,4.77301,3.82663,5.69593,,
+paired_diff,dev_leave_one_blendstock_out,mon,linear_mole_prior,base_unchanged,48,16,1.55714,,,0.819972,2.10216,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,linear_mole_prior,constant_mean,48,16,3.05778,,,1.85478,4.16292,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,linear_mole_prior,linear_volume_pooled_bov,48,16,3.42727,,,2.24035,4.56747,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,linear_volume_pooled_bov,,54,18,1.28044,1.6499,0.211114,0.951361,1.63766,48,1.34574,0.974661,1.71598,,
+paired_diff,dev_leave_one_blendstock_out,mon,linear_volume_pooled_bov,base_unchanged,54,18,-1.97932,,,-2.71665,-1.10446,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,linear_volume_pooled_bov,constant_mean,54,18,-0.370024,,,-0.624694,-0.13049,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,ghosh_lumps,,54,18,1.79577,2.40907,-0.0941806,1.23104,2.4913,48,1.92214,1.32451,2.69182,,
+paired_diff,dev_leave_one_blendstock_out,mon,ghosh_lumps,base_unchanged,54,18,-1.46399,,,-2.27408,-0.611,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,ghosh_lumps,constant_mean,54,18,0.145303,,,-0.373132,0.798826,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,ghosh_lumps,linear_volume_pooled_bov,54,18,0.515327,,,-0.0657879,1.23564,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,gbm_resid,,54,18,1.29905,1.72766,-0.22162,0.92326,1.73357,48,1.34129,0.92555,1.82179,,
+paired_diff,dev_leave_one_blendstock_out,mon,gbm_resid,base_unchanged,54,18,-1.96071,,,-2.61025,-1.18808,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,gbm_resid,constant_mean,54,18,-0.351418,,,-0.727776,0.0229594,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,gbm_resid,linear_volume_pooled_bov,54,18,0.0186069,,,-0.302675,0.36712,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,dev_leave_one_blendstock_out,mon,gp_resid,,54,18,1.24702,1.64228,-0.147908,0.885148,1.65685,48,1.29657,0.880304,1.74392,,
+paired_diff,dev_leave_one_blendstock_out,mon,gp_resid,base_unchanged,54,18,-2.01274,,,-2.69389,-1.25076,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,gp_resid,constant_mean,54,18,-0.403447,,,-0.698514,-0.0948971,,,,,True,mae column = MAE(model) - MAE(ref); negative = model better
+paired_diff,dev_leave_one_blendstock_out,mon,gp_resid,linear_volume_pooled_bov,54,18,-0.0334224,,,-0.301952,0.27181,,,,,False,mae column = MAE(model) - MAE(ref); negative = model better
+metric,locked_thin_test,mon,constant_mean,,12,4,1.77105,2.30662,-1.22816,1.21667,2.2271,12,1.77105,1.21667,2.2271,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,constant_mean,base_unchanged,12,4,-2.5002,,,-3.00373,-1.72032,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,constant_mean,linear_volume_pooled_bov,12,4,0.329368,,,-0.0396243,0.630528,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,base_unchanged,,12,4,4.27125,4.69635,-4.27125,2.95667,5.23083,12,4.27125,2.95667,5.23083,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,base_unchanged,constant_mean,12,4,2.5002,,,1.72032,3.00373,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,base_unchanged,linear_volume_pooled_bov,12,4,2.82957,,,1.68069,3.41033,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,linear_volume_prior,,12,4,5.02502,5.50378,-5.02502,3.85218,6.19786,12,5.02502,3.85218,6.19786,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,linear_volume_prior,base_unchanged,12,4,0.753769,,,-0.413991,1.34869,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,linear_volume_prior,constant_mean,12,4,3.25397,,,2.33321,4.17473,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,linear_volume_prior,linear_volume_pooled_bov,12,4,3.58333,,,2.40764,4.75903,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,linear_mole_prior,,12,4,4.98428,5.53654,-4.98428,3.57973,6.38883,12,4.98428,3.57973,6.38883,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,linear_mole_prior,base_unchanged,12,4,0.713032,,,-0.946873,1.63062,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,linear_mole_prior,constant_mean,12,4,3.21323,,,1.96189,4.36569,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,linear_mole_prior,linear_volume_pooled_bov,12,4,3.5426,,,2.1352,4.95,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,linear_volume_pooled_bov,,12,4,1.44168,1.55622,-0.883998,1.05346,1.8299,12,1.44168,1.05346,1.8299,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,linear_volume_pooled_bov,base_unchanged,12,4,-2.82957,,,-3.41033,-1.68069,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,linear_volume_pooled_bov,constant_mean,12,4,-0.329368,,,-0.630528,0.0396243,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,ghosh_lumps,,12,4,0.983404,1.23587,-0.936202,0.417584,1.5875,12,0.983404,0.417584,1.5875,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,ghosh_lumps,base_unchanged,12,4,-3.28785,,,-4.02123,-2.3602,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,ghosh_lumps,constant_mean,12,4,-0.787648,,,-1.03935,-0.589385,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,ghosh_lumps,linear_volume_pooled_bov,12,4,-0.45828,,,-0.844787,-0.0717734,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,gbm_resid,,12,4,1.52487,1.85919,-1.50504,0.732074,2.48047,12,1.52487,0.732074,2.48047,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,gbm_resid,base_unchanged,12,4,-2.74638,,,-3.6873,-2.02035,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,gbm_resid,constant_mean,12,4,-0.246184,,,-0.833792,0.356464,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,gbm_resid,linear_volume_pooled_bov,12,4,0.0831837,,,-0.712463,0.87883,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+metric,locked_thin_test,mon,gp_resid,,12,4,1.21739,1.41679,-1.02128,0.646905,1.60168,12,1.21739,0.646905,1.60168,,"locked: 4 CAS groups, no CI claim possible"
+paired_diff,locked_thin_test,mon,gp_resid,base_unchanged,12,4,-3.05386,,,-3.69762,-2.27704,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,gp_resid,constant_mean,12,4,-0.553658,,,-0.693892,-0.393664,,,,,True,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
+paired_diff,locked_thin_test,mon,gp_resid,linear_volume_pooled_bov,12,4,-0.22429,,,-0.596345,0.220166,,,,,False,"mae column = MAE(model) - MAE(ref); negative = model better; locked has 4 groups, CI NOT reliable, do not cite"
