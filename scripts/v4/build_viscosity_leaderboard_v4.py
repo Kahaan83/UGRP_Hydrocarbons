@@ -207,7 +207,10 @@ def build_lab(reg, provider, cls, nc):
         d = {f"frac_{c}": float(sum(wi for i, wi in zip(ii, ws) if cls[i] == c)) for c in CLASSES}
         n_ = np.array([nc[i] for i in ii]); m_ = float((ws * n_).sum())
         d["nC_mean"], d["nC_std"] = m_, float(np.sqrt((ws * (n_ - m_) ** 2).sum()))
-        rows.append(dict(system_id=r.system_id, T_K=r.T_K, resid=np.log(r.value) - np.log(nu * rho_mix / 1000.0), **d))
+        # n_comp / measured_mPas / raw_refutas_mPas are additive provenance columns (used by eval_lab_known_composition.py);
+        # the leaderboard itself selects only FEATS, T_K, resid and system_id from this frame.
+        rows.append(dict(system_id=r.system_id, T_K=r.T_K, resid=np.log(r.value) - np.log(nu * rho_mix / 1000.0),
+                         n_comp=len(ks), measured_mPas=float(r.value), raw_refutas_mPas=float(nu * rho_mix / 1000.0), **d))
     return pd.DataFrame(rows)
 
 
