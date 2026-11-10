@@ -233,9 +233,10 @@ def main(argv=None):
     kv = props[(props.property == "viscosity_kin_cSt") & props.fuel_id.str.startswith("CRC647_")]
     assert set(kv.provenance) == {"raw_file"}
     comp = pd.read_csv(COMP)
-    direct = bool((comp.provenance == "reconstructed_r2").any())
+    direct = bool(comp.provenance.isin(["reconstructed_r2", "reconstructed_r3"]).any())
     if direct:
-        assert (comp.provenance == "reconstructed_r2").all(), "mixed r2 / non-r2 composition table"
+        assert (comp.provenance == comp.provenance.iloc[0]).all() and comp.provenance.iloc[0] in (
+            "reconstructed_r2", "reconstructed_r3"), "mixed r2 / r3 / non-r2/r3 composition table"
     splits = json.load(open(SPLITS))
     locked = set(splits["locked"])
     fuels = sorted(kv.fuel_id.unique())
