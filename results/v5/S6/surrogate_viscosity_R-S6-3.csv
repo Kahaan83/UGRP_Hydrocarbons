@@ -1,0 +1,5 @@
+fuel_id,n_components,mole_fraction_without_pure_viscosity_data,nu_exp_cSt,nist_model_cSt,ln_err_nist_model,status,nu_refutas_cSt,ln_err,inside_margin,sensitivity_covered_only_nu_cSt,sensitivity_covered_only_ln_err
+V0a,4,0.0,2.452,2.472,0.008123521521479347,evaluated,2.8102774149957606,0.13637918459655612,True,,
+V0b,5,0.0,2.303,2.118,-0.08374037365933346,evaluated,2.565078652724548,0.10777652114429213,True,,
+V1,8,0.0,2.331,2.172,-0.07064895798193101,evaluated,2.6138708690086343,0.11453485416103791,True,,
+V2,9,0.288,2.378,2.317,-0.025986552818350935,"not evaluable (pure eta(T) missing for: 1,3,5-triisopropylbenzene, 2-methylheptadecane, n-eicosane, perhydrophenanthrene)",,,,2.486552247754715,0.04463731325306785

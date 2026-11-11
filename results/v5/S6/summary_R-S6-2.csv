@@ -1,0 +1,11 @@
+property,lab,model,primary,n,bias,mae,worst_over,worst_under,over_gt5C_rate,fraction_inside_0.186_ln
+cetane_number_D613,CPChem,linear_volume_verified_pure_DCN,False,0,,,,,,
+cetane_number_D613,ORNL/SwRI,linear_volume_verified_pure_DCN,True,0,,,,,,
+dcn_D6890,NREL,linear_volume_verified_pure_DCN,True,0,,,,,,
+density_kg_m3,CPChem,ideal_volume,False,4,5.81943768682757,15.00895200548345,27.100912496924252,-10.384374468788906,,
+density_kg_m3,NCUT,ideal_volume,False,4,6.593675086827574,14.983976605483491,27.800223696924263,-9.585161668788942,,
+density_kg_m3,ORNL/SwRI,ideal_volume,True,4,5.844413086827586,14.983976605483434,27.100912496924252,-10.28447286878884,,
+flash_point_C,CPChem,ideal_le_chatelier,False,3,-14.845992619734645,14.845992619734645,-8.552720450435615,-18.61022374844446,0.0,
+flash_point_C,ORNL/SwRI,ideal_le_chatelier,True,4,-12.752311071714933,12.752311071714933,-4.608276005991172,-16.971266427655806,0.0,
+viscosity_kin_cSt,NCUT,refutas,False,4,-0.309982529788062,0.309982529788062,-0.16178629004972664,-0.5775259264510245,,0.25
+viscosity_kin_cSt,ORNL/SwRI,refutas,True,4,-0.4115241627633999,0.4115241627633999,-0.19789573901839283,-0.748483724594664,,0.0
