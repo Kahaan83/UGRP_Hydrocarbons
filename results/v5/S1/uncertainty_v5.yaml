@@ -1,0 +1,2468 @@
+# GENERATED - do not edit. Produced by scripts/v5/eval_lab_known_composition_v5.py (v5 S1) via scripts/v4/build_uncertainty_v4.py::add.
+# Same residual convention and conformal rule as configs/uncertainty_v4.yaml, which is NOT modified. 'inf' = no valid margin; read applied_margin only.
+version: 5.0-S1
+generated_by: scripts/v5/eval_lab_known_composition_v5.py
+alpha: 0.1
+residual_convention: predicted - measured; one-sided margins use the unsafe side named in 'direction'
+margin_rule: conformal quantile k=ceil((n+1)(1-alpha)) of per-group max unsafe-side residuals over n groups; 'inf' if k>n
+excluded:
+  dvpe_kpa: 'EXCLUDED: DVPE targets are UNITS-UNCONFIRMED (Task 15 / SD-03; psi inferred, 51 BOB+oxygenate rows). No margin is produced until
+    units are confirmed from the source.'
+  diesel_cetane_cloud_pour: 'No v4 residuals exist (SD-02: 0 diesel fuels qualify); the v3 margins are not carried forward.'
+  pour_point_C: No v4 task evaluated pour point; the v3 hand-typed 4.50 is not carried forward.
+margins:
+  flash_point_C.lab_mixtures.ideal:
+    value: 3.698768343688585
+    unit: degC
+    direction: over
+    alpha: 0.1
+    n_groups: 31
+    group_unit: system (distinct InChIKey set)
+    conformal_rank_k: 29
+    n_rows: 126
+    residual_file: results/v4/F/flash_lab_loso.csv
+    model: Le Chatelier + Antoine + LFL, gamma=1; zero fitted parameters
+    scope: lab hydrocarbon mixtures (Leenhouts; 126 records), all 31 systems; no dev/locked split exists for lab data
+    residual_convention: predicted - measured
+    applied_margin: 3.698768343688585
+    mean_signed_residual_bias: -3.300657515010765
+    locked_check: null
+    caveats:
+    - Zero-parameter physics, so leave-one-system-out residuals are genuinely out-of-sample; nothing was tuned on them.
+    - 'Mostly binary alkane/aromatic systems (123 of 126 records binary): not representative of a 100+-component jet fuel.'
+    - No locked slice for lab data; instead the margin is cross-checked against the CRC647 D93 fuel residuals (transfer_check).
+    transfer_check:
+      description: fraction of CRC647 D93 fuels whose over-prediction <= the lab margin (different population; a check, not calibration)
+      groups_covered: 57
+      n_groups: 57
+    recompute:
+      column: ideal_err_C
+      group: system_id
+      where: []
+    recommendation: 'RECOMMENDATION (not a measured result): the D93 reconstructed-CRC entry floors at 0 because every CRC fuel is under-predicted
+      by a closed-cup/reconstruction offset (about -9.4 C). The lab ideal entry (31 systems) is the only margin with a real over-prediction exposure
+      (one lab system over-predicts by +10.6 C). Optimizer-designed novel blends must NOT use 0 as the flash margin; use the larger of the lab
+      applied_margin and the D93 applied_margin unless a different choice is documented.'
+  flash_point_C.lab_mixtures.unifac:
+    value: 1.5582460479421325
+    unit: degC
+    direction: over
+    alpha: 0.1
+    n_groups: 31
+    group_unit: system (distinct InChIKey set)
+    conformal_rank_k: 29
+    n_rows: 126
+    residual_file: results/v4/F/flash_lab_loso.csv
+    model: Le Chatelier + Antoine + LFL, original UNIFAC (Hansen 1991); zero fitted parameters
+    scope: lab hydrocarbon mixtures (Leenhouts; 126 records), all 31 systems; no dev/locked split exists for lab data
+    residual_convention: predicted - measured
+    applied_margin: 1.5582460479421325
+    mean_signed_residual_bias: -3.914073276860714
+    locked_check: null
+    caveats:
+    - Zero-parameter physics, so leave-one-system-out residuals are genuinely out-of-sample; nothing was tuned on them.
+    - 'Mostly binary alkane/aromatic systems (123 of 126 records binary): not representative of a 100+-component jet fuel.'
+    - No locked slice for lab data; instead the margin is cross-checked against the CRC647 D93 fuel residuals (transfer_check).
+    transfer_check:
+      description: fraction of CRC647 D93 fuels whose over-prediction <= the lab margin (different population; a check, not calibration)
+      groups_covered: 57
+      n_groups: 57
+    recompute:
+      column: unifac_err_C
+      group: system_id
+      where: []
+  flash_point_C.real_fuels_D93_reconstructed.ideal:
+    value: -6.547444049647538
+    unit: degC
+    direction: over
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/F/flash_real_fuels.csv
+    model: same physics as lab (ideal) applied to CRC647 reconstructed compositions
+    scope: CRC 647 jet fuels, ASTM D93 closed cup, DEV fuels only (split_role != locked)
+    residual_convention: predicted - measured
+    applied_margin: 0.0
+    applied_margin_note: 'computed margin is negative: no/few groups were ever over-predicted at this level; applied_margin is floored at 0 (a
+      negative margin must not be credited as extra safety).'
+    mean_signed_residual_bias: -9.441063670589717
+    locked_check:
+      groups_covered: 10
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -14.3129
+      - -9.9448
+      - -9.6046
+      - -9.3982
+      - -9.341
+      - -8.7961
+      - -7.7965
+      - -7.0245
+      - -6.808
+      - -6.6109
+      - -5.9837
+      - -5.6797
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - 'Compositions are RECONSTRUCTED from measured aromatics + D86 (ruling R10), not measured by GC: residuals mix reconstruction error with
+      physics error.'
+    - Every fuel is UNDER-predicted (bias about -9 C; D93 closed cup reads warmer than the Le Chatelier prediction), so the conformal over-prediction
+      score is negative. The negative margin only says over-prediction was never observed; it does not make the model accurate.
+    - applied_margin is floored at 0. Over-prediction can still occur for fuels whose composition is poorly reconstructed or outside CRC647 (diesel/gasoline
+      have no raw flash data).
+    - ASTM D56 (Tag closed cup, Jet A-1 spec method) has one fuel only (POSF-10325); see the D56 entry.
+    recompute:
+      column: ideal_err_C
+      group: fuel_id
+      where:
+      - - method
+        - eq
+        - D93
+      - - split_role
+        - ne
+        - locked
+    recommendation: 'RECOMMENDATION (not a measured result): the D93 reconstructed-CRC entry floors at 0 because every CRC fuel is under-predicted
+      by a closed-cup/reconstruction offset (about -9.4 C). The lab ideal entry (31 systems) is the only margin with a real over-prediction exposure
+      (one lab system over-predicts by +10.6 C). Optimizer-designed novel blends must NOT use 0 as the flash margin; use the larger of the lab
+      applied_margin and the D93 applied_margin unless a different choice is documented.'
+  flash_point_C.real_fuels_D93_reconstructed.unifac:
+    value: -7.279663621860685
+    unit: degC
+    direction: over
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/F/flash_real_fuels.csv
+    model: same physics as lab (unifac) applied to CRC647 reconstructed compositions
+    scope: CRC 647 jet fuels, ASTM D93 closed cup, DEV fuels only (split_role != locked)
+    residual_convention: predicted - measured
+    applied_margin: 0.0
+    applied_margin_note: 'computed margin is negative: no/few groups were ever over-predicted at this level; applied_margin is floored at 0 (a
+      negative margin must not be credited as extra safety).'
+    mean_signed_residual_bias: -10.054652062111973
+    locked_check:
+      groups_covered: 9
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -15.0819
+      - -10.4738
+      - -10.1285
+      - -10.059
+      - -10.0573
+      - -9.2673
+      - -8.3946
+      - -7.6275
+      - -7.3036
+      - -7.1516
+      - -6.6402
+      - -6.1669
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - 'Compositions are RECONSTRUCTED from measured aromatics + D86 (ruling R10), not measured by GC: residuals mix reconstruction error with
+      physics error.'
+    - Every fuel is UNDER-predicted (bias about -9 C; D93 closed cup reads warmer than the Le Chatelier prediction), so the conformal over-prediction
+      score is negative. The negative margin only says over-prediction was never observed; it does not make the model accurate.
+    - applied_margin is floored at 0. Over-prediction can still occur for fuels whose composition is poorly reconstructed or outside CRC647 (diesel/gasoline
+      have no raw flash data).
+    - ASTM D56 (Tag closed cup, Jet A-1 spec method) has one fuel only (POSF-10325); see the D56 entry.
+    recompute:
+      column: unifac_err_C
+      group: fuel_id
+      where:
+      - - method
+        - eq
+        - D93
+      - - split_role
+        - ne
+        - locked
+  flash_point_C.real_fuels_D56.ideal:
+    value: inf
+    unit: degC
+    direction: over
+    alpha: 0.1
+    n_groups: 1
+    group_unit: fuel
+    conformal_rank_k: 2
+    n_rows: 0
+    residual_file: results/v4/F/flash_real_fuels.csv
+    model: ideal Le Chatelier
+    scope: ASTM D56 fuels with raw flash value
+    residual_convention: predicted - measured
+    reason: only 1 independent group (POSF-10325, headline n=1, statistics_allowed=False); no valid margin; no substitute number is given.
+    locked_check: null
+    caveats:
+    - 'Exactly one D56 fuel exists (POSF-10325, n=1 headline set, statistics not allowed): residual deliberately NOT used. No D56 margin is possible.'
+    n_groups_available: 1
+  density_kg_m3.crc647_ideal_volume.all_T:
+    value: 23.609917763948147
+    unit: kg/m3
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 315
+    residual_file: results/v4/B/density_v4.csv
+    model: ideal volume mixing, rho = 1/sum(w_i/rho_i(T))
+    scope: CRC 647 fuels (45 dev), every temperature (-0.2..69.5 C), per-fuel max |err| over its rows
+    residual_convention: predicted - measured
+    applied_margin: 23.609917763948147
+    mean_signed_residual_bias: -11.118164080642455
+    locked_check:
+      groups_covered: 11
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 3.7833
+      - 5.0744
+      - 6.1591
+      - 7.0422
+      - 7.8408
+      - 8.9882
+      - 10.7572
+      - 12.5673
+      - 13.8189
+      - 14.8472
+      - 23.4641
+      - 24.5385
+    caveats:
+    - 'Ideal volume mixing of reconstructed CRC647 compositions: error = reconstruction + physics.'
+    - The model is systematically biased low (about -11 kg/m3 on dev); the conformal margin is on |residual| of a biased model, so it is wide.
+      A bias-corrected model would have a narrower margin but its offset would have to be fitted on dev and re-validated; that was not done here.
+    - Density is only the ideal-volume model; it uses ThermoML pure densities with tiered fallbacks (about 20 % of mass on class regressions).
+    - 'Resolves the v3 ''12.94 vs 2.50'' inconsistency: 12.94 kg/m3 was the v3 MAE over 153 fuels (results/v3/G10: MAE 12.94, RMSE 16.75); the
+      2.50 design margin is unsupported by those residuals (a 90 % quantile below the MAE is impossible). The v4 conformal margin is computed
+      from the 45 real CRC647 dev fuels.'
+    recompute:
+      column: err_kg_m3
+      group: fuel_id
+      where:
+      - - slice
+        - eq
+        - dev
+  density_kg_m3.crc647_ideal_volume.T15_56C:
+    value: 22.251763722581472
+    unit: kg/m3
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/density_v4.csv
+    model: ideal volume mixing
+    scope: CRC 647 fuels, ASTM D4052 at 15.56 C only (v3-comparable slice; 45 dev fuels, one row each)
+    residual_convention: predicted - measured
+    applied_margin: 22.251763722581472
+    mean_signed_residual_bias: -11.112524715664723
+    locked_check:
+      groups_covered: 11
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 1.0472
+      - 1.7079
+      - 3.0724
+      - 6.0227
+      - 6.6348
+      - 6.6398
+      - 8.0805
+      - 9.3037
+      - 10.258
+      - 11.8444
+      - 13.1506
+      - 22.9158
+    caveats:
+    - 'Ideal volume mixing of reconstructed CRC647 compositions: error = reconstruction + physics.'
+    - The model is systematically biased low (about -11 kg/m3 on dev); the conformal margin is on |residual| of a biased model, so it is wide.
+      A bias-corrected model would have a narrower margin but its offset would have to be fitted on dev and re-validated; that was not done here.
+    - Density is only the ideal-volume model; it uses ThermoML pure densities with tiered fallbacks (about 20 % of mass on class regressions).
+    recompute:
+      column: err_kg_m3
+      group: fuel_id
+      where:
+      - - slice
+        - eq
+        - dev
+      - - T_C
+        - close
+        - 15.56
+  heat_of_combustion_net_MJ_kg.crc647.group_additivity_composition_H:
+    value: 0.2240266433640911
+    unit: MJ/kg
+    direction: over
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/hoc_v4.csv
+    model: group_additivity_composition_H
+    scope: 'CRC 647 net heat of combustion, 45 dev fuels (min-spec: over-prediction is unsafe)'
+    residual_convention: predicted - measured
+    applied_margin: 0.2240266433640911
+    mean_signed_residual_bias: -0.05686923952918081
+    locked_check:
+      groups_covered: 12
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.2759
+      - -0.199
+      - -0.1884
+      - -0.1738
+      - -0.0973
+      - -0.0833
+      - -0.0601
+      - -0.0446
+      - -0.0387
+      - -0.0159
+      - 0.0607
+      - 0.0942
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - Reconstructed compositions; group additivity with Tier A/B formation enthalpies (v2 table), no fitted parameters.
+    - Model under-predicts on average (bias negative), so the over-prediction score can be small or negative; applied_margin is floored at 0.
+    recompute:
+      column: err_comp_H
+      group: fuel_id
+      where:
+      - - split_role
+        - ne
+        - locked
+  heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8:
+    value: 0.1940195141400025
+    unit: MJ/kg
+    direction: over
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/hoc_v4.csv
+    model: group_additivity_v2_constH13.8
+    scope: 'CRC 647 net heat of combustion, 45 dev fuels (min-spec: over-prediction is unsafe)'
+    residual_convention: predicted - measured
+    applied_margin: 0.1940195141400025
+    mean_signed_residual_bias: -0.10556689185455229
+    locked_check:
+      groups_covered: 12
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.3693
+      - -0.2999
+      - -0.2513
+      - -0.2261
+      - -0.167
+      - -0.1381
+      - -0.1054
+      - -0.0721
+      - -0.0629
+      - -0.0375
+      - 0.0428
+      - 0.0763
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - Reconstructed compositions; group additivity with Tier A/B formation enthalpies (v2 table), no fitted parameters.
+    - Model under-predicts on average (bias negative), so the over-prediction score can be small or negative; applied_margin is floored at 0.
+    recompute:
+      column: err_v2_const_H
+      group: fuel_id
+      where:
+      - - split_role
+        - ne
+        - locked
+  freezing_point_C.crc647.wat_ideal_minus_loo_offset:
+    value: 10.11477272727273
+    unit: degC
+    direction: under
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/freezing_v4.csv
+    model: 'library ideal WAT minus a constant offset re-estimated leaving each fuel out (locked: dev-mean offset)'
+    scope: 'CRC 647 freezing point (D5972), 45 dev fuels, leave-one-fuel-out offset (max-spec: UNDER-prediction, i.e. predicted colder than measured,
+      is unsafe)'
+    residual_convention: predicted - measured
+    applied_margin: 10.11477272727273
+    mean_signed_residual_bias: -5.526443500356335e-16
+    locked_check:
+      groups_covered: 12
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -10.52
+      - -2.35
+      - -2.18
+      - 0.3
+      - 0.37
+      - 0.77
+      - 1.5
+      - 1.78
+      - 2.6
+      - 5.46
+      - 6.18
+      - 9.29
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - Task 12 found NO skill vs a constant mean (locked MAE 3.61 vs 3.32 C); this margin is therefore essentially the spread of the fuels' freezing
+      points, not a model-specific accuracy.
+    - The offset is a fitted constant, here re-estimated out-of-fold; the shipped 'dev-fit' column in freezing_v4.csv is in-sample on dev and
+      was NOT used.
+    - Reconstructed compositions.
+    residual_derivation: residual_i = err_wat_ideal_i - mean(err_wat_ideal of the other dev fuels); source column err_wat_ideal in residual_file
+      (dev rows, split_role != locked)
+  freezing_point_C.crc647.constant_mean_loo:
+    value: 6.913636363636364
+    unit: degC
+    direction: under
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/freezing_v4.csv
+    model: 'no-skill comparator: mean of the other dev fuels'' measured freezing points'
+    scope: same as above; comparator, not a recommendation
+    residual_convention: predicted - measured
+    applied_margin: 6.913636363636364
+    mean_signed_residual_bias: 4.263256414560601e-15
+    locked_check:
+      groups_covered: 12
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -7.04
+      - -6.34
+      - -3.04
+      - -2.04
+      - -0.54
+      - -0.44
+      - 1.86
+      - 2.16
+      - 2.66
+      - 3.26
+      - 5.16
+      - 5.26
+      groups_covered_at_applied_margin: 12
+    caveats:
+    - Included only to show that the physics margin is no tighter than a model that ignores composition entirely.
+    residual_derivation: residual_i = mean(measured_C of the other dev fuels) - measured_C_i; source column measured_C in residual_file (dev rows)
+  freezing_point_C.crc647.coutinho_library:
+    value: 4.049999999999997
+    unit: degC
+    direction: under
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/B/freezing_v4.csv
+    model: library Coutinho eutectic wax model as shipped
+    scope: CRC 647 freezing point, 45 dev fuels
+    residual_convention: predicted - measured
+    applied_margin: 4.049999999999997
+    mean_signed_residual_bias: 4.242000000000001
+    locked_check:
+      groups_covered: 11
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -14.75
+      - -6.42
+      - -4.99
+      - -4.91
+      - -3.17
+      - -2.85
+      - -2.82
+      - -2.68
+      - -2.24
+      - 0.8
+      - 1.08
+      - 4.29
+      groups_covered_at_applied_margin: 11
+    caveats:
+    - 'NOT a clean holdout: the library Coutinho parameters were calibrated on Dauphin and CRC data (Task 12), so dev residuals are optimistic.'
+    - Included for completeness; prefer the other entries.
+    recompute:
+      column: err_coutinho
+      group: fuel_id
+      where:
+      - - split_role
+        - ne
+        - locked
+  freezing_point_C.sle_alkane_blends.ideal_svl:
+    value: inf
+    unit: K
+    direction: under
+    alpha: 0.1
+    n_groups: 8
+    group_unit: system
+    conformal_rank_k: 9
+    n_rows: 103
+    residual_file: results/v4/SLE/sle_eval.csv
+    model: ideal Schroeder-van Laar, mole fractions, verified Tm/dHfus only
+    scope: ThermoML liquidus (SLE) of hydrocarbon binaries/ternaries, P<=150 kPa; no dev/locked split (GroupKFold by system)
+    residual_convention: predicted - measured
+    reason: only 8 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 9 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -1.103101445395009
+    locked_check: null
+    caveats:
+    - Mostly n-alkane + cyclohexane/toluene blends (about 8 clusters for ideal SvL); not real jet fuel.
+    - Zero-fitted physics (offset-free rows), so these are out-of-sample; no locked set exists, so no coverage check.
+    - Unsafe side for a freezing-point limit is predicting a COLDER liquidus than observed.
+    indicative_not_conformal:
+      point_q90_K: 4.045453408213381
+      point_q95_K: 7.361881444796118
+      note: Task 13 point-level quantile of (observed - predicted) liquidus on rows where both models exist (points, not independent groups);
+        cluster-bootstrap 90th-percentile 95% CI [0.99, 7.40] K. Indicative only; NOT a conformal margin.
+    residual_derivation: residual = ideal_svl_K - T_obs_K on scored rows where ideal_svl_K exists; group = system_id
+  freezing_point_C.sle_alkane_blends.coutinho_lib_common8:
+    value: inf
+    unit: K
+    direction: under
+    alpha: 0.1
+    n_groups: 8
+    group_unit: system
+    conformal_rank_k: 9
+    n_rows: 100
+    residual_file: results/v4/SLE/sle_eval.csv
+    model: library Coutinho (mass fractions), restricted to the 8 systems where ideal SvL is defined
+    scope: ThermoML liquidus (SLE) of hydrocarbon binaries/ternaries, P<=150 kPa; no dev/locked split (GroupKFold by system)
+    residual_convention: predicted - measured
+    reason: only 8 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 9 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -3.220900000000006
+    locked_check: null
+    caveats:
+    - Mostly n-alkane + cyclohexane/toluene blends (about 8 clusters for ideal SvL); not real jet fuel.
+    - Zero-fitted physics (offset-free rows), so these are out-of-sample; no locked set exists, so no coverage check.
+    - Unsafe side for a freezing-point limit is predicting a COLDER liquidus than observed.
+    indicative_not_conformal:
+      point_q90_K: 6.247000000000021
+      point_q95_K: 8.720500000000035
+      note: Task 13 point-level quantile of (observed - predicted) liquidus on rows where both models exist (points, not independent groups);
+        cluster-bootstrap 90th-percentile 95% CI [4.92, 9.69] K. Indicative only; NOT a conformal margin.
+    residual_derivation: residual = coutinho_lib_K - T_obs_K on scored rows where both ideal_svl_K and coutinho_lib_K exist; group = system_id
+  freezing_point_C.sle_alkane_blends.coutinho_lib_all:
+    value: 38.27000000000001
+    unit: K
+    direction: under
+    alpha: 0.1
+    n_groups: 44
+    group_unit: system
+    conformal_rank_k: 41
+    n_rows: 525
+    residual_file: results/v4/SLE/sle_eval.csv
+    model: library Coutinho (mass fractions) on every system it covers
+    scope: ThermoML liquidus (SLE) of hydrocarbon binaries/ternaries, P<=150 kPa; no dev/locked split (GroupKFold by system)
+    residual_convention: predicted - measured
+    applied_margin: 38.27000000000001
+    mean_signed_residual_bias: -7.163466666666671
+    locked_check: null
+    caveats:
+    - Mostly n-alkane + cyclohexane/toluene blends (about 8 clusters for ideal SvL); not real jet fuel.
+    - Zero-fitted physics (offset-free rows), so these are out-of-sample; no locked set exists, so no coverage check.
+    - Unsafe side for a freezing-point limit is predicting a COLDER liquidus than observed.
+    - Coutinho library parameters were calibrated partly on Dauphin data, so some of these systems may not be clean holdouts.
+    residual_derivation: residual = coutinho_lib_K - T_obs_K on scored rows where coutinho_lib_K exists; group = system_id
+  viscosity_kin_cSt.crc647.structured_ridge.all_T:
+    value: 0.1621835629609607
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 135
+    residual_file: results/v4/V/viscosity_predictions_v4.csv
+    model: structured ridge (leave-one-fuel-out, hyperparameters chosen by inner CV)
+    scope: CRC 647 kinematic viscosity at +20/-20/-40 C, 45 dev fuels, per-fuel max |ln(pred/meas)| over its rows
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.1760761055203022
+    applied_margin: 0.1621835629609607
+    mean_signed_residual_bias: -0.0018824937500243157
+    locked_check:
+      groups_covered: 10
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0806
+      - 0.0807
+      - 0.1017
+      - 0.1262
+      - 0.1344
+      - 0.1479
+      - 0.1483
+      - 0.1514
+      - 0.1602
+      - 0.1621
+      - 0.1727
+      - 0.7269
+    caveats:
+    - Dev rows are leave-one-fuel-out; locked rows predicted by models trained on all 45 dev fuels (Task 11 protocol).
+    - Reconstructed compositions; only 57 fuels from one source (CRC 647, T range -40..20 C). Not valid for diesel/gasoline or outside the training
+      temperature range.
+    - Task 11 does not claim a ranking among bilinear / structured ridge / GP; ridge is shown because it is the simplest of the three.
+    - Hyperparameters at the edge of their grids (ridge alpha 0.01).
+    residual_derivation: residual = ln(pred_Structured ridge) - ln(y) on rows with locked == False; group = fuel_id
+  viscosity_kin_cSt.crc647.structured_ridge.minus40C:
+    value: 0.14980559041746488
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/V/viscosity_predictions_v4.csv
+    model: structured ridge (leave-one-fuel-out, hyperparameters chosen by inner CV)
+    scope: CRC 647 kinematic viscosity at -40 C only (D455), 45 dev fuels
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.161608392972569
+    applied_margin: 0.14980559041746488
+    mean_signed_residual_bias: -0.04983096574941931
+    locked_check:
+      groups_covered: 11
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0042
+      - 0.0113
+      - 0.0191
+      - 0.0273
+      - 0.0304
+      - 0.0464
+      - 0.0509
+      - 0.0628
+      - 0.0687
+      - 0.079
+      - 0.1262
+      - 0.1514
+    caveats:
+    - Dev rows are leave-one-fuel-out; locked rows predicted by models trained on all 45 dev fuels (Task 11 protocol).
+    - Reconstructed compositions; only 57 fuels from one source (CRC 647, T range -40..20 C). Not valid for diesel/gasoline or outside the training
+      temperature range.
+    - Task 11 does not claim a ranking among bilinear / structured ridge / GP; ridge is shown because it is the simplest of the three.
+    - Hyperparameters at the edge of their grids (ridge alpha 0.01).
+    residual_derivation: residual = ln(pred_Structured ridge) - ln(y) on rows with locked == False and T_C == -40; group = fuel_id
+  viscosity_kin_cSt.crc647.recalibrated_refutas.all_T:
+    value: 0.3465490828831994
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 135
+    residual_file: results/v4/V/viscosity_predictions_v4.csv
+    model: recalibrated refutas (leave-one-fuel-out, hyperparameters chosen by inner CV)
+    scope: CRC 647 kinematic viscosity at +20/-20/-40 C, 45 dev fuels, per-fuel max |ln(pred/meas)| over its rows
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.4141789041048936
+    applied_margin: 0.3465490828831994
+    mean_signed_residual_bias: -6.875158878419487e-16
+    locked_check:
+      groups_covered: 10
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1294
+      - 0.1441
+      - 0.1665
+      - 0.1855
+      - 0.1864
+      - 0.1897
+      - 0.2223
+      - 0.2411
+      - 0.2443
+      - 0.2917
+      - 0.4152
+      - 0.6437
+    caveats:
+    - Dev rows are leave-one-fuel-out; locked rows predicted by models trained on all 45 dev fuels (Task 11 protocol).
+    - Reconstructed compositions; only 57 fuels from one source (CRC 647, T range -40..20 C). Not valid for diesel/gasoline or outside the training
+      temperature range.
+    - Task 11 does not claim a ranking among bilinear / structured ridge / GP; ridge is shown because it is the simplest of the three.
+    residual_derivation: residual = ln(pred_Recalibrated Refutas) - ln(y) on rows with locked == False; group = fuel_id
+  viscosity_kin_cSt.crc647.recalibrated_refutas.minus40C:
+    value: 0.3465490828831994
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 45
+    group_unit: fuel
+    conformal_rank_k: 42
+    n_rows: 45
+    residual_file: results/v4/V/viscosity_predictions_v4.csv
+    model: recalibrated refutas (leave-one-fuel-out, hyperparameters chosen by inner CV)
+    scope: CRC 647 kinematic viscosity at -40 C only (D455), 45 dev fuels
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.4141789041048936
+    applied_margin: 0.3465490828831994
+    mean_signed_residual_bias: -0.04607482674004743
+    locked_check:
+      groups_covered: 11
+      n_locked_groups: 12
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0265
+      - 0.0515
+      - 0.069
+      - 0.1064
+      - 0.1115
+      - 0.1206
+      - 0.1521
+      - 0.1631
+      - 0.1665
+      - 0.167
+      - 0.2019
+      - 0.4152
+    caveats:
+    - Dev rows are leave-one-fuel-out; locked rows predicted by models trained on all 45 dev fuels (Task 11 protocol).
+    - Reconstructed compositions; only 57 fuels from one source (CRC 647, T range -40..20 C). Not valid for diesel/gasoline or outside the training
+      temperature range.
+    - Task 11 does not claim a ranking among bilinear / structured ridge / GP; ridge is shown because it is the simplest of the three.
+    residual_derivation: residual = ln(pred_Recalibrated Refutas) - ln(y) on rows with locked == False and T_C == -40; group = fuel_id
+  ron.constant_mean:
+    value: 6.9375
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: constant_mean
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 6.9375
+    mean_signed_residual_bias: 0.003314465408795743
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.9209
+      - 2.6841
+      - 2.7441
+      - 3.2641
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    - base_unchanged and constant_mean are comparators, not candidate models.
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - constant_mean
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  ron.base_unchanged:
+    value: 0.8299999999999983
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: base_unchanged
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 0.8299999999999983
+    mean_signed_residual_bias: -5.071226415094343
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -5.845
+      - -2.24
+      - -2.18
+      - -1.66
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    - base_unchanged and constant_mean are comparators, not candidate models.
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - base_unchanged
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  ron.linear_volume_pooled_bov:
+    value: 6.4026780745578975
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: linear_volume_pooled_bov
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 6.4026780745578975
+    mean_signed_residual_bias: 0.15961791139733805
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -3.249
+      - 0.3964
+      - 0.4487
+      - 3.6048
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - linear_volume_pooled_bov
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  ron.ghosh_lumps:
+    value: 6.650051207195986
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: ghosh_lumps
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 6.650051207195986
+    mean_signed_residual_bias: -0.3964442351015426
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.2532
+      - -0.0094
+      - 0.1078
+      - 2.2055
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - ghosh_lumps
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  ron.gbm_resid:
+    value: 9.411900448079948
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: gbm_resid
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 9.411900448079948
+    mean_signed_residual_bias: 0.03445325713044318
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -1.6375
+      - -1.0114
+      - -0.7066
+      - 2.4495
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - gbm_resid
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  ron.gp_resid:
+    value: 9.433202403833604
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 53
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: gp_resid
+    scope: 'Co-Optima bRON blends, RON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 9.433202403833604
+    mean_signed_residual_bias: -0.39607311766245024
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -2.7888
+      - -1.2493
+      - 0.2799
+      - 1.3309
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - ron
+      - - model
+        - eq
+        - gp_resid
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.constant_mean:
+    value: 6.208372549019614
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: constant_mean
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 6.208372549019614
+    mean_signed_residual_bias: 3.157967714489334e-15
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.3569
+      - 0.1181
+      - 0.5331
+      - 1.9531
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    - base_unchanged and constant_mean are comparators, not candidate models.
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - constant_mean
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.base_unchanged:
+    value: -0.28000000000000114
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: base_unchanged
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 0.0
+    applied_margin_note: 'computed margin is negative: no/few groups were ever over-predicted at this level; applied_margin is floored at 0 (a
+      negative margin must not be credited as extra safety).'
+    mean_signed_residual_bias: -3.259759259259259
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -3.4
+      - -2.925
+      - -2.51
+      - -1.09
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    - base_unchanged and constant_mean are comparators, not candidate models.
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - base_unchanged
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.linear_volume_pooled_bov:
+    value: 4.6161254368147695
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: linear_volume_pooled_bov
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 4.6161254368147695
+    mean_signed_residual_bias: 0.21111379189172363
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -1.6191
+      - -1.2122
+      - -0.8466
+      - 1.8533
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - linear_volume_pooled_bov
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.ghosh_lumps:
+    value: 8.435922704335297
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: ghosh_lumps
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 8.435922704335297
+    mean_signed_residual_bias: -0.09418063797314892
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.8887
+      - -0.8316
+      - -0.5265
+      - 0.2832
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - ghosh_lumps
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.gbm_resid:
+    value: 4.3610940565598355
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: gbm_resid
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 4.3610940565598355
+    mean_signed_residual_bias: -0.22161960597049005
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -1.9784
+      - -1.2127
+      - -0.7137
+      - 0.119
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - gbm_resid
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  mon.gp_resid:
+    value: 4.000496836832767
+    unit: octane number
+    direction: over
+    alpha: 0.1
+    n_groups: 18
+    group_unit: blendstock CAS (BRON:<CAS>)
+    conformal_rank_k: 18
+    n_rows: 54
+    residual_file: results/v4/U/octane_oof_residuals.csv
+    model: gp_resid
+    scope: 'Co-Optima bRON blends, MON, dev leave-one-blendstock-out (every held-out blendstock is unseen); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    applied_margin: 4.000496836832767
+    mean_signed_residual_bias: -0.14790831341741487
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.9961
+      - -0.8765
+      - -0.6652
+      - 0.7141
+      groups_covered_at_applied_margin: 4
+    caveats:
+    - Targets are bRON blends of a base gasoline + ONE blendstock (R17/R19), not market gasolines; only 2 distinct base gasolines exist (RON 90.3/87.7).
+    - No CI-supported winner among pooled-BOV / Ghosh / GBM / GP (Task 15); all are shown, pick none on margin alone.
+    - 'Locked set = 4 blendstock groups (12 blends): coverage counts are nearly uninformative.'
+    - This replaces the hand-typed v3 RON 4.50 / MON 4.00 margins (CLM-28).
+    recompute:
+      column: resid
+      group: group
+      where:
+      - - prop
+        - eq
+        - mon
+      - - model
+        - eq
+        - gp_resid
+      - - view
+        - eq
+        - dev_leave_one_blendstock_out
+  smoke_point_mm.ajftd100_bulk.selected_in_fold:
+    value: inf
+    unit: mm
+    direction: over
+    alpha: 0.1
+    n_groups: 6
+    group_unit: inferred T-code batch
+    conformal_rank_k: 7
+    n_rows: 100
+    residual_file: results/v4/U/smoke_point_oof_residuals.csv
+    model: bulk model on aromatics+diaromatics (feature set chosen inside each training fold)
+    scope: 'AJFTD 100-fuel smoke point (D1322), GroupKFold(5) by inferred T-code (undocumented tank/producer code; unmatched fuels pooled as one
+      group NOCODE); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    reason: only 6 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 7 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -0.45262445354680525
+    locked_check: null
+    caveats:
+    - Group = inferred T-code, not a documented batch; fuels without a code share one group, so n_groups is an upper bound on independent units.
+    - Observed smoke points span 19.3-25.0 mm only; the 18/25 mm limits are not probed.
+    - 'No locked split exists for AJFTD smoke point: no coverage check. Task 14 found modest skill over the constant mean only when grouped by
+      fuel_id; the T-code grouping is the conservative one.'
+    - The YSI route for pure compounds / real-fuel speciation was not evaluated on real fuels and is excluded.
+    recompute:
+      column: resid_selected_in_fold
+      group: tgroup
+      where: []
+  smoke_point_mm.ajftd100_bulk.const_mean:
+    value: inf
+    unit: mm
+    direction: over
+    alpha: 0.1
+    n_groups: 6
+    group_unit: inferred T-code batch
+    conformal_rank_k: 7
+    n_rows: 100
+    residual_file: results/v4/U/smoke_point_oof_residuals.csv
+    model: 'no-skill comparator: training-fold mean'
+    scope: 'AJFTD 100-fuel smoke point (D1322), GroupKFold(5) by inferred T-code (undocumented tank/producer code; unmatched fuels pooled as one
+      group NOCODE); min-spec: over-prediction unsafe'
+    residual_convention: predicted - measured
+    reason: only 6 independent groups; a 90 % conformal margin needs ceil((n+1)(1-alpha)) = 7 <= n. No valid margin; no substitute number is given.
+    mean_signed_residual_bias: -0.16089130837086046
+    locked_check: null
+    caveats:
+    - Group = inferred T-code, not a documented batch; fuels without a code share one group, so n_groups is an upper bound on independent units.
+    - Observed smoke points span 19.3-25.0 mm only; the 18/25 mm limits are not probed.
+    - 'No locked split exists for AJFTD smoke point: no coverage check. Task 14 found modest skill over the constant mean only when grouped by
+      fuel_id; the T-code grouping is the conservative one.'
+    - The YSI route for pure compounds / real-fuel speciation was not evaluated on real fuels and is excluded.
+    - Comparator only.
+    recompute:
+      column: resid_const_mean
+      group: tgroup
+      where: []
+  density_kg_m3.lab_mixtures.ideal_volume.over:
+    value: 4.5866
+    unit: kg/m3
+    direction: over
+    alpha: 0.1
+    n_groups: 167
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 152
+    n_rows: 8696
+    residual_file: results/v4/L/density_lab_residuals.csv
+    model: ideal volume mixing rho = 1/sum(w_i/rho_i(T)), pure rho_i(T) from measured ThermoML tier-1 fits only
+    scope: ThermoML liquid hydrocarbon mixtures with MEASURED composition (n_comp >= 2), all T; dev systems only; over-prediction (predicted >
+      measured) side
+    residual_convention: predicted - measured
+    applied_margin: 4.5866
+    mean_signed_residual_bias: 0.25933978381991946
+    locked_check:
+      groups_covered: 38
+      n_locked_groups: 41
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -0.5594
+      - -0.5146
+      - -0.4629
+      - -0.4223
+      - -0.3818
+      - -0.2439
+      - -0.1089
+      - 0.0757
+      - 0.0904
+      - 0.1086
+      - 0.1544
+      - 0.1668
+      - 0.2281
+      - 0.2419
+      - 0.3925
+      - 0.4811
+      - 0.5796
+      - 0.5842
+      - 0.602
+      - 0.6529
+      - 0.6689
+      - 0.7596
+      - 0.8438
+      - 0.8629
+      - 0.974
+      - 1.3383
+      - 1.3562
+      - 1.4286
+      - 1.4801
+      - 1.6982
+      - 2.0133
+      - 2.0834
+      - 2.3023
+      - 2.4092
+      - 3.2177
+      - 3.8546
+      - 4.1321
+      - 4.3735
+      - 5.0214
+      - 5.6889
+      - 5.7989
+      groups_covered_at_applied_margin: 38
+    caveats:
+    - 'Known compositions: isolates the physics error (excess volume) from the CRC647 reconstruction error; transfer to real fuels is not shown.'
+    - Systems with a component lacking a measured tier-1 pure density are excluded (counted in results/v4/L/README.md), not filled from a class
+      regression.
+    - 'One-sided: the margin is the conformal quantile of the per-system maximum on the named side; a negative value is floored at 0 in applied_margin.'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+    residual_derivation: residual = predicted - measured (kg/m3), column resid of the residual_file, dev systems (split_role != locked); group
+      = system_id; direction as named
+  density_kg_m3.lab_mixtures.ideal_volume.under:
+    value: 3.2498809
+    unit: kg/m3
+    direction: under
+    alpha: 0.1
+    n_groups: 167
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 152
+    n_rows: 8696
+    residual_file: results/v4/L/density_lab_residuals.csv
+    model: ideal volume mixing rho = 1/sum(w_i/rho_i(T)), pure rho_i(T) from measured ThermoML tier-1 fits only
+    scope: ThermoML liquid hydrocarbon mixtures with MEASURED composition (n_comp >= 2), all T; dev systems only; under-prediction (predicted
+      < measured) side
+    residual_convention: predicted - measured
+    applied_margin: 3.2498809
+    mean_signed_residual_bias: 0.25933978381991946
+    locked_check:
+      groups_covered: 36
+      n_locked_groups: 41
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - -5.1427
+      - -1.0882
+      - -0.7427
+      - -0.613
+      - -0.4838
+      - -0.3398
+      - -0.2616
+      - -0.2532
+      - -0.2283
+      - -0.2045
+      - -0.0902
+      - 0.0428
+      - 0.0505
+      - 0.0521
+      - 0.0801
+      - 0.0878
+      - 0.1175
+      - 0.1202
+      - 0.1278
+      - 0.2041
+      - 0.2072
+      - 0.2346
+      - 0.4298
+      - 0.4726
+      - 0.6439
+      - 1.1141
+      - 1.449
+      - 1.4763
+      - 1.6852
+      - 1.888
+      - 2.0897
+      - 2.1492
+      - 2.1623
+      - 2.1709
+      - 2.4185
+      - 2.43
+      - 3.5375
+      - 4.1513
+      - 4.2176
+      - 5.2993
+      - 7.5939
+      groups_covered_at_applied_margin: 36
+    caveats:
+    - 'Known compositions: isolates the physics error (excess volume) from the CRC647 reconstruction error; transfer to real fuels is not shown.'
+    - Systems with a component lacking a measured tier-1 pure density are excluded (counted in results/v4/L/README.md), not filled from a class
+      regression.
+    - 'One-sided: the margin is the conformal quantile of the per-system maximum on the named side; a negative value is floored at 0 in applied_margin.'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+    residual_derivation: residual = predicted - measured (kg/m3), column resid of the residual_file, dev systems (split_role != locked); group
+      = system_id; direction as named
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_ge_283K:
+    value: 0.1855823
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 255
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 231
+    n_rows: 11918
+    residual_file: results/v4/L/viscosity_lab_residuals.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, from measured pure-component viscosities
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition, temperature bin T_ge_283K (edges belong to the warmer
+      bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.2039192782545993
+    applied_margin: 0.1855823
+    mean_signed_residual_bias: 0.024370378209867163
+    locked_check:
+      groups_covered: 63
+      n_locked_groups: 67
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0093
+      - 0.0229
+      - 0.0245
+      - 0.0256
+      - 0.0262
+      - 0.0299
+      - 0.031
+      - 0.0361
+      - 0.0397
+      - 0.042
+      - 0.0448
+      - 0.0468
+      - 0.0483
+      - 0.0506
+      - 0.0531
+      - 0.0548
+      - 0.056
+      - 0.0581
+      - 0.0624
+      - 0.0752
+      - 0.0755
+      - 0.0773
+      - 0.0792
+      - 0.0793
+      - 0.0816
+      - 0.0822
+      - 0.0947
+      - 0.0964
+      - 0.0964
+      - 0.0964
+      - 0.0966
+      - 0.0969
+      - 0.0975
+      - 0.0976
+      - 0.0994
+      - 0.1004
+      - 0.1029
+      - 0.1048
+      - 0.1051
+      - 0.1053
+      - 0.1063
+      - 0.1085
+      - 0.1136
+      - 0.1147
+      - 0.1158
+      - 0.1162
+      - 0.1164
+      - 0.1216
+      - 0.1229
+      - 0.1274
+      - 0.1316
+      - 0.1342
+      - 0.1366
+      - 0.1381
+      - 0.1396
+      - 0.1415
+      - 0.1419
+      - 0.1427
+      - 0.1455
+      - 0.1456
+      - 0.146
+      - 0.1483
+      - 0.1562
+      - 0.1914
+      - 0.204
+      - 0.2757
+      - 0.3216
+    caveats:
+    - 'Known compositions: isolates Refutas physics error; CRC647 fuels at -40 C are a different regime (Task 11 found raw Refutas collapses there).'
+    - 'Two-sided ln-ratio margin: per-system max |ln(pred/meas)| conformal quantile; inf when fewer than 9 independent dev systems exist (no substitute
+      number).'
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_ge_283K
+    residual_derivation: residual = ln(raw Refutas) - ln(measured) = -(build_lab resid), column resid, dev systems in t_bin T_ge_283K; group =
+      system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_lt_263K:
+    value: 0.4153576080066075
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, pure data from the PurePropertyProvider
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.5149123886369404
+    applied_margin: 0.4153576080066075
+    mean_signed_residual_bias: -0.11348502010244617
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1402
+      - 0.348
+      - 0.3872
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - refutas
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of refutas, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas.T_263_283K:
+    value: 0.6084381907110359
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, pure data from the PurePropertyProvider
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.8375592393937505
+    applied_margin: 0.6084381907110359
+    mean_signed_residual_bias: -0.02330924715478782
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.082
+      - 0.1054
+      - 0.1747
+      - 0.342
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - refutas
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of refutas, column resid, dev systems in t_bin T_263_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius.T_lt_263K:
+    value: 0.522062641340971
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.6855006500115024
+    applied_margin: 0.522062641340971
+    mean_signed_residual_bias: -0.14236650567562462
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1702
+      - 0.4269
+      - 0.4728
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius.T_263_283K:
+    value: 1.1644154344507407
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 3.204049358783979
+    applied_margin: 1.1644154344507407
+    mean_signed_residual_bias: -0.09642209941838113
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0884
+      - 0.1557
+      - 0.1936
+      - 1.4088
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius, column resid, dev systems in t_bin T_263_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius.T_ge_283K:
+    value: 0.2283668841069354
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 264
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 239
+    n_rows: 11956
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_ge_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.2565462477225613
+    applied_margin: 0.2283668841069354
+    mean_signed_residual_bias: 0.0158341862644299
+    locked_check:
+      groups_covered: 63
+      n_locked_groups: 70
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0208
+      - 0.0215
+      - 0.0306
+      - 0.0316
+      - 0.0341
+      - 0.0363
+      - 0.0381
+      - 0.0522
+      - 0.0531
+      - 0.0553
+      - 0.0628
+      - 0.0657
+      - 0.0659
+      - 0.0692
+      - 0.071
+      - 0.0747
+      - 0.076
+      - 0.077
+      - 0.0783
+      - 0.079
+      - 0.0803
+      - 0.0824
+      - 0.0898
+      - 0.0918
+      - 0.0924
+      - 0.0936
+      - 0.0964
+      - 0.0966
+      - 0.0972
+      - 0.0974
+      - 0.098
+      - 0.1
+      - 0.1007
+      - 0.1028
+      - 0.105
+      - 0.1063
+      - 0.1076
+      - 0.1106
+      - 0.1175
+      - 0.121
+      - 0.1213
+      - 0.1282
+      - 0.1313
+      - 0.1326
+      - 0.1333
+      - 0.1342
+      - 0.1343
+      - 0.1436
+      - 0.1455
+      - 0.1482
+      - 0.1514
+      - 0.1517
+      - 0.154
+      - 0.1549
+      - 0.1588
+      - 0.1683
+      - 0.1765
+      - 0.1775
+      - 0.179
+      - 0.1889
+      - 0.1903
+      - 0.191
+      - 0.1954
+      - 0.2293
+      - 0.2497
+      - 0.2509
+      - 0.2973
+      - 0.321
+      - 0.3623
+      - 1.1966
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_ge_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius, column resid, dev systems in t_bin T_ge_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.walther_extrap.T_lt_263K:
+    value: 0.5947950251966599
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Refutas at 288-318 K extrapolated along the ASTM D341 (Walther) line to T, ideal-volume density
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.8126593573831102
+    applied_margin: 0.5947950251966599
+    mean_signed_residual_bias: 0.16130917071332548
+    locked_check:
+      groups_covered: 2
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.191
+      - 0.3321
+      - 0.9679
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - walther
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of walther, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.walther_extrap.T_263_283K:
+    value: 0.49430510254591375
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Refutas at 288-318 K extrapolated along the ASTM D341 (Walther) line to T, ideal-volume density
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.6393586569994825
+    applied_margin: 0.49430510254591375
+    mean_signed_residual_bias: 0.054087890928086114
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1324
+      - 0.2201
+      - 0.2222
+      - 0.2858
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - walther
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of walther, column resid, dev systems in t_bin T_263_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas_biascorr.T_lt_263K:
+    value: 0.31658018042421554
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, pure data from the PurePropertyProvider + constant ln
+      offset fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.3724262795460374
+    applied_margin: 0.31658018042421554
+    mean_signed_residual_bias: -0.010150499440466886
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1535
+      - 0.2442
+      - 0.2833
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - refutas_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of refutas_biascorr, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas_biascorr.T_263_283K:
+    value: 0.6170520990309657
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, pure data from the PurePropertyProvider + constant ln
+      offset fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.8534561752933727
+    applied_margin: 0.6170520990309657
+    mean_signed_residual_bias: -0.013114392631421595
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.093
+      - 0.0943
+      - 0.1857
+      - 0.331
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - refutas_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of refutas_biascorr, column resid, dev systems in t_bin T_263_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.raw_refutas_biascorr.T_ge_283K:
+    value: 0.16932298277483723
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 264
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 239
+    n_rows: 11956
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: raw Refutas (kinematic, mass-fraction VBN blending) with ideal-volume density, pure data from the PurePropertyProvider + constant ln
+      offset fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_ge_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.1845026511012766
+    applied_margin: 0.16932298277483723
+    mean_signed_residual_bias: 0.008454566653280137
+    locked_check:
+      groups_covered: 66
+      n_locked_groups: 70
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.024
+      - 0.0253
+      - 0.026
+      - 0.0287
+      - 0.0295
+      - 0.0303
+      - 0.0366
+      - 0.0371
+      - 0.0385
+      - 0.0405
+      - 0.0414
+      - 0.0423
+      - 0.0459
+      - 0.0489
+      - 0.0521
+      - 0.0591
+      - 0.0612
+      - 0.0631
+      - 0.0643
+      - 0.0656
+      - 0.0661
+      - 0.072
+      - 0.0741
+      - 0.0771
+      - 0.0809
+      - 0.0814
+      - 0.0815
+      - 0.0843
+      - 0.0868
+      - 0.0887
+      - 0.0892
+      - 0.0915
+      - 0.0924
+      - 0.0934
+      - 0.0944
+      - 0.0953
+      - 0.0976
+      - 0.0987
+      - 0.0998
+      - 0.1002
+      - 0.1003
+      - 0.1069
+      - 0.1108
+      - 0.1114
+      - 0.1125
+      - 0.1125
+      - 0.1125
+      - 0.1127
+      - 0.1154
+      - 0.1156
+      - 0.1181
+      - 0.1212
+      - 0.1221
+      - 0.1224
+      - 0.1236
+      - 0.1255
+      - 0.1258
+      - 0.1266
+      - 0.1296
+      - 0.1299
+      - 0.1322
+      - 0.1376
+      - 0.1393
+      - 0.1402
+      - 0.1527
+      - 0.1616
+      - 0.1754
+      - 0.1879
+      - 0.2596
+      - 0.3376
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - refutas_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_ge_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of refutas_biascorr, column resid, dev systems in t_bin T_ge_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius_biascorr.T_lt_263K:
+    value: 0.37627670508164884
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider + constant ln offset
+      fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.4568501958562452
+    applied_margin: 0.37627670508164884
+    mean_signed_residual_bias: 0.0058194282345278
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.1713
+      - 0.279
+      - 0.3249
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius_biascorr, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius_biascorr.T_263_283K:
+    value: 1.0987283056039108
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider + constant ln offset
+      fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 3.0003480709980783
+    applied_margin: 1.0987283056039108
+    mean_signed_residual_bias: 0.013766912413207774
+    locked_check:
+      groups_covered: 3
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0842
+      - 0.1202
+      - 0.265
+      - 1.2995
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius_biascorr, column resid, dev systems in t_bin T_263_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.arrhenius_biascorr.T_ge_283K:
+    value: 0.2277471836613337
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 264
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 239
+    n_rows: 11956
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Arrhenius log-mixing rule ln eta = sum x_i ln eta_i (mole fractions), pure eta_i(T) from the PurePropertyProvider + constant ln offset
+      fit on dev systems (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_ge_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.2557678066779716
+    applied_margin: 0.2277471836613337
+    mean_signed_residual_bias: 0.023391454815379784
+    locked_check:
+      groups_covered: 63
+      n_locked_groups: 70
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0232
+      - 0.0267
+      - 0.0283
+      - 0.0289
+      - 0.0391
+      - 0.0438
+      - 0.0448
+      - 0.0456
+      - 0.0554
+      - 0.0582
+      - 0.0606
+      - 0.0628
+      - 0.0636
+      - 0.0708
+      - 0.0728
+      - 0.0734
+      - 0.0767
+      - 0.0821
+      - 0.0834
+      - 0.0843
+      - 0.0845
+      - 0.0865
+      - 0.089
+      - 0.0892
+      - 0.0897
+      - 0.0898
+      - 0.0932
+      - 0.0973
+      - 0.0989
+      - 0.0999
+      - 0.1011
+      - 0.1048
+      - 0.1055
+      - 0.1075
+      - 0.1101
+      - 0.1103
+      - 0.1124
+      - 0.1135
+      - 0.1151
+      - 0.1181
+      - 0.1267
+      - 0.1288
+      - 0.1357
+      - 0.1362
+      - 0.1381
+      - 0.1388
+      - 0.14
+      - 0.1407
+      - 0.1408
+      - 0.1418
+      - 0.1589
+      - 0.1591
+      - 0.1609
+      - 0.1615
+      - 0.1624
+      - 0.1663
+      - 0.1691
+      - 0.17
+      - 0.1715
+      - 0.1835
+      - 0.1964
+      - 0.1978
+      - 0.2028
+      - 0.2368
+      - 0.2434
+      - 0.2572
+      - 0.2898
+      - 0.3136
+      - 0.3548
+      - 1.1891
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - arrhenius_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_ge_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of arrhenius_biascorr, column resid, dev systems in t_bin T_ge_283K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.walther_extrap_biascorr.T_lt_263K:
+    value: 0.4174134496356277
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 20
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 19
+    n_rows: 113
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Refutas at 288-318 K extrapolated along the ASTM D341 (Walther) line to T, ideal-volume density + constant ln offset fit on dev systems
+      (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_lt_263K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.5180300121618828
+    applied_margin: 0.4174134496356277
+    mean_signed_residual_bias: -0.02291148979034562
+    locked_check:
+      groups_covered: 2
+      n_locked_groups: 3
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0934
+      - 0.149
+      - 0.7848
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - walther_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_lt_263K
+    residual_derivation: residual = ln(pred) - ln(measured) of walther_biascorr, column resid, dev systems in t_bin T_lt_263K; group = system_id
+  viscosity_kin_cSt.lab_mixtures.walther_extrap_biascorr.T_263_283K:
+    value: 0.5868286765114605
+    unit: ln-ratio
+    direction: two_sided
+    alpha: 0.1
+    n_groups: 16
+    group_unit: lab system (distinct InChIKey set)
+    conformal_rank_k: 16
+    n_rows: 85
+    residual_file: results/v5/S1/viscosity_lab_residuals_v5.csv
+    model: Refutas at 288-318 K extrapolated along the ASTM D341 (Walther) line to T, ideal-volume density + constant ln offset fit on dev systems
+      (dev rows leave-one-system-out)
+    scope: lab hydrocarbon binary/multi dynamic-viscosity mixtures with measured composition (v4 lab table + Boehm 2022), temperature bin T_263_283K
+      (edges belong to the warmer bin); dev systems only
+    residual_convention: predicted - measured
+    space: natural-log residual ln(pred/meas); multiplicative factor = exp(value)
+    factor: 1.798276446600703
+    applied_margin: 0.5868286765114605
+    mean_signed_residual_bias: -0.01974081931826097
+    locked_check:
+      groups_covered: 4
+      n_locked_groups: 4
+      note: counts only; locked groups never used to set the margin
+      locked_group_scores:
+      - 0.0598
+      - 0.1475
+      - 0.2132
+      - 0.2948
+    caveats:
+    - 'Known compositions; Boehm rows: volume fractions converted with 15 C densities, nested pre-blends assumed ideally additive.'
+    - Pure eta_i(T), rho_i(T) at cold T come from the provider (fits of warm data, extrapolated).
+    - Binaries/ternaries of ~18 hydrocarbons; transfer to 100-component jet fuels is not demonstrated.
+    - Two-sided ln-ratio margin; inf when fewer than 9 independent dev systems exist (no substitute number).
+    recompute:
+      column: resid
+      group: system_id
+      where:
+      - - method
+        - eq
+        - walther_biascorr
+      - - split_role
+        - ne
+        - locked
+      - - t_bin
+        - eq
+        - T_263_283K
+    residual_derivation: residual = ln(pred) - ln(measured) of walther_biascorr, column resid, dev systems in t_bin T_263_283K; group = system_id
+v5_note: 'Derived from configs/uncertainty_v4.yaml: the two COLD lab raw_refutas viscosity entries (T_lt_263K, T_263_283K) are REPLACED by entries
+  recomputed on the v4 lab table + Boehm 2022; the warm T_ge_283K raw_refutas entry is kept verbatim from v4 (same conformal rule); extra keys
+  .arrhenius/.walther_extrap/.*_biascorr are comparators. All other entries are copied unchanged.'

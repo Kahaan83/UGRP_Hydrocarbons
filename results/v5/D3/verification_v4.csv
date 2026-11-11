@@ -1,0 +1,26 @@
+design_id,property,engine,independent,diff,tolerance,tolerance_is_engine_margin,status,note
+jet_astm_d1655__v3pool,flash_point_C,47.17753426604321,46.26128259063245,0.9162516754107628,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: chemicals.LFL"
+jet_astm_d1655__v3pool,freezing_point_C,,-29.924999999999955,,,,skipped,engine or independent value unavailable
+jet_astm_d1655__v3pool,density_15C_kg_m3,,734.2948719685575,,,,skipped,engine or independent value unavailable
+jet_astm_d1655__v4pool,flash_point_C,49.62556364260144,49.06005917746455,0.5655044651368897,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_astm_d1655__v4pool,freezing_point_C,-36.57,-38.98068098900984,2.4106809890098404,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_astm_d1655__v4pool,density_15C_kg_m3,774.0163211011637,774.4725801229839,-0.4562590218201876,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+jet_bis_is1571__v3pool,flash_point_C,47.17753426604321,46.26128259063245,0.9162516754107628,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: chemicals.LFL"
+jet_bis_is1571__v3pool,freezing_point_C,,-29.924999999999955,,,,skipped,engine or independent value unavailable
+jet_bis_is1571__v3pool,density_15C_kg_m3,,734.2948719685575,,,,skipped,engine or independent value unavailable
+jet_bis_is1571__v4pool,flash_point_C,51.04515415693589,50.465278234081154,0.5798759228547326,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_bis_is1571__v4pool,freezing_point_C,-31.12,-34.32075385989677,3.2007538598967678,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_bis_is1571__v4pool,density_15C_kg_m3,757.6248981599673,758.0352268974334,-0.4103287374661022,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+diesel_astm_d975__v3pool,flash_point_C,,127.38489832044468,,,,skipped,engine or independent value unavailable
+diesel_astm_d975__v3pool,density_15C_kg_m3,,777.2537996812767,,,,skipped,engine or independent value unavailable
+diesel_astm_d975__v4pool,flash_point_C,55.03944295306479,54.4480782131746,0.5913647398901958,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+diesel_astm_d975__v4pool,density_15C_kg_m3,813.9794479139832,816.4738607477054,-2.4944128337222082,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+diesel_bis_is1460__v3pool,flash_point_C,,127.38489832044468,,,,skipped,engine or independent value unavailable
+diesel_bis_is1460__v3pool,density_15C_kg_m3,,777.2537996812767,,,,skipped,engine or independent value unavailable
+diesel_bis_is1460__v4pool,flash_point_C,57.71478257648107,57.21519140383646,0.49959117264461383,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+diesel_bis_is1460__v4pool,density_15C_kg_m3,806.838523221262,809.5842121278914,-2.745688906629425,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+gasoline_astm_d4814__v3pool,density_15C_kg_m3,748.1683595499998,748.7043842662317,-0.5360247162319638,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+gasoline_astm_d4814__v4pool,density_15C_kg_m3,758.9813515036752,759.2278994214867,-0.2465479178114265,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+gasoline_astm_d4814__v4pool_dvpe,density_15C_kg_m3,744.1916251434068,744.4846427994205,-0.293017656013717,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+gasoline_bis_is2796_e10__v3pool,density_15C_kg_m3,682.1498168560206,682.6802308405586,-0.5304139845379723,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+gasoline_bis_is2796_e10__v4pool,density_15C_kg_m3,685.6136205358263,685.7485738576629,-0.13495332183663322,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"

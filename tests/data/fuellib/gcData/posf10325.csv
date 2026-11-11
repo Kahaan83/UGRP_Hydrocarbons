@@ -1,0 +1,9 @@
+GC-Bin,Reference Compound,SMILES,PelePhysics Key,Weight %
+Toluene,toluene,CC1=CC=CC=C1,C6H5CH3,0.17
+C2-Benzene,ethylbenzene,CCC1=CC=CC=C1,C6H5C2H5,1.1
+C3-Benzene,propylbenzene,CCCC1=CC=CC=C1,C6H5C3H7,2.97
+C4-Benzene,butylbenzene,CCCCC1=CC=CC=C1,C6H5C4H9,3.32
+C5-Benzene,pentylbenzene,CCCCCC1=CC=CC=C1,C6H5C5H11,2.22
+C6-Benzene,hexylbenzene,CCCCCCC1=CC=CC=C1,C6H5C6H13,1.45
+C7-Benzene,heptylbenzene,CCCCCCCC1=CC=CC=C1,C6H5C7H15,0.73
+C8-Benzene,octylbenzene,CCCCCCCCC1=CC=CC=C1,C6H5C8H17,0.52

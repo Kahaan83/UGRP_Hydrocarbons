@@ -1,0 +1,57 @@
+design_id,spec,constraint,model,is_primary,prediction,applied_margin,lo,hi,status,reason
+jet_astm_d1655__v4pool,astm:jet_a,density_15C_kg_m3,ideal_volume_rho15,True,774.0163211011637,4.5866,775.0,840.0,fail,limit violated after applying the margin
+jet_astm_d1655__v4pool,astm:jet_a,flash_point_C,le_chatelier_ideal,True,49.625563642601435,3.698768343688585,38.0,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,flash_point_C,le_chatelier_unifac,False,48.69154493217934,1.5582460479421325,38.0,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,ideal_svl_library,True,-36.57,,,-40.0,fail,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry); limit violated"
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,coutinho_library,False,-46.52,4.049999999999997,,-40.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,ideal_sle_mole_fraction,False,-38.94958094431277,,,-40.0,fail,mole-fraction ideal SLE has no yaml margin entry; limit violated
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas_raw,True,2.5229954799535337,0.4153576080066075,,8.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas_recalibrated,False,3.5847715645843743,0.3465490828831994,,8.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.228, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.606, (0.435578955927793, 0.5959145198006397))}"
+jet_astm_d1655__v4pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_constH,True,43.90468584723944,0.1940195141400025,42.8,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_compH,False,43.78723918777978,0.2240266433640911,42.8,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,aromatics_wt_pct,class_mass_fraction,True,16.521793837227417,0.0,,25.0,by_construction,
+jet_astm_d1655__v4pool,astm:jet_a,smoke_point_mm,ajftd_bulk_regression,True,22.860579010785536,,25.0,,fail,"smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated"
+jet_astm_d1655__v4pool,astm:jet_a,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for CCCCCCCCCCCCCC'
+jet_astm_d1655__v5pool,astm:jet_a,density_15C_kg_m3,ideal_volume_rho15,True,781.1734195634509,4.5866,775.0,840.0,pass,
+jet_astm_d1655__v5pool,astm:jet_a,flash_point_C,le_chatelier_ideal,True,53.53227139586909,3.698768343688585,38.0,,pass,
+jet_astm_d1655__v5pool,astm:jet_a,flash_point_C,le_chatelier_unifac,False,53.3080679789507,1.5582460479421325,38.0,,pass,
+jet_astm_d1655__v5pool,astm:jet_a,freezing_point_C,ideal_svl_library,True,-40.72,,,-40.0,uncertified,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
+jet_astm_d1655__v5pool,astm:jet_a,freezing_point_C,coutinho_library,False,-51.23,4.049999999999997,,-40.0,pass,
+jet_astm_d1655__v5pool,astm:jet_a,freezing_point_C,ideal_sle_mole_fraction,False,-42.53519852838511,,,-40.0,uncertified,mole-fraction ideal SLE has no yaml margin entry
+jet_astm_d1655__v5pool,astm:jet_a,kin_visc_m20C_cSt,refutas_raw,True,3.1175298023253903,0.4153576080066075,,8.0,pass,
+jet_astm_d1655__v5pool,astm:jet_a,kin_visc_m20C_cSt,refutas_recalibrated,False,4.429509397030798,0.3465490828831994,,8.0,pass,
+jet_astm_d1655__v5pool,astm:jet_a,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.003, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.528, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'nC_std': (0.681, (0.972145933875752, 2.188856931665505))}"
+jet_astm_d1655__v5pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_constH,True,43.93622348628037,0.1940195141400025,42.8,,pass,
+jet_astm_d1655__v5pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_compH,False,43.74157855792467,0.2240266433640911,42.8,,pass,
+jet_astm_d1655__v5pool,astm:jet_a,aromatics_wt_pct,class_mass_fraction,True,0.27562022228186833,0.0,,25.0,by_construction,
+jet_astm_d1655__v5pool,astm:jet_a,smoke_point_mm,ajftd_bulk_regression,True,27.485368223356943,,25.0,,uncertified,"model emitted OutOfDomainWarning: aromatics 0.2446672631145063 vol % outside training domain 8-23; predicted smoke point 27.5 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified)"
+jet_astm_d1655__v5pool,astm:jet_a,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for C1CC[C@H]2CCCC[C@@H]2C1'
+jet_bis_is1571__v4pool,bis:jet_a1,density_15C_kg_m3,ideal_volume_rho15,True,757.6248981599673,4.5866,775.0,840.0,fail,limit violated after applying the margin
+jet_bis_is1571__v4pool,bis:jet_a1,flash_point_C,le_chatelier_ideal,True,51.045154156935894,3.698768343688585,38.0,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,flash_point_C,le_chatelier_unifac,False,50.599528153270626,1.5582460479421325,38.0,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,ideal_svl_library,True,-31.12,,,-47.0,fail,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry); limit violated"
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,coutinho_library,False,-39.03,4.049999999999997,,-47.0,fail,limit violated after applying the margin
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,ideal_sle_mole_fraction,False,-34.29153953104753,,,-47.0,fail,mole-fraction ideal SLE has no yaml margin entry; limit violated
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_raw,True,2.7027311067370388,0.4153576080066075,,8.0,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_recalibrated,False,3.8401470375710023,0.3465490828831994,,8.0,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.052, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.183, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.765, (0.435578955927793, 0.5959145198006397))}"
+jet_bis_is1571__v4pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_constH,True,44.29838062998023,0.1940195141400025,42.8,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_compH,False,44.040378286509544,0.2240266433640911,42.8,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,aromatics_vol_pct,class_volume_fraction,True,4.494589525768724,0.0,,25.0,by_construction,
+jet_bis_is1571__v4pool,bis:jet_a1,smoke_point_mm,ajftd_bulk_regression,True,26.10967205544183,,25.0,,uncertified,"model emitted OutOfDomainWarning: aromatics 4.494589525768724 vol % outside training domain 8-23; predicted smoke point 26.1 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)"
+jet_bis_is1571__v4pool,bis:jet_a1,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for CCCCCCCCCCCCCC'
+jet_bis_is1571__v5pool,bis:jet_a1,density_15C_kg_m3,ideal_volume_rho15,True,799.495474864227,4.5866,775.0,840.0,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,flash_point_C,le_chatelier_ideal,True,49.53110431808096,3.698768343688585,38.0,,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,flash_point_C,le_chatelier_unifac,False,48.730867835433,1.5582460479421325,38.0,,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,freezing_point_C,ideal_svl_library,True,-47.49,,,-47.0,uncertified,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
+jet_bis_is1571__v5pool,bis:jet_a1,freezing_point_C,coutinho_library,False,-58.28,4.049999999999997,,-47.0,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,freezing_point_C,ideal_sle_mole_fraction,False,-47.72144254719379,,,-47.0,uncertified,mole-fraction ideal SLE has no yaml margin entry
+jet_bis_is1571__v5pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_raw,True,3.121106404193018,0.4153576080066075,,8.0,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_recalibrated,False,4.434591174138518,0.3465490828831994,,8.0,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.495, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.427, (0.435578955927793, 0.5959145198006397)), 'nC_std': (0.51, (0.972145933875752, 2.188856931665505))}"
+jet_bis_is1571__v5pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_constH,True,43.50199317169633,0.1940195141400025,42.8,,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_compH,False,43.439867951711946,0.2240266433640911,42.8,,pass,
+jet_bis_is1571__v5pool,bis:jet_a1,aromatics_vol_pct,class_volume_fraction,True,7.087971627687314,0.0,,25.0,by_construction,
+jet_bis_is1571__v5pool,bis:jet_a1,smoke_point_mm,ajftd_bulk_regression,True,25.27019650764184,,25.0,,uncertified,"model emitted OutOfDomainWarning: aromatics 7.087971627687314 vol % outside training domain 8-23; predicted smoke point 25.3 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)"
+jet_bis_is1571__v5pool,bis:jet_a1,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for C1CC[C@H]2CCCC[C@@H]2C1'
