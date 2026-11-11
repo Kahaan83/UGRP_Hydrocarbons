@@ -1,0 +1,19 @@
+reading,item,value,threshold,met
+R-C2,AV-33-22 ideal mean bias (C),-1.0633772921127502,<= +2.0,True
+R-C2,AV-33-22 ideal fraction over-predicted >5 C,0.0,<= 0.20,True
+R-C2,overall (both conditions),,both,True
+R-C2 ref,r3 dev reference bias / frac>5C,+0.44 / 0.13,,
+R-C2 ref,r2 reference bias / frac>5C,+4.22 / 0.53,,
+R-C2 pairing,T2 fuels also in CRC 647,0,>= 3 to pair,False
+info,POSF-10325: v4 r3 class x cn (D2887-derived) ideal err / measured used (C),-11.88 / 55.0,,
+info,POSF-10325: FuelLib GCxGC ideal err / measured used (C),-2.08 / 48.0,,
+R-C3,median aromatic mass fraction (eligible fuels),0.2007703350901281,,
+R-C3,upper half n=21: mean err ideal (C),-0.8562724997883028,,
+R-C3,upper half n=21: mean err UNIFAC (C),-1.2561180829573806,opposite signs,False
+R-C3 info,lower half n=21: mean err ideal / UNIFAC (C),-0.809 / -1.003,,
+R-C4,"FuelLib-4 (declared) ideal: Pearson r(err, D86 T10)",-0.06384981966905404,n=4; p=0.936,
+R-C4,"FuelLib-4 (declared) unifac: Pearson r(err, D86 T10)",-0.07879539801840904,n=4; p=0.921,
+R-C4,"AV-33-22 (not declared; file has D86 T10) ideal: Pearson r(err, D86 T10)",-0.5096615820820383,n=38; p=0.00108,
+R-C4,"AV-33-22 (not declared; file has D86 T10) unifac: Pearson r(err, D86 T10)",-0.47527783478869023,n=38; p=0.00257,
+R-C4,"all eligible (info) ideal: Pearson r(err, D86 T10)",-0.26703453407874284,n=42; p=0.0873,
+R-C4,"all eligible (info) unifac: Pearson r(err, D86 T10)",-0.23710246702826426,n=42; p=0.131,
