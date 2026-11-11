@@ -89,22 +89,23 @@ def category(res, viol, nopred):
     return "B_meets_at_point_estimate_not_certifiable"
 
 
-def main(out=None):
+def main(out=None, margins=None, pure_props=None):
     global OUT
     if out is not None:
         OUT = Path(out) if Path(out).is_absolute() else ROOT / out
     OUT.mkdir(parents=True, exist_ok=True)
-    L = M.library()
+    mpath = None if margins is None else (Path(margins) if Path(margins).is_absolute() else ROOT / margins)
+    L = M.library(None if pure_props is None else (Path(pure_props) if Path(pure_props).is_absolute() else ROOT / pure_props))
     models = M.build_models(L)
     designs, long_rows, rob_rows, cmp_rows = [], [], [], []
     for v3id, spec_name, pools in DESIGNS:
         v3w, v3row = v3_weights(v3id)
         spec = E.load_spec(spec_name)
-        margins = E.load_margins()
+        margins = E.load_margins(mpath)
         for pool_id, pool in pools.items():
             did = f"{v3id}__{pool_id}"
             print(f"[{did}] designing {pool} ...", flush=True)
-            res = E.design(spec_name, pool, models, n_starts=30, seed=42)
+            res = E.design(spec_name, pool, models, n_starts=30, seed=42, margins_path=mpath)
             cnt = summarise(res.constraints)
             viol, nopred = point_estimate_view(res.constraints)
             designs.append(dict(
@@ -123,7 +124,7 @@ def main(out=None):
                                       lo=c.lo, hi=c.hi, prediction=c.prediction, applied_margin=c.applied_margin,
                                       margin_keys=json.dumps(list(c.margin_keys)), status=c.status, slack=c.slack,
                                       test_method=c.test_method, spec_verification=c.spec_verification, reason=c.reason))
-            for r in E.robustness_table(spec_name, pool, [res.weights[n] for n in pool], models):
+            for r in E.robustness_table(spec_name, pool, [res.weights[n] for n in pool], models, margins_path=mpath):
                 rob_rows.append(dict(design_id=did, **r))
             # --- v3 recipe re-scored by the v4 engine (same weights, v4 models and margins)
             if pool_id == "v3pool":
@@ -173,4 +174,7 @@ def main(out=None):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     ap.add_argument("--out", default=None, help="output folder (default results/v4/D2)")
-    main(ap.parse_args().out)
+    ap.add_argument("--margins", default=None, help="uncertainty yaml (default configs/uncertainty_v4.yaml); v5 S1: results/v5/S1/uncertainty_v5.yaml")
+    ap.add_argument("--pure-props", default=None, help="pure-constant table (default data/processed/v4/pure_props_v4.csv)")
+    a = ap.parse_args()
+    main(a.out, a.margins, a.pure_props)

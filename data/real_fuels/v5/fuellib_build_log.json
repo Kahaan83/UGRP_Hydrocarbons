@@ -1,0 +1,87 @@
+{
+ "gc_fuels": {
+  "2-methyloctane": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  },
+  "decane": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  },
+  "dodecane": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  },
+  "hefa-came": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 29,
+   "sum_weight_pct": 100.03
+  },
+  "hefa-mfat": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 31,
+   "sum_weight_pct": 99.98
+  },
+  "hefa-tall": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 21,
+   "sum_weight_pct": 100.01
+  },
+  "heptane-decane": {
+   "n_bins_file": 2,
+   "n_bins_nonzero": 2,
+   "sum_weight_pct": 100.0
+  },
+  "heptane": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  },
+  "jet-a": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 57,
+   "sum_weight_pct": 99.91
+  },
+  "methylcyclohexane": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  },
+  "posf10264": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 62,
+   "sum_weight_pct": 99.96
+  },
+  "posf10289": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 61,
+   "sum_weight_pct": 100.02
+  },
+  "posf10325": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 65,
+   "sum_weight_pct": 99.96
+  },
+  "posf11498": {
+   "n_bins_file": 13,
+   "n_bins_nonzero": 13,
+   "sum_weight_pct": 99.96
+  },
+  "posf4658": {
+   "n_bins_file": 67,
+   "n_bins_nonzero": 65,
+   "sum_weight_pct": 99.95
+  },
+  "toluene": {
+   "n_bins_file": 1,
+   "n_bins_nonzero": 1,
+   "sum_weight_pct": 100.0
+  }
+ },
+ "properties_dropped_unconvertible": 0,
+ "n_composition_rows": 412,
+ "n_property_rows": 281
+}

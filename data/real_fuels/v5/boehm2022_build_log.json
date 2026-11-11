@@ -1,0 +1,52 @@
+{
+ "pure_density_15C_g_cm3": {
+  "2,2,4,4,6,8,8-heptamethylnonane": 0.78772,
+  "methylcyclohexane": 0.77358,
+  "hexylbenzene": 0.8615,
+  "2,3-dimethylpentane": 0.69956,
+  "2,4-dimethylpentane": 0.67822,
+  "n-hexane": 0.6643,
+  "n-octane": 0.707,
+  "m-xylene": 0.86829,
+  "o-xylene": 0.88363,
+  "2,2,4-trimethylpentane": 0.69596,
+  "butylcyclohexane": 0.80303,
+  "heptylbenzene": 0.86151,
+  "ethylbenzene": 0.8712,
+  "2,2,4,6,6-pentamethylheptane": 0.74879,
+  "n-pentane": 0.63143,
+  "2-methylpentane": 0.6579,
+  "ethylcyclohexane": 0.7918,
+  "trans-decalin": 0.87197
+ },
+ "dropped_fuel_or_blend_stock_components": [
+  "A-1 (POSF 10264)",
+  "A-2 (POSF 10325)",
+  "A-3 (POSF10289)",
+  "C-1 (POSF 13718)",
+  "C-3 (POSF 12959)",
+  "C-7 (POSF 13727)",
+  "C-8 (POSF 13491)",
+  "C-9 (POSF 12968)",
+  "HRJ Camelina (POSF 7720)",
+  "POSF12945"
+ ],
+ "dropped_unresolved_components": [],
+ "dropped_components_without_15C_density": [],
+ "rows_read": 221,
+ "rows_kept": 145,
+ "dyn_viscosity_binary_multi_by_bin": {
+  "T_lt_263K": {
+   "points": 159,
+   "systems": 23
+  },
+  "T_263_283K": {
+   "points": 162,
+   "systems": 23
+  },
+  "T_ge_283K": {
+   "points": 81,
+   "systems": 23
+  }
+ }
+}

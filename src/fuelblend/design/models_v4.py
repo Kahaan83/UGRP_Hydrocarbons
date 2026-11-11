@@ -54,8 +54,9 @@ CRC_CLASSES = set(CLASSES)          # classes present in the CRC 647 reconstruct
 class Library:
     """All static data the model wrappers need; build once per process."""
 
-    def __init__(self):
-        pp = pd.read_csv(PURE_PROPS)
+    def __init__(self, pure_props=None):
+        # pure_props: alternative constants table with the pure_props_v4.csv columns (v5 overlay); default is v4
+        pp = pd.read_csv(PURE_PROPS if pure_props is None else pure_props)
         self.pp = pp
         self.smiles = pp.drop_duplicates("compound").set_index("compound").smiles.to_dict()
         self._tab = {(r.compound, r.prop): (r.value, r.status) for r in pp.itertuples()}
@@ -143,8 +144,8 @@ class Library:
 
 
 @lru_cache(maxsize=1)
-def library() -> Library:
-    return Library()
+def library(pure_props=None) -> Library:
+    return Library(pure_props)
 
 
 # ------------------------------------------------------------------------------------------------ helpers

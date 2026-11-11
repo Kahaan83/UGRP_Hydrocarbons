@@ -1,0 +1,109 @@
+design_id,spec,constraint,model,is_primary,prediction,applied_margin,lo,hi,status,reason
+jet_astm_d1655__v3pool,astm:jet_a,density_15C_kg_m3,ideal_volume_rho15,True,,,775.0,840.0,uncertified,model unavailable: decalin_trans.rho15 status=disputed
+jet_astm_d1655__v3pool,astm:jet_a,flash_point_C,le_chatelier_ideal,True,47.17753426604321,3.698768343688585,38.0,,pass,
+jet_astm_d1655__v3pool,astm:jet_a,flash_point_C,le_chatelier_unifac,False,47.17753426604321,1.5582460479421325,38.0,,pass,
+jet_astm_d1655__v3pool,astm:jet_a,freezing_point_C,ideal_svl_library,True,,,,-40.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_astm_d1655__v3pool,astm:jet_a,freezing_point_C,coutinho_library,False,,,,-40.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_astm_d1655__v3pool,astm:jet_a,freezing_point_C,ideal_sle_mole_fraction,False,,,,-40.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_astm_d1655__v3pool,astm:jet_a,kin_visc_m20C_cSt,refutas_raw,True,2.297587025844833,0.4153576080066075,,8.0,pass,
+jet_astm_d1655__v3pool,astm:jet_a,kin_visc_m20C_cSt,refutas_recalibrated,False,3.2645023357545733,0.3465490828831994,,8.0,pass,
+jet_astm_d1655__v3pool,astm:jet_a,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (1.0, (0.435578955927793, 0.5959145198006397)), 'nC_std': (0.0, (0.972145933875752, 2.188856931665505))}"
+jet_astm_d1655__v3pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_constH,True,44.70824,0.1940195141400025,42.8,,pass,
+jet_astm_d1655__v3pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_compH,False,44.33010998032049,0.2240266433640911,42.8,,pass,
+jet_astm_d1655__v3pool,astm:jet_a,aromatics_wt_pct,class_mass_fraction,True,0.0,0.0,,25.0,by_construction,
+jet_astm_d1655__v3pool,astm:jet_a,smoke_point_mm,ajftd_bulk_regression,True,,,25.0,,uncertified,model unavailable: decalin_trans.rho15 status=disputed
+jet_astm_d1655__v3pool,astm:jet_a,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for C1CC[C@H]2CCCC[C@@H]2C1'
+jet_astm_d1655__v4pool,astm:jet_a,density_15C_kg_m3,ideal_volume_rho15,True,774.0163211011637,4.5866,775.0,840.0,fail,limit violated after applying the margin
+jet_astm_d1655__v4pool,astm:jet_a,flash_point_C,le_chatelier_ideal,True,49.625563642601435,3.698768343688585,38.0,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,flash_point_C,le_chatelier_unifac,False,48.69154493217934,1.5582460479421325,38.0,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,ideal_svl_library,True,-36.57,,,-40.0,fail,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry); limit violated"
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,coutinho_library,False,-46.52,4.049999999999997,,-40.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,freezing_point_C,ideal_sle_mole_fraction,False,-38.94958094431277,,,-40.0,fail,mole-fraction ideal SLE has no yaml margin entry; limit violated
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas_raw,True,2.5229954799535337,0.4153576080066075,,8.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas_recalibrated,False,3.5847715645843743,0.3465490828831994,,8.0,pass,
+jet_astm_d1655__v4pool,astm:jet_a,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.228, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.606, (0.435578955927793, 0.5959145198006397))}"
+jet_astm_d1655__v4pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_constH,True,43.90468584723944,0.1940195141400025,42.8,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,nhoc_MJ_kg,gcv_group_additivity_compH,False,43.78723918777978,0.2240266433640911,42.8,,pass,
+jet_astm_d1655__v4pool,astm:jet_a,aromatics_wt_pct,class_mass_fraction,True,16.521793837227417,0.0,,25.0,by_construction,
+jet_astm_d1655__v4pool,astm:jet_a,smoke_point_mm,ajftd_bulk_regression,True,22.860579010785536,,25.0,,fail,"smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated"
+jet_astm_d1655__v4pool,astm:jet_a,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for CCCCCCCCCCCCCC'
+jet_bis_is1571__v3pool,bis:jet_a1,density_15C_kg_m3,ideal_volume_rho15,True,,,775.0,840.0,uncertified,model unavailable: decalin_trans.rho15 status=disputed
+jet_bis_is1571__v3pool,bis:jet_a1,flash_point_C,le_chatelier_ideal,True,47.17753426604321,3.698768343688585,38.0,,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,flash_point_C,le_chatelier_unifac,False,47.17753426604321,1.5582460479421325,38.0,,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,freezing_point_C,ideal_svl_library,True,,,,-47.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_bis_is1571__v3pool,bis:jet_a1,freezing_point_C,coutinho_library,False,,,,-47.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_bis_is1571__v3pool,bis:jet_a1,freezing_point_C,ideal_sle_mole_fraction,False,,,,-47.0,uncertified,model unavailable: decalin_trans.dHfus status=reference_only
+jet_bis_is1571__v3pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_raw,True,2.297587025844833,0.4153576080066075,,8.0,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_recalibrated,False,3.2645023357545733,0.3465490828831994,,8.0,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (1.0, (0.435578955927793, 0.5959145198006397)), 'nC_std': (0.0, (0.972145933875752, 2.188856931665505))}"
+jet_bis_is1571__v3pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_constH,True,44.70824,0.1940195141400025,42.8,,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_compH,False,44.33010998032049,0.2240266433640911,42.8,,pass,
+jet_bis_is1571__v3pool,bis:jet_a1,aromatics_vol_pct,class_volume_fraction,True,,,,25.0,uncertified,model unavailable: decalin_trans.rho15 status=disputed
+jet_bis_is1571__v3pool,bis:jet_a1,smoke_point_mm,ajftd_bulk_regression,True,,,25.0,,uncertified,model unavailable: decalin_trans.rho15 status=disputed
+jet_bis_is1571__v3pool,bis:jet_a1,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for C1CC[C@H]2CCCC[C@@H]2C1'
+jet_bis_is1571__v4pool,bis:jet_a1,density_15C_kg_m3,ideal_volume_rho15,True,757.6248981599673,4.5866,775.0,840.0,fail,limit violated after applying the margin
+jet_bis_is1571__v4pool,bis:jet_a1,flash_point_C,le_chatelier_ideal,True,51.045154156935894,3.698768343688585,38.0,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,flash_point_C,le_chatelier_unifac,False,50.599528153270626,1.5582460479421325,38.0,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,ideal_svl_library,True,-31.12,,,-47.0,fail,"freezing_point_C.sle_alkane_blends.ideal_svl: no valid margin (applied_margin absent: too few independent groups, see yaml entry); limit violated"
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,coutinho_library,False,-39.03,4.049999999999997,,-47.0,fail,limit violated after applying the margin
+jet_bis_is1571__v4pool,bis:jet_a1,freezing_point_C,ideal_sle_mole_fraction,False,-34.29153953104753,,,-47.0,fail,mole-fraction ideal SLE has no yaml margin entry; limit violated
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_raw,True,2.7027311067370388,0.4153576080066075,,8.0,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas_recalibrated,False,3.8401470375710023,0.3465490828831994,,8.0,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,kin_visc_m20C_cSt,refutas+structured_ridge,False,,,,8.0,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.052, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.183, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.765, (0.435578955927793, 0.5959145198006397))}"
+jet_bis_is1571__v4pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_constH,True,44.29838062998023,0.1940195141400025,42.8,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,nhoc_MJ_kg,gcv_group_additivity_compH,False,44.040378286509544,0.2240266433640911,42.8,,pass,
+jet_bis_is1571__v4pool,bis:jet_a1,aromatics_vol_pct,class_volume_fraction,True,4.494589525768724,0.0,,25.0,by_construction,
+jet_bis_is1571__v4pool,bis:jet_a1,smoke_point_mm,ajftd_bulk_regression,True,26.10967205544183,,25.0,,uncertified,"model emitted OutOfDomainWarning: aromatics 4.494589525768724 vol % outside training domain 8-23; predicted smoke point 26.1 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)"
+jet_bis_is1571__v4pool,bis:jet_a1,smoke_point_mm,ysi_route,False,,,25.0,,uncertified,model unavailable: 'no YSI for CCCCCCCCCCCCCC'
+diesel_astm_d975__v3pool,astm:diesel_no2,kin_visc_40C_cSt,refutas_raw,True,2.9456948150658775,0.1855823,1.9,4.1,pass,
+diesel_astm_d975__v3pool,astm:diesel_no2,kin_visc_40C_cSt,refutas_recalibrated,False,2.3701470364774777,0.3465490828831994,1.9,4.1,fail,"T=40 C outside the margin's validated range (-40.0, 20.0); limit violated after applying the margin"
+diesel_astm_d975__v3pool,astm:diesel_no2,kin_visc_40C_cSt,refutas+structured_ridge,False,,,1.9,4.1,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (1.0, (0.435578955927793, 0.5959145198006397)), 'nC_mean': (16.0, (9.994270057299428, 11.918331708901883)), 'nC_std': (0.0, (0.972145933875752, 2.188856931665505))}"
+diesel_astm_d975__v3pool,astm:diesel_no2,density_15C_kg_m3,ideal_volume_rho15,True,,,820.0,860.0,uncertified,model unavailable: decalin_cis.rho15 status=unverified
+diesel_astm_d975__v3pool,astm:diesel_no2,flash_point_C,le_chatelier_ideal,True,,,52.0,,uncertified,model unavailable: no Antoine/LFL entry in compounds_anchored_vp.csv for ['decalin_cis']
+diesel_astm_d975__v3pool,astm:diesel_no2,flash_point_C,le_chatelier_unifac,False,,,52.0,,uncertified,model unavailable: no Antoine/LFL entry in compounds_anchored_vp.csv for ['decalin_cis']
+diesel_astm_d975__v3pool,astm:diesel_no2,dcn,linear_volume_pure_DCN,True,,,40.0,,uncertified,model unavailable: decalin_cis.rho15 status=unverified
+diesel_astm_d975__v3pool,astm:diesel_no2,aromatics_wt_pct,class_mass_fraction,True,0.0,0.0,,35.0,by_construction,
+diesel_astm_d975__v4pool,astm:diesel_no2,kin_visc_40C_cSt,refutas_raw,True,1.5850881100783638,0.1855823,1.9,4.1,fail,limit violated after applying the margin
+diesel_astm_d975__v4pool,astm:diesel_no2,kin_visc_40C_cSt,refutas_recalibrated,False,1.2753839492954742,0.3465490828831994,1.9,4.1,fail,"T=40 C outside the margin's validated range (-40.0, 20.0); limit violated after applying the margin"
+diesel_astm_d975__v4pool,astm:diesel_no2,kin_visc_40C_cSt,refutas+structured_ridge,False,,,1.9,4.1,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.412, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'nC_mean': (13.119, (9.994270057299428, 11.918331708901883)), 'nC_std': (3.445, (0.972145933875752, 2.188856931665505))}"
+diesel_astm_d975__v4pool,astm:diesel_no2,density_15C_kg_m3,ideal_volume_rho15,True,813.9794479139832,4.5866,820.0,860.0,fail,limit violated after applying the margin
+diesel_astm_d975__v4pool,astm:diesel_no2,flash_point_C,le_chatelier_ideal,True,55.03944295306479,3.698768343688585,52.0,,fail,limit violated after applying the margin
+diesel_astm_d975__v4pool,astm:diesel_no2,flash_point_C,le_chatelier_unifac,False,54.81204572312362,1.5582460479421325,52.0,,pass_jet_derived_margin_only,"margin validated on ['jet'] fuels only; this is a diesel spec, so the pass is not a certification"
+diesel_astm_d975__v4pool,astm:diesel_no2,dcn,linear_volume_pure_DCN,True,66.12034836449794,,40.0,,uncertified,no diesel residuals exist (0 diesel fuels qualify; yaml 'excluded')
+diesel_astm_d975__v4pool,astm:diesel_no2,aromatics_wt_pct,class_mass_fraction,True,41.15457887573903,0.0,,35.0,fail,recipe violates the limit
+diesel_bis_is1460__v3pool,bis:diesel_bs6,dcn,linear_volume_pure_DCN,True,,,51.0,,uncertified,model unavailable: decalin_cis.rho15 status=unverified
+diesel_bis_is1460__v3pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas_raw,True,2.9456948150658775,0.1855823,2.0,4.5,pass,
+diesel_bis_is1460__v3pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas_recalibrated,False,2.3701470364774777,0.3465490828831994,2.0,4.5,fail,"T=40 C outside the margin's validated range (-40.0, 20.0); limit violated after applying the margin"
+diesel_bis_is1460__v3pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas+structured_ridge,False,,,2.0,4.5,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.0, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (1.0, (0.435578955927793, 0.5959145198006397)), 'nC_mean': (16.0, (9.994270057299428, 11.918331708901883)), 'nC_std': (0.0, (0.972145933875752, 2.188856931665505))}"
+diesel_bis_is1460__v3pool,bis:diesel_bs6,flash_point_C,le_chatelier_ideal,True,,,35.0,,uncertified,model unavailable: no Antoine/LFL entry in compounds_anchored_vp.csv for ['decalin_cis']
+diesel_bis_is1460__v3pool,bis:diesel_bs6,flash_point_C,le_chatelier_unifac,False,,,35.0,,uncertified,model unavailable: no Antoine/LFL entry in compounds_anchored_vp.csv for ['decalin_cis']
+diesel_bis_is1460__v3pool,bis:diesel_bs6,density_15C_kg_m3,ideal_volume_rho15,True,,,810.0,845.0,uncertified,model unavailable: decalin_cis.rho15 status=unverified
+diesel_bis_is1460__v4pool,bis:diesel_bs6,dcn,linear_volume_pure_DCN,True,72.08228361451862,,51.0,,uncertified,no diesel residuals exist (0 diesel fuels qualify; yaml 'excluded')
+diesel_bis_is1460__v4pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas_raw,True,1.7415486277006555,0.1855823,2.0,4.5,fail,limit violated after applying the margin
+diesel_bis_is1460__v4pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas_recalibrated,False,1.4012742588657525,0.3465490828831994,2.0,4.5,fail,"T=40 C outside the margin's validated range (-40.0, 20.0); limit violated after applying the margin"
+diesel_bis_is1460__v4pool,bis:diesel_bs6,kin_visc_40C_cSt,refutas+structured_ridge,False,,,2.0,4.5,uncertified,"model unavailable: structured ridge applied outside its CRC dev-fuel feature envelope: {'frac_aromatic': (0.342, (0.0604398359389885, 0.2409538136282322)), 'frac_alkene_alkyne': (0.0, (0.0077216551332264, 0.0397461085083874)), 'frac_cycloalkane': (0.0, (0.1507663847780126, 0.180196351748413)), 'frac_iso_paraffin': (0.0, (0.0705492945070549, 0.2065261533463287)), 'frac_n_paraffin': (0.658, (0.435578955927793, 0.5959145198006397)), 'nC_mean': (13.605, (9.994270057299428, 11.918331708901883)), 'nC_std': (3.321, (0.972145933875752, 2.188856931665505))}"
+diesel_bis_is1460__v4pool,bis:diesel_bs6,flash_point_C,le_chatelier_ideal,True,57.71478257648107,3.698768343688585,35.0,,pass_jet_derived_margin_only,"margin validated on ['jet'] fuels only; this is a diesel spec, so the pass is not a certification"
+diesel_bis_is1460__v4pool,bis:diesel_bs6,flash_point_C,le_chatelier_unifac,False,57.3896459381927,1.5582460479421325,35.0,,pass_jet_derived_margin_only,"margin validated on ['jet'] fuels only; this is a diesel spec, so the pass is not a certification"
+diesel_bis_is1460__v4pool,bis:diesel_bs6,density_15C_kg_m3,ideal_volume_rho15,True,806.838523221262,4.5866,810.0,845.0,fail,limit violated after applying the margin
+gasoline_astm_d4814__v3pool,astm:gasoline,ron,linear_volume_pure_RON,True,,,87.0,,uncertified,model unavailable: isopentane.RON status=unverified
+gasoline_astm_d4814__v3pool,astm:gasoline,mon,linear_volume_pure_MON,True,,,82.0,,uncertified,model unavailable: isopentane.MON status=unverified
+gasoline_astm_d4814__v3pool,astm:gasoline,density_15C_kg_m3,ideal_volume_rho15,True,748.1683595499998,4.5866,720.0,775.0,pass,
+gasoline_astm_d4814__v3pool,astm:gasoline,dvpe_kPa,ideal_raoult_psat37.8,True,,,45.0,70.0,uncertified,model unavailable: isooctane.Psat37_8 status=disputed
+gasoline_astm_d4814__v4pool,astm:gasoline,ron,linear_volume_pure_RON,True,107.19786874327718,,87.0,,uncertified,"octane margins exist only for base-gasoline + ONE blendstock models (Task 15, 18 blendstock groups); a multi-component pure-compound recipe has no validated octane model"
+gasoline_astm_d4814__v4pool,astm:gasoline,mon,linear_volume_pure_MON,True,101.07968031149159,,82.0,,uncertified,"octane margins exist only for base-gasoline + ONE blendstock models (Task 15, 18 blendstock groups); a multi-component pure-compound recipe has no validated octane model"
+gasoline_astm_d4814__v4pool,astm:gasoline,density_15C_kg_m3,ideal_volume_rho15,True,758.9813515036752,4.5866,720.0,775.0,pass,
+gasoline_astm_d4814__v4pool,astm:gasoline,dvpe_kPa,ideal_raoult_psat37.8,True,,,45.0,70.0,uncertified,model unavailable: isooctane.Psat37_8 status=disputed
+gasoline_astm_d4814__v4pool_dvpe,astm:gasoline,ron,linear_volume_pure_RON,True,77.63831663165489,,87.0,,fail,"octane margins exist only for base-gasoline + ONE blendstock models (Task 15, 18 blendstock groups); a multi-component pure-compound recipe has no validated octane model; limit violated"
+gasoline_astm_d4814__v4pool_dvpe,astm:gasoline,mon,linear_volume_pure_MON,True,72.9149079098323,,82.0,,fail,"octane margins exist only for base-gasoline + ONE blendstock models (Task 15, 18 blendstock groups); a multi-component pure-compound recipe has no validated octane model; limit violated"
+gasoline_astm_d4814__v4pool_dvpe,astm:gasoline,density_15C_kg_m3,ideal_volume_rho15,True,744.1916251434068,4.5866,720.0,775.0,pass,
+gasoline_astm_d4814__v4pool_dvpe,astm:gasoline,dvpe_kPa,ideal_raoult_psat37.8,True,42.23015485055923,,45.0,70.0,fail,DVPE targets are units-unconfirmed and excluded from uncertainty_v4.yaml; limit violated
+gasoline_bis_is2796_e10__v3pool,bis:gasoline_e10,density_15C_kg_m3,ideal_volume_rho15,True,682.1498168560206,4.5866,720.0,775.0,fail,limit violated after applying the margin
+gasoline_bis_is2796_e10__v3pool,bis:gasoline_e10,ron,linear_volume_pure_RON,True,,,91.0,,uncertified,model unavailable: isopentane.RON status=unverified
+gasoline_bis_is2796_e10__v3pool,bis:gasoline_e10,mon,linear_volume_pure_MON,True,,,81.0,,uncertified,model unavailable: isopentane.MON status=unverified
+gasoline_bis_is2796_e10__v3pool,bis:gasoline_e10,dvpe_kPa,ideal_raoult_psat37.8,True,,,,67.0,uncertified,model unavailable: isooctane.Psat37_8 status=disputed
+gasoline_bis_is2796_e10__v3pool,bis:gasoline_e10,ethanol_vol_pct,ethanol_volume_fraction,True,0.0,0.0,,10.0,by_construction,
+gasoline_bis_is2796_e10__v4pool,bis:gasoline_e10,density_15C_kg_m3,ideal_volume_rho15,True,685.6136205358263,4.5866,720.0,775.0,fail,limit violated after applying the margin
+gasoline_bis_is2796_e10__v4pool,bis:gasoline_e10,ron,linear_volume_pure_RON,True,,,91.0,,uncertified,model unavailable: ethanol.RON status=unverified
+gasoline_bis_is2796_e10__v4pool,bis:gasoline_e10,mon,linear_volume_pure_MON,True,,,81.0,,uncertified,model unavailable: ethanol.MON status=unverified
+gasoline_bis_is2796_e10__v4pool,bis:gasoline_e10,dvpe_kPa,ideal_raoult_psat37.8,True,,,,67.0,uncertified,model unavailable: isooctane.Psat37_8 status=disputed
+gasoline_bis_is2796_e10__v4pool,bis:gasoline_e10,ethanol_vol_pct,ethanol_volume_fraction,True,0.0,0.0,,10.0,by_construction,
