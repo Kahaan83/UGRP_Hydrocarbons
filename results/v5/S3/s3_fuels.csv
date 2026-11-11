@@ -1,0 +1,156 @@
+entity,source,fuel_id,label,group,locked_ajftd,group_locked,n_bins,M_unmapped,M_ok,n_components_M,R_available,R_fallback,R_ok,R_missing_reason,n_d86_points,aromatics_vol_pct,diaromatics_vol_pct,prior_variant,n_target_rows,n_pair_rows,pairable
+AJFTD:2,AJFTD,2,10325,AJFTD:122,False,False,74,0.0246889,True,42,True,0,True,,6,17.2,,label in prior set; Rlo uses leave-out prior,6,6,True
+AJFTD:18,AJFTD,18,13374,AJFTD:18,False,False,69,0.00451989,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:23,AJFTD,23,4658,AJFTD:23,False,False,73,0.0187732,True,41,True,0,True,,6,19,,standard,4,4,True
+AJFTD:39,AJFTD,39,10289,AJFTD:39,False,False,65,0.0141453,True,39,True,0,True,,6,19.1,,standard,4,4,True
+AJFTD:47,AJFTD,47,10326,AJFTD:47,False,False,34,0.000200421,True,26,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:78,AJFTD,78,11721,AJFTD:78,False,False,73,0.0095372,True,41,True,0,True,,4,19,,standard,4,4,True
+AJFTD:80,AJFTD,80,11729,AJFTD:80,False,False,41,0,True,29,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,1,0,False
+AJFTD:81,AJFTD,81,11757,AJFTD:81,False,False,75,0.0141566,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:82,AJFTD,82,11760,AJFTD:82,False,False,75,0.0148579,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:84,AJFTD,84,11764,AJFTD:84,False,False,35,1.11022e-16,True,29,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:86,AJFTD,86,11769,AJFTD:86,False,False,72,0.0114423,True,41,True,0,True,,4,20,,standard,4,4,True
+AJFTD:87,AJFTD,87,11785,AJFTD:87,False,False,34,0.000200321,True,25,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,1,0,False
+AJFTD:93,AJFTD,93,12223,AJFTD:93,True,True,21,0,True,20,True,0,True,,6,13.6,,standard,5,5,True
+AJFTD:95,AJFTD,95,12341,AJFTD:95,True,True,65,0.00966281,True,39,True,0,True,,6,11.2,,standard,4,4,True
+AJFTD:97,AJFTD,97,12344,AJFTD:97,True,True,33,0,True,28,True,0,True,,6,2.3,,standard,4,4,True
+AJFTD:98,AJFTD,98,12345,AJFTD:98,True,True,15,-2.22045e-16,True,15,True,0,True,,6,26.2,,standard,4,4,True
+AJFTD:99,AJFTD,99,12346,AJFTD:99,False,False,68,0.0388252,True,31,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:103,AJFTD,103,12355,AJFTD:103,False,False,83,0.0161712,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:104,AJFTD,104,12356,AJFTD:104,False,False,80,0.0213151,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:109,AJFTD,109,12382,AJFTD:109,True,True,72,0.012342,True,41,False,,False,fewer than 4 D86 points (0),0,9.1,,standard,1,0,False
+AJFTD:111,AJFTD,111,12398,AJFTD:111,False,False,5,0,True,5,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:117,AJFTD,117,12719,AJFTD:117,False,False,73,0.0236829,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:119,AJFTD,119,12731,AJFTD:119,False,False,72,0.0128462,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:120,AJFTD,120,12732,AJFTD:120,False,False,70,0.0307106,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:122,AJFTD,122,12751,AJFTD:122,False,False,75,0.0197692,True,42,True,0,True,,6,14,,standard,4,4,True
+AJFTD:123,AJFTD,123,12752,AJFTD:123,False,False,56,0.0135406,True,28,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:124,AJFTD,124,12754,AJFTD:124,False,False,76,0.0125464,True,41,True,0,True,,6,9.2,,standard,4,4,True
+AJFTD:129,AJFTD,129,12782,AJFTD:129,False,False,68,0.0154618,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:130,AJFTD,130,12784,AJFTD:130,False,False,73,0.010839,True,41,True,0,True,,4,18.1,,standard,4,4,True
+AJFTD:131,AJFTD,131,12785,AJFTD:131,False,False,13,0,True,12,True,0,True,,6,25,,standard,4,4,True
+AJFTD:139,AJFTD,139,12918,AJFTD:139,False,False,34,0.000200441,True,26,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:140,AJFTD,140,12936,AJFTD:140,False,False,73,0.0190878,True,41,False,,False,fewer than 4 D86 points (0),0,26,,standard,2,0,False
+AJFTD:141,AJFTD,141,12947,AJFTD:141,False,False,18,1.11022e-16,True,16,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:143,AJFTD,143,12968,AJFTD:143,False,False,30,0,True,26,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:144,AJFTD,144,12973,AJFTD:144,False,False,66,0.0214795,True,34,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:145,AJFTD,145,12976,AJFTD:145,False,False,67,0.00321447,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:146,AJFTD,146,13197,AJFTD:146,False,False,43,0.101515,False,22,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:147,AJFTD,147,13208,AJFTD:147,False,False,74,0.0165646,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:148,AJFTD,148,13219,AJFTD:148,False,False,15,0.00010015,True,13,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:149,AJFTD,149,13313,AJFTD:149,False,False,54,0.000401284,True,36,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:150,AJFTD,150,13317,AJFTD:150,True,True,71,0.00471888,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,2,0,False
+AJFTD:156,AJFTD,156,4751,AJFTD:156,True,True,71,0.0161663,True,41,True,0,True,,6,18.8,,standard,5,5,True
+AJFTD:159,AJFTD,159,4877,AJFTD:159,False,False,64,0.00632276,True,38,True,0,True,,6,18.85,,standard,4,4,True
+AJFTD:161,AJFTD,161,4909,AJFTD:161,True,True,36,0.000200361,True,28,True,0,True,,6,0,,standard,5,5,True
+AJFTD:173,AJFTD,173,5171,AJFTD:122,False,False,65,0.00853071,True,39,True,0,True,,6,9,,standard,3,3,True
+AJFTD:174,AJFTD,174,5172,AJFTD:174,False,False,24,0,True,21,True,0,True,,6,0,,standard,4,4,True
+AJFTD:175,AJFTD,175,5225,AJFTD:175,True,True,65,0.00832748,True,39,True,0,True,,6,9.25,,standard,4,4,True
+AJFTD:189,AJFTD,189,5642,AJFTD:189,True,True,27,0.0228388,True,16,True,0,True,,6,1,,standard,6,6,True
+AJFTD:195,AJFTD,195,5698,AJFTD:195,False,False,55,0.000601987,True,35,True,0,True,,6,1.7,,standard,4,4,True
+AJFTD:196,AJFTD,196,5699,AJFTD:196,False,False,67,0.00984035,True,40,True,0,True,,6,17.45,,standard,4,4,True
+AJFTD:215,AJFTD,215,6152,AJFTD:215,False,False,38,0,True,29,True,0,True,,6,0.3,,standard,6,6,True
+AJFTD:239,AJFTD,239,6308,AJFTD:239,True,True,31,0,True,25,True,0,True,,6,0.4,,standard,5,5,True
+AJFTD:275,AJFTD,275,7629,AJFTD:275,False,False,42,0.0262736,True,29,True,0,True,,6,2.1,,standard,6,6,True
+AJFTD:281,AJFTD,281,7674,AJFTD:281,False,False,67,0.0211826,True,36,True,0,True,,6,9.6,,standard,2,2,True
+AJFTD:293,AJFTD,293,7695,AJFTD:293,False,False,25,3.33067e-16,True,20,True,0,True,,6,0,,standard,6,6,True
+AJFTD:325,AJFTD,325,8092,AJFTD:325,False,False,15,0.0025035,True,12,True,0,True,,6,0,,standard,6,5,True
+AJFTD:337,AJFTD,337,8438,AJFTD:337,False,False,17,0.00600901,True,13,True,0,True,,6,0.7,,standard,6,5,True
+AJFTD:348,AJFTD,348,9324,AJFTD:348,False,False,33,0,True,28,True,0,True,,6,0.7,,standard,6,6,True
+AJFTD:350,AJFTD,350,9342,AJFTD:350,False,False,33,0,True,28,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24387,AJFTD,24387,3895,AJFTD:24387,False,False,66,0.0216108,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24389,AJFTD,24389,3897,AJFTD:24389,False,False,67,0.0121085,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24390,AJFTD,24390,3898,AJFTD:24390,False,False,63,0.0318127,True,37,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24391,AJFTD,24391,3899,AJFTD:24391,False,False,68,0.0361217,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24392,AJFTD,24392,3900,AJFTD:24392,False,False,68,0.0237166,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24393,AJFTD,24393,3901,AJFTD:24393,False,False,69,0.0378189,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24394,AJFTD,24394,3902,AJFTD:24394,False,False,71,0.0117059,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24395,AJFTD,24395,3938,AJFTD:24395,False,False,67,0.0109022,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24396,AJFTD,24396,3939,AJFTD:24396,False,False,66,0.0188282,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24397,AJFTD,24397,3940,AJFTD:24397,False,False,70,0.0495297,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24399,AJFTD,24399,3960,AJFTD:24399,False,False,73,0.041921,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24400,AJFTD,24400,3961,AJFTD:24400,False,False,75,0.00310279,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24402,AJFTD,24402,3963,AJFTD:24402,False,False,66,0.0131105,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24403,AJFTD,24403,3964,AJFTD:24403,False,False,76,0.0112078,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24404,AJFTD,24404,3965,AJFTD:24404,False,False,67,0.0273082,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24405,AJFTD,24405,3966,AJFTD:24405,False,False,70,0.0201161,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24406,AJFTD,24406,3967,AJFTD:24406,False,False,68,0.0142057,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24407,AJFTD,24407,3968,AJFTD:24407,False,False,73,0.023321,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24408,AJFTD,24408,3969,AJFTD:24408,False,False,69,0.0307123,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24409,AJFTD,24409,3970,AJFTD:24409,False,False,69,0.0188151,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24410,AJFTD,24410,3971,AJFTD:24410,False,False,65,0.0106064,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24411,AJFTD,24411,4108,AJFTD:24411,False,False,75,0.0249174,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24412,AJFTD,24412,4109,AJFTD:24412,False,False,74,0.0297119,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24413,AJFTD,24413,4110,AJFTD:24413,False,False,70,0.0207207,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24414,AJFTD,24414,4111,AJFTD:24414,False,False,73,0.0335034,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24415,AJFTD,24415,4152,AJFTD:24415,False,False,64,0.0303121,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24416,AJFTD,24416,4153,AJFTD:24416,False,False,46,0.0011,True,30,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24417,AJFTD,24417,4154,AJFTD:24417,False,False,69,0.0075045,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24418,AJFTD,24418,4155,AJFTD:24418,False,False,71,0.0137069,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24419,AJFTD,24419,4156,AJFTD:24419,False,False,59,0.0268349,True,34,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24420,AJFTD,24420,4158,AJFTD:24420,False,False,66,0.0118988,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24421,AJFTD,24421,4159,AJFTD:24421,False,False,42,0.00070035,True,26,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24422,AJFTD,24422,4195,AJFTD:24422,False,False,75,0.0333133,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24423,AJFTD,24423,4197,AJFTD:24423,False,False,66,0.0159111,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24424,AJFTD,24424,4198,AJFTD:24424,False,False,71,0.00921105,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24425,AJFTD,24425,4324,AJFTD:24425,False,False,69,0.0203102,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24426,AJFTD,24426,4325,AJFTD:24426,False,False,76,0.0290116,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24428,AJFTD,24428,4327,AJFTD:24428,False,False,69,0.0344172,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24430,AJFTD,24430,4364,AJFTD:24430,False,False,70,0.0203142,True,36,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24431,AJFTD,24431,4365,AJFTD:24431,False,False,58,0.0233117,True,36,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24432,AJFTD,24432,4366,AJFTD:24432,False,False,75,0.0162113,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24433,AJFTD,24433,4368,AJFTD:24433,False,False,64,0.00620186,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24434,AJFTD,24434,4369,AJFTD:24434,False,False,67,0.0165083,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24435,AJFTD,24435,4370,AJFTD:24435,False,False,76,0.0253076,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24436,AJFTD,24436,4371,AJFTD:24436,False,False,62,0.018715,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24437,AJFTD,24437,4384,AJFTD:24437,False,False,67,0.0227045,True,40,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24438,AJFTD,24438,4385,AJFTD:24438,False,False,64,0.0188282,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24439,AJFTD,24439,4386,AJFTD:24439,False,False,68,0.0141127,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24440,AJFTD,24440,4433,AJFTD:24440,False,False,74,0.0104104,True,42,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24441,AJFTD,24441,4461,AJFTD:24441,False,False,75,0.0108097,True,41,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AJFTD:24567,AJFTD,24567,13784,AJFTD:24567,False,False,38,0.00454775,True,24,True,0,True,,6,0.2,,standard,6,6,True
+AJFTD:24568,AJFTD,24568,13785,AJFTD:122,False,False,75,0.0208125,True,41,True,0,True,,6,14.8,,standard,6,6,True
+AJFTD:24569,AJFTD,24569,13786,AJFTD:24569,False,False,72,0.0139097,True,40,True,0,True,,6,8,,standard,6,6,True
+AJFTD:24570,AJFTD,24570,13718,AJFTD:24570,False,False,20,0.00476142,True,15,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,0,,,standard,0,0,False
+AV-33-22:CRC_AV3322_01,AV-33-22,CRC_AV3322_01,CRC_AV3322_01,AV-33-22:CRC_AV3322_01,False,False,104,0.0234047,True,50,True,0.00842521,True,,6,19.3,0.78,standard,6,5,True
+AV-33-22:CRC_AV3322_02,AV-33-22,CRC_AV3322_02,CRC_AV3322_02,AV-33-22:CRC_AV3322_02,False,False,104,0.0386193,True,50,True,0.00649383,True,,6,17.3,0.6,standard,5,4,True
+AV-33-22:CRC_AV3322_03,AV-33-22,CRC_AV3322_03,CRC_AV3322_03,AV-33-22:CRC_AV3322_03,False,False,104,0.0114989,True,50,True,0.00184157,True,,6,16.4,0.17,standard,6,5,True
+AV-33-22:CRC_AV3322_04,AV-33-22,CRC_AV3322_04,CRC_AV3322_04,AV-33-22:CRC_AV3322_04,False,False,104,0.0309093,True,50,True,0.00540346,True,,6,18.8,0.5,standard,6,5,True
+AV-33-22:CRC_AV3322_05,AV-33-22,CRC_AV3322_05,CRC_AV3322_05,AV-33-22:CRC_AV3322_05,False,False,104,0.0246074,True,50,True,0.00651913,True,,6,13.4,0.6,standard,6,5,True
+AV-33-22:CRC_AV3322_06,AV-33-22,CRC_AV3322_06,CRC_AV3322_06,AV-33-22:CRC_AV3322_06,False,False,104,0.0285086,True,50,True,0.00401973,True,,6,13.5,0.37,standard,6,5,True
+AV-33-22:CRC_AV3322_07,AV-33-22,CRC_AV3322_07,CRC_AV3322_07,AV-33-22:CRC_AV3322_07,False,False,104,0.0412959,True,50,True,0.0215808,True,,6,15.3,1.99,standard,6,5,True
+AV-33-22:CRC_AV3322_08,AV-33-22,CRC_AV3322_08,CRC_AV3322_08,AV-33-22:CRC_AV3322_08,False,False,104,0.0248124,True,50,True,0.00993052,True,,6,20,0.92,standard,6,5,True
+AV-33-22:CRC_AV3322_09,AV-33-22,CRC_AV3322_09,CRC_AV3322_09,AV-33-22:CRC_AV3322_09,False,False,104,0.0288115,True,50,True,0.00900554,True,,6,14.8,0.83,standard,6,5,True
+AV-33-22:CRC_AV3322_10,AV-33-22,CRC_AV3322_10,CRC_AV3322_10,AV-33-22:CRC_AV3322_10,False,False,104,0.030403,True,50,True,0.0130552,True,,6,12.1,1.2,standard,6,5,True
+AV-33-22:CRC_AV3322_11,AV-33-22,CRC_AV3322_11,CRC_AV3322_11,AV-33-22:CRC_AV3322_11,False,False,104,0.019,True,50,True,0.00163599,True,,6,9.6,0.15,standard,6,5,True
+AV-33-22:CRC_AV3322_12,AV-33-22,CRC_AV3322_12,CRC_AV3322_12,AV-33-22:CRC_AV3322_01,False,False,104,0.0219088,True,50,True,0.00874578,True,,6,19.7,0.81,standard,6,5,True
+AV-33-22:CRC_AV3322_13,AV-33-22,CRC_AV3322_13,CRC_AV3322_13,AV-33-22:CRC_AV3322_13,False,False,104,0.0363218,True,50,True,0.0156209,True,,6,15,1.44,standard,6,5,True
+AV-33-22:CRC_AV3322_14,AV-33-22,CRC_AV3322_14,CRC_AV3322_14,AV-33-22:CRC_AV3322_14,False,False,104,0.0409123,True,50,True,0.0184945,True,,6,18,1.71,standard,6,5,True
+AV-33-22:CRC_AV3322_15,AV-33-22,CRC_AV3322_15,CRC_AV3322_15,AV-33-22:CRC_AV3322_15,False,False,104,0.0320128,True,50,True,0.0151162,True,,6,19.7,1.4,standard,6,5,True
+AV-33-22:CRC_AV3322_16,AV-33-22,CRC_AV3322_16,CRC_AV3322_16,AV-33-22:CRC_AV3322_16,False,False,104,0.0343103,True,50,True,0.00733922,True,,6,20.1,0.68,standard,6,5,True
+AV-33-22:CRC_AV3322_17,AV-33-22,CRC_AV3322_17,CRC_AV3322_17,AV-33-22:CRC_AV3322_17,False,False,104,0.0372888,True,50,True,0.0130448,True,,6,12.9,1.2,standard,6,5,True
+AV-33-22:CRC_AV3322_18,AV-33-22,CRC_AV3322_18,CRC_AV3322_18,AV-33-22:CRC_AV3322_18,False,False,104,0.0357143,True,50,True,0.00521114,True,,6,14.2,0.48,standard,6,5,True
+AV-33-22:CRC_AV3322_19,AV-33-22,CRC_AV3322_19,CRC_AV3322_19,AV-33-22:CRC_AV3322_19,False,False,104,0.0334967,True,50,True,0.00537568,True,,6,24,0.5,standard,6,5,True
+AV-33-22:CRC_AV3322_20,AV-33-22,CRC_AV3322_20,CRC_AV3322_20,AV-33-22:CRC_AV3322_20,False,False,104,0.0341966,True,50,True,0.00983234,True,,6,19,0.91,standard,6,5,True
+AV-33-22:CRC_AV3322_21,AV-33-22,CRC_AV3322_21,CRC_AV3322_21,AV-33-22:CRC_AV3322_21,False,False,104,0.038,True,50,True,0.0151992,True,,6,14.2,1.4,standard,6,5,True
+AV-33-22:CRC_AV3322_22,AV-33-22,CRC_AV3322_22,CRC_AV3322_22,AV-33-22:CRC_AV3322_22,False,False,104,0.0178982,True,50,True,0.00173117,True,,6,17.6,0.16,standard,6,5,True
+AV-33-22:CRC_AV3322_23,AV-33-22,CRC_AV3322_23,CRC_AV3322_23,AV-33-22:CRC_AV3322_08,False,False,104,0.025718,True,50,True,0.0102523,True,,6,20.2,0.95,standard,6,5,True
+AV-33-22:CRC_AV3322_24,AV-33-22,CRC_AV3322_24,CRC_AV3322_24,AV-33-22:CRC_AV3322_24,False,False,104,0.0395079,True,50,True,0.00540024,True,,6,19.4,0.5,standard,6,5,True
+AV-33-22:CRC_AV3322_25,AV-33-22,CRC_AV3322_25,CRC_AV3322_25,AV-33-22:CRC_AV3322_25,False,False,104,0.0354142,True,50,True,0.00973396,True,,6,18,0.9,standard,6,5,True
+AV-33-22:CRC_AV3322_26,AV-33-22,CRC_AV3322_26,CRC_AV3322_26,AV-33-22:CRC_AV3322_26,False,False,104,0.0396158,True,50,True,0.0122894,True,,6,21.3,1.14,standard,6,5,True
+AV-33-22:CRC_AV3322_27,AV-33-22,CRC_AV3322_27,CRC_AV3322_27,AV-33-22:CRC_AV3322_27,False,False,104,0.0144986,True,50,True,0,True,,6,13.8,,standard,6,5,True
+AV-33-22:CRC_AV3322_28,AV-33-22,CRC_AV3322_28,CRC_AV3322_28,AV-33-22:CRC_AV3322_28,False,False,104,0.0433217,True,50,True,0.0130175,True,,6,15,1.2,standard,6,5,True
+AV-33-22:CRC_AV3322_29,AV-33-22,CRC_AV3322_29,CRC_AV3322_29,AV-33-22:CRC_AV3322_29,False,False,104,0.0512744,True,50,True,0.0187444,True,,6,22,1.74,standard,6,5,True
+AV-33-22:CRC_AV3322_30,AV-33-22,CRC_AV3322_30,CRC_AV3322_30,AV-33-22:CRC_AV3322_30,False,False,104,0.0469282,True,50,True,0.0182819,True,,6,17.8,1.69,standard,6,5,True
+AV-33-22:CRC_AV3322_31,AV-33-22,CRC_AV3322_31,CRC_AV3322_31,AV-33-22:CRC_AV3322_31,False,False,104,0.0422,True,50,True,0.0151674,True,,6,16.3,1.4,standard,6,5,True
+AV-33-22:CRC_AV3322_32,AV-33-22,CRC_AV3322_32,CRC_AV3322_32,AV-33-22:CRC_AV3322_32,False,False,104,0.0515309,True,50,True,0.0262243,True,,6,20.2,2.43,standard,6,5,True
+AV-33-22:CRC_AV3322_33,AV-33-22,CRC_AV3322_33,CRC_AV3322_33,AV-33-22:CRC_AV3322_33,False,False,104,0.0555944,True,50,True,0,True,,6,20.6,,standard,6,5,True
+AV-33-22:CRC_AV3322_34,AV-33-22,CRC_AV3322_34,CRC_AV3322_34,AV-33-22:CRC_AV3322_34,False,False,104,0.0272218,True,50,True,0.0122155,True,,6,18.5,1.13,standard,6,5,True
+AV-33-22:CRC_AV3322_35,AV-33-22,CRC_AV3322_35,CRC_AV3322_35,AV-33-22:CRC_AV3322_01,False,False,104,0.0244073,True,50,True,0.00950631,True,,6,19.2,0.88,standard,6,5,True
+AV-33-22:CRC_AV3322_36,AV-33-22,CRC_AV3322_36,CRC_AV3322_36,AV-33-22:CRC_AV3322_36,False,False,104,0.0193942,True,50,True,0.00543315,True,,6,13.3,0.5,standard,6,5,True
+AV-33-22:CRC_AV3322_37,AV-33-22,CRC_AV3322_37,CRC_AV3322_37,AV-33-22:CRC_AV3322_37,False,False,104,0.0559944,True,50,True,0.0263663,True,,6,18.9,2.44,standard,6,5,True
+AV-33-22:CRC_AV3322_38,AV-33-22,CRC_AV3322_38,CRC_AV3322_38,AV-33-22:CRC_AV3322_38,False,False,104,0.0282113,True,50,True,0.0128296,True,,6,21.2,1.19,standard,6,5,True
+FuelLib:FUELLIB_posf10264,FuelLib,FUELLIB_posf10264,10264,FuelLib:FUELLIB_posf10264,False,False,62,0.0117047,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,5,0,False
+FuelLib:FUELLIB_posf10289,FuelLib,FUELLIB_posf10289,10289,AJFTD:39,False,False,61,0.0144971,True,38,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,5,0,False
+FuelLib:FUELLIB_posf10325,FuelLib,FUELLIB_posf10325,10325,AJFTD:122,False,False,65,0.02501,True,39,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,5,0,False
+FuelLib:FUELLIB_posf11498,FuelLib,FUELLIB_posf11498,11498,FuelLib:FUELLIB_posf11498,False,False,13,0.00440176,True,8,False,,False,no aromatics descriptor (non-GCxGC) in the fuel's own bulk data,6,,,standard,5,0,False
