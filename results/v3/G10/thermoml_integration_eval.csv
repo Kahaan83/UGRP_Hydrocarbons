@@ -1,8 +1,0 @@
-property,fuel_family,n_fuels,mae,rmse,relative_error_pct,thermoml_clean_rows_integrated,notes
-density_kg_m3,gasoline,55,6.62,8.44,0.89,44575,Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
-density_kg_m3,diesel,16,14.57,21.96,1.73,44575,Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
-density_kg_m3,jet,82,16.86,19.53,2.12,44575,Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
-density_kg_m3,all,153,12.94,16.75,1.64,44575,Verified against liquid phase ThermoML pure/mixture densities (no gas/excess contamination)
-viscosity_kin_cSt,diesel,16,0.26,0.33,10.5,44575,"Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows"
-viscosity_kin_cSt,jet,82,0.18,0.22,11.2,44575,"Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows"
-viscosity_kin_cSt,all,98,0.19,0.25,11.0,44575,"Refutas kinematic viscosity baseline anchored with 11,861 clean liquid viscosity rows"

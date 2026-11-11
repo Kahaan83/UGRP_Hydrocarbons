@@ -99,35 +99,25 @@ temperature**, kinematic viscosity at the temperature(s) of interest.
 
 ---
 
-## 4. Repository layout (all in `fuelblend_data/`)
+## 4. Repository layout (current, v4/r3; the v1 `fuelblend_data/` layout no longer exists)
 
 ```
-README.md  requirements.txt  compounds.csv  common.py
-fetch.py                 download everything automatable (git, Zenodo, PDFs, ThermoML) with manifest/sha256
-inspect_downloads.py     unzip Zenodo zips (skips macOS junk), write data/interim/INVENTORY.md
-build_viscosity.py       hydrocarbon-only NIST/TDE viscosity tables from CheMixHub (pure + binary)
-thermoml_extract.py      hydrocarbon liquid viscosity/density/vapour-pressure from the ThermoML archive
-webbook_antoine.py       scrape Antoine sets from NIST WebBook (bar→kPa, range checks)
-ingest_ajftd.py          AJFTD exports → canonical long table (+ composition table); `--describe` mode
-ajftd_scraper.py         YOUR Playwright scraper (patched: resume, retries, real fuel name)
-ajftd_parse_html.py      re-parse saved debug/detail_*.html offline for ALL metrics (no site access)
-build_unified.py         ONE canonical schema: compounds / measurements / measurements_dedup / report
-refit_antoine.py         refit Antoine constants from measured vapour pressures (valid at 40–100 °C)
-audit.py                 checks everything, writes AUDIT.md, `--bundle` → audit_bundle.zip
-tests/                   8 suites (see §11); tests/data/je8006138.xml = a REAL ThermoML record
-data/raw/    git/ zenodo/ pdfs/ thermoml/ ajftd/ lfl/ rp1/ pour_point/ flashpoint_li/  (+ MANIFEST.json)
-data/interim/ unzipped Zenodo, INVENTORY.md, read_errors.txt, ajftd_description.txt, ajftd_unmapped.txt
-data/processed/ viscosity_*_hc.csv, compounds_hc.csv, thermoml_hc.csv, antoine_*.csv, ajftd_fuels.csv, ajftd_composition.csv
-data/unified/ compounds.csv, measurements.csv, measurements_dedup.csv, UNIFIED_REPORT.md
+src/fuelblend/     package: api, baselines, data (loaders, ThermoML extractor, provenance), design, eval, features,
+                   mixture, models, splits, thermo, train, uq
+scripts/           t02_leakage_audit.py; v2/, v3/ (historic, v3 outputs quarantined); v4/ (current pipeline,
+                   entry point scripts/v4/reproduce_all.py)
+tests/             pytest suites; tests/quarantine/ holds pinned v3 tests; tests/data/ fixtures
+configs/           YAML (e.g. configs/uncertainty_v4.yaml)      splits/   split definitions (splits/v4/)
+data/              raw/, interim/, processed/, unified/ (measurements, compounds.csv), real_fuels/ (v4/ = current
+                   61 jet fuels + 210 gasoline octane rows), quarantine/ (dropped v3 data)
+results/           v2/, v3/ (historic), v4/ (current evidence, one folder per task: P1, P2, B, D, D2, E, F, L, R2, R3, SLE, SP, ...)
+docs/              FULL_REPORT_v4.md, claims_register.md, model_decision.md, PROJECT_HANDOFF.md, PROJECT_SUMMARY_v4.md,
+                   data_sources.csv, abstracts/, superpowers/ (plans)
+extras/            EXTERNAL raw-data staging (old fuelblend_data repo copy, raw downloads); gitignored, not part of the repo
 ```
-Also present on the user's machine (not in the generated repo): `ajftd_scraper.py` original, `debug/detail_<id>.html`
-(81 saved AJFTD pages), `ajftd_data.csv/.json`, `ajftd_session.json` (**login cookies — sensitive, never commit/share**).
-
-`common.py`: `mol_from(smiles|inchi)`, `is_hydrocarbon(mol)` (only C/H, neutral, ≥1 C),
-`hc_class(mol)` → `aromatic | alkene_alkyne | cycloalkane | iso_paraffin | n_paraffin`, `carbon_number`, `mol_weight`,
-`mole_to_mass`, `mass_to_mole`, `mass_to_volume`.
-
----
+Other root items: `fuels.csv` (read by v2/v3 scripts), `Makefile`, `pytest.ini`, `requirements.txt`, `SHA256SUMS_v4.txt`
+(written by `reproduce_all.py`), `archive/` (baseline manifests), `jobs/v4_gpu/`, `runs/` (gitignored). The v1 module names
+(`build_unified.py`, `fetch.py`, ...) live on only inside `extras/` and in git history; `common.py` helpers now sit under `src/fuelblend/`.
 
 ## 5. Pipeline — commands in order
 
@@ -253,9 +243,21 @@ De-dup rules: (1) drop exact repeats (same source+ref+value) — ~⅓ of raw NIS
 
 ---
 
-## 8. Current state (measured numbers)
+## 8. Current state
 
-### 8.0 Session 2026-10-29 additions
+### 8.0 v4/r3 state (tag `v4-r3-final`; latest commit "v4 r3: CRC 647 compositions from measured hydrocarbon types (Table G.1), re-scored")
+Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/claims_register.md`. Facts as reported there:
+* The v3 corpus and design optimizer were formula-derived and are quarantined (`data/quarantine/`); 92 of 153 v3 fuels dropped, 61 kept (all jet).
+* v4 evidence: 57 CRC 647 jet fuels (compositions reconstructed; r3 uses measured hydrocarbon types from Table G.1) + 4 other jet fuels,
+  210 gasoline octane blend rows, no diesel. Only POSF-10325 is a headline GC fuel (n = 1).
+* Designs: 0 of 13 certified (D2 re-run with known-composition lab margins); diesel unvalidated; freezing models show no skill over a constant.
+* r2 reconstruction flipped CRC flash bias to the unsafe (over-prediction) side (+4.2 C raw, dev); causes not isolated.
+* Open: ThermoML `phase_of()` default-mode bug (recorded, not fixed), thin locked sets, cold-viscosity lab margin is `inf`; full list in report section 11 and 13.4.
+* Tests: pytest 308 passed / 42 failed at the v4 baseline (all pre-existing missing-deliverable asserts; `results/v4/baseline_pytest.txt`).
+
+### 8.1 HISTORIC (v1-era, 2026-10-29 and earlier; numbers below predate v4 and several rest on v3-style or contaminated data; do not quote without checking `docs/claims_register.md`)
+
+#### 8.1.0 Session 2026-10-29 additions
 * **LFL measured rows**: `data/raw/lfl/lfl_measured.csv` (12 HC compounds hand-read from Zabetakis 627 App. A-1 OCR lines, ratio-gated vs 0.55*Cst); `fill_lfl.py` → 695 compounds, 25 measured / rest estimated. Pure-flash model now runs on ~84-152/902-923 records; Antoine coverage is the limiter.
 * **flashpoint_li** (Sun/Krakauer/Morgan 2020, figshare 9275210, CC BY): 14,696 rows, flash in K, loader `load_flashpoint_li()`; +550 HC pure flash records (dedup). Duplicates collapse to median. Some suspect pure values remain (e.g. C25 paraffin at 120 C) - flagged not deleted.
 * **fortin2012** (NIST copy, `data/raw/rp1/fortin2012_rp1_blends.pdf`): Tables 1-4 extracted → 252 rows: distillation T0.025..T85-90 for 11 orthogonal RP-1 + 1 RP-1 4572 + 2 RP-2 real fuels (loader `load_fortin()`). THE 11-blend compositions are NOT in this paper (recipes confidential; per NISTIR 6646 phase-1 covers one sample only).
@@ -265,13 +267,13 @@ De-dup rules: (1) drop exact repeats (same source+ref+value) — ~⅓ of raw NIS
 * **CRC ingest final**: crc647 4,559 raw rows (57 aviation fuels: pour 57, freezing 57, flash 57, D86 grids, ±20/−40 °C kinematic viscosity ×171, heat, conductivity, speed of sound), av2718 869 (aromatics, D2887 distillation, viscosity+density, vapour pressure, gas solubility), av1109 3. After build: **pour_point_C 57 / freezing_point_C 78 / viscosity_kin_cSt 361 / thermal_stability 53** in dedup (~70k raw rows total).
 * CRC parse + Li/LiS1 + audit rerun: see the sub-agent outputs in data/raw/pour_point/ and data/raw/flashpoint_li/.
 
-### 8.1 Audit (last bundle): FAIL 0 · MISSING 6 · WARN 8 · OK 49
+#### 8.1.1 Audit (last bundle): FAIL 0 · MISSING 6 · WARN 8 · OK 49
 Missing: AJFTD export folder (since replaced by scraped data), RP-1 blends, pour/cloud tables, Li et al. SI, **LFL (0/611 compounds)**,
 real-fuel records in unified (before AJFTD ingest). Warnings: OneDrive; 1 macOS junk file; 2 inspect read errors (2 empty files, 1 Excel
 lock `~$…xlsx` — harmless); Antoine 22/24 found (methylcyclohexane, n-eicosane have no Antoine table); 20/22 sets don't cover 40–100 °C;
 2 fake DTIC PDFs; WebBook `page_name` held the site banner (bug fixed in code — rerun `webbook_antoine.py`).
 
-### 8.2 Hydrocarbon-only open data (usable for training/validation)
+#### 8.1.2 Hydrocarbon-only open data (usable for training/validation)
 
 | Property | Pure | Mixtures | Notes |
 |---|---|---|---|
@@ -286,7 +288,7 @@ NIST/TDE noise: of 4,341 pure points with ≥3 independent refs only 13 (0.3 %) 
 reports benzene@298 K = 0.395 mPa·s while ~70 refs give ≈0.60. Dedup (median + flags) handles it.
 Real run: 15,779 raw NIST rows → 11,030 de-duplicated records, 30 genuine conflicts.
 
-### 8.3 AJFTD (real fuels)
+#### 8.1.3 AJFTD (real fuels)
 * 81 fuels only (ids 1 and 365–462), tests dated 2015-04-17 … 2016-11-29. **Check the site's "Showing x to y of N entries": if N > 81,
   pagination stopped early or filters were still active.**
 * Numeric coverage of scraped metrics: API gravity 81; distillation T0…T100 ≈80 fuels (561 numeric rows); smoke point 82; aromatics (% vol)
@@ -296,12 +298,12 @@ Real run: 15,779 raw NIST rows → 11,030 de-duplicated records, 30 genuine conf
 * Fuel name was the site banner for every record (fixed: real label e.g. `(02239-070416)T108`).
 * Possible use of the distillation data: estimate flash point from D86 T10 via a published correlation — an *estimate*, validation only.
 
-### 8.4 ThermoML (user's run, **before** the parser fix → contaminated)
+#### 8.1.4 ThermoML (user's run, **before** the parser fix → contaminated)
 Unified report from that data: viscosity records (HC) 18,322 with min value −0.063 (excess viscosity!), vapour pressure up to 1.4×10⁶ kPa,
 density 0.52 kg/m³ at up to 873 K (gas phase), only 39 % of rows had T, 1,728 spurious conflicts, 6,451 rows skipped. **Discard that
 `thermoml_hc.csv` and re-extract.**
 
-### 8.5 Antoine refit (also fitted on the contaminated data → redo)
+#### 8.1.5 Antoine refit (also fitted on the contaminated data → redo)
 220 compounds with vapour-pressure data: 143 ok, 43 `check`, 34 skipped; 94 ok-and-cover 40–100 °C. n-alkanes (kPa form):
 
 | alkane | status | note |
@@ -313,7 +315,7 @@ density 0.52 kg/m³ at up to 873 K (gas phase), only 39 % of rows had T, 1,728 s
 | C13, C15, C17, C19 | **no data** | candidates for interpolation of A,B,C vs carbon number |
 | C18 | skipped (5 points) | |
 
-### 8.6 Physics-input coverage (flash baseline), from the user's unified report (contaminated ThermoML)
+#### 8.1.6 Physics-input coverage (flash baseline), from the user's unified report (contaminated ThermoML)
 370 HC flash records, 248 distinct components; Antoine available 52/248, in-range 29; **LFL 0/248 → 0/370 records can run the physics flash model.**
 Viscosity: 17,020 of 18,322 HC records have all components with a measured pure density (needed for kinematic/Refutas).
 
@@ -364,11 +366,15 @@ Viscosity: 17,020 of 18,322 HC records have all components with a measured pure 
 
 ---
 
-## 12. v4 status (read first; the plan below is the v1-era plan)
+## 12. v4 status and v5 (read first)
 
-v4 (branch `v4-integrity`) quarantined the formula-derived v3 corpus and designs and rebuilt the evidence on `data/real_fuels/v4/` (61 jet fuels, 210 gasoline octane rows, no diesel). Entry points: `docs/FULL_REPORT_v4.md`, `docs/claims_register.md`, `docs/model_decision.md` (sections 5-6), `PROJECT_HANDOFF.md` section 15. Reproduce with `python scripts/v4/reproduce_all.py` (venv python); pytest: 308 passed / 42 failed, all 42 pre-existing missing-deliverable asserts (`results/v4/baseline_pytest.txt`). Headline limits: CRC 647 compositions are reconstructed; 0 of 13 designs certified; diesel unvalidated; freezing models show no skill over a constant; open issues listed in the report section 11 (including the ThermoML `phase_of()` default-mode bug).
+v4 (branches `v4-integrity`, `v4-review-fixes`; final tag `v4-r3-final`) quarantined the formula-derived v3 corpus and designs and rebuilt the evidence on `data/real_fuels/v4/`. Entry points:
+* `docs/FULL_REPORT_v4.md` (state, numbers, open items in section 11, review fixes in section 13)
+* `docs/claims_register.md` (claim-level status, CLM-xx)
+* `docs/model_decision.md` (sections 5-6) and `docs/PROJECT_HANDOFF.md` (section 15)
+Reproduce with `python scripts/v4/reproduce_all.py` (venv python); pytest baseline in `results/v4/baseline_pytest.txt`.
 
----
+v5: work continues on branch `v5` (current). A written v5 plan is not yet in the repo (`docs/superpowers/plans/` holds only the v4 plans); check there and `docs/data_source_leads_2026-11-09.md` for candidate new data before assuming scope.
 
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 
