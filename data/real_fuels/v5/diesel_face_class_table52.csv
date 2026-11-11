@@ -1,0 +1,10 @@
+fuel_id,n_paraffins,paraffins,isoparaffins,cycloalkanes,known_aromatics,unknown_aromatics,total_aromatics,total,source_table,source_page
+FD1A,6.78,59.06,52.28,12.17,8.08,19.97,28.05,99.28,5.2,pdf p80 (printed 58)
+FD2A,3.32,61.85,58.53,14.66,9.58,13.36,22.94,99.45,5.2,pdf p80 (printed 58)
+FD3A,10.49,37.97,27.48,6.19,6.55,48.01,54.56,98.72,5.2,pdf p80 (printed 58)
+FD4A,4.36,52.88,48.52,3.38,11.53,31.15,42.68,98.94,5.2,pdf p80 (printed 58)
+FD5A,31.39,63.18,31.79,7.97,7.18,19.72,26.9,98.04,5.2,pdf p80 (printed 58)
+FD6A,13.45,62.58,49.12,7.78,1.56,26.01,27.57,97.92,5.2,pdf p80 (printed 58)
+FD7A,30.32,46.95,16.63,4.25,9.4,38.73,48.13,99.33,5.2,pdf p80 (printed 58)
+FD8A,23.0,45.57,22.57,3.02,1.1,48.73,49.83,98.42,5.2,pdf p80 (printed 58)
+FD9A,10.96,46.85,35.89,7.65,11.76,32.04,43.8,98.3,5.2,pdf p80 (printed 58)
