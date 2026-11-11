@@ -1,0 +1,4 @@
+scheme,target,model,n_fuels,n_groups,mae,bias_pred_minus_meas
+dev_fit_all_dev_measured,visc_m20_ASSUMED_T,const,578,6,0.47946757123817185,-0.2756472645998283
+dev_fit_all_dev_measured,visc_m20_ASSUMED_T,ridge,578,6,0.5590439794075622,-0.2736052043511164
+dev_fit_all_dev_measured,visc_m20_ASSUMED_T,hgb,578,6,0.327452035210788,-0.15436773043865207
