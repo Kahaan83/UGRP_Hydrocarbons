@@ -1,0 +1,5 @@
+GC-Bin,Reference Compound,SMILES,PelePhysics Key,Weight %
+C07-Isoparaffin,2-methylhexane,CC(C)CCCC,C7H16-2,0.02
+C08-Isoparaffin,2-methylheptane,CC(C)CCCCC,C8H18-2,0.61
+C09-Isoparaffin,2-methyloctane,CC(C)CCCCCC,C9H20-2,0.17
+C10-Isoparaffin,2-methylnonane,CC(C)CCCCCCC,C10H22-2,0.22
