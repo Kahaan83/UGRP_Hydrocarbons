@@ -1,0 +1,41 @@
+check,split,condition,model,logged,recomputed,match
+gp_cov90,dev (LOO by fuel),overall (all T),Structured GP,0.77,0.77,True
+gp_mean_width90_log,dev (LOO by fuel),overall (all T),Structured GP,0.212,0.212,True
+d_log_rmse_vs_recal,dev (LOO by fuel),overall (all T),Bilinear pairwise,"-0.0451 [-0.0630, -0.0267]","-0.0451 [-0.0630, -0.0267]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),overall (all T),Structured ridge,"-0.0525 [-0.0734, -0.0323]","-0.0525 [-0.0734, -0.0323]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),overall (all T),Structured GP,"-0.0464 [-0.0621, -0.0302]","-0.0464 [-0.0621, -0.0302]",True
+gp_cov90,dev (LOO by fuel),T = 20 C,Structured GP,0.956,0.956,True
+gp_mean_width90_log,dev (LOO by fuel),T = 20 C,Structured GP,0.217,0.217,True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = 20 C,Bilinear pairwise,"-0.0112 [-0.0269, 0.0039]","-0.0112 [-0.0269, 0.0039]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = 20 C,Structured ridge,"-0.0286 [-0.0408, -0.0167]","-0.0286 [-0.0408, -0.0167]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = 20 C,Structured GP,"-0.0243 [-0.0327, -0.0158]","-0.0243 [-0.0327, -0.0158]",True
+gp_cov90,dev (LOO by fuel),T = -20 C,Structured GP,0.6,0.6,True
+gp_mean_width90_log,dev (LOO by fuel),T = -20 C,Structured GP,0.204,0.204,True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -20 C,Bilinear pairwise,"-0.0118 [-0.0418, 0.0211]","-0.0118 [-0.0418, 0.0211]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -20 C,Structured ridge,"-0.0226 [-0.0562, 0.0144]","-0.0226 [-0.0562, 0.0144]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -20 C,Structured GP,"-0.0191 [-0.0441, 0.0100]","-0.0191 [-0.0441, 0.0100]",True
+gp_cov90,dev (LOO by fuel),T = -40 C,Structured GP,0.756,0.756,True
+gp_mean_width90_log,dev (LOO by fuel),T = -40 C,Structured GP,0.214,0.214,True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -40 C,Bilinear pairwise,"-0.1014 [-0.1253, -0.0760]","-0.1014 [-0.1253, -0.0760]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -40 C,Structured ridge,"-0.0988 [-0.1308, -0.0671]","-0.0988 [-0.1308, -0.0671]",True
+d_log_rmse_vs_recal,dev (LOO by fuel),T = -40 C,Structured GP,"-0.0871 [-0.1141, -0.0598]","-0.0871 [-0.1141, -0.0598]",True
+gp_cov90,locked (untouched),overall (all T),Structured GP,0.694,0.694,True
+gp_mean_width90_log,locked (untouched),overall (all T),Structured GP,0.247,0.247,True
+d_log_rmse_vs_recal,locked (untouched),overall (all T),Bilinear pairwise,"-0.0269 [-0.0612, -0.0061]","-0.0269 [-0.0612, -0.0061]",True
+d_log_rmse_vs_recal,locked (untouched),overall (all T),Structured ridge,"-0.0442 [-0.0911, -0.0174]","-0.0442 [-0.0911, -0.0174]",True
+d_log_rmse_vs_recal,locked (untouched),overall (all T),Structured GP,"-0.0423 [-0.0871, -0.0163]","-0.0423 [-0.0871, -0.0163]",True
+gp_cov90,locked (untouched),T = 20 C,Structured GP,0.917,0.917,True
+gp_mean_width90_log,locked (untouched),T = 20 C,Structured GP,0.25,0.25,True
+d_log_rmse_vs_recal,locked (untouched),T = 20 C,Bilinear pairwise,"0.0124 [-0.0598, 0.0361]","0.0124 [-0.0598, 0.0361]",True
+d_log_rmse_vs_recal,locked (untouched),T = 20 C,Structured ridge,"0.0164 [-0.0365, 0.0387]","0.0164 [-0.0365, 0.0387]",True
+d_log_rmse_vs_recal,locked (untouched),T = 20 C,Structured GP,"0.0171 [-0.0327, 0.0389]","0.0171 [-0.0327, 0.0389]",True
+gp_cov90,locked (untouched),T = -20 C,Structured GP,0.333,0.333,True
+gp_mean_width90_log,locked (untouched),T = -20 C,Structured GP,0.243,0.243,True
+d_log_rmse_vs_recal,locked (untouched),T = -20 C,Bilinear pairwise,"-0.0449 [-0.0651, -0.0205]","-0.0449 [-0.0651, -0.0205]",True
+d_log_rmse_vs_recal,locked (untouched),T = -20 C,Structured ridge,"-0.0806 [-0.1126, -0.0469]","-0.0806 [-0.1126, -0.0469]",True
+d_log_rmse_vs_recal,locked (untouched),T = -20 C,Structured GP,"-0.0743 [-0.1061, -0.0429]","-0.0743 [-0.1061, -0.0429]",True
+gp_cov90,locked (untouched),T = -40 C,Structured GP,0.833,0.833,True
+gp_mean_width90_log,locked (untouched),T = -40 C,Structured GP,0.248,0.248,True
+d_log_rmse_vs_recal,locked (untouched),T = -40 C,Bilinear pairwise,"-0.0611 [-0.0925, -0.0295]","-0.0611 [-0.0925, -0.0295]",True
+d_log_rmse_vs_recal,locked (untouched),T = -40 C,Structured ridge,"-0.1033 [-0.1520, -0.0531]","-0.1033 [-0.1520, -0.0531]",True
+d_log_rmse_vs_recal,locked (untouched),T = -40 C,Structured GP,"-0.1044 [-0.1502, -0.0577]","-0.1044 [-0.1502, -0.0577]",True
