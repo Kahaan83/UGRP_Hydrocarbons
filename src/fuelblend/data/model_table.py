@@ -96,6 +96,8 @@ TIER_OF_SOURCE = {
     "fortin2012": "A", "pure_freezing_nist": "A", "saldana11": "A",
     "crc647": "B", "av2718": "B", "av1109": "B", "chew2024": "B",
     "flashpoint_li": "A", "pubchem": "C", "lfl_estimated": "C",
+    # added 2026-11-09; B because of known lab issues (Ha & Lee pure dodecane reads ~9 C high; Pires WSU flash and density are biased)
+    "ha_lee_2016": "B", "pires2018": "B", "vozka2019": "B",
 }
 
 def _tier_of_sources(sources):

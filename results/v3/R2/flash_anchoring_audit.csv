@@ -1,6 +1,0 @@
-evaluation_mode,n_points,n_systems,mae_C,rmse_C,bias_C,max_over_prediction_C,over_prediction_rate_gt_5C,worst_system_id,worst_mixture_components
-Strict LOSO (Pure-Anchored Baseline),126,31,2.28,3.42,-1.82,5.28,0.008,39a914ff0579,"[""QRMPKOFEUHIBNM-ZKCHVHJHSA-N"", ""SNRUBQQJIBEYMU-UHFFFAOYSA-N""]"
-Raw Zero-Shot Physical Raoult (Anchored),126,31,3.74,4.55,-3.3,10.6,0.0079,39a914ff0579,"[""QRMPKOFEUHIBNM-ZKCHVHJHSA-N"", ""SNRUBQQJIBEYMU-UHFFFAOYSA-N""]"
-Unanchored WebBook Base (v1 Raw Physics),126,31,6.31,10.14,1.25,41.49,0.1825,6b00f1bbc8c1,"[""AUHZEENZYGFFBQ-UHFFFAOYSA-N"", ""VKPSKYDESGTTFR-UHFFFAOYSA-N""]"
-Anchored Baseline (C12+ Mixtures),78,27,5.21,5.65,-4.71,10.6,0.0128,39a914ff0579,"[""QRMPKOFEUHIBNM-ZKCHVHJHSA-N"", ""SNRUBQQJIBEYMU-UHFFFAOYSA-N""]"
-Anchored Baseline (<C12 Mixtures),48,4,1.37,1.61,-1.02,3.79,0.0,aee28024efb3,"[""IMNFDUFMRHMDMM-UHFFFAOYSA-N"", ""YNQLUTRBYVCPMQ-UHFFFAOYSA-N""]"
