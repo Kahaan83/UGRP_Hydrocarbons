@@ -1,0 +1,2 @@
+n_fuels,n_fuels_with_mesitylene,mass_share_min,mass_share_mean,mass_share_max,note
+57,42,0.000491247,0.00739877,0.0142389,CRC 647 r3 flash NOT rerun with the corrected mesitylene input (only the lab filter was)
