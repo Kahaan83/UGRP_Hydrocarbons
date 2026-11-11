@@ -1,0 +1,18 @@
+{
+ "best": "webbook",
+ "abc": [
+  6.1993,
+  1569.62,
+  -63.57
+ ],
+ "abc_convention": "log10(P/kPa)=A-B/(T/K+C)",
+ "mean_abs_ln_error_at_measured": {
+  "webbook": 0.0008459618802731493,
+  "anchored": 0.4454900786247347
+ },
+ "rule": "smallest mean |ln(Pcalc/Pmeas)| over kept measured points (only 437.83 K available)",
+ "valid_range_K": [
+  354.64,
+  438.87
+ ]
+}

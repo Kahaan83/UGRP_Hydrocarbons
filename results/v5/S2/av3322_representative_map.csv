@@ -1,0 +1,105 @@
+group,kind,carbon_number,mean_mass_pct,n_fuels,any_plus_bin,rep_smiles,rep_inchikey,rep_cn,cn_gap,mapped,reason
+alkene,alkene_alkyne,12,0,38,False,,,,,False,nearest carbon number > gap limit
+alkene,alkene_alkyne,16,0,38,False,,,,,False,nearest carbon number > gap limit
+alkylbenzene,alkylbenzene,6,0.0115789,38,False,c1ccccc1,UHOVQNZJYSORNB-UHFFFAOYSA-N,6,0,True,
+alkylbenzene,alkylbenzene,7,0.154211,38,False,Cc1ccccc1,YXFVVABEGXRONW-UHFFFAOYSA-N,7,0,True,
+alkylbenzene,alkylbenzene,8,1.08737,38,False,Cc1ccccc1C,CTQNGGLPUBDAKN-UHFFFAOYSA-N,8,0,True,
+alkylbenzene,alkylbenzene,9,3.17947,38,False,Cc1cc(C)cc(C)c1,AUHZEENZYGFFBQ-UHFFFAOYSA-N,9,0,True,
+alkylbenzene,alkylbenzene,10,2.91421,38,False,Cc1ccc(C(C)C)cc1,HFPZCAJZSCWRBC-UHFFFAOYSA-N,10,0,True,
+alkylbenzene,alkylbenzene,11,2.17105,38,False,Cc1ccc(C(C)C)cc1,HFPZCAJZSCWRBC-UHFFFAOYSA-N,10,1,True,
+alkylbenzene,alkylbenzene,12,1.08921,38,False,CCCCCCc1ccccc1,LTEQMZWBSYACLV-UHFFFAOYSA-N,12,0,True,
+alkylbenzene,alkylbenzene,13,0.855526,38,False,CCCCCCc1ccccc1,LTEQMZWBSYACLV-UHFFFAOYSA-N,12,1,True,
+alkylbenzene,alkylbenzene,14,0.459474,38,False,CCCCCCCCc1ccccc1,CDKDZKXSXLNROY-UHFFFAOYSA-N,14,0,True,
+alkylbenzene,alkylbenzene,15,0.290789,38,False,CCCCCCCCc1ccccc1,CDKDZKXSXLNROY-UHFFFAOYSA-N,14,1,True,
+alkylbenzene,alkylbenzene,16,0.274474,38,True,CCCCCCCCCCc1ccccc1,UZILCZKGXMQEQR-UHFFFAOYSA-N,16,0,True,
+cycloaromatic,indan_tetralin,9,0.0694737,38,False,c1ccc2c(c1)CCC2,PQNFLJBBNBOBRQ-UHFFFAOYSA-N,9,0,True,
+cycloaromatic,indan_tetralin,10,0.785263,38,False,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,0,True,
+cycloaromatic,indan_tetralin,11,1.22763,38,False,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,1,True,
+cycloaromatic,indan_tetralin,12,1.18579,38,False,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,2,True,
+cycloaromatic,indan_tetralin,13,1.07842,38,False,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,3,True,
+cycloaromatic,indan_tetralin,14,0.598421,38,False,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,4,True,
+cycloaromatic,indan_tetralin,15,0.605526,38,True,c1ccc2c(c1)CCCC2,CXWXQJXEFPUFDZ-UHFFFAOYSA-N,10,5,True,
+diaromatic,aromatic_di,10,0.153684,38,False,,,,,False,no representative in sub-kind
+diaromatic,aromatic_di,11,0.423947,38,False,,,,,False,no representative in sub-kind
+diaromatic,aromatic_di,12,0.491579,38,False,,,,,False,no representative in sub-kind
+diaromatic,aromatic_di,13,0.316316,38,False,,,,,False,no representative in sub-kind
+diaromatic,aromatic_di,14,0.192895,38,False,,,,,False,no representative in sub-kind
+diaromatic,aromatic_di,15,0.187632,38,True,,,,,False,no representative in sub-kind
+dicycloalkane,cyclo_di,8,0.113947,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,2,True,
+dicycloalkane,cyclo_di,9,1.04895,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,1,True,
+dicycloalkane,cyclo_di,10,1.63211,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,0,True,
+dicycloalkane,cyclo_di,11,2.56447,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,1,True,
+dicycloalkane,cyclo_di,12,2.21579,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,2,True,
+dicycloalkane,cyclo_di,13,1.66132,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,3,True,
+dicycloalkane,cyclo_di,14,1.08974,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,4,True,
+dicycloalkane,cyclo_di,15,0.716842,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,5,True,
+dicycloalkane,cyclo_di,16,0.441053,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,6,True,
+dicycloalkane,cyclo_di,17,0.166316,38,False,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,7,True,
+dicycloalkane,cyclo_di,18,0.12,38,True,C1CC[C@H]2CCCC[C@@H]2C1,NNBZCPXTIHJBJL-MGCOHNPYSA-N,10,8,True,
+iso-alkane,iso_paraffin,5,0.00263158,38,False,CCC(C)C,QWTDNUCVQCZILF-UHFFFAOYSA-N,5,0,True,
+iso-alkane,iso_paraffin,6,0.0202632,38,False,CCCC(C)C,AFABGHUZZDYHJO-UHFFFAOYSA-N,6,0,True,
+iso-alkane,iso_paraffin,7,0.0876316,38,False,CC(C)CC(C)C,BZHMBWZPUJHVEE-UHFFFAOYSA-N,7,0,True,
+iso-alkane,iso_paraffin,8,0.428947,38,False,CCC(C)CC(C)C,HDGQICNBXPAKLR-UHFFFAOYSA-N,8,0,True,
+iso-alkane,iso_paraffin,9,1.47342,38,False,CCCCC(C)CCC,DOGIHOCMZJUJNR-UHFFFAOYSA-N,9,0,True,
+iso-alkane,iso_paraffin,10,3.855,38,False,CCCCCC(C)CCC,IALRSQMWHFKJJA-UHFFFAOYSA-N,10,0,True,
+iso-alkane,iso_paraffin,11,4.15605,38,False,CCCCCCCCC(C)C,CNPVJWYWYZMPDS-UHFFFAOYSA-N,11,0,True,
+iso-alkane,iso_paraffin,12,3.53158,38,False,CCCCCCCCC(C)CC,HTZWVZNRDDOFEI-UHFFFAOYSA-N,12,0,True,
+iso-alkane,iso_paraffin,13,3.10684,38,False,CCCCCCCCC(C)CC,HTZWVZNRDDOFEI-UHFFFAOYSA-N,12,1,True,
+iso-alkane,iso_paraffin,14,2.22789,38,False,CCCCCCCCC(C)CC,HTZWVZNRDDOFEI-UHFFFAOYSA-N,12,2,True,
+iso-alkane,iso_paraffin,15,1.41316,38,False,CCCCCCCCCCCCCC(C)C,BANXPJUEBPWEOT-UHFFFAOYSA-N,16,1,True,
+iso-alkane,iso_paraffin,16,0.849737,38,False,CCCCCCCCCCCCCC(C)C,BANXPJUEBPWEOT-UHFFFAOYSA-N,16,0,True,
+iso-alkane,iso_paraffin,17,0.299474,38,False,CCCCCCCCCC(C)CCCCCC,HZRSSYSIMDTFLT-UHFFFAOYSA-N,17,0,True,
+iso-alkane,iso_paraffin,18,0.231579,38,False,CCCCCCCCCC(C)CCCCCC,HZRSSYSIMDTFLT-UHFFFAOYSA-N,17,1,True,
+iso-alkane,iso_paraffin,19,0.120789,38,False,CCCCCCCCCC(C)CCCCCC,HZRSSYSIMDTFLT-UHFFFAOYSA-N,17,2,True,
+iso-alkane,iso_paraffin,20,0.0518421,38,False,CCCCCCCCCC(C)CCCCCC,HZRSSYSIMDTFLT-UHFFFAOYSA-N,17,3,True,
+iso-alkane,iso_paraffin,21,0.0105263,38,False,,,,,False,nearest carbon number > gap limit
+iso-alkane,iso_paraffin,22,0.00421053,38,False,,,,,False,nearest carbon number > gap limit
+iso-alkane,iso_paraffin,23,0.00315789,38,False,,,,,False,nearest carbon number > gap limit
+iso-alkane,iso_paraffin,24,0.00315789,38,False,,,,,False,nearest carbon number > gap limit
+iso-alkane,iso_paraffin,25,0.000263158,38,False,,,,,False,nearest carbon number > gap limit
+monocycloalkane,cyclo_mono,5,0.00921053,38,False,C1CCCC1,RGSFGYAAUTVSQA-UHFFFAOYSA-N,5,0,True,
+monocycloalkane,cyclo_mono,6,0.0776316,38,False,CC1CCCC1,GDOPTJXRTPNYNR-UHFFFAOYSA-N,6,0,True,
+monocycloalkane,cyclo_mono,7,0.441842,38,False,CC1CCCCC1,UAEPNZWRGJTJPN-UHFFFAOYSA-N,7,0,True,
+monocycloalkane,cyclo_mono,8,1.11237,38,False,CCC1CCCCC1,IIEWJVIFRVWJOD-UHFFFAOYSA-N,8,0,True,
+monocycloalkane,cyclo_mono,9,3.19868,38,False,CCCC1CCCCC1,DEDZSLCZHWTGOR-UHFFFAOYSA-N,9,0,True,
+monocycloalkane,cyclo_mono,10,5.925,38,False,CCCCC1CCCCC1,GGBJHURWWWLEQH-UHFFFAOYSA-N,10,0,True,
+monocycloalkane,cyclo_mono,11,5.24421,38,False,CCCCCC1CCCCC1,HLTMUYBTNSVOFY-UHFFFAOYSA-N,11,0,True,
+monocycloalkane,cyclo_mono,12,4.33316,38,False,CCCCCCC1CCCCC1,QHWAQXOSHHKCFK-UHFFFAOYSA-N,12,0,True,
+monocycloalkane,cyclo_mono,13,4.10079,38,False,CCCCCCCC1CCCCC1,MSTLSCNJAHAQNU-UHFFFAOYSA-N,13,0,True,
+monocycloalkane,cyclo_mono,14,2.375,38,False,CCCCCCCCC1CCCCC1,FBXWCEKQCVOOLT-UHFFFAOYSA-N,14,0,True,
+monocycloalkane,cyclo_mono,15,1.48211,38,False,CCCCCCCCCC1CCCCC1,CLMFECCMAVQYQA-UHFFFAOYSA-N,15,0,True,
+monocycloalkane,cyclo_mono,16,0.745263,38,False,CCCCCCCCCCC1CCCCC1,STWFZICHPLEOIC-UHFFFAOYSA-N,16,0,True,
+monocycloalkane,cyclo_mono,17,0.286579,38,False,CCCCCCCCCCC1CCCCC1,STWFZICHPLEOIC-UHFFFAOYSA-N,16,1,True,
+monocycloalkane,cyclo_mono,18,0.136842,38,False,CCCCCCCCCCCCC1CCCCC1,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,18,0,True,
+monocycloalkane,cyclo_mono,19,0.0557895,38,False,CCCCCCCCCCCCC1CCCCC1,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,18,1,True,
+monocycloalkane,cyclo_mono,20,0.0171053,38,False,CCCCCCCCCCCCC1CCCCC1,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,18,2,True,
+monocycloalkane,cyclo_mono,21,0.0252632,38,True,CCCCCCCCCCCCC1CCCCC1,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,18,3,True,
+n-alkane,n_paraffin,3,0,38,False,CCC,ATUOYWHBWRKTHZ-UHFFFAOYSA-N,3,0,True,
+n-alkane,n_paraffin,4,0.000263158,38,False,CCCC,IJDNQMDRQITEOD-UHFFFAOYSA-N,4,0,True,
+n-alkane,n_paraffin,5,0.00289474,38,False,CCCCC,OFBQJSOFQDEBGM-UHFFFAOYSA-N,5,0,True,
+n-alkane,n_paraffin,6,0.0215789,38,False,CCCCCC,VLKZOEOYAKHREP-UHFFFAOYSA-N,6,0,True,
+n-alkane,n_paraffin,7,0.128158,38,False,CCCCCCC,IMNFDUFMRHMDMM-UHFFFAOYSA-N,7,0,True,
+n-alkane,n_paraffin,8,0.488684,38,False,CCCCCCCC,TVMXDCGIABBOFY-UHFFFAOYSA-N,8,0,True,
+n-alkane,n_paraffin,9,1.89737,38,False,CCCCCCCCC,BKIMMITUMNQMOS-UHFFFAOYSA-N,9,0,True,
+n-alkane,n_paraffin,10,3.09947,38,False,CCCCCCCCCC,DIOQZVSQGTUSAI-UHFFFAOYSA-N,10,0,True,
+n-alkane,n_paraffin,11,3.2,38,False,CCCCCCCCCCC,RSJKGSCJYJTIGS-UHFFFAOYSA-N,11,0,True,
+n-alkane,n_paraffin,12,2.54842,38,False,CCCCCCCCCCCC,SNRUBQQJIBEYMU-UHFFFAOYSA-N,12,0,True,
+n-alkane,n_paraffin,13,1.77132,38,False,CCCCCCCCCCCCC,IIYFAKIEWZDVMP-UHFFFAOYSA-N,13,0,True,
+n-alkane,n_paraffin,14,1.21211,38,False,CCCCCCCCCCCCCC,BGHCVCJVXZWKCC-UHFFFAOYSA-N,14,0,True,
+n-alkane,n_paraffin,15,0.588421,38,False,CCCCCCCCCCCCCCC,YCOZIPAWZNQLMR-UHFFFAOYSA-N,15,0,True,
+n-alkane,n_paraffin,16,0.281842,38,False,CCCCCCCCCCCCCCCC,DCAYPVUWAIABOU-UHFFFAOYSA-N,16,0,True,
+n-alkane,n_paraffin,17,0.123158,38,False,CCCCCCCCCCCCCCCCC,NDJKXXJCMXVBJW-UHFFFAOYSA-N,17,0,True,
+n-alkane,n_paraffin,18,0.0336842,38,False,CCCCCCCCCCCCCCCCCC,RZJRJXONCZWCBN-UHFFFAOYSA-N,18,0,True,
+n-alkane,n_paraffin,19,0.0157895,38,False,CCCCCCCCCCCCCCCCCC,RZJRJXONCZWCBN-UHFFFAOYSA-N,18,1,True,
+n-alkane,n_paraffin,20,0.00447368,38,False,CCCCCCCCCCCCCCCCCC,RZJRJXONCZWCBN-UHFFFAOYSA-N,18,2,True,
+n-alkane,n_paraffin,21,0.00157895,38,False,CCCCCCCCCCCCCCCCCC,RZJRJXONCZWCBN-UHFFFAOYSA-N,18,3,True,
+n-alkane,n_paraffin,22,0.00105263,38,False,,,,,False,nearest carbon number > gap limit
+n-alkane,n_paraffin,23,0.000263158,38,False,,,,,False,nearest carbon number > gap limit
+n-alkane,n_paraffin,24,0,38,False,,,,,False,nearest carbon number > gap limit
+tricycloalkane,tricycloalkane_no_rep,10,0.0276316,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,11,0.0355263,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,12,0.490526,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,13,0.357105,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,14,0.277105,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,15,0.226579,38,False,,,,,False,no realistic representative (tricycloparaffin)
+tricycloalkane,tricycloalkane_no_rep,16,0.124474,38,True,,,,,False,no realistic representative (tricycloparaffin)

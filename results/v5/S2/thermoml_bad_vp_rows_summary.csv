@@ -1,0 +1,4 @@
+table,n_rows,n_vp_rows,n_vp_rows_absent_from_v5_reextract,n_all_rows_absent_from_v5_reextract
+thermoml_hc.csv (old parser),46747,13761,254,254
+v2/thermoml_clean_hc.csv,44575,13310,257,257
+v5 re-extract thermoml_hc_v5.csv,46493,13507,0,0
