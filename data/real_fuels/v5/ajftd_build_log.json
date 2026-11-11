@@ -1,0 +1,129 @@
+{
+  "raw_rows": 91175,
+  "raw_fuels": 2679,
+  "dropped": {
+    "implausible_heat_of_combustion_net_MJ_kg": 169,
+    "distillation_non_D86_method": 3,
+    "implausible_freezing_point_C": 2,
+    "exact_duplicate_rows": 57
+  },
+  "long_rows": 26683,
+  "rows_per_property": {
+    "aromatics_mass_pct": 6,
+    "aromatics_vol_pct": 2290,
+    "density_kg_m3": 2199,
+    "distillation_T0_C": 1789,
+    "distillation_T100_C": 2287,
+    "distillation_T10_C": 2284,
+    "distillation_T20_C": 724,
+    "distillation_T30_C": 4,
+    "distillation_T40_C": 4,
+    "distillation_T50_C": 2288,
+    "distillation_T5_C": 177,
+    "distillation_T60_C": 4,
+    "distillation_T70_C": 4,
+    "distillation_T80_C": 4,
+    "distillation_T85_C": 1,
+    "distillation_T90_C": 2286,
+    "distillation_T95_C": 177,
+    "flash_point_C": 2409,
+    "freezing_point_C": 2667,
+    "heat_of_combustion_net_MJ_kg": 2607,
+    "viscosity_kin_cSt": 2472
+  },
+  "fuels_per_property": {
+    "aromatics_mass_pct": 6,
+    "aromatics_vol_pct": 2221,
+    "density_kg_m3": 1980,
+    "distillation_T0_C": 1718,
+    "distillation_T100_C": 2192,
+    "distillation_T10_C": 2192,
+    "distillation_T20_C": 643,
+    "distillation_T30_C": 4,
+    "distillation_T40_C": 4,
+    "distillation_T50_C": 2194,
+    "distillation_T5_C": 177,
+    "distillation_T60_C": 4,
+    "distillation_T70_C": 4,
+    "distillation_T80_C": 4,
+    "distillation_T85_C": 1,
+    "distillation_T90_C": 2190,
+    "distillation_T95_C": 177,
+    "flash_point_C": 2310,
+    "freezing_point_C": 2251,
+    "heat_of_combustion_net_MJ_kg": 2090,
+    "viscosity_kin_cSt": 2101
+  },
+  "fuels_with_numeric": 2601,
+  "fuels_core5": 1740,
+  "source_group_fuels": {
+    "JAA": 693,
+    "JA": 513,
+    "LAB_REPORT": 433,
+    "JFK": 353,
+    "NUMERIC_ID": 247,
+    "OTHER": 221,
+    "HR": 71,
+    "PAREN_BATCH": 65,
+    "CRC": 3,
+    "JETSCREEN": 2
+  },
+  "test_year_range": [
+    2001.0,
+    2021.0
+  ],
+  "composition": {
+    "composition_rows_total": 29807,
+    "composition_rows_numeric": 15315,
+    "aromatics_total": {
+      "rows": 2296,
+      "fuels": 2226
+    },
+    "saturates_total": {
+      "rows": 23,
+      "fuels": 23
+    },
+    "monoaromatics": {
+      "rows": 2,
+      "fuels": 2
+    },
+    "diaromatics": {
+      "rows": 1590,
+      "fuels": 1574
+    },
+    "olefins_total": {
+      "rows": 178,
+      "fuels": 159
+    },
+    "paraffins_total": {
+      "rows": 54,
+      "fuels": 54
+    },
+    "cycloalkanes_total": {
+      "rows": 51,
+      "fuels": 51
+    },
+    "cycloparaffins": {
+      "rows": 3,
+      "fuels": 3
+    },
+    "naphthalenes": {
+      "rows": 58,
+      "fuels": 56
+    },
+    "h_c_ratio": {
+      "rows": 76,
+      "fuels": 43
+    },
+    "hydrogen_content": {
+      "rows": 423,
+      "fuels": 225
+    },
+    "average_molecular_weight": {
+      "rows": 132,
+      "fuels": 91
+    },
+    "fuels_sat+arom": 23,
+    "fuels_paraffin+cycloalkane+arom": 51
+  }
+}
