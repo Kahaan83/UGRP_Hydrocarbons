@@ -113,7 +113,7 @@ def test_method_key_names():
 
 def test_run_designs_margins_flag_is_optional():
     src = (ROOT / "scripts" / "v4" / "run_designs_v4.py").read_text(encoding="utf-8")
-    assert "def main(out=None, margins=None)" in src and "--margins" in src
+    assert "def main(out=None, margins=None, pure_props=None)" in src and "--margins" in src
     assert "mpath = None if margins is None" in src          # default behaviour (v4 yaml) unchanged
 
 
