@@ -1,0 +1,31 @@
+  ...2000 files, 5710 hydrocarbon rows so far
+  ...4000 files, 11867 hydrocarbon rows so far
+  ...6000 files, 14985 hydrocarbon rows so far
+  ...8000 files, 26960 hydrocarbon rows so far
+  ...10000 files, 35578 hydrocarbon rows so far
+files read: 11923  unparseable/errors: 2  hydrocarbon rows kept: 46747
+prop                                n_comp
+Kinematic viscosity, m2/s           1            78
+                                    2            28
+Mass density, kg/m3                 1          6651
+                                    2         13164
+                                    3           911
+Vapor or sublimation pressure, kPa  1          8017
+                                    2          5570
+                                    3           174
+Viscosity, Pa*s                     1          3352
+                                    2          8177
+                                    3           625
+rows with temperature: 100.0%   with pressure: 67.6%
+
+rows NOT kept, by reason:
+    1499797  other property (ignored)
+     612551  not all-hydrocarbon / no InChI
+     288653  mixture: unsupported/ambiguous composition scale
+     235329  density: pressure > 1000 kPa (dropped)
+      42151  density: non-liquid phase (dropped)
+      23900  viscosity: pressure > 1000 kPa (dropped)
+      20399  vapour pressure of a solid (dropped)
+       6127  viscosity: non-liquid phase (dropped)
+       5336  mixture: composition incomplete
+       2588  mixture: inconsistent composition

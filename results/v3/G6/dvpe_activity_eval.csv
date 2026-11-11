@@ -1,3 +1,0 @@
-model,dvpe_mae_kpa,dvpe_rmse_kpa,bias_kpa,n_fuels,notes
-Ideal Raoult Baseline,18.5,22.45,-16.8,55,Zero-parameter ideal Raoult law; fails on positive ethanol azeotrope and light ends
-Activity-Corrected DVPE Model (LOO),4.39,5.46,-0.04,55,Margules non-ideal activity coefficient (gamma_EtOH ~ 4.5-6.0) + light-end speciation

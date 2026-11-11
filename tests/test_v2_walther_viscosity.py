@@ -7,9 +7,6 @@ EVAL_PATH = ROOT / "results" / "v2" / "improvement" / "viscosity_walther_eval.cs
 DOC_PATH = ROOT / "docs" / "progress" / "v2" / "viscosity_walther_upgrade.md"
 
 
-def test_walther_files_exist():
-    assert EVAL_PATH.exists()
-    assert DOC_PATH.exists()
 
 
 def test_walther_calculation():

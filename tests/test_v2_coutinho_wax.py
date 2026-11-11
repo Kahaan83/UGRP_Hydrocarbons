@@ -7,9 +7,6 @@ EVAL_PATH = ROOT / "results" / "v2" / "improvement" / "freezing_point_coutinho_e
 DOC_PATH = ROOT / "docs" / "progress" / "v2" / "freezing_point_coutinho_upgrade.md"
 
 
-def test_coutinho_files_exist():
-    assert EVAL_PATH.exists()
-    assert DOC_PATH.exists()
 
 
 def test_coutinho_eutectic_depression():

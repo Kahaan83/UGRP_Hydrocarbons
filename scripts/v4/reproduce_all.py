@@ -1,7 +1,8 @@
 """reproduce_all.py - master one-command reproduction pipeline for v4 (mirrors scripts/v3/reproduce_all.py).
 
 Runs every deterministic, cheap v4 build/eval script in dependency order, then pytest, then verifies
-deliverable row counts and writes SHA256SUMS_v4.txt.
+deliverable row counts and diffs the output hashes against the committed SHA256SUMS_v4.txt.
+The manifest is READ-ONLY by default (drift => exit 1); only --update-manifest rewrites it.
 
 Steps that need unavailable or expensive resources are SKIP-GUARDED and reported as SKIPPED in the
 summary (never silently dropped):
@@ -12,7 +13,7 @@ summary (never silently dropped):
   * ThermoML SLE re-extraction and any network download (fetch.py) are not part of v4 reproduction.
 
 Usage:
-    python scripts/v4/reproduce_all.py [--verify-only] [--skip-tests] [--include-encoder] [--manifest-out PATH]
+    python scripts/v4/reproduce_all.py [--verify-only] [--skip-tests] [--include-encoder] [--manifest PATH] [--update-manifest]
 """
 from __future__ import annotations
 
@@ -29,6 +30,8 @@ EXTRAS = ROOT / "extras" / "fuelblend_data"
 
 # (title, script, extra args, required paths [skip if any missing])
 R2C = "data/real_fuels/v4/compositions_crc647_r2.csv"
+R3C = "data/real_fuels/v4/compositions_crc647_r3.csv"
+COX_PRE = EXTRAS / "archive" / "2026-11-09_pre_cox_gate" / "compounds_root.csv"
 STEPS = [
     ("P1  Task 2  identity check", "check_identities.py", [], []),
     ("P1  Task 1  provenance audit", "audit_provenance.py", [], []),
@@ -56,9 +59,18 @@ STEPS = [
     ("O   Task 15 octane", "eval_octane_v4.py", [], []),
     ("O   Task 15 DVPE diagnostic", "eval_dvpe_v4.py", [], [EXTRAS]),
     ("L   review fix 3  known-composition lab residuals", "eval_lab_known_composition.py", [], []),
+    ("R3  r3 CRC 647 reconstruction (Table G.1 types)", "rebuild_crc_reconstruction_r3.py", [], []),
+    ("R3  bulk props on r3 compositions", "eval_bulk_props_v4.py",
+     ["--compositions", R3C, "--out", "results/v4/R3/B"], [EXTRAS]),
+    ("R3  flash on r3 compositions", "eval_flash_v4.py",
+     ["--compositions", R3C, "--out", "results/v4/R3/F"], []),
+    ("R3  viscosity on r3 compositions", "build_viscosity_leaderboard_v4.py",
+     ["--compositions", R3C, "--out", "results/v4/R3/V"], []),
+    ("R3  v4-vs-r2-vs-r3 readings", "r3_readings.py", [], []),
     ("U   Task 10 conformal margins", "build_uncertainty_v4.py", [], []),
     ("D2  review fix 4  designs with lab margins", "run_designs_v4.py", ["--out", "results/v4/D2"], []),
     ("D2  review fix 4  independent verification", "verify_designs_v4.py", ["--out", "results/v4/D2"], []),
+    ("--  Antoine/Cox gate flash comparison", "compare_antoine_cox_gate.py", [], [COX_PRE]),
 ]
 
 NOT_RUN = [
@@ -69,8 +81,10 @@ NOT_RUN = [
     ("D   Task 17 designs + verification (results/v4/D)", "run_designs_v4.py / verify_designs_v4.py",
      "frozen: since review fix 4 the default engine uses the lab margins, so re-running into results/v4/D would overwrite the committed v4 "
      "evidence with D2-like content; results/v4/D is verified + hashed but not regenerated (D2 is regenerated instead)"),
-    ("--  Antoine/Cox gate comparison", "compare_antoine_cox_gate.py",
-     "separate uncommitted work, not a v4 plan deliverable"),
+    ("R3  n-share sensitivity (rebuilds + re-evaluates r3 five times)", "r3_n_share_sensitivity.py",
+     "slow; committed results/v4/R3/n_share_sensitivity.csv is hashed but not regenerated"),
+    ("R3  CRC 647 Table G.1 parse", "parse_crc647_g1.py",
+     "parses the raw CRC extract; committed crc647_hydrocarbon_types_g1.csv is the input"),
     ("--  ThermoML SLE re-extraction / downloads", "(extras thermoml_extract.py --sle, fetch.py)",
      "needs the git-ignored extras repo + 189 MB archive + network; committed thermoml_sle_hc.csv is used"),
 ]
@@ -158,16 +172,51 @@ def manifest_paths() -> list[Path]:
     return sorted(out, key=lambda p: p.relative_to(ROOT).as_posix())
 
 
-def write_manifest(out_path: Path) -> int:
-    lines = []
-    for p in manifest_paths():
-        if not p.exists():
-            print(f"[MANIFEST] MISSING: {p.relative_to(ROOT)}")
-            continue
-        lines.append(f"{sha256(p)}  {p.relative_to(ROOT).as_posix()}")
-    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
-    print(f"[MANIFEST] wrote {len(lines)} hashes to {out_path.name}")
-    return len(lines)
+def compute_hashes(paths, root: Path | None = None) -> dict[str, str]:
+    """{posix relative path: sha256} for every existing path; missing ones are omitted."""
+    root = root or ROOT
+    return {p.relative_to(root).as_posix(): sha256(p) for p in paths if p.exists()}
+
+
+def read_manifest(path: Path) -> dict[str, str]:
+    out = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            digest, rel = line.split(None, 1)
+            out[rel.strip()] = digest
+    return out
+
+
+def diff_manifest(manifest: dict[str, str], current: dict[str, str]):
+    """Return (changed, missing, new) sorted lists; missing = in manifest but absent now."""
+    changed = sorted(r for r in manifest if r in current and manifest[r] != current[r])
+    missing = sorted(r for r in manifest if r not in current)
+    new = sorted(r for r in current if r not in manifest)
+    return changed, missing, new
+
+
+def check_manifest(manifest_path: Path, root: Path | None = None, paths=None) -> bool:
+    """Read-only. Print drift vs the committed manifest; return True iff drift (or no manifest)."""
+    if not manifest_path.exists():
+        print(f"[MANIFEST] DRIFT: {manifest_path} does not exist (create it deliberately with --update-manifest)")
+        return True
+    current = compute_hashes(manifest_paths() if paths is None else paths, root)
+    changed, missing, new = diff_manifest(read_manifest(manifest_path), current)
+    for tag, rels in (("CHANGED", changed), ("MISSING", missing), ("NEW", new)):
+        for r in rels:
+            print(f"[MANIFEST] {tag}: {r}")
+    drift = bool(changed or missing or new)
+    print(f"[MANIFEST] {'DRIFT' if drift else 'OK'}: {len(changed)} changed, {len(missing)} missing, {len(new)} new "
+          f"({len(current)} files hashed)")
+    return drift
+
+
+def write_manifest(out_path: Path, root: Path | None = None, paths=None) -> int:
+    """The ONLY manifest writer; called only for --update-manifest."""
+    hashes = compute_hashes(manifest_paths() if paths is None else paths, root)
+    out_path.write_text("".join(f"{h}  {r}\n" for r, h in sorted(hashes.items())), encoding="utf-8", newline="\n")
+    print(f"[MANIFEST] wrote {len(hashes)} hashes to {out_path.name}")
+    return len(hashes)
 
 
 def verify_deliverables() -> bool:
@@ -194,17 +243,26 @@ def verify_deliverables() -> bool:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Master reproduction pipeline for v4")
-    ap.add_argument("--verify-only", action="store_true", help="verify row counts + write manifest, no re-run")
+    ap.add_argument("--verify-only", action="store_true", help="verify row counts + check manifest, no re-run")
     ap.add_argument("--skip-tests", action="store_true")
     ap.add_argument("--include-encoder", action="store_true", help="also retrain the Task 16 set encoder (slow)")
-    ap.add_argument("--manifest-out", default=str(ROOT / "SHA256SUMS_v4.txt"))
+    ap.add_argument("--manifest", "--manifest-out", dest="manifest", default=str(ROOT / "SHA256SUMS_v4.txt"),
+                    help="committed hash manifest (default SHA256SUMS_v4.txt); read-only unless --update-manifest")
+    ap.add_argument("--update-manifest", action="store_true",
+                    help="rewrite the manifest from the current outputs (the only mode that writes it)")
     args = ap.parse_args()
-    manifest_out = Path(args.manifest_out)
+    manifest_out = Path(args.manifest)
+
+    def finish_manifest() -> bool:
+        if args.update_manifest:
+            write_manifest(manifest_out)
+            return False
+        return check_manifest(manifest_out)
 
     if args.verify_only:
         ok = verify_deliverables()
-        write_manifest(manifest_out)
-        sys.exit(0 if ok else 1)
+        drift = finish_manifest()
+        sys.exit(0 if ok and not drift else 1)
 
     print(f"v4 MASTER REPRODUCTION  cwd={ROOT}  python={sys.executable}")
     start = time.time()
@@ -247,9 +305,12 @@ def main() -> None:
         print(f"  - {title}: {why}")
 
     ok = verify_deliverables()
-    write_manifest(manifest_out)
+    drift = finish_manifest()
     if not ok:
         print("\nFATAL: deliverable verification failed.")
+        sys.exit(1)
+    if drift:
+        print("\nFATAL: outputs drifted from the committed manifest (review; rerun with --update-manifest if intended).")
         sys.exit(1)
     print("\nMASTER v4 REPRODUCTION FINISHED.")
 
