@@ -1,0 +1,26 @@
+{
+ "n_fuels": 38,
+ "n_bins": 104,
+ "composition_sum_min": 99.92,
+ "composition_sum_max": 100.05,
+ "excluded_non_bin_rows": [
+  "Average Molecular Formula - Carbon",
+  "Average Molecular Formula - Hydrogen",
+  "Average Molecular Wt",
+  "Hydrogen content"
+ ],
+ "n_property_rows": 3143,
+ "properties_dropped_non_numeric": 11,
+ "censored_rows": [
+  [
+   "CRC_AV3322_02",
+   "freezing_point_C",
+   "<-60"
+  ]
+ ],
+ "fuel_types": {
+  "Jet A": 23,
+  "Jet A-1": 15
+ },
+ "n_composition_rows": 3952
+}
