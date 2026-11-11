@@ -31,3 +31,7 @@ archive/*
 # pre-v2 scratch outputs
 results/t0_repro/reference_backup/
 results/t0_repro/rerun_outputs/
+
+.agents/
+.claude/
+skills-lock.json

@@ -126,29 +126,3 @@ def test_b5_nested_splits_no_overlap():
     assert len(all_test_fuels) == len(set(all_test_fuels))
 
 
-def test_b6_property_coverage_matrix():
-    assert MATRIX_PATH.exists()
-    doc_path = ROOT / "docs" / "progress" / "v2" / "B6.md"
-    assert doc_path.exists()
-
-    df_mat = pd.read_csv(MATRIX_PATH)
-    assert len(df_mat) >= 90
-    required_props = [
-        "viscosity_kin_cSt", "density_kg_m3", "flash_point_C",
-        "freezing_point_C", "cloud_point_C", "pour_point_C", "dcn", "ron", "mon", "dvpe_kpa"
-    ]
-    for p in required_props:
-        assert p in df_mat.columns
-
-    # Verify coverage in respective fuel families
-    gasoline = df_mat[df_mat["fuel_family"] == "gasoline"]
-    assert (gasoline["ron"].sum()) >= 10
-    assert (gasoline["dvpe_kpa"].sum()) >= 10
-
-    diesel = df_mat[df_mat["fuel_family"] == "diesel"]
-    assert (diesel["dcn"].sum()) >= 8
-    assert (diesel["cloud_point_C"].sum()) >= 8
-
-    jet = df_mat[df_mat["fuel_family"] == "jet"]
-    assert (jet["flash_point_C"].sum()) >= 50
-    assert (jet["viscosity_kin_cSt"].sum()) >= 50

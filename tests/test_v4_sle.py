@@ -14,16 +14,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EXTRAS = ROOT / "extras" / "fuelblend_data"
-sys.path.insert(0, str(EXTRAS))
 import pytest  # noqa: E402
 
 try:
-    import thermoml_extract as tx  # noqa: E402
+    from fuelblend.data import thermoml_extract as tx  # noqa: E402
     _HAS_SLE = hasattr(tx, "parse_file_sle") and hasattr(tx, "main_sle")
 except ImportError:
     tx, _HAS_SLE = None, False
-_SKIP = pytest.mark.skipif(not _HAS_SLE, reason="extras/fuelblend_data/thermoml_extract.py missing or lacks --sle support "
-                           "(git-ignored nested repo): apply results/v4/SLE/thermoml_extract_sle.patch inside extras/fuelblend_data")
+_SKIP = pytest.mark.skipif(not _HAS_SLE, reason="src/fuelblend/data/thermoml_extract.py missing or lacks --sle support")
 
 FIX = ROOT / "tests" / "data" / "thermoml_sle_je5001389.xml"
 

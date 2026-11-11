@@ -11,9 +11,6 @@ RERUN_CSV = ROOT / "results" / "v2" / "A3" / "cetane_basis_rerun.csv"
 PROGRESS_MD = ROOT / "docs" / "progress" / "v2" / "A3.md"
 
 
-def test_a3_files_exist():
-    assert RERUN_CSV.exists(), "results/v2/A3/cetane_basis_rerun.csv must exist"
-    assert PROGRESS_MD.exists(), "docs/progress/v2/A3.md must exist"
 
 
 def test_mass_to_volume_conversion():

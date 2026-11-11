@@ -1,4 +1,0 @@
-model,ron_mae,ron_rmse,mon_mae,mon_rmse,sensitivity_mae,n_fuels,notes
-Linear-by-Volume Baseline,9.69,12.51,10.69,12.8,4.12,55,Standard uncalibrated linear-by-volume blending (ASTM D2699/D2700)
-Linear-by-Mole Baseline,6.37,8.14,5.87,7.42,2.85,55,Linear-by-mole blending with pure component ON; fails on oxygenates/interactions
-Ghosh-Style Lump Model (LOO),3.1,6.59,2.63,5.89,0.98,55,"7-lump model with EtOH-paraffin, aromatics-olefins interactions and L2 regularization"
