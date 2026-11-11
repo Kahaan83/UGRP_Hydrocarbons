@@ -1,0 +1,13 @@
+design_id,property,engine,independent,diff,tolerance,tolerance_is_engine_margin,status,note
+jet_astm_d1655__v4pool,flash_point_C,49.62556364260144,49.06005917746455,0.5655044651368897,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_astm_d1655__v4pool,freezing_point_C,-36.57,-38.98068098900984,2.4106809890098404,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_astm_d1655__v4pool,density_15C_kg_m3,774.0163211011637,774.4725801229839,-0.4562590218201876,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+jet_astm_d1655__v5pool,flash_point_C,53.53227139586909,53.31699955755249,0.21527183831659613,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_astm_d1655__v5pool,freezing_point_C,-40.72,-42.56932136735844,1.849321367358442,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_astm_d1655__v5pool,density_15C_kg_m3,781.1734195634509,779.3588284347753,1.8145911286756018,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+jet_bis_is1571__v4pool,flash_point_C,51.04515415693589,50.465278234081154,0.5798759228547326,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_bis_is1571__v4pool,freezing_point_C,-31.12,-34.32075385989677,3.2007538598967678,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_bis_is1571__v4pool,density_15C_kg_m3,757.6248981599673,758.0352268974334,-0.4103287374661022,4.5866,True,agrees,"ideal volume mixing, thermo VolumeLiquid"
+jet_bis_is1571__v5pool,flash_point_C,49.53110431808096,48.54834338306398,0.9827609350169837,3.698768343688585,True,agrees,"Le Chatelier, gamma=1, LFL: Jones 0.55*Cst/chemicals.LFL"
+jet_bis_is1571__v5pool,freezing_point_C,-47.49,-47.913374722525845,0.42337472252584263,5.0,False,agrees,ideal SvL liquidus from library Tm/Hfus
+jet_bis_is1571__v5pool,density_15C_kg_m3,799.495474864227,792.8525173792658,6.642957484961244,4.5866,True,DISAGREES,"ideal volume mixing, thermo VolumeLiquid"
