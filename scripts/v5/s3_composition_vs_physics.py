@@ -5,7 +5,7 @@ Every fuel with a measured GCxGC composition is scored twice with the SAME prope
   R  composition reconstructed by the r2 route (reconstruction_r2.reconstruct) from bulk descriptors of the same fuel only:
      D86 (IBP, T10, T20, T50, T90, FBP), aromatics vol%, naphthalenes vol% (diaromatics), olefins vol% (absent -> 0).
 Table G.1 hydrocarbon types exist only for CRC 647 fuels, so none of these fuels can use r3; all R compositions are r2.
-Nothing is fitted.  Outputs: results/v5/S3/*.csv.  The README is not touched by this script.
+Nothing is fitted.  Outputs: results/v5/S3/corrected_2026-11-12_*.csv (committed s3_*.csv kept).  The README is not touched by this script.
 """
 from __future__ import annotations
 
@@ -32,6 +32,7 @@ from fuelblend.thermo.coutinho_wax import get_pure_thermal_properties  # noqa: E
 
 V5 = ROOT / "data" / "real_fuels" / "v5"
 OUT = ROOT / "results" / "v5" / "S3"
+PFX = "corrected_2026-11-12_"        # corrected outputs; the committed s3_*.csv are not overwritten
 S2 = ROOT / "results" / "v5" / "S2"
 JETCLASS = ROOT / "data" / "real_fuels" / "v4" / "jet_class_compositions.csv"
 SPLITS = ROOT / "results" / "v5" / "S4" / "splits_ajftd_v5.json"
@@ -105,11 +106,18 @@ class Ctx:
         return self._mw[smi]
 
 
+def drop_zero_mass(idx, w):
+    """Drop representatives with non-positive mass.  A zero-mass rep (e.g. propane for 'n-alkane C3 and lower', 0 %) has nu < 0.2 cSt
+    at 313 K, so Refutas ln(ln(nu+0.8)) is NaN and 0 * NaN poisons the VBN sum."""
+    idx, w = np.asarray(idx, np.int64), np.asarray(w, float)
+    keep = w > 0
+    return idx[keep], w[keep]
+
+
 def predict_comp(ctx: Ctx, idx, w, targets: pd.DataFrame) -> pd.DataFrame:
     """Existing property models on a composition (registry indices, mass fractions).  Returns targets + pred, status.
     Flash: ideal Le Chatelier (as G1/S2); viscosity: Refutas; density: ideal volume mixing; freezing: ideal SvL."""
-    idx = np.asarray(idx, np.int64)
-    w = np.asarray(w, float)
+    idx, w = drop_zero_mass(idx, w)
     w = w / w.sum()
     iks = [ctx.reg.ik[i] for i in idx]
     smi = [ctx.reg.smiles[i] for i in idx]
@@ -128,7 +136,10 @@ def predict_comp(ctx: Ctx, idx, w, targets: pd.DataFrame) -> pd.DataFrame:
             pred = nu if r.property == "viscosity_kin_cSt" else rho
         else:
             pred = ctx.ideal_sle_C(x, iks, ctx.tmap)
-        rows.append(dict(pred=float(pred) if pred is not None else np.nan, status=status))
+        pred = float(pred) if pred is not None else np.nan
+        if not np.isfinite(pred) and status == "ok":
+            status = "non_finite"                                   # status 'ok' must imply a finite prediction
+        rows.append(dict(pred=pred, status=status))
     out = targets.reset_index(drop=True).copy()
     out["pred"] = [r["pred"] for r in rows]
     out["status"] = [r["status"] for r in rows]
@@ -274,7 +285,7 @@ def main() -> None:
 
     # ---------------- AJFTD GCxGC
     mapped, summ = g1.build_mapping(reps_m)                                            # in memory only (G1 files not rewritten)
-    tg_aj = g1.targets()
+    tg_aj = g1.targets(exclude_censored=True)               # censored ('<') AJFTD values are bounds, not measurements
     long_aj = pd.read_csv(V5 / "ajftd_fuels_long.csv", low_memory=False)
     gfu = pd.read_csv(V5 / "ajftd_gcxgc_fuels.csv")
     labels = dict(zip(gfu.fuel_id, gfu.fuel_label.astype(str)))
@@ -470,9 +481,9 @@ def main() -> None:
             tv = 0.5 * sum(abs(vec[a].get(k, 0) - vec[b].get(k, 0)) for k in ks) / 100.0
             comp_dist.append(dict(av=a, ajftd=b, ajftd_label=ents[b]["label"] if b in ents else labels[int(b.split(":")[1])], tv_distance=tv))
     cd = pd.DataFrame(comp_dist).sort_values("tv_distance")
-    cd.head(25).to_csv(OUT / "s3_av3322_vs_ajftd_composition_distance_top25.csv", index=False, float_format="%.5g")
-    pd.DataFrame(pair_rows).sort_values("max_scaled_diff").head(60).to_csv(OUT / "s3_bulk_overlap_pairs_top60.csv", index=False, float_format="%.5g")
-    pd.DataFrame(links, columns=["entity_a", "entity_b", "reason"]).to_csv(OUT / "s3_group_links.csv", index=False)
+    cd.head(25).to_csv(OUT / f"{PFX}av3322_vs_ajftd_composition_distance_top25.csv", index=False, float_format="%.5g")
+    pd.DataFrame(pair_rows).sort_values("max_scaled_diff").head(60).to_csv(OUT / f"{PFX}bulk_overlap_pairs_top60.csv", index=False, float_format="%.5g")
+    pd.DataFrame(links, columns=["entity_a", "entity_b", "reason"]).to_csv(OUT / f"{PFX}group_links.csv", index=False)
 
     grp = {a: uf.find(a) for a in ents}
     uf2 = UF(list(ents))
@@ -494,8 +505,8 @@ def main() -> None:
                           diaromatics_vol_pct=e["desc"].get("diaromatics_vol_pct", np.nan), prior_variant=e["prior_variant"],
                           n_target_rows=len(e["targets"]), n_pair_rows=int(npair.get(a, 0)), pairable=bool(e["M_ok"] and e["R_ok"] and npair.get(a, 0) > 0)))
     ent = pd.DataFrame(erows)
-    ent.to_csv(OUT / "s3_fuels.csv", index=False, float_format="%.6g")
-    pd.DataFrame(r_rows).to_csv(OUT / "s3_r_compositions.csv", index=False, float_format="%.6g")
+    ent.to_csv(OUT / f"{PFX}fuels.csv", index=False, float_format="%.6g")
+    pd.DataFrame(r_rows).to_csv(OUT / f"{PFX}r_compositions.csv", index=False, float_format="%.6g")
     sel = select_one_per_group(ent)
     ent2 = ent.assign(group=ent.entity.map(grp2))
     ent2["group_locked"] = ent2.group.isin(set(ent2[ent2.locked_ajftd].group))
@@ -504,12 +515,12 @@ def main() -> None:
     gt = ent.groupby("group").agg(members=("entity", lambda s: ";".join(s)), n_members=("entity", "size"), sources=("source", lambda s: "+".join(sorted(set(s)))),
                                   any_locked=("group_locked", "max"), n_pairable=("pairable", "sum")).reset_index()
     gt["chosen"] = gt.group.map(dict(zip(sel.group, sel.entity))).fillna("")
-    gt.to_csv(OUT / "s3_groups.csv", index=False)
+    gt.to_csv(OUT / f"{PFX}groups.csv", index=False)
 
     d = d.merge(ent[["entity", "group", "pairable", "group_locked", "locked_ajftd"]], on="entity", how="left")
     d["headline"] = d.entity.isin(set(sel.entity))
     d["err_Rlo_pair"] = d.err_Rlo
-    d.drop(columns=["target_dummy"], errors="ignore").to_csv(OUT / "s3_predictions.csv", index=False, float_format="%.6g")
+    d.drop(columns=["target_dummy"], errors="ignore").to_csv(OUT / f"{PFX}predictions.csv", index=False, float_format="%.6g")
 
     # ---------------- central table
     P = d[d.pairable]
@@ -528,7 +539,7 @@ def main() -> None:
     d2 = d[d.entity.isin(set(sel2.entity))].assign(group=lambda x: x.entity.map(grp2))
     sens3 = pd.DataFrame(central_rows(d2, "headline with strict groups (label/dup_map/identical composition only; no bulk-match links)"))
     cen = pd.DataFrame(rows + sens.to_dict("records") + sens2.to_dict("records") + sens3.to_dict("records"))
-    cen.to_csv(OUT / "s3_central_table.csv", index=False, float_format="%.5g")
+    cen.to_csv(OUT / f"{PFX}central_table.csv", index=False, float_format="%.5g")
 
     # ---------------- readings
     rd = []
@@ -572,7 +583,7 @@ def main() -> None:
                        max=gg.R_fallback.max() if len(gg) else np.nan, excluded=";".join(gg[gg.R_fallback > MAX_UNMAPPED].label.astype(str)) or "none"))
         rd.append(dict(reading="R-S3-4", variant="R missing", source=src, n_fuels=int((~g.R_available).sum()),
                        excluded=";".join(f"{r.label}({r.R_missing_reason})" for r in g[~g.R_available].itertuples())[:600] or "none"))
-    pd.DataFrame(rd).to_csv(OUT / "s3_readings.csv", index=False, float_format="%.5g")
+    pd.DataFrame(rd).to_csv(OUT / f"{PFX}readings.csv", index=False, float_format="%.5g")
 
     pd.set_option("display.width", 250); pd.set_option("display.max_columns", 40); pd.set_option("display.max_colwidth", 70)
     print("strict groups:", len(set(grp2.values())), "chosen:", len(sel2))

@@ -43,3 +43,8 @@ R6. Flash methods D93 and D56 are kept in a column and reported together and apa
 R7. Fuels with identical mapped compositions count once in the fuel count note (the number of distinct compositions is reported).
 
 No margin is written to `configs/`. A reading that cannot be evaluated is reported as "not evaluable" with the reason.
+
+
+## Note, 2026-11-12: freezing without censored values
+
+G1's freezing figure (n = 31, MAE 15.2 C vs leave-one-out constant 7.30 C) used 64 AJFTD freezing rows that carry a "<" qualifier as if they were measurements. Nothing above or in the G1 outputs was changed. Recomputed with uncensored values only (G1 predictions reused, `measured` replaced by the median of uncensored rows; six fuels with only censored values drop out): n = 25, bias +7.4 C, MAE 8.99 C vs leave-one-out constant 5.59 C, so "the model has skill" still does not hold. Subsets: not shared n = 21, MAE 9.25 (constant 6.18); dev n = 17, 8.73 (6.02); locked n = 8, 9.56 (5.29). File: `results/v5/S3/corrected_2026-11-12_g1_freezing_uncensored.csv` (script `scripts/v5/g1_freezing_uncensored.py`).

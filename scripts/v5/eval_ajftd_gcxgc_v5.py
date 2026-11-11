@@ -83,9 +83,13 @@ def build_mapping(reps) -> tuple[pd.DataFrame, pd.DataFrame]:
     return pd.DataFrame(rows), pd.DataFrame(summ)
 
 
-def targets() -> pd.DataFrame:
+def targets(exclude_censored: bool = False) -> pd.DataFrame:
+    """Per fuel/property/T median target.  exclude_censored=False (default) keeps G1's committed behaviour; True drops rows with a
+    qualifier (e.g. '<' freezing limits), which are bounds, not measurements."""
     t = pd.read_csv(V5 / "ajftd_fuels_long.csv", low_memory=False)
     t = t[t.property.isin(["flash_point_C", "viscosity_kin_cSt", "density_kg_m3", "freezing_point_C"]) & t.value.notna()]
+    if exclude_censored:
+        t = t[t.qualifier.isna()]
     t = t[~((t.property == "viscosity_kin_cSt") & (t.T_source.astype(str) != "reported"))]
     t = t[~(t.property.isin(["viscosity_kin_cSt", "density_kg_m3"]) & t.T_K.isna())]
     t["T_key"] = t.T_K.round(1).fillna(-1.0)

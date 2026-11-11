@@ -1,0 +1,40 @@
+reading,variant,n_groups,bias_M,bias_R,met,note,frac_over5_M,frac_over5_R,target,bias_M_pct,bias_R_pct,mae_M,mae_R,diff,ci_lo,ci_hi,source,n_fuels,mean,max,excluded
+R-S3-2,headline,53,-3.336,-4.3791,False,M side ok (|bias_M|<=7); R side FAILED (|bias_R|>=10),,,,,,,,,,,,,,,
+R-S3-3,headline,54,-0.63647,11.781,True,,0.055556,0.90741,,,,,,,,,,,,,
+R-S3-5,headline,54,-0.27046,-0.20274,R not worse than M,,,,visc_-20C,-23.697,-18.351,0.29793,0.2401,,,,,,,,
+R-S3-5,headline,43,-0.6452,-0.58479,R not worse than M,,,,visc_-40C,-47.544,-44.278,0.6452,0.58479,,,,,,,,
+R-S3-1,headline,53,-3.336,-4.3791,composition error matters,,,,density_15C,,,4.4897,11.358,6.8688,4.8466,8.9973,,,,,
+R-S3-1,headline,43,-0.6452,-0.58479,R better than M (measured composition worse),,,,visc_-40C,,,0.6452,0.58479,-0.06041,-0.082593,-0.03278,,,,,
+R-S3-1,headline,54,-0.27046,-0.20274,R better than M (measured composition worse),,,,visc_-20C,,,0.29793,0.2401,-0.057823,-0.078957,-0.032748,,,,,
+R-S3-1,headline,45,0.053443,0.099197,composition error matters,,,,visc_40C,,,0.061914,0.1167,0.054786,0.041508,0.06812,,,,,
+R-S3-1,headline,54,-0.63647,11.781,composition error matters,,,,flash,,,2.3583,11.848,9.4893,7.712,11.042,,,,,
+R-S3-1,headline,48,7.9482,1.3745,R better than M (measured composition worse),,,,freezing,,,7.9482,4.4765,-3.4718,-4.6991,-2.1268,,,,,
+R-S3-2,sens_leaveout,53,-3.336,-4.3422,False,M side ok (|bias_M|<=7); R side FAILED (|bias_R|>=10),,,,,,,,,,,,,,,
+R-S3-3,sens_leaveout,54,-0.63647,11.783,True,,0.055556,0.90741,,,,,,,,,,,,,
+R-S3-5,sens_leaveout,54,-0.27046,-0.20255,R not worse than M,,,,visc_-20C,-23.697,-18.335,0.29793,0.23991,,,,,,,,
+R-S3-5,sens_leaveout,43,-0.6452,-0.58453,R not worse than M,,,,visc_-40C,-47.544,-44.263,0.6452,0.58453,,,,,,,,
+R-S3-1,sens_leaveout,53,,,composition error matters,,,,density_15C,,,,,,,,,,,,
+R-S3-1,sens_leaveout,43,,,R better than M (measured composition worse),,,,visc_-40C,,,,,,,,,,,,
+R-S3-1,sens_leaveout,54,,,R better than M (measured composition worse),,,,visc_-20C,,,,,,,,,,,,
+R-S3-1,sens_leaveout,45,,,composition error matters,,,,visc_40C,,,,,,,,,,,,
+R-S3-1,sens_leaveout,54,,,composition error matters,,,,flash,,,,,,,,,,,,
+R-S3-1,sens_leaveout,48,,,R better than M (measured composition worse),,,,freezing,,,,,,,,,,,,
+R-S3-2,sens_dropgroups,52,-3.1884,-4.426,False,M side ok (|bias_M|<=7); R side FAILED (|bias_R|>=10),,,,,,,,,,,,,,,
+R-S3-3,sens_dropgroups,53,-0.60848,11.76,True,,0.056604,0.90566,,,,,,,,,,,,,
+R-S3-5,sens_dropgroups,53,-0.26914,-0.20255,R not worse than M,,,,visc_-20C,-23.596,-18.336,0.29712,0.24062,,,,,,,,
+R-S3-5,sens_dropgroups,42,-0.64321,-0.5847,R not worse than M,,,,visc_-40C,-47.44,-44.273,0.64321,0.5847,,,,,,,,
+R-S3-1,sens_dropgroups,52,,,composition error matters,,,,density_15C,,,,,,,,,,,,
+R-S3-1,sens_dropgroups,42,,,R better than M (measured composition worse),,,,visc_-40C,,,,,,,,,,,,
+R-S3-1,sens_dropgroups,53,,,R better than M (measured composition worse),,,,visc_-20C,,,,,,,,,,,,
+R-S3-1,sens_dropgroups,44,,,composition error matters,,,,visc_40C,,,,,,,,,,,,
+R-S3-1,sens_dropgroups,53,,,composition error matters,,,,flash,,,,,,,,,,,,
+R-S3-1,sens_dropgroups,47,,,R better than M (measured composition worse),,,,freezing,,,,,,,,,,,,
+R-S3-4,M unmapped,,,,,,,,,,,,,,,,AJFTD,113,0.015092,0.10151,13197
+R-S3-4,R fallback (r2),,,,,,,,,,,,,,,,AJFTD,33,0,0,none
+R-S3-4,R missing,,,,,,,,,,,,,,,,AJFTD,80,,,13374(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);10326(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11729(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11757(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11760(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11764(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11785(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);12346(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);12355(no aromatics descriptor (n
+R-S3-4,M unmapped,,,,,,,,,,,,,,,,AV-33-22,38,0.033283,0.055994,none
+R-S3-4,R fallback (r2),,,,,,,,,,,,,,,,AV-33-22,38,0.010502,0.026366,none
+R-S3-4,R missing,,,,,,,,,,,,,,,,AV-33-22,0,,,none
+R-S3-4,M unmapped,,,,,,,,,,,,,,,,FuelLib,4,0.013903,0.02501,none
+R-S3-4,R fallback (r2),,,,,,,,,,,,,,,,FuelLib,0,,,none
+R-S3-4,R missing,,,,,,,,,,,,,,,,FuelLib,4,,,10264(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);10289(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);10325(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data);11498(no aromatics descriptor (non-GCxGC) in the fuel's own bulk data)
