@@ -96,3 +96,46 @@ def test_bootstrap_is_seeded_and_signed():
     assert a == s3.paired_bootstrap(g, eM, eR)
     assert a[0] == 2.0 and a[1] == 2.0 and a[2] == 2.0
     assert s3.verdict_s31(5, 1.0, 0.5, 1.5, 0, 0) == "n too small"
+
+
+# ---- corrections 2026-11-12 (audit B1, B2) -------------------------------------------------------------------------------
+def test_zero_mass_representative_is_dropped():
+    idx, w = s3.drop_zero_mass([5, 7, 9], [0.0, 0.4, 0.6])
+    assert idx.tolist() == [7, 9] and np.allclose(w, [0.4, 0.6])
+
+
+def test_zero_mass_rep_does_not_poison_refutas_and_ok_implies_finite():
+    # a refutas stand-in that returns NaN if any component has nu < 0.2 (propane at 313 K), as the real one does via ln(ln(nu+0.8))
+    def refutas(prov, idx, w, T):
+        nu_i = np.where(np.asarray(idx) == 0, 0.19, 3.0)
+        vbn = float((np.asarray(w) * (14.534 * np.log(np.log(nu_i + 0.8)) + 10.975)).sum())
+        return float(np.exp(np.exp((vbn - 10.975) / 14.534)) - 0.8), 800.0, None, None
+    reg = SimpleNamespace(ik=["IK_C3", "IK_C12"], smiles=["CCC", "CCCCCCCCCCCC"])
+    ctx = s3.Ctx(reg, None, refutas, lambda x, iks, tmap: -50.0, {})
+    t = pd.DataFrame([dict(property="viscosity_kin_cSt", T_K=313.15, measured=2.0, target="visc_40C")])
+    out = s3.predict_comp(ctx, [0, 1], [0.0, 1.0], t)
+    assert out.status.iloc[0] == "ok" and np.isfinite(out.pred.iloc[0])
+    sc = s3.score_entity(ctx, ([0, 1], [0.0, 1.0]), None, t)
+    assert np.isfinite(sc.err_M.iloc[0])
+
+
+def test_non_finite_prediction_never_status_ok():
+    reg = SimpleNamespace(ik=["IK_C12"], smiles=["CCCCCCCCCCCC"])
+    ctx = s3.Ctx(reg, None, lambda *a: (np.nan, 800.0, None, None), lambda x, iks, tmap: np.nan, {})
+    t = pd.DataFrame([dict(property="viscosity_kin_cSt", T_K=313.15, measured=2.0, target="visc_40C"),
+                      dict(property="freezing_point_C", T_K=np.nan, measured=-50.0, target="freezing")])
+    out = s3.predict_comp(ctx, [0], [1.0], t)
+    assert not ((out.status == "ok") & ~np.isfinite(out.pred)).any()
+    assert (out.status == "non_finite").all()
+
+
+def test_censored_freezing_excluded_from_s3_targets():
+    g1 = s3.load_module("g1_eval_t", "scripts/v5/eval_ajftd_gcxgc_v5.py")
+    raw = pd.read_csv(ROOT / "data/real_fuels/v5/ajftd_fuels_long.csv", low_memory=False)
+    cens = raw[(raw.property == "freezing_point_C") & raw.qualifier.notna()]
+    assert len(cens) > 0
+    allt, unc = g1.targets(), g1.targets(exclude_censored=True)                 # default keeps G1 behaviour
+    only_cens = set(cens.fuel_id) - set(raw[(raw.property == "freezing_point_C") & raw.qualifier.isna()].fuel_id)
+    fz_all, fz_unc = allt[allt.property == "freezing_point_C"], unc[unc.property == "freezing_point_C"]
+    assert only_cens <= set(fz_all.fuel_id) and not (only_cens & set(fz_unc.fuel_id))
+    assert "g1.targets(exclude_censored=True)" in inspect.getsource(s3.main)

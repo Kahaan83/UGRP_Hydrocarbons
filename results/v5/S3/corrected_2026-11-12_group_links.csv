@@ -1,0 +1,12 @@
+entity_a,entity_b,reason
+AJFTD:2,FuelLib:FUELLIB_posf10325,same POSF label 10325
+AJFTD:39,FuelLib:FUELLIB_posf10289,same POSF label 10289
+AJFTD:2,FuelLib:FUELLIB_posf10325,"near-identical bulk (t10,t90,flash,freezing)"
+AJFTD:122,FuelLib:FUELLIB_posf10325,"near-identical bulk (t10,t90,flash,freezing)"
+AJFTD:173,FuelLib:FUELLIB_posf10325,"near-identical bulk (t10,t90,flash,freezing)"
+AJFTD:293,AJFTD:325,"near-identical bulk (dens15,aromatics,t10,t90,flash)"
+AJFTD:24568,FuelLib:FUELLIB_posf10325,"near-identical bulk (t10,t90,flash,freezing)"
+AV-33-22:CRC_AV3322_01,AV-33-22:CRC_AV3322_12,"near-identical bulk (dens15,aromatics,t10,t90,flash,freezing)"
+AV-33-22:CRC_AV3322_01,AV-33-22:CRC_AV3322_35,"near-identical bulk (dens15,aromatics,t10,t90,flash,freezing)"
+AV-33-22:CRC_AV3322_08,AV-33-22:CRC_AV3322_23,"near-identical bulk (dens15,aromatics,t10,t90,flash,freezing)"
+AV-33-22:CRC_AV3322_12,AV-33-22:CRC_AV3322_35,"near-identical bulk (dens15,aromatics,t10,t90,flash,freezing)"

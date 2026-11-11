@@ -73,3 +73,27 @@ The declared labels do not cover a CI that excludes 0 in favour of R. I report i
 * The freezing M result (ideal SvL on the measured composition, bias +5.7 C, MAE 10.1) is worse than R's; a likely cause (not tested) is the ideal SvL liquidus being set by heavy n-paraffin tails. This is a physics-model limit, consistent with G1's finding that freezing has no skill, not a statement about reconstruction.
 * The bulk-match links rest on tolerances fixed before the errors were seen; the AJFTD 122/173/24568 merge into the 10325 group rests on four features and may be a coincidence (strict-group sensitivity does not change any verdict).
 * Mapped unmapped mass is renormalised away for both routes (diaromatic and tricycloparaffin classes in M, fallback lumps in R), so neither composition carries those classes.
+
+
+## Correction note, 2026-11-12 (audit `docs/audit_fable_v5_2026-11-11.md`, B1 and B2)
+
+The Results text and readings above are left as originally written; the committed `s3_*.csv` are unchanged. Corrected outputs are in `corrected_2026-11-12_*.csv` (script `scripts/v5/s3_composition_vs_physics.py`, which now writes only those). I re-verified both defects before fixing them.
+
+**What was wrong.**
+* B1 (verified): in all 38 AV-33-22 fuels the "n-alkane C3 and lower" bin has 0 mass and maps to propane (nu about 0.19 cSt at 313 K), so Refutas `ln(ln(nu+0.8))` is NaN and `0 * NaN` made the whole 40 C viscosity NaN while `status_M` stayed `ok` (38 of 38 rows). The 40 C row therefore had n = 11 (AJFTD only) and the sentence "AV-33-22 has -40, -20 C viscosity only" was false (AV-33-22 has 40 C data as well). Fix: zero-mass representatives are dropped before the blend, and a non-finite prediction now gets status `non_finite`, never `ok`.
+* B2 (verified): 64 AJFTD freezing rows carry a "<" qualifier (bounds, not measurements); `targets()` used them as measured. Fix: S3 calls `targets(exclude_censored=True)` (new flag, default False so G1 behaves as committed). The flag also drops the 3 censored flash rows (and none of the other target properties have qualifiers).
+
+**Corrected headline (one per group, locked groups excluded; 5000 group bootstraps, seed 0).** Groups go 54/55/53 to 53/54/48 because removing the censored freezing value of locked fuel AJFTD 293 lets a bulk-property link form to AJFTD 325, which is then dropped with the locked group.
+
+| target | groups | bias M | bias R | MAE M | MAE R | R-M (95 % CI) | verdict |
+|---|---|---|---|---|---|---|---|
+| density 15 C (kg/m3) | 53 | -3.3 | -4.4 | 4.5 | 11.4 | +6.9 (4.8, 9.0) | composition error matters |
+| viscosity -40 C (ln) | 43 | -0.645 (-47.5 %) | -0.585 (-44.3 %) | 0.645 | 0.585 | -0.060 (-0.083, -0.033) | CI excludes 0 in favour of R |
+| viscosity -20 C (ln) | 54 | -0.270 (-23.7 %) | -0.203 (-18.4 %) | 0.298 | 0.240 | -0.058 (-0.079, -0.033) | same |
+| viscosity 40 C (ln) | **45** (was 11) | **+0.053 (+5.5 %)** (was +0.014) | +0.099 (+10.4 %) | 0.062 | 0.117 | +0.055 (0.042, 0.068) | composition error matters |
+| flash (C) | 54 | -0.64 | +11.8 | 2.4 | 11.8 | +9.5 (7.7, 11.0) | composition error matters |
+| freezing (C) | **48** (was 53) | **+7.9** (was +5.7) | +1.4 (was +2.8) | **7.9** (was 10.1) | **4.5** (was 5.6) | **-3.5 (-4.7, -2.1)** (was -4.5 (-8.6, -1.6)) | CI excludes 0 in favour of R |
+
+By source (all pairable): AV-33-22 40 C viscosity n = 35, M bias +0.069 ln (+7 %), R +0.123; AJFTD 40 C n = 16 (was 11 at headline level), M bias -0.002. AV-33-22 freezing n = 34, M +7.4 / MAE 7.4 vs R +1.4 / 3.4. AJFTD freezing n = 22: R-M CI (-4.9, +0.75) so "physics-limited" there. R-S3-3 still MET (over-by-5 fraction M 0.056, R 0.907; M bias -0.64 C). R-S3-2 still NOT attributed (R bias -4.4 kg/m3). R-S3-5 unchanged in direction (R not worse than M at -20 and -40 C).
+
+**Does any verdict change?** No verdict label changes at headline level: density, 40 C viscosity and flash stay "composition error matters"; cold viscosity and freezing stay "CI excludes 0 in favour of R". But two statements in the Results text must be read differently: (a) "unbiased at 40 C" no longer holds on the larger set: M overpredicts 40 C viscosity by about 5.5 % (7 % on AV-33-22), and the 40 C row is no longer AJFTD-only; (b) the freezing M bias is +7.9 C with MAE 7.9 C (every error positive), so the M freezing figures in the original table (n = 53, MAE 10.1) were inflated by censored bounds (one fuel had an M error of -103 C). Numbers in the original prose that depend on the changed rows (freezing, 40 C viscosity, group counts) are superseded by the table above.
