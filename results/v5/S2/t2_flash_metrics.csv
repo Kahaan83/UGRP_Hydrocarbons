@@ -1,0 +1,25 @@
+registry,group,model,N,mean_bias_C,MAE_C,frac_over_gt5C,n_over_gt5C,worst_over_C,worst_under_C
+registry_as_stored,all_eligible,ideal,42,-0.832702,1.8798,0.0238095,1,14.3479,-10.6642
+registry_as_stored,all_eligible,unifac,42,-1.12952,2.03356,0.0238095,1,14.8133,-10.0864
+registry_as_stored,FuelLib-4,ideal,4,1.35871,5.81524,0.25,1,14.3479,-4.23004
+registry_as_stored,FuelLib-4,unifac,4,1.10317,6.30349,0.25,1,14.8133,-4.98096
+registry_as_stored,AV-33-22,ideal,38,-1.06338,1.46554,0,0,2.11096,-10.6642
+registry_as_stored,AV-33-22,unifac,38,-1.36454,1.58409,0,0,1.73139,-10.0864
+registry_as_stored,AV-33-22 CoA method=D56,ideal,27,-1.04948,1.55791,0,0,2.11096,-10.6642
+registry_as_stored,AV-33-22 CoA method=D56,unifac,27,-1.29373,1.60273,0,0,1.73139,-10.0864
+registry_as_stored,AV-33-22 CoA method=IP 170,ideal,10,-1.06111,1.21658,0,0,0.777345,-4.11477
+registry_as_stored,AV-33-22 CoA method=IP 170,unifac,10,-1.52499,1.52499,0,0,-0.1408,-4.77909
+registry_as_stored,AV-33-22 CoA method=Not specified,ideal,1,-1.46124,1.46124,0,0,-1.46124,-1.46124
+registry_as_stored,AV-33-22 CoA method=Not specified,unifac,1,-1.6719,1.6719,0,0,-1.6719,-1.6719
+mesitylene_corrected,all_eligible,ideal,42,-1.15805,2.03725,0.0238095,1,14.3479,-10.8142
+mesitylene_corrected,all_eligible,unifac,42,-1.48479,2.28385,0.0238095,1,14.8133,-10.2572
+mesitylene_corrected,FuelLib-4,ideal,4,1.10073,6.07323,0.25,1,14.3479,-4.51774
+mesitylene_corrected,FuelLib-4,unifac,4,0.818354,6.5883,0.25,1,14.8133,-5.28401
+mesitylene_corrected,AV-33-22,ideal,38,-1.39582,1.61241,0,0,1.75524,-10.8142
+mesitylene_corrected,AV-33-22,unifac,38,-1.72723,1.83075,0,0,1.33756,-10.2572
+mesitylene_corrected,AV-33-22 CoA method=D56,ideal,27,-1.33476,1.6396,0,0,1.75524,-10.8142
+mesitylene_corrected,AV-33-22 CoA method=D56,unifac,27,-1.60562,1.75131,0,0,1.33756,-10.2572
+mesitylene_corrected,AV-33-22 CoA method=IP 170,ideal,10,-1.52105,1.52105,0,0,-0.263062,-4.52701
+mesitylene_corrected,AV-33-22 CoA method=IP 170,unifac,10,-2.02459,2.02459,0,0,-1.1937,-5.22673
+mesitylene_corrected,AV-33-22 CoA method=Not specified,ideal,1,-1.79208,1.79208,0,0,-1.79208,-1.79208
+mesitylene_corrected,AV-33-22 CoA method=Not specified,unifac,1,-2.03714,2.03714,0,0,-2.03714,-2.03714

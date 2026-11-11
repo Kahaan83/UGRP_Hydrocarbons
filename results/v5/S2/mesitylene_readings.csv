@@ -1,0 +1,7 @@
+reading,input,model,n_mesitylene_records,T_flash_min_K,T_flash_max_K,set_valid_K,n_outside,extrapolated,best_input,margin90_all_best_input_C,margin90_excl_mesitylene_C,abs_diff_C,margin90_all_registry_as_v4_C,holds,R_A3_overall_holds
+R-A1,registry,ideal,9,312.982,323.699,354.64-438.87,9,True,,,,,,,
+R-A1,registry,unifac,9,312.742,322.788,354.64-438.87,9,True,,,,,,,
+R-A1,webbook,ideal,9,312.356,315.342,354.64-438.87,9,True,,,,,,,
+R-A1,webbook,unifac,9,311.98,314.761,354.64-438.87,9,True,,,,,,,
+R-A3,,ideal,,,,,,,webbook,0.310645,0.310645,0,3.69877,True,True
+R-A3,,unifac,,,,,,,webbook,0.314407,0.314407,0,1.55825,True,True

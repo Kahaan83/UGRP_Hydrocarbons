@@ -1,0 +1,5 @@
+table,file,prop,prop_phase,value,T_K,P_kPa,n_comp,in_v5_reextract,drop_reason,kept
+thermoml_hc.csv (old parser),10.1016/j.fluid.2015.09.030.xml,"Vapor or sublimation pressure, kPa",Liquid,101.33,437.83,,1,True,,True
+v2/thermoml_clean_hc.csv,10.1016/j.fluid.2015.09.030.xml,"Vapor or sublimation pressure, kPa",Liquid,101.33,437.83,,1,True,,True
+v5 re-extract thermoml_hc_v5.csv,10.1016/j.fluid.2015.09.030.xml,"Vapor or sublimation pressure, kPa",Liquid,101.33,437.83,,1,True,,True
+unified/measurements.csv,10.1016/j.fluid.2015.09.030.xml,,Liquid (loader keeps liquid only),101.33,437.83,,1,True,,True
