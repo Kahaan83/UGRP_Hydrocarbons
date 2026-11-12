@@ -1,0 +1,23 @@
+{
+  "flash_point_C": {
+    "reading_pass": false
+  },
+  "density_kg_m3@288.15": {
+    "reading_pass": false
+  },
+  "viscosity_kin_cSt@313.15": {
+    "reading_pass": false
+  },
+  "viscosity_kin_cSt@253.15": {
+    "reading_pass": true
+  },
+  "viscosity_kin_cSt@233.15": {
+    "reading_pass": true
+  },
+  "heat_of_combustion_net_MJ_kg": {
+    "reading_pass": false
+  },
+  "freezing_point_C": {
+    "reading_pass": false
+  }
+}
