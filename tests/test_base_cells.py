@@ -31,4 +31,6 @@ def test_cells_t1_lab():
     s = c[(c.property == "freezing_point_C") & (c.variant == "designated")].iloc[0]
     assert np.isinf(s.margin90) and s.n_groups == 8
     d = c[(c.property == "density_kg_m3") & (c.set == "thermoml2020_new_systems")]
-    assert len(d) >= 1 and d.n_rows.sum() > 1000 and d.label.eq("dev").all()
+    # plan expected >1000 rows; observed: 1239 of 1599 non-pure rows are systems already in measurements_dedup, 63 rows have an invalid pure
+    # property -> 297 scored rows in 4 systems (see the cell note)
+    assert len(d) == 1 and d.n_rows.iloc[0] == 297 and d.n_groups.iloc[0] == 4 and d.label.eq("dev").all()
