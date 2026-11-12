@@ -593,11 +593,13 @@ def _indicative_tables() -> dict:
     f = pd.read_csv(base / "rows_t2_flash.csv")
     f = f[(f.status == "ok") & (~f.low_coverage.astype(bool)) & f.chosen.astype(bool)].drop_duplicates("group")
     e = np.abs(f.pred_designated.to_numpy(float) - f.measured.to_numpy(float))
-    tabs["flash_point_C"] = [(math.nan, float(np.quantile(e, 0.9)), int(len(f)))]
+    if len(f):
+        tabs["flash_point_C"] = [(math.nan, float(np.quantile(e, 0.9)), int(len(f)))]
     b = pd.read_csv(base / "rows_t2_bulk.csv")
     b = b[(b.variant == "designated") & (b.status == "ok") & (~b.low_coverage.astype(bool))]
     for api_key in ("viscosity_kin_cSt", "density_kg_m3", "heat_net_MJ_kg", "smoke_point_mm"):
-        d = b[b.property == _BULK_ROWS_NAME.get(api_key, api_key)].drop_duplicates(["T_K", "group"])
+        d = b[b.property == _BULK_ROWS_NAME.get(api_key, api_key)]
+        d = d.sort_values("chosen", ascending=False, kind="stable").drop_duplicates(["T_K", "group"])
         if api_key in _LN_PROPS:
             d = d[(d.measured > 0) & (d.pred > 0)]
             err = np.log(d.pred.to_numpy(float)) - np.log(d.measured.to_numpy(float))
@@ -608,8 +610,12 @@ def _indicative_tables() -> dict:
         rows = []
         for tk, idx in d.reset_index(drop=True).groupby(d.T_K.fillna(-1.0).reset_index(drop=True)).groups.items():
             ee = np.abs(err[list(idx)])
+            if len(ee) == 0:
+                continue
+            assert len(ee) == d.reset_index(drop=True).loc[list(idx)].group.nunique()     # one row per group in each bin
             rows.append((math.nan if tk < 0 else float(tk), float(np.quantile(ee, 0.9)), int(len(ee))))
-        tabs[api_key] = rows
+        if rows:
+            tabs[api_key] = rows
     return tabs
 
 
@@ -622,7 +628,10 @@ def _indicative_interval(prop: str, T_K: float, value: float) -> Optional[dict]:
     withT = [r for r in rows if np.isfinite(r[0])]
     q, n = (min(withT, key=lambda r: abs(r[0] - T_K))[1:] if withT else rows[0][1:])
     lo, hi = (value * math.exp(-q), value * math.exp(q)) if prop in _LN_PROPS else (value - q, value + q)
-    return {"lo": float(lo), "hi": float(hi), "q90_abs": float(q), "n_groups": int(n), "kind": INDICATIVE_KIND}
+    res = {"lo": float(lo), "hi": float(hi), "q90_abs": float(q), "n_groups": int(n), "kind": INDICATIVE_KIND}
+    if prop == "flash_point_C":
+        res["residual_basis"] = "v4_designated_flash (pred_designated); the API's designated flash is the LFL overlay"
+    return res
 
 
 def _attach_indicative(out: dict, fuel_type, T_K: float) -> None:

@@ -462,9 +462,10 @@ def test_indicative_flash_q90():
 
 def test_indicative_absent_without_jet():
     r = pr.predict_fuel(BLEND3)
+    assert r["flash_point_C"]["value"] is not None and r["flash_point_C"]["indicative_interval"] is None
     assert all(v["indicative_interval"] is None for v in r.values() if isinstance(v, dict) and "indicative_interval" in v)
     r = pr.predict_fuel({DECANE: 0.8, "CCO": 0.2}, fuel_type="jet")          # unmapped 0.2 > 0.10
-    assert r["flash_point_C"]["indicative_interval"] is None
+    assert r["flash_point_C"]["value"] is None and r["flash_point_C"]["indicative_interval"] is None
 
 
 def test_lo_hi_untouched_by_indicative(monkeypatch):
@@ -477,3 +478,26 @@ def test_lo_hi_untouched_by_indicative(monkeypatch):
             x, y = a[k][f], b[k][f]
             assert (x == y) or (isinstance(x, float) and math.isnan(x) and math.isnan(y))
     assert a["viscosity_kin_cSt"]["indicative_interval"]["lo"] > 0
+
+
+def _bulk(prop, T):
+    b = pd.read_csv(pr.ROOT / "results" / "v5" / "BASE" / "rows_t2_bulk.csv")
+    b = b[(b.property == prop) & (b.variant == "designated") & (b.status == "ok") & (~b.low_coverage.astype(bool)) & (b.T_K == T)]
+    return b.sort_values("chosen", ascending=False, kind="stable").drop_duplicates("group")
+
+
+def test_indicative_density_q90_from_csv():
+    b = _bulk("density_kg_m3", 313.15)
+    q = float(np.quantile(np.abs(b.pred - b.measured), 0.9))
+    ii = pr._indicative_interval("density_kg_m3", 313.15, 800.0)
+    assert ii["q90_abs"] == pytest.approx(q) and ii["n_groups"] == len(b) == b.group.nunique()
+    assert ii["lo"] == pytest.approx(800.0 - q) and ii["hi"] == pytest.approx(800.0 + q)
+
+
+def test_indicative_viscosity_multiplicative():
+    b = _bulk("viscosity_kin_cSt", 253.15)
+    q = float(np.quantile(np.abs(np.log(b.pred) - np.log(b.measured)), 0.9))
+    ii = pr._indicative_interval("viscosity_kin_cSt", 253.15, 4.0)
+    assert ii["q90_abs"] == pytest.approx(q)
+    assert ii["lo"] == pytest.approx(4.0 * math.exp(-q)) and ii["hi"] == pytest.approx(4.0 * math.exp(q))
+    assert ii["lo"] > 0
