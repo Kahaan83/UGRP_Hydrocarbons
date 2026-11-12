@@ -96,3 +96,7 @@ What was and was not run on this machine:
 * Every T2 cell is `descriptive` (all T2 fuels have been read). CRC 647 `fold_b` was read five times before. Neither is a held-out number.
 * The readings for Task 6 cells 4-6 (heat, smoke, distillation) were committed after those results were seen (see the Task 6 note above).
 * Smoke point (0 of 42 fuels) and distillation (1 of 78 fuels) on T2 are `no_evaluation`: mass coverage of the YSI table and of the Antoine boiling points is under 0.90.
+
+## Note 2026-11-12 (frozen reference)
+
+The frozen scoreboard is the one committed in `5a62e20`. Part C deltas are measured against it; `scoreboard.csv` is never edited by a delta.
