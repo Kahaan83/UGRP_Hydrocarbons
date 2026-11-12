@@ -1,0 +1,58 @@
+note: PROPOSED, not adopted. Two-sided ln margins on leave-source-out K1 residuals,
+  alpha=0.10; inf = fewer than 9 groups.
+margins:
+  -40C:
+    T_K: 233.15
+    pooled:
+      margin: 0.29261724903823083
+      n_groups: 48
+    per_source:
+      ajftd_gcxgc:
+        margin: 0.4342092935615396
+        n_groups: 10
+      av3322:
+        margin: 0.29261724903823083
+        n_groups: 35
+      fuellib:
+        margin: .inf
+        n_groups: 4
+    raw_s1_margin: 0.4153576080066075
+  -20C:
+    T_K: 253.15
+    pooled:
+      margin: 0.17211457979492617
+      n_groups: 65
+    per_source:
+      ajftd_gcxgc:
+        margin: 0.2855030479123699
+        n_groups: 28
+      av3322:
+        margin: 0.1519530516067258
+        n_groups: 35
+      fuellib:
+        margin: .inf
+        n_groups: 4
+    raw_s1_margin: 0.4153576080066075
+cross_source_coverage:
+  -40C:
+    margin_from_av3322_on_ajftd_gcxgc:
+      margin: 0.29261724903823083
+      covered: 9
+      n_groups: 10
+      coverage: 0.9
+    margin_from_ajftd_gcxgc_on_av3322:
+      margin: 0.4342092935615396
+      covered: 35
+      n_groups: 35
+      coverage: 1.0
+  -20C:
+    margin_from_av3322_on_ajftd_gcxgc:
+      margin: 0.1519530516067258
+      covered: 21
+      n_groups: 28
+      coverage: 0.75
+    margin_from_ajftd_gcxgc_on_av3322:
+      margin: 0.2855030479123699
+      covered: 35
+      n_groups: 35
+      coverage: 1.0
