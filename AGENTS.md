@@ -245,6 +245,10 @@ De-dup rules: (1) drop exact repeats (same source+ref+value) — ~⅓ of raw NIS
 
 ## 8. Current state
 
+### 8.0a v5 baseline (2026-11-12)
+The v5 full baseline is frozen in `results/v5/BASE/SCOREBOARD.md` (commit `5a62e20`; plan `docs/superpowers/plans/2026-11-12-v5-full-baseline.md`).
+Part C deltas live in `results/v5/BASE/delta_*/`; claims CLM-42 to CLM-48. Reproduce with `python scripts/v5/base/reproduce_base.py`.
+
 ### 8.0 v4/r3 state (tag `v4-r3-final`; latest commit "v4 r3: CRC 647 compositions from measured hydrocarbon types (Table G.1), re-scored")
 Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/claims_register.md`. Facts as reported there:
 * The v3 corpus and design optimizer were formula-derived and are quarantined (`data/quarantine/`); 92 of 153 v3 fuels dropped, 61 kept (all jet).
@@ -289,7 +293,7 @@ reports benzene@298 K = 0.395 mPa·s while ~70 refs give ≈0.60. Dedup (median 
 Real run: 15,779 raw NIST rows → 11,030 de-duplicated records, 30 genuine conflicts.
 
 #### 8.1.3 AJFTD (real fuels)
-* 81 fuels only (ids 1 and 365–462), tests dated 2015-04-17 … 2016-11-29. **Check the site's "Showing x to y of N entries": if N > 81,
+* (corrected 2026-11-12) The first scrape held 81 fuels (ids 1 and 365–462, tests 2015-04-17 … 2016-11-29). The full v5 scrape holds 2,601 fuels (`data/real_fuels/v5/ajftd_fuels_long.csv`) and 116 with GCxGC composition (113 mappable). **Check the site's "Showing x to y of N entries": if N > 81,
   pagination stopped early or filters were still active.**
 * Numeric coverage of scraped metrics: API gravity 81; distillation T0…T100 ≈80 fuels (561 numeric rows); smoke point 82; aromatics (% vol)
   82 (8.6–22.6); diaromatics 80; existent gum 82; sulfur mercaptan 81; thermal stability 81.
@@ -374,7 +378,9 @@ v4 (branches `v4-integrity`, `v4-review-fixes`; final tag `v4-r3-final`) quarant
 * `docs/model_decision.md` (sections 5-6) and `docs/PROJECT_HANDOFF.md` (section 15)
 Reproduce with `python scripts/v4/reproduce_all.py` (venv python); pytest baseline in `results/v4/baseline_pytest.txt`.
 
-v5: work continues on branch `v5` (current). A written v5 plan is not yet in the repo (`docs/superpowers/plans/` holds only the v4 plans); check there and `docs/data_source_leads_2026-11-09.md` for candidate new data before assuming scope.
+v5: work continues on branch `v5` (current). Update 2026-11-12: the v5 full-baseline plan is `docs/superpowers/plans/2026-11-12-v5-full-baseline.md` (not yet committed); results in `results/v5/BASE/` (see 8.0a). Earlier text: a written v5 plan was not yet in the repo (`docs/superpowers/plans/` holds only the v4 plans); check there and `docs/data_source_leads_2026-11-09.md` for candidate new data before assuming scope.
+
+v5 delta_api_route (2026-11-13): `predict()` and a new `predict_fuel` now run on the BASE scoring route (frozen pure-property grid, Refutas viscosity, ideal-volume density, anchored-Antoine Le Chatelier flash with the LFL overlay), and inverse design runs on user pools of names / SMILES / InChIKeys through `scripts/v5/run_design_userpool_v5.py`. No design is certified. Readings, design tables, usage examples and the list of changed tests are in `results/v5/BASE/delta_api_route/README.md`.
 
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 

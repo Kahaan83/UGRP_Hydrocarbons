@@ -1,0 +1,36 @@
+{
+  "f1x_pooled_mae": 3.067661305120582,
+  "f1x_pooled_n": 49,
+  "reproduces_3p07": true,
+  "f1x_verdict": {
+    "ajftd_gcxgc": "no_skill_shown",
+    "av3322": "beats_trivial",
+    "pooled": "beats_trivial"
+  },
+  "ajftd_groups": 12,
+  "reading_pass": true,
+  "wax": {
+    "sle2_two_compilations": {
+      "n": 9,
+      "mae": 3.8749154102700345,
+      "bias": -3.8749154102700345,
+      "verdict": "no_skill_shown"
+    },
+    "sle2_single_compilation": {
+      "n": 34,
+      "mae": 10.79095869336373,
+      "bias": -10.79095869336373,
+      "verdict": "worse_than_trivial"
+    }
+  },
+  "d86": {
+    "n": 34,
+    "mae": 2.9775991910070667,
+    "mae_const": 6.4915744315744295,
+    "verdict": "beats_trivial",
+    "ci": [
+      2.061211903906099,
+      4.869064121221411
+    ]
+  }
+}

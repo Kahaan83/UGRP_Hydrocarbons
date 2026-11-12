@@ -1,0 +1,8 @@
+name,smiles,kind,n_carbon,has_antoine,has_lfl,has_viscosity,has_density,has_fusion,admitted,reason,what_would_fill_it
+1-methylnaphthalene,Cc1cccc2ccccc12,aromatic_di,11,False,False,True,True,False,False,"missing: antoine, lfl","ThermoML vapour pressure on disk (refit_antoine), else NIST WebBook; IEC 60079-20-1 / Co-Optima table, Zabetakis 627"
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,aromatic_di,12,False,False,False,False,False,False,"missing: antoine, lfl, viscosity, density","ThermoML vapour pressure on disk (refit_antoine), else NIST WebBook; IEC 60079-20-1 / Co-Optima table, Zabetakis 627; ThermoML / Boehm 2022 pure viscosity on disk; ThermoML pure density on disk"
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,,14,False,False,False,False,False,False,not in registry,add compound to data/unified/compounds.csv with the above constants
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,,13,False,False,False,False,False,False,not in registry,add compound to data/unified/compounds.csv with the above constants
+1-methyltetralin,CC1CCCc2ccccc21,indan_tetralin,11,False,False,False,False,False,False,"missing: antoine, lfl, viscosity, density","ThermoML vapour pressure on disk (refit_antoine), else NIST WebBook; IEC 60079-20-1 / Co-Optima table, Zabetakis 627; ThermoML / Boehm 2022 pure viscosity on disk; ThermoML pure density on disk"
+n-butyltetralin,CCCCC1CCCc2ccccc21,indan_tetralin,14,False,False,False,False,False,False,not in registry,add compound to data/unified/compounds.csv with the above constants
+2-methyldecalin,CC1CCC2CCCCC2C1,cyclo_di,11,False,False,False,False,False,False,not in registry,add compound to data/unified/compounds.csv with the above constants

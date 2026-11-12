@@ -1,0 +1,18 @@
+{
+  "admitted": [
+    "1,2,4-trimethylbenzene",
+    "n-propylbenzene"
+  ],
+  "replaced_bins": {
+    "alkylbenzene:9": "Cc1ccc(C)c(C)c1"
+  },
+  "n_t2_fuels_changed": 140,
+  "diesel_below_10pct_v5": 4,
+  "diesel_below_10pct_v4": 4,
+  "n_diesel": 9,
+  "reading_diesel_pass": false,
+  "visc40_abs_bias_change_ln": 0.009465296695618547,
+  "density15_abs_bias_change": -0.25220944367578957,
+  "reading_t2_pass": true,
+  "reading_pass": false
+}

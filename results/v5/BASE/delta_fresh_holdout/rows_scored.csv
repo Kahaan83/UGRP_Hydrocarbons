@@ -1,0 +1,12 @@
+fuel_id,posf,property,value,T_K,P_kPa,source_file,provenance,pred,status,err,entity,group
+Jet-A-4658,4658,density_kg_m3,821.1600,270.0000,508.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",809.7028,ok,-11.4572,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,806.9300,290.0000,507.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",794.6429,ok,-12.2871,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,792.0000,310.0000,508.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",779.5755,ok,-12.4245,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,777.3900,330.0000,513.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",764.5001,ok,-12.8899,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,762.8700,350.0000,504.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",749.4164,ok,-13.4536,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,748.0600,370.0000,499.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",734.3239,ok,-13.7361,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,732.9300,390.0000,503.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",719.2222,ok,-13.7078,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,717.3600,410.0000,516.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",704.1108,ok,-13.2492,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,701.3400,430.0000,508.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",688.9893,ok,-12.3507,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,684.8900,450.0000,508.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",673.8570,ok,-11.0330,AJFTD:23,AJFTD:23
+Jet-A-4658,4658,density_kg_m3,667.8900,470.0000,514.0000,nist_density_compressed_liquid.csv,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659 Table 22",658.7133,ok,-9.1767,AJFTD:23,AJFTD:23

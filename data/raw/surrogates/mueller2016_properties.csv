@@ -1,0 +1,17 @@
+fuel_code,property,value,unit,T_C,method,table,page
+Mueller2016_CF,flash_point_C,68.0,C,,"ASTM D93 (closed cup, measured); doi:10.1021/acs.energyfuels.5b02879",Table 5,1457
+Mueller2016_V0a,flash_point_C,88.0,C,,"ASTM D93 (closed cup, measured); doi:10.1021/acs.energyfuels.5b02879",Table 5,1457
+Mueller2016_V0b,flash_point_C,83.0,C,,"ASTM D93 (closed cup, measured); doi:10.1021/acs.energyfuels.5b02879",Table 5,1457
+Mueller2016_V1,flash_point_C,80.0,C,,"ASTM D93 (closed cup, measured); doi:10.1021/acs.energyfuels.5b02879",Table 5,1457
+Mueller2016_V2,flash_point_C,80.0,C,,"ASTM D93 (closed cup, measured); doi:10.1021/acs.energyfuels.5b02879",Table 5,1457
+Mueller2016_CF,density_kg_m3,848.0,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); left bar, 2009 lab; doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_CF,density_kg_m3,845.2,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); right bar, 2014 lab; doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_V0a,density_kg_m3,818.0,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_V0b,density_kg_m3,837.5,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_V1,density_kg_m3,828.4,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_V2,density_kg_m3,853.0,kg/m3,20.0,"ASTM D4052 measured (Figure 11 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 11,1455
+Mueller2016_CF,cloud_point_C,-19.2,C,,"ASTM D5773 / NREL procedure (Figure 14 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 14,1456
+Mueller2016_V0a,cloud_point_C,-2.3,C,,"ASTM D5773 / NREL procedure (Figure 14 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 14,1456
+Mueller2016_V0b,cloud_point_C,8.4,C,,"ASTM D5773 / NREL procedure (Figure 14 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 14,1456
+Mueller2016_V1,cloud_point_C,5.2,C,,"ASTM D5773 / NREL procedure (Figure 14 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 14,1456
+Mueller2016_V2,cloud_point_C,-4.1,C,,"ASTM D5773 / NREL procedure (Figure 14 bar label, number only); doi:10.1021/acs.energyfuels.5b02879",Figure 14,1456
