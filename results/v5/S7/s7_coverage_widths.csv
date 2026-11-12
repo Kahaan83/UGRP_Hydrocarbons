@@ -1,0 +1,33 @@
+interval,kind,split,condition,n_fuels,n_obs,coverage,mean_width_log
+GP,"before (+-1.645 sd, v4)",dev (LOO by fuel),overall (all T),45,135,0.77,0.212
+GP,"before (+-1.645 sd, v4)",dev (LOO by fuel),T = 20 C,45,45,0.956,0.217
+GP,"before (+-1.645 sd, v4)",dev (LOO by fuel),T = -20 C,45,45,0.6,0.204
+GP,"before (+-1.645 sd, v4)",dev (LOO by fuel),T = -40 C,45,45,0.756,0.214
+GP,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),overall (all T),45,135,0.933,0.32
+GP,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = 20 C,45,45,0.933,0.207
+GP,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -20 C,45,45,0.933,0.435
+GP,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -40 C,45,45,0.933,0.317
+ridge,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),overall (all T),45,135,0.933,0.25
+ridge,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = 20 C,45,45,0.933,0.149
+ridge,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -20 C,45,45,0.933,0.302
+ridge,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -40 C,45,45,0.933,0.3
+bilinear,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),overall (all T),45,135,0.933,0.27
+bilinear,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = 20 C,45,45,0.933,0.207
+bilinear,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -20 C,45,45,0.933,0.336
+bilinear,"after (split-conformal, per condition, dev-derived s)",dev (LOO by fuel),T = -40 C,45,45,0.933,0.267
+GP,"before (+-1.645 sd, v4)",locked (untouched),overall (all T),12,36,0.694,0.247
+GP,"before (+-1.645 sd, v4)",locked (untouched),T = 20 C,12,12,0.917,0.25
+GP,"before (+-1.645 sd, v4)",locked (untouched),T = -20 C,12,12,0.333,0.243
+GP,"before (+-1.645 sd, v4)",locked (untouched),T = -40 C,12,12,0.833,0.248
+GP,"after (split-conformal, per condition, dev-derived s)",locked (untouched),overall (all T),12,36,0.972,0.375
+GP,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = 20 C,12,12,0.917,0.238
+GP,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -20 C,12,12,1.0,0.519
+GP,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -40 C,12,12,1.0,0.367
+ridge,"after (split-conformal, per condition, dev-derived s)",locked (untouched),overall (all T),12,36,0.833,0.25
+ridge,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = 20 C,12,12,0.833,0.149
+ridge,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -20 C,12,12,0.75,0.302
+ridge,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -40 C,12,12,0.917,0.3
+bilinear,"after (split-conformal, per condition, dev-derived s)",locked (untouched),overall (all T),12,36,0.694,0.27
+bilinear,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = 20 C,12,12,0.917,0.207
+bilinear,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -20 C,12,12,0.417,0.336
+bilinear,"after (split-conformal, per condition, dev-derived s)",locked (untouched),T = -40 C,12,12,0.75,0.267

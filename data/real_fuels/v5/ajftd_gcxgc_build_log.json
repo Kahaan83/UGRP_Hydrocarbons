@@ -1,0 +1,33 @@
+{
+ "source": "extras/fuelblend_data/data/raw/ajftd/ajftd_fuel_details.csv",
+ "fuels_with_bins": 116,
+ "fuels_complete": 113,
+ "closure_window_pct": [
+  98.0,
+  102.0
+ ],
+ "bins": 6785,
+ "unparsed_metric_labels": [
+  "alkenes",
+  "alkylbenzenes",
+  "aromatics",
+  "cycloaromatics",
+  "cycloparaffins",
+  "diaromatics",
+  "dicycloparaffins",
+  "dienes",
+  "indenes",
+  "iso-paraffins",
+  "monocycloparaffins",
+  "n-paraffins",
+  "tricycloparaffins"
+ ],
+ "complete_with_property": {
+  "flash_point_C": 37,
+  "freezing_point_C": 26,
+  "viscosity_kin_cSt": 32,
+  "density_kg_m3": 30,
+  "heat_of_combustion_net_MJ_kg": 36
+ },
+ "note": "weight % as printed by AJFTD (AFRL GCxGC); bins are class x carbon number, isomers unresolved"
+}

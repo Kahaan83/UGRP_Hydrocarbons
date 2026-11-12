@@ -1,0 +1,17 @@
+entity,source,fuel_id,label,group,locked,unmapped_fraction,freezing_C,n_tests,n_censored,test_method,reason
+AJFTD:189,AJFTD,189,5642,AJFTD:189,True,0.0228388260042072,,0,7,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:275,AJFTD,275,7629,AJFTD:275,False,0.0262735659847574,,0,4,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:281,AJFTD,281,7674,AJFTD:281,False,0.0211826121875313,,0,1,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:293,AJFTD,293,7695,AJFTD:293,False,3.3306690738754696e-16,,0,1,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:337,AJFTD,337,8438,AJFTD:337,False,0.0060090135202803,,0,2,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:348,AJFTD,348,9324,AJFTD:348,False,0.0,,0,1,,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:24567,AJFTD,24567,13784,AJFTD:24567,False,0.0045477513895906,,0,1,,freezing value censored (qualifier) - no uncensored measurement
+AV-33-22:CRC_AV3322_02,AV-33-22,CRC_AV3322_02,CRC_AV3322_02,AV-33-22:CRC_AV3322_02,False,0.038619309654827405,,1,1,supplier CoA,freezing value censored (qualifier) - no uncensored measurement
+AJFTD:122,AJFTD,122,12751,AJFTD:122,False,0.019769192172604,-51.95,2,0,D5972,double-count group AJFTD:122: another member scored (S3 priority)
+AJFTD:173,AJFTD,173,5171,AJFTD:122,False,0.0085307105580088,-51.0,1,0,D5972,double-count group AJFTD:122: another member scored (S3 priority)
+AJFTD:2,AJFTD,2,10325,AJFTD:122,False,0.0246888799678842,-50.0,8,0,D5972,double-count group AJFTD:122: another member scored (S3 priority)
+AJFTD:24568,AJFTD,24568,13785,AJFTD:122,False,0.0208124874924956,-51.0,1,0,D5972,double-count group AJFTD:122: another member scored (S3 priority)
+AJFTD:39,AJFTD,39,10289,AJFTD:39,False,0.0141452648475119,-50.0,3,0,D5972,double-count group AJFTD:39: another member scored (S3 priority)
+AV-33-22:CRC_AV3322_12,AV-33-22,CRC_AV3322_12,CRC_AV3322_12,AV-33-22:CRC_AV3322_01,False,0.021908763505402273,-62.3,1,0,supplier CoA,double-count group AV-33-22:CRC_AV3322_01: another member scored (S3 priority)
+AV-33-22:CRC_AV3322_35,AV-33-22,CRC_AV3322_35,CRC_AV3322_35,AV-33-22:CRC_AV3322_01,False,0.024407322196658976,-61.8,1,0,supplier CoA,double-count group AV-33-22:CRC_AV3322_01: another member scored (S3 priority)
+AV-33-22:CRC_AV3322_23,AV-33-22,CRC_AV3322_23,CRC_AV3322_23,AV-33-22:CRC_AV3322_08,False,0.025718002601821333,-63.6,1,0,supplier CoA,double-count group AV-33-22:CRC_AV3322_08: another member scored (S3 priority)

@@ -1,0 +1,13 @@
+interval,scope,n_dev_fuels,rank_k,factor_s
+GP,per condition: T = 20 C,45,42,1.5686
+GP,per condition: T = -20 C,45,42,3.5079
+GP,per condition: T = -40 C,45,42,2.4338
+GP,"global over all T (sensitivity, not the declared recipe)",45,42,3.5117
+ridge,per condition: T = 20 C,45,42,0.0745
+ridge,per condition: T = -20 C,45,42,0.1508
+ridge,per condition: T = -40 C,45,42,0.1498
+ridge,"global over all T (sensitivity, not the declared recipe)",45,42,0.1622
+bilinear,per condition: T = 20 C,45,42,0.1035
+bilinear,per condition: T = -20 C,45,42,0.1681
+bilinear,per condition: T = -40 C,45,42,0.1334
+bilinear,"global over all T (sensitivity, not the declared recipe)",45,42,0.1845

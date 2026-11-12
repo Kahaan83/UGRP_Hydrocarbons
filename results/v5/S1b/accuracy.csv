@@ -1,0 +1,17 @@
+group,method,t_bin,n_systems,n_rows,bias_ln,rmse_ln
+test,refutas,T_ge_283K,3,135,0.0593478,0.063357
+test,refutas_biascorr,T_ge_283K,3,135,0.0433128,0.0486616
+not_independent (raw only),refutas,T_lt_263K,3,27,-0.0237297,0.0402473
+not_independent (raw only),refutas,T_ge_283K,14,1026,0.0486726,0.08072
+S1 dev,refutas,T_263_283K,16,85,-0.023309,0.1196
+S1 dev,refutas,T_ge_283K,264,11956,0.024458,0.33618
+S1 dev,refutas,T_lt_263K,20,113,-0.11349,0.15989
+S1 dev,refutas_biascorr,T_263_283K,16,85,-0.013114,0.12305
+S1 dev,refutas_biascorr,T_ge_283K,264,11956,0.0084546,0.33665
+S1 dev,refutas_biascorr,T_lt_263K,20,113,-0.01015,0.11577
+S1 locked,refutas,T_263_283K,4,47,0.038156,0.09413
+S1 locked,refutas,T_ge_283K,70,3584,0.04151,0.065792
+S1 locked,refutas,T_lt_263K,3,42,-0.079022,0.13179
+S1 locked,refutas_biascorr,T_263_283K,4,47,0.04917,0.099107
+S1 locked,refutas_biascorr,T_ge_283K,70,3584,0.025475,0.057048
+S1 locked,refutas_biascorr,T_lt_263K,3,42,0.02482,0.10835

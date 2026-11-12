@@ -10,6 +10,10 @@ Viscosity temperature: `temperature_value` (text deg C; -20 dominant, also -40, 
 Raw-data quirks handled: `density_api_by_meter` rows with Unit kg/m3 are really net heat of combustion in kJ/kg; some heat
 values are 0.1004 (dropped as implausible); density sometimes in g/mL; distillation rows with blank method kept; "time_stamp" strings dropped.
 
+**Correction 2026-11-11:** the statement below holds for `ajftd_all_metrics.csv` only. `ajftd_fuel_details.csv` holds AFRL GCxGC
+weight % by class and carbon number for 116 fuels (113 complete); see `docs/data_audit_2026-11-11.md` section 2.1 and
+`src/fuelblend/data/loaders_ajftd_gcxgc.py`.
+
 Composition Metrics (29,807 rows, 15,315 numeric): NO hydrocarbon-type composition suitable for blend modelling. Bulk class numbers only:
 aromatics_total (2,226 fuels), diaromatics (1,574), olefins (159), saturates (23), paraffins_total (54), cycloalkanes_total (51);
 paraffins+cycloalkanes+aromatics together on 51 fuels, saturates+aromatics on 23. No iso/n-paraffin split, no carbon-number data;

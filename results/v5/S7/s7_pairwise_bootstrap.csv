@@ -1,0 +1,25 @@
+split,condition,n_fuels,n_obs,model_a,model_b,rmse_a,rmse_b,d_log_rmse_a_minus_b,ci95_lo,ci95_hi,differs
+dev (LOO by fuel),overall (all T),45,135,Bilinear pairwise,Structured ridge,0.0901,0.0826,0.0075,0.002,0.0132,True
+dev (LOO by fuel),overall (all T),45,135,Bilinear pairwise,Structured GP,0.0901,0.0888,0.0013,-0.008,0.0091,False
+dev (LOO by fuel),overall (all T),45,135,Structured ridge,Structured GP,0.0826,0.0888,-0.0061,-0.0167,0.0012,False
+dev (LOO by fuel),T = 20 C,45,45,Bilinear pairwise,Structured ridge,0.0594,0.042,0.0174,0.0055,0.0276,True
+dev (LOO by fuel),T = 20 C,45,45,Bilinear pairwise,Structured GP,0.0594,0.0462,0.0132,-0.0007,0.0254,False
+dev (LOO by fuel),T = 20 C,45,45,Structured ridge,Structured GP,0.042,0.0462,-0.0043,-0.0113,0.001,False
+dev (LOO by fuel),T = -20 C,45,45,Bilinear pairwise,Structured ridge,0.1217,0.111,0.0108,0.001,0.0232,True
+dev (LOO by fuel),T = -20 C,45,45,Bilinear pairwise,Structured GP,0.1217,0.1144,0.0073,-0.0049,0.02,False
+dev (LOO by fuel),T = -20 C,45,45,Structured ridge,Structured GP,0.111,0.1144,-0.0034,-0.0173,0.0059,False
+dev (LOO by fuel),T = -40 C,45,45,Bilinear pairwise,Structured ridge,0.0775,0.0801,-0.0026,-0.0179,0.0133,False
+dev (LOO by fuel),T = -40 C,45,45,Bilinear pairwise,Structured GP,0.0775,0.0918,-0.0143,-0.0325,0.0022,False
+dev (LOO by fuel),T = -40 C,45,45,Structured ridge,Structured GP,0.0801,0.0918,-0.0117,-0.0243,-0.0007,True
+locked (untouched),overall (all T),12,36,Bilinear pairwise,Structured ridge,0.167,0.1497,0.0173,0.0086,0.0349,True
+locked (untouched),overall (all T),12,36,Bilinear pairwise,Structured GP,0.167,0.1517,0.0153,0.0065,0.031,True
+locked (untouched),overall (all T),12,36,Structured ridge,Structured GP,0.1497,0.1517,-0.002,-0.0057,-0.0004,True
+locked (untouched),T = 20 C,12,12,Bilinear pairwise,Structured ridge,0.2105,0.2145,-0.004,-0.0294,-0.0016,True
+locked (untouched),T = 20 C,12,12,Bilinear pairwise,Structured GP,0.2105,0.2152,-0.0047,-0.0332,-0.0019,True
+locked (untouched),T = 20 C,12,12,Structured ridge,Structured GP,0.2145,0.2152,-0.0007,-0.0053,-0.0001,True
+locked (untouched),T = -20 C,12,12,Bilinear pairwise,Structured ridge,0.1628,0.1271,0.0357,0.0209,0.0504,True
+locked (untouched),T = -20 C,12,12,Bilinear pairwise,Structured GP,0.1628,0.1333,0.0294,0.0125,0.0464,True
+locked (untouched),T = -20 C,12,12,Structured ridge,Structured GP,0.1271,0.1333,-0.0063,-0.0124,-0.0007,True
+locked (untouched),T = -40 C,12,12,Bilinear pairwise,Structured ridge,0.1133,0.0711,0.0422,0.0125,0.0668,True
+locked (untouched),T = -40 C,12,12,Bilinear pairwise,Structured GP,0.1133,0.07,0.0433,0.0163,0.0659,True
+locked (untouched),T = -40 C,12,12,Structured ridge,Structured GP,0.0711,0.07,0.0011,-0.0031,0.0079,False

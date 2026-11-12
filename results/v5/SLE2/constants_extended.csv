@@ -1,0 +1,54 @@
+inchikey,name,tier,tm_K,dh_J_mol,tm_rule,tm_sources,dh_source,dh_broadhurst_kJ,reason
+WVIIMZNLDWSIRH-UHFFFAOYSA-N,"1,1'-bicyclohexyl",,277.025,,agree,"{""OPEN_NTBKM"": 277.15, ""CRC_ORG"": 276.83, ""COMMON_CHEMISTRY"": 277.15, ""WEBBOOK"": 276.9}",,,no_tabulated_dHfus
+URLKBWYHVLBVBO-UHFFFAOYSA-N,"1,4-dimethylbenzene",single_compilation,286.375,17120.0,agree,"{""OPEN_NTBKM"": 286.15, ""CRC_ORG"": 286.45, ""COMMON_CHEMISTRY"": 286.35, ""WEBBOOK"": 286.4}",chemicals CRC table,,
+APQSQLNWAIULLK-UHFFFAOYSA-N,"1,4-dimethylnaphthalene",,280.75,,agree,"{""OPEN_NTBKM"": 280.75, ""CRC_ORG"": 280.75, ""COMMON_CHEMISTRY"": 280.75, ""WEBBOOK"": 279.0}",,,no_tabulated_dHfus
+SDDBCEWUYXVGCQ-UHFFFAOYSA-N,"1,5-dimethylnaphthalene",,354.65,,agree_dropped_WEBBOOK=351.12,"{""OPEN_NTBKM"": 354.15, ""CRC_ORG"": 354.65, ""COMMON_CHEMISTRY"": 355.15, ""WEBBOOK"": 351.12}",,,no_tabulated_dHfus
+CBMXCNPQDUJNHT-UHFFFAOYSA-N,"1,6-dimethylnaphthalene",,256.25,,agree,"{""OPEN_NTBKM"": 256.25, ""CRC_ORG"": 256.95, ""COMMON_CHEMISTRY"": 256.25}",,,no_tabulated_dHfus
+XAABPYINPXYOLM-UHFFFAOYSA-N,"1,8-dimethylnaphthalene",,338.15,,agree_dropped_WEBBOOK=335.00,"{""OPEN_NTBKM"": 338.15, ""CRC_ORG"": 336.31, ""COMMON_CHEMISTRY"": 338.15, ""WEBBOOK"": 335.0}",,,no_tabulated_dHfus
+CGHIBGNXEGJPQZ-UHFFFAOYSA-N,1-hexyne,,141.10000000000002,,agree,"{""OPEN_NTBKM"": 141.15, ""CRC_ORG"": 141.05, ""COMMON_CHEMISTRY"": 141.25, ""WEBBOOK"": 140.85}",,,no_tabulated_dHfus
+QPUYECUOLPXSFR-UHFFFAOYSA-N,1-methylnaphthalene,,,,disputed,"{""OPEN_NTBKM"": 251.15, ""CRC_ORG"": 242.72, ""COMMON_CHEMISTRY"": 251.15, ""WEBBOOK"": 244.0}",,,tm_disputed
+HNRMPXKDFBEGFZ-UHFFFAOYSA-N,"2,2-dimethylbutane",single_compilation,173.2,580.0,agree,"{""OPEN_NTBKM"": 173.15, ""CRC_ORG"": 174.15, ""COMMON_CHEMISTRY"": 173.25, ""WEBBOOK"": 173.0}",chemicals CRC table,,
+WWGUMAYGTYQSGA-UHFFFAOYSA-N,"2,3-dimethylnaphthalene",,378.15,,agree,"{""OPEN_NTBKM"": 378.15, ""CRC_ORG"": 377.45, ""COMMON_CHEMISTRY"": 378.15, ""WEBBOOK"": 378.15}",,,no_tabulated_dHfus
+YGYNBBAUIYTWBF-UHFFFAOYSA-N,"2,6-dimethylnaphthalene",,385.029995,,agree,"{""OPEN_NTBKM"": 385.15, ""CRC_ORG"": 383.25, ""COMMON_CHEMISTRY"": 385.15, ""WEBBOOK"": 384.91}",,,no_tabulated_dHfus
+LRQYSMQNJLZKPS-UHFFFAOYSA-N,"2,7-dimethylnaphthalene",,370.15,,agree,"{""OPEN_NTBKM"": 370.15, ""CRC_ORG"": 369.15, ""COMMON_CHEMISTRY"": 370.15, ""WEBBOOK"": 370.15}",,,no_tabulated_dHfus
+QIMMUPPBPVKWKM-UHFFFAOYSA-N,2-methylnaphthalene,single_compilation,307.0,12130.0,agree_dropped_COMMON_CHEMISTRY=310.65,"{""OPEN_NTBKM"": 306.85, ""CRC_ORG"": 307.75, ""COMMON_CHEMISTRY"": 310.65, ""WEBBOOK"": 307.0}",chemicals CRC table,,
+PFEOZHBOMNWTJB-UHFFFAOYSA-N,3-methylpentane,single_compilation,155.15,5300.0,agree_dropped_CRC_ORG=110.26,"{""OPEN_NTBKM"": 155.15, ""CRC_ORG"": 110.26, ""COMMON_CHEMISTRY"": 155.15, ""WEBBOOK"": 155.15}",chemicals CRC table,,
+CWRYPZZKDGJXCA-UHFFFAOYSA-N,acenaphthene,single_compilation,367.575,21490.0,agree,"{""OPEN_NTBKM"": 368.15, ""CRC_ORG"": 366.15, ""COMMON_CHEMISTRY"": 368.15, ""WEBBOOK"": 367.0}",chemicals CRC table,,
+MWPLVEDNUUSJAV-UHFFFAOYSA-N,anthracene,single_compilation,489.575,29400.0,agree,"{""OPEN_NTBKM"": 489.15, ""CRC_ORG"": 489.15, ""COMMON_CHEMISTRY"": 491.15, ""WEBBOOK"": 490.0}",chemicals CRC table,,
+UHOVQNZJYSORNB-UHFFFAOYSA-N,benzene,single_compilation,278.65,9870.0,agree,"{""OPEN_NTBKM"": 278.65, ""CRC_ORG"": 278.69, ""COMMON_CHEMISTRY"": 278.65, ""WEBBOOK"": 278.64}",chemicals CRC table,,
+ZUOUZKKEUPVFJK-UHFFFAOYSA-N,biphenyl,v4_verified,342.34999999999997,18600.0,v4,,pure_props_v4 verified,,
+GGBJHURWWWLEQH-UHFFFAOYSA-N,butylcyclohexane,v4_verified,198.14999999999998,15000.0,v4,,pure_props_v4 verified,,
+NNBZCPXTIHJBJL-AOOOYVTPSA-N,cis-decahydronaphthalene,single_compilation,230.225,9490.0,agree,"{""OPEN_NTBKM"": 230.2, ""CRC_ORG"": 230.25, ""COMMON_CHEMISTRY"": 230.25, ""WEBBOOK"": 230.0}",chemicals CRC table,,
+XDTMQSROBMDMFD-UHFFFAOYSA-N,cyclohexane,v4_verified,279.65,2680.0,v4,,pure_props_v4 verified,,
+HGCIXCUEYOPUTN-UHFFFAOYSA-N,cyclohexene,single_compilation,169.4,3290.0,agree,"{""OPEN_NTBKM"": 169.15, ""CRC_ORG"": 169.65, ""COMMON_CHEMISTRY"": 169.65, ""WEBBOOK"": 169.0}",chemicals CRC table,,
+NNBZCPXTIHJBJL-UHFFFAOYSA-N,decahydronaphthalene,,,,,,,,stereo_unspecified
+SNRUBQQJIBEYMU-UHFFFAOYSA-N,dodecane,v4_verified,263.54999999999995,36840.0,v4,,pure_props_v4 verified,,
+QHMGJGNTMQDRQA-UHFFFAOYSA-N,dotriacontane,single_compilation,342.925,75800.0,agree,"{""OPEN_NTBKM"": 343.0, ""CRC_ORG"": 342.85, ""COMMON_CHEMISTRY"": 342.85, ""WEBBOOK"": 343.0}",chemicals CRC table,,
+CBFCDTFDPHXCNY-UHFFFAOYSA-N,eicosane,two_compilations,309.92499999999995,69900.0,agree,"{""OPEN_NTBKM"": 309.9, ""CRC_ORG"": 309.63, ""COMMON_CHEMISTRY"": 309.95, ""WEBBOOK"": 310.0}",chemicals CRC table,69.8728,
+VGGSQFUCUMXWEO-UHFFFAOYSA-N,ethene,single_compilation,104.00999999999999,3350.0,agree,"{""OPEN_NTBKM"": 104.05, ""CRC_ORG"": 103.97, ""COMMON_CHEMISTRY"": 104.15, ""WEBBOOK"": 103.8}",chemicals CRC table,,
+IIEWJVIFRVWJOD-UHFFFAOYSA-N,ethylcyclohexane,single_compilation,161.86,8330.0,agree,"{""OPEN_NTBKM"": 162.0, ""CRC_ORG"": 161.87, ""COMMON_CHEMISTRY"": 161.85, ""WEBBOOK"": 161.0}",chemicals CRC table,,
+NIHNNTQXNPWCJQ-UHFFFAOYSA-N,fluorene,single_compilation,388.575,19580.0,agree,"{""OPEN_NTBKM"": 389.15, ""CRC_ORG"": 387.91, ""COMMON_CHEMISTRY"": 389.65, ""WEBBOOK"": 388.0}",chemicals CRC table,,
+IMNFDUFMRHMDMM-UHFFFAOYSA-N,heptane,v4_verified,182.54999999999998,14120.0,v4,,pure_props_v4 verified,,
+HMSWAIKSFDFLKN-UHFFFAOYSA-N,hexacosane,two_compilations,329.70000000000005,60000.0,agree,"{""OPEN_NTBKM"": 329.85, ""CRC_ORG"": 329.24, ""COMMON_CHEMISTRY"": 329.55, ""WEBBOOK"": 330.0}",chemicals CRC table,59.496480000000005,
+DCAYPVUWAIABOU-UHFFFAOYSA-N,hexadecane,v4_verified,291.34999999999997,53300.0,v4,,pure_props_v4 verified,,
+VLKZOEOYAKHREP-UHFFFAOYSA-N,hexane,v4_verified,177.84999999999997,13080.0,v4,,pure_props_v4 verified,,
+YDLYQMBWCWFRAI-UHFFFAOYSA-N,hexatriacontane,single_compilation,349.25,87700.0,agree,"{""OPEN_NTBKM"": 349.4, ""CRC_ORG"": 348.96, ""COMMON_CHEMISTRY"": 349.65, ""WEBBOOK"": 349.1}",chemicals CRC table,,
+UAEPNZWRGJTJPN-UHFFFAOYSA-N,methylcyclohexane,v4_verified,146.54999999999998,6740.0,v4,,pure_props_v4 verified,,
+UFWIBTONFRDIAS-UHFFFAOYSA-N,naphthalene,single_compilation,353.35,19010.0,agree,"{""OPEN_NTBKM"": 353.35, ""CRC_ORG"": 353.37, ""COMMON_CHEMISTRY"": 353.35, ""WEBBOOK"": 353.2}",chemicals CRC table,,
+ZYURHZPYMFLWSH-UHFFFAOYSA-N,octacosane,,,,disputed,"{""OPEN_NTBKM"": 336.4, ""CRC_ORG"": 334.45, ""COMMON_CHEMISTRY"": 337.65, ""WEBBOOK"": 334.0}",,,tm_disputed
+RZJRJXONCZWCBN-UHFFFAOYSA-N,octadecane,v4_verified,301.34999999999997,61700.0,v4,,pure_props_v4 verified,,
+YKNWIILGEFFOPE-UHFFFAOYSA-N,pentacosane,two_compilations,326.825,56900.0,agree,"{""OPEN_NTBKM"": 326.65, ""CRC_ORG"": 326.45, ""COMMON_CHEMISTRY"": 327.15, ""WEBBOOK"": 327.0}",chemicals CRC table,57.739200000000004,
+YCOZIPAWZNQLMR-UHFFFAOYSA-N,pentadecane,two_compilations,283.07500000000005,34600.0,agree,"{""OPEN_NTBKM"": 283.1, ""CRC_ORG"": 283.1, ""COMMON_CHEMISTRY"": 283.05, ""WEBBOOK"": 283.0}",chemicals CRC table,34.593312000000005,
+YNPNZTXNASCQKK-UHFFFAOYSA-N,phenanthrene,single_compilation,372.39,16460.0,agree_dropped_WEBBOOK=372.00,"{""OPEN_NTBKM"": 372.39, ""CRC_ORG"": 372.15, ""COMMON_CHEMISTRY"": 374.15, ""WEBBOOK"": 372.0}",chemicals CRC table,,
+ATUOYWHBWRKTHZ-UHFFFAOYSA-N,propane,two_compilations,85.470737,3500.0,agree_dropped_COMMON_CHEMISTRY=83.45,"{""OPEN_NTBKM"": 85.5, ""CRC_ORG"": 85.4, ""COMMON_CHEMISTRY"": 83.45, ""WEBBOOK"": 85.47}",chemicals CRC table,3.5237648,
+BBEAQIROQSPTKN-UHFFFAOYSA-N,pyrene,single_compilation,424.175,17360.0,agree,"{""OPEN_NTBKM"": 424.35, ""CRC_ORG"": 423.77, ""COMMON_CHEMISTRY"": 424.35, ""WEBBOOK"": 424.0}",chemicals CRC table,,
+KUPLEGDPSCCPJI-UHFFFAOYSA-N,tetracontane,single_compilation,354.6,135500.0,agree,"{""OPEN_NTBKM"": 354.65, ""CRC_ORG"": 354.55, ""COMMON_CHEMISTRY"": 355.15, ""WEBBOOK"": 354.1}",chemicals CRC table,,
+POOSGDOYLQNASK-UHFFFAOYSA-N,tetracosane,,,,disputed,"{""OPEN_NTBKM"": 325.65, ""CRC_ORG"": 323.45, ""COMMON_CHEMISTRY"": 327.15, ""WEBBOOK"": 324.0}",,,tm_disputed
+BGHCVCJVXZWKCC-UHFFFAOYSA-N,tetradecane,v4_verified,279.04999999999995,45100.0,v4,,pure_props_v4 verified,,
+KMXFZRSJMDYPPG-UHFFFAOYSA-N,tetratetracontane,single_compilation,360.65,149600.0,agree_dropped_WEBBOOK=358.26,"{""OPEN_NTBKM"": 360.9, ""CRC_ORG"": 359.15, ""COMMON_CHEMISTRY"": 360.65, ""WEBBOOK"": 358.26}",chemicals CRC table,,
+GWVDBZWVFGFBCN-UHFFFAOYSA-N,tetratriacontane,single_compilation,345.85,79400.0,agree,"{""OPEN_NTBKM"": 345.75, ""CRC_ORG"": 345.95, ""COMMON_CHEMISTRY"": 345.75, ""WEBBOOK"": 346.0}",chemicals CRC table,,
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,v4_verified,178.14999999999998,6640.0,v4,,pure_props_v4 verified,,
+NNBZCPXTIHJBJL-MGCOHNPYSA-N,trans-decahydronaphthalene,single_compilation,242.8,14410.0,agree,"{""CRC_ORG"": 242.8, ""COMMON_CHEMISTRY"": 242.85, ""WEBBOOK"": 242.0}",chemicals CRC table,,
+IIYFAKIEWZDVMP-UHFFFAOYSA-N,tridecane,v4_verified,267.75,28500.0,v4,,pure_props_v4 verified,,
+SUJUOAZFECLBOA-UHFFFAOYSA-N,tritriacontane,single_compilation,345.075,79500.0,agree,"{""OPEN_NTBKM"": 345.15, ""CRC_ORG"": 344.35, ""COMMON_CHEMISTRY"": 345.15, ""WEBBOOK"": 345.0}",chemicals CRC table,,
+RSJKGSCJYJTIGS-UHFFFAOYSA-N,undecane,v4_verified,247.54999999999998,22200.0,v4,,pure_props_v4 verified,,
