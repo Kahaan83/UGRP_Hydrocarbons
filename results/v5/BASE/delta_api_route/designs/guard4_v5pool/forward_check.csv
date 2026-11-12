@@ -1,0 +1,19 @@
+constraint,design_pred,forward_pred,abs_diff,tol,pass,cause,design_id
+density_15C_kg_m3,781.0714323729951,781.9922785551591,0.9208461821640412,,reported,"design: ideal volume mixing of the table rho15; forward: pure-property grid rho at 288.15 K (table rho15 is a listed value, the grid is a fitted curve)",astm_jet_a__v5pool
+flash_point_C,53.97871872592867,53.97862506093321,9.366499546104023e-05,0.01,True,design and API both use the LFL-overlay registry (U1),astm_jet_a__v5pool
+flash_point_C[v4_designated],53.97871872592867,54.131414718051474,0.15269599212280127,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,astm_jet_a__v5pool
+freezing_point_C,-45.005117298644535,-44.50823611393369,0.4968811847108441,,reported,"design: Tm/dHfus from pure_props_v5 (listed values) in mole-fraction ideal SvL; forward: Tm/dHfus from build_tmap (Coutinho table). Same equation, different constants",astm_jet_a__v5pool
+kin_visc_m20C_cSt,3.0292048672475715,3.0292048672475715,0.0,1e-06,True,,astm_jet_a__v5pool
+nhoc_MJ_kg[compH_table_MW],43.76840637824332,43.7682226831245,0.00018369511882099232,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",astm_jet_a__v5pool
+nhoc_MJ_kg,43.7682226831245,43.7682226831245,0.0,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),astm_jet_a__v5pool
+nhoc_MJ_kg[primary_constH],43.971724522819514,43.7682226831245,0.203501839695015,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,astm_jet_a__v5pool
+aromatics_wt_pct,0.0,0.0,0.0,,reported,"class mass fraction, by construction",astm_jet_a__v5pool
+density_15C_kg_m3,781.06471676112,781.9624280249328,0.8977112638127664,,reported,"design: ideal volume mixing of the table rho15; forward: pure-property grid rho at 288.15 K (table rho15 is a listed value, the grid is a fitted curve)",bis_jet_a1__v5pool
+flash_point_C,53.535958012065976,53.53589113511032,6.687695565688045e-05,0.01,True,design and API both use the LFL-overlay registry (U1),bis_jet_a1__v5pool
+flash_point_C[v4_designated],53.535958012065976,53.68591462952304,0.14995661745706457,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,bis_jet_a1__v5pool
+freezing_point_C,-52.15975315107062,-43.869593762549044,8.290159388521573,,reported,"design: Tm/dHfus from pure_props_v5 (listed values) in mole-fraction ideal SvL; forward: Tm/dHfus from build_tmap (Coutinho table). Same equation, different constants",bis_jet_a1__v5pool
+kin_visc_m20C_cSt,2.993452453101291,2.993452453101291,0.0,1e-06,True,,bis_jet_a1__v5pool
+nhoc_MJ_kg[compH_table_MW],43.76484914572519,43.76469223381605,0.00015691190913713626,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",bis_jet_a1__v5pool
+nhoc_MJ_kg,43.76469223381605,43.76469223381605,0.0,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),bis_jet_a1__v5pool
+nhoc_MJ_kg[primary_constH],43.967302550691244,43.76469223381605,0.20261031687519448,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,bis_jet_a1__v5pool
+aromatics_vol_pct,0.0,0.0,0.0,,reported,design: table rho15 volume fractions; forward: grid rho at 288.15 K,bis_jet_a1__v5pool
