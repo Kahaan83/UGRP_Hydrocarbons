@@ -39,11 +39,11 @@ flash    : ideal Le Chatelier + Raoult on the anchored Antoine / LFL registry wi
            margin = max(lab ideal, D93 ideal) applied_margin (lab 3.70 C, set by one system: warning lab_margin_set_by_one_system);
            the v4 routing value is variants['v4_designated'] on predict_fuel. There is no fallback model: if flash fails after
            substitution the value is None and the method 'none'.
-The mixture-residual GBM is opt-in (use_mixture_residual=True) and has no margin. No model is ever trained at load:
+No learned residual correction ships (D3b): use_mixture_residual=True only adds a warning. No model is ever trained at load:
 a missing bundle raises FileNotFoundError naming the command that builds it.
 Margins were validated on CRC 647 jet fuels only: pass fuel_type='jet' or in_domain is False.
 Extra predict() kwargs: fuel_type (None|'jet'|...; 'jet' is TRUSTED from the caller, the composition is not checked
-against a jet specification) and use_mixture_residual (default False; opt-in GBM correction, no margin, needs the bundle).
+against a jet specification) and use_mixture_residual (kept for signature compatibility; no correction is applied, warning mixture_residual_not_shipped_D3b).
 """
 from __future__ import annotations
 
@@ -861,8 +861,6 @@ def predict(
     T_K = float(T_K)
 
     from fuelblend.api import predict_route
-    if use_mixture_residual:
-        _load_mix_models()                      # FileNotFoundError naming the build command when the bundle is missing
     route = predict_route.predict_fuel(list(composition), T_K=T_K, fuel_type=fuel_type,
                                        mole_fractions=mole_fractions, composition_kind=composition_kind)
     global_warn = list(route["warnings"])
@@ -870,25 +868,9 @@ def predict(
     for res in (visc, dens, flash):
         res["warnings"] = list(_check_T_domain(T_K)) + res["warnings"]
 
-    if use_mixture_residual:                    # opt-in GBM correction on top of the route value; no yaml margin exists for it
-        inchikeys = [c["ik"] for c in route["components"]]
-        w_mass = [c["w"] for c in route["components"]]
-        x_mole = _mole_from_mass(inchikeys, w_mass) or w_mass
-        mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
-        for prop, res in (("viscosity_dyn_mPas", visc), ("density_kg_m3", dens)):
-            if res["value"] is None:
-                continue
-            mean, std = _mix_residual_predict(prop, mix_row)
-            if mean is None:
-                continue
-            if prop == "viscosity_dyn_mPas":
-                res["value"] = float(math.exp(math.log(res["value"]) + mean))
-                res["std"] = float(res["value"] * abs(std)) if std else None
-            else:
-                res["value"] = float(res["value"] + mean)
-                res["std"] = float(abs(std)) if std else None
-            res["method"] = f"residual_gbm+{res['method']}"
-            _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type, composition_kind)
+    if use_mixture_residual:                    # D3b: no learned residual correction ships; the route value is returned unchanged
+        for res in (visc, dens, flash):
+            res["warnings"].append("mixture_residual_not_shipped_D3b")
 
     unc = {p: {"value": None, "lo": math.nan, "hi": math.nan, "model_name": "none", "in_domain": False,
                "reason": r, "tuple": (None, math.nan, math.nan, "none", False)}
