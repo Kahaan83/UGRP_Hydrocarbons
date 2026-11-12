@@ -1,0 +1,15 @@
+files read: 9  unparseable/errors: 0  hydrocarbon rows kept: 3768
+prop                                n_comp
+Kinematic viscosity, m2/s           1            5
+                                    2          185
+Mass density, kg/m3                 1          174
+                                    2         1771
+                                    3          108
+Vapor or sublimation pressure, kPa  1           43
+Viscosity, Pa*s                     1          140
+                                    2         1342
+rows with temperature: 100.0%   with pressure: 98.9%
+
+rows NOT kept, by reason:
+       2130  not all-hydrocarbon / no InChI
+       1541  other property (ignored)
