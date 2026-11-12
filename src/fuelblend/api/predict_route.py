@@ -527,7 +527,8 @@ def _heat(prop: dict, ctx, pm: PropMap, fuel_type) -> None:
         _no_value(prop, "non_finite", "group-additivity heat is not finite")
 
 
-def _smoke(prop: dict, comps, ctx, pm: PropMap) -> None:
+def _smoke_ysi_variant(prop: dict, comps, ctx, pm: PropMap) -> None:
+    """YSI route as a labelled variant only (no evaluable fuel in BASE: YSI coverage < 0.90 on all 39 T2 fuels); gated by own-coverage."""
     from fuelblend.baselines.sooting import mixture_mw, smoke_point_from_ysi, ysi_mix
     ci = [_comp_info(ctx, int(i)) for i in pm.idx]
     ok = np.array([c["ysi_ok"] for c in ci])
@@ -537,15 +538,37 @@ def _smoke(prop: dict, comps, ctx, pm: PropMap) -> None:
     cov = float(sum(c.w for c in comps if c.is_hc and c.reg_idx is not None and _comp_info(ctx, c.reg_idx)["ysi_ok"]) / tot) if tot > 0 else 0.0
     prop["coverage"]["ysi_own_mass"] = cov                          # input compounds that themselves carry YSI; this gates
     if cov < SMOKE_YSI_MIN:
-        prop.update(value=None, status="no_evaluation", method="ysi_route")
-        prop["warnings"].append(f"no_evaluation: YSI own-coverage {cov:.3f} < {SMOKE_YSI_MIN}")
-        _uncertified(prop, f"YSI coverage {cov:.3f} < {SMOKE_YSI_MIN}")
+        prop["variants"]["ysi_route"] = {"value": None, "status": "no_evaluation", "ysi_own_mass": cov,
+                                         "note": f"YSI own-coverage {cov:.3f} < {SMOKE_YSI_MIN}"}
         return
     w = pm.w[ok] / pm.w[ok].sum()
     smi = [c["smiles"] for c, o in zip(ci, ok) if o]
     mw = np.array([c["mw"] for c, o in zip(ci, ok) if o])
     x = (w / mw) / (w / mw).sum()
-    prop.update(value=float(smoke_point_from_ysi(ysi_mix(smi, x), mixture_mw(smi, x))), status="ok")
+    prop["variants"]["ysi_route"] = {"value": float(smoke_point_from_ysi(ysi_mix(smi, x), mixture_mw(smi, x))), "status": "ok",
+                                     "ysi_own_mass": cov, "note": "no measured skill; variant only"}
+
+
+def _smoke(prop: dict, comps, ctx, pm: PropMap, arom_vol: dict) -> None:
+    """Designated smoke point = the v4 AJFTD bulk regression on aromatics vol % (the model the design side uses; user decision 2026-11-13).
+    Uncertified (no yaml margin); warns outside the regression domain (aromatics 8-23 vol %, result 19-25 mm)."""
+    import warnings as _w
+    from fuelblend.baselines.sooting import OutOfDomainWarning, smoke_point_from_bulk
+    _smoke_ysi_variant(prop, comps, ctx, pm)
+    a = arom_vol.get("value")
+    if a is None:
+        _no_value(prop, "no_evaluation", "aromatics vol % unavailable (low coverage on the density grid)")
+        prop["method"] = "ajftd_bulk_regression"
+        _uncertified(prop, "aromatics vol % unavailable")
+        return
+    with _w.catch_warnings(record=True) as rec:
+        _w.simplefilter("always")
+        v = float(smoke_point_from_bulk(float(a)))
+    for r in rec:
+        if issubclass(r.category, OutOfDomainWarning):
+            prop["warnings"].append(f"out_of_domain: {r.message}")
+    prop.update(value=v, status="ok", method="ajftd_bulk_regression")
+    prop["inputs"] = {"aromatics_vol_pct": float(a)}
     _uncertified(prop, "smoke point has no valid yaml margin")
 
 
@@ -579,7 +602,7 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
     iks = [c.ik for c in comps]
     pm = map_for(comps, HAS_ANY_REGISTRY, ctx.reps)             # the scoring route's property-independent mapping
     props = {k: _new_prop(k, m, pm) for k, m in (("freezing_point_C", "ideal_svl_mole_fraction"), ("heat_net_MJ_kg", "ga_comp_H"),
-                                                  ("smoke_point_mm", "ysi_route"))}
+                                                  ("smoke_point_mm", "ajftd_bulk_regression"))}
     if pm.unmapped_mass > LOW_COVERAGE_MASS or pm.idx.size == 0:
         for r in props.values():
             _no_value(r, "low_coverage", f"unmapped mass {pm.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
@@ -587,11 +610,12 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
     else:
         _freezing(props["freezing_point_C"], comps, ctx, pm, fuel_type)
         _heat(props["heat_net_MJ_kg"], ctx, pm, fuel_type)
-        _smoke(props["smoke_point_mm"], comps, ctx, pm)
     out["freezing_point_C"] = props["freezing_point_C"]
     out["heat_net_MJ_kg"] = _finish(props["heat_net_MJ_kg"], HEAT_YAML_PROP, iks, T_K, fuel_type, composition_kind)
     out["smoke_point_mm"] = props["smoke_point_mm"]
     _aromatics(out, comps, ctx, P)
+    if not (pm.unmapped_mass > LOW_COVERAGE_MASS or pm.idx.size == 0):
+        _smoke(props["smoke_point_mm"], comps, ctx, pm, out["aromatics_vol_pct"])
 
 
 # ====================================================================================================================
