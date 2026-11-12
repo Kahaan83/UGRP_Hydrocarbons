@@ -10,3 +10,14 @@ A system is scored only if every component has Tm and dHfus at that tier; others
 (c) D86 lead: on the AV-33-22 fuels with a measured freezing point, ridge (leave-one-group-out, alpha by inner LOGO) on D86 T90, D86 FBP and measured n-paraffin mass share,
 against the LOGO constant.
 Reading (fixed now): "F1x beats the constant on AV-33-22 and on the pooled set; AJFTD stays not evaluable below 20 groups".
+
+## Result 2026-11-12
+
+Run with `scripts/v5/base/delta_freezing.py`; `delta.csv`, `rows_wax_appearance.csv`, `rows_d86_ridge.csv`, `readings.json`.
+* (a) Reading PASSES. F1x pooled MAE 3.068 C (n = 49, reproduces S5's 3.07), beats the LOGO constant pooled and on AV-33-22 (bootstrap interval above 0);
+  AJFTD: 12 groups, no skill shown, below 20 groups as declared.
+* (b) Wax appearance (not liquidus): with v4_verified+two_compilations constants only 9 of 57 systems have constants for all components: MAE 3.87 K, all under-predicted, no skill
+  shown against the constant. Adding single_compilation constants (34 systems) gives MAE 10.8 K, worse than the constant. Ideal SLE under-predicts wax appearance here.
+* (c) D86 lead confirmed on 34 AV-33-22 fuels (one per S3 group, censored value excluded): ridge on D86 T90, FBP and n-paraffin share, LOGO, MAE 2.98 C against 6.49 C for the constant,
+  interval +2.06 to +4.87 C (beats_trivial). Exploratory: one source, features chosen after the audit had seen the lead.
+  (The composition file's `double_count_group` column is one constant for all AV-33-22 rows; the S3 groups from `t2_fuels.csv` were used.)
