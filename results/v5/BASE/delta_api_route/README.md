@@ -69,3 +69,48 @@ The `v5pool` designs (6 compounds, as D4) are run first through the route adapte
 | aromatic_di | 11 |
 
 A bin with no qualifying compound is recorded and skipped; it is not filled from a neighbouring bin and no representative is used. A bin whose compound already belongs to the `v5pool` adds nothing. The pool size is therefore whatever the rule yields and may be below 12. Both specs (`astm:jet_a`, `bis:jet_a1`) are run on it with 30 starts and seed 42, and once more with 8 starts for the sensitivity check. One further run per spec on the `v5pool` uses a declared 4 K freezing guard band (freezing limit tightened by 4 K in the optimiser only; the engine's status is unchanged), labelled "indicative guard band, not certified". Freezing stays uncertified: 8 systems support at most an 88.9 % level, and lowering alpha after the failure would be post hoc.
+
+### Task 7 result: user-pool designs (presentation evidence)
+
+Script: `scripts/v5/run_design_userpool_v5.py` (seed 42, margins `results/v5/S1/uncertainty_v5.yaml` as D4, models `build_route_models`, optimiser `design_routed`). Outputs per run in `designs/<run>/`: `designs.csv`, `constraints.csv`, `forward_check.csv`, `runtime.txt` (and `bins.csv` for the extended pool). Runs: `v5pool`, `ext_n30`, `ext_n8`, `guard4_v5pool`.
+
+**R-API-4 (closed).** Both `v5pool` recipes, re-predicted through `predict()` (`forward_check.csv`, run `v5pool`):
+
+| Design | flash max abs diff (tol 0.01 C) | kin. viscosity -20 C rel. diff (tol 1e-6) | net heat abs diff (tol 1e-9, composition-H model) | Pass |
+|---|---|---|---|---|
+| Jet A (`astm:jet_a`) | 1.1e-04 C | 0 | 0 | yes |
+| Jet A-1 (`bis:jet_a1`) | 8.3e-05 C | 0 | 0 | yes |
+
+Density and freezing differences are reported, not judged, with their cause in `forward_check.csv` (design reads listed pure constants, forward reads the grid and the Coutinho table; same equations). `delta.csv` is written by `scripts/v5/base/delta_api_route.py`, which still records R-API-4 as `pending_task_6`; it was not edited by hand, so this line is the record. The flash comparison is against the API's designated (LFL overlay) flash, and every flash margin carries `lab_margin_set_by_one_system`.
+
+**Extended pool: only 2 of 6 bins qualified, so the pool has 8 components, not 12.** `designs/ext_n30/bins.csv`:
+
+| Subkind | nC | Registry compounds | with grid / flash / SLE | Outcome |
+|---|---|---|---|---|
+| n_paraffin | 13 | 1 | 1 / 1 / 1 | added (n-tridecane) |
+| n_paraffin | 14 | 1 | 1 / 1 / 1 | added (n-tetradecane) |
+| cyclo_mono | 9 | 19 | 3 / 7 / 0 | empty bin, skipped |
+| cyclo_mono | 10 | 16 | 1 / 7 / 0 | empty bin, skipped |
+| indan_tetralin | 10 | 3 | 1 / 1 / 0 | empty bin, skipped |
+| aromatic_di | 11 | 2 | 1 / 0 / 1 | empty bin, skipped |
+
+The limiting data is SLE (Tm and heat of fusion in the Coutinho table), absent for every cyclo_mono, indan_tetralin compound in these bins; `aromatic_di` 11 lacks flash data. No representative or neighbouring bin was used.
+
+**Design table.** Category A = fails at the point estimate; B = meets every limit at the point estimate but cannot be certified; certified = engine `passed`. No design is certified.
+
+| Design (pool, starts) | Category | Recipe (mass fraction) | Blocking gaps | Forward check | Design runtime |
+|---|---|---|---|---|---|
+| Jet A, v5pool, 30 | B | undecane 0.243, dodecane 0.120, butylcyclohexane 0.637 | freezing: model uncertified, no yaml margin entry (8 systems support at most an 88.9 % level; alpha not lowered). Smoke point: aromatics 0 vol % outside the 8-23 training domain, predicted 27.6 mm outside the trusted 19-25 mm, no margin, limit verified from secondary sources only | pass | 39 s |
+| Jet A-1, v5pool, 30 | B | undecane 0.288, dodecane 0.066, butylcyclohexane 0.646 | same two; Jet A-1 smoke-point limit is UNVERIFIED | pass | 47 s |
+| Jet A, ext (8), 30 | B | undecane 0.110, dodecane 0.116, butylcyclohexane 0.579, tridecane 0.170, tetradecane 0.026 | same two | pass | 505 s |
+| Jet A-1, ext (8), 30 | B | undecane 0.205, dodecane 0.064, butylcyclohexane 0.610, tridecane 0.109, tetradecane 0.013 | same two | pass | 586 s |
+| Jet A, v5pool, 30, indicative guard band, not certified | B | undecane 0.272, dodecane 0.086, butylcyclohexane 0.643 | same two (guard band does not certify freezing) | pass | 55 s |
+| Jet A-1, v5pool, 30, indicative guard band, not certified | B | decane 0.010, undecane 0.293, dodecane 0.046, butylcyclohexane 0.651 | same two | pass | 134 s |
+
+Point estimates of the freezing point: without guard band -40.9 C (limit -40) and -48.1 C (limit -47); with the 4 K guard band -45.0 C and -52.2 C. Smoke point is 27.6 mm in every design because the optimiser finds aromatic-free blends; it is outside the model's trusted range, which is why that constraint is uncertified rather than failing.
+
+**Differences to D4.** The `v5pool` recipes are not the D4 recipes (maximum component difference 0.24 for Jet A, 0.51 for Jet A-1; butylcyclohexane up, decalin and decane down). This is expected: the route models use mole-fraction ideal SLE for freezing (the forward model), whereas D4 used mass-fraction SLE in the optimiser. Both are B designs.
+
+**n_starts sensitivity (extended pool, 8 vs 30 starts, seed 42).** The recipes, predictions and categories are identical to the printed digits for both specs. Convergence: 5 of 8 and 16-17 of 30 starts. The 8-start runs took 131 s and 121 s against 505 s and 586 s for 30 starts. Runtimes are wall-clock with up to three runs sharing the machine, so they overstate a single run; relative timing is indicative only.
+
+**Reading.** The route-adapter inverse design finds blends that meet every limit at the point estimate, re-predicts them identically through `predict()`, and names what blocks certification (D8). It does not certify any design. Pools beyond 8 components could not be built on the declared rule because SLE data is missing for most naphthenic and indan/tetralin registry compounds.
