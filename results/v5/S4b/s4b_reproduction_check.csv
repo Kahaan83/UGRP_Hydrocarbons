@@ -1,0 +1,31 @@
+scheme,model,quantity,published,reproduced,abs_diff,ok
+dev_logo,const (=C_all),n_fuels,1683.0,1683.0,0.0,True
+dev_logo,const (=C_all),n_groups,33.0,33.0,0.0,True
+dev_logo,const (=C_all),mae,0.2138043049009688,0.2138043049009688,0.0,True
+dev_logo,const (=C_all),ci_lo,0.0,0.0,0.0,True
+dev_logo,const (=C_all),ci_hi,0.0,0.0,0.0,True
+dev_logo,ridge,n_fuels,1683.0,1683.0,0.0,True
+dev_logo,ridge,n_groups,33.0,33.0,0.0,True
+dev_logo,ridge,mae,0.1598200853799587,0.15982008537995876,5.551115123125783e-17,True
+dev_logo,ridge,ci_lo,-0.0789780067706554,-0.07897800677065549,8.326672684688674e-17,True
+dev_logo,ridge,ci_hi,-0.0321259111211745,-0.032125911121174563,6.245004513516506e-17,True
+dev_logo,hgb,n_fuels,1683.0,1683.0,0.0,True
+dev_logo,hgb,n_groups,33.0,33.0,0.0,True
+dev_logo,hgb,mae,0.1552885418094573,0.15528854180945734,2.7755575615628914e-17,True
+dev_logo,hgb,ci_lo,-0.0881125743485665,-0.08811257434856651,1.3877787807814457e-17,True
+dev_logo,hgb,ci_hi,-0.0407193138656763,-0.040719313865676385,8.326672684688674e-17,True
+locked,const (=C_all),n_fuels,215.0,215.0,0.0,True
+locked,const (=C_all),n_groups,8.0,8.0,0.0,True
+locked,const (=C_all),mae,0.1828600930356923,0.1828600930356923,0.0,True
+locked,const (=C_all),ci_lo,0.0,0.0,0.0,True
+locked,const (=C_all),ci_hi,0.0,0.0,0.0,True
+locked,ridge,n_fuels,215.0,215.0,0.0,True
+locked,ridge,n_groups,8.0,8.0,0.0,True
+locked,ridge,mae,0.1112850650701409,0.11128506507014096,6.938893903907228e-17,True
+locked,ridge,ci_lo,-0.2577851082394003,-0.2577851082394003,0.0,True
+locked,ridge,ci_hi,-0.031300365786762,-0.03130036578676205,4.85722573273506e-17,True
+locked,hgb,n_fuels,215.0,215.0,0.0,True
+locked,hgb,n_groups,8.0,8.0,0.0,True
+locked,hgb,mae,0.0941745783379365,0.09417457833793655,5.551115123125783e-17,True
+locked,hgb,ci_lo,-0.3490545908073185,-0.34905459080731854,5.551115123125783e-17,True
+locked,hgb,ci_hi,-0.0350784578388198,-0.03507845783881987,6.938893903907228e-17,True

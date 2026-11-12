@@ -1,0 +1,13 @@
+reading,correction,T_label,works,note,source_robust
+R-C1-1,K1,-40C,True,,
+R-C1-2,K1,-40C,True,within-source success alone does not count,
+R-C1-3,K1,-40C,True,,True
+R-C1-1,K1,-20C,True,,
+R-C1-2,K1,-20C,True,within-source success alone does not count,
+R-C1-3,K1,-20C,True,,True
+R-C1-1,K2,-40C,False,,
+R-C1-2,K2,-40C,False,within-source success alone does not count,
+R-C1-3,K2,-40C,False,,False
+R-C1-1,K2,-20C,True,,
+R-C1-2,K2,-20C,True,within-source success alone does not count,
+R-C1-3,K2,-20C,True,,True
