@@ -212,7 +212,9 @@ def predicates(ctx: Optional[RouteCtx] = None) -> dict:
 LOW_COVERAGE_MASS = 0.10                 # unmapped mass above this gives value None / status low_coverage
 MESITYLENE_IK = inchi.MolToInchiKey(Chem.MolFromSmiles("Cc1cc(C)cc(C)c1"))
 FLASH_METHOD = "ideal_le_chatelier_anchored"
-_UNITS = {"viscosity_kin_cSt": "cSt", "viscosity_dyn_mPas": "mPa.s", "density_kg_m3": "kg/m3", "flash_point_C": "degC"}
+_UNITS = {"viscosity_kin_cSt": "cSt", "viscosity_dyn_mPas": "mPa.s", "density_kg_m3": "kg/m3", "flash_point_C": "degC",
+          "freezing_point_C": "degC", "heat_net_MJ_kg": "MJ/kg", "smoke_point_mm": "mm", "aromatics_wt_pct": "wt%",
+          "aromatics_vol_pct": "vol%"}
 
 
 def _coverage(pm: PropMap) -> dict:
@@ -343,4 +345,221 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     out["flash_point_C"] = _finish(fl, "flash_point_C", iks, T_K, fuel_type, composition_kind)
     if np.isfinite(fl["lo"]) and np.isfinite(fl["hi"]):
         fl["warnings"].append("lab_margin_set_by_one_system")
+    _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
+    _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     return out
+
+
+# ====================================================================================================================
+# freezing, net heat, smoke point, aromatics, and the K1 / F1x labelled variants
+# ====================================================================================================================
+SMOKE_YSI_MIN = 0.90
+HEAT_YAML_PROP = "heat_net_MJ_kg"                      # predict_blend.MARGIN_KEYS maps (this, "ga_comp_H") to the crc647 yaml key
+K1_TOL_K = 0.01
+HAS_ANY_REGISTRY = lambda i: True                       # noqa: E731 - the scoring route's map_bins does not ask for property data
+
+
+@lru_cache(maxsize=1)
+def _pure_data():
+    """Group-additivity GCV model and table (copy of the ``PureData`` set-up in scripts/v5/base/cells_t2_bulk.py)."""
+    import pandas as pd
+    from fuelblend.baselines.heat_of_combustion_v2 import GroupAdditivityGCVModel
+    g = pd.read_csv(ROOT / "data" / "processed" / "v2" / "gcv_v2_MJ_kg.csv").set_index("inchikey")
+    tier_a = g[g.tier == "A"].reset_index()
+    mw = {k: Descriptors.MolWt(Chem.MolFromSmiles(s)) for k, s in zip(tier_a.inchikey, tier_a.smiles)}
+    model = GroupAdditivityGCVModel()
+    model.fit_from_tier_a(tier_a.assign(mw=tier_a.inchikey.map(mw)))
+    return model, g
+
+
+_COMP_CACHE: dict = {}
+
+
+def _comp_info(ctx, i: int) -> dict:
+    """Per registry compound: smiles, mw, GCV (MJ/kg), carbon count, YSI availability.  Same logic as ``PureData.comp_info``."""
+    if i not in _COMP_CACHE:
+        model, g = _pure_data()
+        ik, smi = ctx.reg.ik[i], ctx.reg.smiles[i]
+        m = Chem.MolFromSmiles(smi)
+        mw = Descriptors.MolWt(m)
+        gcv = float(g.loc[ik, "value"]) if ik in g.index else model.predict_gcv(smi, mw)
+        nc = float(sum(a.GetSymbol() == "C" for a in m.GetAtoms()))
+        _COMP_CACHE[i] = dict(smiles=smi, mw=mw, gcv=gcv, nc=nc, ysi_ok=Chem.MolToSmiles(m) in _ysi_smiles())
+    return _COMP_CACHE[i]
+
+
+@lru_cache(maxsize=1)
+def _k1() -> dict:
+    """K1 per-temperature ln offsets fitted once on all designated viscosity rows of BASE rows_t2_bulk.csv (in-sample on T2)."""
+    import pandas as pd
+    from fuelblend.eval.cold_offset import fit_k1
+    d = pd.read_csv(ROOT / "results" / "v5" / "BASE" / "rows_t2_bulk.csv")
+    v = d[(d.property == "viscosity_kin_cSt") & (d.variant == "designated") & (d.status == "ok") & (~d.low_coverage.astype(bool))]
+    return fit_k1(v.T_K, np.log(v.measured) - np.log(v.pred))
+
+
+def _add_viscosity_k1(res: dict, T_K: float) -> None:
+    """Variant only: no margin, only within K1_TOL_K of a fitted temperature, labelled in_sample_T2 (D3b)."""
+    if res.get("value") is None:
+        return
+    for tf, off in _k1().items():
+        if abs(T_K - tf) <= K1_TOL_K:
+            res["variants"]["k1_cold_offset_loso"] = {
+                "value": float(res["value"] * math.exp(off)), "offset_ln": float(off), "T_fit_K": float(tf), "label": "in_sample_T2",
+                "note": "per-temperature ln offset fitted on the designated T2 viscosity rows; in-sample, no margin"}
+            return
+
+
+def _uncertified(res: dict, reason: str) -> dict:
+    """No yaml margin: NaN lo/hi, in_domain False, and an explicit uncertified flag."""
+    v = res["value"]
+    res.update(model_name=res["method"], interval=[math.nan, math.nan], domain_reasons=[reason], uncertified=True,
+               tuple=(v, math.nan, math.nan, res["method"], False))
+    return res
+
+
+def _mapped_input_weights(comps: list, pm: PropMap) -> dict:
+    """input inchikey -> (mass fraction over the mapped mass, rep inchikey or None for own); unmapped inputs are absent."""
+    sub = {a: b for a, b, _ in pm.substitutions}
+    tot = 1.0 - pm.unmapped_mass
+    out = {}
+    for c in comps:
+        if not c.is_hc:
+            continue
+        if c.reg_idx is not None:
+            out[c.ik] = (c.w / tot, None)
+        elif c.ik in sub:
+            out[c.ik] = (c.w / tot, sub[c.ik])
+    return out
+
+
+def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type) -> None:
+    from fuelblend.eval import freezing_f1 as ff
+    from fuelblend.eval.composition_route import ideal_sle_C
+    reg = ctx.reg
+    iks = [reg.ik[int(i)] for i in pm.idx]
+    x = pm.w / np.array([ctx.mw(reg.smiles[int(i)]) for i in pm.idx])
+    x = x / x.sum()
+    tmap = _tmap()
+
+    def has_sle(ik):
+        t = tmap.get(ik)
+        return bool(t) and bool(np.isfinite(t.get("tm_K", np.nan)) and np.isfinite(t.get("dh_fus_J_mol", np.nan)))
+
+    no_sle = float(sum(w for w, ik in zip(pm.w, iks) if not has_sle(ik)))
+    prop["coverage"]["sle_missing_mass"] = no_sle          # in the liquid (counts in x) but carries no Tm / dHfus
+    v = ideal_sle_C(x, iks, tmap)
+    if not np.isfinite(v):
+        _no_value(prop, "non_finite", "no component with Tm / dHfus constants above x = 1e-4")
+        prop["uncertified"] = True
+    else:
+        prop.update(value=float(v), status="ok")
+        _uncertified(prop, "uncertified: no skill shown over a constant; ideal SvL bias about +8 C; no yaml margin")
+    prop["label"] = "ideal SvL in mole fraction; no skill shown, bias about +8 C; uncertified"
+    prop["warnings"].append("freezing_uncertified_no_skill_shown")
+    if no_sle > 0:
+        prop["warnings"].append(f"components_without_sle_constants: mass {no_sle:.3f} is liquid solvent only")
+    if str(fuel_type).lower() != "jet":                    # F1x variant: jet fuels with n-alkanes only
+        return
+    mw_map = _mapped_input_weights(comps, pm)
+    mol_na, other = {}, 0.0
+    for c in comps:
+        if c.ik not in mw_map:
+            continue
+        w, rep = mw_map[c.ik]
+        if c.subkind == "n_paraffin":
+            mol_na[c.n_carbon] = mol_na.get(c.n_carbon, 0.0) + w / ff.nalkane_mw(c.n_carbon)
+        else:
+            smi = c.smiles if rep is None else reg.smiles[reg.ik2i[rep]]
+            other += w / ctx.mw(smi)
+    if not mol_na:
+        return
+    tot = sum(mol_na.values()) + other
+    T, arg = ff.t_first(mol_na, tot, ff.coutinho_consts())
+    if not np.isfinite(T):
+        return
+    a, b = ff.fit_f1x()
+    tc = T - 273.15
+    prop["variants"]["f1x_recalibrated"] = {
+        "value": float(a + b * tc), "T_first_C": float(tc), "first_species_nC": arg, "a": a, "b": b,
+        "logo_mae_C": ff.F1X_LOGO_MAE,
+        "label": "a + b*T_first, complete Coutinho n-alkane table, a and b fitted on 49 S5 headline groups",
+        "score_note": "only the out-of-sample pooled LOGO MAE (logo_mae_C, n=49 groups) may be quoted; uncertified"}
+
+
+def _heat(prop: dict, ctx, pm: PropMap, fuel_type) -> None:
+    from fuelblend.baselines.heat_of_combustion_v2 import mixture_heat_of_combustion_v2
+    if str(fuel_type).lower() != "jet":
+        prop["warnings"].append("heat_net_jet_only: pass fuel_type='jet'")
+        prop["domain_reasons"] = ["heat of combustion is evaluated for jet fuels only"]
+        return
+    ci = [_comp_info(ctx, int(i)) for i in pm.idx]
+    r = mixture_heat_of_combustion_v2(w_mass=pm.w, comp_gcv_MJ_kg=[c["gcv"] for c in ci], comp_mw_g_mol=[c["mw"] for c in ci],
+                                      comp_n_carbon=[c["nc"] for c in ci], use_standard_jet_h=False)["ncv_MJ_kg"]
+    if np.isfinite(r):
+        prop.update(value=float(r), status="ok")
+    else:
+        _no_value(prop, "non_finite", "group-additivity heat is not finite")
+
+
+def _smoke(prop: dict, ctx, pm: PropMap) -> None:
+    from fuelblend.baselines.sooting import mixture_mw, smoke_point_from_ysi, ysi_mix
+    ci = [_comp_info(ctx, int(i)) for i in pm.idx]
+    ok = np.array([c["ysi_ok"] for c in ci])
+    cov = float(pm.w[ok].sum()) if ok.size else 0.0
+    prop["coverage"]["ysi_own_mass"] = cov
+    if cov < SMOKE_YSI_MIN:
+        prop.update(value=None, status="no_evaluation", method="ysi_route")
+        prop["warnings"].append(f"no_evaluation: YSI own-coverage {cov:.3f} < {SMOKE_YSI_MIN}")
+        _uncertified(prop, f"YSI coverage {cov:.3f} < {SMOKE_YSI_MIN}")
+        return
+    w = pm.w[ok] / pm.w[ok].sum()
+    smi = [c["smiles"] for c, o in zip(ci, ok) if o]
+    mw = np.array([c["mw"] for c, o in zip(ci, ok) if o])
+    x = (w / mw) / (w / mw).sum()
+    prop.update(value=float(smoke_point_from_ysi(ysi_mix(smi, x), mixture_mw(smi, x))), status="ok")
+    _uncertified(prop, "smoke point has no valid yaml margin")
+
+
+def _is_aromatic(smi: str) -> bool:
+    return any(a.GetIsAromatic() for a in Chem.MolFromSmiles(smi).GetAtoms())
+
+
+def _aromatics(out: dict, comps, ctx, P) -> None:
+    wt = 100.0 * sum(c.w for c in comps if c.is_hc and _is_aromatic(c.smiles))
+    r = _new_prop("aromatics_wt_pct", "by_construction", map_for(comps, HAS_ANY_REGISTRY, ctx.reps))
+    r.update(value=float(wt), status="ok")
+    _uncertified(r, "aromatics content is by construction (no model, no margin)")
+    out["aromatics_wt_pct"] = r
+    pg = map_for(comps, P["HAS_GRID"], ctx.reps)
+    v = _new_prop("aromatics_vol_pct", "by_construction", pg)
+    if pg.unmapped_mass > LOW_COVERAGE_MASS or pg.idx.size == 0:
+        _no_value(v, "low_coverage", f"unmapped mass {pg.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
+    else:
+        _, rho = ctx.prov.lookup(pg.idx[None, :], 288.15)
+        vol = pg.w / rho[0]
+        flag = np.array([_is_aromatic(ctx.reg.smiles[int(i)]) for i in pg.idx])
+        v.update(value=float(100.0 * vol[flag].sum() / vol.sum()), status="ok")
+        v["warnings"].append("volume basis: pure-component grid density at 288.15 K")
+        _uncertified(v, "aromatics content is by construction (no model, no margin)")
+    out["aromatics_vol_pct"] = v
+
+
+def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_kind: str) -> None:
+    P = predicates(ctx)
+    iks = [c.ik for c in comps]
+    pm = map_for(comps, HAS_ANY_REGISTRY, ctx.reps)             # the scoring route's property-independent mapping
+    props = {k: _new_prop(k, m, pm) for k, m in (("freezing_point_C", "ideal_svl_mole_fraction"), ("heat_net_MJ_kg", "ga_comp_H"),
+                                                  ("smoke_point_mm", "ysi_route"))}
+    if pm.unmapped_mass > LOW_COVERAGE_MASS or pm.idx.size == 0:
+        for r in props.values():
+            _no_value(r, "low_coverage", f"unmapped mass {pm.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
+            r["uncertified"] = True
+    else:
+        _freezing(props["freezing_point_C"], comps, ctx, pm, fuel_type)
+        _heat(props["heat_net_MJ_kg"], ctx, pm, fuel_type)
+        _smoke(props["smoke_point_mm"], ctx, pm)
+    out["freezing_point_C"] = props["freezing_point_C"]
+    out["heat_net_MJ_kg"] = _finish(props["heat_net_MJ_kg"], HEAT_YAML_PROP, iks, T_K, fuel_type, composition_kind)
+    out["smoke_point_mm"] = props["smoke_point_mm"]
+    _aromatics(out, comps, ctx, P)

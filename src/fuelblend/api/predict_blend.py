@@ -85,6 +85,7 @@ MARGIN_KEYS = {
     ("viscosity_dyn_mPas", "refutas_recalibrated"): ["viscosity_kin_cSt.crc647.recalibrated_refutas.all_T"],
     ("density_kg_m3", "dens_idvol"): ["density_kg_m3.crc647_ideal_volume.all_T"],
     # yaml recommendation: NOT the 0-floored D93 margin alone; use the larger of the lab and D93 applied margins
+    ("heat_net_MJ_kg", "ga_comp_H"): ["heat_of_combustion_net_MJ_kg.crc647.group_additivity_composition_H"],
     ("flash_point_C", "ideal_le_chatelier_anchored"): ["flash_point_C.lab_mixtures.ideal", "flash_point_C.real_fuels_D93_reconstructed.ideal"],
 }
 # composition_kind="known": raw Refutas / ideal volume + LAB-mixture margins (hydrocarbon-only, not jet specific).
@@ -95,8 +96,6 @@ LAB_DENSITY_KEYS = {"over": "density_kg_m3.lab_mixtures.ideal_volume.over",
                     "under": "density_kg_m3.lab_mixtures.ideal_volume.under"}
 # properties with no valid margin: reported as (nan, nan) and in_domain False; never given a made-up number
 UNCERTIFIED_PROPERTIES = {
-    "freezing_point_C": "yaml freezing margins are 'inf' / not carried for blends (no valid applied_margin)",
-    "smoke_point_mm": "yaml smoke_point margin is 'inf' (no valid applied_margin)",
     "ron": "octane margins exist only for base gasoline + one blendstock; no multi-component model is certified",
     "mon": "octane margins exist only for base gasoline + one blendstock; no multi-component model is certified",
     "dcn": "no diesel residuals exist; no margin",
@@ -875,11 +874,21 @@ def predict(
     unc = {p: {"value": None, "lo": math.nan, "hi": math.nan, "model_name": "none", "in_domain": False,
                "reason": r, "tuple": (None, math.nan, math.nan, "none", False)}
            for p, r in UNCERTIFIED_PROPERTIES.items()}
+    # freezing and smoke now come from the route (a value, no margin); they stay flagged uncertified here too
+    for p in ("freezing_point_C", "smoke_point_mm"):
+        r = route[p]
+        unc[p] = {"value": r["value"], "lo": math.nan, "hi": math.nan, "model_name": r["method"], "in_domain": False,
+                  "reason": "; ".join(r.get("domain_reasons") or ["no valid yaml margin"]), "tuple": r["tuple"]}
 
     return {
         "viscosity_dyn_mPas": visc,
         "density_kg_m3": dens,
         "flash_point_C": flash,
+        "freezing_point_C": route["freezing_point_C"],
+        "heat_net_MJ_kg": route["heat_net_MJ_kg"],
+        "smoke_point_mm": route["smoke_point_mm"],
+        "aromatics_wt_pct": route["aromatics_wt_pct"],
+        "aromatics_vol_pct": route["aromatics_vol_pct"],
         "uncertified": unc,
         "T_K": T_K,
         "warnings": global_warn,

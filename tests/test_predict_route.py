@@ -300,3 +300,139 @@ def test_predict_wrapper_keys():
     assert r["flash_point_C"]["method"] == "ideal_le_chatelier_anchored"
     f = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.5}, T_K=298.15)["flash_point_C"]["value"]
     assert r["flash_point_C"]["value"] == f
+
+
+# ====================================================================================================================
+# Task 3: freezing, heat, smoke, aromatics; K1 and F1x variants
+# ====================================================================================================================
+from fuelblend.api import predict_route as _pr3
+from fuelblend.eval import freezing_f1 as ff
+from fuelblend.eval.composition_route import ideal_sle_C, build_tmap
+
+
+def _t2_fuels(n, need_heat=False):
+    """First n non-low-coverage T2 fuels as ({inchikey: w}, MappedFuel, entity)."""
+    root = pr.ROOT
+    fu = pd.read_csv(root / "results/v5/BASE/t2_fuels.csv")
+    fu = fu[~fu.low_coverage]
+    if need_heat:
+        rows = pd.read_csv(root / "results/v5/BASE/rows_t2_bulk.csv")
+        h = rows[(rows.property == "heat_of_combustion_net_MJ_kg") & (rows.model == "ga_comp_H") & (rows.status == "ok")]
+        fu = fu[fu.entity.isin(set(h.entity))]
+    V5 = root / "data/real_fuels/v5"
+    srcs = {"av3322": "crc_av3322_composition.csv", "fuellib": "fuellib_gcxgc_compositions.csv", "ajftd": "ajftd_gcxgc_composition.csv"}
+    comps, out = {}, []
+    c0 = pr.get_ctx()
+    for r in fu.itertuples():
+        if r.source not in srcs:
+            continue
+        if r.source not in comps:
+            comps[r.source] = pd.read_csv(V5 / srcs[r.source])
+        fid = int(r.fuel_id) if r.source == "ajftd" else r.fuel_id
+        c = comps[r.source]
+        mf = map_bins(kind_bins(r.source, c[c.fuel_id == fid]), c0.reps)
+        out.append(({c0.reg.ik[int(i)]: float(w) for i, w in zip(mf.idx, mf.w)}, mf, r.entity))
+        if len(out) == n:
+            break
+    return out
+
+
+def test_freezing_svl_matches_route(ctx):
+    reg = ctx.reg
+    tmap = build_tmap(reg, [i for i in range(len(reg.ik)) if reg.usable[i]])
+    fuels = _t2_fuels(5)
+    assert len(fuels) == 5
+    n_finite = 0
+    for comp, mf, _ in fuels:
+        iks = [reg.ik[int(i)] for i in mf.idx]
+        x = mf.w / np.array([ctx.mw(reg.smiles[int(i)]) for i in mf.idx])
+        x = x / x.sum()
+        ref = ideal_sle_C(x, iks, tmap)
+        r = pr.predict_fuel(comp, T_K=298.15, fuel_type="jet")["freezing_point_C"]
+        if np.isfinite(ref):
+            n_finite += 1
+            assert r["value"] is not None and abs(r["value"] - ref) < 1e-9
+        else:
+            assert r["value"] is None
+    assert n_finite >= 3
+
+
+def test_f1x_coefficients_reproduce():
+    a, b = ff.fit_f1x()
+    assert np.isfinite(a) and np.isfinite(b)
+    s5 = pd.read_csv(pr.ROOT / "results/v5/S5/s5_predictions.csv")
+    h = s5[(s5.role == "headline") & s5.F0x.notna() & s5.freezing_C.notna()].reset_index(drop=True)
+    assert len(h) == 49
+    for i in (0, 10, 30):
+        tr = h[h.group != h.group[i]]
+        bb, aa = np.polyfit(tr.F0x, tr.freezing_C, 1)
+        assert abs((aa + bb * h.F0x[i]) - h.F1x[i]) < 1e-6
+    d = pd.read_csv(pr.ROOT / "results/v5/BASE/delta_freezing/delta.csv")
+    row = d[(d.set == "pooled") & (d.model == "F1x_coutinho_complete")].iloc[0]
+    assert ff.F1X_LOGO_MAE == float(row.mae) and 3.0 < ff.F1X_LOGO_MAE < 3.1
+
+
+def test_f1x_variant_jet_with_nalkanes_only():
+    blend = {DECANE: 0.5, DODECANE: 0.3, TOLUENE: 0.2}
+    r = pr.predict_fuel(blend, fuel_type="jet")["freezing_point_C"]
+    v = r["variants"]["f1x_recalibrated"]
+    a, b = ff.fit_f1x()
+    assert abs(v["value"] - (a + b * v["T_first_C"])) < 1e-9
+    assert v["logo_mae_C"] == ff.F1X_LOGO_MAE
+    assert "f1x_recalibrated" not in pr.predict_fuel(blend, fuel_type=None)["freezing_point_C"]["variants"]
+    assert "f1x_recalibrated" not in pr.predict_fuel({TOLUENE: 1.0}, fuel_type="jet")["freezing_point_C"]["variants"]
+
+
+def test_heat_matches_bulk_rows(ctx):
+    rows = pd.read_csv(pr.ROOT / "results/v5/BASE/rows_t2_bulk.csv")
+    h = rows[(rows.property == "heat_of_combustion_net_MJ_kg") & (rows.model == "ga_comp_H") & (rows.status == "ok")]
+    fuels = _t2_fuels(5, need_heat=True)
+    assert len(fuels) == 5
+    for comp, mf, ent in fuels:
+        ref = h[h.entity == ent].pred.iloc[0]
+        r = pr.predict_fuel(comp, fuel_type="jet")["heat_net_MJ_kg"]
+        assert r["value"] is not None and abs(r["value"] - ref) < 5e-7, (ent, r["value"], ref)   # csv stores 8 significant digits (1e-9 is unreachable from the file)
+        assert r["method"] == "ga_comp_H"
+    r = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.5}, fuel_type="jet")["heat_net_MJ_kg"]
+    assert np.isfinite(r["lo"]) and r["in_domain"] is True and r["margin"] > 0
+    assert pr.predict_fuel({DECANE: 1.0}, fuel_type=None)["heat_net_MJ_kg"]["value"] is None
+
+
+def test_smoke_coverage_gate(ctx):
+    P = pr.predicates(ctx)
+    reg = ctx.reg
+    no_ysi = next(reg.ik[i] for i in range(len(reg.ik)) if reg.usable[i] and not P["HAS_YSI"](i) and pr._mol_info(reg.smiles[i])[3]
+                  and pr.subkind(reg.smiles[i]) is not None)
+    r = pr.predict_fuel({TOLUENE: 0.5, no_ysi: 0.5})["smoke_point_mm"]
+    assert r["status"] == "no_evaluation" and r["value"] is None and r["in_domain"] is False
+    assert r["coverage"]["ysi_own_mass"] < 0.9
+    ok = pr.predict_fuel({TOLUENE: 0.1, DECANE: 0.9})["smoke_point_mm"]
+    assert ok["status"] == "ok" and np.isfinite(ok["value"]) and ok["in_domain"] is False
+
+
+def test_aromatics_by_construction():
+    r = pr.predict_fuel({DECANE: 0.8, TOLUENE: 0.2})
+    assert r["aromatics_wt_pct"]["value"] == pytest.approx(20.0, abs=1e-9)
+    assert r["aromatics_wt_pct"]["method"] == "by_construction"
+    v = r["aromatics_vol_pct"]
+    assert v["method"] == "by_construction" and 15.0 < v["value"] < 20.0      # toluene is denser than decane -> its volume share is below its mass share
+
+
+def test_k1_only_at_fitted_T():
+    a = pr.predict_fuel(BLEND3, T_K=233.15)["viscosity_kin_cSt"]
+    k = a["variants"]["k1_cold_offset_loso"]
+    assert k["label"] == "in_sample_T2" and np.isfinite(k["value"]) and k["value"] != a["value"]
+    assert abs(k["value"] - a["value"] * math.exp(k["offset_ln"])) < 1e-9
+    assert "k1_cold_offset_loso" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
+
+
+def test_uncertified_props_have_nan_interval():
+    r = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")
+    for p in ("freezing_point_C", "smoke_point_mm"):
+        assert math.isnan(r[p]["lo"]) and math.isnan(r[p]["hi"]) and r[p]["in_domain"] is False
+    assert r["freezing_point_C"]["uncertified"] is True
+    w = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], fuel_type="jet")
+    assert "freezing_point_C" not in pb.UNCERTIFIED_PROPERTIES and "smoke_point_mm" not in pb.UNCERTIFIED_PROPERTIES
+    for p in ("freezing_point_C", "smoke_point_mm"):
+        assert w[p]["in_domain"] is False and math.isnan(w[p]["lo"])
+        assert w["uncertified"][p]["in_domain"] is False
