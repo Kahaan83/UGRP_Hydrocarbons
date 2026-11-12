@@ -91,3 +91,38 @@ def test_properties_measured_only_columns():
     assert set(p.property) == {"flash_point_C", "density_kg_m3", "cloud_point_C"}
     assert p.method.str.contains("10.1021/acs.energyfuels.5b02879").all()
     assert (p[p.property == "density_kg_m3"].T_C == 20).all()
+
+
+# ---- scoring outputs (scripts/v5/base/delta_diesel_surrogates.py)
+OUTD = ROOT / "results/v5/BASE/delta_diesel_surrogates"
+
+
+def test_rows_csv_four_surrogates_three_properties_with_coverage():
+    r = pd.read_csv(OUTD / "rows.csv")
+    assert len(r) == 12
+    assert set(r.fuel_code) == {"Mueller2016_V0a", "Mueller2016_V0b", "Mueller2016_V1", "Mueller2016_V2"}
+    assert set(r.property) == {"flash_point_C", "density_kg_m3", "cloud_point_C"}
+    assert r.groupby("fuel_code").size().eq(3).all()
+    for c in ("status", "method", "coverage_own_mass", "coverage_substituted_mass", "coverage_unmapped_mass", "lo", "hi", "in_domain", "measured", "error"):
+        assert c in r.columns
+    d = r[r.property == "density_kg_m3"]
+    assert d.value.notna().all() and (d.rel_error_pct.abs() < 2).all()
+    v2 = r[r.fuel_code == "Mueller2016_V2"]
+    assert (v2.coverage_unmapped_mass > 0).all()          # perhydrophenanthrene is not in the registry
+    assert r[r.fuel_code != "Mueller2016_V2"].query("property != 'flash_point_C'").coverage_unmapped_mass.eq(0).all()
+
+
+def test_cloud_label_and_no_silent_none():
+    r = pd.read_csv(OUTD / "rows.csv")
+    c = r[r.property == "cloud_point_C"]
+    assert c.label.eq("SvL vs cloud point, different property, indicative only").all()
+    assert r[r.property != "cloud_point_C"].label.isna().all()
+    assert r[r.value.isna()].status.ne("ok").all()         # any missing value carries a non-ok status
+
+
+def test_target_vs_surrogate_table():
+    t = pd.read_csv(OUTD / "target_vs_surrogate.csv")
+    assert len(t) == 12
+    assert t[t.property == "density_kg_m3"].target_CF_measured.round(1).eq(846.6).all()
+    assert t[t.property == "density_kg_m3"].target_basis.eq("mean of two lab values").all()
+    assert t[t.property == "cloud_point_C"].target_CF_measured.eq(-19.2).all()
