@@ -1,0 +1,23 @@
+group,system_id,components,adamantane,t_bin,n_rows,mean_ln_resid,max_abs_ln_resid,margin_raw,covered_raw,max_abs_ln_resid_biascorr,covered_biascorr,status,reason
+test,2cd02295b6c9,CC(CC(C)(C)C)CC(C)(C)C + CC(C)(C)c1ccccc1,False,T_ge_283K,45,0.059371,0.095566,0.185582,yes,0.079531,yes,scored,
+test,98a3084e3bb4,CC(CC(C)(C)C)CC(C)(C)C + CCC(C)c1ccccc1,False,T_ge_283K,45,0.0634569,0.106863,0.185582,yes,0.090828,yes,scored,
+test,d6f7181abc7e,CC(C)Cc1ccccc1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_ge_283K,45,0.0552154,0.0845269,0.185582,yes,0.0684919,yes,scored,
+not_independent,31055565ef10,CCCCCCCCCCCC + CCC(C)c1ccccc1,False,T_ge_283K,45,0.0446458,0.0641499,0.185582,yes,,,scored,
+not_independent,38d096e1de41,CC(C)Cc1ccccc1 + CCCCCCCCCCCC,False,T_ge_283K,45,0.0386476,0.0594952,0.185582,yes,,,scored,
+not_independent,3ea3f905b62d,CCCCCCCCCC + C1C[C@@H]2[C@H]3CC[C@H](C3)[C@@H]2C1,False,T_ge_283K,81,0.094416,0.126189,0.185582,yes,,,scored,
+not_independent,451816cfb8fd,CCCCCCCCCCC + CC12CC3CC(C)(C1)CC(C)(C3)C2,True,T_ge_283K,99,0.0341716,0.0748089,0.185582,yes,,,scored,
+not_independent,4da2956f9a57,CC12CC3CC(C1)CC(C)(C3)C2 + CCCCCCCCCCC,True,T_ge_283K,99,0.0648964,0.115591,0.185582,yes,,,scored,
+not_independent,5066b8c012e4,CC(C)C1CCCCC1 + CCCCCCCCCCCCC,False,T_ge_283K,81,0.00837788,0.0315202,0.185582,yes,,,scored,
+not_independent,6b00f1bbc8c1,Cc1cc(C)cc(C)c1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_ge_283K,45,0.0397078,0.0821795,0.185582,yes,,,scored,
+not_independent,6b00f1bbc8c1,Cc1cc(C)cc(C)c1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_lt_263K,9,-0.0172218,0.0594871,0.415358,yes,,,scored,
+not_independent,6b4f35e2d3aa,CCCCCCCCC + CC12CC3CC(C1)CC(C)(C3)C2,True,T_ge_283K,99,0.101664,0.156823,0.185582,yes,,,scored,
+not_independent,6fb947bc968c,CCCCCCCCC + CC12CC3CC(C)(C1)CC(C)(C3)C2,True,T_ge_283K,99,0.0678624,0.139616,0.185582,yes,,,scored,
+not_independent,b30d7680e486,CCCc1ccccc1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_ge_283K,45,0.0741434,0.108459,0.185582,yes,,,scored,
+not_independent,b30d7680e486,CCCc1ccccc1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_lt_263K,9,-0.0253812,0.102183,0.415358,yes,,,scored,
+not_independent,bedb14fc8474,Cc1ccc(C)c(C)c1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_ge_283K,45,0.106595,0.141526,0.185582,yes,,,scored,
+not_independent,bedb14fc8474,Cc1ccc(C)c(C)c1 + CC(CC(C)(C)C)CC(C)(C)C,False,T_lt_263K,9,-0.0285861,0.10223,0.415358,yes,,,scored,
+not_independent,e8d4bf55dfee,CCCCCCCCC + CCC12CC3CC(CC(C3)C1)C2,True,T_ge_283K,99,-0.0911376,0.223428,0.185582,no,,,scored,
+not_independent,fd5cabac54de,CCCCCCCCCCCC + CC(C)(C)c1ccccc1,False,T_ge_283K,45,0.0578586,0.079157,0.185582,yes,,,scored,
+not_independent,ff0678aca0d0,CCC12CC3CC(CC(C3)C1)C2 + CCCCCCCCCCC,True,T_ge_283K,99,0.078502,0.156216,0.185582,yes,,,scored,
+test,760c05cdd8be,CCc1cccc(CC)c1 + CC(CC(C)(C)C)CC(C)(C)C,False,,45,,,,,,,not scorable,no pure-property provider data
+not_independent,3461b72d5243,CCc1cccc(CC)c1 + CCCCCCCCCCCC,False,,45,,,,,,,not scorable,no pure-property provider data

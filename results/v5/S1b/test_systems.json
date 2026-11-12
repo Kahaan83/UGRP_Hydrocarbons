@@ -1,0 +1,33 @@
+{
+ "test": [
+  "2cd02295b6c9",
+  "760c05cdd8be",
+  "98a3084e3bb4",
+  "d6f7181abc7e"
+ ],
+ "not_independent": [
+  "31055565ef10",
+  "3461b72d5243",
+  "38d096e1de41",
+  "3ea3f905b62d",
+  "451816cfb8fd",
+  "4da2956f9a57",
+  "5066b8c012e4",
+  "6b00f1bbc8c1",
+  "6b4f35e2d3aa",
+  "6fb947bc968c",
+  "b30d7680e486",
+  "bedb14fc8474",
+  "e8d4bf55dfee",
+  "fd5cabac54de",
+  "ff0678aca0d0"
+ ],
+ "not_scorable": [
+  "760c05cdd8be",
+  "3461b72d5243"
+ ],
+ "not_scorable_among_test": [
+  "760c05cdd8be"
+ ],
+ "adamantane_systems": []
+}

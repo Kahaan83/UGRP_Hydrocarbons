@@ -139,6 +139,73 @@ Status words: CONFIRMED = document opened and the table seen; LISTED = found, co
 Not found: an open Zenodo-style dataset of jet fuels with GCxGC composition and measured properties. The AJFTD detail file
 (section 2.1) is that dataset, and it was already on disk.
 
+## 5b. Second online pass (2026-11-12)
+
+Status words as in section 5. Nothing in this section has been downloaded into the repo.
+
+### NIST ThermoML: files on the server that are not in the bulk archive (largest find of this pass)
+
+The bulk archive `ThermoML.v2020-09-30.tgz` and NIST's own browse index (`/ThermoML/jsons/journal_issue.json`, 11,922 DOIs) stop at
+J. Chem. Eng. Data 2019. The server still answers `https://trc.nist.gov/ThermoML/<doi>.json` and `.xml` for later articles.
+Every J. Chem. Eng. Data DOI of the forms `acs.jced.9b00001-9b01250` and `acs.jced.0c00001-0c01150` that is absent from the index was
+checked for existence (2,185 checks): **367 unlisted files exist** (179 with `9b` DOIs, 188 with `0c` DOIs, the highest being 0c00724; all those opened are volume 65, 2020).
+Each file's metadata was read; 52 hold at least one hydrocarbon-only data set. The ones that matter here:
+
+| DOI (10.1021/acs.jced.) | first author, J. Chem. Eng. Data 65 (2020) | hydrocarbon-only content | T range, K |
+|---|---|---|---|
+| 0c00020 | Luning Prak, p 2625 | iso-dodecane (2,2,4,6,6-pentamethylheptane) + n-propylbenzene, 1,3,5- and 1,2,4-trimethylbenzene: 198 binary viscosity, 264 density, 231 speed of sound | 253.15-333.15 |
+| 0c00280 | Luning Prak, p 3941 | n-dodecane + five C10 aromatics: 220 binary viscosity, 308 density | 288.15-333.15 |
+| 0c00581 | Luning Prak, p 4699 | iso-dodecane + butylbenzene isomers and 1,3-diethylbenzene: 185 binary kinematic viscosity, 259 density | 288.15-333.15 |
+| 0c00309 | Lei, p 3977 | isopropylcyclohexane + n-tridecane: 99 binary viscosity, 99 density | 293.15-333.15 |
+| 9b01171 | Zhao, p 2527 | exo-tetrahydrodicyclopentadiene + n-decane: 99 binary viscosity, 99 density | 293.15-333.15 |
+| 9b01167 | Qin, p 2512 | three alkyladamantanes + n-nonane or n-undecane: 726 binary viscosity, 726 density | 293.15-343.15 |
+| 9b01026 | Gahlyan, p 2964 | benzene + n-heptane + n-octane: 108 ternary density | 298.15-318.15 |
+| 9b01208 | Touronen, p 3270 | vapour pressure of toluene, hexylbenzene, 2-ethylnaphthalene: 40 points | 400-620 |
+| 0c00111 | Troni, p 3334 | n-undecane, n-dodecane, n-tridecane boiling temperatures (pure and binary) | 377-449 |
+
+Counts are data-set sizes read from the JSON (`NumValues`), not rows passed through our extractor.
+Why it matters: about 1,500 new hydrocarbon binary viscosity points and 1,850 density points, mostly iso-paraffin + aromatic and
+cycloparaffin + n-paraffin pairs, which looked thin when compared with the ThermoML archive alone (see the correction below; the earlier reference here to the S7 pairwise model was wrong, S7 re-analyses real-fuel predictions and has no lab-pair training). 0c00020 reaches -20 C, the temperature
+of the jet viscosity limit, where the lab margin is widest (S1).
+Limits: (a) ThermoML has no flash-point property, so the flash points these papers report are still not available this way;
+(b) the other four journals (Elsevier and Springer DOIs) cannot be enumerated the same way, so their 2020 files, if any, are unchecked;
+(c) the search API (`/ThermoML-API`) returned HTTP 503 on both days, so a query by compound was not possible;
+(d) no J. Chem. Eng. Data 2021+ file was found (75 spot checks of `1c`, `2c`, `3c` DOIs, all absent);
+(e) these files carry the same NIST liability statement as the archive and are not listed by NIST, so they may be less checked.
+Total size of the nine JSON files is about 4 MB.
+
+**Update, same day:** the nine XML files were downloaded with the user's go-ahead and run through the unchanged extractor:
+3,768 hydrocarbon rows, 0 file errors; 1,527 mixture viscosity rows in 19 systems, 17 of them absent from the 2019 archive.
+See `results/v5/thermoml_2020/README.md`.
+
+**Correction, 2026-11-12 (after the S1b run):** "17 systems absent from the 2019 archive" compared against the ThermoML archive only.
+Against the project's unified data the files add much less viscosity: 15 of the 19 mixture viscosity systems are already in
+`measurements_dedup.csv` through NIST TDE and Leenhouts. They are the same measurements: 738 rows match a NIST TDE row on system, composition and temperature, all within 0.5 % in value. After end points are removed and repeats merged
+there are 1,278 mixture viscosity rows: 756 sit at a (system, temperature) the unified data already has, 342 are new temperatures of
+known systems (including all 27 rows at 253 K), and 180 belong to 4 systems that are new (iso-dodecane with butylbenzene isomers or
+1,3-diethylbenzene). Density is mostly new: 1,440 of 1,599 mixture density rows are in systems found neither in the unified data nor in `data/processed/v2/thermoml_clean_hc.csv`.
+All 27 rows at 253 K belong to three systems that are locked in the S1 split, so they cannot enter a dev margin.
+The "about 1,500 new viscosity points" in the paragraph above is therefore an overstatement; read it as 522 new rows.
+Used once as a held-out test (`results/v5/S1b/`): only 3 independent scorable systems, so every coverage reading is "not evaluable".
+Lesson for the next source: check overlap against `measurements_dedup.csv`, not against one upstream archive.
+
+### Other sources checked in this pass
+
+| # | source | fills | status |
+|---|---|---|---|
+| 8 | NIST public data mds2-2289 (Bell), https://doi.org/10.18434/mds2-2289, file `MIDAS_alkanes.csv` | Literature viscosity of the n-alkanes from NIST ThermoData Engine 10.4.2, with a reference code per point | CONFIRMED record and file list (catalog.data.gov). Carbon-number range, point count and T range not stated on the record; the CSV was not opened. NIST open licence. Pure fluids only. |
+| 9 | Puetz et al., Energy & Fuels 39 (2025) 18001, doi 10.1021/acs.energyfuels.5c02762 (open copy at elib.dlr.de/216631) | 8 samples (Jet A-1, ATJ-SPK, two FT-SPK, IsoPar G/H/J/L) with exact GCxGC composition in Supporting Information E and measured density, viscosity, distillation, heat of combustion, cetane | CONFIRMED from the article text. The Supporting Information is on the ACS site, which blocks scripted access; needs a browser download. Small, but the four IsoPar solvents are nearly pure iso-paraffin, where our representatives are weakest. |
+| 10 | Mueller et al., Energy & Fuels 30 (2016) 1445, doi 10.1021/acs.energyfuels.5b02879 | Measured properties of the four CRC diesel surrogates (section 5, item 2) | Citation now CONFIRMED (PNNL, Sandia, OSTI records). No free full text found: OSTI record 1237000 has no file, PMC has no copy. Needs library access. |
+| 11 | Li et al. 2014, doi 10.1155/2014/239023 (section 5, item 5) | Binary and ternary n-alkane flash points | Still not opened: Hindawi and Wiley both refuse scripted access (HTTP 403). Needs a browser download. |
+
+Checked and closed:
+* CRC AV-25-16 (2021, 93 airport jet fuel samples): 39 pages opened. Composition is class totals only (Appendix II, one page); the rest is trace
+  heteroatoms, microbes and ions. No flash, freezing or viscosity tables. Not useful here.
+* Luedtke et al., Energy & Fuels 39 (2025) 4434: a composition-method paper; its supplement has no property data.
+* arXiv 2408.01530 (FTIR and machine learning for jet fuel properties): its data are AJFTD, which we already hold.
+* No open diesel dataset with GCxGC composition and flash, viscosity and cloud point was found beyond CRC FACE-1 (already used in S6).
+* No open table of pure iso-paraffin or alkylcyclohexane viscosity at -40 C was found.
+
 ## 6. Housekeeping noticed
 
 * `AGENTS.md` section 8.1.3 still says AJFTD has 81 fuels; the v5 scrape has 2,601 in the metrics file and 2,657 in the detail file.
