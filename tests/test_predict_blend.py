@@ -208,9 +208,12 @@ def test_not_certified_cases(monkeypatch):
         assert r["flash_point_C"]["in_domain"] is False
         assert r["flash_point_C"]["domain_reasons"]
     t = pb.predict_tuples(comp, T_K=293.15, fuel_type="jet")
-    for prop in ("freezing_point_C", "smoke_point_mm", "ron", "mon", "dcn", "dvpe_kpa", "pour_point_C"):
+    for prop in ("ron", "mon", "dcn", "dvpe_kpa", "pour_point_C"):
         val, lo, hi, name, ok = t[prop]
         assert val is None and math.isnan(lo) and math.isnan(hi) and ok is False
+    for prop in ("freezing_point_C", "smoke_point_mm"):          # v5 Task 3: the route gives a value, still no interval, never in domain
+        val, lo, hi, name, ok = t[prop]
+        assert math.isnan(lo) and math.isnan(hi) and ok is False
     # temperature outside the viscosity window: raw Refutas, no certified interval
     r = _predict(comp, T_K=310.0, fuel_type="jet", composition_kind="reconstructed")
     assert r["viscosity_dyn_mPas"]["method"] != "refutas_recalibrated"
