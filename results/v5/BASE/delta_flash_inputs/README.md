@@ -18,3 +18,18 @@ Readings (fixed now):
 
 If readings 1 and 2 hold, a follow-up commit writes the overlay flash margin once into a new `configs/uncertainty_v5.yaml` (v4 yaml untouched).
 If either fails, nothing is written to `configs/` and the failure is reported.
+
+## Result 2026-11-12
+
+Run with `scripts/v5/base/delta_flash_inputs.py`; numbers in `delta.csv`, `lab_margin.csv`, `readings.json`.
+* Reading 1 PASSES: with the overlay no unsafe rate rises. Lab 0.8 % -> 0.8 %; CRC 647 dev 13.3 % -> 4.4 %; fold_b 25 % -> 8.3 %; T2 pooled 5.7 % -> 5.7 % and unchanged in every source and family.
+* Reading 2 FAILS. The lab margin 3.70 C is the group score of the mesitylene system itself (it is the 29th of 31 ranked group scores). Leaving that
+  system out gives 0.31 C (30 systems), a 3.39 C difference, for designated and overlay alike. With the mesitylene Antoine set the all-31 margin is also 0.31 C.
+  So the v4 lab flash margin is set by one system with a suspect Antoine input, not by the overlay.
+* Reading 3 PASSES trivially: the overlay leaves the lab margin at 3.70 C (the overlay does not change the tail group scores).
+* Overlay effect on bias/MAE: lab bias -3.30 -> -3.25 C, MAE 3.74 -> 3.69; CRC dev bias +0.44 -> -0.73 C; T2 pooled bias -0.73 -> -0.69 C, MAE unchanged (2.58). The mesitylene set worsens
+  T2 pooled MAE to 2.81 C and lab MAE to 3.89 C, consistent with U1 (not adopted).
+
+Consequence: `configs/uncertainty_v5.yaml` is NOT written. The overlay does not move the margin, so writing a v5 file would only restate 3.70 C, and the margin's
+dependence on one system is unresolved. If you want the margin settled, decide between keeping 3.70 C (conservative, rests on the suspect mesitylene system)
+or the 0.31 C leave-one-system-out value (not safe to adopt: it rests on 30 mostly binary alkane systems and shows how fragile the 29th-of-31 rank is).
