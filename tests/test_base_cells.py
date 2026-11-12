@@ -78,3 +78,20 @@ def test_cells_t3_bulk():
     assert ((c.property == "flash_point_C") & (c.trivial_model == "logo_constant_within_method")).any()
     p = c[c.property == "pour_point_C"]
     assert set(p.model) >= {"const", "ridge", "freezing_offset"} and (p.n_rows == 57).all()
+
+
+def test_cells_carried():
+    c = pd.read_csv(BASE / "cells_carried.csv")
+    _schema_ok(c)
+    fl = c[(c.property == "flash_point_C") & (c.set == "crc647_r3") & (c.label == "dev") & (c.variant == "designated")].iloc[0]
+    assert fl.n_groups == 45 and fl.bias == pytest.approx(0.44, abs=0.02) and fl.unsafe_rate == pytest.approx(0.133, abs=0.005)
+    assert c[c.set == "crc647_r3"].label.isin(["dev", "fold_b"]).all()
+    assert (c[c.set == "face_diesel"].verdict == "n_too_small").all()
+    lf = c[(c.property == "flash_point_C") & (c.set == "crc647_r3") & (c.label == "dev") & (c.variant == "lfl_overlay")].iloc[0]
+    assert lf.bias == pytest.approx(-0.726, abs=0.01)                       # L1 comparison.csv, after
+    v = c[(c.property == "viscosity_kin_cSt") & (c.set == "crc647_r3") & (c.label == "dev") & (c.model == "Recalibrated Refutas") & c.T_K.isna()]
+    assert len(v) == 1 and v.margin90.iloc[0] == pytest.approx(0.3465, abs=1e-3)
+    assert len(c[(c.property == "viscosity_kin_cSt") & (c.set == "crc647_r3") & (c.label == "dev")].model.unique()) == 8
+    d = c[c.property == "designs_certified"].iloc[0]
+    assert d.n_rows == 4 and d.bias == 0
+    assert (c[c.status == "no_evaluation"].reason.str.len() > 0).all()
