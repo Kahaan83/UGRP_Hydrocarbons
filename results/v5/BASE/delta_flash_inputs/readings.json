@@ -1,0 +1,12 @@
+{
+  "reading1_unsafe_rate_never_rises": true,
+  "reading2_loo_mesitylene_margin_diff": {
+    "designated": 3.3881236995173074,
+    "lfl_overlay": 3.3881236995173074
+  },
+  "reading2_pass": false,
+  "reading3_overlay_margin_minus_v4": -4.440892098500626e-16,
+  "reading3_pass": true,
+  "lab_margin_overlay": 3.6987683436885845,
+  "v4_margin": 3.698768343688585
+}
