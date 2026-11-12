@@ -26,12 +26,19 @@ Returns a dict::
 Property paths (documented in reports/T2_WRAPPER.md)
 ------------------------------------------------------
 v4 routing (Task 18). Intervals come ONLY from configs/uncertainty_v4.yaml `applied_margin`; 'inf' => (nan, nan).
+v5: predict() delegates to ``fuelblend.api.predict_route.predict_fuel`` (the BASE scoring route): pure data from the frozen
+provider grid (never rebuilt), a component with no own data for a property is replaced by a nearest same-kind representative
+for that property only, non-hydrocarbons are unmapped, and margins apply only when nothing was substituted or unmapped.
 composition_kind="known" (default): viscosity raw Refutas (any n_comp) with the lab_mixtures.raw_refutas margin of the
            temperature bin; density ideal volume with side-specific lab_mixtures.ideal_volume over/under margins.
            Hydrocarbons only; a bin without a valid margin is not certified.
-composition_kind="reconstructed": viscosity recalibrated Refutas (-40..20 C; raw Refutas outside, uncertified) → GN mass →
-           pure GBM fallback; density margin density_kg_m3.crc647_ideal_volume.all_T; fuel_type='jet' required.
-flash    : Le Chatelier + Raoult (Antoine, LFL); margin = max(lab ideal, D93 ideal) applied_margin; fallback GBM = uncertified
+composition_kind="reconstructed": viscosity recalibrated Refutas (-40..20 C; raw Refutas outside, uncertified);
+           density margin density_kg_m3.crc647_ideal_volume.all_T; fuel_type='jet' required.
+           Viscosity and density are None (status T_out_of_grid) outside the 230-470 K grid.
+flash    : ideal Le Chatelier + Raoult on the anchored Antoine / LFL registry with the LFL overlay (U1), independent of T_K;
+           margin = max(lab ideal, D93 ideal) applied_margin (lab 3.70 C, set by one system: warning lab_margin_set_by_one_system);
+           the v4 routing value is variants['v4_designated'] on predict_fuel. There is no fallback model: if flash fails after
+           substitution the value is None and the method 'none'.
 The mixture-residual GBM is opt-in (use_mixture_residual=True) and has no margin. No model is ever trained at load:
 a missing bundle raises FileNotFoundError naming the command that builds it.
 Margins were validated on CRC 647 jet fuels only: pass fuel_type='jet' or in_domain is False.
@@ -68,8 +75,6 @@ _COMPOUNDS_CSV  = _BASE / "data" / "unified" / "compounds.csv"
 _MODEL_TABLE    = _BASE / "data" / "processed" / "model_table.csv"
 
 T_DOMAIN_LO, T_DOMAIN_HI = 230.0, 470.0   # K
-P_TOTAL = 101.325                           # kPa
-FLASH_LO_K, FLASH_HI_K = -150.0 + 273.15, 400.0 + 273.15
 VISC_RECAL_T_C = (-40.0, 20.0)       # CRC 647 window the Refutas recalibration + its yaml margin were validated on
 DENSITY_MARGIN_T_C = (-0.2, 69.5)    # CRC 647 density residual temperature range (yaml scope)
 CERTIFIED_FUEL_KIND = "jet"          # every yaml margin was validated on CRC 647 / AJFTD jet fuels only
@@ -80,7 +85,7 @@ MARGIN_KEYS = {
     ("viscosity_dyn_mPas", "refutas_recalibrated"): ["viscosity_kin_cSt.crc647.recalibrated_refutas.all_T"],
     ("density_kg_m3", "dens_idvol"): ["density_kg_m3.crc647_ideal_volume.all_T"],
     # yaml recommendation: NOT the 0-floored D93 margin alone; use the larger of the lab and D93 applied margins
-    ("flash_point_C", "chat"): ["flash_point_C.lab_mixtures.ideal", "flash_point_C.real_fuels_D93_reconstructed.ideal"],
+    ("flash_point_C", "ideal_le_chatelier_anchored"): ["flash_point_C.lab_mixtures.ideal", "flash_point_C.real_fuels_D93_reconstructed.ideal"],
 }
 # composition_kind="known": raw Refutas / ideal volume + LAB-mixture margins (hydrocarbon-only, not jet specific).
 # Viscosity margins are binned by temperature (same bins as engine_v4.viscosity_t_bin); density margins are side-specific:
@@ -460,15 +465,6 @@ def _dens_idvol(inchikeys, w_mass, T_K) -> float | None:
     return (1.0 / inv) if inv > 0 else None
 
 
-# ── Antoine + Le Chatelier flash ─────────────────────────────────────────────
-
-def _psat_kpa(A, B, C, T_K: float) -> float:
-    d = T_K + C
-    if not math.isfinite(d) or d <= 1.0:
-        return math.nan
-    return float(10.0 ** (A - B / d))
-
-
 def _mole_from_mass(inchikeys, w_mass) -> list[float] | None:
     comp_df = _load_compounds()
     num = []
@@ -478,67 +474,6 @@ def _mole_from_mass(inchikeys, w_mass) -> list[float] | None:
         num.append(float(wi) / float(comp_df.loc[ik, "mw"]))
     s = sum(num)
     return [v / s for v in num] if s > 0 else None
-
-
-def _flash_lechatelier(inchikeys, x_mole, warnings_out: list[str], lfl_temp=True) -> float | None:
-    """Le Chatelier + Raoult. Returns flash point °C or None."""
-    from scipy.optimize import brentq
-
-    comp_df = _load_compounds()
-    A, B, C, lfl = [], [], [], []
-
-    for ik in inchikeys:
-        if ik not in comp_df.index:
-            warnings_out.append(f"no_antoine: {ik} not in registry")
-            return None
-        row = comp_df.loc[ik]
-        if pd.isna(row.get("antoine_A")) or pd.isna(row.get("antoine_B")) or pd.isna(row.get("antoine_C")):
-            warnings_out.append(f"no_antoine: {ik} missing Antoine constants")
-            return None
-        if pd.isna(row.get("lfl_vol_pct")):
-            warnings_out.append(f"no_lfl: {ik} missing LFL")
-            return None
-        # Antoine window check
-        Tlo = float(row["antoine_Tlo"]) if pd.notna(row.get("antoine_Tlo")) else 0.0
-        Thi = float(row["antoine_Thi"]) if pd.notna(row.get("antoine_Thi")) else 9999.0
-        if FLASH_LO_K > Thi + 5 or FLASH_HI_K < Tlo - 5:
-            warnings_out.append(f"antoine_out_of_range: {ik} Antoine window [{Tlo:.0f},{Thi:.0f}] K "
-                                 f"does not overlap flash search range")
-            return None
-        A.append(float(row["antoine_A"]))
-        B.append(float(row["antoine_B"]))
-        C.append(float(row["antoine_C"]))
-        lfl.append(float(row["lfl_vol_pct"]) / 100.0)
-
-    x = np.asarray(x_mole, float)
-    if x.sum() <= 0:
-        return None
-
-    def haz(T_K: float) -> float:
-        tc = T_K - 273.15
-        fac = max(1.0 - 0.000721 * (tc - 25.0), 0.05) if lfl_temp else 1.0
-        h = 0.0
-        for xi, a, b, c, l in zip(x, A, B, C, lfl):
-            p = _psat_kpa(a, b, c, T_K)
-            if not math.isfinite(p):
-                return math.nan
-            h += xi * p / (P_TOTAL * l * fac)
-        return h - 1.0
-
-    lo, hi = FLASH_LO_K, FLASH_HI_K
-    try:
-        flo, fhi = haz(lo), haz(hi)
-        if not math.isfinite(flo) or flo > 0:
-            warnings_out.append("no_root_in_bracket: H(T_lo)>0 or NaN for flash Le Chatelier")
-            return None
-        if not math.isfinite(fhi) or fhi < 0:
-            warnings_out.append("no_root_in_bracket: H(T_hi)<0 or NaN for flash Le Chatelier")
-            return None
-        T_flash = brentq(haz, lo, hi, xtol=1e-6, rtol=1e-10)
-        return float(T_flash - 273.15)
-    except Exception as e:
-        warnings_out.append(f"solver_error: {e}")
-        return None
 
 
 # =============================================================================
@@ -706,46 +641,11 @@ def _predict_density(inchikeys, w_mass, x_mole, T_K, use_residual: bool = False)
 
 
 def _predict_flash(inchikeys, w_mass, x_mole, T_K) -> dict:
-    """Flash-point prediction path with Le Chatelier fallback to pure-GBM weighted average."""
-    warns = list(_check_T_domain(T_K))
-    comp_df = _load_compounds()
-
-    # Check non-HC
-    for ik in inchikeys:
-        if ik in comp_df.index and not bool(comp_df.loc[ik, "is_hc"]):
-            warns.append(f"non_hc_component: {ik} is not a hydrocarbon; flash prediction unreliable")
-
-    flash_warns: list[str] = []
-    val = _flash_lechatelier(inchikeys, x_mole, flash_warns, lfl_temp=True)
-
-    if val is not None:
-        method = "chat"
-        warns.extend(flash_warns)
-        warns.append("flash_data_thin: mixture flash training is sparse (123 binary + 3 multi rows)")
-        return {"value": val, "std": None, "method": method, "warnings": warns}
-
-    warns.extend(flash_warns)
-
-    # Fallback: weighted pure-GBM flash estimates
-    wt_vals, wt_stds = [], []
-    for ik, wi in zip(inchikeys, w_mass):
-        smi = str(comp_df.loc[ik, "smiles"]) if ik in comp_df.index and pd.notna(comp_df.loc[ik, "smiles"]) else ""
-        cls_val = str(comp_df.loc[ik, "cls"]) if ik in comp_df.index and pd.notna(comp_df.loc[ik, "cls"]) else "other"
-        mean_raw, std_raw = _pure_gbm_predict("flash_point_C", ik, smi, cls_val, T_K)
-        if mean_raw is not None:
-            wt_vals.append((wi, float(mean_raw)))
-            wt_stds.append((wi, float(std_raw) if std_raw else 0.0))
-
-    if wt_vals:
-        gbm_val = float(sum(wi * v for wi, v in wt_vals))
-        gbm_std = float(math.sqrt(sum((wi * s) ** 2 for wi, s in wt_stds)))
-        warns.append("flash_data_thin: mixture flash training is sparse (123 binary + 3 multi rows)")
-        warns.append("flash_fallback_gbm_mix: Le Chatelier unavailable (missing Antoine/LFL); "
-                     "using mass-weighted average of pure-GBM flash — mixture non-ideality ignored")
-        return {"value": gbm_val, "std": gbm_std, "method": "gbm_mix", "warnings": warns}
-
-    warns.append("flash_none: cannot predict flash point (no Antoine/LFL and no pure GBM coverage)")
-    return {"value": None, "std": None, "method": "none", "warnings": warns}
+    """Flash point on the BASE scoring route (``predict_route``); returns the legacy {value, std, method, warnings}.
+    No fallback: a flash that cannot be computed after substitution is value None / method 'none' with the reason."""
+    from fuelblend.api import predict_route
+    r = predict_route.predict_fuel(list(zip(inchikeys, w_mass)), T_K=T_K)["flash_point_C"]
+    return {"value": r["value"], "std": None, "method": r["method"], "warnings": list(r["warnings"])}
 
 
 # =============================================================================
@@ -936,10 +836,9 @@ def predict(
         Refutas for any number of components and density is ideal volume mixing; both are judged by the hydrocarbon
         lab-mixture margins (viscosity binned by temperature, density side-specific), which are not jet specific.
         A temperature bin without a valid margin (below 10 C at present) is not certified.
-        Cold limit: below about 273 K the tier-1 pure densities do not cover the temperature, so known-composition
-        viscosity is NOT raw Refutas there; it falls to gn_mass / gn_fallback (e.g. at 253.15 K pure decane gn_mass
-        1.755 vs decane/dodecane 0.999/0.001 gn_fallback 1.966 mPa.s, a 12 % jump). Both are in_domain=False, so
-        nothing is certified from the cold path.
+        Cold limit: viscosity and density come from the frozen 230-470 K pure-property grid, so the cold path is
+        raw Refutas as well; a bin without a valid margin (below 283 K at present) is in_domain=False. Outside the
+        grid viscosity and density are None with status T_out_of_grid (flash does not depend on T).
         "reconstructed": the composition was reconstructed from bulk fuel properties (CRC 647 style); the CRC
         recalibrated-Refutas path and its CRC margins are used and fuel_type='jet' is still required for in_domain.
     mole_fractions : list of float, optional
@@ -961,25 +860,35 @@ def predict(
         T_K = float(T_C) + 273.15
     T_K = float(T_K)
 
-    inchikeys, w_mass, global_warn = _resolve_components(composition, mole_fractions)
+    from fuelblend.api import predict_route
+    if use_mixture_residual:
+        _load_mix_models()                      # FileNotFoundError naming the build command when the bundle is missing
+    route = predict_route.predict_fuel(list(composition), T_K=T_K, fuel_type=fuel_type,
+                                       mole_fractions=mole_fractions, composition_kind=composition_kind)
+    global_warn = list(route["warnings"])
+    visc, dens, flash = route["viscosity_dyn_mPas"], route["density_kg_m3"], route["flash_point_C"]
+    for res in (visc, dens, flash):
+        res["warnings"] = list(_check_T_domain(T_K)) + res["warnings"]
 
-    # Non-HC check at global level
-    comp_df = _load_compounds()
-    for ik in inchikeys:
-        if ik in comp_df.index and not bool(comp_df.loc[ik, "is_hc"]):
-            global_warn.append(f"non_hc_input: {ik} is not a hydrocarbon — model trained on HC only")
-
-    x_mole = _mole_from_mass(inchikeys, w_mass)
-    if x_mole is None:
-        x_mole = w_mass   # fallback (equal mole/mass only for equal MW — wrong but non-crashing)
-        global_warn.append("mole_fraction_approx: could not compute exact mole fractions from MW; using mass fractions")
-
-    visc  = _predict_viscosity(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual,
-                               composition_kind=composition_kind)
-    dens  = _predict_density(inchikeys, w_mass, x_mole, T_K, use_residual=use_mixture_residual)
-    flash = _predict_flash(inchikeys, w_mass, x_mole, T_K)
-    for prop, res in (("viscosity_dyn_mPas", visc), ("density_kg_m3", dens), ("flash_point_C", flash)):
-        _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type, composition_kind)
+    if use_mixture_residual:                    # opt-in GBM correction on top of the route value; no yaml margin exists for it
+        inchikeys = [c["ik"] for c in route["components"]]
+        w_mass = [c["w"] for c in route["components"]]
+        x_mole = _mole_from_mass(inchikeys, w_mass) or w_mass
+        mix_row = _make_mix_row(inchikeys, w_mass, x_mole, T_K, len(inchikeys))
+        for prop, res in (("viscosity_dyn_mPas", visc), ("density_kg_m3", dens)):
+            if res["value"] is None:
+                continue
+            mean, std = _mix_residual_predict(prop, mix_row)
+            if mean is None:
+                continue
+            if prop == "viscosity_dyn_mPas":
+                res["value"] = float(math.exp(math.log(res["value"]) + mean))
+                res["std"] = float(res["value"] * abs(std)) if std else None
+            else:
+                res["value"] = float(res["value"] + mean)
+                res["std"] = float(abs(std)) if std else None
+            res["method"] = f"residual_gbm+{res['method']}"
+            _attach_uncertainty(prop, res, inchikeys, T_K, fuel_type, composition_kind)
 
     unc = {p: {"value": None, "lo": math.nan, "hi": math.nan, "model_name": "none", "in_domain": False,
                "reason": r, "tuple": (None, math.nan, math.nan, "none", False)}
