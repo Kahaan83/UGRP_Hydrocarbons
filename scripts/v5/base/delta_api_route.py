@@ -131,7 +131,8 @@ def main() -> None:
                     before_bias=np.nan, after_bias=np.nan, after_mae=np.nan))
     out.append(dict(reading="R-API-3", n_rows=len(d), max_abs_diff=float((~d.r3_identical).sum()), **{"pass": bool(d.r3_identical.all())},
                     before_bias=np.nan, after_bias=np.nan, after_mae=np.nan))
-    out.append(dict(reading="R-API-4", n_rows=0, max_abs_diff=np.nan, **{"pass": "pending_task_6"},
+    n4, m4, ok4 = r_api_4()
+    out.append(dict(reading="R-API-4", n_rows=n4, max_abs_diff=m4, **{"pass": ok4},
                     before_bias=np.nan, after_bias=np.nan, after_mae=np.nan))
     dd = pd.DataFrame(out)
     dd.to_csv(OUT / "delta.csv", index=False, float_format="%.10g")
@@ -141,6 +142,31 @@ def main() -> None:
     for r in out:
         print(r["reading"], "PASS" if r["pass"] is True else ("FAIL" if r["pass"] is False else r["pass"]))
     demo()
+
+
+def r_api_4():
+    """Both D4 v5pool recipes: the design-side prediction against predict_fuel on the like-for-like tolerance rows of
+    ``library_route.design_forward_check`` (flash 0.01 C, kinematic viscosity 1e-6 relative, composition-H net heat 1e-9).
+    Returns (n tolerance rows, max normalised difference = max(|d|/tol), all pass).  Density, freezing, smoke and the limit
+    verdicts are reported in ``results/v5/BASE/delta_api_route/designs/*/forward_check.csv``, not judged here."""
+    import json
+    from fuelblend.design import library_route as LR
+    d4 = pd.read_csv(ROOT / "results" / "v5" / "D4" / "designs_v4.csv").set_index("design_id")
+    pool = ["n-decane", "n-undecane", "n-dodecane", "butylcyclohexane", "decalin_trans", "1,2,4-trimethylbenzene"]
+    margins = ROOT / "results" / "v5" / "S1" / "uncertainty_v5.yaml"
+    models = LR.build_route_models(pool)
+    n, mx, ok = 0, 0.0, True
+    for did, spec in (("jet_astm_d1655__v5pool", "astm:jet_a"), ("jet_bis_is1571__v5pool", "bis:jet_a1")):
+        res = LR.evaluate_recipe(spec, models, json.loads(d4.loc[did, "weights"]), margins_path=margins)
+        fc = LR.design_forward_check(res)
+        j = fc[fc["tol"].notna()]
+        ok &= bool((j["pass"] == True).all()) and len(j) > 0          # noqa: E712
+        n += len(j)
+        for r in j.itertuples():
+            scale = r.tol * (abs(r.forward_pred) if r.constraint.startswith("kin_visc_") else 1.0)
+            mx = max(mx, r.abs_diff / scale)
+        print(did + "\n" + fc[["constraint", "design_pred", "forward_pred", "tol", "pass", "design_meets", "api_meets"]].to_string(), flush=True)
+    return n, float(mx), bool(ok)
 
 
 def demo() -> None:

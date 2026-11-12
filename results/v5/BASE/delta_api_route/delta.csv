@@ -2,4 +2,4 @@ reading,n_rows,max_abs_diff,pass,before_bias,after_bias,after_mae
 R-API-1,79,4.981598494e-07,True,-21.656749,-0.6915117462,2.576047878
 R-API-2,729,1.058914426e-15,True,,,
 R-API-3,81,0,True,,,
-R-API-4,0,,pending_task_6,,,
+R-API-4,6,0.004919107789,True,,,
