@@ -140,3 +140,163 @@ def test_resolve_mole_fractions(ctx):
     d = {x.n_carbon: x.w for x in c}
     m10, m12 = ctx.mw(c[0].smiles if c[0].n_carbon == 10 else c[1].smiles), ctx.mw(c[0].smiles if c[0].n_carbon == 12 else c[1].smiles)
     assert d[10] == pytest.approx(m10 / (m10 + m12))
+
+
+# ---------------------------------------------------------------- Task 2: predict_fuel and predict() on the route
+import inspect
+import math
+import time
+
+from fuelblend.api import predict_blend as pb
+from fuelblend.baselines.flash_unifac import flash_point_unifac_detail
+from fuelblend.eval.composition_route import refutas_nu_safe
+
+MESITYLENE = "Cc1cc(C)cc(C)c1"
+BLEND3 = {DECANE: 0.5, DODECANE: 0.3, TOLUENE: 0.2}
+PROPS4 = ("viscosity_kin_cSt", "viscosity_dyn_mPas", "density_kg_m3", "flash_point_C")
+
+
+def test_three_component_physics(ctx):
+    r = pr.predict_fuel(BLEND3, T_K=313.15)
+    assert set(r) >= {"T_K", "warnings", "components"}
+    f = r["flash_point_C"]
+    assert f["method"] == "ideal_le_chatelier_anchored" and f["status"] == "ok"
+    assert f["coverage"]["substituted_mass"] == 0 and f["coverage"]["unmapped_mass"] == 0
+    comps = pr.resolve(BLEND3)
+    pm = pr.map_for(comps, pr.predicates(ctx)["HAS_GRID"], ctx.reps)
+    nu, rho = refutas_nu_safe(ctx.prov, pm.idx, pm.w, 313.15)
+    assert r["viscosity_kin_cSt"]["value"] == pytest.approx(nu, abs=1e-9, rel=0)
+    assert r["density_kg_m3"]["value"] == pytest.approx(rho, abs=1e-9, rel=0)
+    assert r["viscosity_dyn_mPas"]["value"] == pytest.approx(nu * rho / 1000.0, abs=1e-9, rel=0)
+    for p in PROPS4:
+        d = r[p]
+        assert set(d) >= {"value", "unit", "method", "status", "coverage", "lo", "hi", "margin", "in_domain",
+                          "indicative_interval", "variants", "warnings"}
+        assert d["status"] == "ok" and d["indicative_interval"] is None
+        assert set(d["coverage"]) == {"own_mass", "substituted_mass", "unmapped_mass", "substitutions"}
+
+
+def test_flash_overlay_designated(ctx):
+    r = pr.predict_fuel(BLEND3, T_K=313.15)
+    comps = pr.resolve(BLEND3)
+    pm = pr.map_for(comps, pr.predicates(ctx)["HAS_FLASH"], ctx.reps)
+    smi = [ctx.reg.smiles[i] for i in pm.idx]
+    x = pm.w / np.array([ctx.mw(s) for s in smi])
+    x = x / x.sum()
+    ov = flash_point_unifac_detail(smi, x, registry=pr._overlay_ctx().flash_reg, use_unifac=False)["flash_C"]
+    plain = flash_point_unifac_detail(smi, x, registry=ctx.flash_reg, use_unifac=False)["flash_C"]
+    f = r["flash_point_C"]
+    assert f["value"] == pytest.approx(ov, abs=1e-9, rel=0)
+    assert f["variants"]["v4_designated"] == pytest.approx(plain, abs=1e-9, rel=0)
+
+
+def test_mesitylene_warning():
+    r = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.4, MESITYLENE: 0.1}, T_K=298.15, fuel_type="jet")
+    f = r["flash_point_C"]
+    assert "antoine_suspect:mesitylene" in f["warnings"]
+    assert np.isfinite(f["lo"]) and "lab_margin_set_by_one_system" in f["warnings"]
+    r2 = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")
+    assert "antoine_suspect:mesitylene" not in r2["flash_point_C"]["warnings"]
+    assert "lab_margin_set_by_one_system" in r2["flash_point_C"]["warnings"]
+
+
+def test_flash_independent_of_T():
+    vals = [pr.predict_fuel(BLEND3, T_K=T)["flash_point_C"]["value"] for T in (233.15, 288.15, 313.15)]
+    assert vals[0] == vals[1] == vals[2] and math.isfinite(vals[0])
+
+
+def test_sixty_component_blend_runs_physics(ctx):
+    P = pr.predicates(ctx)
+    cand = [i for i in range(len(ctx.reg.ik)) if (P["HAS_GRID"](i) or P["HAS_FLASH"](i)) and pr.subkind(ctx.reg.smiles[i])
+            and 8 <= pr._mol_info(ctx.reg.smiles[i])[2] <= 16 and pr._mol_info(ctx.reg.smiles[i])[3]]
+    assert len(cand) >= 60
+    pick = np.random.default_rng(0).choice(cand, 60, replace=False)
+    comp = {ctx.reg.ik[int(i)]: 1.0 for i in pick}
+    t0 = time.time()
+    r = pr.predict_fuel(comp, T_K=298.15)
+    assert time.time() - t0 < 20
+    for p in PROPS4:
+        d = r[p]
+        assert d["method"] != "none" and d["status"] == "ok" and d["value"] is not None and math.isfinite(d["value"])
+
+
+def _unregistered_hcs(ctx, n):
+    P = pr.predicates(ctx)
+    out = []
+    for nc in range(9, 16):
+        for a in range(1, nc // 2):
+            for b in range(a + 1, nc - 1):
+                s = "".join("C(C)" if k in (a, b) else "C" for k in range(nc))
+                m = Chem.MolFromSmiles(s)
+                if m is None or inchi.MolToInchiKey(m) in ctx.reg.ik2i:
+                    continue
+                c = pr.resolve({s: 1.0})[0]
+                if (pr.map_for([c], P["HAS_GRID"], ctx.reps).substituted_mass == 1.0
+                        and pr.map_for([c], P["HAS_FLASH"], ctx.reps).substituted_mass == 1.0):
+                    out.append(s)
+                if len(out) == n:
+                    return out
+    return out
+
+
+def test_all_substituted_blend(ctx):
+    smis = _unregistered_hcs(ctx, 60)
+    assert len(smis) == 60
+    r = pr.predict_fuel({s: 1.0 for s in smis}, T_K=298.15, fuel_type="jet")
+    for p in PROPS4:
+        d = r[p]
+        assert d["coverage"]["substituted_mass"] == pytest.approx(1.0) and d["in_domain"] is False
+        assert d["value"] is not None and math.isfinite(d["value"]) and d["status"] == "ok"
+        assert math.isnan(d["lo"]) and math.isnan(d["hi"]) and d["margin"] is None
+
+
+def test_duplicates_and_zero_weights():
+    messy = pr.predict_fuel([(DECANE, 1.0), (_ik(DECANE), 2.0), ("C(CCCCCCCC)C", 0.0), (TOLUENE, 0.0), (DODECANE, 4.0)],
+                            T_K=298.15)
+    ref = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.5}, T_K=298.15)
+    assert len(messy["components"]) == 2
+    for p in PROPS4:
+        assert math.isfinite(messy[p]["value"])
+    ref = pr.predict_fuel({DECANE: 3.0 / 7.0, DODECANE: 4.0 / 7.0}, T_K=298.15)
+    for p in PROPS4:
+        assert messy[p]["value"] == pytest.approx(ref[p]["value"], rel=1e-12)
+
+
+def test_T_outside_grid():
+    for T in (200.0, 500.0):
+        r = pr.predict_fuel(BLEND3, T_K=T)
+        for p in ("viscosity_kin_cSt", "viscosity_dyn_mPas", "density_kg_m3"):
+            assert r[p]["value"] is None and r[p]["status"] == "T_out_of_grid" and r[p]["in_domain"] is False
+        assert r["flash_point_C"]["status"] == "ok" and math.isfinite(r["flash_point_C"]["value"])
+
+
+def test_non_hc_component():
+    r5 = pr.predict_fuel({DECANE: 0.55, DODECANE: 0.4, "CCO": 0.05}, T_K=298.15, fuel_type="jet")
+    assert any("non_hc" in w for w in r5["warnings"])
+    for p in ("viscosity_kin_cSt", "density_kg_m3", "flash_point_C"):
+        d = r5[p]
+        assert d["status"] == "ok" and d["coverage"]["unmapped_mass"] == pytest.approx(0.05)
+        assert d["in_domain"] is False and math.isnan(d["lo"]) and d["margin"] is None
+    r20 = pr.predict_fuel({DECANE: 0.4, DODECANE: 0.4, "CCO": 0.2}, T_K=298.15)
+    for p in ("viscosity_kin_cSt", "density_kg_m3", "flash_point_C"):
+        assert r20[p]["status"] == "low_coverage" and r20[p]["value"] is None
+
+
+def test_bad_smiles_raises():
+    with pytest.raises(ValueError):
+        pr.predict_fuel({"not_a_smiles(((": 1.0})
+
+
+def test_no_gbm_mix_anywhere():
+    assert "gbm_mix" not in inspect.getsource(pb)
+    assert not hasattr(pb, "_flash_lechatelier")
+
+
+def test_predict_wrapper_keys():
+    r = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], T_K=298.15)
+    assert {"viscosity_dyn_mPas", "density_kg_m3", "flash_point_C", "uncertified", "T_K", "warnings"} <= set(r)
+    for p in ("viscosity_dyn_mPas", "density_kg_m3", "flash_point_C"):
+        assert isinstance(r[p]["value"], float) and "tuple" in r[p] and "model_name" in r[p]
+    assert r["flash_point_C"]["method"] == "ideal_le_chatelier_anchored"
+    f = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.5}, T_K=298.15)["flash_point_C"]["value"]
+    assert r["flash_point_C"]["value"] == f

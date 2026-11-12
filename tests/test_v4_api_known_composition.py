@@ -24,11 +24,11 @@ def test_binary_is_continuous_with_pure():
     near = predict([(DEC, 0.999), (DOD, 0.001)], T_K=283.15, composition_kind="known")["viscosity_dyn_mPas"]
     assert pure["method"] == near["method"] == "refutas_raw"
     assert abs(near["value"] / pure["value"] - 1) < 0.01
-    # Cold check (253.15 K): NOT Refutas (tier-1 densities start at 273.15 K). Pure decane takes gn_mass, the near-pure blend
-    # takes gn_fallback; we assert those methods explicitly and that both are uncertified (in_domain False).
+    # Cold check (253.15 K): v5 reads the frozen 230-470 K grid, so the cold path is raw Refutas too and stays continuous
+    # (the v4 gn_mass / gn_fallback paths, a 12 % jump, are gone).  The cold lab bins have no margin: nothing is certified.
     pc = predict([(DEC, 1.0)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
     nc = predict([(DEC, 0.999), ("CCCCCCCC", 0.001)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
-    assert pc["method"] != "refutas_raw" and nc["method"] != "refutas_raw"
+    assert pc["method"] == nc["method"] == "refutas_raw"
     assert pc["in_domain"] is False and nc["in_domain"] is False
     assert abs(nc["value"] / pc["value"] - 1) < 0.01
 
