@@ -70,3 +70,13 @@ Reading for the one new T1 cell (ideal-volume density on ThermoML 2020 systems a
 v2 ThermoML extract, selected by system_id and by DOI): **absolute bias <= 2 kg/m3 and 90 % of systems inside the v4 lab density
 margin** (4.5866 kg/m3 over, 3.2499 kg/m3 under). These systems have never been scored for density, so the cell is labelled `dev`
 ("first read").
+
+## Note 2026-11-12 (Task 6 readings, heat / smoke / distillation)
+
+Readings (text fixed by the plan, Task 6):
+* heat: group additivity beats a within-method constant on measured rows (n >= 8 groups).
+* smoke and distillation: reported, no skill claim; the verdict comes from the rule.
+
+Provenance, stated plainly: the plan required this note to be committed before scoring. It was not. `rows_t2_bulk.csv`
+was generated earlier on 2026-11-12, and the heat cells were printed in the session before this commit. This reading is
+therefore NOT a pre-registration. B6 is not fixed for these three cells. The reading text is the plan's, unchanged.
