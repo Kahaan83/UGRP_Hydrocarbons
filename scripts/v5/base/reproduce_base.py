@@ -30,7 +30,7 @@ FAST = [["scripts/v5/base/cells_t2_bulk.py", "--from-rows"], ["scripts/v5/base/c
 
 
 def manifest_paths() -> list[Path]:
-    return sorted(p for p in BASE.rglob("*") if p.is_file())
+    return sorted(p for p in BASE.rglob("*") if p.is_file() and not p.relative_to(BASE).parts[0].startswith("delta_"))   # deltas are measured against the frozen files, not part of them
 
 
 def run(cmd: list[str]) -> None:
