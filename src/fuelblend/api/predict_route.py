@@ -347,6 +347,7 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
         fl["warnings"].append("lab_margin_set_by_one_system")
     _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
+    _attach_indicative(out, fuel_type, T_K)
     return out
 
 
@@ -567,3 +568,69 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
     out["heat_net_MJ_kg"] = _finish(props["heat_net_MJ_kg"], HEAT_YAML_PROP, iks, T_K, fuel_type, composition_kind)
     out["smoke_point_mm"] = props["smoke_point_mm"]
     _aromatics(out, comps, ctx, P)
+
+
+# ====================================================================================================================
+# indicative T2 interval (D6): descriptive, separate from lab margins, never read by design
+# ====================================================================================================================
+INDICATIVE_KIND = "empirical_T2_descriptive_not_held_out"
+INDICATIVE_MAX_UNMAPPED = 0.10
+_BULK_ROWS_NAME = {"heat_net_MJ_kg": "heat_of_combustion_net_MJ_kg"}      # API key -> BASE rows_t2_bulk.csv property
+_LN_PROPS = ("viscosity_kin_cSt",)                                         # residuals in ln space; interval multiplicative
+
+
+@lru_cache(maxsize=1)
+def _indicative_tables() -> dict:
+    """Frozen BASE T2 residual tables, built once.  {prop: [(T_K or nan, q90_abs, n_groups), ...]}.
+
+    Flash: |pred_designated - measured| over the chosen row of each group in rows_t2_flash.csv.  Note: the API's designated flash
+    is the LFL overlay (U1), so this interval comes from the v4-designated residuals; the label stays
+    empirical_T2_descriptive_not_held_out.  Bulk: designated variant, status ok, not low_coverage, one row per group and BASE T bin;
+    viscosity error is ln(pred/measured), the others pred - measured."""
+    import pandas as pd
+    base = ROOT / "results" / "v5" / "BASE"
+    tabs: dict = {}
+    f = pd.read_csv(base / "rows_t2_flash.csv")
+    f = f[(f.status == "ok") & (~f.low_coverage.astype(bool)) & f.chosen.astype(bool)].drop_duplicates("group")
+    e = np.abs(f.pred_designated.to_numpy(float) - f.measured.to_numpy(float))
+    tabs["flash_point_C"] = [(math.nan, float(np.quantile(e, 0.9)), int(len(f)))]
+    b = pd.read_csv(base / "rows_t2_bulk.csv")
+    b = b[(b.variant == "designated") & (b.status == "ok") & (~b.low_coverage.astype(bool))]
+    for api_key in ("viscosity_kin_cSt", "density_kg_m3", "heat_net_MJ_kg", "smoke_point_mm"):
+        d = b[b.property == _BULK_ROWS_NAME.get(api_key, api_key)].drop_duplicates(["T_K", "group"])
+        if api_key in _LN_PROPS:
+            d = d[(d.measured > 0) & (d.pred > 0)]
+            err = np.log(d.pred.to_numpy(float)) - np.log(d.measured.to_numpy(float))
+        else:
+            err = d.pred.to_numpy(float) - d.measured.to_numpy(float)
+        if len(d) == 0:
+            continue
+        rows = []
+        for tk, idx in d.reset_index(drop=True).groupby(d.T_K.fillna(-1.0).reset_index(drop=True)).groups.items():
+            ee = np.abs(err[list(idx)])
+            rows.append((math.nan if tk < 0 else float(tk), float(np.quantile(ee, 0.9)), int(len(ee))))
+        tabs[api_key] = rows
+    return tabs
+
+
+def _indicative_interval(prop: str, T_K: float, value: float) -> Optional[dict]:
+    """90 % abs-error quantile of the frozen T2 residuals, nearest BASE T bin.  None when no table exists for ``prop``.
+    Gating on fuel type and unmapped mass is done by the caller.  Never feeds lo/hi."""
+    rows = _indicative_tables().get(prop)
+    if not rows or value is None or not np.isfinite(value):
+        return None
+    withT = [r for r in rows if np.isfinite(r[0])]
+    q, n = (min(withT, key=lambda r: abs(r[0] - T_K))[1:] if withT else rows[0][1:])
+    lo, hi = (value * math.exp(-q), value * math.exp(q)) if prop in _LN_PROPS else (value - q, value + q)
+    return {"lo": float(lo), "hi": float(hi), "q90_abs": float(q), "n_groups": int(n), "kind": INDICATIVE_KIND}
+
+
+def _attach_indicative(out: dict, fuel_type, T_K: float) -> None:
+    if str(fuel_type).lower() != "jet":
+        return
+    for k, r in out.items():
+        if not isinstance(r, dict) or "indicative_interval" not in r or r.get("value") is None:
+            continue
+        if r["coverage"]["unmapped_mass"] > INDICATIVE_MAX_UNMAPPED:
+            continue
+        r["indicative_interval"] = _indicative_interval(k, T_K, r["value"])
