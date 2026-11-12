@@ -50,6 +50,7 @@ class RouteLibrary(M.Library):
         from fuelblend.api import predict_route as pr
         self._pr = pr
         self._ctx = pr.get_ctx()
+        self.provider = pr.ReadOnlyProvider(self.reg, pr.GRID_NPZ)     # frozen grid: never computes, never writes
         self._table_names = set(self.smiles)
         self._table_ik = {self.ik(n): n for n in self._table_names}
         self._route: dict = {}                    # (name, prop) -> (value, status) for compounds outside the table
