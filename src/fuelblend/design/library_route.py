@@ -12,6 +12,9 @@ design to the name-based pool).  A compound that is not in the table gets route 
 
 ``v()`` returns route values too and records every non-verified one in ``nonverified_used``.  ``build_route_models`` turns
 that record into ``margin_missing_reason`` so the unchanged engine reports the constraint as ``uncertified``.
+Flash is computed on the LFL overlay registry (U1), the same registry the API's designated flash uses.  Disclosure: kinematic
+viscosity of a non-table member comes from the pure-property grid, which is fitted and unpinned; the same grid rho is flagged
+``route_grid`` in density but is used silently inside viscosity (no verified viscosity constant exists, so it stays certifiable).
 No representatives are used inside a pool: a member without its own data is refused by name.  ``ensure()`` is never called.
 """
 from __future__ import annotations
@@ -19,6 +22,7 @@ from __future__ import annotations
 import dataclasses
 import math
 import re
+import warnings
 from pathlib import Path
 
 import numpy as np
@@ -161,13 +165,23 @@ def _probe(L: RouteLibrary, pm: E.PropertyModel) -> set:
 
 
 def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
-    if pm.name.startswith("le_chatelier"):                         # flash reads the anchored registry, not L.v
-        inner = pm.fn
+    if pm.name.startswith("le_chatelier"):                         # flash on the LFL overlay registry (U1), like the API
+        unifac = "unifac" in pm.name
 
-        def fn(pool, w, T_C, _inner=inner):
+        def fn(pool, w, T_C, _u=unifac):
             for n in pool:
                 L.touch(n, "flash")
-            return _inner(pool, w, T_C)
+            reg = L._pr._overlay_ctx().flash_reg
+            smi = [L.smiles[n] for n in pool]
+            if any(fu._lookup(x, reg) is None for x in smi):
+                raise ModelUnavailable("no Antoine/LFL entry in the flash registry")
+            x = M._mole_frac(L, pool, w)
+            with np.errstate(all="ignore"), warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                d = fu.flash_point_unifac_detail(smi, x, registry=reg, use_unifac=_u)
+            if d["status"] != "ok" or not np.isfinite(d["flash_C"]):
+                raise ModelUnavailable(f"flash solver status {d['status']}")
+            return float(d["flash_C"])
         pm = dataclasses.replace(pm, fn=fn)
     used = _probe(L, pm)
     if not used:
@@ -197,6 +211,28 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     return models
 
 
+LAB_MARGIN_NOTE = "lab_margin_set_by_one_system"
+
+
+def default_n_starts(pool) -> int:
+    return 8 if len(pool) > 20 else 30
+
+
+def annotate(result: E.DesignResult) -> E.DesignResult:
+    """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
+    the lab margin is the group score of the single mesitylene system)."""
+    for c in result.constraints:
+        if c.prop == "flash" and c.applied_margin is not None and math.isfinite(c.applied_margin)                 and LAB_MARGIN_NOTE not in c.reason:
+            c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
+    return result
+
+
+def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None) -> E.DesignResult:
+    pool = models["pool"]
+    return annotate(E.design(spec_name, pool, models, n_starts=n_starts or default_n_starts(pool), seed=seed,
+                             margins_path=margins_path))
+
+
 # ------------------------------------------------------------------------------------------------ forward check
 @dataclasses.dataclass
 class _Row:
@@ -220,15 +256,15 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
     w = w / w.sum()
     spec = E.load_spec(spec_name)
     cons = E.evaluate_blend(spec, pool, w, models, E.load_margins(margins_path))
-    return E.DesignResult(weights=dict(zip(pool, map(float, w))), predictions={c.key: c.prediction for c in cons},
+    return annotate(E.DesignResult(weights=dict(zip(pool, map(float, w))), predictions={c.key: c.prediction for c in cons},
                           margins={c.key: c.applied_margin for c in cons}, passed=False, extrapolating=False,
-                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool)
+                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool))
 
 
 def design_forward_check(result: E.DesignResult, T_C_visc: float = -20.0) -> pd.DataFrame:
     """Re-predict ``result.weights`` through ``predict_fuel`` and compare with the design-side predictions.
 
-    Tolerances (R-API-4): flash 0.01 C against the plain-registry flash (``variants['v4_designated']``), viscosity 1e-6
+    Tolerances (R-API-4): flash 0.01 C against the API designated (overlay) flash, viscosity 1e-6
     relative, net heat exact (1e-9, like-for-like composition-H model).  Density and freezing differences are reported
     with the cause, not judged."""
     from fuelblend.api import predict_route as pr
@@ -253,9 +289,10 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float = -20.0) -> pd.
                          "(table rho15 is a listed value, the grid is a fitted curve)", True))
     if "flash_point_C" in cons:
         fl = f_15["flash_point_C"]
-        rows.append(_Row("flash_point_C", dp("flash_point_C"), fl["variants"]["v4_designated"], 0.01,
-                         "forward value compared is variants['v4_designated'] (plain registry); the API's designated "
-                         f"value uses the LFL overlay and is {fl['value']:.4f} C"))
+        rows.append(_Row("flash_point_C", dp("flash_point_C"), fl["value"], 0.01,
+                         "design and API both use the LFL-overlay registry (U1)"))
+        rows.append(_Row("flash_point_C[v4_designated]", dp("flash_point_C"), fl["variants"]["v4_designated"], float("nan"),
+                         "informational: plain registry (no LFL overlay); the diff is the overlay effect", True))
     if "freezing_point_C" in cons:
         rows.append(_Row("freezing_point_C", dp("freezing_point_C"), f_15["freezing_point_C"]["value"], float("nan"),
                          "design: Tm/dHfus from pure_props_v5 (listed values) in mole-fraction ideal SvL; forward: Tm/dHfus "

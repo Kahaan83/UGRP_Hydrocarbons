@@ -32,7 +32,8 @@ def _design_unswapped(pool_key, spec, n_starts=30):
 
 
 def test_name_pool_unchanged():
-    """RouteLibrary on table names gives the library designs of D4 (build_models, not the freezing swap)."""
+    """RouteLibrary on table names gives the library designs of D4 (build_models, not the freezing swap, not the flash overlay).
+    Against the plain Library: 1e-9.  Against designs_v4.csv: 5.1e-5, because the CSV weights are rounded to 4 decimals."""
     d4 = pd.read_csv(ROOT / "results" / "v5" / "D4" / "designs_v4.csv").set_index("design_id")
     base = M.build_models(M.library(str(LR.PURE_PROPS_V5)))
     for did, spec in SPECS.items():
@@ -124,3 +125,19 @@ def test_forward_check_d4(did):
         r = df[df.constraint == key].iloc[0]
         assert isinstance(r.cause, str) and r.cause.strip()
         assert np.isfinite(r.abs_diff)
+
+
+def test_flash_on_overlay_and_note():
+    from fuelblend.api import predict_route as pr
+    models = LR.build_route_models(V5POOL)
+    res = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.3, "n-dodecane": 0.3, "butylcyclohexane": 0.4}, margins_path=MARGINS)
+    comp = {s: res.weights[n] for n, s in zip(V5POOL, _smiles(V5POOL)) if res.weights[n] > 0}
+    fl = pr.predict_fuel(comp, T_K=288.15, fuel_type="jet")["flash_point_C"]
+    c = next(c for c in res.constraints if c.prop == "flash")
+    assert abs(c.prediction - fl["value"]) < 0.01
+    if c.applied_margin is not None and np.isfinite(c.applied_margin):
+        assert LR.LAB_MARGIN_NOTE in c.reason
+
+
+def test_default_n_starts():
+    assert LR.default_n_starts(range(21)) == 8 and LR.default_n_starts(range(6)) == 30
