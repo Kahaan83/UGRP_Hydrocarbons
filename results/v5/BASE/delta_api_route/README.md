@@ -54,3 +54,18 @@ Flash on the T2 headline set (70 groups; chosen, not low coverage, status ok):
 The "after" values equal the frozen `lfl_overlay` pooled cell of `cells_t2_flash.csv` (checked by `test_delta_readings_pass`, read from the CSV). These are descriptive T2 numbers on the set the route was developed against, not held-out.
 
 60-component demo (`forward_demo_60.csv`): the Task 2 blend (registry hydrocarbons C8-C16 with grid or flash data, seed 0, equal mass weights) at 233.15, 253.15, 288.15 and 313.15 K, every property with method, status and coverage. It runs without exception; viscosity and density rest on 55 % substituted mass and 5 % dropped mass and are not in domain.
+
+## Task 7 declared rule: extended design pool (written before any extended-pool design is run)
+
+The `v5pool` designs (6 compounds, as D4) are run first through the route adapter (`RouteLibrary`, `build_route_models`, `design_routed`). The extended pool is the `v5pool` plus, for each (subkind, carbon number) bin below, the registry compound with the lowest InChIKey that satisfies all three `predict_route.predicates` at once: `HAS_GRID`, `HAS_FLASH`, `HAS_SLE`.
+
+| Subkind | nC |
+|---|---|
+| n_paraffin | 13 |
+| n_paraffin | 14 |
+| cyclo_mono | 9 |
+| cyclo_mono | 10 |
+| indan_tetralin | 10 |
+| aromatic_di | 11 |
+
+A bin with no qualifying compound is recorded and skipped; it is not filled from a neighbouring bin and no representative is used. A bin whose compound already belongs to the `v5pool` adds nothing. The pool size is therefore whatever the rule yields and may be below 12. Both specs (`astm:jet_a`, `bis:jet_a1`) are run on it with 30 starts and seed 42, and once more with 8 starts for the sensitivity check. One further run per spec on the `v5pool` uses a declared 4 K freezing guard band (freezing limit tightened by 4 K in the optimiser only; the engine's status is unchanged), labelled "indicative guard band, not certified". Freezing stays uncertified: 8 systems support at most an 88.9 % level, and lowering alpha after the failure would be post hoc.
