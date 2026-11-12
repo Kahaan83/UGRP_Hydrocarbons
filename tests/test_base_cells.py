@@ -48,3 +48,33 @@ def test_cells_t2_flash():
     assert (c[c.n_groups < 8].verdict == "n_too_small").all()
     assert c.unsafe_rate.between(0, 1).all()
     assert (c.model == "api_as_shipped").any()
+
+
+def test_cells_t2_bulk():
+    vt = pd.read_csv(BASE / "viscosity_error_vs_T.csv")
+    a = vt[vt.source == "av3322"].set_index("T_K")
+    assert len(a) == 9
+    tol = 0.02                                                        # 0.05 if route_vs_s3_differences.csv existed (it does not)
+    assert a.loc[233.15, "bias_ln"] == pytest.approx(-0.637, abs=tol)      # C1 R-C1-5
+    assert a.loc[313.15, "bias_ln"] == pytest.approx(0.066, abs=tol)
+    c = pd.read_csv(BASE / "cells_t2_bulk.csv")
+    _schema_ok(c)
+    k1 = c[(c.property == "viscosity_kin_cSt") & (c.variant == "k1_cold_offset_loso") & (c.set == "ajftd_gcxgc") & (c.T_K == 253.15)]
+    assert abs(k1.bias.iloc[0]) <= 0.10                                     # C1 R-C1-1
+    fz = c[(c.property == "freezing_point_C") & (c.set == "pooled") & (c.label == "descriptive")]
+    assert fz[fz.variant == "f1_recalibrated"].mae.iloc[0] == pytest.approx(3.46, abs=0.02)
+    for p in ["heat_of_combustion_net_MJ_kg", "smoke_point_mm", "distillation_T10_C", "density_kg_m3"]:
+        assert (c.property == p).any()
+    r = pd.read_csv(BASE / "rows_t2_bulk.csv")
+    assert np.isfinite(r.loc[r.status == "ok", "pred"]).all()
+
+
+def test_cells_t3_bulk():
+    c = pd.read_csv(BASE / "cells_t3_bulk.csv")
+    _schema_ok(c)
+    f = c[(c.property == "flash_point_C") & (c.model == "const") & (c.label == "dev") & (c.variant == "designated")].iloc[0]
+    assert f.n_rows == 1728 and f.mae == pytest.approx(3.943, abs=1e-3)
+    assert (c[c.label == "already_read"].status == "aggregated_v5").all()
+    assert ((c.property == "flash_point_C") & (c.trivial_model == "logo_constant_within_method")).any()
+    p = c[c.property == "pour_point_C"]
+    assert set(p.model) >= {"const", "ridge", "freezing_offset"} and (p.n_rows == 57).all()

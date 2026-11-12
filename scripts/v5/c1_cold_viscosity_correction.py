@@ -44,11 +44,7 @@ def margin_for(T_K: float) -> float:
     return np.nan
 
 
-def fit_k1(T, resid) -> dict:
-    """K1: per-temperature constant ln offset = mean(ln(meas/pred)) over training rows.  T keyed by round(T, 2)."""
-    T, r = np.round(np.asarray(T, float), 2), np.asarray(resid, float)
-    ok = np.isfinite(r) & np.isfinite(T)
-    return {float(t): float(r[ok & (T == t)].mean()) for t in np.unique(T[ok])}
+from fuelblend.eval.cold_offset import apply_k1, fit_k1  # noqa: E402,F401  (moved to src, bodies unchanged)
 
 
 def fit_k2(T, resid):
@@ -60,11 +56,6 @@ def fit_k2(T, resid):
         return None
     b, a = np.polyfit(x, r[ok], 1)
     return float(a), float(b)
-
-
-def apply_k1(k1: dict, T) -> np.ndarray:
-    """Offset at each T; NaN where the temperature was not in the training data (K1 is not usable there)."""
-    return np.array([k1.get(round(float(t), 2), np.nan) for t in np.atleast_1d(T)])
 
 
 def apply_k2(ab, T) -> np.ndarray:
