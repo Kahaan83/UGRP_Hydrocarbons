@@ -1,0 +1,13 @@
+reading,variant,method,t_bin,margin,n_systems,covered,k,verdict
+R-S1b-2,all systems,refutas,T_lt_263K,0.41535761,0,0,,NOT EVALUABLE
+R-S1b-2,all systems,refutas,T_263_283K,0.60843819,0,0,,NOT EVALUABLE
+R-S1b-2,all systems,refutas,T_ge_283K,0.1855823,3,3,,NOT EVALUABLE
+R-S1b-3,all systems,refutas_biascorr,T_lt_263K,0.31658018,0,0,,NOT EVALUABLE
+R-S1b-3,all systems,refutas_biascorr,T_263_283K,0.6170521,0,0,,NOT EVALUABLE
+R-S1b-3,all systems,refutas_biascorr,T_ge_283K,0.16932298,3,3,,NOT EVALUABLE
+R-S1b-2 sensitivity (R-S1b-5),without adamantane systems,refutas,T_lt_263K,0.41535761,0,0,,NOT EVALUABLE
+R-S1b-2 sensitivity (R-S1b-5),without adamantane systems,refutas,T_263_283K,0.60843819,0,0,,NOT EVALUABLE
+R-S1b-2 sensitivity (R-S1b-5),without adamantane systems,refutas,T_ge_283K,0.1855823,3,3,,NOT EVALUABLE
+R-S1b-3 sensitivity (R-S1b-5),without adamantane systems,refutas_biascorr,T_lt_263K,0.31658018,0,0,,NOT EVALUABLE
+R-S1b-3 sensitivity (R-S1b-5),without adamantane systems,refutas_biascorr,T_263_283K,0.6170521,0,0,,NOT EVALUABLE
+R-S1b-3 sensitivity (R-S1b-5),without adamantane systems,refutas_biascorr,T_ge_283K,0.16932298,3,3,,NOT EVALUABLE
