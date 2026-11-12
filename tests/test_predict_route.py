@@ -447,3 +447,33 @@ def test_aromatics_same_basis_with_non_hc():
     r = pr.predict_fuel({DECANE: 0.4, TOLUENE: 0.4, "CCO": 0.2})
     assert r["aromatics_wt_pct"]["value"] == pytest.approx(50.0, abs=1e-9)
     assert r["heat_net_MJ_kg"]["tuple"] is not None
+
+
+def test_indicative_flash_q90():
+    f = pd.read_csv(pr.ROOT / "results" / "v5" / "BASE" / "rows_t2_flash.csv")
+    f = f[(f.status == "ok") & (~f.low_coverage.astype(bool)) & f.chosen.astype(bool)].drop_duplicates("group")
+    q = float(np.quantile(np.abs(f.pred_designated - f.measured), 0.9))
+    r = pr.predict_fuel(BLEND3, fuel_type="jet")["flash_point_C"]
+    ii = r["indicative_interval"]
+    assert ii["q90_abs"] == pytest.approx(q) and ii["n_groups"] == len(f)
+    assert ii["kind"] == "empirical_T2_descriptive_not_held_out"
+    assert ii["lo"] == pytest.approx(r["value"] - q) and ii["hi"] == pytest.approx(r["value"] + q)
+
+
+def test_indicative_absent_without_jet():
+    r = pr.predict_fuel(BLEND3)
+    assert all(v["indicative_interval"] is None for v in r.values() if isinstance(v, dict) and "indicative_interval" in v)
+    r = pr.predict_fuel({DECANE: 0.8, "CCO": 0.2}, fuel_type="jet")          # unmapped 0.2 > 0.10
+    assert r["flash_point_C"]["indicative_interval"] is None
+
+
+def test_lo_hi_untouched_by_indicative(monkeypatch):
+    a = pr.predict_fuel(BLEND3, fuel_type="jet")
+    monkeypatch.setattr(pr, "_indicative_interval", lambda *x: None)
+    b = pr.predict_fuel(BLEND3, fuel_type="jet")
+    assert b["flash_point_C"]["indicative_interval"] is None
+    for k in ("flash_point_C", "viscosity_kin_cSt", "density_kg_m3", "heat_net_MJ_kg", "smoke_point_mm"):
+        for f in ("lo", "hi", "in_domain"):
+            x, y = a[k][f], b[k][f]
+            assert (x == y) or (isinstance(x, float) and math.isnan(x) and math.isnan(y))
+    assert a["viscosity_kin_cSt"]["indicative_interval"]["lo"] > 0
