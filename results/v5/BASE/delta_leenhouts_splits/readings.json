@@ -1,0 +1,27 @@
+{
+  "n_lab_rows": 126,
+  "n_matched": 126,
+  "by_split": {
+    "mixture": {
+      "mae_mean_over_folds": 3.7898825443195014,
+      "rmse_mean_over_folds": 4.535465096011426,
+      "rows_covered": 126
+    },
+    "molecule": {
+      "mae_mean_over_folds": 2.995462785245754,
+      "rmse_mean_over_folds": 3.57306798943144,
+      "rows_covered": 119
+    },
+    "pure_to_mixture": {
+      "mae_mean_over_folds": 2.995462785245754,
+      "rmse_mean_over_folds": 3.57306798943144,
+      "rows_covered": 119
+    },
+    "random_rowwise": {
+      "mae_mean_over_folds": 3.7746687558433663,
+      "rmse_mean_over_folds": 4.537507455247557,
+      "rows_covered": 126
+    }
+  },
+  "all_rows_mae": 3.7444853036294505
+}
