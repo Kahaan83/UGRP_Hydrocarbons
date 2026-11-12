@@ -80,3 +80,19 @@ Readings (text fixed by the plan, Task 6):
 Provenance, stated plainly: the plan required this note to be committed before scoring. It was not. `rows_t2_bulk.csv`
 was generated earlier on 2026-11-12, and the heat cells were printed in the session before this commit. This reading is
 therefore NOT a pre-registration. B6 is not fixed for these three cells. The reading text is the plan's, unchanged.
+
+## Note 2026-11-12 (SCORED)
+
+All Part B cells exist (`cells_t1_lab`, `cells_t2_flash`, `cells_t2_bulk`, `cells_t3_bulk`, `cells_carried`) and are assembled by
+`scripts/v5/base/build_scoreboard.py` into `scoreboard.csv`, `data_gaps.csv` and `SCOREBOARD.md`. The declaration text above is unchanged.
+R-BASE-1 to R-BASE-5 are answered in `SCOREBOARD.md` from the data.
+
+What was and was not run on this machine:
+* `reproduce_base.py` (default) rebuilds from the committed `rows_*.csv`: `cells_t2_bulk.py --from-rows` refits only the K1 offsets, so the
+  T2 viscosity, density, heat, smoke and distillation predictions in `rows_t2_bulk.csv` were generated once and not regenerated in the default run.
+  `--full` re-runs every prediction stage; the T2 prediction pass alone took over 80 minutes, so `--full` has NOT been run end to end.
+* R-BASE-2: the AJFTD GCxGC flash headline (31 fuels, one per double-count group) differs from G1 (37 rows, bias -0.426, MAE 3.536) by 0.21 C in bias.
+  The cause is the group rule, shown by re-scoring all 37 rows from `rows_t2_flash.csv`, which reproduces G1 exactly.
+* Every T2 cell is `descriptive` (all T2 fuels have been read). CRC 647 `fold_b` was read five times before. Neither is a held-out number.
+* The readings for Task 6 cells 4-6 (heat, smoke, distillation) were committed after those results were seen (see the Task 6 note above).
+* Smoke point (0 of 42 fuels) and distillation (1 of 78 fuels) on T2 are `no_evaluation`: mass coverage of the YSI table and of the Antoine boiling points is under 0.90.
