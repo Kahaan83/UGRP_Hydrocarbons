@@ -400,13 +400,13 @@ def _k1() -> dict:
 
 def _add_viscosity_k1(res: dict, T_K: float) -> None:
     """Variant only: no margin, only within K1_TOL_K of a fitted temperature, labelled in_sample_T2 (D3b)."""
-    if res.get("value") is None:
+    if res.get("value") is None or res.get("method") != "refutas_raw":      # K1 was fitted on raw Refutas only (no double correction)
         return
     for tf, off in _k1().items():
         if abs(T_K - tf) <= K1_TOL_K:
             res["variants"]["k1_cold_offset_loso"] = {
                 "value": float(res["value"] * math.exp(off)), "offset_ln": float(off), "T_fit_K": float(tf), "label": "in_sample_T2",
-                "note": "per-temperature ln offset fitted on the designated T2 viscosity rows; in-sample, no margin"}
+                "note": "per-temperature ln offset fitted on designated raw-Refutas T2 viscosity rows (status ok, not low-coverage); in-sample, no margin"}
             return
 
 
@@ -447,7 +447,7 @@ def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type) -> None:
         return bool(t) and bool(np.isfinite(t.get("tm_K", np.nan)) and np.isfinite(t.get("dh_fus_J_mol", np.nan)))
 
     no_sle = float(sum(w for w, ik in zip(pm.w, iks) if not has_sle(ik)))
-    prop["coverage"]["sle_missing_mass"] = no_sle          # in the liquid (counts in x) but carries no Tm / dHfus
+    prop["coverage"]["sle_missing_mapped_mass"] = no_sle   # mapped mass (own or representative) with no Tm / dHfus; counts in x
     v = ideal_sle_C(x, iks, tmap)
     if not np.isfinite(v):
         _no_value(prop, "non_finite", "no component with Tm / dHfus constants above x = 1e-4")
@@ -491,7 +491,7 @@ def _heat(prop: dict, ctx, pm: PropMap, fuel_type) -> None:
     from fuelblend.baselines.heat_of_combustion_v2 import mixture_heat_of_combustion_v2
     if str(fuel_type).lower() != "jet":
         prop["warnings"].append("heat_net_jet_only: pass fuel_type='jet'")
-        prop["domain_reasons"] = ["heat of combustion is evaluated for jet fuels only"]
+        _no_value(prop, "no_evaluation", "heat of combustion is evaluated for jet fuels only")
         return
     ci = [_comp_info(ctx, int(i)) for i in pm.idx]
     r = mixture_heat_of_combustion_v2(w_mass=pm.w, comp_gcv_MJ_kg=[c["gcv"] for c in ci], comp_mw_g_mol=[c["mw"] for c in ci],
@@ -502,12 +502,15 @@ def _heat(prop: dict, ctx, pm: PropMap, fuel_type) -> None:
         _no_value(prop, "non_finite", "group-additivity heat is not finite")
 
 
-def _smoke(prop: dict, ctx, pm: PropMap) -> None:
+def _smoke(prop: dict, comps, ctx, pm: PropMap) -> None:
     from fuelblend.baselines.sooting import mixture_mw, smoke_point_from_ysi, ysi_mix
     ci = [_comp_info(ctx, int(i)) for i in pm.idx]
     ok = np.array([c["ysi_ok"] for c in ci])
-    cov = float(pm.w[ok].sum()) if ok.size else 0.0
-    prop["coverage"]["ysi_own_mass"] = cov
+    cov_mapped = float(pm.w[ok].sum()) if ok.size else 0.0         # mapped mass (own or representative) with YSI
+    prop["coverage"]["ysi_mapped_mass"] = cov_mapped
+    tot = 1.0 - pm.unmapped_mass
+    cov = float(sum(c.w for c in comps if c.is_hc and c.reg_idx is not None and _comp_info(ctx, c.reg_idx)["ysi_ok"]) / tot) if tot > 0 else 0.0
+    prop["coverage"]["ysi_own_mass"] = cov                          # input compounds that themselves carry YSI; this gates
     if cov < SMOKE_YSI_MIN:
         prop.update(value=None, status="no_evaluation", method="ysi_route")
         prop["warnings"].append(f"no_evaluation: YSI own-coverage {cov:.3f} < {SMOKE_YSI_MIN}")
@@ -526,7 +529,8 @@ def _is_aromatic(smi: str) -> bool:
 
 
 def _aromatics(out: dict, comps, ctx, P) -> None:
-    wt = 100.0 * sum(c.w for c in comps if c.is_hc and _is_aromatic(c.smiles))
+    hc = sum(c.w for c in comps if c.is_hc)                         # same HC-only basis as the volume share
+    wt = 100.0 * sum(c.w for c in comps if c.is_hc and _is_aromatic(c.smiles)) / hc if hc > 0 else 0.0
     r = _new_prop("aromatics_wt_pct", "by_construction", map_for(comps, HAS_ANY_REGISTRY, ctx.reps))
     r.update(value=float(wt), status="ok")
     _uncertified(r, "aromatics content is by construction (no model, no margin)")
@@ -558,7 +562,7 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
     else:
         _freezing(props["freezing_point_C"], comps, ctx, pm, fuel_type)
         _heat(props["heat_net_MJ_kg"], ctx, pm, fuel_type)
-        _smoke(props["smoke_point_mm"], ctx, pm)
+        _smoke(props["smoke_point_mm"], comps, ctx, pm)
     out["freezing_point_C"] = props["freezing_point_C"]
     out["heat_net_MJ_kg"] = _finish(props["heat_net_MJ_kg"], HEAT_YAML_PROP, iks, T_K, fuel_type, composition_kind)
     out["smoke_point_mm"] = props["smoke_point_mm"]

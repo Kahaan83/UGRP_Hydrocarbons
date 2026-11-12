@@ -405,7 +405,7 @@ def test_smoke_coverage_gate(ctx):
                   and pr.subkind(reg.smiles[i]) is not None)
     r = pr.predict_fuel({TOLUENE: 0.5, no_ysi: 0.5})["smoke_point_mm"]
     assert r["status"] == "no_evaluation" and r["value"] is None and r["in_domain"] is False
-    assert r["coverage"]["ysi_own_mass"] < 0.9
+    assert r["coverage"]["ysi_own_mass"] < 0.9 and r["coverage"]["ysi_mapped_mass"] >= 0
     ok = pr.predict_fuel({TOLUENE: 0.1, DECANE: 0.9})["smoke_point_mm"]
     assert ok["status"] == "ok" and np.isfinite(ok["value"]) and ok["in_domain"] is False
 
@@ -436,3 +436,14 @@ def test_uncertified_props_have_nan_interval():
     for p in ("freezing_point_C", "smoke_point_mm"):
         assert w[p]["in_domain"] is False and math.isnan(w[p]["lo"])
         assert w["uncertified"][p]["in_domain"] is False
+
+
+def test_k1_not_on_reconstructed():
+    r = pr.predict_fuel(BLEND3, T_K=233.15, composition_kind="reconstructed")["viscosity_kin_cSt"]
+    assert "k1_cold_offset_loso" not in r["variants"]
+
+
+def test_aromatics_same_basis_with_non_hc():
+    r = pr.predict_fuel({DECANE: 0.4, TOLUENE: 0.4, "CCO": 0.2})
+    assert r["aromatics_wt_pct"]["value"] == pytest.approx(50.0, abs=1e-9)
+    assert r["heat_net_MJ_kg"]["tuple"] is not None
