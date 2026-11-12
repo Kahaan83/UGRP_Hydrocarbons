@@ -1,0 +1,22 @@
+{
+ "ajftd_viscosity_T_not_reported_skipped": 5,
+ "ajftd_T_dependent_without_T_skipped": 0,
+ "fuellib_T_dependent_without_T_skipped": 0,
+ "n_target_rows": 1659,
+ "n_entities": 155,
+ "n_groups": 146,
+ "n_censored_excluded": 21,
+ "n_low_coverage": 1,
+ "rows_by_property": {
+  "density_kg_m3": 427,
+  "distillation_T10_C": 78,
+  "distillation_T50_C": 78,
+  "distillation_T90_C": 78,
+  "flash_point_C": 79,
+  "freezing_point_C": 66,
+  "heat_of_combustion_net_MJ_kg": 78,
+  "smoke_point_mm": 42,
+  "vapor_pressure_kPa": 294,
+  "viscosity_kin_cSt": 439
+ }
+}

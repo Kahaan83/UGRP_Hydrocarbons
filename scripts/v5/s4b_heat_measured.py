@@ -29,40 +29,8 @@ _spec.loader.exec_module(s4)
 
 HEAT = "heat_of_combustion_net_MJ_kg"
 BOOT_B, BOOT_SEED, MIN_GROUPS = 5000, 0, 8
-MEAS, CALC, UNC = "MEASURED", "CALCULATED", "UNCLASSIFIED"
-
-# Class and evidence per normalised method code. Evidence is documentation in the repo or AJFTD page metadata
-# on disk. No class was decided from agreement with any model.
-_AUD = "docs/audit_fable_v5_2026-11-11.md finding B3"
-_NOPAGE = ("saved AJFTD pages extras/fuelblend_data/debug/detail_*.html carry only the code in the 'Test Method' "
-           "column (no legend or tooltip); extras/fuelblend_data/data/raw/ajftd/*.csv add no description; "
-           "docs/audit_fable_v5_2026-11-11.md line 112 lists the code as unverified")
-CLASS_EVIDENCE = {
-    "D3338": (CALC, f"{_AUD}: 'D3338 is an estimate from density, aromatics and distillation'"),
-    "D4809": (MEAS, f"{_AUD} and its next-step 3 (line 96): 'D4809/D240 (bomb calorimeter)'"),
-    "D240": (MEAS, f"{_AUD} and its next-step 3 (line 96): 'D4809/D240 (bomb calorimeter)'"),
-    "D4529": (CALC, f"{_AUD} / S4b README name D4529 as calculated; no rows with this code exist in "
-                    "ajftd_fuels_long.csv heat rows (raw extras scrape lists it under the sulfur-free-basis metric only)"),
-    "400C": (UNC, f"{_NOPAGE}; audit B3: 'meaning of the code not verified'"),
-    "400D": (UNC, f"{_NOPAGE}; audit B3: 'meaning of the code not verified'"),
-    "400E": (UNC, f"{_NOPAGE}; audit B3: 'meaning of the code not verified'"),
-    "400IPA": (UNC, f"{_NOPAGE}; no documentation found"),
-    "400IPB": (UNC, f"{_NOPAGE}; no documentation found"),
-    "231A": (UNC, f"{_NOPAGE}; audit B3 groups '231A/B' without a meaning"),
-    "231B": (UNC, f"{_NOPAGE}; audit B3 groups '231A/B' without a meaning"),
-    "NA": (UNC, "method field empty in ajftd_fuels_long.csv"),
-}
-
-
-def norm_code(m) -> str:
-    """'D 4809' -> 'D4809'; 'D4809 (SwRI[32])' -> 'D4809'; NaN -> 'NA'."""
-    if m is None or (isinstance(m, float) and np.isnan(m)) or pd.isna(m):
-        return "NA"
-    return re.sub(r"\s+", "", str(m)).split("(")[0] or "NA"
-
-
-def classify_method(m) -> str:
-    return CLASS_EVIDENCE.get(norm_code(m), (UNC, ""))[0]
+sys.path.insert(0, str(ROOT / "src"))
+from fuelblend.eval.group_stats import CALC, CLASS_EVIDENCE, MEAS, UNC, classify_method, norm_code  # noqa: E402,F401  (moved, bodies unchanged)
 
 
 # --------------------------------------------------------------------------- labels
