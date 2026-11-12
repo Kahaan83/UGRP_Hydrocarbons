@@ -134,13 +134,18 @@ def map_for(comps: list, has_own: Callable[[int], bool], reps) -> PropMap:
     own = sub = lost = 0.0
     subs = []
     for c in comps:
+        if not c.is_hc:
+            lost += c.w
+            continue
         if c.reg_idx is not None and has_own(c.reg_idx):
             agg[c.reg_idx] = agg.get(c.reg_idx, 0.0) + c.w
             own += c.w
             continue
         rep = None
-        if c.is_hc and c.subkind is not None:
+        if c.subkind is not None:
             rep = reps.get(c.subkind, c.n_carbon, max_gap=99 if c.subkind in NEAREST_ANY else 3)
+            if rep is not None and not has_own(rep):      # a representative must itself carry own data for this property
+                rep = None
         if rep is None:
             lost += c.w
             continue
