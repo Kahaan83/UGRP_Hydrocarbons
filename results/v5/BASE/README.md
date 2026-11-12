@@ -1,0 +1,65 @@
+# v5 BASE: full-baseline scoreboard
+
+Status: DECLARED 2026-11-12, not scored.
+Start commit: see `START_COMMIT.txt`. Plan: `docs/superpowers/plans/2026-11-12-v5-full-baseline.md`.
+
+Every T2 fuel was read before this declaration; the baseline is descriptive.
+The CRC 647 locked 12 fuels have been read five times; they are reported as `fold_b`, not as a locked test.
+
+## Scoreboard
+
+Rows = property x tier x set x model x variant. Columns:
+`property, tier, set, model, variant, status, n_groups, n_rows, bias, mae, rmse, unsafe_rate, trivial_model, mae_trivial, diff_trivial_minus_model, ci_lo, ci_hi, verdict, margin90, coverage90, n_excluded_censored, n_excluded_nonfinite, n_low_coverage, evidence_path, label`
+
+- `tier`: `T1_lab | T2_measured | CRC647_r3 | T3_ajftd | diesel | designs`
+- `status`: `recomputed_v5 | aggregated_v5 | carried_v4 | no_evaluation`
+- `label`: `descriptive | dev | fold_b | already_read | exploratory`
+- `verdict`: `beats_trivial | no_skill_shown | worse_than_trivial | n_too_small | not_applicable`.
+  Rule: paired group bootstrap (5000 resamples, seed 0), 95 % interval of `MAE(trivial) - MAE(model)`;
+  above 0 = beats, below 0 = worse, else no skill shown; fewer than 8 groups = `n_too_small`.
+- `trivial_model`: leave-one-group-out constant. For flash and heat of combustion the constant is fitted within method family.
+
+## Definitions
+
+- Error = predicted - measured. Viscosity error = ln(pred) - ln(meas).
+- Unsafe side: flash = fraction over-predicted by more than 5 C. Viscosity at T < 283 K = fraction under-predicted
+  by more than the S1 margin (0.4154 below 263 K, 0.6084 at 263-283 K).
+- Group rule: one fuel per double-count group, groups from `results/v5/S3/corrected_2026-11-12_groups.csv`
+  (source order AV-33-22, FuelLib, AJFTD).
+- Censoring rule: values with a non-null `qualifier` (e.g. "<") are bounds, excluded and counted.
+- Finite rule: a prediction with status `ok` must be finite; others are excluded and counted in `n_excluded_nonfinite`.
+- `low_coverage`: a fuel whose composition maps under 90 % of its mass; scored apart, never in the headline, never dropped silently.
+- Several measured values for one (fuel, property, T): one median target; method family recorded.
+- Designated model per tier: T1/T2 = API `composition_kind="known"`; CRC 647 r3 = `composition_kind="reconstructed"`;
+  T3 = no shipped model (hgb, ridge vs constant); freezing, smoke, pour, cetane = named baseline in the `model` column.
+- Locked stages are never re-invoked; locked cells are aggregated from committed CSVs and labelled `already_read`.
+
+## Cells that must exist
+
+| Property | T1 lab | T2 measured | CRC 647 r3 | T3 AJFTD | Diesel |
+|---|---|---|---|---|---|
+| Viscosity by T bin | aggregate S1 | recompute, 9 T | carry v4 R3 | aggregate S4 | aggregate S6 |
+| Density by T | v4 L + ThermoML 2020 new systems | recompute, 9 T | carry | no_evaluation | carry |
+| Flash point | v4 F, 126 rows | recompute | carry | aggregate | carry |
+| Freezing point | SLE2 tiers | aggregate S5 | carry | aggregate | no_evaluation |
+| Net heat of combustion | no_evaluation | new | carry | S4 + S4b | no_evaluation |
+| Smoke point | no_evaluation | new (YSI) | no_evaluation | carry v4 SP | no_evaluation |
+| Distillation T10/T50/T90 | no_evaluation | new | no_evaluation (input) | no_evaluation (input) | no_evaluation |
+| Pour point | no_evaluation | no_evaluation | bulk baseline n=57 | no_evaluation | no_evaluation |
+| Cetane / DCN | no_evaluation | no_evaluation | no_evaluation | no_evaluation | S6 not evaluable |
+| RON / MON, DVPE | carry v4 O | - | - | - | - |
+| Designs certified | aggregate D4 | | | | |
+
+## Variants
+
+`designated`, `lfl_overlay`, `mesitylene_fixed`, `lfl_overlay+mesitylene_fixed`, `k1_cold_offset_loso`,
+`sle2_two_compilations`, `sle2_single_compilation`. The `designated` variant stays the v4 routing until the user decides.
+
+## Readings (declared before any BASE result exists)
+
+- R-BASE-1: every cell in the table exists with a status.
+- R-BASE-2: each `recomputed_v5` cell that has a committed counterpart reproduces it within tolerance
+  (flash 0.05 C, ln viscosity 0.005, density 0.5 kg/m3, freezing 0.05 C) or the difference is listed with its cause.
+- R-BASE-3: per property, name the tier where the designated model beats the trivial model and the tier where it does not.
+- R-BASE-4: per property, name the largest unsafe-side rate and the set it occurs on.
+- R-BASE-5: list every cell whose verdict is `n_too_small` or `no_evaluation`; this is the data-gap list.
