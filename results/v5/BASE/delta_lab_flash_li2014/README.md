@@ -29,3 +29,13 @@ New points are labelled `dev` (first read), never `held_out`. Predictions use th
 * **R-LI-2.** The lab one-sided margin, `one_sided_margin(direction="over", alpha=0.10)`, over the old plus new systems, computed with and without the mesitylene system, differs by less than 0.5 C.
 * If R-LI-2 holds, that margin is proposed for `configs/uncertainty_v5.yaml`. Writing that file stays the user's decision (Q2); this task does not write it.
 * If no new point survives de-duplication, both readings are recorded as "not evaluable: no new points" (not the case here: 33 points survive).
+
+## Result (script `scripts/v5/base/delta_lab_flash_li2014.py`; files `delta.csv`, `lab_margin.csv`, `points.csv`, `readings.json`)
+
+Note on commit order: the loader and its fixture test were staged by mistake in the same commit as this README's declared readings; they contain no scores and no result existed at that point.
+
+**R-LI-1: fails.** On the 33 new points the overlay flash has bias -3.54 C (|bias| > 2 C), MAE 4.22 C. The over-prediction rate (> 5 C) is 0 % (passes its half), because the model under-predicts: the five binary systems sit at -4.7 to -6.0 C mean error (safe side), the ternary nonane + decane + dodecane (13 points) at -0.6 C mean, with a maximum over-prediction of +2.2 C. The overlay and the designated variant give the same values for these n-alkane points (LFLs of the n-alkanes were already measured/identical), so the overlay changes nothing here.
+
+**R-LI-2: fails.** Lab margin (overlay, one-sided over, alpha 0.10): old 31 systems 3.70 C; old without mesitylene 0.31 C; old plus new 36 systems 3.70 C; old plus new without mesitylene 2.21 C. The difference with versus without mesitylene is 1.49 C (> 0.5 C), so no margin is proposed for `configs/uncertainty_v5.yaml`. The margin with mesitylene removed rises from 0.31 to 2.21 C because the new ternary system (max over-prediction +2.2 C) becomes the 90 % quantile group; the margin is still determined by a single system, now two different ones depending on the scope. The designated variant has identical margins.
+
+Honest reading: the extra systems do not settle Q2. The lab one-sided margin remains sensitive to which single system sits at the quantile; the new n-alkane data say the route is not unsafe on binary n-alkane mixtures (error on the conservative side), and they add one ternary system with small positive error. The new points are `dev` (first read), not `held_out`. Q2 stays the user's decision.
