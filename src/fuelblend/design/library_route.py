@@ -382,7 +382,7 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
         "flash_point_C": "design and API both use the LFL-overlay registry (U1)",
         "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the Coutinho tmap constants",
         "nhoc_MJ_kg": "design primary model uses constant H = 13.8 wt%; the API uses composition H",
-        "smoke_point_mm": "design: AJFTD bulk regression on aromatics; API: YSI route (a different model)",
+        "smoke_point_mm": "design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K)",
         "aromatics_wt_pct": "class mass fraction, by construction",
         "aromatics_vol_pct": "design: table rho15 volume fractions; API: grid rho at 288.15 K",
     }

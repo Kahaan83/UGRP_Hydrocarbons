@@ -5,7 +5,7 @@ freezing_point_C,-40.91624683924334,-40.91624683924334,0.0,,reported,design and 
 kin_visc_m20C_cSt,3.0531419416028953,3.0531419416028944,8.881784197001252e-16,,reported,"kinematic viscosity at the spec temperature, Refutas on the pure-property grid",<= 8,,8.0,True,True,astm_jet_a__v5pool
 nhoc_MJ_kg,43.974403632129764,43.77038424943095,0.20401938269881725,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,astm_jet_a__v5pool
 aromatics_wt_pct,0.0,0.0,0.0,,reported,"class mass fraction, by construction",<= 25,,25.0,True,True,astm_jet_a__v5pool
-smoke_point_mm,27.564566805231873,18.91147415589387,8.653092649338003,,reported,design: AJFTD bulk regression on aromatics; API: YSI route (a different model),>= 25,25.0,,True,False,astm_jet_a__v5pool
+smoke_point_mm,27.564566805231873,27.564566805231873,0.0,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,True,True,astm_jet_a__v5pool
 flash_point_C[tol],54.18543317177392,54.18532255886248,0.00011061291144187635,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,astm_jet_a__v5pool
 flash_point_C[v4_designated],54.18543317177392,54.339317175035376,0.15388400326145302,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,astm_jet_a__v5pool
 kin_visc_m20C_cSt[tol],3.0531419416028953,3.0531419416028944,8.881784197001252e-16,1e-06,True,,,,,,,astm_jet_a__v5pool
@@ -17,7 +17,7 @@ freezing_point_C,-48.065167702079236,-48.065167702079236,0.0,,reported,design an
 kin_visc_m20C_cSt,2.982103089280998,2.982103089280998,0.0,,reported,"kinematic viscosity at the spec temperature, Refutas on the pure-property grid",<= 8,,8.0,True,True,bis_jet_a1__v5pool
 nhoc_MJ_kg,43.964002017304836,43.76223322821152,0.20176878909331464,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,bis_jet_a1__v5pool
 aromatics_vol_pct,0.0,0.0,0.0,,reported,design: table rho15 volume fractions; API: grid rho at 288.15 K,<= 25,,25.0,True,True,bis_jet_a1__v5pool
-smoke_point_mm,27.564566805231873,18.753548670325195,8.811018134906679,,reported,design: AJFTD bulk regression on aromatics; API: YSI route (a different model),>= 25,25.0,,True,False,bis_jet_a1__v5pool
+smoke_point_mm,27.564566805231873,27.564566805231873,0.0,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,True,True,bis_jet_a1__v5pool
 flash_point_C[tol],52.7171592336411,52.71710459958098,5.46340601204065e-05,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,bis_jet_a1__v5pool
 flash_point_C[v4_designated],52.7171592336411,52.86139120676751,0.14423197312640923,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,bis_jet_a1__v5pool
 kin_visc_m20C_cSt[tol],2.982103089280998,2.982103089280998,0.0,1e-06,True,,,,,,,bis_jet_a1__v5pool

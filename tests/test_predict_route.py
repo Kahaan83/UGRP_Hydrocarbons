@@ -398,16 +398,30 @@ def test_heat_matches_bulk_rows(ctx):
     assert pr.predict_fuel({DECANE: 1.0}, fuel_type=None)["heat_net_MJ_kg"]["value"] is None
 
 
-def test_smoke_coverage_gate(ctx):
+def test_smoke_designated_bulk_regression(ctx):
     P = pr.predicates(ctx)
     reg = ctx.reg
     no_ysi = next(reg.ik[i] for i in range(len(reg.ik)) if reg.usable[i] and not P["HAS_YSI"](i) and pr._mol_info(reg.smiles[i])[3]
                   and pr.subkind(reg.smiles[i]) is not None)
     r = pr.predict_fuel({TOLUENE: 0.5, no_ysi: 0.5})["smoke_point_mm"]
-    assert r["status"] == "no_evaluation" and r["value"] is None and r["in_domain"] is False
-    assert r["coverage"]["ysi_own_mass"] < 0.9 and r["coverage"]["ysi_mapped_mass"] >= 0
+    # designated = bulk regression, independent of YSI coverage; YSI only a gated variant
+    assert r["method"] == "ajftd_bulk_regression" and r["status"] == "ok" and np.isfinite(r["value"])
+    assert r["variants"]["ysi_route"]["status"] == "no_evaluation" and r["variants"]["ysi_route"]["value"] is None
+    assert r["coverage"]["ysi_own_mass"] < 0.9
+    assert math.isnan(r["lo"]) and math.isnan(r["hi"]) and r["in_domain"] is False and r["uncertified"] is True
+    assert any(w.startswith("out_of_domain") for w in r["warnings"])        # 50 % aromatics is far outside 8-23 vol %
     ok = pr.predict_fuel({TOLUENE: 0.1, DECANE: 0.9})["smoke_point_mm"]
-    assert ok["status"] == "ok" and np.isfinite(ok["value"]) and ok["in_domain"] is False
+    assert ok["method"] == "ajftd_bulk_regression" and ok["status"] == "ok" and ok["in_domain"] is False
+    assert ok["variants"]["ysi_route"]["status"] == "ok" and np.isfinite(ok["variants"]["ysi_route"]["value"])
+
+
+def test_smoke_in_domain_no_warning():
+    r = pr.predict_fuel({DECANE: 0.85, TOLUENE: 0.15}, fuel_type="jet")
+    s = r["smoke_point_mm"]
+    a = r["aromatics_vol_pct"]["value"]
+    assert 8.0 <= a <= 23.0 and s["method"] == "ajftd_bulk_regression" and s["status"] == "ok"
+    assert s["inputs"]["aromatics_vol_pct"] == pytest.approx(a)
+    assert math.isnan(s["lo"]) and s["in_domain"] is False
 
 
 def test_aromatics_by_construction():
