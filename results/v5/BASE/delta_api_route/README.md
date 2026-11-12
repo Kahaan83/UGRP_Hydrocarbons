@@ -114,3 +114,41 @@ Point estimates of the freezing point: without guard band -40.9 C (limit -40) an
 **n_starts sensitivity (extended pool, 8 vs 30 starts, seed 42).** The recipes, predictions and categories are identical to the printed digits for both specs. Convergence: 5 of 8 and 16-17 of 30 starts. The 8-start runs took 131 s and 121 s against 505 s and 586 s for 30 starts. Runtimes are wall-clock with up to three runs sharing the machine, so they overstate a single run; relative timing is indicative only.
 
 **Reading.** The route-adapter inverse design finds blends that meet every limit at the point estimate, re-predicts them identically through `predict()`, and names what blocks certification (D8). It does not certify any design. Pools beyond 8 components could not be built on the declared rule because SLE data is missing for most naphthenic and indan/tetralin registry compounds.
+
+## How to call it
+
+Both entry points take a list of `(id, weight)` pairs, where `id` is an InChIKey or a SMILES string (any mix) and the weights are mass fractions. Pass `mole_fractions=[...]` (aligned with the list) to give mole fractions instead. Unparseable SMILES raise `ValueError`.
+
+```python
+from fuelblend.api.predict_blend import predict          # v4-compatible wrapper, now on the BASE route
+from fuelblend.api.predict_route import predict_fuel     # route function itself
+
+# a 60-component list, e.g. 60 registry hydrocarbons (equal mass weights)
+comp = [(ik, 1.0 / 60) for ik in inchikeys_or_smiles_60]
+
+r = predict(comp, T_K=288.15)                            # fuel_type="jet", composition_kind="known"|"reconstructed" optional
+r["flash_point_C"]["value"], r["flash_point_C"]["method"]        # ideal_le_chatelier_anchored
+r["viscosity_dyn_mPas"]["lo"], r["viscosity_dyn_mPas"]["hi"]     # NaN where the yaml has no margin
+r["density_kg_m3"]["in_domain"], r["warnings"]
+
+f = predict_fuel(comp, T_K=253.15)                       # same properties plus viscosity_kin_cSt, per-property status/coverage/variants
+f["flash_point_C"]["variants"]
+```
+
+Read `in_domain`, `warnings` and `status` before using a value: a property with unmapped or substituted mass, or no yaml margin, has NaN `lo`/`hi` and `in_domain` False.
+
+Inverse design on a user pool (names / SMILES / InChIKeys):
+
+```powershell
+.venv\Scripts\python.exe scripts/v5/run_design_userpool_v5.py --spec astm:jet_a,bis:jet_a1 --pool v5pool --n-starts 30 --seed 42 --out results/v5/BASE/delta_api_route/design_v5pool
+# --pool v5pool | ext | comma-separated ids | a .txt file of ids;  --freezing-guard-K 4 for the indicative guard-band run (not certified)
+```
+
+It writes `designs.csv`, `constraints.csv`, `forward_check.csv` and `runtime.txt`. No design is certified; categories A / B and the blocking gaps are as in the design table above.
+
+## Existing tests changed
+
+Compared with `0a85f20` (`git diff --stat 0a85f20 HEAD -- tests/`), only two existing test files changed; the other three differences are new files (`test_delta_api_route.py`, `test_predict_route.py`, `test_v5_design_forward.py`).
+
+- `tests/test_predict_blend.py`: flash now runs on the anchored-Antoine route with no fallback model, so the method is `ideal_le_chatelier_anchored` (was `chat`) and the `antoine_out_of_range` warning is replaced by `antoine_nominal_window_exceeded`; `use_mixture_residual=True` no longer raises, it only adds `mixture_residual_not_shipped_D3b` and leaves values unchanged; `freezing_point_C` and `smoke_point_mm` now return a route value (still no interval, never in domain) instead of None.
+- `tests/test_v4_api_known_composition.py`: the cold (253.15 K) check now expects `refutas_raw` for both the pure and the near-pure blend, because the frozen 230-470 K grid replaces the v4 `gn_mass` / `gn_fallback` cold paths (the 12 % jump is gone); both stay uncertified.

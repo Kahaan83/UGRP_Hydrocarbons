@@ -380,6 +380,8 @@ Reproduce with `python scripts/v4/reproduce_all.py` (venv python); pytest baseli
 
 v5: work continues on branch `v5` (current). Update 2026-11-12: the v5 full-baseline plan is `docs/superpowers/plans/2026-11-12-v5-full-baseline.md` (not yet committed); results in `results/v5/BASE/` (see 8.0a). Earlier text: a written v5 plan was not yet in the repo (`docs/superpowers/plans/` holds only the v4 plans); check there and `docs/data_source_leads_2026-11-09.md` for candidate new data before assuming scope.
 
+v5 delta_api_route (2026-11-13): `predict()` and a new `predict_fuel` now run on the BASE scoring route (frozen pure-property grid, Refutas viscosity, ideal-volume density, anchored-Antoine Le Chatelier flash with the LFL overlay), and inverse design runs on user pools of names / SMILES / InChIKeys through `scripts/v5/run_design_userpool_v5.py`. No design is certified. Readings, design tables, usage examples and the list of changed tests are in `results/v5/BASE/delta_api_route/README.md`.
+
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 
 The last deliverable was `fuelblend_update.zip` (14 files: `thermoml_extract.py`, `build_unified.py`, `refit_antoine.py`, `ingest_ajftd.py`,
