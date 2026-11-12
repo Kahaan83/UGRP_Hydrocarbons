@@ -112,3 +112,31 @@ def test_provider_never_writes():
 def test_provider_missing_file(tmp_path):
     with pytest.raises(FileNotFoundError):
         pr.ReadOnlyProvider(pr.get_ctx().reg, tmp_path / "nope.npz")
+
+
+def test_non_hc_with_grid_is_unmapped(ctx):
+    etbe = "CCOC(C)(C)C"
+    c = pr.resolve({DECANE: 0.8, etbe: 0.2})
+    e = [x for x in c if not x.is_hc][0]
+    if e.reg_idx is None or not ctx.prov.valid[e.reg_idx]:
+        pytest.skip("ETBE has no grid in this registry")
+    p = pr.map_for(c, pr.predicates(ctx)["HAS_GRID"], ctx.reps)
+    assert p.unmapped_mass == pytest.approx(0.2) and p.own_mass == pytest.approx(0.8)
+
+
+def test_rep_without_own_data_is_unmapped(ctx):
+    P = pr.predicates(ctx)
+    cand = [i for i in range(len(ctx.reg.ik)) if P["HAS_GRID"](i) and P["HAS_FLASH"](i) and not P["HAS_SLE"](i)
+            and pr.subkind(ctx.reg.smiles[i]) is not None]
+    if not cand:
+        pytest.skip("no grid+flash compound lacking SLE")
+    c = pr.resolve({ctx.reg.ik[cand[0]]: 1.0})
+    p = pr.map_for(c, P["HAS_SLE"], ctx.reps)
+    assert p.substituted_mass == 0 and p.unmapped_mass == pytest.approx(1.0) and p.idx.size == 0
+
+
+def test_resolve_mole_fractions(ctx):
+    c = pr.resolve({DECANE: 0.5, DODECANE: 0.5}, mole_fractions=True)
+    d = {x.n_carbon: x.w for x in c}
+    m10, m12 = ctx.mw(c[0].smiles if c[0].n_carbon == 10 else c[1].smiles), ctx.mw(c[0].smiles if c[0].n_carbon == 12 else c[1].smiles)
+    assert d[10] == pytest.approx(m10 / (m10 + m12))
