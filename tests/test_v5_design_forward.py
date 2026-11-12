@@ -53,11 +53,12 @@ def test_smiles_pool_equals_name_pool():
     mixed = [_smiles(V5POOL)[0], ik[1], ik[2], V5POOL[3], ik[4], _smiles(V5POOL)[5]]
     by_id = LR.build_route_models(mixed)
     assert by_id["pool"] == V5POOL
+    assert not by_id["library"].nonverified_used              # nothing recorded by the build probes (freezing records on use)
     a = E.design(spec, by_name["pool"], by_name, n_starts=8, seed=42, margins_path=MARGINS)
     b = E.design(spec, by_id["pool"], by_id, n_starts=8, seed=42, margins_path=MARGINS)
     for n in V5POOL:
         assert abs(a.weights[n] - b.weights[n]) < 1e-9
-    assert not by_id["library"].nonverified_used
+    assert {x.split("=")[0].split(".")[1] for x in by_id["library"].nonverified_used} <= {"Tm", "dHfus"}   # freezing only
 
 
 def _first_absent_nalkane():
@@ -117,14 +118,66 @@ def test_forward_check_d4(did):
     models = LR.build_route_models(V5POOL)
     res = LR.evaluate_recipe(SPECS[did], models, w, margins_path=MARGINS)
     df = LR.design_forward_check(res)
-    assert list(df.columns) == ["constraint", "design_pred", "forward_pred", "abs_diff", "tol", "pass", "cause"]
+    assert list(df.columns) == LR.CHECK_COLUMNS
     judged = df[df.tol.notna()]
-    assert set(judged.constraint) >= {"flash_point_C", "nhoc_MJ_kg"} and len(judged) >= 3
+    assert set(judged.constraint) >= {"flash_point_C[tol]", "nhoc_MJ_kg[compH_rdkit_MW]"} and len(judged) >= 3
     assert (judged["pass"] == True).all(), df.to_string()     # noqa: E712
-    for key in ("density_15C_kg_m3", "freezing_point_C"):
+    # every constrained property has a limit row judged on BOTH the design and the API value
+    lim = df[df.limit != ""]
+    assert set(lim.constraint) == {c.key for c in res.constraints}, df.to_string()
+    for key in ("density_15C_kg_m3", "freezing_point_C", "smoke_point_mm"):
         r = df[df.constraint == key].iloc[0]
         assert isinstance(r.cause, str) and r.cause.strip()
-        assert np.isfinite(r.abs_diff)
+        assert r.design_meets in (True, False) and r.api_meets in (True, False)
+
+
+def test_category_b_designs_meet_limits_on_api_value():
+    """Review C1: a design that is called 'meets limits' must meet every limit at the API (predict_fuel) point estimate too."""
+    from fuelblend.design import library_route as lr
+    models = LR.build_route_models(V5POOL)
+    for spec in ("astm:jet_a", "bis:jet_a1"):
+        res = LR.design_routed(spec, models, n_starts=8, seed=42, margins_path=MARGINS)
+        fc = LR.design_forward_check(res)
+        lim = fc[fc.limit != ""]
+        both = lr.limits_met_by_both(fc)
+        assert both == bool(lim.design_meets.all() and lim.api_meets.all())
+        if both:
+            assert (lim.forward_pred.map(np.isfinite)).all()
+
+
+def test_design_freezing_equals_api_freezing():
+    """The design freezing model is the API function (ideal SvL, mole fraction, Coutinho tmap): same value for a recipe."""
+    from fuelblend.api import predict_route as pr
+    models = LR.build_route_models(V5POOL)
+    w = {"n-undecane": 0.25, "n-dodecane": 0.15, "butylcyclohexane": 0.6}
+    res = LR.evaluate_recipe("astm:jet_a", models, w, margins_path=MARGINS)
+    c = next(c for c in res.constraints if c.prop == "freezing")
+    comp = {s: res.weights[n] for n, s in zip(V5POOL, _smiles(V5POOL)) if res.weights[n] > 0}
+    f = pr.predict_fuel(comp, T_K=288.15, fuel_type="jet")["freezing_point_C"]["value"]
+    assert abs(c.prediction - f) < 1e-9
+    assert "coutinho_table" in models["props"]["freezing"].margin_missing_reason     # route constants: never certifiable
+
+
+def test_forward_check_none_safe(monkeypatch):
+    """A forward value of None gives api_meets False with a cause, not an exception."""
+    from fuelblend.api import predict_route as pr
+    models = LR.build_route_models(V5POOL)
+    res = LR.evaluate_recipe("astm:jet_a", models, {"n-undecane": 0.3, "butylcyclohexane": 0.7}, margins_path=MARGINS)
+    real = pr.predict_fuel
+
+    def fake(*a, **k):
+        out = real(*a, **k)
+        out["viscosity_kin_cSt"] = dict(out["viscosity_kin_cSt"], value=None, status="T_out_of_grid", domain_reasons=["T"])
+        out["smoke_point_mm"] = dict(out["smoke_point_mm"], value=None, status="no_evaluation")
+        out["flash_point_C"] = dict(out["flash_point_C"], value=None, status="low_coverage", variants={})
+        return out
+    monkeypatch.setattr(pr, "predict_fuel", fake)
+    df = LR.design_forward_check(res)
+    for key in ("kin_visc_m20C_cSt", "smoke_point_mm", "flash_point_C"):
+        r = df[df.constraint == key].iloc[0]
+        assert r.api_meets is False or r.api_meets == False   # noqa: E712
+        assert "None" in r.cause
+    assert not LR.limits_met_by_both(df)
 
 
 def test_flash_on_overlay_and_note():

@@ -8,6 +8,8 @@ design to the name-based pool).  A compound that is not in the table gets route 
     rho15               pure-property grid at 288.15 K        route_grid
     Tm, dHfus           ``build_tmap`` (Coutinho table)       coutinho_table
     flash               anchored Antoine / LFL registry       route_anchored
+    freezing            the API function: ideal SvL in mole fraction on the Coutinho tmap for every member
+                        (so every member's Tm/dHfus is recorded as coutinho_table and freezing is uncertified)
     RON, MON, DCN, Psat37_8   none                            absent  (ModelUnavailable)
 
 ``v()`` returns route values too and records every non-verified one in ``nonverified_used``.  ``build_route_models`` turns
@@ -199,6 +201,32 @@ def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
                                margin_missing_reason=why, by_construction=False, T_valid_C=None)
 
 
+def _freezing_api_fn(L: RouteLibrary):
+    """Design freezing = the function ``predict_fuel`` uses: ideal Schroeder-van Laar in mole fraction (RDKit MW) on the
+    Coutinho ``build_tmap`` constants, for every pool member (D7, review C1).  The constants are route constants, so each
+    member is recorded as ``coutinho_table`` and the model is uncertified (freezing has no valid margin anyway)."""
+    from fuelblend.eval.composition_route import ideal_sle_C
+
+    def fn(pool, w, T_C):
+        pool = list(pool)
+        tmap = L._pr._tmap()
+        iks = [L.ik(n) for n in pool]
+        for n, ik in zip(pool, iks):
+            if not tmap.get(ik):
+                raise ModelUnavailable(f"{n}.Tm status=absent (no Coutinho table entry)")
+            L.nonverified_used.add(f"{n}.Tm={'coutinho_table'}")
+            L.nonverified_used.add(f"{n}.dHfus={'coutinho_table'}")
+        w = np.asarray(w, float)
+        mw = np.array([L._ctx.mw(L.smiles[n]) for n in pool])
+        x = (w / w.sum()) / mw
+        x = x / x.sum()
+        v = ideal_sle_C(x, iks, tmap)
+        if not np.isfinite(v):
+            raise ModelUnavailable("no crystallising component with Tm and dHfus")
+        return float(v)
+    return fn
+
+
 def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "flash", "sle")) -> dict:
     """Models for ``engine_v4.design`` on a SMILES / InChIKey / name pool.  The resolved pool is ``models['pool']``."""
     L = RouteLibrary(pool_ids, pure_props)
@@ -211,7 +239,7 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     props, alts = models["props"], models["alternates"]
     mole = next(p for p in alts["freezing"] if p.name == "ideal_sle_mole_fraction")
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
-    props["freezing"] = dataclasses.replace(mole, certified_kinds={"jet"})
+    props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"})
     models["props"] = {k: _flag(L, p) for k, p in props.items()}
     models["alternates"] = {k: [_flag(L, p) for p in v] for k, v in alts.items()}
     models["pool"] = list(L.pool)
@@ -251,6 +279,11 @@ class _Row:
     tol: float
     cause: str = ""
     informational: bool = False
+    limit_key: str = ""                   # constraint key whose spec limit this row is judged against ("" = no limit judgement)
+
+
+CHECK_COLUMNS = ["constraint", "design_pred", "forward_pred", "abs_diff", "tol", "pass", "cause",
+                 "limit", "lo", "hi", "design_meets", "api_meets"]
 
 
 def _name_smiles() -> dict:
@@ -270,14 +303,49 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
                           binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool))
 
 
+def _fnum(x) -> float:
+    try:
+        return float("nan") if x is None else float(x)
+    except (TypeError, ValueError):
+        return float("nan")
+
+
+def _meets(v, lo, hi) -> bool:
+    """Point-estimate verdict against the spec limit(s); a missing or non-finite value never meets."""
+    v = _fnum(v)
+    if not math.isfinite(v):
+        return False
+    return not ((lo is not None and v < lo) or (hi is not None and v > hi))
+
+
+def _limit_text(lo, hi) -> str:
+    if lo is not None and hi is not None:
+        return f"{lo:g}..{hi:g}"
+    return f">= {lo:g}" if lo is not None else (f"<= {hi:g}" if hi is not None else "")
+
+
+def _api_value(f: dict, key: str) -> tuple:
+    """(value or nan, cause suffix) of an API property dict; a None value gives the status/reason as the cause."""
+    v = f.get(key)
+    if v is None:
+        return float("nan"), f"API returned no property {key}"
+    val = v.get("value")
+    if val is None or not math.isfinite(_fnum(val)):
+        why = "; ".join(v.get("domain_reasons") or []) or str(v.get("status", ""))
+        return float("nan"), f"API value is None (status {v.get('status')}): {why}"
+    return float(val), ""
+
+
 def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) -> pd.DataFrame:
     """Re-predict ``result.weights`` through ``predict_fuel`` and compare with the design-side predictions.
 
-    Tolerances (R-API-4): flash 0.01 C against the API designated (overlay) flash, viscosity 1e-6
-    relative, net heat exact (1e-9, like-for-like composition-H model).  Density and freezing differences are reported
-    with the cause, not judged."""
+    Two kinds of rows.  (1) For EVERY constrained property: ``design_pred`` (the engine's point estimate), ``forward_pred`` (the
+    API value), the spec ``limit``, ``design_meets`` and ``api_meets`` (each point estimate against the limit, margins
+    ignored).  A design meets its limits only if ``design_meets`` and ``api_meets`` are both true for every such row
+    (``limits_met_by_both``); a forward value of None gives ``api_meets`` False with the cause.  (2) Like-for-like rows with a
+    tolerance (R-API-4): flash 0.01 C against the API designated (overlay) flash, viscosity 1e-6 relative, net heat exact
+    (1e-9) for the composition-H model.  ``pass`` is judged on those tolerance rows; the other rows are reported."""
     from fuelblend.api import predict_route as pr
-    from fuelblend.baselines.heat_of_combustion_v2 import mixture_heat_of_combustion_v2
     names = _name_smiles()
     pool = list(result.pool) or list(result.weights)
     smi = {n: names.get(n, n) for n in pool}
@@ -299,52 +367,79 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
 
     def dp(key):
         c = cons.get(key)
-        return float(c.prediction) if c is not None else float("nan")
+        return _fnum(c.prediction) if c is not None else float("nan")
 
-    if "density_15C_kg_m3" in cons:
-        rows.append(_Row("density_15C_kg_m3", dp("density_15C_kg_m3"), f_15["density_kg_m3"]["value"], float("nan"),
-                         "design: ideal volume mixing of the table rho15; forward: pure-property grid rho at 288.15 K "
-                         "(table rho15 is a listed value, the grid is a fitted curve)", True))
+    # (1) every constrained property against the API value and the spec limit
+    api_key = {"density_15C_kg_m3": ("density_kg_m3", f_15), "flash_point_C": ("flash_point_C", f_15),
+               "freezing_point_C": ("freezing_point_C", f_15), "nhoc_MJ_kg": ("heat_net_MJ_kg", f_15),
+               "smoke_point_mm": ("smoke_point_mm", f_15), "aromatics_wt_pct": ("aromatics_wt_pct", f_15),
+               "aromatics_vol_pct": ("aromatics_vol_pct", f_15)}
+    if kv:
+        api_key[kv] = ("viscosity_kin_cSt", f_vis)
+    notes = {
+        "density_15C_kg_m3": "design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K",
+        "flash_point_C": "design and API both use the LFL-overlay registry (U1)",
+        "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the Coutinho tmap constants",
+        "nhoc_MJ_kg": "design primary model uses constant H = 13.8 wt%; the API uses composition H",
+        "smoke_point_mm": "design: AJFTD bulk regression on aromatics; API: YSI route (a different model)",
+        "aromatics_wt_pct": "class mass fraction, by construction",
+        "aromatics_vol_pct": "design: table rho15 volume fractions; API: grid rho at 288.15 K",
+    }
+    if kv:
+        notes[kv] = "kinematic viscosity at the spec temperature, Refutas on the pure-property grid"
+    for key in cons:
+        if key not in api_key:
+            continue
+        ak, f = api_key[key]
+        fv, why = _api_value(f, ak)
+        rows.append(_Row(key, dp(key), fv, float("nan"), notes.get(key, "") + ("; " + why if why else ""),
+                         informational=True, limit_key=key))
+
+    # (2) like-for-like tolerance rows
     if "flash_point_C" in cons:
         fl = f_15["flash_point_C"]
-        rows.append(_Row("flash_point_C", dp("flash_point_C"), fl["value"], 0.01,
+        rows.append(_Row("flash_point_C[tol]", dp("flash_point_C"), _fnum(fl.get("value")), 0.01,
                          "design and API both use the LFL-overlay registry (U1)"))
-        rows.append(_Row("flash_point_C[v4_designated]", dp("flash_point_C"), fl["variants"]["v4_designated"], float("nan"),
+        v4d = (fl.get("variants") or {}).get("v4_designated")
+        rows.append(_Row("flash_point_C[v4_designated]", dp("flash_point_C"), _fnum(v4d), float("nan"),
                          "informational: plain registry (no LFL overlay); the diff is the overlay effect", True))
-    if "freezing_point_C" in cons:
-        rows.append(_Row("freezing_point_C", dp("freezing_point_C"), f_15["freezing_point_C"]["value"], float("nan"),
-                         "design: Tm/dHfus from pure_props_v5 (listed values) in mole-fraction ideal SvL; forward: Tm/dHfus "
-                         "from build_tmap (Coutinho table). Same equation, different constants", True))
     if kv:
-        rows.append(_Row(kv, dp(kv), f_vis["viscosity_kin_cSt"]["value"], 1e-6))
+        rows.append(_Row(kv + "[tol]", dp(kv), _api_value(f_vis, "viscosity_kin_cSt")[0], 1e-6))
     if "nhoc_MJ_kg" in cons:
         # The API uses the composition-H group-additivity model; the design primary uses constant H.  Two like-for-like rows
         # use the design's composition-H model: as designed (table MW, 2 decimals) and with RDKit MW, the API's MW.
         w = np.array([result.weights[n] for n in pool], float)
+        fv = _api_value(f_15, "heat_net_MJ_kg")[0]
         fn = M.make_fns(L)["nhoc_comp_h"]
-        rows.append(_Row("nhoc_MJ_kg[compH_table_MW]", fn(pool, w, None), f_15["heat_net_MJ_kg"]["value"], float("nan"),
+        rows.append(_Row("nhoc_MJ_kg[compH_table_MW]", fn(pool, w, None), fv, float("nan"),
                          "same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW", True))
         Lr = RouteLibrary(pool)
         for n in pool:
             Lr._tab[(n, "MW")] = (float(Descriptors.MolWt(Chem.MolFromSmiles(smi[n]))), "verified")
-        rows.append(_Row("nhoc_MJ_kg", M.make_fns(Lr)["nhoc_comp_h"](pool, w, None), f_15["heat_net_MJ_kg"]["value"], 1e-9,
+        rows.append(_Row("nhoc_MJ_kg[compH_rdkit_MW]", M.make_fns(Lr)["nhoc_comp_h"](pool, w, None), fv, 1e-9,
                          "design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H)"))
-        rows.append(_Row("nhoc_MJ_kg[primary_constH]", dp("nhoc_MJ_kg"), f_15["heat_net_MJ_kg"]["value"], float("nan"),
-                         "design primary model uses constant H = 13.8 wt%; the API uses composition H", True))
-    for key, fk in (("aromatics_wt_pct", "aromatics_wt_pct"), ("aromatics_vol_pct", "aromatics_vol_pct")):
-        if key in cons:
-            rows.append(_Row(key, dp(key), f_15[fk]["value"], float("nan"),
-                             "design: table rho15 volume fractions; forward: grid rho at 288.15 K" if "vol" in key else
-                             "class mass fraction, by construction", True))
     out = []
     for r in rows:
-        d = abs(r.design_pred - r.forward_pred) if (r.forward_pred is not None and np.isfinite(r.design_pred)) else float("nan")
-        if r.informational:
+        fin = math.isfinite(_fnum(r.forward_pred)) and math.isfinite(_fnum(r.design_pred))
+        d = abs(r.design_pred - r.forward_pred) if fin else float("nan")
+        if r.informational or not math.isfinite(r.tol):
             ok = "reported"
         elif r.constraint.startswith("kin_visc_"):
-            ok = bool(d <= r.tol * abs(r.forward_pred))
+            ok = bool(fin and d <= r.tol * abs(r.forward_pred))
         else:
-            ok = bool(d <= r.tol)
-        out.append(dict(constraint=r.constraint, design_pred=r.design_pred, forward_pred=r.forward_pred, abs_diff=d,
-                        tol=r.tol, **{"pass": ok}, cause=r.cause))
-    return pd.DataFrame(out, columns=["constraint", "design_pred", "forward_pred", "abs_diff", "tol", "pass", "cause"])
+            ok = bool(fin and d <= r.tol)
+        row = dict(constraint=r.constraint, design_pred=_fnum(r.design_pred), forward_pred=_fnum(r.forward_pred), abs_diff=d,
+                   tol=r.tol, cause=r.cause, limit="", lo=np.nan, hi=np.nan, design_meets=None, api_meets=None)
+        row["pass"] = ok
+        if r.limit_key:
+            c = cons[r.limit_key]
+            row.update(limit=_limit_text(c.lo, c.hi), lo=_fnum(c.lo), hi=_fnum(c.hi),
+                       design_meets=_meets(r.design_pred, c.lo, c.hi), api_meets=_meets(r.forward_pred, c.lo, c.hi))
+        out.append(row)
+    return pd.DataFrame(out, columns=CHECK_COLUMNS)
+
+
+def limits_met_by_both(fc: pd.DataFrame) -> bool:
+    """True iff every constrained property meets its limit at the design point estimate AND at the API value."""
+    lim = fc[fc["limit"] != ""]
+    return bool(len(lim) > 0 and lim["design_meets"].astype(bool).all() and lim["api_meets"].astype(bool).all())

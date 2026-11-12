@@ -4,8 +4,8 @@
 Models: ``fuelblend.design.library_route.build_route_models`` (every constant carries a status; a model that touches a
 non-verified constant is uncertified).  Optimiser and statuses: ``engine_v4.design`` through ``design_routed``.
 Margins: results/v5/S1/uncertainty_v5.yaml (as D4).  Freezing has no valid margin (8 systems -> at most an 88.9 % level),
-so a design is category A (fails at the point estimate), B (meets every limit at the point estimate, cannot be certified)
-or certified.  ``--freezing-guard-K 4`` optimises against a freezing limit tightened by 4 K and reports against the real
+so a design is category A (fails a limit at the design OR the API point estimate), B (meets every limit on both, cannot be
+certified) or certified.  The forward check judges every constrained property against the ``predict_fuel`` value.  ``--freezing-guard-K 4`` optimises against a freezing limit tightened by 4 K and reports against the real
 spec: "indicative guard band, not certified".
 
 Pools: ``v5pool`` (the D4 pool), ``ext`` (v5pool plus the lowest-InChIKey registry compound with own grid, flash and SLE data
@@ -163,13 +163,25 @@ def main(argv=None):
         fc = LR.design_forward_check(res)
         fc_t = time.time() - t2
         judged = fc[fc["tol"].notna()]
-        fwd_pass = bool(judged["pass"].all()) and len(judged) > 0
+        fwd_pass = bool(judged["pass"].all()) and len(judged) > 0          # like-for-like tolerance rows only
+        lim = fc[fc["limit"] != ""]
+        both = LR.limits_met_by_both(fc)
+        api_failed = lim.loc[~lim["api_meets"].astype(bool), "constraint"].tolist()
+        design_failed = lim.loc[~lim["design_meets"].astype(bool), "constraint"].tolist()
+        if res.passed and both:
+            cat_final = "C_certified"
+        elif not both:
+            cat_final = "A_fails_a_limit_on_design_or_API_point_estimate"
+        else:
+            cat_final = "B_meets_both_not_certifiable"
         gaps = blocking_gaps(res)
         w = {k: round(v, 4) for k, v in res.weights.items()}
         d_rows.append(dict(design_id=did, spec_name=spec_name, pool_arg=a.pool, pool_size=len(pool), pool=json.dumps(pool),
                            n_starts=n_starts, seed=a.seed, freezing_guard_K=a.freezing_guard_K, label=label,
                            weights=json.dumps(w), passed=res.passed, meets_at_point_estimate=bool(viol == 0 and nopred == 0),
-                           n_point_violation=viol, n_no_point_estimate=nopred, category=cat,
+                           n_point_violation=viol, n_no_point_estimate=nopred, category_design_side=cat, category=cat_final,
+                           meets_limits_design_and_api=both, design_failed_limits=json.dumps(design_failed),
+                           api_failed_limits=json.dumps(api_failed),
                            best_min_slack=res.optimiser["best_min_slack"], n_converged=res.optimiser["n_converged"],
                            blocking=json.dumps(gaps), forward_check_pass=fwd_pass,
                            forward_failed=json.dumps(judged.loc[~judged["pass"].astype(bool), "constraint"].tolist()),
@@ -180,7 +192,7 @@ def main(argv=None):
                                spec_verification=c.spec_verification))
         f_rows.append(fc.assign(design_id=did))
         rt.append(f"{did}: design {dt:.1f}s ({res.optimiser['n_converged']}/{n_starts} converged), forward check {fc_t:.1f}s")
-        print(f"[{did}] {cat} passed={res.passed} fwd_pass={fwd_pass} {dt:.1f}s\n  weights {w}", flush=True)
+        print(f"[{did}] {cat_final} (design side {cat}) passed={res.passed} fwd_pass={fwd_pass} api_failed={api_failed} {dt:.1f}s\n  weights {w}", flush=True)
         for k, v in gaps.items():
             print(f"  blocked: {k}: {v[:160]}")
         if d4 is not None and a.pool == "v5pool" and not a.freezing_guard_K:
