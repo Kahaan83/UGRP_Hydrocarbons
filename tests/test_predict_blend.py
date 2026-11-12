@@ -88,12 +88,13 @@ def test_flash_antoine_out_of_range_warns():
     assert not any("antoine_out_of_range" in str(w) for w in flash["warnings"])
     # a heavy blend flashes above 100 C: the warning must appear
     heavy = _predict([("CCCCCCCCCCCCCCCCCC", 1.0)], T_K=298.15)["flash_point_C"]     # n-octadecane
-    if heavy["value"] is not None and not (0.0 <= heavy["value"] <= 100.0):
-        assert any("antoine_nominal_window_exceeded" in str(w) for w in heavy["warnings"])
+    assert heavy["value"] is not None and not (0.0 <= heavy["value"] <= 100.0)
+    assert any("antoine_nominal_window_exceeded" in str(w) for w in heavy["warnings"])
     result2 = _predict(composition, T_K=800.0)
     assert result2["flash_point_C"]["value"] == flash["value"]                         # flash does not depend on T_K
     all_w = result2.get("warnings", []) + result2.get("flash_point_C", {}).get("warnings", [])
-    assert any("T_out" in str(w) or "230" in str(w) or "470" in str(w) for w in all_w),         f"Expected T-domain warning at T=800K, got {all_w}"
+    assert any("T_out" in str(w) or "230" in str(w) or "470" in str(w) for w in all_w), (
+        f"Expected T-domain warning at T=800K, got {all_w}")
 
 
 # ── Test 5: determinism ───────────────────────────────────────────────────────
@@ -139,9 +140,12 @@ def test_missing_bundle_raises_not_trains(monkeypatch, tmp_path):
     msg = str(ei.value)
     assert "train_mixture_residual.py" in msg and ".venv/Scripts/python.exe" in msg
     assert not (tmp_path / "empty_mix").exists(), "nothing may be written (no training / no mkdir)"
-    # opt-in residual path surfaces the same error through predict()
-    with pytest.raises(FileNotFoundError):
-        _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15, use_mixture_residual=True)
+    # D3b: no residual correction ships; the kwarg only adds a warning and the route value is unchanged
+    base = _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15)
+    flagged = _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15, use_mixture_residual=True)
+    for prop in ("viscosity_dyn_mPas", "density_kg_m3", "flash_point_C"):
+        assert flagged[prop]["value"] == base[prop]["value"]
+        assert "mixture_residual_not_shipped_D3b" in flagged[prop]["warnings"]
     # pure-component bundle: same contract
     monkeypatch.setattr(pb, "_PURE_MODEL_DIR", tmp_path / "empty_pure")
     monkeypatch.setattr(pb, "_pure_models", None)
