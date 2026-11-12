@@ -63,15 +63,8 @@ def sha256_file(p: Path) -> str:
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def _flash_family(m: str) -> str:
-    u = str(m).upper().replace(" ", "")
-    if "93" in u or "IP170" in u:
-        return "D93_or_IP170"
-    if "D56" in u:
-        return "D56"
-    if u.startswith("220"):
-        return "spec_table_220x"
-    return "other"
+from fuelblend.eval.group_stats import flash_family as _flash_family  # noqa: E402  (moved, body unchanged)
+
 
 
 def build_table(wide_path: Path = WIDE, long_path: Path = LONG):
