@@ -1,0 +1,11 @@
+fuel_id,fuel_name,category,T_K,P_MPa,P_kPa,density_kg_m3,uncertainty_kg_m3,source_table,reference
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,30.015,30015.0,837.52,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,25.01,25010.0,834.93,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,20.002,20002.0,832.28,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,15.007,15007.0,829.56,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,10.007,10007.0,826.76,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,4.999,4999.0,823.86,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,4.01,4010.0,823.27,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,2.999,2999.0,822.67,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,2.005,2005.0,822.07,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
+Jet-A-4658,Jet A (POSF 4658),conventional_jet,270.0,1.007,1006.9999999999999,821.46,1.0,Table 22,"Outcalt, Laesecke & Freund, Energy & Fuels 2009 / NISTIR 6659"
