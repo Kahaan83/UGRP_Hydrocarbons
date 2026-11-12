@@ -1,0 +1,88 @@
+system_label,component_name,component_smiles,x_mole,measured_C,method,doi,table,page
+Li2014 Table 5 octane+dodecane pt1,octane,CCCCCCCC,0.31,42.0,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt1,dodecane,CCCCCCCCCCCC,0.69,42.0,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt2,octane,CCCCCCCC,0.54,29.5,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt2,dodecane,CCCCCCCCCCCC,0.46,29.5,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt3,octane,CCCCCCCC,0.73,23.2,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt3,dodecane,CCCCCCCCCCCC,0.27,23.2,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt4,octane,CCCCCCCC,0.88,21.2,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 5 octane+dodecane pt4,dodecane,CCCCCCCCCCCC,0.12,21.2,closed cup (WFY-111C),10.1155/2014/239023,Table 5,3
+Li2014 Table 6 nonane+decane pt5,nonane,CCCCCCCCC,0.22,48.5,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt5,decane,CCCCCCCCCC,0.78,48.5,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt6,nonane,CCCCCCCCC,0.46,44.0,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt6,decane,CCCCCCCCCC,0.54,44.0,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt7,nonane,CCCCCCCCC,0.65,39.8,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt7,decane,CCCCCCCCCC,0.35,39.8,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt8,nonane,CCCCCCCCC,0.83,37.5,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 6 nonane+decane pt8,decane,CCCCCCCCCC,0.17,37.5,closed cup (WFY-111C),10.1155/2014/239023,Table 6,3
+Li2014 Table 7 nonane+dodecane pt9,nonane,CCCCCCCCC,0.28,58.8,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt9,dodecane,CCCCCCCCCCCC,0.72,58.8,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt10,nonane,CCCCCCCCC,0.51,48.0,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt10,dodecane,CCCCCCCCCCCC,0.49,48.0,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt11,nonane,CCCCCCCCC,0.7,41.5,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt11,dodecane,CCCCCCCCCCCC,0.3,41.5,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt12,nonane,CCCCCCCCC,0.87,37.8,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 7 nonane+dodecane pt12,dodecane,CCCCCCCCCCCC,0.13,37.8,closed cup (WFY-111C),10.1155/2014/239023,Table 7,3
+Li2014 Table 8 octane+decane+dodecane pt13,octane,CCCCCCCC,0.21,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt13,decane,CCCCCCCCCC,0.17,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt13,dodecane,CCCCCCCCCCCC,0.62,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt14,octane,CCCCCCCC,0.2,42.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt14,decane,CCCCCCCCCC,0.65,42.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt14,dodecane,CCCCCCCCCCCC,0.15,42.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt15,octane,CCCCCCCC,0.39,31.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt15,decane,CCCCCCCCCC,0.32,31.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt15,dodecane,CCCCCCCCCCCC,0.29,31.5,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt16,octane,CCCCCCCC,0.71,22.0,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt16,decane,CCCCCCCCCC,0.15,22.0,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 8 octane+decane+dodecane pt16,dodecane,CCCCCCCCCCCC,0.13,22.0,closed cup (WFY-111C),10.1155/2014/239023,Table 8,3
+Li2014 Table 9 nonane+decane+undecane pt17,nonane,CCCCCCCCC,0.19,54.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt17,decane,CCCCCCCCCC,0.17,54.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt17,undecane,CCCCCCCCCCC,0.63,54.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt18,nonane,CCCCCCCCC,0.18,49.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt18,decane,CCCCCCCCCC,0.66,49.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt18,undecane,CCCCCCCCCCC,0.15,49.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt19,nonane,CCCCCCCCC,0.36,46.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt19,decane,CCCCCCCCCC,0.33,46.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt19,undecane,CCCCCCCCCCC,0.31,46.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt20,nonane,CCCCCCCCC,0.69,39.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt20,decane,CCCCCCCCCC,0.16,39.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 9 nonane+decane+undecane pt20,undecane,CCCCCCCCCCC,0.15,39.5,closed cup (WFY-111C),10.1155/2014/239023,Table 9,4
+Li2014 Table 10 nonane+decane+dodecane pt21,nonane,CCCCCCCCC,0.19,58.4,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt21,decane,CCCCCCCCCC,0.18,58.4,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt21,dodecane,CCCCCCCCCCCC,0.63,58.4,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt22,nonane,CCCCCCCCC,0.18,50.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt22,decane,CCCCCCCCCC,0.67,50.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt22,dodecane,CCCCCCCCCCCC,0.15,50.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt23,nonane,CCCCCCCCC,0.37,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt23,decane,CCCCCCCCCC,0.34,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt23,dodecane,CCCCCCCCCCCC,0.3,47.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt24,nonane,CCCCCCCCC,0.69,38.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt24,decane,CCCCCCCCCC,0.16,38.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Li2014 Table 10 nonane+decane+dodecane pt24,dodecane,CCCCCCCCCCCC,0.14,38.5,closed cup (WFY-111C),10.1155/2014/239023,Table 10,4
+Ha2016 Table 2 nonane+decane+dodecane pt1,nonane,CCCCCCCCC,0.2,43.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt1,decane,CCCCCCCCCC,0.7,43.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt1,dodecane,CCCCCCCCCCCC,0.1,43.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt2,nonane,CCCCCCCCC,0.2,46.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt2,decane,CCCCCCCCCC,0.5,46.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt2,dodecane,CCCCCCCCCCCC,0.3,46.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt3,nonane,CCCCCCCCC,0.2,48.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt3,decane,CCCCCCCCCC,0.3,48.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt3,dodecane,CCCCCCCCCCCC,0.5,48.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt4,nonane,CCCCCCCCC,0.2,53.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt4,decane,CCCCCCCCCC,0.1,53.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt4,dodecane,CCCCCCCCCCCC,0.7,53.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt5,nonane,CCCCCCCCC,0.3,42.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt5,decane,CCCCCCCCCC,0.5,42.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt5,dodecane,CCCCCCCCCCCC,0.2,42.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt6,nonane,CCCCCCCCC,0.3,45.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt6,decane,CCCCCCCCCC,0.2,45.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt6,dodecane,CCCCCCCCCCCC,0.5,45.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt7,nonane,CCCCCCCCC,0.5,37.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt7,decane,CCCCCCCCCC,0.4,37.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt7,dodecane,CCCCCCCCCCCC,0.1,37.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt8,nonane,CCCCCCCCC,0.5,39.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt8,decane,CCCCCCCCCC,0.1,39.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt8,dodecane,CCCCCCCCCCCC,0.4,39.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt9,nonane,CCCCCCCCC,0.7,34.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt9,decane,CCCCCCCCCC,0.2,34.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34
+Ha2016 Table 2 nonane+decane+dodecane pt9,dodecane,CCCCCCCCCCCC,0.1,34.0,Seta flash closed cup,10.7842/kigas.2016.20.6.31,Table 2,34

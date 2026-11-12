@@ -88,7 +88,7 @@ The empirical data across blend complexity buckets $N \in [1, 40+]$ (`results/v2
 | Flash point | Le Chatelier (ideal) + Antoine + LFL | max of `flash_point_C.lab_mixtures.ideal` and `flash_point_C.real_fuels_D93_reconstructed.ideal` (never the 0-floored D93 alone) | jet fuels only; `lo` is the safe bound |
 
 Uncertified (no valid margin; value None, interval NaN, `in_domain=False`): freezing, smoke point, RON/MON, DCN, DVPE (data units unconfirmed), pour point.
-The mixture-residual GBM is opt-in (`use_mixture_residual=True`), has no margin, and is never certified. `fuel_type='jet'` is trusted from the caller.
+No learned mixture-residual correction ships (v5 D3b): `use_mixture_residual=True` only adds a warning. `fuel_type='jet'` is trusted from the caller.
 
 ---
 

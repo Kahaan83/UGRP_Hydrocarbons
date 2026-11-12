@@ -1,0 +1,10 @@
+name,smiles,kind,n_carbon,has_antoine,has_lfl,has_viscosity,has_density,has_fusion,admitted,reason
+"1,2,4-trimethylbenzene",Cc1ccc(C)c(C)c1,alkylbenzene,9,True,True,True,True,False,True,admitted
+n-propylbenzene,CCCc1ccccc1,alkylbenzene,9,True,True,True,True,False,True,admitted
+1-methylnaphthalene,Cc1cccc2ccccc12,aromatic_di,11,False,False,True,True,False,False,"missing: antoine, lfl"
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,aromatic_di,12,False,False,False,False,False,False,"missing: antoine, lfl, viscosity, density"
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,,14,False,False,False,False,False,False,not in registry
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,,13,False,False,False,False,False,False,not in registry
+1-methyltetralin,CC1CCCc2ccccc21,indan_tetralin,11,False,False,False,False,False,False,"missing: antoine, lfl, viscosity, density"
+n-butyltetralin,CCCCC1CCCc2ccccc21,indan_tetralin,14,False,False,False,False,False,False,not in registry
+2-methyldecalin,CC1CCC2CCCCC2C1,cyclo_di,11,False,False,False,False,False,False,not in registry

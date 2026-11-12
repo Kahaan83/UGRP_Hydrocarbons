@@ -1,0 +1,13 @@
+fuel_code,property,surrogate_predicted,status,target_CF_measured,target_CF_values,target_basis,diff_pred_minus_target,surrogate_measured,surrogate_measured_minus_target,label
+Mueller2016_V0a,flash_point_C,,low_coverage,68.0,68.0,single measurement,,88.0,20.0,
+Mueller2016_V0a,density_kg_m3,818.6970980746418,ok,846.6,848.0;845.2,mean of two lab values,-27.902901925358265,818.0,-28.600000000000023,
+Mueller2016_V0a,cloud_point_C,2.1647866037283165,ok,-19.2,-19.2,single measurement,21.364786603728316,-2.3,16.9,"SvL vs cloud point, different property, indicative only"
+Mueller2016_V0b,flash_point_C,,low_coverage,68.0,68.0,single measurement,,83.0,15.0,
+Mueller2016_V0b,density_kg_m3,836.3225471390125,ok,846.6,848.0;845.2,mean of two lab values,-10.277452860987523,837.5,-9.100000000000023,
+Mueller2016_V0b,cloud_point_C,11.340595216416148,ok,-19.2,-19.2,single measurement,30.540595216416147,8.4,27.6,"SvL vs cloud point, different property, indicative only"
+Mueller2016_V1,flash_point_C,,low_coverage,68.0,68.0,single measurement,,80.0,12.0,
+Mueller2016_V1,density_kg_m3,827.8801036121172,ok,846.6,848.0;845.2,mean of two lab values,-18.71989638788284,828.4,-18.200000000000045,
+Mueller2016_V1,cloud_point_C,9.691797478549233,ok,-19.2,-19.2,single measurement,28.891797478549233,5.2,24.4,"SvL vs cloud point, different property, indicative only"
+Mueller2016_V2,flash_point_C,,low_coverage,68.0,68.0,single measurement,,80.0,12.0,
+Mueller2016_V2,density_kg_m3,847.2255205198933,ok,846.6,848.0;845.2,mean of two lab values,0.6255205198932572,853.0,6.399999999999977,
+Mueller2016_V2,cloud_point_C,3.7084089205080204,ok,-19.2,-19.2,single measurement,22.90840892050802,-4.1,15.1,"SvL vs cloud point, different property, indicative only"

@@ -73,37 +73,28 @@ def test_T_out_of_domain_warns():
         assert found, f"{prop}: expected T-range warning, got {warnings}"
 
 
-# ── Test 4: Antoine window violation → warning + non-chat method ─────────────
+# ── Test 4: flash is on the anchored-Antoine route; the nominal window warning replaces antoine_out_of_range ─────────
 
 def test_flash_antoine_out_of_range_warns():
-    """At T=800 K (extremely hot) Antoine constants for C10-C12 alkanes are out of range.
-    The wrapper should fall back away from 'chat' and emit 'antoine_out_of_range'."""
-    # Use T_K for the flash call but the flash point is a property, not the call T.
-    # The Antoine window check happens at flash-point solve temperature, not at T_K.
-    # To force out-of-range: use pure n-decane whose Antoine range is ~399-470 K (refit).
-    # We fabricate a scenario by using an extremely high T_K (which triggers the T-domain
-    # warning independently) and confirming the method falls back.
+    """v5: flash is ideal Le Chatelier on the anchored Antoine registry, independent of T_K.  There is no fallback model:
+    the method is always the route method, and a flash outside the nominal 0-100 C Antoine window carries the warning
+    'antoine_nominal_window_exceeded' (a flash inside it does not).  T_K outside 230-470 K still carries the T-domain warning."""
     composition = [(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)]
-    # Normal T_K; force the Antoine window to be "out of range" by checking the method
     result = _predict(composition, T_K=298.15)
     flash = result.get("flash_point_C", {})
-    # If Antoine worked, method=="chat"; if Antoine window blocked, method starts with "gbm" or "none"
-    # We do not know ahead of time which branch fires (depends on compounds.csv Tlo/Thi).
-    # What we CAN assert: the method is present and is a string.
-    assert "method" in flash, "flash_point_C must have a 'method' key"
-    assert isinstance(flash["method"], str)
-    # If the method IS chat, check no antoine_out_of_range warning (they are consistent)
-    # If a warning IS present, verify the method is not chat
-    warns = flash.get("warnings", [])
-    out_of_range = any("antoine_out_of_range" in str(w) for w in warns)
-    if out_of_range:
-        assert flash["method"] != "chat", \
-            f"antoine_out_of_range warning but method is still 'chat' — inconsistent"
-    # Separately: test that calling at T=800 K triggers the overall T-domain warning
+    assert flash["method"] == "ideal_le_chatelier_anchored" and isinstance(flash["value"], float)
+    out_of_window = not (0.0 <= flash["value"] <= 100.0)
+    assert any("antoine_nominal_window_exceeded" in str(w) for w in flash["warnings"]) == out_of_window
+    assert not any("antoine_out_of_range" in str(w) for w in flash["warnings"])
+    # a heavy blend flashes above 100 C: the warning must appear
+    heavy = _predict([("CCCCCCCCCCCCCCCCCC", 1.0)], T_K=298.15)["flash_point_C"]     # n-octadecane
+    assert heavy["value"] is not None and not (0.0 <= heavy["value"] <= 100.0)
+    assert any("antoine_nominal_window_exceeded" in str(w) for w in heavy["warnings"])
     result2 = _predict(composition, T_K=800.0)
+    assert result2["flash_point_C"]["value"] == flash["value"]                         # flash does not depend on T_K
     all_w = result2.get("warnings", []) + result2.get("flash_point_C", {}).get("warnings", [])
-    assert any("T_out" in str(w) or "230" in str(w) or "470" in str(w) for w in all_w), \
-        f"Expected T-domain warning at T=800K, got {all_w}"
+    assert any("T_out" in str(w) or "230" in str(w) or "470" in str(w) for w in all_w), (
+        f"Expected T-domain warning at T=800K, got {all_w}")
 
 
 # ── Test 5: determinism ───────────────────────────────────────────────────────
@@ -149,9 +140,12 @@ def test_missing_bundle_raises_not_trains(monkeypatch, tmp_path):
     msg = str(ei.value)
     assert "train_mixture_residual.py" in msg and ".venv/Scripts/python.exe" in msg
     assert not (tmp_path / "empty_mix").exists(), "nothing may be written (no training / no mkdir)"
-    # opt-in residual path surfaces the same error through predict()
-    with pytest.raises(FileNotFoundError):
-        _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15, use_mixture_residual=True)
+    # D3b: no residual correction ships; the kwarg only adds a warning and the route value is unchanged
+    base = _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15)
+    flagged = _predict([(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)], T_K=293.15, use_mixture_residual=True)
+    for prop in ("viscosity_dyn_mPas", "density_kg_m3", "flash_point_C"):
+        assert flagged[prop]["value"] == base[prop]["value"]
+        assert "mixture_residual_not_shipped_D3b" in flagged[prop]["warnings"]
     # pure-component bundle: same contract
     monkeypatch.setattr(pb, "_PURE_MODEL_DIR", tmp_path / "empty_pure")
     monkeypatch.setattr(pb, "_pure_models", None)
@@ -181,11 +175,11 @@ def test_interval_from_v4_yaml(monkeypatch):
     r = _predict(comp, T_K=293.15, fuel_type="jet", composition_kind="reconstructed")   # 20 C: inside the viscosity window
 
     f = r["flash_point_C"]
-    assert f["method"] == "chat"
+    assert f["method"] == "ideal_le_chatelier_anchored"
     assert f["margin"] == 4.0                                 # max(4.0, 0.0): the 0 D93 floor is never used alone
     assert f["lo"] == pytest.approx(f["value"] - 4.0) and f["hi"] == pytest.approx(f["value"] + 4.0)
     assert f["in_domain"] is True and f["safe_bound"] == f["lo"]
-    assert f["tuple"] == (f["value"], f["lo"], f["hi"], "chat", True)
+    assert f["tuple"] == (f["value"], f["lo"], f["hi"], "ideal_le_chatelier_anchored", True)
 
     v = r["viscosity_dyn_mPas"]
     assert v["method"] == "refutas_recalibrated"
@@ -214,9 +208,12 @@ def test_not_certified_cases(monkeypatch):
         assert r["flash_point_C"]["in_domain"] is False
         assert r["flash_point_C"]["domain_reasons"]
     t = pb.predict_tuples(comp, T_K=293.15, fuel_type="jet")
-    for prop in ("freezing_point_C", "smoke_point_mm", "ron", "mon", "dcn", "dvpe_kpa", "pour_point_C"):
+    for prop in ("ron", "mon", "dcn", "dvpe_kpa", "pour_point_C"):
         val, lo, hi, name, ok = t[prop]
         assert val is None and math.isnan(lo) and math.isnan(hi) and ok is False
+    for prop in ("freezing_point_C", "smoke_point_mm"):          # v5 Task 3: the route gives a value, still no interval, never in domain
+        val, lo, hi, name, ok = t[prop]
+        assert math.isnan(lo) and math.isnan(hi) and ok is False
     # temperature outside the viscosity window: raw Refutas, no certified interval
     r = _predict(comp, T_K=310.0, fuel_type="jet", composition_kind="reconstructed")
     assert r["viscosity_dyn_mPas"]["method"] != "refutas_recalibrated"
