@@ -157,11 +157,13 @@ def _probe(L: RouteLibrary, pm: E.PropertyModel) -> set:
         pm.fn(list(L.pool), np.full(n, 1.0 / n), -20.0)
     except ModelUnavailable:
         pass
-    except Exception:
-        pass
+    except Exception as e:                      # never leave a model certifiable when its probe could not run
+        used = set(L.nonverified_used)
+        L.nonverified_used.clear()
+        return used, f"probe failed: {type(e).__name__}: {e}"
     used = set(L.nonverified_used)
     L.nonverified_used.clear()
-    return used
+    return used, ""
 
 
 def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
@@ -183,10 +185,16 @@ def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
                 raise ModelUnavailable(f"flash solver status {d['status']}")
             return float(d["flash_C"])
         pm = dataclasses.replace(pm, fn=fn)
-    used = _probe(L, pm)
-    if not used:
+    used, err = _probe(L, pm)
+    if not used and not err:
         return pm
-    why = "non-verified constant(s): " + ", ".join(sorted(used))
+    why = err if err else "non-verified constant(s): " + ", ".join(sorted(used))
+    if err:                                      # the failing model must report unavailable, not raise
+        inner = pm.fn
+
+        def fn(pool, w, T_C, _inner=inner, _why=err):
+            raise ModelUnavailable(_why)
+        pm = dataclasses.replace(pm, fn=fn)
     return dataclasses.replace(pm, margin_keys=(), margin_keys_by_side=None, margin_keys_fn=None,
                                margin_missing_reason=why, by_construction=False, T_valid_C=None)
 
@@ -222,7 +230,8 @@ def annotate(result: E.DesignResult) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
     the lab margin is the group score of the single mesitylene system)."""
     for c in result.constraints:
-        if c.prop == "flash" and c.applied_margin is not None and math.isfinite(c.applied_margin)                 and LAB_MARGIN_NOTE not in c.reason:
+        has_margin = c.applied_margin is not None and math.isfinite(c.applied_margin)
+        if c.prop == "flash" and has_margin and LAB_MARGIN_NOTE not in c.reason:
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
     return result
 
@@ -261,7 +270,7 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
                           binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool))
 
 
-def design_forward_check(result: E.DesignResult, T_C_visc: float = -20.0) -> pd.DataFrame:
+def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) -> pd.DataFrame:
     """Re-predict ``result.weights`` through ``predict_fuel`` and compare with the design-side predictions.
 
     Tolerances (R-API-4): flash 0.01 C against the API designated (overlay) flash, viscosity 1e-6
@@ -275,6 +284,15 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float = -20.0) -> pd.
     comp = {smi[n]: float(result.weights[n]) for n in pool if result.weights[n] > 0}
     cons = {c.key: c for c in result.constraints}
     L = RouteLibrary(pool)
+    kv = next((k for k in cons if k.startswith("kin_visc_")), None)
+    if kv is not None:
+        mo = re.match(r"^kin_visc_(m?)(\d+)C_cSt$", kv)
+        T_spec = (-1.0 if mo.group(1) else 1.0) * float(mo.group(2))
+        if T_C_visc is not None and abs(T_C_visc - T_spec) > 1e-9:
+            raise ValueError(f"T_C_visc={T_C_visc} does not match the spec constraint {kv} ({T_spec} C)")
+        T_C_visc = T_spec
+    elif T_C_visc is None:
+        T_C_visc = -20.0
     f_vis = pr.predict_fuel(comp, T_K=T_C_visc + 273.15, fuel_type="jet")
     f_15 = pr.predict_fuel(comp, T_K=T15_K, fuel_type="jet")
     rows: list[_Row] = []
@@ -297,7 +315,6 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float = -20.0) -> pd.
         rows.append(_Row("freezing_point_C", dp("freezing_point_C"), f_15["freezing_point_C"]["value"], float("nan"),
                          "design: Tm/dHfus from pure_props_v5 (listed values) in mole-fraction ideal SvL; forward: Tm/dHfus "
                          "from build_tmap (Coutinho table). Same equation, different constants", True))
-    kv = next((k for k in cons if k.startswith("kin_visc_")), None)
     if kv:
         rows.append(_Row(kv, dp(kv), f_vis["viscosity_kin_cSt"]["value"], 1e-6))
     if "nhoc_MJ_kg" in cons:

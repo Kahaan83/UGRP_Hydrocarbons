@@ -141,3 +141,25 @@ def test_flash_on_overlay_and_note():
 
 def test_default_n_starts():
     assert LR.default_n_starts(range(21)) == 8 and LR.default_n_starts(range(6)) == 30
+
+
+def test_probe_failure_uncertifies(monkeypatch):
+    models = LR.build_route_models(V5POOL)
+    L = models["library"]
+    pm = models["props"]["density"]
+
+    def boom(pool, w, T_C):
+        raise RuntimeError("boom")
+    bad = LR._flag(L, __import__("dataclasses").replace(pm, fn=boom))
+    assert "probe failed" in bad.margin_missing_reason and not bad.margin_keys_by_side
+    models["props"]["density"] = bad
+    res = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "butylcyclohexane": 0.5}, margins_path=MARGINS)
+    c = next(c for c in res.constraints if c.prop == "density")
+    assert c.status == "uncertified" and "probe failed" in c.reason
+
+
+def test_visc_T_mismatch_raises():
+    models = LR.build_route_models(V5POOL)
+    res = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "butylcyclohexane": 0.5}, margins_path=MARGINS)
+    with pytest.raises(ValueError):
+        LR.design_forward_check(res, T_C_visc=-40.0)
