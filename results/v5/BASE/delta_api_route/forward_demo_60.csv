@@ -1,5 +1,5 @@
 T_K,property,value,unit,method,status,in_domain,own_mass,substituted_mass,unmapped_mass,n_substitutions,uncertified,warnings,variants
-233.15,viscosity_kin_cSt,2.433569899,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_loso
+233.15,viscosity_kin_cSt,2.433569899,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_in_sample
 233.15,viscosity_dyn_mPas,2.005579131,mPa.s,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 233.15,density_kg_m3,824.1304808,kg/m3,dens_idvol,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 233.15,flash_point_C,21.3492141,degC,ideal_le_chatelier_anchored,ok,False,0.9,0.08333333333,0.01666666667,5,False,substituted_components | unmapped_mass_dropped | antoine_suspect,v4_designated
@@ -8,7 +8,7 @@ T_K,property,value,unit,method,status,in_domain,own_mass,substituted_mass,unmapp
 233.15,smoke_point_mm,,mm,ysi_route,no_evaluation,False,1,0,0,0,True,no_evaluation,
 233.15,aromatics_wt_pct,21.66666667,wt%,by_construction,ok,False,1,0,0,0,True,,
 233.15,aromatics_vol_pct,18.48765086,vol%,by_construction,ok,False,0.4,0.55,0.05,33,True,substituted_components | unmapped_mass_dropped | volume basis,
-253.15,viscosity_kin_cSt,1.887773919,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_loso
+253.15,viscosity_kin_cSt,1.887773919,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_in_sample
 253.15,viscosity_dyn_mPas,1.529028836,mPa.s,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 253.15,density_kg_m3,809.9639587,kg/m3,dens_idvol,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 253.15,flash_point_C,21.3492141,degC,ideal_le_chatelier_anchored,ok,False,0.9,0.08333333333,0.01666666667,5,False,substituted_components | unmapped_mass_dropped | antoine_suspect,v4_designated
@@ -17,7 +17,7 @@ T_K,property,value,unit,method,status,in_domain,own_mass,substituted_mass,unmapp
 253.15,smoke_point_mm,,mm,ysi_route,no_evaluation,False,1,0,0,0,True,no_evaluation,
 253.15,aromatics_wt_pct,21.66666667,wt%,by_construction,ok,False,1,0,0,0,True,,
 253.15,aromatics_vol_pct,18.48765086,vol%,by_construction,ok,False,0.4,0.55,0.05,33,True,substituted_components | unmapped_mass_dropped | volume basis,
-288.15,viscosity_kin_cSt,1.25889166,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_loso
+288.15,viscosity_kin_cSt,1.25889166,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_in_sample
 288.15,viscosity_dyn_mPas,0.9882713566,mPa.s,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 288.15,density_kg_m3,785.0328886,kg/m3,dens_idvol,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 288.15,flash_point_C,21.3492141,degC,ideal_le_chatelier_anchored,ok,False,0.9,0.08333333333,0.01666666667,5,False,substituted_components | unmapped_mass_dropped | antoine_suspect,v4_designated
@@ -26,7 +26,7 @@ T_K,property,value,unit,method,status,in_domain,own_mass,substituted_mass,unmapp
 288.15,smoke_point_mm,,mm,ysi_route,no_evaluation,False,1,0,0,0,True,no_evaluation,
 288.15,aromatics_wt_pct,21.66666667,wt%,by_construction,ok,False,1,0,0,0,True,,
 288.15,aromatics_vol_pct,18.48765086,vol%,by_construction,ok,False,0.4,0.55,0.05,33,True,substituted_components | unmapped_mass_dropped | volume basis,
-313.15,viscosity_kin_cSt,0.9661210823,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_loso
+313.15,viscosity_kin_cSt,0.9661210823,cSt,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,k1_cold_offset_in_sample
 313.15,viscosity_dyn_mPas,0.7411255316,mPa.s,refutas_raw,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 313.15,density_kg_m3,767.1145421,kg/m3,dens_idvol,ok,False,0.4,0.55,0.05,33,False,substituted_components | unmapped_mass_dropped,
 313.15,flash_point_C,21.3492141,degC,ideal_le_chatelier_anchored,ok,False,0.9,0.08333333333,0.01666666667,5,False,substituted_components | unmapped_mass_dropped | antoine_suspect,v4_designated
