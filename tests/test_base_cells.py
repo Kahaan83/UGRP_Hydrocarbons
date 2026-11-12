@@ -34,3 +34,17 @@ def test_cells_t1_lab():
     # plan expected >1000 rows; observed: 1239 of 1599 non-pure rows are systems already in measurements_dedup, 63 rows have an invalid pure
     # property -> 297 scored rows in 4 systems (see the cell note)
     assert len(d) == 1 and d.n_rows.iloc[0] == 297 and d.n_groups.iloc[0] == 4 and d.label.eq("dev").all()
+
+
+def test_cells_t2_flash():
+    r = pd.read_csv(BASE / "rows_t2_flash.csv", dtype={"fuel_id": str})
+    g1 = pd.read_csv(ROOT / "results/v5/G1/predictions.csv", dtype={"fuel_id": str})
+    g1 = g1[(g1.property == "flash_point_C") & (g1.model == "ideal")]
+    j = r[r.source == "ajftd_gcxgc"].merge(g1, on="fuel_id")
+    assert len(j) == 37 and np.allclose(j.pred_designated, j.pred, atol=0.05)          # R-BASE-2
+    c = pd.read_csv(BASE / "cells_t2_flash.csv")
+    _schema_ok(c)
+    assert set(c.variant) == {"designated", "lfl_overlay", "mesitylene_fixed", "lfl_overlay+mesitylene_fixed"}
+    assert (c[c.n_groups < 8].verdict == "n_too_small").all()
+    assert c.unsafe_rate.between(0, 1).all()
+    assert (c.model == "api_as_shipped").any()
