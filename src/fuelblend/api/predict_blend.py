@@ -17,7 +17,10 @@ Returns a dict::
       "viscosity_dyn_mPas": {"value": x, "std": s, "method": str, "warnings": [...]},
       "density_kg_m3":      {"value": x, "std": s, "method": str, "warnings": [...]},
       "flash_point_C":      {"value": x, "std": s, "method": str, "warnings": [...]},
-      # every property dict also carries (v4): lo, hi, interval, model_name, in_domain, margin, domain_reasons, tuple
+      "viscosity_kin_cSt":  {...}, "freezing_point_C": {...}, "heat_net_MJ_kg": {...}, "smoke_point_mm": {...},
+      "aromatics_wt_pct": {...}, "aromatics_vol_pct": {...},     # the same property dicts predict_route.predict_fuel returns
+      # every property dict also carries: lo, hi, interval, model_name, in_domain, margin, domain_reasons, tuple,
+      # indicative_interval, variants
       "uncertified": {freezing_point_C|smoke_point_mm|ron|mon|dcn|dvpe_kpa|pour_point_C: no-margin placeholders},
       "T_K": float,
       "warnings": [global_warnings],
@@ -828,8 +831,8 @@ def predict(
         Declared fuel kind. Only 'jet' can yield in_domain=True (margins validated on CRC 647 jet fuels). The value
         is trusted from the caller; the composition is not checked to be a jet fuel. None -> in_domain False.
     use_mixture_residual : bool
-        Default False. True adds the mixture-residual GBM correction (needs the joblib bundle, else FileNotFoundError);
-        it has no uncertainty_v4.yaml margin, so the result is not certified.
+        Kept for signature compatibility. No learned residual ships (D3b): True only adds the warning
+        ``mixture_residual_not_shipped_D3b``; the route value is returned unchanged.
     composition_kind : {"known", "reconstructed"}
         "known" (default): the composition is a list of known compounds (a lab blend or a design). Viscosity is raw
         Refutas for any number of components and density is ideal volume mixing; both are judged by the hydrocarbon
@@ -848,9 +851,11 @@ def predict(
     Returns
     -------
     dict with keys:
-        viscosity_dyn_mPas, density_kg_m3, flash_point_C  — each a dict with
+        viscosity_dyn_mPas, viscosity_kin_cSt, density_kg_m3, flash_point_C, freezing_point_C, heat_net_MJ_kg,
+        smoke_point_mm, aromatics_wt_pct, aromatics_vol_pct  — each a dict with
             value (float|None), std (float|None), method (str), warnings (list)
         every property also has lo, hi (NaN if no valid margin), model_name, in_domain, tuple
+        uncertified (placeholders for properties with no model)
         T_K (float), warnings (list of global warnings)
     """
     if composition_kind not in COMPOSITION_KINDS:
@@ -882,6 +887,7 @@ def predict(
 
     return {
         "viscosity_dyn_mPas": visc,
+        "viscosity_kin_cSt": route["viscosity_kin_cSt"],
         "density_kg_m3": dens,
         "flash_point_C": flash,
         "freezing_point_C": route["freezing_point_C"],
@@ -983,7 +989,7 @@ def _demo():
 
     print()
     print("=" * 70)
-    print("EXAMPLE (c): Unknown compound + n-decane — fallback path")
+    print("EXAMPLE (c): Unresolvable compound + n-decane (unmapped, margins off)")
     print("=" * 70)
     comp_c = [(dec_smi, 0.7), ("CCCOOOO[Zn]CCCC", 0.3)]
     r3 = predict(comp_c, T_K=310.0)

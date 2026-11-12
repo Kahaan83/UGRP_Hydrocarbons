@@ -6,6 +6,7 @@ The provider is read-only: ``ensure()`` never runs and the npz is never written.
 """
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import math
 import re
@@ -30,6 +31,17 @@ ROOT = Path(__file__).resolve().parents[3]
 GRID_NPZ = ROOT / "data" / "cache" / "pure_grid.npz"
 COMPOUNDS_CSV = ROOT / "data" / "unified" / "compounds.csv"
 _IK_RE = re.compile(r"^[A-Z]{14}-[A-Z]{10}-[A-Z]$")
+GRID_SHA256 = "b931e969926698dff52d69ff51dd99a990c24ff12eca545aa98e970afd3e7daf"      # pinned frozen pure-property grid
+
+
+@lru_cache(maxsize=1)
+def grid_sha_status() -> tuple:
+    """(matches the pinned GRID_SHA256, actual sha256 hex).  Hashed once per process; never raises on a mismatch."""
+    h = hashlib.sha256()
+    with open(GRID_NPZ, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest() == GRID_SHA256, h.hexdigest()
 
 
 class ReadOnlyProvider(PurePropertyProvider):
@@ -281,7 +293,12 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     ctx = get_ctx()
     P = predicates(ctx)
     iks = [c.ik for c in comps]
-    top_warn = [f"non_hc_input: {c.ik} is not a hydrocarbon; unmapped for physics, margins off" for c in comps if not c.is_hc]
+    top_warn = []
+    sha_ok, sha = grid_sha_status()
+    if not sha_ok:
+        top_warn.append(f"grid_sha_mismatch: data/cache/pure_grid.npz sha256 {sha[:12]}... differs from the pinned "
+                        f"{GRID_SHA256[:12]}...; viscosity, density and design numbers may differ from the BASE evidence")
+    top_warn += [f"non_hc_input: {c.ik} is not a hydrocarbon; unmapped for physics, margins off" for c in comps if not c.is_hc]
     out = {"T_K": T_K, "warnings": top_warn, "components": [asdict(c) for c in comps]}
 
     # ---- viscosity and density: frozen provider grid, Refutas / ideal volume
@@ -317,6 +334,7 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     # ---- flash point: ideal Le Chatelier on the anchored Antoine / LFL registry (does not depend on T)
     pf = map_for(comps, P["HAS_FLASH"], ctx.reps)
     fl = _new_prop("flash_point_C", FLASH_METHOD, pf)
+    exceeded = False
     if pf.unmapped_mass > LOW_COVERAGE_MASS or pf.idx.size == 0:
         _no_value(fl, "low_coverage", f"unmapped mass {pf.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
     else:
@@ -338,11 +356,17 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
         else:
             fl.update(value=float(val), status="ok")
             if not (0.0 <= val <= 100.0):
+                exceeded = True
                 fl["warnings"].append("antoine_nominal_window_exceeded: flash point outside 0-100 C; the anchored Antoine "
                                       "window (273.15-373.15 K) is nominal")
-    if MESITYLENE_IK in iks:
+    if MESITYLENE_IK in iks or any(r == MESITYLENE_IK for _, r, _ in pf.substitutions):   # input, or entering as a representative
         fl["warnings"].append("antoine_suspect:mesitylene")
     out["flash_point_C"] = _finish(fl, "flash_point_C", iks, T_K, fuel_type, composition_kind)
+    if exceeded:                                       # outside the model's nominal Antoine window: no interval, not in domain
+        nan = math.nan
+        fl.update(lo=nan, hi=nan, interval=[nan, nan], margin=None, in_domain=False,
+                  domain_reasons=list(fl.get("domain_reasons") or []) + ["antoine_nominal_window_exceeded"],
+                  tuple=(fl["value"], nan, nan, fl["method"], False))
     if np.isfinite(fl["lo"]) and np.isfinite(fl["hi"]):
         fl["warnings"].append("lab_margin_set_by_one_system")
     _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
@@ -405,7 +429,7 @@ def _add_viscosity_k1(res: dict, T_K: float) -> None:
         return
     for tf, off in _k1().items():
         if abs(T_K - tf) <= K1_TOL_K:
-            res["variants"]["k1_cold_offset_loso"] = {
+            res["variants"]["k1_cold_offset_in_sample"] = {
                 "value": float(res["value"] * math.exp(off)), "offset_ln": float(off), "T_fit_K": float(tf), "label": "in_sample_T2",
                 "note": "per-temperature ln offset fitted on designated raw-Refutas T2 viscosity rows (status ok, not low-coverage); in-sample, no margin"}
             return
@@ -619,6 +643,10 @@ def _indicative_tables() -> dict:
     return tabs
 
 
+INDICATIVE_MIN_GROUPS = 5
+INDICATIVE_MAX_BIN_GAP_K = 10.0
+
+
 def _indicative_interval(prop: str, T_K: float, value: float) -> Optional[dict]:
     """90 % abs-error quantile of the frozen T2 residuals, nearest BASE T bin.  None when no table exists for ``prop``.
     Gating on fuel type and unmapped mass is done by the caller.  Never feeds lo/hi."""
@@ -626,9 +654,19 @@ def _indicative_interval(prop: str, T_K: float, value: float) -> Optional[dict]:
     if not rows or value is None or not np.isfinite(value):
         return None
     withT = [r for r in rows if np.isfinite(r[0])]
-    q, n = (min(withT, key=lambda r: abs(r[0] - T_K))[1:] if withT else rows[0][1:])
+    tb = None
+    if withT:
+        tb, q, n = min(withT, key=lambda r: abs(r[0] - T_K))
+        if abs(tb - T_K) > INDICATIVE_MAX_BIN_GAP_K:      # the nearest evidence bin is too far in temperature
+            return None
+    else:
+        q, n = rows[0][1:]
+    if n < INDICATIVE_MIN_GROUPS:                          # a quantile of fewer than 5 groups is not an interval
+        return None
     lo, hi = (value * math.exp(-q), value * math.exp(q)) if prop in _LN_PROPS else (value - q, value + q)
     res = {"lo": float(lo), "hi": float(hi), "q90_abs": float(q), "n_groups": int(n), "kind": INDICATIVE_KIND}
+    if tb is not None:
+        res["T_bin_K"] = float(tb)
     if prop == "flash_point_C":
         res["residual_basis"] = "v4_designated_flash (pred_designated); the API's designated flash is the LFL overlay"
     return res
@@ -641,5 +679,7 @@ def _attach_indicative(out: dict, fuel_type, T_K: float) -> None:
         if not isinstance(r, dict) or "indicative_interval" not in r or r.get("value") is None:
             continue
         if r["coverage"]["unmapped_mass"] > INDICATIVE_MAX_UNMAPPED:
+            continue
+        if r.get("method") == "refutas_recalibrated":      # the table holds raw-Refutas residuals; do not attach it to a recalibrated value
             continue
         r["indicative_interval"] = _indicative_interval(k, T_K, r["value"])

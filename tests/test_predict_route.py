@@ -420,10 +420,10 @@ def test_aromatics_by_construction():
 
 def test_k1_only_at_fitted_T():
     a = pr.predict_fuel(BLEND3, T_K=233.15)["viscosity_kin_cSt"]
-    k = a["variants"]["k1_cold_offset_loso"]
+    k = a["variants"]["k1_cold_offset_in_sample"]
     assert k["label"] == "in_sample_T2" and np.isfinite(k["value"]) and k["value"] != a["value"]
     assert abs(k["value"] - a["value"] * math.exp(k["offset_ln"])) < 1e-9
-    assert "k1_cold_offset_loso" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
+    assert "k1_cold_offset_in_sample" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
 
 
 def test_uncertified_props_have_nan_interval():
@@ -440,7 +440,7 @@ def test_uncertified_props_have_nan_interval():
 
 def test_k1_not_on_reconstructed():
     r = pr.predict_fuel(BLEND3, T_K=233.15, composition_kind="reconstructed")["viscosity_kin_cSt"]
-    assert "k1_cold_offset_loso" not in r["variants"]
+    assert "k1_cold_offset_in_sample" not in r["variants"]
 
 
 def test_aromatics_same_basis_with_non_hc():
@@ -469,9 +469,9 @@ def test_indicative_absent_without_jet():
 
 
 def test_lo_hi_untouched_by_indicative(monkeypatch):
-    a = pr.predict_fuel(BLEND3, fuel_type="jet")
+    a = pr.predict_fuel(BLEND3, T_K=253.15, fuel_type="jet")
     monkeypatch.setattr(pr, "_indicative_interval", lambda *x: None)
-    b = pr.predict_fuel(BLEND3, fuel_type="jet")
+    b = pr.predict_fuel(BLEND3, T_K=253.15, fuel_type="jet")
     assert b["flash_point_C"]["indicative_interval"] is None
     for k in ("flash_point_C", "viscosity_kin_cSt", "density_kg_m3", "heat_net_MJ_kg", "smoke_point_mm"):
         for f in ("lo", "hi", "in_domain"):
@@ -501,3 +501,79 @@ def test_indicative_viscosity_multiplicative():
     assert ii["q90_abs"] == pytest.approx(q)
     assert ii["lo"] == pytest.approx(4.0 * math.exp(-q)) and ii["hi"] == pytest.approx(4.0 * math.exp(q))
     assert ii["lo"] > 0
+
+
+# ---------------------------------------------------------------------------------------------- whole-branch review fixes
+def test_flash_window_exceeded_not_in_domain():
+    """I1: a flash outside the nominal 0-100 C Antoine window keeps its value and warning but gets no interval."""
+    for comp in ({"CCCCCCCCCCCCCC": 0.5, "CCCCCCCCCCCCCCCC": 0.5}, {"CCCCCC": 0.5, "CCCCCCC": 0.5}):
+        f = pr.predict_fuel(comp, T_K=298.15, fuel_type="jet")["flash_point_C"]
+        assert f["value"] is not None and not (0.0 <= f["value"] <= 100.0)
+        assert any(w.startswith("antoine_nominal_window_exceeded") for w in f["warnings"])
+        assert np.isnan(f["lo"]) and np.isnan(f["hi"]) and f["in_domain"] is False
+        assert "antoine_nominal_window_exceeded" in f["domain_reasons"]
+        assert np.isnan(f["tuple"][1]) and f["tuple"][4] is False
+    g = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")["flash_point_C"]          # inside the window: unchanged
+    assert 0.0 <= g["value"] <= 100.0 and np.isfinite(g["lo"])
+
+
+def test_mesitylene_warning_as_representative(monkeypatch):
+    """M5: the warning also fires when mesitylene enters the flash mapping as a representative."""
+    real = pr.map_for
+
+    def fake(comps, has_own, reps):
+        pm = real(comps, has_own, reps)
+        pm.substitutions.append((comps[0].ik, pr.MESITYLENE_IK, 0))
+        return pm
+    monkeypatch.setattr(pr, "map_for", fake)
+    f = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")["flash_point_C"]
+    assert "antoine_suspect:mesitylene" in f["warnings"]
+
+
+def test_indicative_needs_five_groups_and_near_bin():
+    """I2: no interval from a bin with fewer than 5 groups or one more than 10 K from T."""
+    tab = pr._indicative_tables()
+    rows = tab["viscosity_kin_cSt"]
+    small = [r for r in rows if r[2] < pr.INDICATIVE_MIN_GROUPS and np.isfinite(r[0])]
+    big = [r for r in rows if r[2] >= pr.INDICATIVE_MIN_GROUPS and np.isfinite(r[0])]
+    assert small and big
+    assert pr._indicative_interval("viscosity_kin_cSt", small[0][0], 4.0) is None
+    ii = pr._indicative_interval("viscosity_kin_cSt", big[0][0], 4.0)
+    assert ii["T_bin_K"] == big[0][0] and ii["n_groups"] >= 5
+    far = max(r[0] for r in rows if np.isfinite(r[0])) + 50.0
+    assert pr._indicative_interval("viscosity_kin_cSt", far, 4.0) is None
+    r = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")["viscosity_kin_cSt"]       # n_groups 1 at 298.15 K
+    assert r["indicative_interval"] is None
+
+
+def test_indicative_skipped_for_recalibrated_refutas():
+    r = pr.predict_fuel(BLEND3, T_K=253.15, fuel_type="jet", composition_kind="reconstructed")["viscosity_kin_cSt"]
+    assert r["method"] == "refutas_recalibrated" and r["indicative_interval"] is None
+
+
+def test_grid_sha_mismatch_warns_not_raises(monkeypatch):
+    """I4: a grid that differs from the pinned SHA-256 gives a top-level warning, no exception."""
+    if not pr.GRID_NPZ.exists():
+        pytest.skip("grid absent")
+    assert pr.grid_sha_status()[0] is True
+    assert not any(w.startswith("grid_sha_mismatch") for w in pr.predict_fuel(BLEND3)["warnings"])
+    monkeypatch.setattr(pr, "GRID_SHA256", "0" * 64)
+    pr.grid_sha_status.cache_clear()
+    try:
+        r = pr.predict_fuel(BLEND3)
+        assert any(w.startswith("grid_sha_mismatch") for w in r["warnings"]) and r["flash_point_C"]["value"] is not None
+    finally:
+        monkeypatch.undo()
+        pr.grid_sha_status.cache_clear()
+
+
+def test_route_library_uses_read_only_provider():
+    from fuelblend.design import library_route as LR
+    L = LR.RouteLibrary(["n-decane", "n-dodecane"])
+    assert isinstance(L.provider, pr.ReadOnlyProvider)
+
+
+def test_predict_returns_viscosity_kin():
+    from fuelblend.api import predict_blend as pb
+    r = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], T_K=233.15)
+    assert r["viscosity_kin_cSt"]["value"] > 0 and "k1_cold_offset_in_sample" in r["viscosity_kin_cSt"]["variants"]
