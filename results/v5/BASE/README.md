@@ -63,3 +63,10 @@ Rows = property x tier x set x model x variant. Columns:
 - R-BASE-3: per property, name the tier where the designated model beats the trivial model and the tier where it does not.
 - R-BASE-4: per property, name the largest unsafe-side rate and the set it occurs on.
 - R-BASE-5: list every cell whose verdict is `n_too_small` or `no_evaluation`; this is the data-gap list.
+
+## Note 2026-11-12 (Task 4, committed before the density cell is scored)
+
+Reading for the one new T1 cell (ideal-volume density on ThermoML 2020 systems absent from the unified table and from the
+v2 ThermoML extract, selected by system_id and by DOI): **absolute bias <= 2 kg/m3 and 90 % of systems inside the v4 lab density
+margin** (4.5866 kg/m3 over, 3.2499 kg/m3 under). These systems have never been scored for density, so the cell is labelled `dev`
+("first read").
