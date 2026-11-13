@@ -21,6 +21,7 @@ No representatives are used inside a pool: a member without its own data is refu
 """
 from __future__ import annotations
 
+import copy
 import dataclasses
 import math
 import re
@@ -35,6 +36,7 @@ from rdkit.Chem import Descriptors, inchi as rdinchi
 from fuelblend.baselines import flash_unifac as fu
 from fuelblend.design import engine_v4 as E
 from fuelblend.design import models_v4 as M
+from fuelblend.design import smoke_margin_v5 as SM
 from fuelblend.design.engine_v4 import ModelUnavailable
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -270,11 +272,27 @@ def visc_ml_status(smiles, w, T_C: float) -> dict:
     return out
 
 
+_VSTAT_CAP = 4096
+
+
+def _visc_status_cached(L: RouteLibrary, pool, w, T_C: float) -> dict:
+    """``visc_ml_status`` for a pool recipe, memoised per (members, weights, T) on the library (same values; the value function
+    and the recipe margin function of a design both ask for it at every optimiser evaluation)."""
+    cache = L.__dict__.setdefault("_vstat", {})
+    key = (tuple(pool), np.asarray(w, float).tobytes(), float(T_C))
+    st = cache.get(key)
+    if st is None:
+        if len(cache) >= _VSTAT_CAP:
+            cache.clear()
+        st = cache[key] = visc_ml_status([L.smiles[n] for n in pool], w, T_C)
+    return st
+
+
 def _visc_designated_fn(L: RouteLibrary, refutas_fn):
     """Design viscosity = the API designated value: Refutas x exp(ML ln correction) where the ML model is in domain, else Refutas."""
     def fn(pool, w, T_C):
         nu = refutas_fn(pool, w, T_C)
-        st = visc_ml_status([L.smiles[n] for n in pool], w, T_C)
+        st = _visc_status_cached(L, pool, w, T_C)
         return float(nu * math.exp(st["g"])) if st["in_domain"] else nu
     return fn
 
@@ -306,6 +324,98 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
 
 LAB_MARGIN_NOTE = "lab_margin_set_by_one_system"
 SMOKE_MARGIN_KEY = "smoke_point_mm.lab_mixtures.bulk_regression"
+SMOKE_V5_KEY = "smoke_point_mm.ajftd_v5_in_domain.bulk_regression"        # real-fuel margin (Task 1.4); absent until the user decides
+SMOKE_OOD_REASON = "outside the smoke regression domain (aromatics 8-23 vol %, result 19-25 mm)"
+
+
+def smoke_recipe_margin(pool, w, classes: dict, margins: dict, in_domain: bool) -> tuple:
+    """Smoke margin of one recipe -> (margin | None, yaml key | None, reason | None).
+
+    Outside the regression domain: None.  If ``SMOKE_V5_KEY`` is PRESENT in ``margins`` it REPLACES the lab key (not max over both)
+    and applies only inside the real-fuel class-mix range (``smoke_margin_v5`` gate; outside: None, reason
+    ``class_mix_outside_real_fuel_range``); a present but unusable entry gives None, never a fallback to the lab key.  Key absent:
+    the lab-mixture margin (7.8 mm) exactly as before, with no class-mix gate."""
+    if not in_domain:
+        return None, None, SMOKE_OOD_REASON
+    if SMOKE_V5_KEY in margins:
+        m = E.read_applied_margin(margins[SMOKE_V5_KEY])[0]
+        if m is None:
+            return None, SMOKE_V5_KEY, "real-fuel smoke margin entry has no valid applied_margin"
+        ok, why = SM.class_mix_ok_for_recipe(pool, w, classes)
+        return (m, SMOKE_V5_KEY, None) if ok else (None, SMOKE_V5_KEY, why)
+    m = E.read_applied_margin(margins.get(SMOKE_MARGIN_KEY))[0]
+    return (m, SMOKE_MARGIN_KEY, None) if m is not None else (None, SMOKE_MARGIN_KEY, "smoke point has no valid yaml margin")
+
+
+class _RecipeMargin:
+    """Callable ``margin_fn(pool, w, T_C) -> margin | None`` with a memo (one entry per weight vector, FIFO-bounded) and a
+    ``why`` giving the reason of a None.  ``compute(pool, w, T_C) -> (margin | None, reason | None)``."""
+
+    def __init__(self, compute, cap: int = 4096):
+        self._compute, self._cap, self._memo = compute, cap, {}
+
+    def _get(self, pool, w, T_C):
+        key = (tuple(pool), np.asarray(w, float).tobytes(), None if T_C is None else float(T_C))
+        hit = self._memo.get(key)
+        if hit is None:
+            if len(self._memo) >= self._cap:
+                self._memo.clear()
+            hit = self._memo[key] = self._compute(list(pool), np.asarray(w, float), T_C)
+        return hit
+
+    def __call__(self, pool, w, T_C):
+        return self._get(pool, w, T_C)[0]
+
+    def why(self, pool, w, T_C):
+        return self._get(pool, w, T_C)[1] or ""
+
+
+def _smoke_margin_fn(smoke_fn, classes: dict, margins: dict) -> _RecipeMargin:
+    def compute(pool, w, T_C):
+        with warnings.catch_warnings(record=True) as rec:
+            warnings.simplefilter("always")
+            smoke_fn(pool, w, T_C)
+        in_dom = not any(r.category.__name__.endswith("OutOfDomainWarning") for r in rec)
+        m, _key, why = smoke_recipe_margin(pool, w, classes, margins, in_dom)
+        return m, why
+    return _RecipeMargin(compute)
+
+
+def _visc_margin_fn(L: RouteLibrary, margins: dict) -> _RecipeMargin:
+    def compute(pool, w, T_C):
+        if T_C is None:
+            return None, "viscosity margin needs a temperature"
+        st = _visc_status_cached(L, pool, w, T_C)
+        if st["in_domain"]:
+            m = st["margin"]
+            return (float(m), None) if m is not None and math.isfinite(float(m)) else (None, "ML viscosity margin unavailable")
+        key = f"viscosity_kin_cSt.lab_mixtures.raw_refutas.{E.viscosity_t_bin(T_C)}"
+        m, _u, _d, why = E.read_applied_margin(margins.get(key))
+        return m, (f"{key}: {why}" if m is None else None)
+    return _RecipeMargin(compute)
+
+
+def with_recipe_margins(models: dict, margins: dict) -> dict:
+    """A copy of ``models`` whose viscosity and smoke models carry a recipe-dependent ``margin_fn`` (Task 1.5):
+    viscosity = ML R-MLV-6 ln margin where the ML model is in domain, else the Refutas lab margin of the T bin; smoke = the
+    in-domain smoke margin (``smoke_recipe_margin``).  A model that the route flagged (non-verified constants, ``margin_missing_reason``)
+    keeps its uncertified status.  ``models`` itself is not modified."""
+    props = dict(models["props"])
+    L, classes = models["library"], models.get("classes", {})
+    pv = props.get("viscosity")
+    if pv is not None and not pv.margin_missing_reason:
+        props["viscosity"] = dataclasses.replace(
+            pv, margin_fn=_visc_margin_fn(L, margins), margin_ln=True, margin_direction="two_sided",
+            margin_source="recipe_margin_fn:viscosity (ML R-MLV-6 ln margin in domain, else Refutas lab margin of the T bin)")
+    ps = props.get("smoke_point")
+    if ps is not None and not ps.margin_missing_reason:
+        key = SMOKE_V5_KEY if SMOKE_V5_KEY in margins else SMOKE_MARGIN_KEY
+        props["smoke_point"] = dataclasses.replace(
+            ps, margin_fn=_smoke_margin_fn(ps.fn, classes, margins), margin_ln=False, margin_direction="over",
+            margin_source=f"recipe_margin_fn:smoke_point ({key}, in domain only)")
+    out = dict(models)
+    out["props"] = props
+    return out
 
 
 def default_n_starts(pool) -> int:
@@ -315,27 +425,58 @@ def default_n_starts(pool) -> int:
 SMOKE_MARGIN_REASON = "smoke margin 7.8 mm from binaries and surrogates (user decision), applied inside the regression domain only"
 
 
-def _rejudge_smoke(result: E.DesignResult, margins: dict) -> None:
+def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = None, alt_limits: bool = False) -> None:
     """Smoke margin, design side, DOMAIN-GATED (user decision 2026-11-13 plus controller ruling).
 
-    The engine (unchanged) judges smoke without a margin and tags a recipe outside the regression domain (aromatics 8-23 vol %, result
-    19-25 mm) with the OutOfDomainWarning reason, which keeps it ``uncertified`` with margin None.  The optimiser therefore also sees no
-    smoke margin (a margin is recipe-dependent through the domain, the engine's margin is not).  Here, after the engine, a smoke constraint
-    that is IN domain is re-judged with the v5 margin: slack = (pred - margin - limit) / scale; ``fail`` if negative.  Out of domain it is left
-    exactly as the engine produced it."""
-    e = margins.get(SMOKE_MARGIN_KEY)
-    m, unit, direction, _ = E.read_applied_margin(e)
-    if m is None:
-        return
+    The engine without ``margin_fn`` judges smoke without a margin and tags a recipe outside the regression domain (aromatics 8-23
+    vol %, result 19-25 mm) with the OutOfDomainWarning reason, which keeps it ``uncertified`` with margin None.  Here, after the engine,
+    a smoke constraint that is IN domain is re-judged with ``smoke_recipe_margin`` (lab key, or the real-fuel key when present, with its
+    class-mix gate; the gate needs ``models``): slack = (pred - margin - limit) / scale; ``fail`` if negative.  With ``alt_limits`` the
+    slack is max(primary, min(alternative, naphthalenes)) like the optimiser; the naphthalene value comes from ``models`` (unknown ->
+    primary only).  Out of domain it is left exactly as the engine produced it.  With ``margin_fn`` models this function is only the
+    consistency check (``annotate`` runs it on a copy)."""
+    spec_c = {}
+    if alt_limits:
+        try:
+            spec_c = E.load_spec(result.spec_name, alt_limits=True)["constraints"]
+        except Exception:
+            spec_c = {}
+    pool = list(result.pool) or list(result.weights)
+    w = np.array([result.weights.get(n, 0.0) for n in pool], float)
+    classes = (models or {}).get("classes", {})
     for c in result.constraints:
         if c.prop != "smoke_point" or not math.isfinite(c.prediction) or "OutOfDomainWarning" in c.reason:
             continue
         if c.lo is None or c.hi is not None:                       # smoke is a minimum limit: over-prediction is the unsafe side
             continue
+        if SMOKE_V5_KEY in margins and models is None:             # the class-mix gate needs the recipe classes: leave the engine's judgement
+            continue
+        m, key, _why = smoke_recipe_margin(pool, w, classes, margins, True)
+        if m is None:
+            continue
         sc = E._scale(c.lo, c.hi)
-        c.applied_margin, c.margin_keys = m, (SMOKE_MARGIN_KEY,)
-        c.slack = (c.prediction - m - c.lo) / sc
-        if c.slack < 0 or c.prediction < c.lo:
+        c.applied_margin, c.margin_keys = m, (key,)
+        slack = (c.prediction - m - c.lo) / sc
+        alt = spec_c.get(c.key) or {}
+        alt_used = False
+        if alt_limits and alt.get("alt_min") is not None and alt.get("alt_requires") and models is not None:
+            a_slack = (c.prediction - m - float(alt["alt_min"])) / E._scale(alt["alt_min"], None)
+            vals = [a_slack]
+            for rk, rv in alt["alt_requires"].items():
+                mo = re.match(r"^(.*)_(max|min)$", rk)
+                pm2 = models["props"].get(E.canonical_property(mo.group(1))[0]) if mo else None
+                try:
+                    q = float(pm2.fn(pool, w, None))
+                except Exception:
+                    q = float("nan")
+                if not math.isfinite(q) or pm2 is None:
+                    vals = None
+                    break
+                vals.append((float(rv) - q) / E._scale(None, rv) if mo.group(2) == "max" else (q - float(rv)) / E._scale(rv, None))
+            if vals is not None:
+                slack, alt_used = max(slack, min(vals)), True
+        c.slack = slack
+        if c.slack < 0 or (c.prediction < c.lo and not alt_used):
             c.status = E.STATUS_FAIL
         c.reason = (c.reason + "; " if c.reason else "") + SMOKE_MARGIN_REASON + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
         result.margins[c.key] = m
@@ -386,15 +527,53 @@ def _rejudge_viscosity(result: E.DesignResult) -> None:
     result.passed = bool(all(c.status in E.OK_STATUSES for c in result.constraints) and not result.extrapolating)
 
 
-def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
+def _consistency(result: E.DesignResult, chk: E.DesignResult) -> list:
+    """Differences between the engine's judgement of viscosity / smoke (``margin_fn`` path) and the independent post-hoc rejudge ``chk``:
+    slack and margin to 1e-9 for both; the status for viscosity; for smoke a rejudge ``fail`` must be an engine ``fail`` (the engine also
+    fails nominal alternative-limit misses of an unverified spec, which the rejudge leaves uncertified)."""
+    def same(a, b):
+        a = float("nan") if a is None else float(a)
+        b = float("nan") if b is None else float(b)
+        return (math.isnan(a) and math.isnan(b)) or abs(a - b) <= 1e-9
+    out = []
+    mine = {c.key: c for c in result.constraints}
+    for c2 in chk.constraints:
+        c1 = mine[c2.key]
+        if c1.prop not in ("viscosity", "smoke_point"):
+            continue
+        if not same(c1.slack, c2.slack):
+            out.append(f"{c1.key}: slack {c1.slack} vs rejudge {c2.slack}")
+        if not same(c1.applied_margin, c2.applied_margin):
+            out.append(f"{c1.key}: margin {c1.applied_margin} vs rejudge {c2.applied_margin}")
+        if c1.prop == "viscosity" and c1.status != c2.status:
+            out.append(f"{c1.key}: status {c1.status} vs rejudge {c2.status}")
+        if c1.prop == "smoke_point" and c2.status == E.STATUS_FAIL and c1.status != E.STATUS_FAIL:
+            out.append(f"{c1.key}: rejudge fail but engine {c1.status}")
+    return out
+
+
+def annotate(result: E.DesignResult, margins_path=None, models: dict | None = None, alt_limits: bool = False,
+             recipe_margins: bool = False) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
-    the lab margin is the group score of the single mesitylene system).  In-domain smoke constraints get the v5 smoke margin."""
+    the lab margin is the group score of the single mesitylene system).  In-domain smoke constraints get the v5 smoke margin.
+
+    ``recipe_margins`` (the engine already judged viscosity and smoke with ``margin_fn``, see ``with_recipe_margins``): the rejudges run
+    on a copy as a consistency check and any difference is listed in ``result.optimiser['margin_fn_consistency']`` (empty = consistent);
+    the engine's judgement is kept.  ``models`` / ``alt_limits`` make the smoke rejudge class-mix- and alternative-limit-aware."""
     for c in result.constraints:
         has_margin = c.applied_margin is not None and math.isfinite(c.applied_margin)
         if c.prop == "flash" and has_margin and LAB_MARGIN_NOTE not in c.reason:
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
+    margins = E.load_margins(margins_path)
+    if recipe_margins:
+        chk = copy.deepcopy(result)
+        _rejudge_viscosity(chk)
+        _rejudge_smoke(chk, margins, models, alt_limits)
+        result.optimiser = dict(result.optimiser, margin_fn_consistency=_consistency(result, chk))
+        result.passed = bool(all(c.status in E.OK_STATUSES for c in result.constraints) and not result.extrapolating)
+        return result
     _rejudge_viscosity(result)
-    _rejudge_smoke(result, E.load_margins(margins_path))
+    _rejudge_smoke(result, margins, models, alt_limits)
     return result
 
 
@@ -402,17 +581,20 @@ BLOCKED_AROMATICS, BLOCKED_AROMATICS_REASON, blocked_result = E.BLOCKED_AROMATIC
 
 
 def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None, synthetic_blend: bool = False,
-                  alt_limits: bool = False) -> E.DesignResult:
+                  alt_limits: bool = False, recipe_margins: bool = False) -> E.DesignResult:
     """``synthetic_blend``: add the D7566 aromatics minimum (8 vol %); a pool with no aromatic member then cannot meet it
     and the result is category ``blocked_aromatics_min_infeasible`` (no optimisation run).  ``alt_limits``: honour the
-    D1655 alternative smoke limit (spec flag ``use_alt_limits``; the caller's spec is not mutated, it is re-read)."""
+    D1655 alternative smoke limit (spec flag ``use_alt_limits``; the caller's spec is not mutated, it is re-read).
+    ``recipe_margins`` (default off = results identical to before): viscosity and smoke carry recipe-dependent ``margin_fn`` margins
+    (``with_recipe_margins``), so the optimiser sees them; ``annotate`` then only checks consistency."""
     pool = models["pool"]
     blocked = E.blocked_result(spec_name, pool, models, seed, synthetic_blend)
     if blocked is not None:
         return blocked
-    return annotate(E.design(spec_name, pool, models, n_starts=n_starts or default_n_starts(pool), seed=seed,
+    use = with_recipe_margins(models, E.load_margins(margins_path)) if recipe_margins else models
+    return annotate(E.design(spec_name, pool, use, n_starts=n_starts or default_n_starts(pool), seed=seed,
                              margins_path=margins_path, synthetic_blend=synthetic_blend, alt_limits=alt_limits),
-                    margins_path)
+                    margins_path, models=models, alt_limits=alt_limits, recipe_margins=recipe_margins)
 
 
 # ------------------------------------------------------------------------------------------------ forward check
@@ -437,7 +619,7 @@ def _name_smiles() -> dict:
 
 
 def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=None, synthetic_blend: bool = False,
-                    alt_limits: bool = False) -> E.DesignResult:
+                    alt_limits: bool = False, recipe_margins: bool = False) -> E.DesignResult:
     """A ``DesignResult`` for a given recipe (no optimisation), scored by the engine with ``models``."""
     pool = list(models["pool"]) if "pool" in models else list(weights)
     blocked = E.blocked_result(spec_name, pool, models, synthetic_blend=synthetic_blend)
@@ -446,10 +628,13 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
     w = np.array([weights.get(n, 0.0) for n in pool], float)
     w = w / w.sum()
     spec = E.load_spec(spec_name, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
-    cons = E.evaluate_blend(spec, pool, w, models, E.load_margins(margins_path))
+    margins = E.load_margins(margins_path)
+    use = with_recipe_margins(models, margins) if recipe_margins else models
+    cons = E.evaluate_blend(spec, pool, w, use, margins)
     return annotate(E.DesignResult(weights=dict(zip(pool, map(float, w))), predictions={c.key: c.prediction for c in cons},
                           margins={c.key: c.applied_margin for c in cons}, passed=False, extrapolating=False,
-                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool), margins_path)
+                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool), margins_path,
+                    models=models, alt_limits=alt_limits, recipe_margins=recipe_margins)
 
 
 def _fnum(x) -> float:

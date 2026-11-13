@@ -278,6 +278,24 @@ def _v5_margins() -> dict:
 
 SMOKE_MARGIN_KEY = "smoke_point_mm.lab_mixtures.bulk_regression"
 SMOKE_MARGIN_NOTE = "smoke_margin_from_binaries_and_surrogates (user decision)"
+SMOKE_V5_KEY = "smoke_point_mm.ajftd_v5_in_domain.bulk_regression"        # real-fuel margin; replaces the lab key when present in the yaml
+
+
+@lru_cache(maxsize=1)
+def _registry_classes() -> list:
+    """Library class (n_paraffin / iso_paraffin / cycloalkane / aromatic / ...) per registry index (same file and order as the design side)."""
+    from fuelblend.design import models_v4 as M
+    from fuelblend.mixture.cold_flow import compound_meta
+    return compound_meta(M.COMPOUNDS)[1]
+
+
+def _smoke_class_mix_ok(comps) -> tuple:
+    """Class-mix gate of the real-fuel smoke margin on an API composition (same basis as the design side)."""
+    from fuelblend.design import smoke_margin_v5 as SM
+    cls = _registry_classes()
+    pool = [c.ik for c in comps]
+    classes = {c.ik: (cls[c.reg_idx] if c.reg_idx is not None else "unknown") for c in comps}
+    return SM.class_mix_ok_for_recipe(pool, [c.w for c in comps], classes)
 
 
 def _flash_margin_v5(res: dict) -> None:
@@ -773,11 +791,16 @@ def _smoke(prop: dict, comps, ctx, pm: PropMap, arom_vol: dict) -> None:
     prop["inputs"] = {"aromatics_vol_pct": float(a)}
     cov = prop["coverage"]
     in_dom = not any(w.startswith("out_of_domain") for w in prop["warnings"])
-    e = _v5_margins().get(SMOKE_MARGIN_KEY)
+    margins = _v5_margins()
+    if SMOKE_V5_KEY in margins:                         # real-fuel margin present: it REPLACES the lab key, inside the class-mix range only
+        e = margins[SMOKE_V5_KEY]
+        gate_ok, gate_why = _smoke_class_mix_ok(comps)
+    else:
+        e, gate_ok, gate_why = margins.get(SMOKE_MARGIN_KEY), True, None
     m = None if e is None else e.get("applied_margin")
     if (not in_dom or cov["substituted_mass"] > 1e-12 or cov["unmapped_mass"] > 1e-12 or m is None
-            or isinstance(m, str) or not math.isfinite(float(m))):
-        _uncertified(prop, "smoke point has no valid yaml margin" if in_dom else "outside the smoke regression domain (aromatics 8-23 vol %, result 19-25 mm)")
+            or isinstance(m, str) or not math.isfinite(float(m)) or not gate_ok):
+        _uncertified(prop, (gate_why or "smoke point has no valid yaml margin") if in_dom else "outside the smoke regression domain (aromatics 8-23 vol %, result 19-25 mm)")
         return
     m = float(m)
     lo, hi = v - m, v + m                   # over-prediction is unsafe for a minimum smoke point: lo is the safe bound
