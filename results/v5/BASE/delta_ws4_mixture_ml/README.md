@@ -91,6 +91,17 @@ Plain PyTorch (`src/fuelblend/ml/set_models.py`), CPU, no PyG.
 3. `--stage locked`: run once, giving `readings.json` and `rows_scored.csv`. The results are appended below a separator, and this
    declaration is not edited.
 
+## Execution note (added before the declared run, after a 1-epoch / 1-seed pipeline smoke test whose output went to a scratch folder;
+## only its timing and error lines were read)
+- Timing from the smoke test: about 0.3 / 1.5 / 2.5 s per epoch-seed for pds / gnn / st. The serial run would take about 4 h, so each
+  candidate runs as its own process with `--cands <c> --threads 2 --out results/v5/BASE/delta_ws4_mixture_ml/<c>/`. The machine has
+  6 cores and is shared.
+- Thread count changes floating-point summation order only. The hyper-parameters above are unchanged.
+- The smoke test showed 77 viscosity molecules and 60 density molecules, every density molecule has a graph, and no density
+  component lacks grid ln eta.
+- The committed baseline `rows_scored.csv` stores 6 significant digits, so alignment is checked with |T| < 1e-3 K. The baseline errors are
+  used as stored, with a rounding of at most about 5e-7 ln / 5e-6 kg/m3.
+
 ## Files
 src/fuelblend/ml/set_models.py, scripts/v5/base/delta_ws4_mixture_ml.py, tests/test_v5_ws4_set_models.py, jobs/v5_gpu/{README.md,run_ws4.sh},
 results/v5/BASE/delta_ws4_mixture_ml/**. Checkpoints are not saved; they would go under the gitignored `runs/` if needed.
