@@ -187,9 +187,7 @@ def main(argv=None):
         alt_keys = []
         if a.alt_limits:                       # alt-aware point-estimate view (labelling only, review 3)
             fc, alt_keys = LR.apply_alt_point_view(fc, res, models, E.load_margins(MARGINS), spec_name)
-            n_alt = sum(1 for c in res.constraints if c.key in alt_keys and c.lo is not None and np.isfinite(c.prediction)
-                        and c.prediction < c.lo)
-            viol = max(viol - n_alt, 0)
+            viol, nopred = LR.point_estimate_view_alt(res.constraints, alt_keys)
             cat = R4.category(res, viol, nopred)
         lim = fc[fc["limit"] != ""]
         both = LR.limits_met_by_both(fc)

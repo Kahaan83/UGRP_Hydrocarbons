@@ -469,8 +469,18 @@ SMOKE_MARGIN_REASON_V5 = ("smoke margin from real fuels (AJFTD, user decision R-
                           "real-fuel class-mix range only")
 
 
-ENGINE_BLOCKER_MARKERS = ("extrapolating", "non-verified", "margin direction", "validated range", "model unavailable",
-                          "non-finite", "OutOfDomainWarning")
+# Fail-closed: an engine reason on the smoke row is benign only if it is one of these (the row's own limit failure, the missing
+# lab margin that this function supplies, the class-mix / alt-branch notes); ANY other reason (extrapolation, non-verified constants,
+# margin direction, validated range, scope, non-finite, ...) blocks the alt-met PASS, and so does an engine status other than
+# fail / uncertified (e.g. STATUS_SCOPE).
+BENIGN_ENGINE_REASONS = ("limit violated", "no such entry", "margin exists for this model", "no valid margin", "limit used", "alt_min", "class_mix_outside_real_fuel_range",
+                         "smoke margin")
+
+
+def _engine_blocked(status: str, reason: str) -> bool:
+    if status not in (E.STATUS_FAIL, E.STATUS_UNCERTIFIED):
+        return True
+    return any(part.strip() and not any(b in part for b in BENIGN_ENGINE_REASONS) for part in (reason or "").split("; "))
 
 
 def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = None, alt_limits: bool = False) -> None:
@@ -504,6 +514,7 @@ def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = 
             continue
         sc = E._scale(c.lo, c.hi)
         c.applied_margin, c.margin_keys = m, (key,)
+        engine_blocked = _engine_blocked(c.status, c.reason)             # judged on the engine's own status / reasons, before rewriting
         slack = (c.prediction - m - c.lo) / sc
         alt = spec_c.get(c.key) or {}
         primary_fail = slack < 0 or c.prediction < c.lo
@@ -537,8 +548,7 @@ def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = 
             else:                                                  # the alternative branch is met (or not established): at most uncertified
                 verified = str(alt.get("verification", "")).strip().lower() == "verified"
                 # the engine's other blockers (extrapolation, non-verified constants, margin direction, validated range, ...) stay
-                blocked_by_engine = any(mk in (c.reason or "") for mk in ENGINE_BLOCKER_MARKERS)
-                c.status = E.STATUS_PASS if (branch == "met" and verified and not blocked_by_engine) else E.STATUS_UNCERTIFIED
+                c.status = E.STATUS_PASS if (branch == "met" and verified and not engine_blocked) else E.STATUS_UNCERTIFIED
         elif slack < 0:
             c.status = E.STATUS_FAIL
         c.reason = (c.reason + "; " if c.reason else "") + (SMOKE_MARGIN_REASON_V5 if key == SMOKE_V5_KEY else SMOKE_MARGIN_REASON) + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
@@ -859,6 +869,23 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
                        design_meets=_meets(r.design_pred, c.lo, c.hi), api_meets=_meets(r.forward_pred, c.lo, c.hi))
         out.append(row)
     return pd.DataFrame(out, columns=CHECK_COLUMNS)
+
+
+def point_estimate_view_alt(cons: list, alt_keys: list) -> tuple:
+    """Same count as ``run_designs_v4.point_estimate_view`` ((violations, rows without a point estimate), margins ignored) but a row
+    whose key is in ``alt_keys`` (alternative branch met on both sides) is not a violation.  Counted afresh, nothing subtracted, so an
+    unrelated violation can never be masked."""
+    viol = nopred = 0
+    for c in cons:
+        p = c.prediction
+        if p is None or not np.isfinite(p):
+            nopred += 1
+            continue
+        if c.key in alt_keys:
+            continue
+        if (c.lo is not None and p < c.lo) or (c.hi is not None and p > c.hi):
+            viol += 1
+    return viol, nopred
 
 
 def apply_alt_point_view(fc: pd.DataFrame, result: E.DesignResult, models: dict, margins: dict, spec_name: str,
