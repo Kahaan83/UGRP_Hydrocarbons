@@ -87,3 +87,6 @@ Rerun into `designs_domain_fix/` (seed 42, same arguments). Finished: v5pool and
 
 Tests run for this fix: `tests/test_v5_design_forward.py` and `tests/test_predict_route.py` only (the full suite was not rerun, by instruction; the earlier
 full run of the first version gave 581 passed).
+
+Update (reruns completed): ext_n8 and guard4_v5pool also finished: all four designs in each are category B (8 of 8 designs B, smoke uncertified, 0 certified).
+Full pytest after the fix: 582 passed, 0 failed.

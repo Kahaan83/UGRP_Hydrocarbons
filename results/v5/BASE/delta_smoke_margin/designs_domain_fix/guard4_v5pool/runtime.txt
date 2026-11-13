@@ -1,0 +1,4 @@
+pool_size=6 n_starts=30 seed=42 guard_K=4.0 build_models_s=10.3
+astm_jet_a__v5pool: design 365.6s (25/30 converged), forward check 12.7s
+bis_jet_a1__v5pool: design 320.1s (27/30 converged), forward check 8.4s
+total_s=717.0
