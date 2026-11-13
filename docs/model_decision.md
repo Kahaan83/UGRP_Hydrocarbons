@@ -117,3 +117,11 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 - ML cetane number (delta_ml_dcn): not built; only 31 hydrocarbon mixture systems have pure DCN for every component (declared floor ~40). Scored negative feasibility.
 - ML YSI (delta_ml_ysi) FAILED its gates (R-MLY-1, R-MLY-1x): no YSI variant is exposed; it is a scored negative.
 - The design optimiser and its certification still use the Refutas viscosity margins (engine_v4 path, not changed); the design forward check carries one report-only ML viscosity row.
+
+
+## v5 WS6: GCxGC class x carbon-number models on real fuels (2026-11-14, exploratory)
+
+`results/v5/BASE/delta_ws6_gcxgc/README.md`. Models: physics, physics + constant offset, physics + PLS / GP / NN residual on a 9-class x 10-carbon-bin matrix, grouped CV over S3 groups (142 fuels).
+* Composition residual wins on split G for density (3.50 -> 2.28 kg/m3), ln viscosity at -20 C (0.088 -> 0.064) and -40 C (0.110 -> 0.047); not for flash, freezing, smoke. It does not transfer across sources (worse than offset-only in 10 of 12 leave-one-source-out comparisons) or to reconstructed CRC 647 compositions. Not designated, not exposed in `predict_fuel`.
+* The constant cold offset is the robust piece: real-fuel one-sided margin 0.135 ln (-20 C) / 0.215 ln (-40 C), transfer holds at -40 C only. Proposal in `proposed_margins.yaml`; the yaml `inf` is unchanged (user decision).
+* Freezing correction: F1x beats a constant on 54 real fuels (3.55 vs 6.11 C), so "no skill over a constant" applies to the v4 designated route, not to F1x. Models on top of F1x do not improve it.

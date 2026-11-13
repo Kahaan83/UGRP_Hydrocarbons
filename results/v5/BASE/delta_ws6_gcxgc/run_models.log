@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\.claude\worktrees\agent-ab5aceb174f266a9b\scripts\v5\base\delta_ws6_gcxgc.py", line 423, in <module>
+    main(sys.argv[1] if len(sys.argv) > 1 else "all")
+  File "C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\.claude\worktrees\agent-ab5aceb174f266a9b\scripts\v5\base\delta_ws6_gcxgc.py", line 357, in main
+    sG, rd = summarise(pf)
+             ^^^^^^^^^^^^^
+  File "C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\.claude\worktrees\agent-ab5aceb174f266a9b\scripts\v5\base\delta_ws6_gcxgc.py", line 323, in summarise
+    _, lo2, hi2, _, _ = (lambda dd: (None,) + tuple(np.percentile(boot(dd)[4], [100 * secondary_alpha / 2, 100 * (1 - secondary_alpha / 2)])) + (None,))(d)
+    ^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 5, got 4)
