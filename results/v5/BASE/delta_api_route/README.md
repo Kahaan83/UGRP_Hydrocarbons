@@ -175,3 +175,4 @@ Left unfixed, with the reason:
 - **M1 dead code** (`_resolve_components`, `_mix_residual_predict`, `_load_mix_models`, `_predict_flash` in `predict_blend.py`) is not removed (no callers, but outside this wave); `_predict_viscosity(use_residual=True)` still applies the GBM when called directly.
 - **M4** (`_probe` annotation and partial `used` set on a `ModelUnavailable` at the probe point), **M7** (the check calls `predict_fuel`, not `predict()`, same route: wording above says so), **M8** (flash lo/hi finite when `in_domain` is False for an undeclared fuel type: v4 behaviour) are not changed.
 - The K1 variant at a temperature is built from a single group at some temperatures (no minimum n); not changed.
+Update 2026-11-13: flash margin changed to 2.21 C, see ../delta_flash_margin_q2/

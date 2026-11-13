@@ -1,0 +1,4 @@
+pool_size=8 n_starts=30 seed=42 guard_K=0.0 build_models_s=4.3
+astm_jet_a__ext: design 536.9s (17/30 converged), forward check 6.4s
+bis_jet_a1__ext: design 519.7s (9/30 converged), forward check 5.1s
+total_s=1072.4

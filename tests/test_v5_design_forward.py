@@ -14,7 +14,7 @@ from fuelblend.design import library_route as LR
 from fuelblend.design import models_v4 as M
 
 ROOT = Path(__file__).resolve().parents[1]
-MARGINS = ROOT / "results" / "v5" / "S1" / "uncertainty_v5.yaml"
+MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
 V5POOL = ["n-decane", "n-undecane", "n-dodecane", "butylcyclohexane", "decalin_trans", "1,2,4-trimethylbenzene"]
 SPECS = {"jet_astm_d1655__v5pool": "astm:jet_a", "jet_bis_is1571__v5pool": "bis:jet_a1"}
 

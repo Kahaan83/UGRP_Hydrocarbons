@@ -35,4 +35,18 @@ and mesitylene-containing blends still carry the warning `antoine_suspect:mesity
 
 ## Result
 
-(filled in after the runs)
+* **R-Q2-1: pass.** `predict_fuel({decane 0.5, dodecane 0.3, toluene 0.2}, 298.15 K, jet)` flash `margin` = 2.206932808388615, `lo` = value - margin,
+  `hi` = value + margin, `in_domain` True (test `tests/test_predict_route.py::test_flash_margin_q2_user_decision`). The 5-compound
+  mesitylene-bearing blend gives margin 2.2069 (was 3.6988), lo 22.73 (was 21.24), with `antoine_suspect:mesitylene` still raised.
+* **R-Q2-2: pass.** Input set: the forward-demo 60-component blend (seed 0) and a 5-compound known blend, each at 233.15, 288.15 and 313.15 K
+  (54 property records). Compared before and after the change field by field (value, lo, hi, margin, in_domain, status, warnings, as repr):
+  the only records that differ are `flash_point_C` (6 of 54). Viscosity, density and all other properties are identical. (The 60-component blend
+  has substituted/unmapped flash mass, so its flash stays uncertified, NaN lo/hi, unchanged.)
+* **R-Q2-3: designs re-run** (`designs/{v5pool,ext_n30,ext_n8,guard4_v5pool}`, seed 42, same arguments as `../delta_api_route/designs/`, margins
+  `configs/uncertainty_v5.yaml`). In all 8 designs the flash constraint is judged with applied margin 2.2069 (was 3.6988) and its status is `pass`.
+  The recipes are unchanged (max weight change 0.0000 in 7 of 8; 0.0008 in `ext_n8` bis_jet_a1, an n_starts=8 optimiser difference).
+  Every design has `passed` False and category B (`B_meets_both_not_certifiable`), as before; forward check passes for all eight.
+  So flash is certified on all eight designs (it was before the change too), and **0 designs are certified overall**, because freezing and smoke
+  have no valid margin and the Jet A-1 limits are unverified.
+
+Cherry-picking note repeated: the only effect of the decision is a tighter flash interval (+/-2.21 C instead of +/-3.70 C); no design changed category.
