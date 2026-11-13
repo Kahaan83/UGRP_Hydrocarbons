@@ -458,25 +458,38 @@ def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = 
         c.applied_margin, c.margin_keys = m, (key,)
         slack = (c.prediction - m - c.lo) / sc
         alt = spec_c.get(c.key) or {}
-        alt_used = False
+        primary_fail = slack < 0 or c.prediction < c.lo
+        branch = None                                              # None = no alternative branch; "fail" / "unknown" / "met"
         if alt_limits and alt.get("alt_min") is not None and alt.get("alt_requires") and models is not None:
             a_slack = (c.prediction - m - float(alt["alt_min"])) / E._scale(alt["alt_min"], None)
-            vals = [a_slack]
+            vals, unknown = [a_slack], False
             for rk, rv in alt["alt_requires"].items():
                 mo = re.match(r"^(.*)_(max|min)$", rk)
                 pm2 = models["props"].get(E.canonical_property(mo.group(1))[0]) if mo else None
+                # a requirement is judged without margin only when its model is by_construction (margin 0 legitimately, as in the
+                # engine); any other requirement has no margin here, so it is "not established" (never silently margin 0)
+                if pm2 is None or not pm2.by_construction:
+                    unknown = True
+                    continue
                 try:
                     q = float(pm2.fn(pool, w, None))
                 except Exception:
                     q = float("nan")
-                if not math.isfinite(q) or pm2 is None:
-                    vals = None
-                    break
+                if not math.isfinite(q):
+                    unknown = True
+                    continue
                 vals.append((float(rv) - q) / E._scale(None, rv) if mo.group(2) == "max" else (q - float(rv)) / E._scale(rv, None))
-            if vals is not None:
-                slack, alt_used = max(slack, min(vals)), True
+            branch = "fail" if min(vals) < 0 else "unknown" if unknown else "met"
+            if not unknown:                                        # same number the optimiser / engine report: max(primary, alt combo)
+                slack = max(slack, min(vals))
         c.slack = slack
-        if c.slack < 0 or (c.prediction < c.lo and not alt_used):
+        if primary_fail:
+            if branch in (None, "fail"):
+                c.status = E.STATUS_FAIL
+            else:                                                  # the alternative branch is met (or not established): at most uncertified
+                verified = str(alt.get("verification", "")).strip().lower() == "verified"
+                c.status = E.STATUS_PASS if (branch == "met" and verified) else E.STATUS_UNCERTIFIED
+        elif slack < 0:
             c.status = E.STATUS_FAIL
         c.reason = (c.reason + "; " if c.reason else "") + SMOKE_MARGIN_REASON + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
         result.margins[c.key] = m
@@ -529,8 +542,8 @@ def _rejudge_viscosity(result: E.DesignResult) -> None:
 
 def _consistency(result: E.DesignResult, chk: E.DesignResult) -> list:
     """Differences between the engine's judgement of viscosity / smoke (``margin_fn`` path) and the independent post-hoc rejudge ``chk``:
-    slack and margin to 1e-9 for both; the status for viscosity; for smoke a rejudge ``fail`` must be an engine ``fail`` (the engine also
-    fails nominal alternative-limit misses of an unverified spec, which the rejudge leaves uncertified)."""
+    slack, margin and status (both ways) for viscosity and smoke.  NB ``chk`` starts as a copy of the engine result, so this is only a
+    partial check; the independent check is the tests' comparison of the alt-on status against the flags-off legacy path."""
     def same(a, b):
         a = float("nan") if a is None else float(a)
         b = float("nan") if b is None else float(b)
@@ -545,10 +558,8 @@ def _consistency(result: E.DesignResult, chk: E.DesignResult) -> list:
             out.append(f"{c1.key}: slack {c1.slack} vs rejudge {c2.slack}")
         if not same(c1.applied_margin, c2.applied_margin):
             out.append(f"{c1.key}: margin {c1.applied_margin} vs rejudge {c2.applied_margin}")
-        if c1.prop == "viscosity" and c1.status != c2.status:
+        if c1.status != c2.status:
             out.append(f"{c1.key}: status {c1.status} vs rejudge {c2.status}")
-        if c1.prop == "smoke_point" and c2.status == E.STATUS_FAIL and c1.status != E.STATUS_FAIL:
-            out.append(f"{c1.key}: rejudge fail but engine {c1.status}")
     return out
 
 

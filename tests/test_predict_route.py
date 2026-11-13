@@ -153,6 +153,12 @@ from fuelblend.eval.composition_route import refutas_nu_safe
 
 MESITYLENE = "Cc1cc(C)cc(C)c1"
 BLEND3 = {DECANE: 0.5, DODECANE: 0.3, TOLUENE: 0.2}
+ISOOCTANE = "CC(C)CC(C)(C)C"
+BUTYLCYCLOHEXANE = "CCCCC1CCCCC1"
+# inside the real-fuel class-mix range (cyclo 0-0.709, n-paraffin 0-0.508, iso-paraffin 0.007-0.995) and inside the smoke regression domain
+BLEND_IN_MIX = {DECANE: 0.2, DODECANE: 0.1, ISOOCTANE: 0.2, BUTYLCYCLOHEXANE: 0.3, TOLUENE: 0.2}
+SMOKE_V5_MARGIN = 4.107069860688682          # configs/uncertainty_v5.yaml smoke_point_mm.ajftd_v5_in_domain.bulk_regression
+CLASS_MIX_REASON = "class_mix_outside_real_fuel_range"
 PROPS4 = ("viscosity_kin_cSt", "viscosity_dyn_mPas", "density_kg_m3", "flash_point_C")
 
 
@@ -414,18 +420,28 @@ def test_smoke_designated_bulk_regression(ctx):
     assert math.isnan(r["lo"]) and math.isnan(r["hi"]) and r["in_domain"] is False and r["uncertified"] is True
     assert any(w.startswith("out_of_domain") for w in r["warnings"])        # 50 % aromatics is far outside 8-23 vol %
     ok = pr.predict_fuel({TOLUENE: 0.1, DECANE: 0.9})["smoke_point_mm"]
-    assert ok["method"] == "ajftd_bulk_regression" and ok["status"] == "ok" and ok["in_domain"] == (not any(w.startswith("out_of_domain") for w in ok["warnings"]))
+    # user decision R-SC-2b ('Yes, replace (Recommended)'): the real-fuel margin applies only inside the class-mix range; decane + toluene has
+    # no iso-paraffin (range 0.007-0.995), so it is in the aromatics domain but uncertified with the class-mix reason
+    assert ok["method"] == "ajftd_bulk_regression" and ok["status"] == "ok"
+    assert not any(w.startswith("out_of_domain") for w in ok["warnings"])
+    assert ok["in_domain"] is False and ok["uncertified"] is True and any(CLASS_MIX_REASON in x for x in ok["domain_reasons"])
     assert ok["variants"]["ysi_route"]["status"] == "ok" and np.isfinite(ok["variants"]["ysi_route"]["value"])
 
 
 def test_smoke_in_domain_no_warning():
-    r = pr.predict_fuel({DECANE: 0.85, TOLUENE: 0.15}, fuel_type="jet")
+    """User decision R-SC-2b, 'Yes, replace (Recommended)': in the aromatics domain AND inside the class-mix range the real-fuel margin
+    4.107069860688682 mm replaces the 7.8 mm lab margin; in the aromatics domain but outside the class-mix range it is uncertified."""
+    r = pr.predict_fuel(BLEND_IN_MIX, fuel_type="jet")
     s = r["smoke_point_mm"]
     a = r["aromatics_vol_pct"]["value"]
     assert 8.0 <= a <= 23.0 and s["method"] == "ajftd_bulk_regression" and s["status"] == "ok"
     assert s["inputs"]["aromatics_vol_pct"] == pytest.approx(a)
     assert not any(w.startswith("out_of_domain") for w in s["warnings"])
-    assert s["margin"] == 7.8009965628100595 and s["in_domain"] is True      # R-SM-1 (margin applied inside the domain)
+    assert s["margin"] == SMOKE_V5_MARGIN and s["in_domain"] is True
+    r2 = pr.predict_fuel({DECANE: 0.85, TOLUENE: 0.15}, fuel_type="jet")["smoke_point_mm"]     # in aromatics domain, no iso-paraffin
+    assert 8.0 <= pr.predict_fuel({DECANE: 0.85, TOLUENE: 0.15})["aromatics_vol_pct"]["value"] <= 23.0
+    assert r2["in_domain"] is False and r2["uncertified"] is True and any(CLASS_MIX_REASON in x for x in r2["domain_reasons"])
+    assert math.isnan(r2["lo"]) and math.isnan(r2["hi"])
 
 
 def test_aromatics_by_construction():
@@ -600,17 +616,22 @@ def test_predict_returns_viscosity_kin():
 
 
 def test_smoke_margin_in_domain_user_decision():
-    """R-SM-1: in-domain smoke gets the 7.8 mm margin from configs/uncertainty_v5.yaml; lo = value - margin, safe_bound = lo."""
-    s = pr.predict_fuel(BLEND3, T_K=288.15, fuel_type="jet")["smoke_point_mm"]
+    """User decision R-SC-2b, 'Yes, replace (Recommended)': in-domain recipe inside the class-mix range gets the real-fuel margin
+    4.107069860688682 mm (configs/uncertainty_v5.yaml smoke_point_mm.ajftd_v5_in_domain.bulk_regression), replacing the 7.8 mm lab margin;
+    lo = value - margin, safe_bound = lo.  The lab key stays in the yaml (used when the new key is absent, see test_v5_margin_fn)."""
+    s = pr.predict_fuel(BLEND_IN_MIX, T_K=288.15, fuel_type="jet")["smoke_point_mm"]
     assert 19.0 <= s["value"] <= 25.0 and s["in_domain"] is True
-    assert s["margin"] == 7.8009965628100595 and s["margin_unit"] == "mm" and s["margin_direction"] == "over"
-    assert s["lo"] == pytest.approx(s["value"] - 7.8009965628100595, abs=1e-12)
-    assert s["hi"] == pytest.approx(s["value"] + 7.8009965628100595, abs=1e-12)
+    assert s["margin"] == SMOKE_V5_MARGIN and s["margin_unit"] == "mm" and s["margin_direction"] == "over"
+    assert s["lo"] == pytest.approx(s["value"] - SMOKE_V5_MARGIN, abs=1e-12)
+    assert s["hi"] == pytest.approx(s["value"] + SMOKE_V5_MARGIN, abs=1e-12)
     assert s["safe_bound"] == s["lo"] and not s.get("uncertified")
     assert "smoke_margin_from_binaries_and_surrogates (user decision)" in s["warnings"]
+    out = pr.predict_fuel(BLEND3, T_K=288.15, fuel_type="jet")["smoke_point_mm"]      # decane/dodecane/toluene: no iso-paraffin
+    assert out["uncertified"] is True and any(CLASS_MIX_REASON in x for x in out["domain_reasons"]) and math.isnan(out["lo"])
     import yaml
     y = yaml.safe_load((pr.ROOT / "configs/uncertainty_v5.yaml").read_text(encoding="utf-8"))["margins"]
     assert y["smoke_point_mm.lab_mixtures.bulk_regression"]["applied_margin"] == 7.8009965628100595
+    assert y["smoke_point_mm.ajftd_v5_in_domain.bulk_regression"]["applied_margin"] == SMOKE_V5_MARGIN
     assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin"] == 2.206932808388615
 
 
