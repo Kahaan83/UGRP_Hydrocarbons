@@ -42,6 +42,9 @@ def main():
             only_ver = [k for k, s, v in zip(cc.index, cc.status, cc.spec_verification.fillna("")) if s not in ("pass", "by_construction")]
             row["blocked_only_by_secondary_sources_only"] = bool(
                 len(only_ver) > 0 and all(cc.loc[k, "status"] == "uncertified" and "secondary_sources_only" in str(cc.loc[k, "spec_verification"]) + str(cc.loc[k, "reason"]) for k in only_ver))
+            row["blocked_only_by_secondary_sources_only"] = bool(row["blocked_only_by_secondary_sources_only"] and "class_mix_outside" not in str(row["smoke_reason"]) and row["smoke_status"] != "fail")
+            row["graded_objective"] = r.get("graded_objective")
+            row["best_min_slack"] = r.get("best_min_slack")
             row["weights"] = r.weights
             rows.append(row)
     out = pd.DataFrame(rows)

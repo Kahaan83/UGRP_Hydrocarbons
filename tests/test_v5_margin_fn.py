@@ -405,3 +405,72 @@ def test_recipe_margins_viscosity_label_is_ml_when_in_domain():
     assert rows[True].model == LR.VISC_ML_NAME == rows[False].model
     assert rows[True].prediction == pytest.approx(rows[False].prediction, rel=1e-12)
     assert rows[True].applied_margin == pytest.approx(rows[False].applied_margin, rel=1e-12)
+
+
+def _rejudge_stub(tmp_path, monkeypatch, engine_reason):
+    """Smoke row of a recipe that misses the 25 mm limit, meets the verified 18 mm alternative with the 3 mm lab margin, with an engine reason."""
+    cdir, _ = _stub_cfg(tmp_path, verification="verified")
+    monkeypatch.setattr(E, "CONFIGS", cdir)
+    mp = Path(tmp_path) / "k2.yaml"
+    mp.write_text(yaml.safe_dump({"margins": {LR.SMOKE_MARGIN_KEY: {"applied_margin": 3.0, "unit": "mm", "direction": "over"}}}))
+    marg = E.load_margins(mp)
+    w = np.array([0.2, 0.4, 0.4])                      # smoke 22 mm: 22 - 3 = 19 >= 18
+    spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+    models = _stub_models()
+    cons = E.evaluate_blend(spec, POOL3, w, models, marg)
+    sm = {c.key: c for c in cons}["smoke_point_mm"]
+    sm.reason = (sm.reason + "; " if sm.reason else "") + engine_reason
+    res = E.DesignResult(weights=dict(zip(POOL3, map(float, w))), predictions={}, margins={}, passed=False, extrapolating=False,
+                         binding_constraints=[], constraints=cons, spec_name="test:jet_stub", pool=list(POOL3), optimiser={})
+    LR._rejudge_smoke(res, marg, models, alt_limits=True)
+    return {c.key: c for c in res.constraints}["smoke_point_mm"]
+
+
+def test_rejudge_smoke_alt_met_verified_keeps_other_engine_blockers(tmp_path, monkeypatch):
+    """Review IMPORTANT-1: alt branch met on a VERIFIED spec passes only when the engine reported no other blocker."""
+    clean = _rejudge_stub(tmp_path, monkeypatch, "")
+    assert clean.status == E.STATUS_PASS, clean.reason
+    for why in ("extrapolating: 0.50 wt fraction in classes absent from this model's validation data",
+                "non-verified constant(s): x.rho15=disputed",
+                "margin direction does not protect the side of the limit"):
+        blocked = _rejudge_stub(tmp_path, monkeypatch, why)
+        assert blocked.status == E.STATUS_UNCERTIFIED and blocked.status not in E.OK_STATUSES, (why, blocked.reason)
+
+
+def _plateau_models():
+    """Smoke margin 3 mm only for w[0] <= 0.15, else None (the centroid start sits on the None plateau)."""
+    fn = lambda pool, w, T: 3.0 if float(w[0]) <= 0.15 else None            # noqa: E731
+    m = _stub_models(margin_fn=fn)
+    m["props"]["smoke_point"] = dataclasses.replace(
+        m["props"]["smoke_point"], margin_stand_in=3.0, margin_penalty_fn=lambda pool, w, T: max(float(w[0]) - 0.15, 0.0))
+    return m
+
+
+def test_graded_objective_moves_off_the_plateau_judge_unchanged(tmp_path):
+    """Review IMPORTANT-2: with a None margin the old objective is the constant BAD_SLACK (SLSQP stays at its start); the graded objective
+    (optimiser only) has a gradient and moves; the judge still gives uncertified for a None margin, never margin 0."""
+    cdir, mp = _stub_cfg(tmp_path)
+    spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+    marg = E.load_margins(mp)
+    models = _plateau_models()
+    c = np.full(3, 1 / 3)
+    old = E._Sides(spec, POOL3, models, marg)                    # graded off: bit-identical old behaviour
+    assert (old.vector(c) <= E.BAD_SLACK).any() and old.vector(c).min() == E.BAD_SLACK
+    w_old, s_old, _ = E._optimise(old, 3, 1, 42)
+    assert np.allclose(w_old, c) and s_old == E.BAD_SLACK                      # stuck at its start on the plateau
+    new = E._Sides(spec, POOL3, models, marg, graded=True)
+    assert new.vector(c).min() > E.BAD_SLACK
+    w_new, s_new, _ = E._optimise(new, 3, 1, 42)
+    assert not np.allclose(w_new, c) and s_new > E.BAD_SLACK and w_new[0] < c[0]            # moved toward the certifiable region
+    # judge unchanged: the plateau recipe has no margin -> uncertified (or fail), never pass, margin None
+    sm = {x.key: x for x in E.evaluate_blend(spec, POOL3, c, models, marg)}["smoke_point_mm"]
+    assert sm.applied_margin is None and sm.status not in E.OK_STATUSES
+
+
+def test_graded_objective_default_off_in_design(tmp_path):
+    cdir, mp = _stub_cfg(tmp_path)
+    r = E.design("test:jet_stub", POOL3, _plateau_models(), n_starts=3, seed=42, margins_path=mp, configs_dir=cdir, alt_limits=True)
+    assert r.optimiser["graded_objective"] is False
+    r2 = E.design("test:jet_stub", POOL3, _plateau_models(), n_starts=3, seed=42, margins_path=mp, configs_dir=cdir, alt_limits=True,
+                  graded_objective=True)
+    assert r2.optimiser["graded_objective"] is True

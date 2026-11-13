@@ -277,7 +277,8 @@ def _v5_margins() -> dict:
 
 
 SMOKE_MARGIN_KEY = "smoke_point_mm.lab_mixtures.bulk_regression"
-SMOKE_MARGIN_NOTE = "smoke_margin_from_binaries_and_surrogates (user decision)"
+SMOKE_MARGIN_NOTE = "smoke_margin_from_binaries_and_surrogates (user decision)"          # lab key 7.8 mm (used only when the v5 key is absent)
+SMOKE_MARGIN_NOTE_V5 = "smoke_margin_from_real_fuel_ajftd_v5_in_domain (user decision R-SC-2b)"
 SMOKE_V5_KEY = "smoke_point_mm.ajftd_v5_in_domain.bulk_regression"        # real-fuel margin; replaces the lab key when present in the yaml
 
 
@@ -807,7 +808,7 @@ def _smoke(prop: dict, comps, ctx, pm: PropMap, arom_vol: dict) -> None:
     prop.update(model_name=prop["method"], lo=lo, hi=hi, interval=[lo, hi], margin=m, margin_unit=e["unit"],
                 margin_direction=e["direction"], safe_bound=lo, in_domain=True, domain_reasons=[],
                 tuple=(v, lo, hi, prop["method"], True))
-    prop["warnings"].append(SMOKE_MARGIN_NOTE)
+    prop["warnings"].append(SMOKE_MARGIN_NOTE_V5 if SMOKE_V5_KEY in margins else SMOKE_MARGIN_NOTE)
 
 
 def _is_aromatic(smi: str) -> bool:
