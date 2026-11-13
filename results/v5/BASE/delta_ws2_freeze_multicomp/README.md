@@ -73,3 +73,47 @@ waxy systems, the proposed margin is reported with that caveat and remains "need
 ## Outputs
 `scripts/v5/base/delta_ws2_freeze_multicomp.py` -> `rows.csv` (one per scored row and model), `summary.csv`, `systems.csv`, `readings.json`.
 Tests `tests/test_ws2_freeze_multicomp.py`.
+
+## Result (appended 2026-11-14; declared text above unchanged)
+Script `scripts/v5/base/delta_ws2_freeze_multicomp.py`; files `rows.csv`, `summary.csv`, `systems.csv`, `readings.json`; tests
+`tests/test_ws2_freeze_multicomp.py`. Constants: verified, then thermoml_measured (`data/processed/v5/thermoml_fusion_pure_hc_by_compound.csv`
+from delta_ws3_pure_gaps); ml_estimated never used. Dedup removed 1 row (the Oakley ternary point, = the ThermoML point).
+
+| reading | alkane_only | alkane_naphthene | with_aromatic |
+|---|---|---|---|
+| R-W2-1 systems in M (of which wax_appearance) | 8 (4) | 1 | 2 |
+| R-W2-1 systems scorable (every component has a constant) | 2 | 1 | 0 |
+| R-W2-2 gate (>= 8 scorable systems) | **fail** | **fail** | **fail** |
+
+**Finding: the data are too thin; no class-mix margin exists.** The 16.98 C freezing margin stays the binary margin, applied to
+multicomponent recipes by transfer, "not validated on multicomponent data". Nothing is proposed for the yaml.
+Two limits, separately: (i) there are few multicomponent systems at all (11, of which 4 are C18-C36 wax mixtures and only 7 are jet-relevant);
+(ii) 8 of the 11 are not scorable because a component has no verified or ThermoML-measured Tm AND dHfus: n-hexane, n-octane, n-nonane, p-xylene,
+stereo-unspecified decahydronaphthalene, and the odd heavy waxes C19, C23, C27, C29, C31, C33, C35 (`systems.csv`, column `missing_constants`).
+Even with all of those constants, alkane_only would reach exactly 8 only by counting the 4 Dauphin wax systems; the other two class mixes would
+stay at 1 and 2.
+
+R-W2-3 (descriptive; scored rows: Shariatrad 30 rows / 1 system, ASCENT nC16/nC13/iso-octane 2 rows, ASCENT nC16/bicyclohexyl/iso-octane 1 row):
+
+| model | class mix | n rows (systems) | MAE C | bias C | under-predicted | largest under-prediction C |
+|---|---|---|---|---|---|---|
+| svl_ideal (designated) | alkane_only | 32 (2) | 1.17 | -0.60 | 69 % | 3.08 |
+| svl_unifac | alkane_only | 32 (2) | 1.25 | -0.85 | 72 % | 3.31 |
+| ideal_solid_solution_nalkanes (stand-in) | alkane_only | 32 (2) | 4.92 | +4.90 | 3 % | 0.29 |
+| coutinho_empirical_depression (not p.UNIQUAC) | alkane_only | 32 (2) | 9.67 | -9.67 | 100 % | 20.25 |
+| svl_ideal | alkane_naphthene | 1 (1) | 2.82 | -2.82 | 100 % | 2.82 |
+| svl_unifac | alkane_naphthene | 1 (1) | 4.64 | -4.64 | 100 % | 4.64 |
+
+* On the Shariatrad C11/C14/C16/C18 quaternary the pure-solid ideal SvL is within 1.15 C on average (largest under-prediction 3.08 C); the
+  paper reports AAD 0.8 K for its predictive UNIQUAC solid + regular-solution liquid (their Table 2; not reproduced here). UNIFAC liquid activity
+  does not improve on ideal for these alkane-only or alkane+naphthene rows. The ideal n-alkane solid-solution stand-in over-predicts (safe side,
+  +4.9 C). The existing empirical "Coutinho" depression under-predicts every row (by up to 20 C): not a usable comparator.
+* R-W2-4: all 33 scored multicomponent rows lie within the transferred 16.98 C margin (pred + 16.98 >= measured). A consistency check on
+  3 systems, not a validation.
+* Verified-only sensitivity (`summary.csv`, constants `verified_only`): 3 rows / 2 systems scorable (Shariatrad needs n-C18, which is
+  thermoml_measured only).
+
+Needs user decision: none from this delta (no margin to propose). Follow-ups (not done): primary-source Tm/dHfus (WebBook calorimetry, as in
+`tm_dhfus_verified.csv`) for n-hexane, n-octane, n-nonane, p-xylene and the odd C19-C35 waxes would make 8 more systems scorable; predictive
+UNIQUAC solid phase remains unimplemented; new multicomponent jet-range liquidus data (n >= 3 with aromatics or cycloalkanes) are the real gap:
+the open sources checked here have none beyond the systems above.
