@@ -241,9 +241,6 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     mole = next(p for p in alts["freezing"] if p.name == "ideal_sle_mole_fraction")
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
     props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"})
-    # smoke: the v5 lab-mixture margin (7.8 mm, user decision 2026-11-13).  The engine still emits the OutOfDomainWarning reason
-    # (aromatics outside 8-23 vol % or result outside 19-25 mm), which keeps the constraint uncertified out of domain.
-    props["smoke_point"] = dataclasses.replace(props["smoke_point"], margin_keys=(SMOKE_MARGIN_KEY,))
     models["props"] = {k: _flag(L, p) for k, p in props.items()}
     models["alternates"] = {k: [_flag(L, p) for p in v] for k, v in alts.items()}
     models["pool"] = list(L.pool)
@@ -259,20 +256,51 @@ def default_n_starts(pool) -> int:
     return 8 if len(pool) > 20 else 30
 
 
-def annotate(result: E.DesignResult) -> E.DesignResult:
+SMOKE_MARGIN_REASON = "smoke margin 7.8 mm from binaries and surrogates (user decision), applied inside the regression domain only"
+
+
+def _rejudge_smoke(result: E.DesignResult, margins: dict) -> None:
+    """Smoke margin, design side, DOMAIN-GATED (user decision 2026-11-13 plus controller ruling).
+
+    The engine (unchanged) judges smoke without a margin and tags a recipe outside the regression domain (aromatics 8-23 vol %, result
+    19-25 mm) with the OutOfDomainWarning reason, which keeps it ``uncertified`` with margin None.  The optimiser therefore also sees no
+    smoke margin (a margin is recipe-dependent through the domain, the engine's margin is not).  Here, after the engine, a smoke constraint
+    that is IN domain is re-judged with the v5 margin: slack = (pred - margin - limit) / scale; ``fail`` if negative.  Out of domain it is left
+    exactly as the engine produced it."""
+    e = margins.get(SMOKE_MARGIN_KEY)
+    m, unit, direction, _ = E.read_applied_margin(e)
+    if m is None:
+        return
+    for c in result.constraints:
+        if c.prop != "smoke_point" or not math.isfinite(c.prediction) or "OutOfDomainWarning" in c.reason:
+            continue
+        if c.lo is None or c.hi is not None:                       # smoke is a minimum limit: over-prediction is the unsafe side
+            continue
+        sc = E._scale(c.lo, c.hi)
+        c.applied_margin, c.margin_keys = m, (SMOKE_MARGIN_KEY,)
+        c.slack = (c.prediction - m - c.lo) / sc
+        if c.slack < 0 or c.prediction < c.lo:
+            c.status = E.STATUS_FAIL
+        c.reason = (c.reason + "; " if c.reason else "") + SMOKE_MARGIN_REASON + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
+        result.margins[c.key] = m
+    result.passed = result.passed and all(c.status in E.OK_STATUSES for c in result.constraints)
+
+
+def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
-    the lab margin is the group score of the single mesitylene system)."""
+    the lab margin is the group score of the single mesitylene system).  In-domain smoke constraints get the v5 smoke margin."""
     for c in result.constraints:
         has_margin = c.applied_margin is not None and math.isfinite(c.applied_margin)
         if c.prop == "flash" and has_margin and LAB_MARGIN_NOTE not in c.reason:
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
+    _rejudge_smoke(result, E.load_margins(margins_path))
     return result
 
 
 def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None) -> E.DesignResult:
     pool = models["pool"]
     return annotate(E.design(spec_name, pool, models, n_starts=n_starts or default_n_starts(pool), seed=seed,
-                             margins_path=margins_path))
+                             margins_path=margins_path), margins_path)
 
 
 # ------------------------------------------------------------------------------------------------ forward check
@@ -305,7 +333,7 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
     cons = E.evaluate_blend(spec, pool, w, models, E.load_margins(margins_path))
     return annotate(E.DesignResult(weights=dict(zip(pool, map(float, w))), predictions={c.key: c.prediction for c in cons},
                           margins={c.key: c.applied_margin for c in cons}, passed=False, extrapolating=False,
-                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool))
+                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool), margins_path)
 
 
 def _fnum(x) -> float:
