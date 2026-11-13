@@ -108,3 +108,10 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 | DVPE, pour, cloud, DCN | Uncertified, no v4 model or margin | `configs/uncertainty_v4.yaml` | DVPE data units unconfirmed |
 | Diesel (any property) | Nothing validated: 0 qualifying fuels | `results/v4/P2/coverage_matrix_summary.md` | |
 | Designs | 0 of 13 certified; certification is jet-only | `results/v4/D/README.md` | 8 of 13 are undetermined, not failed |
+
+## v5 ML components
+- ML viscosity (`src/fuelblend/ml/viscosity_pair.py`, delta_ml_viscosity): ln eta = ln eta_Refutas + sum_{i<j} x_i x_j g_ij (LightGBM pair term). Exposed in `predict_fuel` as variant `ml_pair_residual` only; designated viscosity stays raw Refutas (promotion is the user's decision).
+- Readings: R-MLV-1 dev 0.0824 -> 0.0599 ln MAE; R-MLV-2 locked (70 systems) 0.0544 -> 0.0311; R-MLV-3 ternaries 0.0841 -> 0.0398 (18 systems); R-MLV-4 cold 0.0994 -> 0.0612 (essentially one source, Boehm 2022).
+- Margins (ln, alpha 0.10, read from `readings.json`): 0.287 for T < 263 K, 0.608 for 263-283 K, 0.134 for T >= 283 K. Attached only for known compositions in domain (own grid data, class pairs with >= 5 training systems, 233-393 K); reconstructed real fuels get the value with in_domain False and no margin (R-MLV-5 transfer was mixed).
+- ML YSI (delta_ml_ysi) FAILED its gates (R-MLY-1, R-MLY-1x): no YSI variant is exposed; it is a scored negative.
+- The design forward check carries one report-only ML viscosity row; it does not change certification.

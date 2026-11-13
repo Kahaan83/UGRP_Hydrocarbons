@@ -407,6 +407,7 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
         fl["warnings"].append("lab_margin_set_by_one_system")
         fl["warnings"].append("flash_margin_excludes_mesitylene (user decision Q2)")
     _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
+    _add_viscosity_ml(out, ctx, pm, T_K, composition_kind)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
     return out
@@ -470,6 +471,61 @@ def _add_viscosity_k1(res: dict, T_K: float) -> None:
                 "value": float(res["value"] * math.exp(off)), "offset_ln": float(off), "T_fit_K": float(tf), "label": "in_sample_T2",
                 "note": "per-temperature ln offset fitted on designated raw-Refutas T2 viscosity rows (status ok, not low-coverage); in-sample, no margin"}
             return
+
+
+ML_VISC_T_RANGE_K = (233.15, 393.15)        # delta_ml_viscosity README: correction defined over the 233-393 K training range
+
+
+@lru_cache(maxsize=1)
+def _ml_visc_margins() -> dict:
+    """R-MLV-6 ML margins (ln, alpha 0.10) read from the committed delta_ml_viscosity readings."""
+    import json
+    d = json.loads((ROOT / "results" / "v5" / "BASE" / "delta_ml_viscosity" / "readings.json").read_text())["R-MLV-6"]["ml"]
+    return {k: float(v["margin"]) for k, v in d.items()}
+
+
+def _ml_margin_for(T_K: float) -> float:
+    m = _ml_visc_margins()
+    return m["T_lt_263K"] if T_K < 263.0 else (m["T_263_283K"] if T_K < 283.0 else m["T_ge_283K"])
+
+
+def _add_viscosity_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind: str) -> None:
+    """Variant ml_pair_residual (ln eta = ln eta_Refutas + sum x_i x_j g_ij, mole fractions).  Variant only: designated stays Refutas.
+    R-MLV-1..4 passed, so a margin is attached in domain; reconstructed real fuels get the value with in_domain False, margin None."""
+    res = out["viscosity_kin_cSt"]
+    if res.get("value") is None:
+        return
+    dyn = out["viscosity_dyn_mPas"]
+    base = {"method": "refutas+ml_pair_gn", "margin_unit": "ln", "training_scope": "lab binaries, 264 dev systems",
+            "source": "results/v5/BASE/delta_ml_viscosity"}
+
+    def _none(reason):
+        v = dict(base, value=None, ln_correction=None, status="out_of_range", in_domain=False, margin=None, reason=reason,
+                 warnings=[f"ml_pair_residual_out_of_range: {reason}"])
+        res["variants"]["ml_pair_residual"] = v
+        dyn["variants"]["ml_pair_residual"] = dict(v)
+
+    if pm.substituted_mass > 0 or pm.unmapped_mass > 0 or pm.idx.size == 0:
+        return _none("component without its own grid data (substituted or unmapped mass)")
+    try:
+        from fuelblend.ml import viscosity_pair as vp
+        smi = [ctx.reg.smiles[i] for i in pm.idx]
+        x = pm.w / np.array([ctx.mw(s) for s in smi])
+        x = x / x.sum()
+        dom = vp.domain_status(smi, T_K)
+        if dom["in_domain"] and not (ML_VISC_T_RANGE_K[0] <= T_K <= ML_VISC_T_RANGE_K[1]):
+            dom = dict(in_domain=False, reason=f"T outside the training range {ML_VISC_T_RANGE_K[0]}-{ML_VISC_T_RANGE_K[1]} K")
+        if not dom["in_domain"]:
+            return _none(dom["reason"])
+        g = vp.ln_correction(smi, x, T_K)
+    except Exception as e:                                      # model files missing or feature failure: variant unavailable
+        return _none(f"ml model unavailable ({type(e).__name__})")
+    known = composition_kind == "known"
+    m = _ml_margin_for(T_K) if known else None
+    w = [] if known else ["ml_pair_residual_reconstructed_fuel: R-MLV-5 transfer was mixed; in_domain False, no margin"]
+    for r in (res, dyn):
+        r["variants"]["ml_pair_residual"] = dict(base, value=float(r["value"] * math.exp(g)), ln_correction=float(g), status="ok",
+                                                 in_domain=known, margin=m, warnings=list(w))
 
 
 def _uncertified(res: dict, reason: str) -> dict:
