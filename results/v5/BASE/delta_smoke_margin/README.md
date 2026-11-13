@@ -62,3 +62,28 @@ Why: 27.56 - 7.80 = 19.76 mm is below the 25 mm minimum, so smoke can never pass
 estimate, on both the design and the API side (forward check passes: design and API agree). Before the margin the optimiser could satisfy all limits at the point
 estimate. The smoke result is a weak extrapolation (0 vol % aromatics), so the optimiser is now being driven by a margin that was never validated there.
 `engine_v4.py` was not changed; making smoke `uncertified` out of domain instead of `fail` would need an engine rule change (not done, out of scope).
+
+### Domain fix
+
+What went wrong: the first rerun (`designs/`, kept as the record) gave the optimiser the smoke margin through the engine's yaml key. The engine's margin does
+not depend on the recipe, so the margin applied at 0 vol % aromatics (outside the regression domain), smoke (27.56 mm) could never reach 25 + 7.8, and the
+optimiser gave up density and freezing. All 8 designs fell from category B to A. This contradicted brief step 4 (smoke stays uncertified out of domain).
+
+Fix (design side only; `engine_v4.py` unchanged): `library_route` no longer hands the smoke key to the optimiser, so the optimiser and the engine see smoke as
+before the margin (OutOfDomainWarning gives `uncertified`, margin None). After the engine, `annotate` / `evaluate_recipe` re-judge smoke constraints that are
+IN the domain (no OutOfDomainWarning in the reason): margin 7.8009965628100595 applied, slack = (prediction - margin - limit) / scale, `fail` if negative.
+The optimiser is therefore not margin-aware in domain; an in-domain recipe is only judged correctly after the fact. Test:
+`tests/test_v5_design_forward.py::test_smoke_margin_design_side_domain_gated` (0 vol % recipe: uncertified, margin None; in-domain recipe: margin applied).
+
+Rerun into `designs_domain_fix/` (seed 42, same arguments). Finished: v5pool and ext_n30. NOT finished at the time of writing: ext_n8 and guard4_v5pool
+(still running; their folders may be incomplete or absent and are not part of this result).
+
+| run | design | smoke status | smoke margin | category | vs 9ee34cc |
+|---|---|---|---|---|---|
+| v5pool | Jet A | uncertified | none | B | recipe identical (max weight change 0.0000) |
+| v5pool | Jet A-1 | uncertified | none | B | recipe identical |
+| ext_n30 | Jet A | uncertified | none | B | recipe identical |
+| ext_n30 | Jet A-1 | uncertified | none | B | recipe identical |
+
+Tests run for this fix: `tests/test_v5_design_forward.py` and `tests/test_predict_route.py` only (the full suite was not rerun, by instruction; the earlier
+full run of the first version gave 581 passed).
