@@ -1,0 +1,105 @@
+{
+ "seed": 42,
+ "n_boot": 2000,
+ "n_rows": 15827,
+ "n_systems": 334,
+ "dev_systems": 264,
+ "locked_systems": 70,
+ "train_pair_rows": 10681,
+ "train_systems": 250,
+ "class_pair_training_systems": {
+  "alkene_alkyne|alkene_alkyne": 1,
+  "alkene_alkyne|aromatic": 5,
+  "alkene_alkyne|cycloalkane": 1,
+  "alkene_alkyne|n_paraffin": 1,
+  "aromatic|aromatic": 22,
+  "aromatic|cycloalkane": 21,
+  "aromatic|iso_paraffin": 13,
+  "aromatic|n_paraffin": 40,
+  "cycloalkane|cycloalkane": 16,
+  "cycloalkane|iso_paraffin": 10,
+  "cycloalkane|n_paraffin": 56,
+  "iso_paraffin|iso_paraffin": 2,
+  "iso_paraffin|n_paraffin": 27,
+  "n_paraffin|n_paraffin": 35
+ },
+ "endpoint": {
+  "rows": 1275,
+  "systems": 112,
+  "share_of_binary_systems": 0.35443037974683544,
+  "mean_resid_ln": 0.012187130849174348,
+  "mean_abs_resid_ln": 0.033960926744059435
+ },
+ "R-MLV-1": {
+  "ml": {
+   "n_systems": 264,
+   "mae_a": 0.08238412165803917,
+   "mae_b": 0.05989025404412356,
+   "gain": 0.02249386761391561,
+   "lo": 0.018033643003336812,
+   "hi": 0.02692078248090503
+  },
+  "const": {
+   "n_systems": 264,
+   "mae_a": 0.08238412165803917,
+   "mae_b": 0.06920465572650178,
+   "gain": 0.0131794659315374,
+   "lo": 0.010201471883231781,
+   "hi": 0.016186134551297707
+  },
+  "classpair": {
+   "n_systems": 264,
+   "mae_a": 0.08238412165803917,
+   "mae_b": 0.06488679741519433,
+   "gain": 0.017497324242844836,
+   "lo": 0.013816743519150361,
+   "hi": 0.021149088935521563
+  },
+  "binary_only_ml": {
+   "n_systems": 250,
+   "mae_a": 0.08125928051114249,
+   "mae_b": 0.06096039664008945,
+   "gain": 0.020298883871053035,
+   "lo": 0.015934859686491644,
+   "hi": 0.024691837999835032
+  },
+  "pass": true
+ },
+ "R-MLV-6": {
+  "ml": {
+   "T_lt_263K": {
+    "margin": 0.28747778594508044,
+    "n_dev_systems": 20,
+    "k": 19
+   },
+   "T_263_283K": {
+    "margin": 0.6084381907110359,
+    "n_dev_systems": 16,
+    "k": 16
+   },
+   "T_ge_283K": {
+    "margin": 0.13426357484240542,
+    "n_dev_systems": 264,
+    "k": 239
+   }
+  },
+  "refutas": {
+   "T_lt_263K": {
+    "margin": 0.4153576080066075,
+    "n_dev_systems": 20,
+    "k": 19
+   },
+   "T_263_283K": {
+    "margin": 0.6084381907110359,
+    "n_dev_systems": 16,
+    "k": 16
+   },
+   "T_ge_283K": {
+    "margin": 0.18490773481188544,
+    "n_dev_systems": 264,
+    "k": 239
+   }
+  },
+  "ml_ge283_le_0.186": true
+ }
+}

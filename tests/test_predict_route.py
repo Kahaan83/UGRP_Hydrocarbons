@@ -165,9 +165,12 @@ def test_three_component_physics(ctx):
     comps = pr.resolve(BLEND3)
     pm = pr.map_for(comps, pr.predicates(ctx)["HAS_GRID"], ctx.reps)
     nu, rho = refutas_nu_safe(ctx.prov, pm.idx, pm.w, 313.15)
-    assert r["viscosity_kin_cSt"]["value"] == pytest.approx(nu, abs=1e-9, rel=0)
+    def _refutas(p):  # designated may be the ML value (user decision 2026-11-13); Refutas is then variants['refutas_raw']
+        d = r[p]
+        return d["variants"]["refutas_raw"]["value"] if d["method"] == "refutas+ml_pair_gn" else d["value"]
+    assert _refutas("viscosity_kin_cSt") == pytest.approx(nu, abs=1e-9, rel=0)
     assert r["density_kg_m3"]["value"] == pytest.approx(rho, abs=1e-9, rel=0)
-    assert r["viscosity_dyn_mPas"]["value"] == pytest.approx(nu * rho / 1000.0, abs=1e-9, rel=0)
+    assert _refutas("viscosity_dyn_mPas") == pytest.approx(nu * rho / 1000.0, abs=1e-9, rel=0)
     for p in PROPS4:
         d = r[p]
         assert set(d) >= {"value", "unit", "method", "status", "coverage", "lo", "hi", "margin", "in_domain",
@@ -398,16 +401,31 @@ def test_heat_matches_bulk_rows(ctx):
     assert pr.predict_fuel({DECANE: 1.0}, fuel_type=None)["heat_net_MJ_kg"]["value"] is None
 
 
-def test_smoke_coverage_gate(ctx):
+def test_smoke_designated_bulk_regression(ctx):
     P = pr.predicates(ctx)
     reg = ctx.reg
     no_ysi = next(reg.ik[i] for i in range(len(reg.ik)) if reg.usable[i] and not P["HAS_YSI"](i) and pr._mol_info(reg.smiles[i])[3]
                   and pr.subkind(reg.smiles[i]) is not None)
     r = pr.predict_fuel({TOLUENE: 0.5, no_ysi: 0.5})["smoke_point_mm"]
-    assert r["status"] == "no_evaluation" and r["value"] is None and r["in_domain"] is False
-    assert r["coverage"]["ysi_own_mass"] < 0.9 and r["coverage"]["ysi_mapped_mass"] >= 0
+    # designated = bulk regression, independent of YSI coverage; YSI only a gated variant
+    assert r["method"] == "ajftd_bulk_regression" and r["status"] == "ok" and np.isfinite(r["value"])
+    assert r["variants"]["ysi_route"]["status"] == "no_evaluation" and r["variants"]["ysi_route"]["value"] is None
+    assert r["coverage"]["ysi_own_mass"] < 0.9
+    assert math.isnan(r["lo"]) and math.isnan(r["hi"]) and r["in_domain"] is False and r["uncertified"] is True
+    assert any(w.startswith("out_of_domain") for w in r["warnings"])        # 50 % aromatics is far outside 8-23 vol %
     ok = pr.predict_fuel({TOLUENE: 0.1, DECANE: 0.9})["smoke_point_mm"]
-    assert ok["status"] == "ok" and np.isfinite(ok["value"]) and ok["in_domain"] is False
+    assert ok["method"] == "ajftd_bulk_regression" and ok["status"] == "ok" and ok["in_domain"] == (not any(w.startswith("out_of_domain") for w in ok["warnings"]))
+    assert ok["variants"]["ysi_route"]["status"] == "ok" and np.isfinite(ok["variants"]["ysi_route"]["value"])
+
+
+def test_smoke_in_domain_no_warning():
+    r = pr.predict_fuel({DECANE: 0.85, TOLUENE: 0.15}, fuel_type="jet")
+    s = r["smoke_point_mm"]
+    a = r["aromatics_vol_pct"]["value"]
+    assert 8.0 <= a <= 23.0 and s["method"] == "ajftd_bulk_regression" and s["status"] == "ok"
+    assert s["inputs"]["aromatics_vol_pct"] == pytest.approx(a)
+    assert not any(w.startswith("out_of_domain") for w in s["warnings"])
+    assert s["margin"] == 7.8009965628100595 and s["in_domain"] is True      # R-SM-1 (margin applied inside the domain)
 
 
 def test_aromatics_by_construction():
@@ -422,14 +440,14 @@ def test_k1_only_at_fitted_T():
     a = pr.predict_fuel(BLEND3, T_K=233.15)["viscosity_kin_cSt"]
     k = a["variants"]["k1_cold_offset_in_sample"]
     assert k["label"] == "in_sample_T2" and np.isfinite(k["value"]) and k["value"] != a["value"]
-    assert abs(k["value"] - a["value"] * math.exp(k["offset_ln"])) < 1e-9
+    base = a["variants"]["refutas_raw"]["value"] if a["method"] == "refutas+ml_pair_gn" else a["value"]
+    assert abs(k["value"] - base * math.exp(k["offset_ln"])) < 1e-9   # K1 is an offset on raw Refutas
     assert "k1_cold_offset_in_sample" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
 
 
 def test_uncertified_props_have_nan_interval():
     r = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")
-    for p in ("freezing_point_C", "smoke_point_mm"):
-        assert math.isnan(r[p]["lo"]) and math.isnan(r[p]["hi"]) and r[p]["in_domain"] is False
+    assert math.isnan(r["freezing_point_C"]["lo"]) and math.isnan(r["freezing_point_C"]["hi"]) and r["freezing_point_C"]["in_domain"] is False
     assert r["freezing_point_C"]["uncertified"] is True
     w = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], fuel_type="jet")
     assert "freezing_point_C" not in pb.UNCERTIFIED_PROPERTIES and "smoke_point_mm" not in pb.UNCERTIFIED_PROPERTIES
@@ -577,3 +595,42 @@ def test_predict_returns_viscosity_kin():
     from fuelblend.api import predict_blend as pb
     r = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], T_K=233.15)
     assert r["viscosity_kin_cSt"]["value"] > 0 and "k1_cold_offset_in_sample" in r["viscosity_kin_cSt"]["variants"]
+
+
+def test_smoke_margin_in_domain_user_decision():
+    """R-SM-1: in-domain smoke gets the 7.8 mm margin from configs/uncertainty_v5.yaml; lo = value - margin, safe_bound = lo."""
+    s = pr.predict_fuel(BLEND3, T_K=288.15, fuel_type="jet")["smoke_point_mm"]
+    assert 19.0 <= s["value"] <= 25.0 and s["in_domain"] is True
+    assert s["margin"] == 7.8009965628100595 and s["margin_unit"] == "mm" and s["margin_direction"] == "over"
+    assert s["lo"] == pytest.approx(s["value"] - 7.8009965628100595, abs=1e-12)
+    assert s["hi"] == pytest.approx(s["value"] + 7.8009965628100595, abs=1e-12)
+    assert s["safe_bound"] == s["lo"] and not s.get("uncertified")
+    assert "smoke_margin_from_binaries_and_surrogates (user decision)" in s["warnings"]
+    import yaml
+    y = yaml.safe_load((pr.ROOT / "configs/uncertainty_v5.yaml").read_text(encoding="utf-8"))["margins"]
+    assert y["smoke_point_mm.lab_mixtures.bulk_regression"]["applied_margin"] == 7.8009965628100595
+    assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin"] == 2.206932808388615
+
+
+def test_smoke_margin_not_applied_out_of_domain():
+    """R-SM-2: aromatics outside 8-23 vol % (or result outside 19-25 mm) keeps NaN lo/hi, in_domain False, uncertified."""
+    for blend in ({DECANE: 0.5, TOLUENE: 0.5}, {DECANE: 0.6, DODECANE: 0.4}):
+        s = pr.predict_fuel(blend, T_K=288.15, fuel_type="jet")["smoke_point_mm"]
+        assert math.isnan(s["lo"]) and math.isnan(s["hi"]) and s["in_domain"] is False and s["uncertified"] is True
+        assert s["margin"] is None and any(w.startswith("out_of_domain") for w in s["warnings"])
+        assert "smoke_margin_from_binaries_and_surrogates (user decision)" not in s["warnings"]
+
+
+def test_flash_margin_q2_user_decision():
+    """R-Q2-1: in-domain known-composition flash margin is the Q2 value (35 systems, mesitylene excluded), lo = value - margin."""
+    f = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")["flash_point_C"]
+    assert f["margin"] == 2.206932808388615
+    assert f["lo"] == pytest.approx(f["value"] - 2.206932808388615, abs=1e-12)
+    assert f["hi"] == pytest.approx(f["value"] + 2.206932808388615, abs=1e-12)
+    assert f["in_domain"] is True
+    assert "lab_margin_set_by_one_system" in f["warnings"]
+    assert "flash_margin_excludes_mesitylene (user decision Q2)" in f["warnings"]
+    import yaml
+    y = yaml.safe_load((pr.ROOT / "configs/uncertainty_v5.yaml").read_text(encoding="utf-8"))["margins"]
+    assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin"] == 2.206932808388615
+    assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin_v4"] == 3.698768343688585
