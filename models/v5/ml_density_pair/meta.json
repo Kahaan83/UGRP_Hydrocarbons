@@ -1,0 +1,110 @@
+{
+ "model": "LightGBM pair g(d_i,d_j,T); V_ML = V_ideal + sum_{i<j} x_i x_j g (cm3/mol)",
+ "features": [
+  "mean_n_carbon",
+  "absdiff_n_carbon",
+  "mean_mw",
+  "absdiff_mw",
+  "mean_n_rings",
+  "absdiff_n_rings",
+  "mean_n_arom_rings",
+  "absdiff_n_arom_rings",
+  "mean_n_ch3",
+  "absdiff_n_ch3",
+  "mean_n_quat_c",
+  "absdiff_n_quat_c",
+  "mean_v_molar",
+  "absdiff_v_molar",
+  "class_pair",
+  "T"
+ ],
+ "class_pairs": [
+  "alkene_alkyne|alkene_alkyne",
+  "alkene_alkyne|aromatic",
+  "alkene_alkyne|cycloalkane",
+  "alkene_alkyne|iso_paraffin",
+  "alkene_alkyne|n_paraffin",
+  "aromatic|aromatic",
+  "aromatic|cycloalkane",
+  "aromatic|iso_paraffin",
+  "aromatic|n_paraffin",
+  "cycloalkane|cycloalkane",
+  "cycloalkane|iso_paraffin",
+  "cycloalkane|n_paraffin",
+  "iso_paraffin|iso_paraffin",
+  "iso_paraffin|n_paraffin",
+  "n_paraffin|n_paraffin"
+ ],
+ "lgb_params": {
+  "n_estimators": 400,
+  "learning_rate": 0.05,
+  "num_leaves": 15,
+  "min_child_samples": 40,
+  "subsample": 0.8,
+  "subsample_freq": 1,
+  "colsample_bytree": 0.8,
+  "reg_lambda": 1.0,
+  "random_state": 42,
+  "deterministic": true,
+  "force_row_wise": true,
+  "n_jobs": 1,
+  "verbose": -1
+ },
+ "winsor_cm3_mol": 2.0,
+ "xmin": 0.01,
+ "seed": 42,
+ "class_pair_training_systems": {
+  "alkene_alkyne|alkene_alkyne": 1,
+  "alkene_alkyne|cycloalkane": 1,
+  "aromatic|aromatic": 4,
+  "aromatic|cycloalkane": 27,
+  "aromatic|iso_paraffin": 5,
+  "aromatic|n_paraffin": 31,
+  "cycloalkane|cycloalkane": 12,
+  "cycloalkane|iso_paraffin": 6,
+  "cycloalkane|n_paraffin": 44,
+  "iso_paraffin|n_paraffin": 8,
+  "n_paraffin|n_paraffin": 9
+ },
+ "input_sha256": {
+  "results/v4/L/density_lab_residuals.csv": "3c81a4502e50118a1a205238e0756fef7d505f9d07c90479e09e6e102b22b141",
+  "data/processed/v2/thermoml_clean_hc.csv": "a47f4e4a49696dddf6fd294e1ca48805d2b1ca7e5eb809c78de3715ffd6a71a1"
+ },
+ "cv_scores": {
+  "dev_oof_mae_ideal": 1.3335364544518757,
+  "dev_oof_mae_ml": 0.9577868304818979,
+  "locked_mae_ideal": 1.2007587499896115,
+  "locked_mae_ml": 0.8971956145695744
+ },
+ "margin_kg_m3": {
+  "ml": {
+   "locked_margin_kg_m3": 4.424828681837994,
+   "dev_oof_margin_kg_m3": 5.067073423039574,
+   "locked_coverage_by_dev_margin": [
+    38,
+    41
+   ],
+   "locked_coverage_by_locked_margin": [
+    38,
+    41
+   ]
+  },
+  "ideal": {
+   "locked_margin_kg_m3": 5.299263365613342,
+   "dev_oof_margin_kg_m3": 5.509839437491792,
+   "locked_coverage_by_dev_margin": [
+    38,
+    41
+   ],
+   "locked_coverage_by_locked_margin": [
+    38,
+    41
+   ]
+  }
+ },
+ "adoption": {
+  "ships_variant_ml_pair_excess_volume": true,
+  "promotion_offered": false
+ },
+ "training_scope": "lab binaries (ThermoML), 167 dev systems"
+}
