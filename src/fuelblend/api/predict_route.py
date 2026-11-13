@@ -408,6 +408,7 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
         fl["warnings"].append("flash_margin_excludes_mesitylene (user decision Q2)")
     _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
     _add_viscosity_ml(out, ctx, pm, T_K, composition_kind)
+    _promote_ml_viscosity(out)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
     return out
@@ -526,6 +527,35 @@ def _add_viscosity_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind:
     for r in (res, dyn):
         r["variants"]["ml_pair_residual"] = dict(base, value=float(r["value"] * math.exp(g)), ln_correction=float(g), status="ok",
                                                  in_domain=known, margin=m, warnings=list(w))
+
+
+ML_DESIGNATED_NOTE = "designated_ml_pair_residual (user decision 2026-11-13, after R-MLV-1..4 passed)"
+
+
+def _promote_ml_viscosity(out: dict) -> None:
+    """User decision 2026-11-13 ("Make it main"): where the ml_pair_residual variant is ok and in domain (known composition,
+    own grid data, 233-393 K, class pairs seen in training) it becomes the designated viscosity with its own conformal ln
+    margin (R-MLV-6).  The Refutas result is kept as variants['refutas_raw'].  Elsewhere designated stays Refutas, with a
+    warning naming why the ML value was not used."""
+    from fuelblend.api import predict_blend as pb
+    for name in ("viscosity_kin_cSt", "viscosity_dyn_mPas"):
+        r = out[name]
+        ml = r["variants"].get("ml_pair_residual")
+        if r.get("value") is None or ml is None:
+            continue
+        if not (ml.get("status") == "ok" and ml.get("in_domain") and ml.get("margin") is not None):
+            why = ml.get("reason") or "; ".join(ml.get("warnings") or []) or "not in the ML domain"
+            r["warnings"].append(f"ml_not_designated: Refutas kept ({why})")
+            continue
+        r["variants"]["refutas_raw"] = {k: r.get(k) for k in ("value", "method", "lo", "hi", "margin", "margin_unit",
+                                                              "in_domain", "interval")}
+        v, m = ml["value"], ml["margin"]
+        lo, hi = pb.interval_from_margin(v, m, "ln-ratio")
+        r.update(value=v, method="refutas+ml_pair_gn", model_name="refutas+ml_pair_gn", margin=m, margin_unit="ln-ratio",
+                 margin_source="results/v5/BASE/delta_ml_viscosity/readings.json (R-MLV-6)", lo=lo, hi=hi,
+                 interval=[lo, hi], in_domain=True, uncertified=False,
+                 tuple=(v, lo, hi, "refutas+ml_pair_gn", True))
+        r["warnings"].append(ML_DESIGNATED_NOTE)
 
 
 def _uncertified(res: dict, reason: str) -> dict:

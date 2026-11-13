@@ -165,9 +165,12 @@ def test_three_component_physics(ctx):
     comps = pr.resolve(BLEND3)
     pm = pr.map_for(comps, pr.predicates(ctx)["HAS_GRID"], ctx.reps)
     nu, rho = refutas_nu_safe(ctx.prov, pm.idx, pm.w, 313.15)
-    assert r["viscosity_kin_cSt"]["value"] == pytest.approx(nu, abs=1e-9, rel=0)
+    def _refutas(p):  # designated may be the ML value (user decision 2026-11-13); Refutas is then variants['refutas_raw']
+        d = r[p]
+        return d["variants"]["refutas_raw"]["value"] if d["method"] == "refutas+ml_pair_gn" else d["value"]
+    assert _refutas("viscosity_kin_cSt") == pytest.approx(nu, abs=1e-9, rel=0)
     assert r["density_kg_m3"]["value"] == pytest.approx(rho, abs=1e-9, rel=0)
-    assert r["viscosity_dyn_mPas"]["value"] == pytest.approx(nu * rho / 1000.0, abs=1e-9, rel=0)
+    assert _refutas("viscosity_dyn_mPas") == pytest.approx(nu * rho / 1000.0, abs=1e-9, rel=0)
     for p in PROPS4:
         d = r[p]
         assert set(d) >= {"value", "unit", "method", "status", "coverage", "lo", "hi", "margin", "in_domain",
@@ -437,7 +440,8 @@ def test_k1_only_at_fitted_T():
     a = pr.predict_fuel(BLEND3, T_K=233.15)["viscosity_kin_cSt"]
     k = a["variants"]["k1_cold_offset_in_sample"]
     assert k["label"] == "in_sample_T2" and np.isfinite(k["value"]) and k["value"] != a["value"]
-    assert abs(k["value"] - a["value"] * math.exp(k["offset_ln"])) < 1e-9
+    base = a["variants"]["refutas_raw"]["value"] if a["method"] == "refutas+ml_pair_gn" else a["value"]
+    assert abs(k["value"] - base * math.exp(k["offset_ln"])) < 1e-9   # K1 is an offset on raw Refutas
     assert "k1_cold_offset_in_sample" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
 
 
