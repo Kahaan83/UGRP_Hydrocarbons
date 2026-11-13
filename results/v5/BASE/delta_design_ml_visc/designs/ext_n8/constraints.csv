@@ -1,0 +1,15 @@
+design_id,constraint,model,lo,hi,prediction,applied_margin,status,slack,reason,spec_verification
+astm_jet_a__ext,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,781.0512224944604,4.5866,pass,0.022532653760929233,,
+astm_jet_a__ext,flash_point_C,le_chatelier_ideal,38.0,,51.52528498623775,2.206932808388615,pass,0.29785137310129306,lab_margin_set_by_one_system,
+astm_jet_a__ext,freezing_point_C,ideal_sle_mole_fraction,,-40.0,-57.87675728355157,16.975450975521966,pass,0.02253265770074009,,
+astm_jet_a__ext,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,3.2549336413106733,0.28747778594508044,pass,0.45762187163300694,designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser,
+astm_jet_a__ext,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.95841709490616,0.1940195141400025,pass,0.022532653756218702,,
+astm_jet_a__ext,aromatics_wt_pct,class_mass_fraction,,25.0,0.0,0.0,by_construction,1.0,,
+astm_jet_a__ext,smoke_point_mm,ajftd_bulk_regression,25.0,,27.564566805231873,,uncertified,0.10258267220927493,"model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified)",secondary_sources_only
+bis_jet_a1__ext,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,789.3431317467288,4.5866,pass,0.15010048841121226,,
+bis_jet_a1__ext,flash_point_C,le_chatelier_ideal,38.0,,50.85101977506855,2.206932808388615,pass,0.2801075517547352,lab_margin_set_by_one_system,
+bis_jet_a1__ext,freezing_point_C,ideal_sle_mole_fraction,,-47.0,-64.8858557834036,16.975450975521966,pass,0.019370315061311347,,
+bis_jet_a1__ext,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,3.1969519874703907,0.28747778594508044,pass,0.4672835066630999,designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser,
+bis_jet_a1__ext,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.82306899877444,0.1940195141400025,pass,0.019370315061552307,,
+bis_jet_a1__ext,aromatics_vol_pct,class_volume_fraction,,25.0,0.0,0.0,by_construction,1.0,,
+bis_jet_a1__ext,smoke_point_mm,ajftd_bulk_regression,25.0,,27.564566805231873,,uncertified,0.10258267220927493,"model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)",UNVERIFIED
