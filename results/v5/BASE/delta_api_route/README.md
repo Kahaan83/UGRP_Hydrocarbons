@@ -176,3 +176,4 @@ Left unfixed, with the reason:
 - **M4** (`_probe` annotation and partial `used` set on a `ModelUnavailable` at the probe point), **M7** (the check calls `predict_fuel`, not `predict()`, same route: wording above says so), **M8** (flash lo/hi finite when `in_domain` is False for an undeclared fuel type: v4 behaviour) are not changed.
 - The K1 variant at a temperature is built from a single group at some temperatures (no minimum n); not changed.
 Update 2026-11-13: flash margin changed to 2.21 C, see ../delta_flash_margin_q2/
+Update 2026-11-13: smoke margin 7.8 mm added, see ../delta_smoke_margin/
