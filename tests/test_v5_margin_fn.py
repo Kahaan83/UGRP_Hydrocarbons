@@ -474,3 +474,65 @@ def test_graded_objective_default_off_in_design(tmp_path):
     r2 = E.design("test:jet_stub", POOL3, _plateau_models(), n_starts=3, seed=42, margins_path=mp, configs_dir=cdir, alt_limits=True,
                   graded_objective=True)
     assert r2.optimiser["graded_objective"] is True
+
+
+def test_graded_objective_is_continuous_at_the_margin_edge(tmp_path):
+    """Review 3: no jump where the margin turns None (the old 0.01 floor); the penalty is applied inside and outside."""
+    cdir, mp = _stub_cfg(tmp_path)
+    spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+    marg = E.load_margins(mp)
+    models = _plateau_models()
+    s = E._Sides(spec, POOL3, models, marg, graded=True)
+    def at(x):
+        w = np.array([x, (1 - x) / 2, (1 - x) / 2])
+        return s.vector(w)
+    a, b = at(0.15), at(0.1500001)
+    assert np.max(np.abs(a - b)) < 1e-4                          # continuous across the edge
+    assert at(0.20).min() < at(0.16).min()                       # and the penalty keeps growing outside
+
+
+def test_smoke_penalty_fn_inner_buffer_class_mix():
+    """Review 3: the class-mix distance is measured to the box shrunk 0.005 at non-zero edges (iso-paraffin lower edge 0.007)."""
+    from fuelblend.design import library_route as LR
+    pool = ["a", "b", "c"]
+    classes = {"a": "cycloalkane", "b": "n_paraffin", "c": "iso_paraffin"}
+    pen = LR._smoke_penalty_fn(lambda p, w, T: 22.0, classes, lambda p, w, T: 12.0)
+    assert pen(pool, np.array([0.60, 0.39, 0.01]), None) > 0.0       # inside the box but inside the buffer
+    assert pen(pool, np.array([0.60, 0.378, 0.022]), None) == 0.0    # well inside
+    assert pen(pool, np.array([0.61, 0.39, 0.0]), None) > pen(pool, np.array([0.60, 0.39, 0.01]), None)   # outside > buffer zone
+
+
+def test_alt_point_view_relabels_alt_met_smoke(tmp_path):
+    """Review 3: a smoke point estimate below the primary 25 mm but meeting the alt branch (>= 18, naphthalenes <= 3) is reported as
+    alt met (design and API), not as a failed limit; a smoke below 18 stays failed."""
+    import pandas as pd
+    cdir, mp = _stub_cfg(tmp_path)
+    marg = E.load_margins(mp)
+    w = np.array([0.1, 0.45, 0.45])
+    models = _stub_models()
+    res = E.DesignResult(weights=dict(zip(POOL3, map(float, w))), predictions={}, margins={}, passed=False, extrapolating=False,
+                         binding_constraints=[], constraints=[], spec_name="test:jet_stub", pool=list(POOL3), optimiser={})
+    def fc(dp, ap):
+        return pd.DataFrame([dict(constraint="smoke_point_mm", design_pred=dp, forward_pred=ap, limit=">= 25", lo=25.0, hi=float("nan"),
+                                  design_meets=False, api_meets=False)])
+    out, keys = LR.apply_alt_point_view(fc(24.9, 24.8), res, models, marg, "test:jet_stub", configs_dir=cdir)
+    assert keys == ["smoke_point_mm"] and bool(out.loc[0, "design_meets"]) and bool(out.loc[0, "api_meets"])
+    out, keys = LR.apply_alt_point_view(fc(24.9, 17.0), res, models, marg, "test:jet_stub", configs_dir=cdir)
+    assert keys == [] and not bool(out.loc[0, "api_meets"])
+    out, keys = LR.apply_alt_point_view(fc(17.5, 24.8), res, models, marg, "test:jet_stub", configs_dir=cdir)
+    assert keys == [] and not bool(out.loc[0, "design_meets"])
+
+
+def test_graded_penalty_reaches_the_objective_when_its_own_slack_is_not_binding(tmp_path):
+    """Review 3: the smoke row's own slack (alt branch) is far from the minimum, so a penalty subtracted from that row alone never
+    changes the max-min optimum.  The penalty must lower the whole objective (optimiser only)."""
+    cdir, mp = _stub_cfg(tmp_path)
+    spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+    marg = E.load_margins(mp)
+    def models(pen):
+        m = _stub_models(margin_fn=lambda pool, w, T: 3.0)             # margin never None
+        m["props"]["smoke_point"] = dataclasses.replace(m["props"]["smoke_point"], margin_stand_in=3.0, margin_penalty_fn=pen)
+        return m
+    w_no, _, _ = E._optimise(E._Sides(spec, POOL3, models(lambda pool, w, T: 0.0), marg, graded=True), 3, 5, 42)
+    w_pen, _, _ = E._optimise(E._Sides(spec, POOL3, models(lambda pool, w, T: 20.0 * max(float(w[0]) - 0.10, 0.0)), marg, graded=True), 3, 5, 42)
+    assert w_pen[0] < w_no[0] - 0.005, (w_pen, w_no)

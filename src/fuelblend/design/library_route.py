@@ -387,13 +387,21 @@ def _class_ranges() -> dict:
     return SM.real_fuel_class_ranges()
 
 
+CLASS_MIX_BUFFER = 0.005          # graded objective: class-mix box shrunk by this mass fraction at non-zero edges (optimiser only)
+
+
 def _smoke_penalty_fn(smoke_fn, classes: dict, arom_fn):
-    """Optimiser-only distance of a recipe to the certifiable smoke region (>= 0, 0 inside): class-mix box (mass fractions outside the
+    """Optimiser-only distance of a recipe to the certifiable smoke region (>= 0, 0 well inside; continuous): class-mix box (mass fractions outside the
     GCxGC range) + aromatics vol % outside 8-23 (/ 23) + smoke prediction outside 19-25 mm (/ 25).  Never used by the judge."""
     def pen(pool, w, T_C):
         r = _class_ranges()
         fr = dict(zip(("cyclo", "nparaffin", "isoparaffin"), SM.recipe_class_fractions(pool, w, classes)))
-        d = sum(max(r[k][0] - v, 0.0) + max(v - r[k][1], 0.0) for k, v in fr.items())
+        b = CLASS_MIX_BUFFER                                         # inner buffer at every non-zero edge (round-off safety)
+        d = 0.0
+        for k, v in fr.items():
+            lo, hi = r[k]
+            lo_e = lo + b if lo > b else lo
+            d += max(lo_e - v, 0.0) + max(v - (hi - b), 0.0)
         try:
             a = float(arom_fn(pool, w, None))
             d += (max(8.0 - a, 0.0) + max(a - 23.0, 0.0)) / 23.0
@@ -851,6 +859,37 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
                        design_meets=_meets(r.design_pred, c.lo, c.hi), api_meets=_meets(r.forward_pred, c.lo, c.hi))
         out.append(row)
     return pd.DataFrame(out, columns=CHECK_COLUMNS)
+
+
+def apply_alt_point_view(fc: pd.DataFrame, result: E.DesignResult, models: dict, margins: dict, spec_name: str,
+                         configs_dir=None) -> tuple:
+    """Alt-aware point-estimate view (review 3).  ``design_forward_check`` and ``point_estimate_view`` test only the PRIMARY limit, so
+    a smoke estimate of 24.9 mm (< 25) reads as failed although the D1655 alternative (>= alt_min with every ``alt_requires``) is met.
+    For each limit row of a constraint with ``alt_min`` / ``alt_requires`` set ``design_meets`` / ``api_meets`` to True where the
+    alternative branch is met at that side's point estimate (margins ignored, like the primary view).  Returns (fc copy, keys whose
+    alternative branch is met on BOTH sides).  Labelling only: ``result.passed`` and every status are untouched."""
+    spec_c = E.load_spec(spec_name, configs_dir, alt_limits=True)["constraints"] if configs_dir is not None         else E.load_spec(spec_name, alt_limits=True)["constraints"]
+    pool = list(result.pool) or list(result.weights)
+    w = np.array([result.weights.get(n, 0.0) for n in pool], float)
+    out = fc.copy()
+    out["alt_branch_met"] = False
+    keys = []
+    for i, r in out.iterrows():
+        c = spec_c.get(r["constraint"]) or {}
+        if r["limit"] == "" or c.get("alt_min") is None or not c.get("alt_requires"):
+            continue
+        reqs = [E._alt_requirement(k, v, pool, w, models, margins, None) for k, v in c["alt_requires"].items()]
+        req_ok = all(_meets(q.prediction, q.lo, q.hi) for q in reqs)
+        d_alt = bool(req_ok and _fnum(r["design_pred"]) >= float(c["alt_min"]))
+        a_alt = bool(req_ok and _fnum(r["forward_pred"]) >= float(c["alt_min"]))
+        if d_alt:
+            out.at[i, "design_meets"] = True
+        if a_alt:
+            out.at[i, "api_meets"] = True
+        if d_alt and a_alt:
+            out.at[i, "alt_branch_met"] = True
+            keys.append(r["constraint"])
+    return out, keys
 
 
 def limits_met_by_both(fc: pd.DataFrame) -> bool:

@@ -50,7 +50,7 @@ UNCERTAINTY_YAML = CONFIGS / "uncertainty_v4.yaml"
 
 # Non-spec engineering constants (the AST test allows exactly these numeric literals; see tests/test_v4_design.py).
 EXTRAP_WT_THRESHOLD = 0.6      # wt fraction of absent-class mass above which a design is flagged extrapolating
-GRADED_FLOOR = 0.01            # minimum penalty of a recipe whose margin is None under the graded objective
+GRADED_FLOOR = 0.01            # penalty of a recipe whose margin is None for a reason the distance penalty does not explain
 BAD_SLACK = -100.0             # normalised slack assigned to a non-finite prediction inside the optimiser
 MAX_ITER = 120
 
@@ -619,6 +619,7 @@ class _Sides:
         if kb == self._k:
             return self._v
         out = []
+        gpen = 0.0                       # graded objective: total distance penalty, lowers the WHOLE max-min objective
         for key, c, pm, T_C, (m_lo, ln_lo), (m_hi, ln_hi), sc in self.items:
             pen = 0.0
             try:
@@ -628,13 +629,19 @@ class _Sides:
             if pm.margin_fn is not None and not pm.by_construction:
                 mm, ln, _d, _why = _fn_margin(pm, self.pool, w, T_C)      # recipe-dependent margin; None = infeasible
                 pen = 0.0
-                if mm is None and self.graded and pm.margin_stand_in is not None:      # graded objective (optimiser only)
-                    mm = float(pm.margin_stand_in)
+                if self.graded and pm.margin_stand_in is not None:      # graded objective (optimiser only), continuous
                     try:
                         pen = float(pm.margin_penalty_fn(self.pool, w, T_C)) if pm.margin_penalty_fn is not None else 0.0
                     except Exception:
                         pen = 0.0
-                    pen = max(pen if math.isfinite(pen) else 1.0, GRADED_FLOOR)
+                    if not math.isfinite(pen):
+                        pen = 1.0
+                    if mm is None:
+                        mm = float(pm.margin_stand_in)
+                        if pen <= 0.0:
+                            pen = GRADED_FLOOR                       # margin None with no distance to explain it
+                    gpen += pen
+                    pen = 0.0
                 m_lo = m_hi = mm
                 ln_lo = ln_hi = ln
             lo, hi = c.get("min"), c.get("max")
@@ -655,7 +662,10 @@ class _Sides:
         classes = self.models.get("classes", {})
         for v in self.extrap_sets:
             out.append((EXTRAP_WT_THRESHOLD - absent_fraction(self.pool, w, classes, v)) / EXTRAP_WT_THRESHOLD)
-        self._k, self._v = kb, np.array(out, float)
+        arr = np.array(out, float)
+        if gpen > 0.0:
+            arr = np.where(arr > BAD_SLACK, arr - gpen, arr)
+        self._k, self._v = kb, arr
         return self._v
 
 
