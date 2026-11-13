@@ -32,6 +32,7 @@ Models are injected (``models`` dict) so the engine itself holds no property phy
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 import re
 import warnings
@@ -70,6 +71,7 @@ _CANON = [
     (r"^nhoc_MJ_kg$", "nhoc"),
     (r"^aromatics_wt_pct$", "aromatics_wt"),
     (r"^aromatics_vol_pct$", "aromatics_vol"),
+    (r"^naphthalenes_vol_pct$", "naphthalenes_vol_pct"),
     (r"^smoke_point_mm$", "smoke_point"),
     (r"^dcn$", "dcn"),
     (r"^ron$", "ron"),
@@ -265,8 +267,51 @@ def forced_extrapolation(pool, classes: dict, validated) -> bool:
 
 
 def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
-                        kind: Optional[str] = None) -> ConstraintResult:
-    """Evaluate one spec constraint for blend ``w`` with the primary (or an override) property model."""
+                        kind: Optional[str] = None, use_alt: bool = False) -> ConstraintResult:
+    """Evaluate one spec constraint for blend ``w`` with the primary (or an override) property model.
+
+    ``use_alt`` (spec flag ``use_alt_limits``, default off = v4/v5 behaviour): honour ``c["alt_min"]`` / ``c["alt_requires"]``."""
+    if use_alt and c.get("alt_min") is not None and c.get("min") is not None:
+        return _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind)
+    return _evaluate_primary(key, c, pool, w, models, margins, pm_override, kind)
+
+
+def _alt_requirement(rkey: str, rval, pool, w, models: dict, margins: dict, kind) -> ConstraintResult:
+    """``naphthalenes_vol_pct_max: 3.0`` -> the constraint ``naphthalenes_vol_pct`` with ``max: 3.0`` (``_min`` likewise)."""
+    mo = re.match(r"^(.*)_(max|min)$", rkey)
+    if not mo:
+        return ConstraintResult(key=rkey, prop="?", lo=None, hi=None, model="none", prediction=float("nan"),
+                                applied_margin=None, margin_keys=(), status=STATUS_UNCERTIFIED, slack=float("nan"),
+                                reason=f"unparseable alt_requires key {rkey!r}")
+    return _evaluate_primary(mo.group(1), {mo.group(2): rval}, pool, w, models, margins, None, kind)
+
+
+def _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind) -> ConstraintResult:
+    r = _evaluate_primary(key, c, pool, w, models, margins, pm_override, kind)
+    if r.status == STATUS_PASS:
+        return dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "") + "limit used: primary")
+    c_alt = {k: v for k, v in c.items() if k not in ("alt_min", "alt_requires")}
+    c_alt["min"] = c["alt_min"]
+    ra = _evaluate_primary(key, c_alt, pool, w, models, margins, pm_override, kind)
+    if ra.status != STATUS_PASS:                          # the alternative limit itself does not pass with its margin
+        return dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "")
+                                   + f"alt_min {c['alt_min']:g} not passed (status {ra.status})")
+    reqs = [(k, _alt_requirement(k, v, pool, w, models, margins, kind)) for k, v in (c.get("alt_requires") or {}).items()]
+    if not reqs:                                          # alt_min without a requirement is not a defined D1655 alternative
+        return dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "") + "alt_min has no alt_requires: not used")
+    desc = "; ".join(f"{k}: {q.status} (pred {q.prediction:.3g})" for k, q in reqs)
+    if any(q.status == STATUS_FAIL for _, q in reqs):
+        return dataclasses.replace(r, status=STATUS_FAIL, reason=(r.reason + "; " if r.reason else "")
+                                   + f"alt_min requirement violated ({desc})")
+    if not all(q.status in OK_STATUSES for _, q in reqs):   # unknown / unavailable / uncertified requirement: never pass
+        return dataclasses.replace(r, status=STATUS_UNCERTIFIED, reason=(r.reason + "; " if r.reason else "")
+                                   + f"alt_min requirement not established ({desc}; " + "; ".join(q.reason for _, q in reqs if q.reason) + ")")
+    return dataclasses.replace(ra, lo=c.get("min"), reason=(ra.reason + "; " if ra.reason else "")
+                               + f"limit used: alt_min {c['alt_min']:g} with {desc}")
+
+
+def _evaluate_primary(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
+                      kind: Optional[str] = None) -> ConstraintResult:
     lo, hi = c.get("min"), c.get("max")
     prop, T_C = canonical_property(key)
     ver = str(c.get("verification", ""))
@@ -372,7 +417,9 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
 
 def evaluate_blend(spec: dict, pool, w, models: dict, margins: dict) -> list:
     kind = fuel_kind(spec)
-    return [evaluate_constraint(k, c, pool, w, models, margins, kind=kind) for k, c in spec["constraints"].items()]
+    use_alt = bool(spec.get("use_alt_limits", False))
+    return [evaluate_constraint(k, c, pool, w, models, margins, kind=kind, use_alt=use_alt)
+            for k, c in spec["constraints"].items()]
 
 
 # ----------------------------------------------------------------------------------------------- optimiser
