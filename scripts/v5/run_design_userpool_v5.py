@@ -216,7 +216,7 @@ def main(argv=None):
                 d_rows[-1]["diff_to_D4"] = json.dumps(diff)
     pd.DataFrame(d_rows).to_csv(out / "designs.csv", index=False)
     pd.DataFrame(c_rows).to_csv(out / "constraints.csv", index=False)
-    pd.concat(f_rows).to_csv(out / "forward_check.csv", index=False)
+    pd.concat(f_rows).to_csv(out / "forward_check.csv", index=False) if f_rows else None   # all blocked: no rows
     (out / "runtime.txt").write_text("\n".join(rt) + f"\ntotal_s={time.time() - t0:.1f}\n", encoding="utf-8")
     print("wrote", out)
 
