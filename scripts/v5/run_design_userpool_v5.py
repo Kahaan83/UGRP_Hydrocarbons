@@ -184,6 +184,13 @@ def main(argv=None):
         fc_t = time.time() - t2
         judged = fc[fc["tol"].notna()]
         fwd_pass = bool(judged["pass"].all()) and len(judged) > 0          # like-for-like tolerance rows only
+        alt_keys = []
+        if a.alt_limits:                       # alt-aware point-estimate view (labelling only, review 3)
+            fc, alt_keys = LR.apply_alt_point_view(fc, res, models, E.load_margins(MARGINS), spec_name)
+            n_alt = sum(1 for c in res.constraints if c.key in alt_keys and c.lo is not None and np.isfinite(c.prediction)
+                        and c.prediction < c.lo)
+            viol = max(viol - n_alt, 0)
+            cat = R4.category(res, viol, nopred)
         lim = fc[fc["limit"] != ""]
         both = LR.limits_met_by_both(fc)
         api_failed = lim.loc[~lim["api_meets"].astype(bool), "constraint"].tolist()
@@ -204,6 +211,8 @@ def main(argv=None):
                            api_failed_limits=json.dumps(api_failed),
                            best_min_slack=res.optimiser["best_min_slack"], n_converged=res.optimiser["n_converged"],
                            graded_objective=res.optimiser.get("graded_objective", False),
+                           smoke_alt_branch_met=json.dumps(alt_keys),
+                           smoke_label=("alt met, uncertified" if "smoke_point_mm" in alt_keys and not res.passed else ""),
                            margin_fn_consistency=json.dumps(res.optimiser.get("margin_fn_consistency", [])),
                            blocking=json.dumps(gaps), forward_check_pass=fwd_pass,
                            forward_failed=json.dumps(judged.loc[~judged["pass"].astype(bool), "constraint"].tolist()),

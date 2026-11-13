@@ -45,6 +45,10 @@ def main():
             row["blocked_only_by_secondary_sources_only"] = bool(row["blocked_only_by_secondary_sources_only"] and "class_mix_outside" not in str(row["smoke_reason"]) and row["smoke_status"] != "fail")
             row["graded_objective"] = r.get("graded_objective")
             row["best_min_slack"] = r.get("best_min_slack")
+            row["smoke_label"] = r.get("smoke_label", "")
+            sl = cc["slack"].astype(float)
+            row["min_slack_constraints"] = float(sl.min())
+            row["binding"] = ",".join(k for k, v in sl.items() if v <= sl.min() + 0.003)
             row["weights"] = r.weights
             rows.append(row)
     out = pd.DataFrame(rows)
