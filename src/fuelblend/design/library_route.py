@@ -438,6 +438,10 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
                          "informational: plain registry (no LFL overlay); the diff is the overlay effect", True))
     if kv:
         rows.append(_Row(kv + "[tol]", dp(kv), _api_value(f_vis, "viscosity_kin_cSt")[0], 1e-6))
+        mlv = ((f_vis["viscosity_kin_cSt"].get("variants") or {}).get("ml_pair_residual") or {})
+        rows.append(_Row(kv + "[ml_pair_residual]", dp(kv), _fnum(mlv.get("value")), float("nan"),
+                         "report only, does not change certification: Refutas + ML pair residual (variant); "
+                         + ("in domain" if mlv.get("in_domain") else "; ".join(mlv.get("warnings") or ["no ML value"])), True))
     if "nhoc_MJ_kg" in cons:
         # The API uses the composition-H group-additivity model; the design primary uses constant H.  Two like-for-like rows
         # use the design's composition-H model: as designed (table MW, 2 decimals) and with RDKit MW, the API's MW.
