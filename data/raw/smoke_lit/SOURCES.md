@@ -53,6 +53,12 @@ Boehm, Yang, Heyne, Energy & Fuels 2022, doi 10.1021/acs.energyfuels.1c03794 (AC
   toluene/iso-octane fuel. A/B TSI values (100, 5) are assigned anchors, qualifier `anchor_assigned`. The other Table 2 columns
   (Mensch, Olson, Hunt) are compilations of other campaigns and were not ingested (Mensch values are already in S3).
 * The Energy & Fuels SI with binary-mixture data is not staged and not ingested.
+* Re-check 2026-11-13: a second copy of the article (user download `dot_64807_DS1.pdf`, a US DOT repository copy, staged as
+  `extras/staging/lit/DOT64807_DS1.pdf`, sha256 f7cf15709a1af3f0caff2d431ba04b96df379e61b22e8f17c9537ffe66c8fef6, 14 pages) is the same
+  article (ASAP version). Its PDF metadata carries the ACS open-access stamp CC BY-NC-ND 4.0, so the licence is that, not "not stated".
+  Table 5 (text layer) and Table 2 "This work" (rendered page 5) match every row of this file; no new measured data. Tables 3-4 are model
+  coefficients; Figures 10-11 (binary mixtures with toluene / iso-octane) are plots only; Table 2 Olson and Hunt columns are secondary.
+  Nothing added.
 
 ## S7 YSI unified (file S7_ysi_unified_hc.csv, 229 rows of 447)
 Das, St. John, McEnally, Kim, Pfefferle, Combustion and Flame 2018; database "Yield Sooting Index Database Volume 2", Harvard Dataverse,

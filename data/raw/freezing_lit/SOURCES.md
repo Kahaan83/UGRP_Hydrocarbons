@@ -26,6 +26,11 @@ test: `tests/test_loaders_freezing_lit.py`. Common columns: see `.superpowers/sd
   aromatic / aromatic_di (the AJFTD parser files naphthalenes under diaromatic). Same vocabulary as `data/real_fuels/v5/ajftd_gcxgc_composition.csv`.
   `vozka_as_ajftd_composition()` emits that layout; `blend_composition(sample)` mixes the neat tables linearly (exact for a mass blend, a small
   approximation for a volume blend).
+* Re-check 2026-11-13: user download `ef8b02787_si_001.pdf` (staged as `extras/staging/lit/U7b_ef8b02787_si_001.pdf`, sha256
+  7fc348c978e32a3b2eb960181c03fd8046400d3f0690cfac62cad24186854baa, 13 pages) is this same SI. The earlier staged copy `U7_vozka2018_si.pdf` is no
+  longer on disk, so file hashes could not be compared; content was compared instead. In this copy the text layer garbles every minus sign
+  (and the hyphen in class names) as '7'. All 272 Table S2 bins match `vozka2018_gcxgc.csv` exactly (script comparison); all 25 Table S4 measured
+  freezing points and the 3 Table S3-note densities match `vozka2018_properties.csv` after sign decoding. No new data; nothing added.
 
 ## ascent065A_freezing.csv
 * F2: Bell, Boehm, Heyne, "Freezing Point of Hydrocarbon Fuels from Single Species Concentrations", Energy Fuels 39, 4221 (2025), doi 10.1021/acs.energyfuels.4c06091,
