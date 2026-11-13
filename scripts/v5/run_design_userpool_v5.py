@@ -127,6 +127,9 @@ def main(argv=None):
     ap.add_argument("--freezing-guard-K", type=float, default=0.0, choices=[0.0, 4.0])
     ap.add_argument("--out", required=True)
     ap.add_argument("--label", default="")
+    ap.add_argument("--synthetic-blend", action="store_true",
+                    help="add the D7566 aromatics minimum (8 vol %%); a pool with no aromatic member is blocked")
+    ap.add_argument("--alt-limits", action="store_true", help="honour the D1655 alternative smoke limit (use_alt_limits)")
     a = ap.parse_args(argv)
     out = Path(a.out) if Path(a.out).is_absolute() else ROOT / a.out
     out.mkdir(parents=True, exist_ok=True)
@@ -151,12 +154,21 @@ def main(argv=None):
             with tempfile.TemporaryDirectory() as tmp:
                 cdir = guard_configs(spec_name, a.freezing_guard_K, tmp)
                 opt = LR.annotate(E.design(spec_name, pool, models, n_starts=n_starts, seed=a.seed, margins_path=MARGINS,
-                                           configs_dir=cdir))
-            res = LR.evaluate_recipe(spec_name, models, opt.weights, margins_path=MARGINS)   # judged on the real spec
+                                           configs_dir=cdir,
+                                           synthetic_blend=a.synthetic_blend, alt_limits=a.alt_limits))
+            res = LR.evaluate_recipe(spec_name, models, opt.weights, margins_path=MARGINS,
+                                    synthetic_blend=a.synthetic_blend, alt_limits=a.alt_limits)   # judged on the real spec
             res.optimiser = opt.optimiser
         else:
-            res = LR.design_routed(spec_name, models, n_starts=n_starts, seed=a.seed, margins_path=MARGINS)
+            res = LR.design_routed(spec_name, models, n_starts=n_starts, seed=a.seed, margins_path=MARGINS,
+                                   synthetic_blend=a.synthetic_blend, alt_limits=a.alt_limits)
         dt = time.time() - t1
+        if res.category:                                  # blocked: no optimisation, no forward check
+            d_rows.append(dict(design_id=did, spec_name=spec_name, pool_arg=a.pool, pool_size=len(pool), pool=json.dumps(pool),
+                               n_starts=0, seed=a.seed, category=res.category, passed=False,
+                               blocking=json.dumps({"aromatics_vol_pct": res.binding_constraints[0]["reason"]})))
+            print(f"[{did}] {res.category}: {res.binding_constraints[0]['reason']}", flush=True)
+            continue
         viol, nopred = R4.point_estimate_view(res.constraints)
         cat = R4.category(res, viol, nopred)
         t2 = time.time()
