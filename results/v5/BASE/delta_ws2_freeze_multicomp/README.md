@@ -59,6 +59,17 @@ This delta asks whether multicomponent liquidus data exist to measure it per cla
 * **R-W2-4 (descriptive):** does the transferred 16.98 C margin cover every row of M (pred + 16.98 >= measured)? Reported as counts; it is
   not a validation (too few systems).
 
+## Declared addendum (2026-11-14, after the first README commit, before any script or result)
+A fifth already-ingested source was found after the README above was committed: `data/processed/v2/wax_dauphin_coutinho.csv` (Coutinho
+SoftX 2018 database, github.com/ElsevierSoftwareX/SOFTX_2018_207, Apache 2.0; listed in `docs/data_sources.csv`). It holds 4 multicomponent
+systems (Dauphin et al. 1999 BIM mixtures: n-decane solvent + n-C18...C36 waxes, 7-20 components, one wax appearance temperature each) and
+53 binary n-heptane + heavy-wax points (binaries: not in M). Decision fixed now: the 4 multicomponent systems ARE included in M, class mix
+`alkane_only`, with method label `wax_appearance` (appearance on cooling, not the equilibrium liquidus; `delta_freezing` found ideal SvL
+under-predicts these). The gate counts them like any other system; summary rows are also given without them (`excluding_wax_appearance`)
+so a reader can see how much of a count rests on C18-C36 waxes far above the jet range. Expected count changes to alkane_only about 8
+(if every Dauphin component has a verified or thermoml_measured constant; otherwise fewer). If alkane_only reaches the gate only through these
+waxy systems, the proposed margin is reported with that caveat and remains "needs user decision".
+
 ## Outputs
 `scripts/v5/base/delta_ws2_freeze_multicomp.py` -> `rows.csv` (one per scored row and model), `summary.csv`, `systems.csv`, `readings.json`.
 Tests `tests/test_ws2_freeze_multicomp.py`.
