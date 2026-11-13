@@ -31,4 +31,10 @@ Written 2026-11-13 BEFORE any result. Gates below are never moved after results 
 
 ## Results
 
-(appended later)
+### Task 1.1 ingest (R-SC-1 counts; `r_sc_1_counts.json`, table `data/real_fuels/v5/ajftd_smoke_naph.csv`)
+
+- Table has 2314 fuels (smoke, naphthalenes or aromatics). 2379 fuels have a smoke row in the raw file; 2183 have an uncensored value, 14 are censored-only, the rest are `No Test`/`Not Found`.
+- smoke + aromatics: 2092; smoke + aromatics + naphthalenes vol% (R-SC-1): 36; in domain (aromatics 8-23, smoke uncensored): 1990.
+- `source_group` counts among fuels with aromatics match the declared table exactly (JAA 672, JA 452, JFK 348, LAB_REPORT 271, NUMERIC_ID 190, OTHER 170, PAREN_BATCH 65, HR 49, CRC 2, JETSCREEN 2).
+- Plain smoke values are kept as recorded, including odd ones (e.g. fuel 156 has a row of -24 mm; >40 mm values).
+
