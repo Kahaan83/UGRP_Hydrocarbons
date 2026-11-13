@@ -233,6 +233,52 @@ def _freezing_api_fn(L: RouteLibrary):
     return fn
 
 
+VISC_ML_NAME = "refutas+ml_pair_gn"
+VISC_ML_REASON = ("designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin "
+                  "(results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser")
+
+
+def visc_ml_status(smiles, w, T_C: float) -> dict:
+    """The API's ML viscosity decision for a known recipe: ``{'in_domain', 'g', 'margin', 'reason'}``.
+
+    Same rule as ``predict_route._add_viscosity_ml`` / ``_promote_ml_viscosity`` for a known composition: members with weight > 0,
+    mole fractions from RDKit MW (``ctx.mw``), ``viscosity_pair.domain_status`` plus the 233-393 K training range; ``g`` is the ln
+    correction and ``margin`` the R-MLV-6 margin of the temperature bin.  Out of domain: ``g`` 0, ``margin`` None."""
+    from fuelblend.api import predict_route as pr
+    T_K = float(T_C) + 273.15
+    w = np.asarray(w, float)
+    keep = w > 0
+    smi = [s for s, k in zip(smiles, keep) if k]
+    out = dict(in_domain=False, g=0.0, margin=None, reason="")
+    if not smi:
+        out["reason"] = "empty recipe"
+        return out
+    try:
+        from fuelblend.ml import viscosity_pair as vp
+        ctx = pr.get_ctx()
+        x = w[keep] / np.array([ctx.mw(s) for s in smi])
+        x = x / x.sum()
+        dom = vp.domain_status(smi, T_K)
+        if dom["in_domain"] and not (pr.ML_VISC_T_RANGE_K[0] <= T_K <= pr.ML_VISC_T_RANGE_K[1]):
+            dom = dict(in_domain=False, reason=f"T outside the training range {pr.ML_VISC_T_RANGE_K[0]}-{pr.ML_VISC_T_RANGE_K[1]} K")
+        if not dom["in_domain"]:
+            out["reason"] = dom["reason"]
+            return out
+        out.update(in_domain=True, g=float(vp.ln_correction(smi, x, T_K)), margin=float(pr._ml_margin_for(T_K)))
+    except Exception as e:                                      # model files missing or feature failure: Refutas stays designated
+        out["reason"] = f"ml model unavailable ({type(e).__name__})"
+    return out
+
+
+def _visc_designated_fn(L: RouteLibrary, refutas_fn):
+    """Design viscosity = the API designated value: Refutas x exp(ML ln correction) where the ML model is in domain, else Refutas."""
+    def fn(pool, w, T_C):
+        nu = refutas_fn(pool, w, T_C)
+        st = visc_ml_status([L.smiles[n] for n in pool], w, T_C)
+        return float(nu * math.exp(st["g"])) if st["in_domain"] else nu
+    return fn
+
+
 def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "flash", "sle")) -> dict:
     """Models for ``engine_v4.design`` on a SMILES / InChIKey / name pool.  The resolved pool is ``models['pool']``."""
     L = RouteLibrary(pool_ids, pure_props)
@@ -248,6 +294,9 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     # the yaml key is attached unconditionally: a margins file without it gives the engine's "no such entry" reason (uncertified)
     props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"},
                                             margin_keys=(FREEZING_MARGIN_KEY,), margin_missing_reason="")
+    # viscosity: same value as predict_fuel (ML pair residual designated in its domain, cc5f5ef); the optimiser runs with the
+    # Refutas yaml margin of the T bin, the final recipe is re-judged with the ML margin in ``annotate`` (``_rejudge_viscosity``)
+    props["viscosity"] = dataclasses.replace(props["viscosity"], fn=_visc_designated_fn(L, props["viscosity"].fn))
     models["props"] = {k: _flag(L, p) for k, p in props.items()}
     models["alternates"] = {k: [_flag(L, p) for p in v] for k, v in alts.items()}
     models["pool"] = list(L.pool)
@@ -293,6 +342,50 @@ def _rejudge_smoke(result: E.DesignResult, margins: dict) -> None:
     result.passed = result.passed and all(c.status in E.OK_STATUSES for c in result.constraints)
 
 
+def _rejudge_viscosity(result: E.DesignResult) -> None:
+    """Viscosity certification on the API designated value (user decision "Make it main", cc5f5ef).
+
+    In the ML domain the prediction already is the ML value (``_visc_designated_fn``); here its margin becomes the R-MLV-6 ln margin of
+    the T bin (two-sided ln-ratio): slack recomputed, ``fail`` if the limit is violated after the margin, else ``pass`` unless an engine
+    reason other than the Refutas margin blocks it.  Out of the ML domain the engine's Refutas judgement is left as it is (a note says why)."""
+    names = _name_smiles()
+    pool = list(result.pool) or list(result.weights)
+    smi = [names.get(n, n) for n in pool]
+    w = np.array([result.weights.get(n, 0.0) for n in pool], float)
+    for c in result.constraints:
+        if c.prop != "viscosity" or not math.isfinite(c.prediction):
+            continue
+        _, T_C = E.canonical_property(c.key)
+        st = visc_ml_status(smi, w, T_C)
+        if not st["in_domain"]:
+            note = f"ml_not_designated: Refutas kept ({st['reason']})"
+            c.reason = (c.reason + "; " if c.reason else "") + note
+            continue
+        m = st["margin"]
+        sc = E._scale(c.lo, c.hi)
+        slacks = []
+        if c.lo is not None:
+            slacks.append((c.prediction * math.exp(-m) - c.lo) / sc)
+        if c.hi is not None:
+            slacks.append((c.hi - c.prediction * math.exp(m)) / sc)
+        nominal = not ((c.lo is not None and c.prediction < c.lo) or (c.hi is not None and c.prediction > c.hi))
+        keep = [r for r in (c.reason.split("; ") if c.reason else [])
+                if r and "raw_refutas" not in r and not r.startswith("limit violated")]
+        c.model, c.applied_margin, c.margin_keys = VISC_ML_NAME, m, ("results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6",)
+        c.slack = float(min(slacks)) if slacks else float("nan")
+        if not nominal or c.slack < 0:
+            c.status = E.STATUS_FAIL
+            keep.append("limit violated after applying the ML margin")
+        elif any(not r.startswith("margin validated on") for r in keep):
+            c.status = E.STATUS_UNCERTIFIED
+        elif c.status not in (E.STATUS_SCOPE,):
+            c.status = E.STATUS_PASS
+        c.reason = "; ".join([VISC_ML_REASON] + keep)
+        result.margins[c.key] = m
+        result.predictions[c.key] = c.prediction
+    result.passed = bool(all(c.status in E.OK_STATUSES for c in result.constraints) and not result.extrapolating)
+
+
 def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
     the lab margin is the group score of the single mesitylene system).  In-domain smoke constraints get the v5 smoke margin."""
@@ -300,6 +393,7 @@ def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
         has_margin = c.applied_margin is not None and math.isfinite(c.applied_margin)
         if c.prop == "flash" and has_margin and LAB_MARGIN_NOTE not in c.reason:
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
+    _rejudge_viscosity(result)
     _rejudge_smoke(result, E.load_margins(margins_path))
     return result
 
@@ -426,7 +520,8 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
         "aromatics_vol_pct": "design: table rho15 volume fractions; API: grid rho at 288.15 K",
     }
     if kv:
-        notes[kv] = "kinematic viscosity at the spec temperature, Refutas on the pure-property grid"
+        notes[kv] = ("kinematic viscosity at the spec temperature, API designated value on both sides: Refutas x ML pair residual in the "
+                     "ML domain, else Refutas on the pure-property grid")
     for key in cons:
         if key not in api_key:
             continue
@@ -445,10 +540,16 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
                          "informational: plain registry (no LFL overlay); the diff is the overlay effect", True))
     if kv:
         rows.append(_Row(kv + "[tol]", dp(kv), _api_value(f_vis, "viscosity_kin_cSt")[0], 1e-6))
-        mlv = ((f_vis["viscosity_kin_cSt"].get("variants") or {}).get("ml_pair_residual") or {})
-        rows.append(_Row(kv + "[ml_pair_residual]", dp(kv), _fnum(mlv.get("value")), float("nan"),
-                         "report only, does not change certification: Refutas + ML pair residual (variant); "
-                         + ("in domain" if mlv.get("in_domain") else "; ".join(mlv.get("warnings") or ["no ML value"])), True))
+        var = f_vis["viscosity_kin_cSt"].get("variants") or {}
+        rr = var.get("refutas_raw")
+        if rr is not None:                                  # ML designated: show the Refutas value it replaced
+            rows.append(_Row(kv + "[refutas_raw]", dp(kv), _fnum(rr.get("value")), float("nan"),
+                             "informational: API Refutas variant (replaced by the designated ML value in its domain)", True))
+        else:
+            mlv = var.get("ml_pair_residual") or {}
+            rows.append(_Row(kv + "[ml_pair_residual]", dp(kv), _fnum(mlv.get("value")), float("nan"),
+                             "informational: ML not designated here; "
+                             + ("; ".join(mlv.get("warnings") or []) or str(mlv.get("reason") or "no ML value")), True))
     if "nhoc_MJ_kg" in cons:
         # The API uses the composition-H group-additivity model; the design primary uses constant H.  Two like-for-like rows
         # use the design's composition-H model: as designed (table MW, 2 decimals) and with RDKit MW, the API's MW.
