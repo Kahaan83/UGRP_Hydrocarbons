@@ -87,6 +87,35 @@ def _stored_reference(d: pd.DataFrame) -> np.ndarray:
     return pred - d["smoke_point_mm"].to_numpy()
 
 
+def production_predictor_margin(d: pd.DataFrame, alpha: float = 0.10, group_col: str = "source_group") -> dict:
+    """R-SC-2c: residuals of smoke_point_from_bulk(aromatics, None) on in-domain fuels not in its 100 training fuels."""
+    from fuelblend.baselines.sooting import DATA
+    train = pd.read_csv(DATA / "smoke_point_ajftd.csv")
+    q = d["smoke_qualifier"].fillna("").astype(str)
+    ind = d[q.eq("") & d["smoke_point_mm"].notna() & d["aromatics_vol_pct"].between(AROM_LO, AROM_HI)]
+    n_match = int(ind["fuel_id"].isin(train["fuel_id"]).sum())
+    held = ind[~ind["fuel_id"].isin(train["fuel_id"])]
+    r = _stored_reference(held)
+    per_n = {str(g): int((held[group_col] == g).sum()) for g in held[group_col].unique()}
+    per_m = {g: conformal_over(r[(held[group_col] == g).to_numpy()], alpha) for g in per_n}
+    elig = [g for g, n in per_n.items() if n >= MIN_GROUP]
+    fuel_m = conformal_over(r, alpha)
+    n_el = sum(per_n[g] for g in elig)
+    passed = n_el >= MIN_FUELS and len(elig) >= MIN_GROUPS
+    margin = max([fuel_m] + [per_m[g] for g in elig]) if passed else math.inf
+    # refit-OLS (full in-domain data, aromatics only) vs stored predictor over aromatics grid
+    coef, means = fit_bulk(_value_df(ind), features=FEATS)
+    grid = np.arange(8.0, 23.0001, 0.5)
+    ols = predict_bulk(pd.DataFrame({BULK_FEATURES[0]: grid}), coef, means, features=FEATS)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        stored = np.array([smoke_point_from_bulk(float(a)) for a in grid])
+    return dict(margin=margin, fuel_level_margin=fuel_m, per_group_margin=per_m, per_group_n=per_n,
+                eligible_groups=elig, n_in_domain=int(len(ind)), n_matched_training_fuels=n_match,
+                n_scored=int(len(held)), gate_passed=bool(passed),
+                max_abs_pred_diff_refit_vs_stored_mm=float(np.max(np.abs(ols - stored))))
+
+
 def _json_default(o):
     return str(o)
 
@@ -106,6 +135,8 @@ def main() -> dict:
     leaky = dict(fuel_level_margin=conformal_over(leak, 0.10), n=int(len(leak)), per_group=pg)
     leaky["certifying"] = max([leaky["fuel_level_margin"]] + list(pg.values()))
     res = np.asarray(main_fit["oof_residuals"])
+    prod = production_predictor_margin(d)
+    final = max(main_fit["margin"], prod["margin"])
     rows = [dict(source_group=g, n_fuels=n, eligible=g in main_fit["eligible_groups"],
                  margin_mm=main_fit["per_group_margin"][g])
             for g, n in sorted(main_fit["per_group_n"].items(), key=lambda kv: -kv[1])]
@@ -115,7 +146,10 @@ def main() -> dict:
                      margin_mm=main_fit["margin"]))
     pd.DataFrame(rows).to_csv(OUT / "margin_fit.csv", index=False)
     r = real_fuel_class_ranges()
-    cert_levels = {8: 6.97, 10: 6.33, 12: 5.68, 15: 4.71, 20: 3.09}
+    # max margin that certifies = smoke_point_from_bulk(aromatics) - 18 mm (D1655 alternative limit), derived not hard-coded
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        cert_levels = {a: round(float(smoke_point_from_bulk(float(a))) - 18.0, 2) for a in (8, 10, 12, 15, 20)}
     m = main_fit["margin"]
     read = dict(
         task="1.4", reading="R-SC-2", alpha=0.10, direction="over", gate_passed=main_fit["gate_passed"],
@@ -134,6 +168,7 @@ def main() -> dict:
         margin_vs_lab_ratio=(m / LAB_MARGIN_MM) if math.isfinite(m) else None,
         certifies_at={str(a): bool(m < v) for a, v in cert_levels.items()},
         class_mix_range_mass_frac={k: list(v) for k, v in r.items()},
+        r_sc_2c=prod, certifying_margin_final=final,
         user_decision_required="R-SC-2b: yaml key not added; needs a quoted user answer")
     (OUT / "readings.json").write_text(json.dumps(read, indent=2, default=_json_default))
     print(json.dumps({k: v for k, v in read.items() if k != "per_group_n"}, indent=1, default=_json_default))
