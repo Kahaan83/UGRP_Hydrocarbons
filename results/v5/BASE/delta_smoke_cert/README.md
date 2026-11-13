@@ -44,3 +44,16 @@ Written 2026-11-13 BEFORE any result. Gates below are never moved after results 
 - `source_group` counts among fuels with aromatics match the declared table exactly (JAA 672, JA 452, JFK 348, LAB_REPORT 271, NUMERIC_ID 190, OTHER 170, PAREN_BATCH 65, HR 49, CRC 2, JETSCREEN 2).
 - Plain smoke values are kept as recorded, including odd ones (e.g. fuel 156 has a row of -24 mm; >40 mm values).
 
+
+### Task 1.4 R-SC-2 results (script `scripts/v5/base/delta_smoke_cert.py`; `margin_fit.csv`, `readings.json`)
+
+- Model: production form (`fit_bulk`, OLS) refit on the training folds with **aromatics as the only feature**, because diaromatics is absent from the AJFTD smoke table (the stored model imputes it at its training mean; a single-feature OLS is the matching fold-level model). Leave-one-`source_group`-out, residual = pred - measured, 14 censored-only fuels excluded.
+- **Gate (>= 200 in-domain fuels in >= 5 groups with >= 40 fuels): PASSED.** 1990 in-domain fuels (1989 in eligible groups), 7 eligible groups: JAA 665, JA 432, JFK 348, LAB_REPORT 269, OTHER 140, NUMERIC_ID 70, PAREN_BATCH 65. JETSCREEN has 1 in-domain fuel (margin inf, not eligible). HR (49) and CRC (2) have no in-domain fuels (aromatics outside 8-23 or absent).
+- Fuel-level margin (alpha 0.10): **2.95 mm**. Per-group: JFK 4.11, LAB_REPORT 2.77, JAA 1.79, OTHER 1.55, PAREN_BATCH 1.18, JA 0.16, NUMERIC_ID 0.07.
+- **Certifying margin = max = 4.11 mm (JFK)**, 0.53 x the 7.8 mm lab margin. Out-of-fold coverage of that margin: 0.981. OOF residual mean -0.06, median 0.03 mm.
+- Against the max margin that certifies (pred - 18): 4.11 < 6.97 (8 vol %), 6.33 (10), 5.68 (12), 4.71 (15): certifies; 4.11 > 3.09 (20 vol %): does not.
+- Sensitivity (smoke == 25.0 removed, n = 1791): certifying 3.86 mm (fuel-level 2.73, JFK 3.86). Cannot change the certifying margin by declared rule.
+- Leaky reference (stored coefficients on the same 1990 fuels, trained on 100 of them): fuel-level 2.32, certifying 3.16 mm (JFK). The leak-free margin is larger, as expected.
+- Class-mix gate (`fuelblend.design.smoke_margin_v5`), observed range over the 113 mapped GCxGC fuels, class mass fractions normalised to 1 per fuel (cycloalkane = mono+di+tri-cycloparaffin): cyclo 0.000-0.709, n-paraffin 0.000-0.508, iso-paraffin 0.007-0.995. A 75 % butylcyclohexane recipe is outside the cyclo range -> `uncertified`, reason `class_mix_outside_real_fuel_range`.
+- Gate interpretation used: the 200-fuel count is taken over fuels in groups with >= 40 fuels (the stricter reading); the total-count reading gives the same pass.
+- R-SC-2b not answered: `configs/uncertainty_v5.yaml` NOT edited; the 7.8 mm margin stays in force until a quoted user decision.
