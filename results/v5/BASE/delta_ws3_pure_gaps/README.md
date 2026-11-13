@@ -77,3 +77,60 @@ re-optimised.
 ## Outputs
 `scripts/v5/base/delta_ws3_antoine.py`, `scripts/v5/base/delta_ws3_fusion.py`; files in this folder: `antoine_knots.csv`, `antoine_loo.csv`,
 `antoine_targets.csv`, `fusion_oof.csv`, `fusion_family_summary.csv`, `gap_table.csv`, `propagation.csv`, `readings.json`.
+
+## Result (appended 2026-11-14; declared text above unchanged)
+Scripts `scripts/v5/base/delta_ws3_antoine.py`, `scripts/v5/base/delta_ws3_fusion.py`, extractor `src/fuelblend/data/thermoml_fusion.py`;
+readings in `readings_antoine.json` and `readings_fusion.json` (two files instead of the one `readings.json` named above). Tests
+`tests/test_ws3_antoine_interp.py`, `tests/test_thermoml_fusion.py` (trimmed real record 10.1016/j.fluid.2017.03.012), `tests/test_ws3_fusion_estimate.py`.
+
+### Part A: Antoine
+| reading | value | verdict |
+|---|---|---|
+| R-W3-1 knots | C8, C9, C10, C11, C21, C22. NOT knots: C12 (stored refit rms 0.087 on its own 74 measured points), C14 (0.0315), C16 (0.082), C20 (0.071), and C13/C15/C17/C18/C19 (no measured points) | descriptive |
+| R-W3-2 | pooled LOO rms 0.016 (comparator per-parameter 0.017), but the two declared 4-carbon-gap cases cannot be formed (C12, C14 are not knots); the only interior knots are C9, C10 (gap 2) and C11, C21 (gap 11) | **fail** |
+
+* Rule applied: `data/processed/v5/antoine_interpolated_nalkanes.csv` written for C13/C15/C17/C18/C19 with `gate_R_W3_2 = failed`, "not for use".
+  No registry changed.
+* Finding (not fixed): `data/processed/antoine_refit.csv` is stale against `data/unified/measurements_dedup.csv`. For C14 and C16 a fresh refit
+  on the same measured points has rms 0.009 / 0.010, so the data are fine and the stored constants are not; for C12 and C20 the measured references
+  disagree (fresh-refit rms 0.056 / 0.051). The stored C13/C15/C17/C18/C19 "refit_measured" sets (13 points each, exactly 313.15-373.15 K) have no
+  measured source in the current unified data; their provenance is not established.
+* Exploratory, post-hoc, NOT a gate (`antoine_exploratory_fresh_refit.csv`): with knots refit freshly on measured points (C8-C11, C14, C16, C21,
+  C22) the leave-one-out errors are C11 0.002 (gap 4, 7 points only), C14 0.049 (gap 5), C16 0.072 (gap 7), C21 0.049 (gap 6). Interpolation across
+  5-7 carbons misses the 0.03 target, so even fixed knots would not certify interpolated C17-C19 constants.
+* Descriptive: at 313 K the interpolated C13-C19 log10 P agree with the stored refit within 0.03, while the v2 flash registry
+  (`anchored_thermo_ambient`) is 0.03-0.12 log10 higher for C15-C19 (C19: +0.12, i.e. about 30 % higher Psat). The v2 registry constants from about
+  C19 upward are implausible (C20 A = 17.05, C = +150; C27+ A = -5), as stated in advance; not fixed.
+
+### Part B: Tm / dHfus
+* ThermoML harvest: 321 rows, 102 hydrocarbons (`data/processed/v5/thermoml_fusion_pure_hc.csv`, `_by_compound.csv`). Implementation detail
+  found on real records before any fit: ThermoML lists the surrounding atmosphere ("Air at 1 atmosphere", "Gas") as a dataset phase, and files
+  crystal-crystal transitions under "Triple point temperature" and "Molar enthalpy of transition"; the phase rule therefore ignores the ambient
+  phase and requires exactly one Crystal + Liquid for all three properties. Against the 29 verified compounds it also covers, Tm agrees within
+  2.1 K (median |dT| 0.2 K); dHfus differs by more than 2.5 kJ/mol for n-C14 (+2.9), n-C16 (-3.3), n-C12 (-2.5), C36 (+3.2), 2,3-DMN (+4.6),
+  1,8-DMN (+2.8) (verified values take precedence).
+* Training set: 109 hydrocarbons with measured Tm (38 verified, 71 thermoml_measured); 94 with dHfus. Families: aromatic_poly 48, n_alkane 27,
+  benzene_mono 10, cycloalkane_poly 7, cycloalkane_mono 5, iso_alkane 5, cycloalkene 3, aromatic_naphthenic 2, acyclic_unsaturated 2.
+
+| reading | value | verdict |
+|---|---|---|
+| R-W3-3 leave-one-family-out OOF MAE(Tm), C8-C20 (n = 70) | 47.7 K (RMSE 60.4); Joback 40.7 K | **fail** (threshold 5 K; failure expected and stated in advance) |
+| R-W3-4 OOF dHfus, C8-C20 (n = 60) | MAE 8.5 kJ/mol (42 %), RMSE 12.5; Joback 6.3 kJ/mol | descriptive (the model is worse than Joback) |
+| R-W3-5 random 5-fold by compound, C8-C20 | MAE 47.7 K (n-alkanes alone 10.2 K) | descriptive: even without family transfer the data are too few and too aromatic-heavy |
+| R-W3-6 gap table (55 compounds) | Tm: 15 verified, 10 thermoml_measured, 30 need an estimate; dHfus: 15 verified, 6 thermoml_measured, 34 need an estimate | descriptive |
+| R-W3-7 propagation (pool A / pool B final recipes) | 0.0 C: no final recipe contains an estimated component (toluene and hexylbenzene end at 0 %); tiered SvL -40.83 C (Jet A) / -47.96 C (Jet A-1) | descriptive |
+
+* Rule applied: `data/processed/v5/fusion_ml_estimated.csv` written for the 35 gap compounds missing a measured Tm and/or dHfus (30 Tm and
+  34 dHfus estimates; where Tm is measured only dHfus is estimated, e.g. toluene 6.83 kJ/mol on the measured 178.1 K) (`source = ml_estimated`,
+  `oof_rmse_Tm_K = 60.4`, `oof_rmse_dHfus_kJ_mol = 12.5`, `gate_R_W3_3 = failed`, "not for use in any margin"). Nothing reads it. The estimates are
+  poor (e.g. n-nonane 194.8 K against about 219.7 K in the literature).
+* Pool members: all v5pool / ext members and isooctane have verified Tm and dHfus. Toluene (pool A) has a ThermoML-measured Tm but no dHfus;
+  hexylbenzene (pool B) has neither in these tiers. Observation (not changed): the pool A designs record freezing as uncertified because of
+  "toluene.Tm=coutinho_table" although the final recipes contain 0 % toluene; the blocker comes from pool membership, not from the recipe.
+
+### Needs user decision / follow-ups
+* Whether to refresh `antoine_refit.csv` from `measurements_dedup.csv` (C14, C16 fit their measured data to 0.01 log10 when refit). Not done here.
+* Whether to curate primary-source Tm/dHfus (WebBook calorimetry, the `tm_dhfus_verified.csv` method) for toluene, hexylbenzene, n-octane, n-nonane,
+  n-hexane, p-xylene and the gap-table representatives instead of estimating them: the gated estimator cannot fill them (47.7 K error).
+* Acree-Chickos compendia were not ingested (large PDF tables); they remain the main open source of dHfus for alkylbenzenes, alkylcyclohexanes and
+  branched alkanes.
