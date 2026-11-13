@@ -407,7 +407,7 @@ def test_recipe_margins_viscosity_label_is_ml_when_in_domain():
     assert rows[True].applied_margin == pytest.approx(rows[False].applied_margin, rel=1e-12)
 
 
-def _rejudge_stub(tmp_path, monkeypatch, engine_reason):
+def _rejudge_stub(tmp_path, monkeypatch, engine_reason, engine_status=None):
     """Smoke row of a recipe that misses the 25 mm limit, meets the verified 18 mm alternative with the 3 mm lab margin, with an engine reason."""
     cdir, _ = _stub_cfg(tmp_path, verification="verified")
     monkeypatch.setattr(E, "CONFIGS", cdir)
@@ -420,6 +420,8 @@ def _rejudge_stub(tmp_path, monkeypatch, engine_reason):
     cons = E.evaluate_blend(spec, POOL3, w, models, marg)
     sm = {c.key: c for c in cons}["smoke_point_mm"]
     sm.reason = (sm.reason + "; " if sm.reason else "") + engine_reason
+    if engine_status is not None:
+        sm.status = engine_status
     res = E.DesignResult(weights=dict(zip(POOL3, map(float, w))), predictions={}, margins={}, passed=False, extrapolating=False,
                          binding_constraints=[], constraints=cons, spec_name="test:jet_stub", pool=list(POOL3), optimiser={})
     LR._rejudge_smoke(res, marg, models, alt_limits=True)
@@ -536,3 +538,22 @@ def test_graded_penalty_reaches_the_objective_when_its_own_slack_is_not_binding(
     w_no, _, _ = E._optimise(E._Sides(spec, POOL3, models(lambda pool, w, T: 0.0), marg, graded=True), 3, 5, 42)
     w_pen, _, _ = E._optimise(E._Sides(spec, POOL3, models(lambda pool, w, T: 20.0 * max(float(w[0]) - 0.10, 0.0)), marg, graded=True), 3, 5, 42)
     assert w_pen[0] < w_no[0] - 0.005, (w_pen, w_no)
+
+
+def test_rejudge_smoke_alt_met_scope_or_unknown_reason_never_passes(tmp_path, monkeypatch):
+    """Review 4 (fail-closed): a STATUS_SCOPE row, or ANY reason not on the benign list, must not be upgraded to PASS."""
+    scope = "margin validated on ['jet'] fuels only; this is a diesel spec, so the pass is not a certification"
+    for status, why in ((E.STATUS_SCOPE, scope), (None, scope), (None, "some future engine blocker text")):
+        r = _rejudge_stub(tmp_path, monkeypatch, why, engine_status=status)
+        assert r.status == E.STATUS_UNCERTIFIED and r.status not in E.OK_STATUSES, (status, why, r.reason)
+    assert _rejudge_stub(tmp_path, monkeypatch, "").status == E.STATUS_PASS            # the clean case still passes
+
+
+def test_point_estimate_view_alt_does_not_mask_unrelated_violation():
+    """Review 4: an alt-met smoke row is not a violation, but an unrelated violation still counts (nothing is subtracted/clamped)."""
+    import types
+    mk = lambda key, p, lo=None, hi=None: types.SimpleNamespace(key=key, prediction=p, lo=lo, hi=hi)   # noqa: E731
+    cons = [mk("smoke_point_mm", 24.9, lo=25.0), mk("density_15C_kg_m3", 760.0, lo=775.0, hi=840.0), mk("flash_point_C", 50.0, lo=38.0)]
+    assert LR.point_estimate_view_alt(cons, ["smoke_point_mm"]) == (1, 0)          # only density violates
+    assert LR.point_estimate_view_alt(cons[:1] + cons[2:], ["smoke_point_mm"]) == (0, 0)
+    assert LR.point_estimate_view_alt(cons, []) == (2, 0)
