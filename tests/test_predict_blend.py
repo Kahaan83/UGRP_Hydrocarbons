@@ -172,6 +172,8 @@ def test_interval_from_v4_yaml(monkeypatch):
     pb = _pb()
     comp = [(DEC_SMILES, 0.5), (DOD_SMILES, 0.5)]
     monkeypatch.setattr(pb, "_margins_cache", _fake_margins(flash_lab=4.0, flash_d93=0.0, visc=0.3, dens="inf"))
+    import fuelblend.api.predict_route as _pr    # flash margin is read from configs/uncertainty_v5.yaml (Q2); fake it too
+    monkeypatch.setattr(_pr, "_flash_margins_cache", _fake_margins(flash_lab=4.0, flash_d93=0.0, visc=0.3, dens="inf"))
     r = _predict(comp, T_K=293.15, fuel_type="jet", composition_kind="reconstructed")   # 20 C: inside the viscosity window
 
     f = r["flash_point_C"]

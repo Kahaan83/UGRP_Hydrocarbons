@@ -591,3 +591,18 @@ def test_predict_returns_viscosity_kin():
     from fuelblend.api import predict_blend as pb
     r = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], T_K=233.15)
     assert r["viscosity_kin_cSt"]["value"] > 0 and "k1_cold_offset_in_sample" in r["viscosity_kin_cSt"]["variants"]
+
+
+def test_flash_margin_q2_user_decision():
+    """R-Q2-1: in-domain known-composition flash margin is the Q2 value (35 systems, mesitylene excluded), lo = value - margin."""
+    f = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")["flash_point_C"]
+    assert f["margin"] == 2.206932808388615
+    assert f["lo"] == pytest.approx(f["value"] - 2.206932808388615, abs=1e-12)
+    assert f["hi"] == pytest.approx(f["value"] + 2.206932808388615, abs=1e-12)
+    assert f["in_domain"] is True
+    assert "lab_margin_set_by_one_system" in f["warnings"]
+    assert "flash_margin_excludes_mesitylene (user decision Q2)" in f["warnings"]
+    import yaml
+    y = yaml.safe_load((pr.ROOT / "configs/uncertainty_v5.yaml").read_text(encoding="utf-8"))["margins"]
+    assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin"] == 2.206932808388615
+    assert y["flash_point_C.lab_mixtures.ideal"]["applied_margin_v4"] == 3.698768343688585
