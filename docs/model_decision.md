@@ -87,7 +87,7 @@ The empirical data across blend complexity buckets $N \in [1, 40+]$ (`results/v2
 | Density | Ideal volume mixing | `density_kg_m3.crc647_ideal_volume.all_T` | jet fuels only; -0.2..69.5 C |
 | Flash point | Le Chatelier (ideal) + Antoine + LFL | max of `flash_point_C.lab_mixtures.ideal` and `flash_point_C.real_fuels_D93_reconstructed.ideal` (never the 0-floored D93 alone) | jet fuels only; `lo` is the safe bound |
 
-Uncertified (no valid margin; value None, interval NaN, `in_domain=False`): freezing, smoke point, RON/MON, DCN, DVPE (data units unconfirmed), pour point.
+Uncertified (no valid margin; value None, interval NaN, `in_domain=False`): freezing (update 2026-11-13: margin 16.98 C now for known compositions with verified constants, see v5 ML components), smoke point (update: 7.8 mm in the regression domain only), RON/MON, DCN, DVPE (data units unconfirmed), pour point.
 No learned mixture-residual correction ships (v5 D3b): `use_mixture_residual=True` only adds a warning. `fuel_type='jet'` is trusted from the caller.
 
 ---
@@ -116,4 +116,5 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 - ML density (`src/fuelblend/ml/density_pair.py`, delta_ml_density): V = V_ideal + sum_{i<j} x_i x_j g_ij (LightGBM excess-volume pair term). R-MLD-1 dev 1.334 -> 0.958 kg/m3 (167 systems), R-MLD-2 locked 1.201 -> 0.897 (41 systems, gain interval [0.020, 0.561]); R-MLD-3 ternaries FAILED (3.644 -> 3.922). Exposed as variant `ml_pair_excess_volume` only; designated stays ideal volume. Margin 4.42 kg/m3 (locked, alpha 0.10) only for known binaries in domain; 3+ components and real fuels get the value without a margin.
 - ML cetane number (delta_ml_dcn): not built; only 31 hydrocarbon mixture systems have pure DCN for every component (declared floor ~40). Scored negative feasibility.
 - ML YSI (delta_ml_ysi) FAILED its gates (R-MLY-1, R-MLY-1x): no YSI variant is exposed; it is a scored negative.
-- The design optimiser and its certification still use the Refutas viscosity margins (engine_v4 path, not changed); the design forward check carries one report-only ML viscosity row.
+- Design side (update 2026-11-13, delta_design_ml_visc, commit 3ee904c): the design viscosity is the API designated value (ML in its domain, else Refutas); after the optimiser, an in-domain viscosity constraint is re-judged with the R-MLV-6 ML margin of its T bin (the optimiser itself runs with the Refutas yaml margin; engine_v4 unchanged). The forward check's `[tol]` row compares the two designated values; `[refutas_raw]` is informational.
+- Freezing (update 2026-11-13, delta_freeze_margin): designated SvL on verified Tm/dHfus constants (else Coutinho, flagged); margin 16.98 C (`freezing_point_C.lab_liquidus.svl_verified`, direction under, 9 systems of binary/simple liquidus data, C8-C16) applied only for known compositions whose every component has a verified constant. The margin was measured on binaries; in multi-component designs (e.g. butylcyclohexane-rich recipes) a freezing `pass` is a margin transferred from binaries, not validated for that class mix.

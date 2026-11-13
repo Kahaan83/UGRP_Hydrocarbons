@@ -2506,7 +2506,7 @@ margins:
     - 9 systems is the minimum for alpha = 0.10; the margin is the largest group score (worst system).
     - Binaries only (2 components); 5 of the 9 systems were unscorable with the old Coutinho constants and were added after seeing that scoring.
     - A liquidus is not an ASTM D5972 freezing point; transfer to multi-component jet fuels is not demonstrated.
-    - Real jet fuels (Vozka) are over-predicted by the same constants (safe side), so the margin is conservative there.
+    - Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed real fuels.
     source: results/v5/BASE/delta_freeze_margin/summary.csv row S_F,svl_verified margin_alpha10
 v5_note: 'Derived from configs/uncertainty_v4.yaml: the two COLD lab raw_refutas viscosity entries (T_lt_263K, T_263_283K) are REPLACED by entries
   recomputed on the v4 lab table + Boehm 2022; the warm T_ge_283K raw_refutas entry is kept verbatim from v4 (same conformal rule); extra keys

@@ -495,7 +495,8 @@ def _ml_visc_margins() -> dict:
 
 def _ml_margin_for(T_K: float) -> float:
     m = _ml_visc_margins()
-    return m["T_lt_263K"] if T_K < 263.0 else (m["T_263_283K"] if T_K < 283.0 else m["T_ge_283K"])
+    # same bins as the R-MLV-6 scoring (eval_lab_known_composition_v5.t_bin, engine_v4.viscosity_t_bin): 263.15 and 283.15 K go to the warmer bin
+    return m["T_lt_263K"] if T_K < 263.15 else (m["T_263_283K"] if T_K < 283.15 else m["T_ge_283K"])
 
 
 def _add_viscosity_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind: str) -> None:
