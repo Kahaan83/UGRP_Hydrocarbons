@@ -1,0 +1,150 @@
+   "macro": {
+    "n_systems": 18,
+    "mae_a": 0.09845981870747639,
+    "mae_b": 0.04193834853231183,
+    "gain": 0.05652147017516454,
+    "lo": 0.04005336801453568,
+    "hi": 0.07372557375321043
+   }
+  },
+  "all_pairs_in_training": {
+   "rows": 216,
+   "systems": 5,
+   "mae_refutas": 0.08339179019128744,
+   "mae_ml": 0.04095231560824363,
+   "mae_const": 0.061098629354734195,
+   "mae_classpair": 0.05943643039203829
+  },
+  "some_pair_unseen": {
+   "rows": 448,
+   "systems": 13,
+   "mae_refutas": 0.08443320119461117,
+   "mae_ml": 0.03930341215194622,
+   "mae_const": 0.0565310762055666,
+   "mae_classpair": 0.05311625863821377
+  },
+  "dev_oof": {
+   "rows": 478,
+   "systems": 14,
+   "mae_refutas": 0.08395391814009422,
+   "mae_ml": 0.04018837623165469,
+   "mae_const": 0.05584700929528867,
+   "mae_classpair": 0.052711264735265224
+  },
+  "locked": {
+   "rows": 186,
+   "systems": 4,
+   "mae_refutas": 0.08445552658891858,
+   "mae_ml": 0.03894400525119134,
+   "mae_const": 0.06359330987940023,
+   "mae_classpair": 0.061496603715823994
+  },
+  "pass": true
+ },
+ "R-MLV-4": {
+  "n_systems": 26,
+  "mae_a": 0.09941851757151454,
+  "mae_b": 0.06121222494886548,
+  "gain": 0.038206292622649046,
+  "lo": 0.02253709347696912,
+  "hi": 0.05474724765515379,
+  "under_pred_rate_refutas": 0.6306620209059234,
+  "under_pred_rate_ml": 0.5714285714285714,
+  "rows": 287,
+  "systems_dev": 22,
+  "systems_locked": 4,
+  "sources": [
+   "boehm2022",
+   "thermoml"
+  ],
+  "pass": true,
+  "T_lt_263K": {
+   "n_systems": 23,
+   "mae_a": 0.10973250253090842,
+   "mae_b": 0.06361846877693848,
+   "gain": 0.046114033753969955,
+   "lo": 0.023032399116705782,
+   "hi": 0.06877969239138161
+  },
+  "T_263_283K": {
+   "n_systems": 20,
+   "mae_a": 0.0785473943851426,
+   "mae_b": 0.052551105645843546,
+   "gain": 0.025996288739299052,
+   "lo": 0.00896159301662439,
+   "hi": 0.04565671071742755
+  }
+ },
+ "R-MLV-6": {
+  "ml": {
+   "T_lt_263K": {
+    "margin": 0.28747778594508044,
+    "n_dev_systems": 20,
+    "k": 19
+   },
+   "T_263_283K": {
+    "margin": 0.6084381907110359,
+    "n_dev_systems": 16,
+    "k": 16
+   },
+   "T_ge_283K": {
+    "margin": 0.13426357484240542,
+    "n_dev_systems": 264,
+    "k": 239
+   }
+  },
+  "refutas": {
+   "T_lt_263K": {
+    "margin": 0.4153576080066075,
+    "n_dev_systems": 20,
+    "k": 19
+   },
+   "T_263_283K": {
+    "margin": 0.6084381907110359,
+    "n_dev_systems": 16,
+    "k": 16
+   },
+   "T_ge_283K": {
+    "margin": 0.18490773481188544,
+    "n_dev_systems": 264,
+    "k": 239
+   }
+  },
+  "ml_ge283_le_0.186": true,
+  "locked_coverage": {
+   "ml": {
+    "T_lt_263K": {
+     "locked_systems": 3,
+     "covered": 3
+    },
+    "T_263_283K": {
+     "locked_systems": 4,
+     "covered": 4
+    },
+    "T_ge_283K": {
+     "locked_systems": 70,
+     "covered": 64
+    }
+   },
+   "refutas": {
+    "T_lt_263K": {
+     "locked_systems": 3,
+     "covered": 3
+    },
+    "T_263_283K": {
+     "locked_systems": 4,
+     "covered": 4
+    },
+    "T_ge_283K": {
+     "locked_systems": 70,
+     "covered": 66
+    }
+   }
+  }
+ },
+ "adoption": {
+  "ships_variant_ml_pair_residual": true,
+  "cold_gate_passed": true,
+  "promotion_offered": true
+ }
+}
