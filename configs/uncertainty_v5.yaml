@@ -1,6 +1,6 @@
 # GENERATED - do not edit. Produced by scripts/v5/base/build_uncertainty_v5_q2.py from results/v5/S1/uncertainty_v5.yaml.
 # Changes vs S1: flash_point_C.lab_mixtures.ideal.applied_margin (3.698768343688585 -> 2.206932808388615); new entries smoke_point_mm.lab_mixtures.bulk_regression (7.8009965628100595) and freezing_point_C.lab_liquidus.svl_verified. Read applied_margin only.
-version: 5.0-S1+Q2+SM+FM
+version: 5.0-S1+Q2+SM+FM+SC
 generated_by: scripts/v5/base/build_uncertainty_v5_q2.py
 alpha: 0.1
 residual_convention: predicted - measured; one-sided margins use the unsafe side named in 'direction'
@@ -2506,8 +2506,30 @@ margins:
     - 9 systems is the minimum for alpha = 0.10; the margin is the largest group score (worst system).
     - Binaries only (2 components); 5 of the 9 systems were unscorable with the old Coutinho constants and were added after seeing that scoring.
     - A liquidus is not an ASTM D5972 freezing point; transfer to multi-component jet fuels is not demonstrated.
-    - Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed real fuels.
+    - Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed
+      real fuels.
     source: results/v5/BASE/delta_freeze_margin/summary.csv row S_F,svl_verified margin_alpha10
+  smoke_point_mm.ajftd_v5_in_domain.bulk_regression:
+    value: 4.107069860688682
+    unit: mm
+    direction: over
+    alpha: 0.1
+    n_groups: 7
+    group_unit: source_group
+    n_rows: 1990
+    residual_file: results/v5/BASE/delta_smoke_cert/margin_fit.csv
+    applied_margin: 4.107069860688682
+    model: smoke_point_from_bulk (aromatics only), margin = max(fuel-level, largest eligible per-group margin, production-predictor margin R-SC-2c)
+    scope: real AJFTD jet fuels, aromatics 8-23 vol %, uncensored smoke; applies only to recipes whose class mix lies inside the AJFTD GCxGC range
+      (src/fuelblend/design/smoke_margin_v5.py); otherwise smoke stays uncertified.
+    residual_convention: predicted - measured
+    caveats:
+    - 'Smoke spec limit is secondary_sources_only: this margin does not make any design certified by itself.'
+    - Refit model is single-feature OLS; stored predictor differs by up to 1.87 mm (R-SC-2c); the larger margin is used.
+    user_decision: 2026-11-13 'Yes, replace (Recommended)' to 'Should 4.11 mm REPLACE your earlier 7.8 mm lab-mixture margin for in-domain jet
+      recipes inside the real-fuel class-mix range?'; 'Yes, add it (Recommended)' to 'May WS1 add the key smoke_point_mm.ajftd_v5_in_domain.bulk_regression
+      = 4.11 to configs/uncertainty_v5.yaml?'
+    source: results/v5/BASE/delta_smoke_cert/readings.json certifying_margin_final
 v5_note: 'Derived from configs/uncertainty_v4.yaml: the two COLD lab raw_refutas viscosity entries (T_lt_263K, T_263_283K) are REPLACED by entries
   recomputed on the v4 lab table + Boehm 2022; the warm T_ge_283K raw_refutas entry is kept verbatim from v4 (same conformal rule); extra keys
   .arrhenius/.walther_extrap/.*_biascorr are comparators. All other entries are copied unchanged.'

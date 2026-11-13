@@ -17,7 +17,21 @@ from fuelblend.design import engine_v4 as E  # noqa: E402
 from fuelblend.design import library_route as LR  # noqa: E402
 from fuelblend.design import smoke_margin_v5 as SM  # noqa: E402
 
-MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
+REAL_MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
+V5_SMOKE_KEY = "smoke_point_mm.ajftd_v5_in_domain.bulk_regression"
+
+
+def _margins_without_v5_smoke_key():
+    """Pre-change margins file: the live yaml minus the real-fuel smoke key, so these tests keep exercising the lab-key (7.8 mm) path."""
+    import tempfile
+    doc = yaml.safe_load(REAL_MARGINS.read_text(encoding="utf-8"))
+    doc["margins"].pop(V5_SMOKE_KEY, None)
+    f = Path(tempfile.mkdtemp()) / "uncertainty_no_v5_smoke.yaml"
+    f.write_text(yaml.safe_dump(doc, sort_keys=False), encoding="utf-8")
+    return f
+
+
+MARGINS = _margins_without_v5_smoke_key()
 DESIGNS = ROOT / "results" / "v5" / "BASE" / "delta_design_ml_visc" / "designs"
 FOLDERS = ["ext_n30", "ext_n8", "guard4_v5pool", "v5pool"]
 BASELINE = ROOT / "tests" / "data" / "margin_fn_baseline.json"
