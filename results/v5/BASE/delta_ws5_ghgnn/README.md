@@ -1,4 +1,4 @@
-# delta_ws5_ghgnn: does GH-GNN activity-coefficient non-ideality improve Le Chatelier flash? (a test, not a fix)
+﻿# delta_ws5_ghgnn: does GH-GNN activity-coefficient non-ideality improve Le Chatelier flash? (a test, not a fix)
 
 Plan: `docs/superpowers/plans/2026-11-14-v5-ws5-ghgnn.md`. Roadmap source: WS5 of `docs/superpowers/plans/2026-11-13-v5-certification-and-ml-roadmap.md` (not in this worktree; read from the main checkout).
 
@@ -49,4 +49,48 @@ Designating GH-GNN (or any gamma model) in the live flash route is a user decisi
 
 ## Results
 
-(appended below after the run)
+### R-1 gate (declared, applied unchanged): NOT MET
+
+| set | rows / clusters | MAE ideal | MAE GH-GNN-Wilson | dMAE [95 % CI] | over > 5 C ideal -> GH | pass |
+|---|---|---|---|---|---|---|
+| S-LAB | 126 / 31 | 3.692 | 4.393 | +0.701 [+0.145, +1.333] | 0.8 % -> 0.8 % | no |
+| S-CRC | 45 / 45 | 4.094 | 4.298 | +0.204 [-0.302, +0.721] | 4.4 % -> 2.2 % | no (CI includes 0) |
+| S-T2 | 70 / 70 | 2.576 | 3.665 | +1.089 [+0.849, +1.314] | 5.7 % -> 5.7 % | no |
+
+Two of three gated sets are significantly WORSE. The unsafe-side rate did not rise anywhere, but it did not fall on the lab or T2 sets either. Locked CRC (12 fuels, descriptive, read once): dMAE -0.106 [-1.016, +0.809], over > 5 C 8.3 % -> 8.3 %; no unsafe rise. Bias moves further to the safe side everywhere: S-LAB -3.25 -> -4.20 C, S-CRC -0.73 -> -2.52, S-T2 -0.69 -> -2.18. The stated expectation (a loss is likely) was right: gamma > 1 for most pairs lowers the predicted flash point on top of an ideal model that already under-predicts.
+
+### R-2 splits (descriptive; full numbers in `summary.csv`)
+
+* S-T2 by source: D56 dMAE +1.40 [1.05, 1.68]; D93/IP170 +0.68 [0.33, 1.02]; other +1.54 [1.03, 1.91]. S-CRC is all D93 (same as above).
+* S-LAB binaries Wilson +0.70 [0.12, 1.33]; Margules +1.08 [0.32, 1.92] (R-5: Margules is worse than Wilson). Ternaries: 1 system, 3 rows, +0.86.
+* S-LI (6 systems, margin reading only) +0.30 [0.02, 0.71]. S-LAB + S-LI (36 systems) +0.62 [0.16, 1.12].
+* Wilson inversion failures (declared rule L = 1): 0 pairs in every set (about 66 000 pairs). Solved flash temperatures: lab -5 to 151 C, CRC 40-60 C, T2 16-67 C.
+
+### R-3 applicability domain
+
+* 4970 ordered hydrocarbon pairs examined (about 58 unique molecules); 95.2 % in domain; 1867 are interpolation pairs (solute and solvent both seen in training). All 240 out-of-domain pairs fail the class-pair count (< 25 training systems), none fail Tanimoto (> 0.35 always).
+* Mixture-level in-domain pair weight: lab and Li 1.00 (every mixture fully in domain); CRC 647 median 0.69 (minimum 0.54, 0 of 45 fully in domain); T2 median 0.75 (3 of 70 fully in domain). The real-fuel reconstructions lean on the heavy-hydrocarbon class pairs, which GH-GNN's training set barely covers.
+* Training temperature range (Brouwer hydrocarbon rows, 2372 rows, 805 pairs): 0-180 C, 5th-95th percentile 20-139 C; the flash temperatures solved (-5 to 151 C) sit in range except a few lab points below 0 C.
+* AD-gated variant (out-of-domain pairs set to L = 1): S-CRC +0.059 [-0.146, +0.270], S-T2 +0.670 [0.48, 0.85], S-LAB unchanged (all in domain). AD gating reduces the loss but does not turn it into a gain; it also is not the gated variant.
+
+### R-4 mesitylene and the lab margin
+
+* Ideal route reproduces the yaml numbers: 3.70 C with the mesitylene system (36 systems), 2.21 C without it (set by another system); the mesitylene-Antoine-fixed ideal also gives 2.21 C. So the caller's 2.21 C is the no-mesitylene figure.
+* GH-GNN-Wilson one-sided lab margin is 0.70 C with or without mesitylene (difference 0.0, within the 0.5 C flag); on the 31 old systems 0.26 C. **This is not evidence that GH-GNN fixes the mesitylene system.** The margin falls only because every prediction moves 1 C lower (bias -3.31 -> -4.20 C), so the over-prediction tail the margin is the quantile of shrinks. MAE got worse. With the corrected mesitylene Antoine, the mesitylene system itself goes from -4.74 (ideal) to -7.34 C (Wilson): GH-GNN pushes it further into under-prediction. A smaller margin bought by uniformly lowering predictions is a conservatism trade, not a model gain, and the gate (R-1) already failed.
+* No margin is written to any yaml. Any use of the 0.70 C figure is a user decision.
+
+### R-5 Margules
+
+Binaries of S-LAB: Margules MAE 4.77 vs Wilson 4.39 vs ideal 3.69; over > 5 C identical (0.8 %). Margules is worse than Wilson and is not recommended.
+
+### Not run
+
+SVL freezing with GH-GNN was not run (time was spent on the flash gate); nothing is claimed about it. UNIFAC-Dortmund fallback not needed (GH-GNN ran and reproduces the repo's stored predictions to 2.4e-4 ln units).
+
+### Reproduce
+
+`python scripts/v5/ws5/ws5_flash.py --stage all` then `python scripts/v5/ws5/ws5_report.py` (GH-GNN clone and weights under `data/raw/ghgnn_code/`, see its `SOURCES.md`; MIT licence).
+
+### Needs user decision
+
+Designating GH-GNN: not recommended, gate failed. Writing any margin: none written.
