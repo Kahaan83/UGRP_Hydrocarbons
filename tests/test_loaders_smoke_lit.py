@@ -20,10 +20,10 @@ def _one(d, sample, prop, **kw):
 
 def test_row_counts():
     d = load_smoke_lit()
-    assert d.groupby("property").size().to_dict() == {"smoke_point_mm": 166, "tsi": 128, "ysi": 229}
+    assert d.groupby("property").size().to_dict() == {"smoke_point_mm": 189, "tsi": 151, "ysi": 229}
     assert d.groupby("source_id").size().to_dict() == {"S3_mensch2009": 228, "S4_rainville2025": 37,
                                                       "S5_botero_preprint153": 13, "S6_boehm2022": 16,
-                                                      "S7_ysi_unified": 229}
+                                                      "S7_ysi_unified": 229, "S8_yang2006": 46}
 
 
 def test_spot_values_against_pdf():
@@ -101,3 +101,17 @@ def test_ids_and_flags():
         iks = sorted(inchi.MolToInchiKey(Chem.MolFromSmiles(s)) for s in sur[sur.fuel_code == code].component_smiles)
         sid = hashlib.md5("|".join(iks).encode()).hexdigest()[:12]
         assert d[d.sample_id == code].system_id.iloc[0] == sid, code
+
+
+def test_yang2006():
+    from fuelblend.data.loaders_smoke_lit import load_yang_fuel_class
+    d = load_smoke_lit()
+    y = d[d.source_id == "S8_yang2006"]
+    assert len(y) == 46 and y.kind.eq("real_fuel").all() and y[y.property == "tsi"].qualifier.eq("model_calculated").all()
+    assert _one(y, "Yang2006_EI-004", "smoke_point_mm").value == 24.3          # Table 1, PDF p10
+    assert _one(y, "Yang2006_EI-033", "tsi").value == 82
+    assert _one(y, "Yang2006_JP-8+100", "smoke_point_mm").value == 24.4
+    assert _one(y, "PandeHardy1995_ERBS2", "smoke_point_mm").value == 14       # Table 3, PDF p12
+    c = load_yang_fuel_class().set_index("sample_id")
+    assert len(c) == 23 and c.loc["Yang2006_EI-031", "DA_pct"] == 43.54 and c.loc["Yang2006_EI-001", "H_wt_pct"] == 11.18
+    assert c.loc["PandeHardy1995_HC29", "MA_pct"] == 27.29 and pd.isna(c.loc["PandeHardy1995_HC29", "norm_flame_radiation"])

@@ -55,3 +55,17 @@ test: `tests/test_loaders_freezing_lit.py`. Common columns: see `.superpowers/sd
   separate row (not ingested).
 * Class composition: only aromatics vol % (mono/di). n-alkane contents appear in figures only (skipped); no GCxGC tables, so these seven are bulk-property
   validation rows with `is_hc` set True by assumption (petroleum or HEFA / pyrolysis streams; no molecule list).
+
+## oakley2017_liquidus.csv (6 rows)
+* Oakley, Hughes, Graham, Marsh, May, J. Chem. Thermodynamics 108 (2017) 59-70, doi 10.1016/j.jct.2016.12.030 (Elsevier; licence not stated, numbers only).
+  Staged as `extras/staging/determination_of_melting_temperatures_in_hydrocarbon_mixtures_Oakley_et_al_2017.pdf` (12 pages, sha256 9072a666cb1777c8bf6ba30e834f90d92a6bf406eb43b50927849d971d0ec3a7). Not previously in the repo.
+* Table 2 (PDF p4): gravimetric mole fractions; Table 4 (PDF p11): liquidus temperatures (K) by extrapolated end-set; Table 3 (PDF p5): pure hexane
+  melting point 177.39 K (water and mercury rows are not hydrocarbons, not ingested). Values stored in C (K - 273.15, 2 decimals), K and uncertainty in the note.
+  Property `freezing_point_C` with method "DSC liquidus"; the equilibrium liquidus is the SLE temperature, which sits at or slightly above a measured D5972
+  freezing point (supercooling and the instrument method differ): use `qualifier` `liquidus` to separate these from fuel freezing points.
+* Systems: heptane + hexadecane (x_C7 0.6473; end-set 279.17 K, plus a step-method replicate on a fresh sample 279.24 K, sample_id Mix1b, qualifier `replicate`),
+  hexane + hexadecane (x_C6 0.6727 and 0.9037), hexane + p-xylene + hexadecane (0.7036 / 0.2004 / 0.0960; C16 fraction derived as 1 - x1 - x2).
+* Not ingested: peak-temperature liquidus (277.74 K for Mixture 1, the paper shows it is inconsistent), PRA model values, and plot-only data (Figs 5-12).
+  Literature points compared in Fig 11 (Kniaz, Dernini, Hoerr) are not tabulated in this paper.
+* Caveat: hydrocarbon-only, short-chain solvents with C16 solute at high temperature (260-279 K); no jet-range multicomponent data. Useful as an SLE check on
+  the freezing model for C16-rich binaries/ternary, not for the fuel freezing margin directly.
