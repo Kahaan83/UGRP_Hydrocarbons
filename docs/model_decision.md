@@ -117,3 +117,4 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 - ML cetane number (delta_ml_dcn): not built; only 31 hydrocarbon mixture systems have pure DCN for every component (declared floor ~40). Scored negative feasibility.
 - ML YSI (delta_ml_ysi) FAILED its gates (R-MLY-1, R-MLY-1x): no YSI variant is exposed; it is a scored negative.
 - The design optimiser and its certification still use the Refutas viscosity margins (engine_v4 path, not changed); the design forward check carries one report-only ML viscosity row.
+- GH-GNN activity coefficients in the flash (delta_ws5_ghgnn, 2026-11-14): ln gamma_inf from GH-GNN, inverted to per-pair Wilson parameters, used as modified Raoult in the Le Chatelier solver. Gate NOT met (dMAE +0.70 lab, +0.20 CRC, +1.09 T2 C; CIs above 0 on lab and T2). Not exposed, not designated; live flash route unchanged. User decision needed only if it is to be revisited. SVL freezing with GH-GNN not run.
