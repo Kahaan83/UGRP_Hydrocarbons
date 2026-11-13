@@ -25,6 +25,12 @@ Written 2026-11-13 BEFORE any result. Gates below are never moved after results 
 - `naphthalenes` (class total, vol% only) is not merged with `naphthalene` (single compound); mass% rows are not converted. Unit is kept in the output.
 - Sensitivity only (cannot change the certifying margin): the margin is also reported with fuels at smoke == 25.0 exactly removed, because 25 may be a reporting cap.
 
+## Declared before Task 1.4 results (added 2026-11-13, no fit run yet)
+
+- `smoke_point_from_bulk` docstring says it was trained on 100 AJFTD jet fuels, so scoring those fuels with its stored coefficients would leak. Declared: the certifying margin uses the same model form refit on the training folds only (leave-one-`source_group`-out), predicting each held-out fuel from aromatics only (diaromatics unknown, as in the design call), residual = pred - measured. The stored-coefficient residuals are reported as a leaky reference only.
+- Per-group margin: groups with >= 40 in-domain fuels; fuel-level margin = conformal (1-alpha) quantile, alpha = 0.10, of out-of-fold residuals over all in-domain fuels, `ceil((n+1)(1-alpha))/n` rule.
+- Class-mix gate (Review Focus 6): real-fuel margin applies only if the recipe's cycloalkane and n-/iso-alkane mass fractions lie inside the [min, max] range of the AJFTD GCxGC fuels (113 mapped); else smoke is `uncertified`, reason `class_mix_outside_real_fuel_range`. Range taken as observed min/max over those fuels, fixed before any design is scored.
+
 ## User decisions (quoted verbatim)
 
 (none yet)
