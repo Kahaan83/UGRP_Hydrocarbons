@@ -39,7 +39,7 @@ def add_freezing(doc):
         "caveats": ["9 systems is the minimum for alpha = 0.10; the margin is the largest group score (worst system).",
                     "Binaries only (2 components); 5 of the 9 systems were unscorable with the old Coutinho constants and were added after seeing that scoring.",
                     "A liquidus is not an ASTM D5972 freezing point; transfer to multi-component jet fuels is not demonstrated.",
-                    "Real jet fuels (Vozka) are over-predicted by the same constants (safe side), so the margin is conservative there."],
+                    "Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed real fuels."],
         "source": "results/v5/BASE/delta_freeze_margin/summary.csv row S_F,svl_verified margin_alpha10"}
 
 
