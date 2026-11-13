@@ -1,6 +1,6 @@
 # GENERATED - do not edit. Produced by scripts/v5/base/build_uncertainty_v5_q2.py from results/v5/S1/uncertainty_v5.yaml.
-# Only flash_point_C.lab_mixtures.ideal.applied_margin differs (3.698768343688585 -> 2.206932808388615). Read applied_margin only.
-version: 5.0-S1+Q2
+# Changes vs S1: flash_point_C.lab_mixtures.ideal.applied_margin (3.698768343688585 -> 2.206932808388615); new entry smoke_point_mm.lab_mixtures.bulk_regression (7.8009965628100595). Read applied_margin only.
+version: 5.0-S1+Q2+SM
 generated_by: scripts/v5/base/build_uncertainty_v5_q2.py
 alpha: 0.1
 residual_convention: predicted - measured; one-sided margins use the unsafe side named in 'direction'
@@ -2467,6 +2467,26 @@ margins:
         - eq
         - T_263_283K
     residual_derivation: residual = ln(pred) - ln(measured) of walther_biascorr, column resid, dev systems in t_bin T_263_283K; group = system_id
+  smoke_point_mm.lab_mixtures.bulk_regression:
+    value: 7.8009965628100595
+    unit: mm
+    direction: over
+    alpha: 0.1
+    n_groups: 12
+    group_unit: system_id
+    n_rows: 56
+    residual_file: results/v5/BASE/delta_newdata_freeze_smoke/rows_smoke.csv
+    applied_margin: 7.8009965628100595
+    model: AJFTD bulk regression of smoke point on aromatics vol % (smoke_point_from_bulk), designated route
+    scope: 'smoke_mixtures: literature binaries and surrogates (12 systems, 56 scored points); not real jet fuels. Valid only inside the regression
+      domain (aromatics 8-23 vol %, result 19-25 mm); outside it the API and the designs stay uncertified.'
+    residual_convention: predicted - measured
+    caveats:
+    - Bound from binaries and surrogates; 37 of 56 scored points are outside the regression's 8-23 vol % aromatics domain.
+    - The margin (7.8 mm) is wider than the 19-25 mm trusted range of the regression.
+    - User chose it after seeing the numbers; probably certifies nothing (designs predict about 27.6 mm vs limit 25).
+    user_decision: 2026-11-13 'Yes, add it' to 'Add the 7.8 mm smoke margin to uncertainty_v5.yaml?'
+    source: results/v5/BASE/delta_newdata_freeze_smoke/summary.csv row smoke_mixtures,bulk_designated margin_alpha10
 v5_note: 'Derived from configs/uncertainty_v4.yaml: the two COLD lab raw_refutas viscosity entries (T_lt_263K, T_263_283K) are REPLACED by entries
   recomputed on the v4 lab table + Boehm 2022; the warm T_ge_283K raw_refutas entry is kept verbatim from v4 (same conformal rule); extra keys
   .arrhenius/.walther_extrap/.*_biascorr are comparators. All other entries are copied unchanged.'

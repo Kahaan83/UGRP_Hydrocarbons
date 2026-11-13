@@ -241,6 +241,9 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     mole = next(p for p in alts["freezing"] if p.name == "ideal_sle_mole_fraction")
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
     props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"})
+    # smoke: the v5 lab-mixture margin (7.8 mm, user decision 2026-11-13).  The engine still emits the OutOfDomainWarning reason
+    # (aromatics outside 8-23 vol % or result outside 19-25 mm), which keeps the constraint uncertified out of domain.
+    props["smoke_point"] = dataclasses.replace(props["smoke_point"], margin_keys=(SMOKE_MARGIN_KEY,))
     models["props"] = {k: _flag(L, p) for k, p in props.items()}
     models["alternates"] = {k: [_flag(L, p) for p in v] for k, v in alts.items()}
     models["pool"] = list(L.pool)
@@ -249,6 +252,7 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
 
 
 LAB_MARGIN_NOTE = "lab_margin_set_by_one_system"
+SMOKE_MARGIN_KEY = "smoke_point_mm.lab_mixtures.bulk_regression"
 
 
 def default_n_starts(pool) -> int:
