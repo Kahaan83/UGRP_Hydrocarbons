@@ -1,0 +1,8 @@
+dataset,sample,measured,qualifiers,status,censored
+kittel2023,Jet A-1,-55.4,,not_scorable_no_composition,False
+kittel2023,Jet HC,-80.0,<,not_scorable_no_composition,True
+kittel2023,FCC HN,-80.0,<,not_scorable_no_composition,True
+kittel2023,HEFA Cam,-57.2,,not_scorable_no_composition,False
+kittel2023,HEFA 215,-49.1,,not_scorable_no_composition,False
+kittel2023,PyrTIR,-80.0,,not_scorable_no_composition,False
+kittel2023,PyrPO,-50.1,,not_scorable_no_composition,False

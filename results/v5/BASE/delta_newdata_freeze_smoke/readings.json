@@ -1,0 +1,121 @@
+{
+  "R-NF-1": {
+    "scope": "thermoml_jet_cold",
+    "pass_point_estimate": true,
+    "svl_mae_C": 6.42180436921466,
+    "const_mae_C": 10.159084385536,
+    "svl_bias_C": -4.827174536770187,
+    "macro_svl": 9.892222374443394,
+    "macro_const": 13.429010193435596,
+    "n_rows": 37,
+    "n_systems": 4,
+    "n_unscored": 37,
+    "bootstrap95_const_minus_svl": [
+      -3.449722257922245,
+      9.437964106168366
+    ],
+    "interval_excludes_zero": false
+  },
+  "R-NF-2": {
+    "thermoml_jet_cold": {
+      "model": "svl_designated",
+      "direction": "under",
+      "n_systems": 4,
+      "margin_C": Infinity,
+      "finite": false,
+      "n_rows": 37
+    },
+    "thermoml_all": {
+      "model": "svl_designated",
+      "direction": "under",
+      "n_systems": 45,
+      "margin_C": 76.18008053241252,
+      "finite": true,
+      "n_rows": 629
+    },
+    "ascent_mixtures": {
+      "model": "svl_designated",
+      "direction": "under",
+      "n_systems": 6,
+      "margin_C": Infinity,
+      "finite": false,
+      "n_rows": 7
+    },
+    "vozka": {
+      "model": "svl_designated",
+      "direction": "under",
+      "n_systems": 3,
+      "margin_C": Infinity,
+      "finite": false,
+      "n_rows": 22
+    },
+    "pass": false
+  },
+  "R-NF-3": {
+    "post_hoc_bootstrap95_const_minus_model": {
+      "bulk": [
+        2.2582528655783043,
+        4.16159279279943
+      ],
+      "ysi": [
+        -1.772992687264147,
+        3.1495610571647252
+      ]
+    },
+    "scope": "smoke_mixtures",
+    "bulk": {
+      "pass_point_estimate": true,
+      "mae_mm": 4.491093807248284,
+      "const_mae_mm": 7.802213222657776,
+      "bias_mm": -2.377282225475708,
+      "n_rows": 56,
+      "n_systems": 12,
+      "n_unscored": 12,
+      "n_in_domain": 19.0,
+      "n_out_domain": 37.0,
+      "mae_in_domain": 5.612859952861741,
+      "mae_out_domain": 3.915051732473808
+    },
+    "ysi": {
+      "pass_point_estimate": true,
+      "mae_mm": 7.559025529306074,
+      "const_mae_mm": 7.829316377303556,
+      "bias_mm": -7.559025529306074,
+      "n_rows": 55,
+      "n_systems": 12,
+      "gate_coverage": 0.9821428571428571
+    }
+  },
+  "R-NF-4": {
+    "scope": "smoke_mixtures",
+    "direction": "over",
+    "bulk": {
+      "n_systems": 12,
+      "margin_mm": 7.8009965628100595,
+      "finite": true,
+      "measured_span_mm": [
+        6.1,
+        39.0
+      ]
+    },
+    "ysi": {
+      "n_systems": 12,
+      "margin_mm": -0.3205518511557166,
+      "finite": true,
+      "measured_span_mm": [
+        6.1,
+        39.0
+      ]
+    }
+  },
+  "counts": {
+    "freezing_rows": 877,
+    "thermoml_liquidus_rows": 838,
+    "ascent_points": 17,
+    "vozka_rows": 22,
+    "kittel_freezing_not_scorable": 7,
+    "kittel_freezing_censored": 2,
+    "smoke_points": 106,
+    "smoke_mixtures_points": 68
+  }
+}
