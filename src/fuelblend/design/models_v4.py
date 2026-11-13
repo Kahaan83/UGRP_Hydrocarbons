@@ -48,6 +48,7 @@ VISC_HP = ROOT / "results" / "v4" / "V" / "selected_hyperparameters_v4.csv"
 GCV_V2 = ROOT / "data" / "processed" / "v2" / "gcv_v2_MJ_kg.csv"
 R_GAS = 8.314462618
 FEATS = [f"frac_{c}" for c in CLASSES] + ["nC_mean", "nC_std"]
+_NAPHTHALENE_CORE = Chem.MolFromSmarts("c1ccc2ccccc2c1")
 CRC_CLASSES = set(CLASSES)          # classes present in the CRC 647 reconstructed compositions (validation data)
 
 
@@ -283,6 +284,17 @@ def make_fns(L: Library) -> dict:
         v = _vol_frac(L, pool, w)
         return float(100.0 * sum(vi for vi, n in zip(v, pool) if L.cls(n) == "aromatic"))
 
+    def naph_vol(pool, w, T_C):
+        """Vol % of naphthalene-type components (naphthalene core, i.e. two fused benzene rings; D1840 'naphthalenes').
+
+        Tetralin, indane, biphenyl and decalin are NOT naphthalene-type.  A component whose class is unknown or whose SMILES
+        does not parse makes the quantity unknown (ModelUnavailable): it must never read as 0."""
+        for n in pool:
+            if L.cls(n) == "unknown" or Chem.MolFromSmiles(L.smiles[n]) is None:
+                raise ModelUnavailable(f"naphthalenes: no class/ring data for {n}")
+        v = _vol_frac(L, pool, w)
+        return float(100.0 * sum(vi for vi, n in zip(v, pool) if Chem.MolFromSmiles(L.smiles[n]).HasSubstructMatch(_NAPHTHALENE_CORE)))
+
     def ethanol_vol(pool, w, T_C):
         v = _vol_frac(L, pool, w)
         return float(100.0 * sum(vi for vi, n in zip(v, pool) if n == "ethanol"))
@@ -312,7 +324,7 @@ def make_fns(L: Library) -> dict:
     return dict(density=density, flash_ideal=flash_ideal, flash_unifac=flash_unifac, visc_raw=visc_raw,
                 visc_recal=visc_recal, visc_ridge=visc_ridge, visc_ridge_unguarded=visc_ridge_unguarded, freezing_ideal=freezing_ideal,
                 freezing_coutinho=freezing_coutinho, freezing_ideal_mole=freezing_ideal_mole,
-                nhoc_const_h=nhoc_const_h, nhoc_comp_h=nhoc_comp_h, arom_wt=arom_wt, arom_vol=arom_vol,
+                nhoc_const_h=nhoc_const_h, nhoc_comp_h=nhoc_comp_h, arom_wt=arom_wt, arom_vol=arom_vol, naph_vol=naph_vol,
                 ethanol_vol=ethanol_vol, smoke_bulk=smoke_bulk, smoke_ysi=smoke_ysi, ron=_lin_vol("RON"),
                 mon=_lin_vol("MON"), dcn=_lin_vol("DCN"), dvpe=dvpe)
 
@@ -354,6 +366,7 @@ def build_models(L: Library | None = None) -> dict:
                   ["heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"], validated_classes=CRC_CLASSES),
         "aromatics_wt": P("class_mass_fraction", f["arom_wt"], by_construction=True),
         "aromatics_vol": P("class_volume_fraction", f["arom_vol"], by_construction=True),
+        "naphthalenes_vol_pct": P("naphthalene_core_volume_fraction", f["naph_vol"], by_construction=True),
         "ethanol_vol": P("ethanol_volume_fraction", f["ethanol_vol"], by_construction=True),
         "smoke_point": P("ajftd_bulk_regression", f["smoke_bulk"], ["smoke_point_mm.ajftd100_bulk.selected_in_fold"],
                          validated_classes=CRC_CLASSES),
