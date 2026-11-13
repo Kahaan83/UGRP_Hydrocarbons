@@ -539,12 +539,35 @@ def _optimise(sides: _Sides, n: int, n_starts: int, seed: int) -> tuple:
     return best_w, best_score, n_ok
 
 
+BLOCKED_AROMATICS = "blocked_aromatics_min_infeasible"
+BLOCKED_AROMATICS_REASON = "blocked: aromatics_min infeasible for pool"
+
+
+def blocked_result(spec_name: str, pool: list, models: dict, seed: int = 42, synthetic_blend: bool = False) -> Optional[DesignResult]:
+    """With ``synthetic_blend`` (aromatics minimum) and no aromatic member in ``pool`` the minimum cannot be met:
+    return a blocked ``DesignResult`` (category ``blocked_aromatics_min_infeasible``, no optimisation); otherwise None.
+    Called at the top of ``design`` and ``library_route.evaluate_recipe`` so no caller can skip it."""
+    if not synthetic_blend or any(models.get("classes", {}).get(n) == "aromatic" for n in pool):
+        return None
+    return DesignResult(weights={n: float("nan") for n in pool}, predictions={}, margins={}, passed=False,
+                        extrapolating=False,
+                        binding_constraints=[dict(constraint="aromatics_vol_pct", status=STATUS_FAIL,
+                                                  reason=BLOCKED_AROMATICS_REASON, slack=float("nan"))],
+                        constraints=[], spec_name=spec_name, pool=list(pool),
+                        optimiser=dict(best_min_slack=float("nan"), n_starts=0, n_converged=0, seed=int(seed),
+                                       excluded_from_optimiser={}),
+                        category=BLOCKED_AROMATICS)
+
+
 def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: int = 42,
            margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None,
            synthetic_blend: bool = False, alt_limits: bool = False) -> DesignResult:
     """Search the simplex of ``pool`` for the blend with the largest worst-case normalised slack, then report the
     honest status of every constraint (see module docstring).  ``synthetic_blend`` adds the aromatics minimum
     (spec entries with ``applies_to: synthetic_blend``); ``alt_limits`` sets ``use_alt_limits`` on the spec copy."""
+    blocked = blocked_result(spec_name, pool, models, seed, synthetic_blend)
+    if blocked is not None:
+        return blocked
     spec = load_spec(spec_name, configs_dir, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
     margins = load_margins(margins_path)
     pool = list(pool)

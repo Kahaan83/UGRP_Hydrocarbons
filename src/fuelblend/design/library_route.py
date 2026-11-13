@@ -398,8 +398,7 @@ def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
     return result
 
 
-BLOCKED_AROMATICS = "blocked_aromatics_min_infeasible"
-BLOCKED_AROMATICS_REASON = "blocked: aromatics_min infeasible for pool"
+BLOCKED_AROMATICS, BLOCKED_AROMATICS_REASON, blocked_result = E.BLOCKED_AROMATICS, E.BLOCKED_AROMATICS_REASON, E.blocked_result
 
 
 def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None, synthetic_blend: bool = False,
@@ -408,15 +407,9 @@ def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None, 
     and the result is category ``blocked_aromatics_min_infeasible`` (no optimisation run).  ``alt_limits``: honour the
     D1655 alternative smoke limit (spec flag ``use_alt_limits``; the caller's spec is not mutated, it is re-read)."""
     pool = models["pool"]
-    if synthetic_blend and not any(models.get("classes", {}).get(n) == "aromatic" for n in pool):
-        return E.DesignResult(weights={n: float("nan") for n in pool}, predictions={}, margins={}, passed=False,
-                              extrapolating=False,
-                              binding_constraints=[dict(constraint="aromatics_vol_pct", status=E.STATUS_FAIL,
-                                                        reason=BLOCKED_AROMATICS_REASON, slack=float("nan"))],
-                              constraints=[], spec_name=spec_name, pool=list(pool),
-                              optimiser=dict(best_min_slack=float("nan"), n_starts=0, n_converged=0, seed=int(seed),
-                                             excluded_from_optimiser={}),
-                              category=BLOCKED_AROMATICS)
+    blocked = E.blocked_result(spec_name, pool, models, seed, synthetic_blend)
+    if blocked is not None:
+        return blocked
     return annotate(E.design(spec_name, pool, models, n_starts=n_starts or default_n_starts(pool), seed=seed,
                              margins_path=margins_path, synthetic_blend=synthetic_blend, alt_limits=alt_limits),
                     margins_path)
@@ -447,6 +440,9 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
                     alt_limits: bool = False) -> E.DesignResult:
     """A ``DesignResult`` for a given recipe (no optimisation), scored by the engine with ``models``."""
     pool = list(models["pool"]) if "pool" in models else list(weights)
+    blocked = E.blocked_result(spec_name, pool, models, synthetic_blend=synthetic_blend)
+    if blocked is not None:
+        return blocked
     w = np.array([weights.get(n, 0.0) for n in pool], float)
     w = w / w.sum()
     spec = E.load_spec(spec_name, synthetic_blend=synthetic_blend, alt_limits=alt_limits)

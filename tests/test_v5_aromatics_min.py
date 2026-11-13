@@ -12,6 +12,7 @@ from fuelblend.design import engine_v4 as E, library_route as LR
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "tests" / "data" / "smoke_alt_baseline.json"
 MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
+BASE_COMMIT = "b037496"      # last commit before the aromatics_min block was added to the specs
 
 
 def _aro_warnings(a):
@@ -46,11 +47,11 @@ def test_synthetic_blend_adds_constraint_only_when_set():
 
 def test_bis_spec_unchanged_when_flag_off():
     import subprocess
-    old = subprocess.run(["git", "show", "HEAD:configs/specs_bis.yaml"], capture_output=True, text=True, cwd=ROOT).stdout
+    old = subprocess.run(["git", "show", f"{BASE_COMMIT}:configs/specs_bis.yaml"], capture_output=True, text=True, cwd=ROOT).stdout
     import yaml
     for fam, d in yaml.safe_load(old)["families"].items():
         assert E.load_spec(f"bis:{fam}")["constraints"] == d["constraints"], fam
-    old_a = yaml.safe_load(subprocess.run(["git", "show", "HEAD:configs/specs_astm.yaml"], capture_output=True, text=True, cwd=ROOT).stdout)
+    old_a = yaml.safe_load(subprocess.run(["git", "show", f"{BASE_COMMIT}:configs/specs_astm.yaml"], capture_output=True, text=True, cwd=ROOT).stdout)
     for fam, d in old_a["families"].items():
         assert E.load_spec(f"astm:{fam}")["constraints"] == d["constraints"], fam
 
@@ -90,3 +91,27 @@ def test_flag_off_identical():
             for f in ("pred", "slack", "margin"):
                 x, y = a[f], b[f]
                 assert (x is None and y is None) or (str(x) == "nan" and str(y) == "nan") or x == y, (did, k, f)
+
+
+def test_blocked_on_every_call_path_no_optimiser(monkeypatch):
+    """The guard-band path (E.design directly, then LR.evaluate_recipe) must also be blocked, without running the optimiser."""
+    models = LR.build_route_models(["n-decane", "n-undecane", "n-dodecane"])
+    called = []
+    monkeypatch.setattr(E, "_optimise", lambda *a, **k: called.append(1))
+    opt = E.design("astm:jet_a", models["pool"], models, n_starts=2, margins_path=MARGINS, synthetic_blend=True)
+    assert opt.category == "blocked_aromatics_min_infeasible" and not called
+    res = LR.evaluate_recipe("astm:jet_a", models, opt.weights, margins_path=MARGINS, synthetic_blend=True)
+    assert res.category == "blocked_aromatics_min_infeasible"
+    # CLI guard-band route
+    import importlib.util
+    s = importlib.util.spec_from_file_location("ru", ROOT / "scripts/v5/run_design_userpool_v5.py")
+    ru = importlib.util.module_from_spec(s); s.loader.exec_module(ru)
+    out = ROOT / "results" / "_tmp_t13_blocked"
+    try:
+        ru.main(["--spec", "astm:jet_a", "--pool", "n-decane,n-undecane,n-dodecane", "--synthetic-blend",
+                 "--freezing-guard-K", "4", "--out", str(out)])
+        import pandas as pd
+        d = pd.read_csv(out / "designs.csv")
+        assert list(d.category) == ["blocked_aromatics_min_infeasible"] and not called
+    finally:
+        import shutil; shutil.rmtree(out, ignore_errors=True)
