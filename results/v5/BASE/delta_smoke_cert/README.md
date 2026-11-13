@@ -81,3 +81,59 @@ Residuals of `smoke_point_from_bulk(aromatics, None)` (the predictor the design 
 - **Status rule under the alt flag.** Overall status = better of (primary, alternative branch); the alternative branch = worse of (alternative limit, requirements). A recipe that meets the alternative limit with its margin on a spec whose `verification` is `secondary_sources_only` is `uncertified` on every path, never `fail`. `fail` remains for a violated limit (with margin) on both branches.
 - **v5 pool class-mix rejection.** The real-fuel smoke margin (4.107 mm, user decision R-SC-2b 'Yes, replace (Recommended)') applies only to recipes inside the GCxGC class-mix range (cyclo 0-0.709, n-paraffin 0-0.508, iso-paraffin 0.007-0.995). The v5 pool has no iso-alkane, so every v5-pool recipe has iso-paraffin fraction 0 and is outside the range: its smoke margin is None, reason `class_mix_outside_real_fuel_range`, status `uncertified`. That is a property of the pool, not of the optimiser; a pool with an iso-alkane (for example isooctane) can reach the in-range case.
 - A requirement that is not `by_construction` and has no margin is no longer treated as margin 0 in `_Sides` (the alternative branch is infeasible); naphthalenes is `by_construction`, so margin 0 is legitimate there and in the rejudge.
+
+### R-SC-3 run protocol (declared before results; written 2026-11-13 before any Task 1.6 run)
+
+Common arguments for every run: `--synthetic-blend --alt-limits --recipe-margins`, seed 42 (default), `--spec astm:jet_a,bis:jet_a1`, default n_starts (30 unless stated), margins `configs/uncertainty_v5.yaml` (contains the user-decided real-fuel smoke key 4.107 mm). Python `.venv/Scripts/python.exe`, `PYTHONPATH=src`. Output root `results/v5/BASE/delta_smoke_cert/designs/<name>/`.
+
+The 4 existing pools (same arguments as `delta_design_ml_visc`, plus the three flags):
+
+```
+python scripts/v5/run_design_userpool_v5.py --pool v5pool --synthetic-blend --alt-limits --recipe-margins --out results/v5/BASE/delta_smoke_cert/designs/v5pool
+python scripts/v5/run_design_userpool_v5.py --pool v5pool --freezing-guard-K 4 --synthetic-blend --alt-limits --recipe-margins --out results/v5/BASE/delta_smoke_cert/designs/guard4_v5pool
+python scripts/v5/run_design_userpool_v5.py --pool ext --n-starts 30 --synthetic-blend --alt-limits --recipe-margins --out results/v5/BASE/delta_smoke_cert/designs/ext_n30
+python scripts/v5/run_design_userpool_v5.py --pool ext --n-starts 8 --synthetic-blend --alt-limits --recipe-margins --out results/v5/BASE/delta_smoke_cert/designs/ext_n8
+```
+
+The 2 new pools (v5pool members: n-decane, n-undecane, n-dodecane, butylcyclohexane, decalin_trans, 1,2,4-trimethylbenzene):
+
+```
+python scripts/v5/run_design_userpool_v5.py --pool "n-decane,n-undecane,n-dodecane,butylcyclohexane,decalin_trans,1,2,4-trimethylbenzene,toluene,isooctane" ...  --out .../designs/poolA_toluene_isooctane
+python scripts/v5/run_design_userpool_v5.py --pool "<v5pool members>,hexylbenzene,isooctane" ...  --out .../designs/poolB_hexylbenzene_isooctane
+```
+(`1,2,4-trimethylbenzene` contains commas, so the pool is passed as a `.txt` file, one id per line, written to `designs/poolA_ids.txt` / `designs/poolB_ids.txt`; the run uses `--pool results/v5/BASE/delta_smoke_cert/designs/poolA_ids.txt`.)
+
+Pool choices, fixed before running (from `data/processed/v5/pure_props_v5.csv` constant statuses and `library_route.build_route_models`):
+* **Correction to the expectation given in the task brief.** The existing v5pool is NOT aromatic-free: it already contains 1,2,4-trimethylbenzene (class `aromatic`), so `blocked_aromatics_min_infeasible` will NOT fire for the 4 old pools. They will be optimised. Their expected outcome is instead smoke `uncertified`, reason `class_mix_outside_real_fuel_range` (no iso-alkane, so iso-paraffin fraction 0 < 0.007). This is stated before any run.
+* **Pool A = v5pool + toluene + isooctane.** 1,2,4-trimethylbenzene is already in v5pool, so the new aromatic blendstock is toluene (rho15, Tm, dHfus, flash all `verified`). Isooctane (2,2,4-trimethylpentane) is added because the class-mix gate needs an iso-alkane fraction >= 0.007 (the minimum over the 113 GCxGC fuels) and v5pool has none; isooctane has `verified` rho15, Tm, dHfus, MW (flash is supplied by the registry as `verified` for the 2,2,4-trimethylpentane entry). Isododecane is NOT used (rho15 `disputed`).
+* **Pool B = v5pool + hexylbenzene + isooctane.** Hexylbenzene is the only C10-C12 alkylbenzene in the verified-constants table that also passes the own-data gate (grid, flash, SLE). Its constants are NOT all verified: rho15, Tm, MW, Tb `verified`; dHfus `disputed`, flash `reference_only`. Consequence declared now: constraints that touch hexylbenzene flash or freezing may be `uncertified` through non-verified constants, and freezing for a recipe with hexylbenzene uses the Coutinho entry not the verified csv. Reported as found, not corrected. The nearest alternative (a registry alkylbenzene from the route) would carry only `route_*` / `coutinho_table` statuses, which is weaker, so hexylbenzene is the pick.
+* Run plan: 4 old pools first (each could take 15-40 min per spec; the old pools are no longer instant), the two new pools in the background, concurrently if CPU allows.
+* Table columns (r_sc_3.csv): design, category, aromatics vol %, smoke pred, margin used, max margin that certifies (pred - 18), smoke status/reason, naphthalenes, class-mix gate, freezing slack/status, flash, density, viscosity -20 C, NHOC status, and whether the only blocker is `secondary_sources_only` verification. No gate is moved after results.
+
+### Task 1.6 R-SC-3 results (appended 2026-11-13; protocol above unchanged)
+
+Runs: 6 pools x 2 specs, seed 42, `--synthetic-blend --alt-limits --recipe-margins`; each design takes 4-19 s (not 20+ min). Outputs `designs/<run>/`, table `r_sc_3.csv`, builder `scripts/v5/base/delta_smoke_cert_r_sc_3.py`. Smoke margin is the user-decided 4.107 mm where the class-mix gate holds, otherwise none.
+
+| run | design | cat | arom vol % | smoke pred (mm) | margin used (mm) | max margin that certifies (pred - 18) | smoke status | freezing | flash | density | visc -20 C / NHOC |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| v5pool | Jet A | A | 15.0 | 22.70 | none (class-mix) | 4.70 | uncertified | fail, slack -0.495 | pass 0.300 | pass | pass/pass |
+| v5pool | Jet A-1 | A | 15.0 | 22.70 | none | 4.70 | uncertified | fail -0.570 | pass 0.300 | pass | pass/pass |
+| guard4_v5pool | Jet A | A | 15.0 | 22.70 | none | 4.70 | uncertified | fail -0.495 | pass 0.300 | pass | pass/pass |
+| guard4_v5pool | Jet A-1 | A | 15.0 | 22.70 | none | 4.70 | uncertified | fail -0.570 | pass 0.300 | pass | pass/pass |
+| ext_n30 | Jet A | A | 11.2 | 23.95 | none | 5.95 | uncertified | fail -0.821 | pass 0.399 | pass | pass/pass |
+| ext_n30 | Jet A-1 | A | 11.2 | 23.95 | none | 5.95 | uncertified | fail -0.848 | pass 0.399 | pass | pass/pass |
+| ext_n8 | Jet A | A | 11.2 | 23.95 | none | 5.95 | uncertified | fail -0.821 | pass 0.399 | pass | pass/pass |
+| ext_n8 | Jet A-1 | A | 11.2 | 23.95 | none | 5.95 | uncertified | fail -0.848 | pass 0.399 | pass | pass/pass |
+| poolA (toluene, isooctane) | Jet A | A | 20.6 | 20.89 | 4.107 | 2.89 | fail | uncertified, slack +0.155 | fail -0.188 | pass | pass/pass |
+| poolA | Jet A-1 | A | 20.6 | 20.89 | 4.107 | 2.89 | fail | fail -0.017 | fail -0.188 | pass | pass/pass |
+| poolB (hexylbenzene, isooctane) | Jet A | A | 20.7 | 20.88 | 4.107 | 2.88 | fail | uncertified +0.146 | fail -0.039 | pass | pass/pass |
+| poolB | Jet A-1 | A | 20.7 | 20.88 | 4.107 | 2.88 | fail | fail -0.025 | fail -0.039 | pass | pass/pass |
+
+(max margin that certifies = smoke pred - 18; the 4.107 margin is only applied where the class-mix gate holds.)
+
+- **Correction to the stated expectation**: the 4 old pools were not blocked (`blocked_aromatics_min_infeasible` did not fire): v5pool contains 1,2,4-trimethylbenzene. They were optimised; smoke is `uncertified`, reason `class_mix_outside_real_fuel_range` (no iso-alkane), as the Task 1.5 notes predicted. Their smoke predictions (22.7 / 23.95 mm) would pass the 18 mm alternative limit even with 4.107 mm (max margins 4.70 / 5.95 > 4.107) if the class-mix gate held; the gate is what blocks them. On old pools freezing FAILS (all 8 designs), because the 8 vol % aromatics minimum forces trimethylbenzene (high freezing) into the recipe.
+- **New pools (with isooctane the class-mix gate holds)**: the optimiser's max-min recipe sits at 20.6-20.7 vol % aromatics, where pred - 18 = 2.88-2.89 mm < 4.107 mm, so smoke is `fail` (limit violated after the margin; alt_min 18 not passed). Pool A flash fails with margin (slack -0.188, API point estimate also fails 33.1 C vs 38 C); pool B flash fails with the margin (-0.039) but not at the point estimate. Freezing: Jet A `uncertified` (passes on the margin transferred from binaries, constants include non-verified entries: pool A has isooctane/toluene on route/table statuses, pool B hexylbenzene dHfus disputed); Jet A-1 `fail` (-0.017/-0.025).
+- Aromatics vol % is `uncertified` in every design only because its spec limit has `verification: secondary_sources_only`. No design is "blocked only by secondary_sources_only": every one also has at least one `fail` (freezing, flash and/or smoke) or a class-mix `uncertified`.
+- Nothing certifies. 0 of 12 designs are certified; all 12 are category A.
+- Recipes in pool A and pool B are identical to 4 decimals except the aromatic blendstock name (toluene vs hexylbenzene weight 0.0394); not investigated (optimiser result at a shared binding set).
+- The viscosity constraint model label in pools A/B is `refutas_raw` with margin 0.287 ln, whereas the `delta_design_ml_visc` v5pool designs reported `refutas+ml_pair_gn`; not investigated here (viscosity passes in all 12 designs).
