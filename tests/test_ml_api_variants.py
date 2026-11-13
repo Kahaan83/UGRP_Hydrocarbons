@@ -71,3 +71,17 @@ def test_reconstructed_has_no_margin():
 def test_no_ysi_ml_variant():
     r = _fresh(BLEND_A, 313.15)
     assert "ysi_route_ml_filled" not in r["smoke_point_mm"]["variants"]
+
+
+def test_density_ml_variant_binary_has_margin_designated_unchanged():
+    d = _fresh(BLEND_A, 298.15)["density_kg_m3"]
+    assert d["method"] == "dens_idvol"
+    v = d["variants"]["ml_pair_excess_volume"]
+    if v["status"] == "ok":
+        assert v["in_domain"] is True and v["margin"] == pytest.approx(4.4248287, abs=1e-6)
+        assert abs(v["value"] - d["value"]) < 20.0
+
+
+def test_density_ml_ternary_no_margin():
+    v = _fresh(BLEND_B, 298.15)["density_kg_m3"]["variants"]["ml_pair_excess_volume"]
+    assert v["margin"] is None and v["in_domain"] is False

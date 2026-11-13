@@ -409,6 +409,7 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     _add_viscosity_k1(out["viscosity_kin_cSt"], T_K)
     _add_viscosity_ml(out, ctx, pm, T_K, composition_kind)
     _promote_ml_viscosity(out)
+    _add_density_ml(out, ctx, pm, T_K, composition_kind)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
     return out
@@ -529,7 +530,45 @@ def _add_viscosity_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind:
                                                  in_domain=known, margin=m, warnings=list(w))
 
 
-ML_DESIGNATED_NOTE = "designated_ml_pair_residual (user decision 2026-11-13, after R-MLV-1..4 passed)"
+ML_DENSITY_READINGS = ROOT / "results" / "v5" / "BASE" / "delta_ml_density" / "readings.json"
+
+
+def _add_density_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind: str) -> None:
+    """Variant ml_pair_excess_volume (V = V_ideal + sum x_i x_j g_ij).  Variant only: designated stays dens_idvol, because
+    R-MLD-3 (ternaries) failed.  Margin (R-MLD-4, locked, kg/m3) only for known binaries in domain; 3+ components get the
+    value with in_domain False and no margin."""
+    res = out["density_kg_m3"]
+    if res.get("value") is None:
+        return
+    base = {"method": "ideal_volume+ml_pair_excess_volume", "margin_unit": "kg/m3", "source": "results/v5/BASE/delta_ml_density"}
+
+    def _none(reason):
+        res["variants"]["ml_pair_excess_volume"] = dict(base, value=None, status="out_of_range", in_domain=False, margin=None,
+                                                        warnings=[f"ml_pair_excess_volume_out_of_range: {reason}"])
+
+    if pm.substituted_mass > 0 or pm.unmapped_mass > 0 or pm.idx.size == 0:
+        return _none("component without its own grid data (substituted or unmapped mass)")
+    try:
+        import json as _json
+        from fuelblend.ml import density_pair as dp
+        smi = [ctx.reg.smiles[i] for i in pm.idx]
+        dom = dp.domain_status(smi)
+        if not dom["in_domain"]:
+            return _none(dom["reason"])
+        x = pm.w / np.array([ctx.mw(s) for s in smi])
+        r = dp.density_ml(smi, x / x.sum(), T_K)
+        m = float(_json.loads(ML_DENSITY_READINGS.read_text())["R-MLD-4"]["ml"]["locked_margin_kg_m3"])
+    except Exception as e:                                      # model files missing or feature failure
+        return _none(f"ml model unavailable ({type(e).__name__})")
+    ok = composition_kind == "known" and len(smi) == 2
+    w = [] if ok else ["ml_pair_excess_volume_no_margin: margin only for known binaries (R-MLD-3 ternaries failed; real fuels not tested)"]
+    v = float(res["value"] * r["rho_ml"] / r["rho_ideal"])     # same correction ratio applied on the API's ideal value
+    lo, hi = (v - m, v + m) if ok else (math.nan, math.nan)
+    res["variants"]["ml_pair_excess_volume"] = dict(base, value=v, excess_volume_cm3_mol=r["excess_volume_cm3_mol"], status="ok",
+                                                    in_domain=ok, margin=m if ok else None, lo=lo, hi=hi, warnings=w)
+
+
+ML_DESIGNATED_NOTE ="designated_ml_pair_residual (user decision 2026-11-13, after R-MLV-1..4 passed)"
 
 
 def _promote_ml_viscosity(out: dict) -> None:
