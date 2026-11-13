@@ -390,3 +390,18 @@ def test_engine_smoke_margin_uses_v5_key_in_memory():
     bad = np.array([0.05, 0.0, 0.0, 0.75, 0.2])
     cb = {x.key: x for x in E.evaluate_blend(spec, models["pool"], bad, LR.with_recipe_margins(models, withkey), withkey)}["smoke_point_mm"]
     assert cb.applied_margin is None and SM.REASON in cb.reason and cb.status != E.STATUS_PASS
+
+
+def test_recipe_margins_viscosity_label_is_ml_when_in_domain():
+    """Task 1.6 check: with recipe_margins the in-domain viscosity row carries the ML label (value and margin are the ML ones,
+    identical to the recipe_margins-off result); a Refutas label must never sit beside the ML margin."""
+    pool = ["n-decane", "n-undecane", "n-dodecane", "butylcyclohexane", "decalin_trans", "1,2,4-trimethylbenzene"]
+    models = LR.build_route_models(pool)
+    w = {n: 1.0 / len(pool) for n in pool}
+    rows = {}
+    for rm in (False, True):
+        r = LR.evaluate_recipe("astm:jet_a", models, w, margins_path=REAL_MARGINS, recipe_margins=rm)
+        rows[rm] = {c.key: c for c in r.constraints}["kin_visc_m20C_cSt"]
+    assert rows[True].model == LR.VISC_ML_NAME == rows[False].model
+    assert rows[True].prediction == pytest.approx(rows[False].prediction, rel=1e-12)
+    assert rows[True].applied_margin == pytest.approx(rows[False].applied_margin, rel=1e-12)

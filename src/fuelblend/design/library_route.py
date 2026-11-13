@@ -563,6 +563,20 @@ def _consistency(result: E.DesignResult, chk: E.DesignResult) -> list:
     return out
 
 
+def _label_viscosity_ml(result: E.DesignResult) -> None:
+    """Label only (recipe_margins path): the engine reports the property model name ``refutas_raw`` although ``_visc_designated_fn``
+    already returned the ML value with the ML margin; set ``VISC_ML_NAME`` where the ML model is in domain (value and margin unchanged)."""
+    names = _name_smiles()
+    pool = list(result.pool) or list(result.weights)
+    smi = [names.get(n, n) for n in pool]
+    w = np.array([result.weights.get(n, 0.0) for n in pool], float)
+    for c in result.constraints:
+        if c.prop != "viscosity" or not math.isfinite(c.prediction) or c.model == VISC_ML_NAME:
+            continue
+        if visc_ml_status(smi, w, E.canonical_property(c.key)[1])["in_domain"]:
+            c.model = VISC_ML_NAME
+
+
 def annotate(result: E.DesignResult, margins_path=None, models: dict | None = None, alt_limits: bool = False,
              recipe_margins: bool = False) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
@@ -577,6 +591,7 @@ def annotate(result: E.DesignResult, margins_path=None, models: dict | None = No
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
     margins = E.load_margins(margins_path)
     if recipe_margins:
+        _label_viscosity_ml(result)
         chk = copy.deepcopy(result)
         _rejudge_viscosity(chk)
         _rejudge_smoke(chk, margins, models, alt_limits)

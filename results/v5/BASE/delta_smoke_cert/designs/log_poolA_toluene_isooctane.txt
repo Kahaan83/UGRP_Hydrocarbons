@@ -1,12 +1,12 @@
 pool (8): ['n-decane', 'n-undecane', 'n-dodecane', 'butylcyclohexane', 'decalin_trans', '1,2,4-trimethylbenzene', 'toluene', 'isooctane']
-n_starts=30 seed=42 guard=0.0K models 13.1s
-[astm_jet_a__custom] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['flash_point_C', 'smoke_point_mm'] 15.9s
+n_starts=30 seed=42 guard=0.0K models 13.8s
+[astm_jet_a__custom] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['flash_point_C', 'smoke_point_mm'] 16.7s
   weights {'n-decane': 0.1118, 'n-undecane': 0.3154, 'n-dodecane': 0.0319, 'butylcyclohexane': 0.1908, 'decalin_trans': 0.0839, '1,2,4-trimethylbenzene': 0.1901, 'toluene': 0.0394, 'isooctane': 0.0366}
   blocked: flash_point_C: fail: limit violated after applying the margin; lab_margin_set_by_one_system
   blocked: freezing_point_C: uncertified: non-verified constant(s): toluene.Tm=coutinho_table, toluene.dHfus=coutinho_table
   blocked: aromatics_vol_pct: uncertified: spec limit verification: secondary_sources_only (an unverified limit is never certified)
   blocked: smoke_point_mm: fail: spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 not passed 
-[bis_jet_a1__custom] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['flash_point_C', 'freezing_point_C', 'smoke_point_mm'] 18.9s
+[bis_jet_a1__custom] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['flash_point_C', 'freezing_point_C', 'smoke_point_mm'] 18.6s
   weights {'n-decane': 0.1118, 'n-undecane': 0.3154, 'n-dodecane': 0.0319, 'butylcyclohexane': 0.1908, 'decalin_trans': 0.0839, '1,2,4-trimethylbenzene': 0.1901, 'toluene': 0.0394, 'isooctane': 0.0366}
   blocked: flash_point_C: fail: limit violated after applying the margin; lab_margin_set_by_one_system
   blocked: freezing_point_C: fail: non-verified constant(s): toluene.Tm=coutinho_table, toluene.dHfus=coutinho_table; limit violated
