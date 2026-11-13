@@ -1,0 +1,116 @@
+{
+ "model": "LightGBM pair g(d_i,d_j,T); ln eta_ML = ln eta_Refutas + sum_{i<j} x_i x_j g",
+ "features": [
+  "mean_n_carbon",
+  "absdiff_n_carbon",
+  "mean_mw",
+  "absdiff_mw",
+  "mean_n_rings",
+  "absdiff_n_rings",
+  "mean_n_arom_rings",
+  "absdiff_n_arom_rings",
+  "mean_n_ch3",
+  "absdiff_n_ch3",
+  "mean_n_quat_c",
+  "absdiff_n_quat_c",
+  "mean_ln_eta",
+  "absdiff_ln_eta",
+  "mean_v_molar",
+  "absdiff_v_molar",
+  "class_pair",
+  "inv_T"
+ ],
+ "class_pairs": [
+  "alkene_alkyne|alkene_alkyne",
+  "alkene_alkyne|aromatic",
+  "alkene_alkyne|cycloalkane",
+  "alkene_alkyne|iso_paraffin",
+  "alkene_alkyne|n_paraffin",
+  "aromatic|aromatic",
+  "aromatic|cycloalkane",
+  "aromatic|iso_paraffin",
+  "aromatic|n_paraffin",
+  "cycloalkane|cycloalkane",
+  "cycloalkane|iso_paraffin",
+  "cycloalkane|n_paraffin",
+  "iso_paraffin|iso_paraffin",
+  "iso_paraffin|n_paraffin",
+  "n_paraffin|n_paraffin"
+ ],
+ "lgb_params": {
+  "n_estimators": 400,
+  "learning_rate": 0.05,
+  "num_leaves": 15,
+  "min_child_samples": 40,
+  "subsample": 0.8,
+  "subsample_freq": 1,
+  "colsample_bytree": 0.8,
+  "reg_lambda": 1.0,
+  "random_state": 42,
+  "deterministic": true,
+  "force_row_wise": true,
+  "n_jobs": 1,
+  "verbose": -1
+ },
+ "winsor_ln": 0.5,
+ "xmin": 0.01,
+ "seed": 42,
+ "T_min_K": 100.0,
+ "class_pair_training_systems": {
+  "alkene_alkyne|alkene_alkyne": 1,
+  "alkene_alkyne|aromatic": 5,
+  "alkene_alkyne|cycloalkane": 1,
+  "alkene_alkyne|n_paraffin": 1,
+  "aromatic|aromatic": 22,
+  "aromatic|cycloalkane": 21,
+  "aromatic|iso_paraffin": 13,
+  "aromatic|n_paraffin": 40,
+  "cycloalkane|cycloalkane": 16,
+  "cycloalkane|iso_paraffin": 10,
+  "cycloalkane|n_paraffin": 56,
+  "iso_paraffin|iso_paraffin": 2,
+  "iso_paraffin|n_paraffin": 27,
+  "n_paraffin|n_paraffin": 35
+ },
+ "grid_sha256": "b931e969926698dff52d69ff51dd99a990c24ff12eca545aa98e970afd3e7daf",
+ "input_sha256": {
+  "results/v5/S1/viscosity_lab_residuals_v5.csv": "ec00c8709fd3ecfb482d6a0ed7563c9f368d815906faf6a58806c29879923511",
+  "results/v5/S1/lab_systems_splits_v5.json": "0cae446ff5d4e54087439883b5f5846d232e922bdac3e9cf40eb3df8806ddcba",
+  "data/unified/measurements_dedup.csv": "39a217957f9c7d587d4f2a4b4b2d2f240dcd3e6c4d801115c3e4a309e20b0aab",
+  "data/real_fuels/v5/boehm2022_viscosity.csv": "2e34d67be33f42a57ded0c184377ca3c5fd54cd1f180dcf25b6587fdd0e534cf",
+  "data/unified/compounds.csv": "4abff26ee14bc1e7d3f6d4233e5f102c29379ccf97f63c480e55e86ada75de95"
+ },
+ "cv_scores": {
+  "dev_oof_warm_macro_mae_refutas": 0.08238412165803917,
+  "dev_oof_warm_macro_mae_ml": 0.05989025404412356,
+  "locked_warm_macro_mae_refutas": 0.05438398146528558,
+  "locked_warm_macro_mae_ml": 0.03110334688971239
+ },
+ "training": {
+  "systems": 250,
+  "pair_rows": 10681
+ },
+ "training_scope": "lab binaries, 264 dev systems",
+ "margin_ln": {
+  "T_lt_263K": {
+   "margin": 0.28747778594508044,
+   "n_dev_systems": 20,
+   "k": 19
+  },
+  "T_263_283K": {
+   "margin": 0.6084381907110359,
+   "n_dev_systems": 16,
+   "k": 16
+  },
+  "T_ge_283K": {
+   "margin": 0.13426357484240542,
+   "n_dev_systems": 264,
+   "k": 239
+  }
+ },
+ "adoption": {
+  "ships_variant_ml_pair_residual": true,
+  "cold_gate_passed": true,
+  "promotion_offered": true
+ }
+}

@@ -76,3 +76,30 @@ Design: `design_forward_check` gains a column `ml_variant_pred`.
 ## Files
 src/fuelblend/ml/{__init__,viscosity_pair}.py, scripts/v5/base/delta_ml_viscosity.py, models/v5/ml_viscosity_pair/{model.txt,meta.json},
 results/v5/BASE/delta_ml_viscosity/**, tests/test_ml_viscosity_pair.py.
+
+---
+
+## Outcome (appended AFTER scoring; the declaration above is unchanged)
+
+Reproduce: `.venv/Scripts/python.exe scripts/v5/base/delta_ml_viscosity.py` (full run; `--dev-only` skips the locked systems),
+then `scripts/v5/base/delta_ml_viscosity_realfuels.py` (R-MLV-5). Numbers: `readings.json`, `readings_R-MLV-5.json`, `rows_scored.csv`, `run_log.txt`.
+Positional regeneration check against the committed S1 table passed (15,827 rows, 334 systems). The locked systems were scored once.
+MAE below = system-macro mean |ln error|, Refutas -> ML; interval = paired system bootstrap of the gain.
+
+| reading | result | numbers |
+|---|---|---|
+| R-MLV-1 dev OOF, T >= 283 K (264 systems) | PASS | 0.0824 -> 0.0599, gain interval [0.0180, 0.0269] (global-constant g 0.0692, class-pair table 0.0649) |
+| R-MLV-2 locked, T >= 283 K (70 systems) | PASS | 0.0544 -> 0.0311, gain [0.0163, 0.0302]; 1.4 % of systems worse by > 0.02 ln (const 0.0431, class-pair 0.0390) |
+| R-MLV-3 ternaries (664 rows, 18 systems) | PASS | row MAE 0.0841 -> 0.0398; all-pairs-in-training 5 systems 0.0834 -> 0.0410; some pair unseen 13 systems 0.0844 -> 0.0393 |
+| R-MLV-4 cold T < 283.15 K (26 systems, Boehm 2022 + thermoml) | PASS | 0.0994 -> 0.0612, gain [0.0225, 0.0547]; under-prediction rate 0.631 -> 0.571 |
+| R-MLV-5 real fuels (descriptive) | MIXED | 394 rows; Refutas reproduced to 4.5e-8; MAE 0.160 -> 0.086 ln pooled, but ML is worse at warm cells (e.g. av3322 273-313 K, ajftd 313 K, fuellib 313 K): not worse in 13 of 21 source x T cells; large gain only at 233/253 K |
+| R-MLV-6 margin (ln, alpha 0.10) | computed | ML: T < 263 K 0.287 (20 dev systems), 263-283 K 0.608 (16), >= 283 K 0.134 (264); Refutas 0.415 / 0.608 / 0.185. Locked coverage at >= 283 K: ML 64/70, Refutas 66/70 |
+
+Adoption: R-MLV-1 and R-MLV-2 pass, so the variant `ml_pair_residual` ships with the margin above, in domain only. R-MLV-3 passes and the ML
+>= 283 K margin 0.134 <= 0.186, so promotion to designated is OFFERED to the user; it is not made here. Because R-MLV-3 rests on 18 ternary
+systems and R-MLV-5 is mixed on 100-component fuels, no claim beyond lab mixtures is supported.
+
+Caveats (measured): 35 % of binary systems (112) carry endpoint rows with x1 x2 < 0.01 (mean endpoint residual +0.012 ln, mean |.| 0.034 ln),
+which the pair form cannot represent. Training systems per class pair are < 5 for alkene_alkyne|{cycloalkane, n_paraffin} (1 each) and
+iso_paraffin|iso_paraffin (2); such mixtures are out of domain. Cold evidence is essentially one source (Boehm 2022). The cold gate passed, so the
+correction is defined at all T in the training range (233-393 K). Locked ternaries may contain dev binary pairs (intended).
