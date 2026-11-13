@@ -153,7 +153,7 @@ def r_api_4():
     from fuelblend.design import library_route as LR
     d4 = pd.read_csv(ROOT / "results" / "v5" / "D4" / "designs_v4.csv").set_index("design_id")
     pool = ["n-decane", "n-undecane", "n-dodecane", "butylcyclohexane", "decalin_trans", "1,2,4-trimethylbenzene"]
-    margins = ROOT / "results" / "v5" / "S1" / "uncertainty_v5.yaml"
+    margins = ROOT / "configs" / "uncertainty_v5.yaml"
     models = LR.build_route_models(pool)
     n, mx, ok = 0, 0.0, True
     for did, spec in (("jet_astm_d1655__v5pool", "astm:jet_a"), ("jet_bis_is1571__v5pool", "bis:jet_a1")):

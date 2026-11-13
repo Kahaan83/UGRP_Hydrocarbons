@@ -1,0 +1,55 @@
+{
+ "model": "ridge group-contribution on 16 RDKit counts, StandardScaler, weight 1/(YSI+50)^2",
+ "alpha": 10.0,
+ "features": [
+  "n_C",
+  "n_H",
+  "H_per_C",
+  "MW",
+  "arom_C",
+  "arom_rings",
+  "aliph_rings",
+  "fused_ring_atoms",
+  "sp2_nonarom_C",
+  "sp_C",
+  "CH3",
+  "tertiary_CH",
+  "quaternary_C",
+  "benzylic_C",
+  "rot_bonds",
+  "DBE"
+ ],
+ "coef": {
+  "n_C": 34.12971310415214,
+  "n_H": -13.493351176446657,
+  "H_per_C": -8.685289376545272,
+  "MW": 31.22136805246103,
+  "arom_C": 43.26424299403441,
+  "arom_rings": 43.96167109542067,
+  "aliph_rings": -6.28814953979101,
+  "fused_ring_atoms": 24.408470261556204,
+  "sp2_nonarom_C": -3.2375399770706506,
+  "sp_C": -1.839739744646248,
+  "CH3": 8.451838367718336,
+  "tertiary_CH": -5.749446177544072,
+  "quaternary_C": -4.581467501698573,
+  "benzylic_C": 16.467313001250908,
+  "rot_bonds": -15.003424863955702,
+  "DBE": 43.99195409864352
+ },
+ "training_input_sha256": "66edf2fb68d65cd59a14afc83a45e32d14f34daf8bd1df42fa642530041bfe7f",
+ "n_train": 222,
+ "cv": {
+  "median_rel_err_ridge": 0.22910432519220456,
+  "mae_ridge": 107.81569067339778,
+  "mae_classmean": 103.26140151610132,
+  "pass_R_MLY_1": false
+ },
+ "extrapolation": {
+  "median_rel_err_ridge": 0.16409874820012443,
+  "n_test": 5,
+  "pass_R_MLY_1x": false
+ },
+ "seed": 42,
+ "note": "ridge fit minimises sum sw*(y-f)^2 + (alpha/n)*|beta|^2 on standardised features, sw = w/sum(w)"
+}

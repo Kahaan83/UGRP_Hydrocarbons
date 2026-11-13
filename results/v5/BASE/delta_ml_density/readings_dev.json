@@ -1,0 +1,59 @@
+{
+ "seed": 42,
+ "n_boot": 2000,
+ "n_rows": 10900,
+ "n_systems": 208,
+ "dev_systems": 167,
+ "locked_systems": 41,
+ "train_pair_rows": 8077,
+ "class_pair_training_systems": {
+  "alkene_alkyne|alkene_alkyne": 1,
+  "alkene_alkyne|cycloalkane": 1,
+  "aromatic|aromatic": 4,
+  "aromatic|cycloalkane": 27,
+  "aromatic|iso_paraffin": 5,
+  "aromatic|n_paraffin": 31,
+  "cycloalkane|cycloalkane": 12,
+  "cycloalkane|iso_paraffin": 6,
+  "cycloalkane|n_paraffin": 44,
+  "iso_paraffin|n_paraffin": 8,
+  "n_paraffin|n_paraffin": 9
+ },
+ "R-MLD-5": {
+  "endpoint_rows_dev": 4,
+  "dev_binary_rows": 8081,
+  "endpoint_row_share": 0.0004949882440292043,
+  "endpoint_systems": 3,
+  "share_of_dev_binary_ideal_abs_error_in_endpoint_rows": 5.160564950712159e-05,
+  "mean_abs_err_ideal_endpoint_kg_m3": 0.1214410363743923,
+  "mean_abs_ve_endpoint_cm3_mol": 0.037808190303668,
+  "real_fuel_and_thermoml2020": "not run, time"
+ },
+ "R-MLD-1": {
+  "ml": {
+   "n_systems": 167,
+   "mae_a": 1.3335364544518757,
+   "mae_b": 0.9577868304818979,
+   "gain": 0.3757496239699778,
+   "lo": 0.23497096197965156,
+   "hi": 0.5108434390880982
+  },
+  "const": {
+   "n_systems": 167,
+   "mae_a": 1.3335364544518757,
+   "mae_b": 1.3302914691680165,
+   "gain": 0.0032449852838592197,
+   "lo": -0.0032983663405750153,
+   "hi": 0.010232230089876858
+  },
+  "classpair": {
+   "n_systems": 167,
+   "mae_a": 1.3335364544518757,
+   "mae_b": 1.1824784604004894,
+   "gain": 0.15105799405138634,
+   "lo": 0.029520193570350257,
+   "hi": 0.26824553102727317
+  },
+  "pass": true
+ }
+}

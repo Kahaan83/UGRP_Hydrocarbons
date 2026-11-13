@@ -1,0 +1,10 @@
+records 72 differing 6
+('b5', 233.15, 'smoke_point_mm')
+('b5', 288.15, 'smoke_point_mm')
+('b5', 313.15, 'smoke_point_mm')
+('b60', 233.15, 'smoke_point_mm')
+('b60', 288.15, 'smoke_point_mm')
+('b60', 313.15, 'smoke_point_mm')
+non-smoke differing: 0 []
+b5 smoke value 20.373314333663224 in_domain True margin 7.8009965628100595
+b60 smoke value 21.580130180548686 in_domain True margin 7.8009965628100595 cov 0.0 0.0 ['smoke_margin_from_binaries_and_surrogates (user decision)']

@@ -249,26 +249,58 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
 
 
 LAB_MARGIN_NOTE = "lab_margin_set_by_one_system"
+SMOKE_MARGIN_KEY = "smoke_point_mm.lab_mixtures.bulk_regression"
 
 
 def default_n_starts(pool) -> int:
     return 8 if len(pool) > 20 else 30
 
 
-def annotate(result: E.DesignResult) -> E.DesignResult:
+SMOKE_MARGIN_REASON = "smoke margin 7.8 mm from binaries and surrogates (user decision), applied inside the regression domain only"
+
+
+def _rejudge_smoke(result: E.DesignResult, margins: dict) -> None:
+    """Smoke margin, design side, DOMAIN-GATED (user decision 2026-11-13 plus controller ruling).
+
+    The engine (unchanged) judges smoke without a margin and tags a recipe outside the regression domain (aromatics 8-23 vol %, result
+    19-25 mm) with the OutOfDomainWarning reason, which keeps it ``uncertified`` with margin None.  The optimiser therefore also sees no
+    smoke margin (a margin is recipe-dependent through the domain, the engine's margin is not).  Here, after the engine, a smoke constraint
+    that is IN domain is re-judged with the v5 margin: slack = (pred - margin - limit) / scale; ``fail`` if negative.  Out of domain it is left
+    exactly as the engine produced it."""
+    e = margins.get(SMOKE_MARGIN_KEY)
+    m, unit, direction, _ = E.read_applied_margin(e)
+    if m is None:
+        return
+    for c in result.constraints:
+        if c.prop != "smoke_point" or not math.isfinite(c.prediction) or "OutOfDomainWarning" in c.reason:
+            continue
+        if c.lo is None or c.hi is not None:                       # smoke is a minimum limit: over-prediction is the unsafe side
+            continue
+        sc = E._scale(c.lo, c.hi)
+        c.applied_margin, c.margin_keys = m, (SMOKE_MARGIN_KEY,)
+        c.slack = (c.prediction - m - c.lo) / sc
+        if c.slack < 0 or c.prediction < c.lo:
+            c.status = E.STATUS_FAIL
+        c.reason = (c.reason + "; " if c.reason else "") + SMOKE_MARGIN_REASON + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
+        result.margins[c.key] = m
+    result.passed = result.passed and all(c.status in E.OK_STATUSES for c in result.constraints)
+
+
+def annotate(result: E.DesignResult, margins_path=None) -> E.DesignResult:
     """Every flash constraint carrying a finite margin gets ``lab_margin_set_by_one_system`` in its reason (BASE Task 10:
-    the lab margin is the group score of the single mesitylene system)."""
+    the lab margin is the group score of the single mesitylene system).  In-domain smoke constraints get the v5 smoke margin."""
     for c in result.constraints:
         has_margin = c.applied_margin is not None and math.isfinite(c.applied_margin)
         if c.prop == "flash" and has_margin and LAB_MARGIN_NOTE not in c.reason:
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
+    _rejudge_smoke(result, E.load_margins(margins_path))
     return result
 
 
 def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None) -> E.DesignResult:
     pool = models["pool"]
     return annotate(E.design(spec_name, pool, models, n_starts=n_starts or default_n_starts(pool), seed=seed,
-                             margins_path=margins_path))
+                             margins_path=margins_path), margins_path)
 
 
 # ------------------------------------------------------------------------------------------------ forward check
@@ -301,7 +333,7 @@ def evaluate_recipe(spec_name: str, models: dict, weights: dict, margins_path=No
     cons = E.evaluate_blend(spec, pool, w, models, E.load_margins(margins_path))
     return annotate(E.DesignResult(weights=dict(zip(pool, map(float, w))), predictions={c.key: c.prediction for c in cons},
                           margins={c.key: c.applied_margin for c in cons}, passed=False, extrapolating=False,
-                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool))
+                          binding_constraints=[], constraints=cons, spec_name=spec_name, pool=pool), margins_path)
 
 
 def _fnum(x) -> float:
@@ -382,7 +414,7 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
         "flash_point_C": "design and API both use the LFL-overlay registry (U1)",
         "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the Coutinho tmap constants",
         "nhoc_MJ_kg": "design primary model uses constant H = 13.8 wt%; the API uses composition H",
-        "smoke_point_mm": "design: AJFTD bulk regression on aromatics; API: YSI route (a different model)",
+        "smoke_point_mm": "design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K)",
         "aromatics_wt_pct": "class mass fraction, by construction",
         "aromatics_vol_pct": "design: table rho15 volume fractions; API: grid rho at 288.15 K",
     }
@@ -406,6 +438,10 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
                          "informational: plain registry (no LFL overlay); the diff is the overlay effect", True))
     if kv:
         rows.append(_Row(kv + "[tol]", dp(kv), _api_value(f_vis, "viscosity_kin_cSt")[0], 1e-6))
+        mlv = ((f_vis["viscosity_kin_cSt"].get("variants") or {}).get("ml_pair_residual") or {})
+        rows.append(_Row(kv + "[ml_pair_residual]", dp(kv), _fnum(mlv.get("value")), float("nan"),
+                         "report only, does not change certification: Refutas + ML pair residual (variant); "
+                         + ("in domain" if mlv.get("in_domain") else "; ".join(mlv.get("warnings") or ["no ML value"])), True))
     if "nhoc_MJ_kg" in cons:
         # The API uses the composition-H group-additivity model; the design primary uses constant H.  Two like-for-like rows
         # use the design's composition-H model: as designed (table MW, 2 decimals) and with RDKit MW, the API's MW.

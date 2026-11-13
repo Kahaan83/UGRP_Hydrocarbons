@@ -1,0 +1,8 @@
+{
+ "refutas_reproduction_max_rel_diff": 4.471207539088887e-08,
+ "n_rows": 394,
+ "mae_ln_refutas": 0.1596580418131134,
+ "mae_ln_ml": 0.08625258992576298,
+ "temps_ml_not_worse": 13,
+ "temps_total": 21
+}

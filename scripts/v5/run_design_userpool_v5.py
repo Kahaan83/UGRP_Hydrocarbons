@@ -43,7 +43,7 @@ BINS = [("n_paraffin", 13), ("n_paraffin", 14), ("cyclo_mono", 9), ("cyclo_mono"
         ("aromatic_di", 11)]
 D4_DESIGNS = ROOT / "results/v5/D4/designs_v4.csv"
 D4_ID = {"astm:jet_a": "jet_astm_d1655__v5pool", "bis:jet_a1": "jet_bis_is1571__v5pool"}
-MARGINS = ROOT / "results/v5/S1/uncertainty_v5.yaml"
+MARGINS = ROOT / "configs/uncertainty_v5.yaml"      # S1 yaml + flash lab margin 2.2069 C (user decision Q2)
 
 
 def extended_pool():

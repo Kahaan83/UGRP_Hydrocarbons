@@ -14,7 +14,7 @@ from fuelblend.design import library_route as LR
 from fuelblend.design import models_v4 as M
 
 ROOT = Path(__file__).resolve().parents[1]
-MARGINS = ROOT / "results" / "v5" / "S1" / "uncertainty_v5.yaml"
+MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
 V5POOL = ["n-decane", "n-undecane", "n-dodecane", "butylcyclohexane", "decalin_trans", "1,2,4-trimethylbenzene"]
 SPECS = {"jet_astm_d1655__v5pool": "astm:jet_a", "jet_bis_is1571__v5pool": "bis:jet_a1"}
 
@@ -216,3 +216,20 @@ def test_visc_T_mismatch_raises():
     res = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "butylcyclohexane": 0.5}, margins_path=MARGINS)
     with pytest.raises(ValueError):
         LR.design_forward_check(res, T_C_visc=-40.0)
+
+
+def test_smoke_margin_design_side_domain_gated():
+    """Smoke margin 7.8 mm applies on the design side only inside the regression domain; at 0 vol % aromatics the constraint
+    stays uncertified (not fail) with margin None; in domain it is judged with the margin."""
+    import math
+    from fuelblend.design import library_route as LR
+    models = LR.build_route_models(["n-decane", "n-dodecane", "1,2,4-trimethylbenzene"])
+    mp = ROOT / "configs/uncertainty_v5.yaml"
+    out = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "n-dodecane": 0.5}, margins_path=mp)
+    s = next(c for c in out.constraints if c.key == "smoke_point_mm")
+    assert s.status == "uncertified" and s.applied_margin is None and "OutOfDomainWarning" in s.reason
+    ind = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.45, "n-dodecane": 0.4, "1,2,4-trimethylbenzene": 0.15}, margins_path=mp)
+    t = next(c for c in ind.constraints if c.key == "smoke_point_mm")
+    assert "OutOfDomainWarning" not in t.reason and t.applied_margin == 7.8009965628100595
+    assert t.slack == pytest.approx((t.prediction - 7.8009965628100595 - 25.0) / 25.0)
+    assert t.status == ("fail" if t.slack < 0 else t.status)

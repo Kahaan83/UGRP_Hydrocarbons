@@ -1,0 +1,14 @@
+source_id,doi,table_or_page,sample_id,kind,components,smiles,fractions,fraction_unit,fraction_basis,property,value,unit,T_C,method,qualifier,note
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_heptane,pure,"[""n-heptane""]","[""CCCCCCC""]",[],,none,smoke_point_mm,73.0,mm,,wick-fed smoke point lamp,literature_value,"+/- 18; heptane value is quoted from the preprint's ref [65] (table footnote), not measured there"
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_heptane,pure,"[""n-heptane""]","[""CCCCCCC""]",[],,none,tsi,-2.6,-,,wick-fed smoke point lamp,literature_value,no uncertainty printed; derived from the literature SP
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H90T10,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[90, 10]",percent,volume,smoke_point_mm,39.0,mm,,wick-fed smoke point lamp,,+/- 2.8
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H90T10,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[90, 10]",percent,volume,tsi,2.1,-,,wick-fed smoke point lamp,,+/- 3.3
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H70T30,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[70, 30]",percent,volume,smoke_point_mm,20.5,mm,,wick-fed smoke point lamp,,+/- 1.7
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H70T30,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[70, 30]",percent,volume,tsi,11.0,-,,wick-fed smoke point lamp,,+/- 4.81
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H50T50,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[50, 50]",percent,volume,smoke_point_mm,12.0,mm,,wick-fed smoke point lamp,,+/- 1.1
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H50T50,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[50, 50]",percent,volume,tsi,19.9,-,,wick-fed smoke point lamp,,+/- 6.53
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H30T70,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[30, 70]",percent,volume,smoke_point_mm,9.8,mm,,wick-fed smoke point lamp,,+/- 0.8
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_H30T70,binary,"[""n-heptane"", ""toluene""]","[""CCCCCCC"", ""Cc1ccccc1""]","[30, 70]",percent,volume,tsi,30.5,-,,wick-fed smoke point lamp,,+/- 8.55
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_toluene,pure,"[""toluene""]","[""Cc1ccccc1""]",[],,none,smoke_point_mm,7.8,mm,,wick-fed smoke point lamp,,+/- 0.5
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_toluene,pure,"[""toluene""]","[""Cc1ccccc1""]",[],,none,tsi,39.4,-,,wick-fed smoke point lamp,,+/- 10.1
+S5_botero_preprint153,,Table 1 (PDF p8),Botero_gasoline,real_fuel,[],[],[],,none,smoke_point_mm,11.8,mm,,wick-fed smoke point lamp,,"+/- 0.4; commercial gasoline, class composition only (no recipe); no TSI printed"
