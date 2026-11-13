@@ -29,3 +29,27 @@ forward-check row `kin_visc_m20C_cSt[tol]` failed in all 8 designs of `delta_fre
   margin changes from 0.415 (Refutas, T < 263 K bin) to 0.287; viscosity stays `pass` (predictions near 3 cSt vs 8 cSt). Categories stay B and
   0 designs are certified, because smoke blocks every design (aromatics 0 vol %, out of the regression domain). Nothing here is a new certification
   claim beyond the per-constraint statuses.
+
+## Result (appended 2026-11-13; declared text above unchanged)
+Runs re-done into `designs/<run>/` (seed 42, same arguments). v5pool, ext_n8, guard4_v5pool ran before commit `d1b2b60` (memoised ML pair matrix,
+same values); ext_n30 was stopped and re-run after it (speed only).
+
+R-DV-1, viscosity constraint `kin_visc_m20C_cSt` (limit <= 8 cSt), before (`delta_freeze_margin/designs`) and after:
+
+| run | design | before: model, pred (cSt), margin (ln), slack, status | after: model, pred, margin, slack, status | max weight change | category | `[tol]` row | forward check |
+|---|---|---|---|---|---|---|---|
+| v5pool | Jet A | refutas_raw 2.918, 0.415, 0.447, pass | refutas+ml_pair_gn 3.172, 0.287, 0.471, pass | 0.0000 | B | pass | pass |
+| v5pool | Jet A-1 | refutas_raw 2.994, 0.415, 0.433, pass | refutas+ml_pair_gn 3.156, 0.287, 0.474, pass | 0.0000 | B | pass | pass |
+| ext_n30 | Jet A | refutas_raw 2.968, 0.415, 0.438, pass | refutas+ml_pair_gn 3.255, 0.287, 0.458, pass | 0.0000 | B | pass | pass |
+| ext_n30 | Jet A-1 | refutas_raw 3.015, 0.415, 0.429, pass | refutas+ml_pair_gn 3.197, 0.287, 0.467, pass | 0.0001 | B | pass | pass |
+| ext_n8 | Jet A | refutas_raw 2.968, 0.415, 0.438, pass | refutas+ml_pair_gn 3.255, 0.287, 0.458, pass | 0.0000 | B | pass | pass |
+| ext_n8 | Jet A-1 | refutas_raw 3.015, 0.415, 0.429, pass | refutas+ml_pair_gn 3.197, 0.287, 0.467, pass | 0.0001 | B | pass | pass |
+| guard4_v5pool | Jet A | refutas_raw 2.965, 0.415, 0.438, pass | refutas+ml_pair_gn 3.164, 0.287, 0.473, pass | 0.0000 | B | pass | pass |
+| guard4_v5pool | Jet A-1 | refutas_raw 3.025, 0.415, 0.427, pass | refutas+ml_pair_gn 3.146, 0.287, 0.476, pass | 0.0000 | B | pass | pass |
+
+R-DV-2: the `[tol]` row passes in all 8 designs (it failed in all 8 before), so every forward check now passes. The ML value is 5-10 % above Refutas
+at -20 C; viscosity stays `pass` with the smaller ML margin; recipes are unchanged to 1e-4. As expected, all 8 designs stay category B and 0 are
+certified: smoke blocks every design (aromatics 0 vol %, out of the regression domain, no margin). Freezing `pass` in these designs uses the 16.98 C
+margin measured on binary liquidus data (delta_freeze_margin), transferred to these multi-component recipes, not validated for them.
+Tests: `tests/test_v5_design_forward.py` (incl. `test_design_viscosity_is_api_designated_with_ml_margin`), `tests/test_predict_route.py`,
+`tests/test_delta_freeze_margin.py`: 77 passed (targeted only, as instructed).
