@@ -146,7 +146,7 @@ def test_category_b_designs_meet_limits_on_api_value():
 
 
 def test_design_freezing_equals_api_freezing():
-    """The design freezing model is the API function (ideal SvL, mole fraction, Coutinho tmap): same value for a recipe."""
+    """The design freezing model is the API function (ideal SvL, mole fraction, designated verified-else-Coutinho tmap): same value for a recipe."""
     from fuelblend.api import predict_route as pr
     models = LR.build_route_models(V5POOL)
     w = {"n-undecane": 0.25, "n-dodecane": 0.15, "butylcyclohexane": 0.6}
@@ -155,7 +155,8 @@ def test_design_freezing_equals_api_freezing():
     comp = {s: res.weights[n] for n, s in zip(V5POOL, _smiles(V5POOL)) if res.weights[n] > 0}
     f = pr.predict_fuel(comp, T_K=288.15, fuel_type="jet")["freezing_point_C"]["value"]
     assert abs(c.prediction - f) < 1e-9
-    assert "coutinho_table" in models["props"]["freezing"].margin_missing_reason     # route constants: never certifiable
+    fz = models["props"]["freezing"]                      # v5 delta_freeze_margin: verified constants carry the lab-liquidus margin key
+    assert fz.margin_keys == ("freezing_point_C.lab_liquidus.svl_verified",) and fz.margin_missing_reason == ""
 
 
 def test_forward_check_none_safe(monkeypatch):
