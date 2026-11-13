@@ -60,6 +60,14 @@ families:
       aromatics_wt_pct:
         max: 25.0
         test_method: "ASTM D1319"
+      # v5 Task 1.3: D7566 Table 1 aromatics 8.0-25.0 vol %.  Used ONLY when a design is run with --synthetic-blend
+      # (applies_to: synthetic_blend; engine_v4.load_spec drops it otherwise).  Secondary source only (D7566-12a); standard text not read.
+      aromatics_vol_pct:
+        min: 8.0
+        max: 25.0
+        source: "D7566 Table 1 (secondary, D7566-12a)"
+        verification: secondary_sources_only
+        applies_to: synthetic_blend
       # v4 Task 14. D1655 Table 1: smoke point >= 25.0 mm, OR >= 18.0 mm AND naphthalenes <= 3.00 vol %
       # (D1322 / D1840). Limits confirmed only from secondary sources (supplier specification sheets that
       # cite D1655-15/-19, found via web search 2026-11-10); the ASTM standard text itself was NOT read.

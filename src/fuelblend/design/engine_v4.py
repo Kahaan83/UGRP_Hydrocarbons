@@ -135,17 +135,36 @@ class DesignResult:
     pool: list = field(default_factory=list)
     absent_class_fraction: dict = field(default_factory=dict)
     optimiser: dict = field(default_factory=dict)
+    category: str = ""                               # "" normally; "blocked_aromatics_min_infeasible" when no optimisation was run
 
 
 # ----------------------------------------------------------------------------------------------- configuration
-def load_spec(spec_name: str, configs_dir: Optional[Path] = None) -> dict:
-    """``spec_name`` = ``"<standard>:<family>"`` e.g. ``"astm:jet_a"``, ``"bis:gasoline_e10"``."""
+def load_spec(spec_name: str, configs_dir: Optional[Path] = None, synthetic_blend: bool = False,
+              alt_limits: bool = False) -> dict:
+    """``spec_name`` = ``"<standard>:<family>"`` e.g. ``"astm:jet_a"``, ``"bis:gasoline_e10"``.
+
+    Constraints declaring ``applies_to: synthetic_blend`` (e.g. the D7566 aromatics minimum) are dropped unless
+    ``synthetic_blend`` is True, so they are inert by default.  ``alt_limits`` sets ``spec["use_alt_limits"]``."""
     std, fam = spec_name.split(":")
     cdir = CONFIGS if configs_dir is None else Path(configs_dir)
     with open(cdir / f"specs_{std}.yaml", "r", encoding="utf-8") as fh:
         doc = yaml.safe_load(fh)
     spec = dict(doc["families"][fam])
     spec["_family"] = fam
+    cons = {}
+    for k, c in spec["constraints"].items():
+        if isinstance(c, dict):
+            if not synthetic_blend and c.get("applies_to") == "synthetic_blend":
+                continue
+            if "synthetic_blend_overrides" in c:           # merged only for synthetic blends; otherwise the entry is unchanged
+                c = dict(c)
+                ov = c.pop("synthetic_blend_overrides")
+                if synthetic_blend:
+                    c.update(ov)
+        cons[k] = c
+    spec["constraints"] = cons
+    if alt_limits:
+        spec["use_alt_limits"] = True
     return spec
 
 
@@ -521,10 +540,12 @@ def _optimise(sides: _Sides, n: int, n_starts: int, seed: int) -> tuple:
 
 
 def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: int = 42,
-           margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None) -> DesignResult:
+           margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None,
+           synthetic_blend: bool = False, alt_limits: bool = False) -> DesignResult:
     """Search the simplex of ``pool`` for the blend with the largest worst-case normalised slack, then report the
-    honest status of every constraint (see module docstring)."""
-    spec = load_spec(spec_name, configs_dir)
+    honest status of every constraint (see module docstring).  ``synthetic_blend`` adds the aromatics minimum
+    (spec entries with ``applies_to: synthetic_blend``); ``alt_limits`` sets ``use_alt_limits`` on the spec copy."""
+    spec = load_spec(spec_name, configs_dir, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
     margins = load_margins(margins_path)
     pool = list(pool)
     sides = _Sides(spec, pool, models, margins)
