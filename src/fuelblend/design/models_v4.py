@@ -288,12 +288,17 @@ def make_fns(L: Library) -> dict:
         """Vol % of naphthalene-type components (naphthalene core, i.e. two fused benzene rings; D1840 'naphthalenes').
 
         Tetralin, indane, biphenyl and decalin are NOT naphthalene-type.  A component whose class is unknown or whose SMILES
-        does not parse makes the quantity unknown (ModelUnavailable): it must never read as 0."""
+        does not parse makes the quantity unknown (ModelUnavailable): it must never read as 0.
+        The D1655 limit (<= 3.0 vol %) is judged with margin 0 (by_construction); no D1840 reproducibility margin is applied."""
+        mols = {}
         for n in pool:
-            if L.cls(n) == "unknown" or Chem.MolFromSmiles(L.smiles[n]) is None:
+            smi = L.smiles.get(n)
+            mol = Chem.MolFromSmiles(smi) if isinstance(smi, str) else None
+            if mol is None or L.cls(n) == "unknown":
                 raise ModelUnavailable(f"naphthalenes: no class/ring data for {n}")
+            mols[n] = mol
         v = _vol_frac(L, pool, w)
-        return float(100.0 * sum(vi for vi, n in zip(v, pool) if Chem.MolFromSmiles(L.smiles[n]).HasSubstructMatch(_NAPHTHALENE_CORE)))
+        return float(100.0 * sum(vi for vi, n in zip(v, pool) if mols[n].HasSubstructMatch(_NAPHTHALENE_CORE)))
 
     def ethanol_vol(pool, w, T_C):
         v = _vol_frac(L, pool, w)

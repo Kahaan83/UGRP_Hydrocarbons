@@ -306,7 +306,7 @@ def _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind) -> C
     if not all(q.status in OK_STATUSES for _, q in reqs):   # unknown / unavailable / uncertified requirement: never pass
         return dataclasses.replace(r, status=STATUS_UNCERTIFIED, reason=(r.reason + "; " if r.reason else "")
                                    + f"alt_min requirement not established ({desc}; " + "; ".join(q.reason for _, q in reqs if q.reason) + ")")
-    return dataclasses.replace(ra, lo=c.get("min"), reason=(ra.reason + "; " if ra.reason else "")
+    return dataclasses.replace(ra, reason=(ra.reason + "; " if ra.reason else "")
                                + f"limit used: alt_min {c['alt_min']:g} with {desc}")
 
 

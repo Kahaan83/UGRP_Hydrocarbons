@@ -105,3 +105,24 @@ def test_alt_limit_off_unchanged():
             for f in ("pred", "slack", "margin"):
                 x, y = a[f], b[f]
                 assert (x is None and y is None) or (str(x) == "nan" and str(y) == "nan") or x == y, (did, k, f)
+
+
+def test_alt_pass_record_self_consistent():
+    r = _smoke(_spec(), _models(22.0, 0.0))
+    assert r.status == E.STATUS_PASS and r.lo == 18.0 and r.applied_margin == 3.0
+    assert r.slack == pytest.approx((r.prediction - r.applied_margin - r.lo) / E._scale(r.lo, None))
+
+
+def test_naphthalenes_missing_or_nan_smiles_unavailable():
+    from fuelblend.design import models_v4 as M
+    L = M.library()
+    fn = M.build_models(L)["props"]["naphthalenes_vol_pct"].fn
+    w = np.array([0.5, 0.5])
+    with pytest.raises(E.ModelUnavailable):
+        fn(["n-decane", "not-in-library"], w, None)
+    L.smiles["n-undecane"] = float("nan")
+    try:
+        with pytest.raises(E.ModelUnavailable):
+            fn(["n-decane", "n-undecane"], w, None)
+    finally:
+        L.smiles["n-undecane"] = "CCCCCCCCCCC"
