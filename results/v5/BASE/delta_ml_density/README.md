@@ -59,3 +59,28 @@ no tuning after seeing locked results.
 ## Files
 src/fuelblend/ml/density_pair.py, scripts/v5/base/delta_ml_density.py, models/v5/ml_density_pair/{model.txt,meta.json},
 results/v5/BASE/delta_ml_density/**, tests/test_ml_density_pair.py.
+
+---
+
+## Result (appended AFTER scoring; the declaration above is unchanged)
+
+Reproduce: `.venv/Scripts/python.exe scripts/v5/base/delta_ml_density.py` (`--dev-only` skips locked). Numbers: `readings.json`, `readings_dev.json`,
+`rows_scored.csv`, `run_log.txt`. Regeneration check: 10,900 rows, 208 systems. The 1e-6 assert is relative, not absolute, because the committed
+CSV stores 8 significant digits (max absolute difference 5e-6 kg/m3, relative 8e-9). The dev run and endpoint share (R-MLD-5) were printed before the locked run; locked scored once.
+MAE = system-macro mean |rho error| kg/m3, ideal -> ML; interval = paired system bootstrap of the gain.
+
+| reading | result | numbers |
+|---|---|---|
+| R-MLD-1 dev OOF (167 systems) | PASS | 1.334 -> 0.958, gain [0.235, 0.511] (global-constant g 1.330, class-pair table 1.182) |
+| R-MLD-2 locked (41 systems) | PASS | 1.201 -> 0.897, gain [0.020, 0.561]; 19.5 % of systems worse by > 0.2 kg/m3 (limit 25 %); const 1.196, class-pair 1.063 (interval includes 0) |
+| R-MLD-3 ternaries (626 rows, 21 systems; locked only 11 rows / 2 systems) | FAIL | row MAE 3.644 -> 3.922 (const 3.622, class-pair 4.050); locked 3.622 -> 5.064 |
+| R-MLD-4 margin (two-sided, alpha 0.10, kg/m3) | computed | ML: locked 4.42, dev OOF 5.07; ideal: locked 5.30, dev OOF 5.51. Locked coverage 38/41 for both models at either margin |
+| R-MLD-5 endpoint (descriptive) | computed | only 4 dev binary rows (3 systems, 0.05 %) have x_i x_j < 0.01; mean |error| 0.12 kg/m3; negligible. Real-fuel / thermoml2020 transfer: not run, time |
+
+Adoption: R-MLD-1 and R-MLD-2 pass, so the variant `ml_pair_excess_volume` may ship with the margin above, in domain only (11 class pairs;
+alkene_alkyne|alkene_alkyne, alkene_alkyne|cycloalkane have 1 training system and aromatic|aromatic 4, so they are out of domain). Designated stays `dens_idvol`.
+Promotion is NOT offered: R-MLD-3 fails (the model is worse than ideal mixing on ternaries, driven by the 3-body gap the pair form cannot represent).
+
+Caveats: the locked gain interval lower bound is only 0.02 kg/m3 (41 systems); the global constant and class-pair table gain almost nothing, so
+the gain comes from the continuous features. Ternary evidence is 21 systems, 2 locked. At inference rho_i comes from the frozen grid whereas training used
+the tier-1 ThermoML fits (a small mismatch not measured here). Wiring into `predict_route.py` is left to the controller.

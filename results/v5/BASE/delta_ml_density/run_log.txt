@@ -1,0 +1,60 @@
+   "mae_const": 3.6223133594410366,
+   "mae_classpair": 4.05010069135351,
+   "macro": {
+    "n_systems": 21,
+    "mae_a": 2.356253016490868,
+    "mae_b": 2.488342242163743,
+    "gain": -0.13208922567287462,
+    "lo": -0.6326844769595663,
+    "hi": 0.33296763060170165
+   }
+  },
+  "dev_oof": {
+   "rows": 615,
+   "systems": 19,
+   "mae_ideal": 3.6439208661852893,
+   "mae_ml": 3.9019601559476667,
+   "mae_const": 3.6230850787843183,
+   "mae_classpair": 4.050373452133634
+  },
+  "locked": {
+   "rows": 11,
+   "systems": 2,
+   "mae_ideal": 3.622002437553523,
+   "mae_ml": 5.064492202137971,
+   "mae_const": 3.5791672325212236,
+   "mae_classpair": 4.034850884101047
+  },
+  "pass": false
+ },
+ "R-MLD-4": {
+  "ml": {
+   "locked_margin_kg_m3": 4.424828681837994,
+   "dev_oof_margin_kg_m3": 5.067073423039574,
+   "locked_coverage_by_dev_margin": [
+    38,
+    41
+   ],
+   "locked_coverage_by_locked_margin": [
+    38,
+    41
+   ]
+  },
+  "ideal": {
+   "locked_margin_kg_m3": 5.299263365613342,
+   "dev_oof_margin_kg_m3": 5.509839437491792,
+   "locked_coverage_by_dev_margin": [
+    38,
+    41
+   ],
+   "locked_coverage_by_locked_margin": [
+    38,
+    41
+   ]
+  }
+ },
+ "adoption": {
+  "ships_variant_ml_pair_excess_volume": true,
+  "promotion_offered": false
+ }
+}
