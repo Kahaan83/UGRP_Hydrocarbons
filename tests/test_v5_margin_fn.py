@@ -74,8 +74,10 @@ POOL3 = ["toluene", "n_dodecane", "iso_octane"]
 STUB_CLASSES = {"toluene": "aromatic", "n_dodecane": "n_paraffin", "iso_octane": "iso_paraffin"}
 
 
-def _stub_cfg(tmp, arom_min=10.0, with_alt=True):
+def _stub_cfg(tmp, arom_min=10.0, with_alt=True, verification=None):
     smoke = {"min": 25.0}
+    if verification:
+        smoke["verification"] = verification
     if with_alt:
         smoke.update(alt_min=18.0, alt_requires={"naphthalenes_vol_pct_max": 3.0})
     spec = {"aromatics_vol_pct": {"min": arom_min}, "smoke_point_mm": smoke}
@@ -86,11 +88,11 @@ def _stub_cfg(tmp, arom_min=10.0, with_alt=True):
     return cdir, mp
 
 
-def _stub_models(margin_fn=None, margin_keys=()):
+def _stub_models(margin_fn=None, margin_keys=(), naph_by_construction=True):
     extra = {} if margin_fn is None else dict(margin_fn=margin_fn, margin_direction="over")
     smoke = E.PropertyModel("stub_smoke", lambda pool, w, T: 28.0 - 30.0 * float(w[0]), margin_keys=margin_keys, **extra)
     return {"props": {"aromatics_vol": E.PropertyModel("arom", lambda pool, w, T: 100.0 * float(w[0]), by_construction=True),
-                      "naphthalenes_vol_pct": E.PropertyModel("naph", lambda pool, w, T: 0.0, by_construction=True),
+                      "naphthalenes_vol_pct": E.PropertyModel("naph", lambda pool, w, T: 0.0, by_construction=naph_by_construction),
                       "smoke_point": smoke},
             "alternates": {}, "classes": STUB_CLASSES, "validated_classes": None}
 
@@ -118,6 +120,48 @@ def test_optimiser_sees_smoke_margin(tmp_path):
     # the alt-blind optimiser (alt flag off) cannot satisfy both: smoke primary 25 mm is unreachable at >= 10 vol % aromatics
     res_off = _stub_design(tmp_path, _stub_models(margin_fn=_in_domain_3mm), alt=False)
     assert not res_off.passed
+
+
+def test_alt_met_on_unverified_spec_is_uncertified_never_fail(tmp_path):
+    """Review fix A: a recipe that misses the primary 25 mm limit but meets the 18 mm alternative (with margin and naphthalenes) on a spec
+    whose verification is 'secondary_sources_only' is UNCERTIFIED on every path (margin_fn, yaml margin), never FAIL; the same recipe on
+    a verified spec passes; a recipe missing the alternative limit with its margin still fails."""
+    w_met = np.array([0.2, 0.4, 0.4])          # smoke 22 mm: primary miss, alt 18 met with 3 mm margin (19)
+    w_miss = np.array([0.4, 0.3, 0.3])         # smoke 16 mm: alt 18 missed even nominally
+    w_marg = np.array([0.3, 0.35, 0.35])       # smoke 19 mm: alt met nominally, 19 - 3 = 16 < 18 with the margin
+    for verification, want in (("secondary_sources_only", E.STATUS_UNCERTIFIED), ("verified", E.STATUS_PASS)):
+        cdir, _ = _stub_cfg(tmp_path, verification=verification)
+        spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+        mp = Path(tmp_path) / "k.yaml"
+        mp.write_text(yaml.safe_dump({"margins": {"k": {"applied_margin": 3.0, "unit": "mm", "direction": "over"}}}))
+        for models in (_stub_models(margin_fn=lambda pool, w, T: 3.0), _stub_models(margin_keys=["k"])):
+            marg = E.load_margins(mp)
+            def st(w):
+                return {x.key: x for x in E.evaluate_blend(spec, POOL3, w, models, marg)}["smoke_point_mm"]
+            assert st(w_met).status == want, (verification, st(w_met).reason)
+            assert st(w_marg).status == E.STATUS_FAIL and st(w_miss).status == E.STATUS_FAIL
+
+
+def test_requirement_without_margin_is_infeasible(tmp_path):
+    """Review fix B: a requirement whose model is not by_construction and has no margin is never treated as margin 0: the optimiser's
+    alternative branch is dead (_Sides.alt None) and the engine does not pass the alternative; a by_construction requirement (naphthalenes)
+    legitimately has margin 0 in both."""
+    cdir, mp = _stub_cfg(tmp_path)
+    marg = E.load_margins(mp)
+    spec = E.load_spec("test:jet_stub", cdir, alt_limits=True)
+    ok = E._Sides(spec, POOL3, _stub_models(margin_fn=_in_domain_3mm), marg)
+    assert ok.alt["smoke_point_mm"] is not None
+    bad_models = _stub_models(margin_fn=_in_domain_3mm, naph_by_construction=False)
+    bad = E._Sides(spec, POOL3, bad_models, marg)
+    assert bad.alt["smoke_point_mm"] is None
+    w = np.array([0.2, 0.4, 0.4])
+    sm = {x.key: x for x in E.evaluate_blend(spec, POOL3, w, bad_models, marg)}["smoke_point_mm"]
+    assert sm.status not in E.OK_STATUSES
+    good = {x.key: x for x in E.evaluate_blend(spec, POOL3, w, _stub_models(margin_fn=_in_domain_3mm), marg)}["smoke_point_mm"]
+    assert good.status in E.OK_STATUSES                                         # no verification flag in the stub spec: the alternative passes
+    assert ok.vector(w)[1] > 0 > bad.vector(w)[1]                                # smoke slack: alt branch alive (+) vs dead (primary miss)
+    res = _stub_design(tmp_path, bad_models)
+    assert not res.passed
 
 
 def test_none_margin_is_infeasible(tmp_path):
@@ -249,7 +293,7 @@ def test_margin_fn_matches_rejudge_smoke_in_domain():
             o, n = _by_key(old)["smoke_point_mm"], _by_key(new)["smoke_point_mm"]
             assert o.applied_margin is not None and abs(o.applied_margin - 7.8009965628100595) < 1e-12
             assert _same(o.slack, n.slack) and _same(o.applied_margin, n.applied_margin)
-            assert (o.status == E.STATUS_FAIL) == (n.status == E.STATUS_FAIL) or alt
+            assert o.status == n.status, (spec, alt, o.status, n.status)     # review fix A: independent flags-off path vs margin_fn path, both ways
 
 
 def test_margin_fn_absent_unchanged():
@@ -271,7 +315,13 @@ def test_margin_fn_absent_unchanged():
             assert set(got) == set(want)
             for k in want:
                 g, w_ = got[k], want[k]
-                assert g["status"] == w_["status"] and g["reason"] == w_["reason"] and g["model"] == w_["model"], (key, k)
+                if alt and k == "smoke_point_mm":
+                    # review fix A: the alt-branch wording changed ("met but not certified" instead of "not passed"); the status must not
+                    # be worse than before (a recipe meeting the alt limit on an unverified spec is uncertified, never fail)
+                    assert g["model"] == w_["model"], (key, k)
+                    assert E._status_rank(g["status"]) >= E._status_rank(w_["status"]), (key, k, g["status"], w_["status"])
+                else:
+                    assert g["status"] == w_["status"] and g["reason"] == w_["reason"] and g["model"] == w_["model"], (key, k)
                 assert g["margin_keys"] == w_["margin_keys"], (key, k)
                 for f in ("pred", "slack", "margin"):
                     if alt and f == "slack" and k == "smoke_point_mm":
@@ -301,21 +351,27 @@ def test_margin_fn_absent_unchanged():
 
 
 def test_predict_route_smoke_key_replaces_lab_key(monkeypatch):
-    """predict_route._smoke: yaml key absent -> 7.8 mm as today; key present -> it replaces the lab key (class-mix gated)."""
+    """User decision R-SC-2b, 'Yes, replace (Recommended)': predict_route._smoke with the real yaml (v5 key present) gives 4.107069860688682 mm
+    for an in-domain recipe inside the class-mix range and an uncertified result (reason class_mix_outside_real_fuel_range) for an in-domain
+    recipe outside it; with the key absent (in-memory config) the 7.8 mm lab key is used exactly as before, with no class-mix gate."""
     from fuelblend.api import predict_route as pr
-    base = pr._v5_margins()
+    real = pr._v5_margins()
+    assert pr.SMOKE_V5_KEY in real and real[pr.SMOKE_V5_KEY]["applied_margin"] == 4.107069860688682
     names = pd.read_csv(ROOT / "data" / "processed" / "v5" / "pure_props_v5.csv").drop_duplicates("compound").set_index("compound").smiles
     comp = {names[n]: x for n, x in {"n-decane": 0.2, "n-dodecane": 0.1, "isooctane": 0.2, "butylcyclohexane": 0.3,
                                      "1,2,4-trimethylbenzene": 0.2}.items()}
-    r0 = pr.predict_fuel(comp, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
-    assert r0["margin"] == pytest.approx(7.8009965628100595)
-    withkey = {**base, pr.SMOKE_V5_KEY: {"applied_margin": 4.11, "unit": "mm", "direction": "over"}}
-    monkeypatch.setattr(pr, "_v5_margins", lambda: withkey)
-    r1 = pr.predict_fuel(comp, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
-    assert r1["margin"] == pytest.approx(4.11)
     comp_bad = {names[n]: x for n, x in {"n-decane": 0.05, "butylcyclohexane": 0.75, "1,2,4-trimethylbenzene": 0.2}.items()}   # no iso-alkane
+    r1 = pr.predict_fuel(comp, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
+    assert r1["margin"] == 4.107069860688682 and r1["in_domain"] is True
     r2 = pr.predict_fuel(comp_bad, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
-    assert r2.get("margin") is None and r2.get("value") is not None
+    assert r2.get("margin") is None and r2.get("value") is not None and r2["uncertified"] is True
+    assert any("class_mix_outside_real_fuel_range" in x for x in r2["domain_reasons"])
+    lab_only = {k: v for k, v in real.items() if k != pr.SMOKE_V5_KEY}
+    monkeypatch.setattr(pr, "_v5_margins", lambda: lab_only)
+    r0 = pr.predict_fuel(comp, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
+    assert r0["margin"] == pytest.approx(7.8009965628100595)                     # key absent: today's behaviour
+    r3 = pr.predict_fuel(comp_bad, T_K=293.15, fuel_type="jet")["smoke_point_mm"]
+    assert r3["margin"] == pytest.approx(7.8009965628100595)                     # no class-mix gate without the new key
 
 
 def test_engine_smoke_margin_uses_v5_key_in_memory():

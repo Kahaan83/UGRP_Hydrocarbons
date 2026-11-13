@@ -365,20 +365,28 @@ def _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind) -> C
     combo = _alt_combo_slack(ra, reqs)
     if r.status == STATUS_PASS:
         return _with_alt_slack(dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "") + "limit used: primary"), r, combo)
-    if ra.status != STATUS_PASS:                          # the alternative limit itself does not pass with its margin
-        return _with_alt_slack(dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "")
-                                                   + f"alt_min {c['alt_min']:g} not passed (status {ra.status})"), r, combo)
+    sep = (r.reason + "; " if r.reason else "")
+    if _status_rank(ra.status) == 0:                      # the alternative limit itself is violated (nominally or with its margin)
+        return _with_alt_slack(dataclasses.replace(r, reason=sep + f"alt_min {c['alt_min']:g} not passed (status {ra.status})"), r, combo)
     if not reqs:                                          # alt_min without a requirement is not a defined D1655 alternative
-        return dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "") + "alt_min has no alt_requires: not used")
+        return dataclasses.replace(r, reason=sep + "alt_min has no alt_requires: not used")
     desc = "; ".join(f"{k}: {q.status} (pred {q.prediction:.3g})" for k, q in reqs)
-    if any(q.status == STATUS_FAIL for _, q in reqs):
-        return _with_alt_slack(dataclasses.replace(r, status=STATUS_FAIL, reason=(r.reason + "; " if r.reason else "")
-                                                   + f"alt_min requirement violated ({desc})"), r, combo)
-    if not all(q.status in OK_STATUSES for _, q in reqs):   # unknown / unavailable / uncertified requirement: never pass
-        return _with_alt_slack(dataclasses.replace(r, status=STATUS_UNCERTIFIED, reason=(r.reason + "; " if r.reason else "")
-                                                   + f"alt_min requirement not established ({desc}; " + "; ".join(q.reason for _, q in reqs if q.reason) + ")"), r, combo)
+    # alternative branch = worse of (alternative limit, every requirement); overall = better of (primary, alternative branch)
+    alt_rank = min([_status_rank(ra.status)] + [_status_rank(q.status) for _, q in reqs])
+    if alt_rank == 0:                                     # a requirement is violated: the branch fails, the primary result stands
+        return _with_alt_slack(dataclasses.replace(r, reason=sep + f"alt_min requirement violated ({desc})"), r, combo)
+    if alt_rank == 1:                                     # branch met but not certifiable (unverified spec / margin or requirement not established)
+        why = "; ".join(x for x in [ra.reason] + [q.reason for _, q in reqs] if x)
+        st = STATUS_UNCERTIFIED if _status_rank(r.status) == 0 else r.status
+        return _with_alt_slack(dataclasses.replace(r, status=st, reason=sep + f"alt_min {c['alt_min']:g} met but not certified ({desc}; {why})"),
+                               r, combo)
     return _with_alt_slack(dataclasses.replace(ra, reason=(ra.reason + "; " if ra.reason else "")
                                                + f"limit used: alt_min {c['alt_min']:g} with {desc}"), r, combo)
+
+
+def _status_rank(status: str) -> int:
+    """0 = fail, 1 = uncertified (not established), 2 = pass-like."""
+    return 0 if status == STATUS_FAIL else 1 if status == STATUS_UNCERTIFIED else 2
 
 
 def _evaluate_primary(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
@@ -569,7 +577,9 @@ class _Sides:
                 m = None                                           # read per weight vector
             else:
                 r = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, self.margins, T_C, nm if sided else None)
-                m = (0.0 if r[0] is None else r[0], r[1])
+                if r[0] is None:                                   # no margin for a non-by_construction requirement: never margin 0
+                    return None
+                m = (r[0], r[1])
             sc = _scale(None, rval) if sgn > 0 else _scale(rval, None)
             reqs.append((pm, T_C, float(rval), sgn, sc, m))
         if not reqs:

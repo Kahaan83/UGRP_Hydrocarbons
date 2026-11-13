@@ -220,20 +220,27 @@ def test_visc_T_mismatch_raises():
 
 
 def test_smoke_margin_design_side_domain_gated():
-    """Smoke margin 7.8 mm applies on the design side only inside the regression domain; at 0 vol % aromatics the constraint
-    stays uncertified (not fail) with margin None; in domain it is judged with the margin."""
+    """Smoke margin on the design side, domain- and class-mix-gated.  User decision R-SC-2b, 'Yes, replace (Recommended)': inside the
+    regression domain AND the real-fuel class-mix range the margin is 4.107069860688682 mm (configs/uncertainty_v5.yaml, replacing the
+    7.8 mm lab margin); in the domain but outside the class-mix range it is uncertified (reason class_mix_outside_real_fuel_range, margin
+    None); out of the domain (0 vol % aromatics) it stays uncertified with the OutOfDomainWarning reason, as before."""
     import math
     from fuelblend.design import library_route as LR
-    models = LR.build_route_models(["n-decane", "n-dodecane", "1,2,4-trimethylbenzene"])
+    new_margin = 4.107069860688682
+    models = LR.build_route_models(["n-decane", "n-dodecane", "isooctane", "butylcyclohexane", "1,2,4-trimethylbenzene"])
     mp = ROOT / "configs/uncertainty_v5.yaml"
     out = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "n-dodecane": 0.5}, margins_path=mp)
     s = next(c for c in out.constraints if c.key == "smoke_point_mm")
     assert s.status == "uncertified" and s.applied_margin is None and "OutOfDomainWarning" in s.reason
-    ind = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.45, "n-dodecane": 0.4, "1,2,4-trimethylbenzene": 0.15}, margins_path=mp)
+    ind = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.2, "n-dodecane": 0.1, "isooctane": 0.2, "butylcyclohexane": 0.3,
+                                                    "1,2,4-trimethylbenzene": 0.2}, margins_path=mp)
     t = next(c for c in ind.constraints if c.key == "smoke_point_mm")
-    assert "OutOfDomainWarning" not in t.reason and t.applied_margin == 7.8009965628100595
-    assert t.slack == pytest.approx((t.prediction - 7.8009965628100595 - 25.0) / 25.0)
+    assert "OutOfDomainWarning" not in t.reason and t.applied_margin == new_margin
+    assert t.slack == pytest.approx((t.prediction - new_margin - 25.0) / 25.0)
     assert t.status == ("fail" if t.slack < 0 else t.status)
+    nomix = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.45, "n-dodecane": 0.4, "1,2,4-trimethylbenzene": 0.15}, margins_path=mp)
+    u = next(c for c in nomix.constraints if c.key == "smoke_point_mm")        # in the aromatics domain, but no iso-paraffin
+    assert "OutOfDomainWarning" not in u.reason and u.applied_margin is None and u.status != "pass"
 
 
 def test_design_viscosity_is_api_designated_with_ml_margin():
