@@ -382,7 +382,7 @@ v5: work continues on branch `v5` (current). Update 2026-11-12: the v5 full-base
 
 v5 delta_api_route (2026-11-13): `predict()` and a new `predict_fuel` now run on the BASE scoring route (frozen pure-property grid, Refutas viscosity, ideal-volume density, anchored-Antoine Le Chatelier flash with the LFL overlay), and inverse design runs on user pools of names / SMILES / InChIKeys through `scripts/v5/run_design_userpool_v5.py`. No design is certified. Readings, design tables, usage examples and the list of changed tests are in `results/v5/BASE/delta_api_route/README.md`.
 
-v5 ML (2026-11-13): `predict_fuel` exposes viscosity variant `ml_pair_residual` (passed R-MLV-1..4, margins 0.287/0.608/0.134 ln by T bin, known compositions only); designated viscosity unchanged; ML-YSI failed its gates and is not exposed (`docs/model_decision.md`, "v5 ML components").
+v5 ML (2026-11-13): `predict_fuel` exposes viscosity variant `ml_pair_residual` (passed R-MLV-1..4, margins 0.287/0.608/0.134 ln by T bin, known compositions only); update: by user decision it is the designated viscosity in domain, Refutas kept as variant `refutas_raw` and used elsewhere; design certification still on Refutas; ML-YSI failed its gates and is not exposed (`docs/model_decision.md`, "v5 ML components").
 
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 

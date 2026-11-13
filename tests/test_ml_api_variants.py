@@ -1,4 +1,4 @@
-"""ML pair-residual viscosity variant in predict_fuel (variant only; designated Refutas unchanged)."""
+"""ML pair-residual viscosity in predict_fuel: designated in domain (user decision 2026-11-13), Refutas kept as a variant."""
 import math
 
 import pytest
@@ -21,16 +21,26 @@ def test_variant_present_and_designated_unchanged(blend):
     ml = v["variants"]["ml_pair_residual"]
     assert ml["status"] == "ok" and ml["in_domain"] is True and ml["margin_unit"] == "ln"
     assert ml["margin"] == pytest.approx(0.13426357, abs=1e-6)
-    assert ml["value"] == pytest.approx(v["value"] * math.exp(ml["ln_correction"]))
-    # designated stays raw Refutas on the BASE route
+    # designated is the ML value; the Refutas result is kept as variants['refutas_raw']
     from fuelblend.eval.composition_route import refutas_nu_safe
     ctx = pr.get_ctx()
     comps = pr.resolve(blend)
     pm = pr.map_for(comps, pr.predicates(ctx)["HAS_GRID"], ctx.reps)
     nu, _ = refutas_nu_safe(ctx.prov, pm.idx, pm.w, 313.15)
-    assert v["method"] == "refutas_raw" and v["value"] == pytest.approx(float(nu), rel=1e-12)
-    dml = r["viscosity_dyn_mPas"]["variants"]["ml_pair_residual"]
-    assert dml["value"] == pytest.approx(r["viscosity_dyn_mPas"]["value"] * math.exp(ml["ln_correction"]))
+    rr = v["variants"]["refutas_raw"]
+    assert rr["method"] == "refutas_raw" and rr["value"] == pytest.approx(float(nu), rel=1e-12)
+    assert ml["value"] == pytest.approx(rr["value"] * math.exp(ml["ln_correction"]))
+    assert v["method"] == "refutas+ml_pair_gn" and v["value"] == ml["value"] and v["in_domain"] is True
+    assert v["lo"] == pytest.approx(v["value"] * math.exp(-ml["margin"])) and v["hi"] == pytest.approx(v["value"] * math.exp(ml["margin"]))
+    d = r["viscosity_dyn_mPas"]
+    assert d["method"] == "refutas+ml_pair_gn"
+    assert d["value"] == pytest.approx(d["variants"]["refutas_raw"]["value"] * math.exp(ml["ln_correction"]))
+
+
+def test_reconstructed_keeps_refutas_designated():
+    v = _fresh(BLEND_A, 313.15, "reconstructed")["viscosity_kin_cSt"]
+    assert v["method"] != "refutas+ml_pair_gn"
+    assert any("ml_not_designated" in w for w in v["warnings"])
 
 
 def test_cold_margin_bins():
