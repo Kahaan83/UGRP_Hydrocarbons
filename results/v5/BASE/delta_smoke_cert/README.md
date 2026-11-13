@@ -57,3 +57,15 @@ Written 2026-11-13 BEFORE any result. Gates below are never moved after results 
 - Class-mix gate (`fuelblend.design.smoke_margin_v5`), observed range over the 113 mapped GCxGC fuels, class mass fractions normalised to 1 per fuel (cycloalkane = mono+di+tri-cycloparaffin): cyclo 0.000-0.709, n-paraffin 0.000-0.508, iso-paraffin 0.007-0.995. A 75 % butylcyclohexane recipe is outside the cyclo range -> `uncertified`, reason `class_mix_outside_real_fuel_range`.
 - Gate interpretation used: the 200-fuel count is taken over fuels in groups with >= 40 fuels (the stricter reading); the total-count reading gives the same pass.
 - R-SC-2b not answered: `configs/uncertainty_v5.yaml` NOT edited; the 7.8 mm margin stays in force until a quoted user decision.
+
+### R-SC-2c (consistency check, declared before result; added after Task 1.4 review, before this check was run)
+
+Residuals of `smoke_point_from_bulk(aromatics, None)` (the predictor the design and `predict_route` use) on in-domain fuels NOT among the 100 training fuels of `data/processed/v4/sooting/smoke_point_ajftd.csv` (matched by `fuel_id`; the file has ids; the number matched is reported), as fuel-level conformal margin and per-group margin (groups >= 40), same rule as R-SC-2 (alpha 0.10, over, certifying = max, same gate). If the production-predictor certifying margin is LARGER than the refit margin, the certifying margin used downstream (`certifying_margin_final`) is the larger of the two (the margin must belong to the predictor the design uses); if smaller, the refit margin stays. Also reported: max abs difference between refit-OLS and `smoke_point_from_bulk` predictions over aromatics 8..23 step 0.5. The max-margin-that-certifies levels are derived (pred - 18 at the aromatics, with pred from `smoke_point_from_bulk`) instead of hard-coded.
+
+#### R-SC-2c results
+
+- Matched by `fuel_id`: all 100 training fuels are among the 1990 in-domain fuels; 1890 scored. Eligible groups (>= 40): JAA 665, JA 432, JFK 348, LAB_REPORT 268, OTHER 106, NUMERIC_ID 70 (PAREN_BATCH drops below 40 as most of it is training data); gate passed.
+- Production predictor (`smoke_point_from_bulk(aromatics, None)`): fuel-level margin 2.41 mm, per-group JFK 3.16, LAB_REPORT 2.19, JAA 1.74, OTHER 1.37, JA 0.38, NUMERIC_ID -0.05; certifying margin **3.16 mm**.
+- Refit margin 4.11 mm is larger, so `certifying_margin_final` = **4.11 mm** (refit stays).
+- Max abs difference refit-OLS vs `smoke_point_from_bulk` over aromatics 8..23 step 0.5: **1.87 mm** (the two predictors differ in slope/offset; the refit margin is not calibrated to the stored predictor's bias, but the stored predictor's own margin is smaller, so the larger refit value covers both).
+- Max-margin-that-certifies levels in `readings.json` are now derived as `smoke_point_from_bulk(a) - 18`.

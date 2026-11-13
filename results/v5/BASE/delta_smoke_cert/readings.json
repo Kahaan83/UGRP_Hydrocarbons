@@ -103,5 +103,41 @@
       0.9946925695974363
     ]
   },
+  "r_sc_2c": {
+    "margin": 3.1587912205664104,
+    "fuel_level_margin": 2.414283205911886,
+    "per_group_margin": {
+      "NUMERIC_ID": -0.053058347836749675,
+      "OTHER": 1.3732425153569388,
+      "LAB_REPORT": 2.1911611342470394,
+      "JFK": 3.1587912205664104,
+      "JA": 0.3784459681316754,
+      "JAA": 1.737982342718201,
+      "JETSCREEN": Infinity
+    },
+    "per_group_n": {
+      "NUMERIC_ID": 70,
+      "OTHER": 106,
+      "LAB_REPORT": 268,
+      "JFK": 348,
+      "JA": 432,
+      "JAA": 665,
+      "JETSCREEN": 1
+    },
+    "eligible_groups": [
+      "NUMERIC_ID",
+      "OTHER",
+      "LAB_REPORT",
+      "JFK",
+      "JA",
+      "JAA"
+    ],
+    "n_in_domain": 1990,
+    "n_matched_training_fuels": 100,
+    "n_scored": 1890,
+    "gate_passed": true,
+    "max_abs_pred_diff_refit_vs_stored_mm": 1.865787928457621
+  },
+  "certifying_margin_final": 4.107069860688682,
   "user_decision_required": "R-SC-2b: yaml key not added; needs a quoted user answer"
 }
