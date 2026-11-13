@@ -1,0 +1,16 @@
+design_id,constraint,model,lo,hi,prediction,applied_margin,status,slack,reason,spec_verification
+astm_jet_a__v5pool,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,792.7548959972819,4.5866,pass,0.20258916918895256,,
+astm_jet_a__v5pool,flash_point_C,le_chatelier_ideal,38.0,,51.60914062360564,2.206932808388615,pass,0.30005810040044806,lab_margin_set_by_one_system,
+astm_jet_a__v5pool,freezing_point_C,ideal_sle_mole_fraction,,-40.0,-37.17829141043771,16.975450975521966,fail,-0.4949289891271064,limit violated after applying the margin,
+astm_jet_a__v5pool,kin_visc_m20C_cSt,refutas_raw,,8.0,3.1631960122368286,0.28747778594508044,pass,0.47290835333770365,,
+astm_jet_a__v5pool,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.583790000000015,0.1940195141400025,pass,0.013779684249065772,,
+astm_jet_a__v5pool,aromatics_wt_pct,class_mass_fraction,,25.0,16.666666666666664,0.0,by_construction,0.3333333333333334,,
+astm_jet_a__v5pool,aromatics_vol_pct,class_volume_fraction,8.0,25.0,15.014297272675794,0.0,uncertified,0.41260572192210554,spec limit verification: secondary_sources_only (an unverified limit is never certified),secondary_sources_only
+astm_jet_a__v5pool,smoke_point_mm,ajftd_bulk_regression,25.0,,22.704451738313306,,uncertified,0.26135842990629476,class_mix_outside_real_fuel_range; spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); class_mix_outside_real_fuel_range; spec limit verification: secondary_sources_only (an unverified limit is never certified)),secondary_sources_only
+bis_jet_a1__v5pool,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,792.7548959972819,4.5866,pass,0.20258916918895256,,
+bis_jet_a1__v5pool,flash_point_C,le_chatelier_ideal,38.0,,51.60914062360564,2.206932808388615,pass,0.30005810040044806,lab_margin_set_by_one_system,
+bis_jet_a1__v5pool,freezing_point_C,ideal_sle_mole_fraction,,-47.0,-37.17829141043771,16.975450975521966,fail,-0.5701523311720055,limit violated after applying the margin,
+bis_jet_a1__v5pool,kin_visc_m20C_cSt,refutas_raw,,8.0,3.1631960122368286,0.28747778594508044,pass,0.47290835333770365,,
+bis_jet_a1__v5pool,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.583790000000015,0.1940195141400025,pass,0.013779684249065772,,
+bis_jet_a1__v5pool,aromatics_vol_pct,class_volume_fraction,8.0,25.0,15.014297272675794,0.0,uncertified,0.41260572192210554,spec limit verification: secondary_sources_only (an unverified limit is never certified),secondary_sources_only
+bis_jet_a1__v5pool,smoke_point_mm,ajftd_bulk_regression,25.0,,22.704451738313306,,uncertified,0.26135842990629476,class_mix_outside_real_fuel_range; spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); class_mix_outside_real_fuel_range; spec limit verification: UNVERIFIED (an unverified limit is never certified)),UNVERIFIED
