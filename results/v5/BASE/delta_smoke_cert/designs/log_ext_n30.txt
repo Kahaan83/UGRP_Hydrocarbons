@@ -6,13 +6,13 @@
 indan_tetralin  10             0 empty bin, skipped (no registry compound has own grid, flash and SLE data)                            
    aromatic_di  11             0 empty bin, skipped (no registry compound has own grid, flash and SLE data)                            
 pool (8): ['n-decane', 'n-undecane', 'n-dodecane', 'butylcyclohexane', 'decalin_trans', '1,2,4-trimethylbenzene', 'n-tridecane', 'n-tetradecane']
-n_starts=30 seed=42 guard=0.0K models 7.6s
-[astm_jet_a__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 11.1s
+n_starts=30 seed=42 guard=0.0K models 8.2s
+[astm_jet_a__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 11.6s
   weights {'n-decane': 0.125, 'n-undecane': 0.125, 'n-dodecane': 0.125, 'butylcyclohexane': 0.125, 'decalin_trans': 0.125, '1,2,4-trimethylbenzene': 0.125, 'n-tridecane': 0.125, 'n-tetradecane': 0.125}
   blocked: freezing_point_C: fail: limit violated after applying the margin
   blocked: aromatics_vol_pct: uncertified: spec limit verification: secondary_sources_only (an unverified limit is never certified)
   blocked: smoke_point_mm: uncertified: class_mix_outside_real_fuel_range; spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated; alt_mi
-[bis_jet_a1__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 9.7s
+[bis_jet_a1__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 10.0s
   weights {'n-decane': 0.125, 'n-undecane': 0.125, 'n-dodecane': 0.125, 'butylcyclohexane': 0.125, 'decalin_trans': 0.125, '1,2,4-trimethylbenzene': 0.125, 'n-tridecane': 0.125, 'n-tetradecane': 0.125}
   blocked: freezing_point_C: fail: limit violated after applying the margin
   blocked: aromatics_vol_pct: uncertified: spec limit verification: secondary_sources_only (an unverified limit is never certified)
