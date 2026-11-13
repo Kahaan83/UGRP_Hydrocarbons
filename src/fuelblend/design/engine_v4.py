@@ -50,6 +50,7 @@ UNCERTAINTY_YAML = CONFIGS / "uncertainty_v4.yaml"
 
 # Non-spec engineering constants (the AST test allows exactly these numeric literals; see tests/test_v4_design.py).
 EXTRAP_WT_THRESHOLD = 0.6      # wt fraction of absent-class mass above which a design is flagged extrapolating
+GRADED_FLOOR = 0.01            # minimum penalty of a recipe whose margin is None under the graded objective
 BAD_SLACK = -100.0             # normalised slack assigned to a non-finite prediction inside the optimiser
 MAX_ITER = 120
 
@@ -111,6 +112,10 @@ class PropertyModel:
     margin_ln: bool = False
     margin_direction: str = "two_sided"
     margin_source: str = ""
+    # v5 optimiser-plateau fix (OPTIMISER ONLY; the judge never uses these): when ``_Sides(graded=True)`` and ``margin_fn`` returns None, the
+    # objective uses ``margin_stand_in`` and subtracts ``margin_penalty_fn(pool, w, T_C)`` (>= 0, smooth) instead of ``BAD_SLACK``.
+    margin_stand_in: Optional[float] = None
+    margin_penalty_fn: Optional[Callable] = None
 
 
 @dataclass
@@ -510,7 +515,8 @@ class _Sides:
     ``alt_requires`` gets slack = max(primary slack, min(alternative-limit slack, requirement slacks)), the same number
     ``engine_v4._evaluate_with_alt`` reports (alternative limit scaled by |alt_min|, a requirement by its own bound)."""
 
-    def __init__(self, spec, pool, models, margins):
+    def __init__(self, spec, pool, models, margins, graded: bool = False):
+        self.graded = bool(graded)
         self.pool, self.models, self.margins, self.spec = list(pool), models, margins, spec
         self.items = []                      # (key, c, pm, T_C, (m, ln) lower side, (m, ln) upper side, sc)
         self.excluded = {}
@@ -614,12 +620,21 @@ class _Sides:
             return self._v
         out = []
         for key, c, pm, T_C, (m_lo, ln_lo), (m_hi, ln_hi), sc in self.items:
+            pen = 0.0
             try:
                 p = float(pm.fn(self.pool, w, T_C))
             except Exception:
                 p = float("nan")
             if pm.margin_fn is not None and not pm.by_construction:
                 mm, ln, _d, _why = _fn_margin(pm, self.pool, w, T_C)      # recipe-dependent margin; None = infeasible
+                pen = 0.0
+                if mm is None and self.graded and pm.margin_stand_in is not None:      # graded objective (optimiser only)
+                    mm = float(pm.margin_stand_in)
+                    try:
+                        pen = float(pm.margin_penalty_fn(self.pool, w, T_C)) if pm.margin_penalty_fn is not None else 0.0
+                    except Exception:
+                        pen = 0.0
+                    pen = max(pen if math.isfinite(pen) else 1.0, GRADED_FLOOR)
                 m_lo = m_hi = mm
                 ln_lo = ln_hi = ln
             lo, hi = c.get("min"), c.get("max")
@@ -634,9 +649,9 @@ class _Sides:
                     sl = (_adjust(p, m_s, ln_s, -1) - bound) / sc
                     if key in self.alt:
                         sl = max(sl, self._alt_slack(self.alt[key], p, m_s, ln_s, w))
-                    out.append(sl)
+                    out.append(sl - pen)
                 else:
-                    out.append((bound - _adjust(p, m_s, ln_s, +1)) / sc)
+                    out.append((bound - _adjust(p, m_s, ln_s, +1)) / sc - pen)
         classes = self.models.get("classes", {})
         for v in self.extrap_sets:
             out.append((EXTRAP_WT_THRESHOLD - absent_fraction(self.pool, w, classes, v)) / EXTRAP_WT_THRESHOLD)
@@ -694,7 +709,7 @@ def blocked_result(spec_name: str, pool: list, models: dict, seed: int = 42, syn
 
 def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: int = 42,
            margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None,
-           synthetic_blend: bool = False, alt_limits: bool = False) -> DesignResult:
+           synthetic_blend: bool = False, alt_limits: bool = False, graded_objective: bool = False) -> DesignResult:
     """Search the simplex of ``pool`` for the blend with the largest worst-case normalised slack, then report the
     honest status of every constraint (see module docstring).  ``synthetic_blend`` adds the aromatics minimum
     (spec entries with ``applies_to: synthetic_blend``); ``alt_limits`` sets ``use_alt_limits`` on the spec copy."""
@@ -704,7 +719,7 @@ def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: i
     spec = load_spec(spec_name, configs_dir, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
     margins = load_margins(margins_path)
     pool = list(pool)
-    sides = _Sides(spec, pool, models, margins)
+    sides = _Sides(spec, pool, models, margins, graded=graded_objective)
     w, score, n_ok = _optimise(sides, len(pool), n_starts, seed)
     w = np.where(w < 1e-6, 0.0, w)
     w = w / w.sum()
@@ -754,7 +769,7 @@ def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: i
         passed=passed, extrapolating=bool(extrap), binding_constraints=binding, constraints=cons,
         spec_name=spec_name, pool=pool, absent_class_fraction=absent,
         optimiser=dict(best_min_slack=float(score), n_starts=int(n_starts), n_converged=int(n_ok), seed=int(seed),
-                       excluded_from_optimiser=dict(sides.excluded)))
+                       excluded_from_optimiser=dict(sides.excluded), graded_objective=bool(graded_objective)))
 
 
 # ----------------------------------------------------------------------------------------------- robustness

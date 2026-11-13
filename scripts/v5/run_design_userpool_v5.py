@@ -158,7 +158,8 @@ def main(argv=None):
                 use = LR.with_recipe_margins(models, E.load_margins(MARGINS)) if a.recipe_margins else models
                 opt = LR.annotate(E.design(spec_name, pool, use, n_starts=n_starts, seed=a.seed, margins_path=MARGINS,
                                            configs_dir=cdir,
-                                           synthetic_blend=a.synthetic_blend, alt_limits=a.alt_limits),
+                                           synthetic_blend=a.synthetic_blend, alt_limits=a.alt_limits,
+                                           graded_objective=a.recipe_margins),
                                   models=models, alt_limits=a.alt_limits, recipe_margins=a.recipe_margins,
                                   margins_path=MARGINS if a.recipe_margins else None)
             res = LR.evaluate_recipe(spec_name, models, opt.weights, margins_path=MARGINS,
@@ -202,6 +203,8 @@ def main(argv=None):
                            meets_limits_design_and_api=both, design_failed_limits=json.dumps(design_failed),
                            api_failed_limits=json.dumps(api_failed),
                            best_min_slack=res.optimiser["best_min_slack"], n_converged=res.optimiser["n_converged"],
+                           graded_objective=res.optimiser.get("graded_objective", False),
+                           margin_fn_consistency=json.dumps(res.optimiser.get("margin_fn_consistency", [])),
                            blocking=json.dumps(gaps), forward_check_pass=fwd_pass,
                            forward_failed=json.dumps(judged.loc[~judged["pass"].astype(bool), "constraint"].tolist()),
                            runtime_design_s=round(dt, 2), runtime_forward_s=round(fc_t, 2)))

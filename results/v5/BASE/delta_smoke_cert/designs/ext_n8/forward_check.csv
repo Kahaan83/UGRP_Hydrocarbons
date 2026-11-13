@@ -1,28 +1,28 @@
 constraint,design_pred,forward_pred,abs_diff,tol,pass,cause,limit,lo,hi,design_meets,api_meets,design_id
-density_15C_kg_m3,785.22874442749,786.0258472853513,0.7971028578613186,,reported,design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K,775..840,775.0,840.0,True,True,astm_jet_a__ext
-flash_point_C,55.369657945904805,55.369649165298256,8.780606549407821e-06,,reported,design and API both use the LFL-overlay registry (U1),>= 38,38.0,,True,True,astm_jet_a__ext
-freezing_point_C,-24.141909374446527,-24.141909374446527,0.0,,reported,"design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",<= -40,,-40.0,False,False,astm_jet_a__ext
-kin_visc_m20C_cSt,3.8572453471181833,3.8572453471181833,0.0,,reported,"kinematic viscosity at the spec temperature, API designated value on both sides: Refutas x ML pair residual in the ML domain, else Refutas on the pure-property grid",<= 8,,8.0,True,True,astm_jet_a__ext
-nhoc_MJ_kg,43.79909,43.68878731821134,0.1103026817886601,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,astm_jet_a__ext
-aromatics_wt_pct,12.5,12.5,0.0,,reported,"class mass fraction, by construction",<= 25,,25.0,True,True,astm_jet_a__ext
-aromatics_vol_pct,11.153817392435936,11.168870811974879,0.015053419538942236,,reported,design: table rho15 volume fractions; API: grid rho at 288.15 K,8..25,8.0,25.0,True,True,astm_jet_a__ext
-smoke_point_mm,23.954085743205095,23.949212964294357,0.004872778910737452,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,False,False,astm_jet_a__ext
-flash_point_C[tol],55.369657945904805,55.369649165298256,8.780606549407821e-06,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,astm_jet_a__ext
-flash_point_C[v4_designated],55.369657945904805,55.65934096773327,0.2896830218284663,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,astm_jet_a__ext
-kin_visc_m20C_cSt[tol],3.8572453471181833,3.8572453471181833,0.0,1e-06,True,,,,,,,astm_jet_a__ext
-kin_visc_m20C_cSt[refutas_raw],3.8572453471181833,3.317998008659937,0.5392473384582464,,reported,informational: API Refutas variant (replaced by the designated ML value in its domain),,,,,,astm_jet_a__ext
-nhoc_MJ_kg[compH_table_MW],43.68935307742134,43.68878731821134,0.000565759209997907,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",,,,,,astm_jet_a__ext
-nhoc_MJ_kg[compH_rdkit_MW],43.68878731821134,43.68878731821134,0.0,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),,,,,,astm_jet_a__ext
-density_15C_kg_m3,785.22874442749,786.0258472853513,0.7971028578613186,,reported,design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K,775..840,775.0,840.0,True,True,bis_jet_a1__ext
-flash_point_C,55.369657945904805,55.369649165298256,8.780606549407821e-06,,reported,design and API both use the LFL-overlay registry (U1),>= 38,38.0,,True,True,bis_jet_a1__ext
-freezing_point_C,-24.141909374446527,-24.141909374446527,0.0,,reported,"design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",<= -47,,-47.0,False,False,bis_jet_a1__ext
-kin_visc_m20C_cSt,3.8572453471181833,3.8572453471181833,0.0,,reported,"kinematic viscosity at the spec temperature, API designated value on both sides: Refutas x ML pair residual in the ML domain, else Refutas on the pure-property grid",<= 8,,8.0,True,True,bis_jet_a1__ext
-nhoc_MJ_kg,43.79909,43.68878731821134,0.1103026817886601,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,bis_jet_a1__ext
-aromatics_vol_pct,11.153817392435936,11.168870811974879,0.015053419538942236,,reported,design: table rho15 volume fractions; API: grid rho at 288.15 K,8..25,8.0,25.0,True,True,bis_jet_a1__ext
-smoke_point_mm,23.954085743205095,23.949212964294357,0.004872778910737452,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,False,False,bis_jet_a1__ext
-flash_point_C[tol],55.369657945904805,55.369649165298256,8.780606549407821e-06,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,bis_jet_a1__ext
-flash_point_C[v4_designated],55.369657945904805,55.65934096773327,0.2896830218284663,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,bis_jet_a1__ext
-kin_visc_m20C_cSt[tol],3.8572453471181833,3.8572453471181833,0.0,1e-06,True,,,,,,,bis_jet_a1__ext
-kin_visc_m20C_cSt[refutas_raw],3.8572453471181833,3.317998008659937,0.5392473384582464,,reported,informational: API Refutas variant (replaced by the designated ML value in its domain),,,,,,bis_jet_a1__ext
-nhoc_MJ_kg[compH_table_MW],43.68935307742134,43.68878731821134,0.000565759209997907,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",,,,,,bis_jet_a1__ext
-nhoc_MJ_kg[compH_rdkit_MW],43.68878731821134,43.68878731821134,0.0,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),,,,,,bis_jet_a1__ext
+density_15C_kg_m3,786.1063720213845,786.9492916657468,0.8429196443623823,,reported,design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K,775..840,775.0,840.0,True,True,astm_jet_a__ext
+flash_point_C,50.61815038513248,50.618160834539765,1.044940728434085e-05,,reported,design and API both use the LFL-overlay registry (U1),>= 38,38.0,,True,True,astm_jet_a__ext
+freezing_point_C,-57.71374786539863,-57.71374786539863,0.0,,reported,"design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",<= -40,,-40.0,True,True,astm_jet_a__ext
+kin_visc_m20C_cSt,3.050328771601735,3.050328771601735,0.0,,reported,"kinematic viscosity at the spec temperature, API designated value on both sides: Refutas x ML pair residual in the ML domain, else Refutas on the pure-property grid",<= 8,,8.0,True,True,astm_jet_a__ext
+nhoc_MJ_kg,43.78399718048651,43.66391477345935,0.12008240702716222,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,astm_jet_a__ext
+aromatics_wt_pct,9.309562343847109,9.309562343847109,0.0,,reported,"class mass fraction, by construction",<= 25,,25.0,True,True,astm_jet_a__ext
+aromatics_vol_pct,8.316257135486984,8.327956357747759,0.011699222260775244,,reported,design: table rho15 volume fractions; API: grid rho at 288.15 K,8..25,8.0,25.0,True,True,astm_jet_a__ext
+smoke_point_mm,24.87260154901538,24.86881452086826,0.003787028147119287,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,False,False,astm_jet_a__ext
+flash_point_C[tol],50.61815038513248,50.618160834539765,1.044940728434085e-05,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,astm_jet_a__ext
+flash_point_C[v4_designated],50.61815038513248,50.86048512281417,0.24233473768168778,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,astm_jet_a__ext
+kin_visc_m20C_cSt[tol],3.050328771601735,3.050328771601735,0.0,1e-06,True,,,,,,,astm_jet_a__ext
+kin_visc_m20C_cSt[refutas_raw],3.050328771601735,2.7666842625271313,0.2836445090746036,,reported,informational: API Refutas variant (replaced by the designated ML value in its domain),,,,,,astm_jet_a__ext
+nhoc_MJ_kg[compH_table_MW],43.66420206988987,43.66391477345935,0.0002872964305211667,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",,,,,,astm_jet_a__ext
+nhoc_MJ_kg[compH_rdkit_MW],43.66391477345934,43.66391477345935,7.105427357601002e-15,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),,,,,,astm_jet_a__ext
+density_15C_kg_m3,795.2779245551824,796.24480246936,0.966877914177644,,reported,design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K,775..840,775.0,840.0,True,True,bis_jet_a1__ext
+flash_point_C,50.03172369399357,50.03174018729396,1.649330039299457e-05,,reported,design and API both use the LFL-overlay registry (U1),>= 38,38.0,,True,True,bis_jet_a1__ext
+freezing_point_C,-64.68305209450273,-64.68305209450273,0.0,,reported,"design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",<= -47,,-47.0,True,True,bis_jet_a1__ext
+kin_visc_m20C_cSt,3.0248264659814628,3.0248264659814637,8.881784197001252e-16,,reported,"kinematic viscosity at the spec temperature, API designated value on both sides: Refutas x ML pair residual in the ML domain, else Refutas on the pure-property grid",<= 8,,8.0,True,True,bis_jet_a1__ext
+nhoc_MJ_kg,43.638959146748384,43.55250098549521,0.08645816125317651,,reported,design primary model uses constant H = 13.8 wt%; the API uses composition H,>= 42.8,42.8,,True,True,bis_jet_a1__ext
+aromatics_vol_pct,8.25658526433864,8.269385772234205,0.012800507895565971,,reported,design: table rho15 volume fractions; API: grid rho at 288.15 K,8..25,8.0,25.0,True,True,bis_jet_a1__ext
+smoke_point_mm,24.891917282197713,24.887773768841235,0.004143513356478223,,reported,design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K),>= 25,25.0,,False,False,bis_jet_a1__ext
+flash_point_C[tol],50.03172369399357,50.03174018729396,1.649330039299457e-05,0.01,True,design and API both use the LFL-overlay registry (U1),,,,,,bis_jet_a1__ext
+flash_point_C[v4_designated],50.03172369399357,50.290338794277375,0.2586151002838051,,reported,informational: plain registry (no LFL overlay); the diff is the overlay effect,,,,,,bis_jet_a1__ext
+kin_visc_m20C_cSt[tol],3.0248264659814628,3.0248264659814637,8.881784197001252e-16,1e-06,True,,,,,,,bis_jet_a1__ext
+kin_visc_m20C_cSt[refutas_raw],3.0248264659814628,2.823381688287496,0.20144477769396696,,reported,informational: API Refutas variant (replaced by the designated ML value in its domain),,,,,,bis_jet_a1__ext
+nhoc_MJ_kg[compH_table_MW],43.5526958375842,43.55250098549521,0.00019485208899538975,,reported,"same composition-H model; the design reads listed MW (2 decimals) from pure_props_v5, the API reads RDKit MW",,,,,,bis_jet_a1__ext
+nhoc_MJ_kg[compH_rdkit_MW],43.5525009854952,43.55250098549521,7.105427357601002e-15,1e-09,True,design-side composition-H group-additivity model with RDKit MW (alternate model; primary is constant H),,,,,,bis_jet_a1__ext

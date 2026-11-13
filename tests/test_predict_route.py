@@ -625,7 +625,7 @@ def test_smoke_margin_in_domain_user_decision():
     assert s["lo"] == pytest.approx(s["value"] - SMOKE_V5_MARGIN, abs=1e-12)
     assert s["hi"] == pytest.approx(s["value"] + SMOKE_V5_MARGIN, abs=1e-12)
     assert s["safe_bound"] == s["lo"] and not s.get("uncertified")
-    assert "smoke_margin_from_binaries_and_surrogates (user decision)" in s["warnings"]
+    assert pr.SMOKE_MARGIN_NOTE_V5 in s["warnings"] and pr.SMOKE_MARGIN_NOTE not in s["warnings"]     # the note names the margin applied
     out = pr.predict_fuel(BLEND3, T_K=288.15, fuel_type="jet")["smoke_point_mm"]      # decane/dodecane/toluene: no iso-paraffin
     assert out["uncertified"] is True and any(CLASS_MIX_REASON in x for x in out["domain_reasons"]) and math.isnan(out["lo"])
     import yaml
@@ -641,7 +641,7 @@ def test_smoke_margin_not_applied_out_of_domain():
         s = pr.predict_fuel(blend, T_K=288.15, fuel_type="jet")["smoke_point_mm"]
         assert math.isnan(s["lo"]) and math.isnan(s["hi"]) and s["in_domain"] is False and s["uncertified"] is True
         assert s["margin"] is None and any(w.startswith("out_of_domain") for w in s["warnings"])
-        assert "smoke_margin_from_binaries_and_surrogates (user decision)" not in s["warnings"]
+        assert "smoke_margin_from_binaries_and_surrogates (user decision)" not in s["warnings"] and pr.SMOKE_MARGIN_NOTE_V5 not in s["warnings"]
 
 
 def test_flash_margin_q2_user_decision():

@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+import functools
 import math
 import re
 import warnings
@@ -381,6 +382,34 @@ def _smoke_margin_fn(smoke_fn, classes: dict, margins: dict) -> _RecipeMargin:
     return _RecipeMargin(compute)
 
 
+@functools.lru_cache(maxsize=1)
+def _class_ranges() -> dict:
+    return SM.real_fuel_class_ranges()
+
+
+def _smoke_penalty_fn(smoke_fn, classes: dict, arom_fn):
+    """Optimiser-only distance of a recipe to the certifiable smoke region (>= 0, 0 inside): class-mix box (mass fractions outside the
+    GCxGC range) + aromatics vol % outside 8-23 (/ 23) + smoke prediction outside 19-25 mm (/ 25).  Never used by the judge."""
+    def pen(pool, w, T_C):
+        r = _class_ranges()
+        fr = dict(zip(("cyclo", "nparaffin", "isoparaffin"), SM.recipe_class_fractions(pool, w, classes)))
+        d = sum(max(r[k][0] - v, 0.0) + max(v - r[k][1], 0.0) for k, v in fr.items())
+        try:
+            a = float(arom_fn(pool, w, None))
+            d += (max(8.0 - a, 0.0) + max(a - 23.0, 0.0)) / 23.0
+        except Exception:
+            pass
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                p = float(smoke_fn(pool, w, T_C))
+            d += (max(19.0 - p, 0.0) + max(p - 25.0, 0.0)) / 25.0
+        except Exception:
+            pass
+        return d
+    return pen
+
+
 def _visc_margin_fn(L: RouteLibrary, margins: dict) -> _RecipeMargin:
     def compute(pool, w, T_C):
         if T_C is None:
@@ -413,6 +442,11 @@ def with_recipe_margins(models: dict, margins: dict) -> dict:
         props["smoke_point"] = dataclasses.replace(
             ps, margin_fn=_smoke_margin_fn(ps.fn, classes, margins), margin_ln=False, margin_direction="over",
             margin_source=f"recipe_margin_fn:smoke_point ({key}, in domain only)")
+        sm = E.read_applied_margin(margins.get(key))[0]
+        if sm is not None and "aromatics_vol" in props:              # optimiser-only graded objective (engine_v4._Sides graded=True)
+            props["smoke_point"] = dataclasses.replace(
+                props["smoke_point"], margin_stand_in=float(sm),
+                margin_penalty_fn=_smoke_penalty_fn(ps.fn, classes, props["aromatics_vol"].fn))
     out = dict(models)
     out["props"] = props
     return out
@@ -423,6 +457,12 @@ def default_n_starts(pool) -> int:
 
 
 SMOKE_MARGIN_REASON = "smoke margin 7.8 mm from binaries and surrogates (user decision), applied inside the regression domain only"
+SMOKE_MARGIN_REASON_V5 = ("smoke margin from real fuels (AJFTD, user decision R-SC-2b), applied inside the regression domain and the "
+                          "real-fuel class-mix range only")
+
+
+ENGINE_BLOCKER_MARKERS = ("extrapolating", "non-verified", "margin direction", "validated range", "model unavailable",
+                          "non-finite", "OutOfDomainWarning")
 
 
 def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = None, alt_limits: bool = False) -> None:
@@ -488,10 +528,12 @@ def _rejudge_smoke(result: E.DesignResult, margins: dict, models: dict | None = 
                 c.status = E.STATUS_FAIL
             else:                                                  # the alternative branch is met (or not established): at most uncertified
                 verified = str(alt.get("verification", "")).strip().lower() == "verified"
-                c.status = E.STATUS_PASS if (branch == "met" and verified) else E.STATUS_UNCERTIFIED
+                # the engine's other blockers (extrapolation, non-verified constants, margin direction, validated range, ...) stay
+                blocked_by_engine = any(mk in (c.reason or "") for mk in ENGINE_BLOCKER_MARKERS)
+                c.status = E.STATUS_PASS if (branch == "met" and verified and not blocked_by_engine) else E.STATUS_UNCERTIFIED
         elif slack < 0:
             c.status = E.STATUS_FAIL
-        c.reason = (c.reason + "; " if c.reason else "") + SMOKE_MARGIN_REASON + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
+        c.reason = (c.reason + "; " if c.reason else "") + (SMOKE_MARGIN_REASON_V5 if key == SMOKE_V5_KEY else SMOKE_MARGIN_REASON) + ("; limit violated after applying the margin" if c.status == E.STATUS_FAIL else "")
         result.margins[c.key] = m
     result.passed = result.passed and all(c.status in E.OK_STATUSES for c in result.constraints)
 
@@ -563,12 +605,11 @@ def _consistency(result: E.DesignResult, chk: E.DesignResult) -> list:
     return out
 
 
-def _label_viscosity_ml(result: E.DesignResult) -> None:
+def _label_viscosity_ml(result: E.DesignResult, library) -> None:
     """Label only (recipe_margins path): the engine reports the property model name ``refutas_raw`` although ``_visc_designated_fn``
     already returned the ML value with the ML margin; set ``VISC_ML_NAME`` where the ML model is in domain (value and margin unchanged)."""
-    names = _name_smiles()
     pool = list(result.pool) or list(result.weights)
-    smi = [names.get(n, n) for n in pool]
+    smi = [library.smiles[n] for n in pool]            # the same source as the value (``_visc_designated_fn``)
     w = np.array([result.weights.get(n, 0.0) for n in pool], float)
     for c in result.constraints:
         if c.prop != "viscosity" or not math.isfinite(c.prediction) or c.model == VISC_ML_NAME:
@@ -591,7 +632,8 @@ def annotate(result: E.DesignResult, margins_path=None, models: dict | None = No
             c.reason = (c.reason + "; " if c.reason else "") + LAB_MARGIN_NOTE
     margins = E.load_margins(margins_path)
     if recipe_margins:
-        _label_viscosity_ml(result)
+        if models is not None and "library" in models:
+            _label_viscosity_ml(result, models["library"])
         chk = copy.deepcopy(result)
         _rejudge_viscosity(chk)
         _rejudge_smoke(chk, margins, models, alt_limits)
@@ -619,7 +661,8 @@ def design_routed(spec_name, models, n_starts=None, seed=42, margins_path=None, 
         return blocked
     use = with_recipe_margins(models, E.load_margins(margins_path)) if recipe_margins else models
     return annotate(E.design(spec_name, pool, use, n_starts=n_starts or default_n_starts(pool), seed=seed,
-                             margins_path=margins_path, synthetic_blend=synthetic_blend, alt_limits=alt_limits),
+                             margins_path=margins_path, synthetic_blend=synthetic_blend, alt_limits=alt_limits,
+                             graded_objective=bool(recipe_margins)),
                     margins_path, models=models, alt_limits=alt_limits, recipe_margins=recipe_margins)
 
 

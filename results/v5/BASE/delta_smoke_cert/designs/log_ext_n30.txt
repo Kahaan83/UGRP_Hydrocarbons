@@ -6,15 +6,13 @@
 indan_tetralin  10             0 empty bin, skipped (no registry compound has own grid, flash and SLE data)                            
    aromatic_di  11             0 empty bin, skipped (no registry compound has own grid, flash and SLE data)                            
 pool (8): ['n-decane', 'n-undecane', 'n-dodecane', 'butylcyclohexane', 'decalin_trans', '1,2,4-trimethylbenzene', 'n-tridecane', 'n-tetradecane']
-n_starts=30 seed=42 guard=0.0K models 8.2s
-[astm_jet_a__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 11.6s
-  weights {'n-decane': 0.125, 'n-undecane': 0.125, 'n-dodecane': 0.125, 'butylcyclohexane': 0.125, 'decalin_trans': 0.125, '1,2,4-trimethylbenzene': 0.125, 'n-tridecane': 0.125, 'n-tetradecane': 0.125}
-  blocked: freezing_point_C: fail: limit violated after applying the margin
+n_starts=30 seed=42 guard=0.0K models 7.6s
+[astm_jet_a__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['smoke_point_mm'] 1219.5s
+  weights {'n-decane': 0.1578, 'n-undecane': 0.134, 'n-dodecane': 0.028, 'butylcyclohexane': 0.5576, 'decalin_trans': 0.0, '1,2,4-trimethylbenzene': 0.0931, 'n-tridecane': 0.0251, 'n-tetradecane': 0.0045}
   blocked: aromatics_vol_pct: uncertified: spec limit verification: secondary_sources_only (an unverified limit is never certified)
   blocked: smoke_point_mm: uncertified: class_mix_outside_real_fuel_range; spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated; alt_mi
-[bis_jet_a1__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['freezing_point_C', 'smoke_point_mm'] 10.0s
-  weights {'n-decane': 0.125, 'n-undecane': 0.125, 'n-dodecane': 0.125, 'butylcyclohexane': 0.125, 'decalin_trans': 0.125, '1,2,4-trimethylbenzene': 0.125, 'n-tridecane': 0.125, 'n-tetradecane': 0.125}
-  blocked: freezing_point_C: fail: limit violated after applying the margin
+[bis_jet_a1__ext] A_fails_a_limit_on_design_or_API_point_estimate (design side A_fails_at_point_estimate) passed=False fwd_pass=True api_failed=['smoke_point_mm'] 900.2s
+  weights {'n-decane': 0.0935, 'n-undecane': 0.0789, 'n-dodecane': 0.0143, 'butylcyclohexane': 0.7071, 'decalin_trans': 0.0, '1,2,4-trimethylbenzene': 0.0914, 'n-tridecane': 0.0129, 'n-tetradecane': 0.002}
   blocked: aromatics_vol_pct: uncertified: spec limit verification: secondary_sources_only (an unverified limit is never certified)
   blocked: smoke_point_mm: uncertified: class_mix_outside_real_fuel_range; spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated; alt_min 18 met but
 wrote C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons\results\v5\BASE\delta_smoke_cert\designs\ext_n30
