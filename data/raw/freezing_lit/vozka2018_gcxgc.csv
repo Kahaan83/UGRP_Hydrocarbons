@@ -1,0 +1,273 @@
+source_id,doi,table_or_page,fuel_id,class,n_carbon,value,basis,unit
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),Jet A,n-paraffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),CAME,n-paraffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),TALL,n-paraffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),MFAT,n-paraffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),Jet A,n-paraffins,8,0.67,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),CAME,n-paraffins,8,0.83,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),TALL,n-paraffins,8,0.1,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),MFAT,n-paraffins,8,0.54,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),Jet A,n-paraffins,9,4.42,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),CAME,n-paraffins,9,1.92,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),TALL,n-paraffins,9,1.84,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),MFAT,n-paraffins,9,1.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),Jet A,n-paraffins,10,4.73,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),CAME,n-paraffins,10,1.4,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),TALL,n-paraffins,10,1.69,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),MFAT,n-paraffins,10,1.42,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),Jet A,n-paraffins,11,3.44,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),CAME,n-paraffins,11,0.84,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),TALL,n-paraffins,11,1.33,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p2),MFAT,n-paraffins,11,1.36,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,12,2.49,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,12,0.59,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,12,1.12,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,12,1.44,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,13,1.93,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,13,0.49,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,13,0.86,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,13,0.87,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,14,1.31,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,14,0.23,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,14,0.56,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,14,1.67,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,15,0.79,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,15,0.46,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,15,0.32,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,15,0.18,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,16,0.38,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,16,0.2,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,16,0.7,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,17,0.09,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,17,0.12,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,17,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,n-paraffins,18,0.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,n-paraffins,18,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,n-paraffins,18,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,n-paraffins,18,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,7,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,7,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,8,0.31,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,8,1.51,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,8,0.06,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,8,1.77,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,9,4.12,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,9,11.09,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,9,6.13,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,9,3.65,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,10,6.63,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,10,11.1,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,10,12.14,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,10,6.69,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,11,5.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,11,9.62,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,11,12.6,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,11,10.33,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,12,3.21,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,12,8.27,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,12,13.52,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,12,12.37,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,13,2.95,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,13,8.33,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,13,12.69,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,13,11.54,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,14,2.39,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,14,6.39,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,14,8.75,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,14,13.98,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,15,1.66,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,15,5.42,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,15,21.74,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,15,4.29,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,16,0.87,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,16,2.14,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,16,4.13,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,16,20.73,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,17,0.19,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,17,21.58,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,17,0.29,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,18,0.08,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,18,4.71,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,18,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,18,3.44,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),Jet A,isoparaffins,19,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),CAME,isoparaffins,19,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),TALL,isoparaffins,19,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p3),MFAT,isoparaffins,19,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,7,0.19,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,7,0.1,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,7,0.07,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,8,5.81,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,8,1.94,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,8,0.22,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,8,0.76,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,9,5.26,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,9,0.52,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,9,0.18,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,9,0.41,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,10,4.58,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,10,0.15,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,10,0.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,10,0.27,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,11,2.82,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,11,0.04,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,11,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,11,0.14,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,12,2.5,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,12,0.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,13,1.53,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,13,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,14,0.65,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,15,0.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,monocycloparaffins,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,monocycloparaffins,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,monocycloparaffins,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,monocycloparaffins,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,8,0.86,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,8,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,8,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,8,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,9,1.21,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,9,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,10,1.05,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,11,0.8,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,12,0.27,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,13,0.09,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,di- and tricycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,di- and tricycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,di- and tricycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,di- and tricycloparaffins,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),Jet A,alkylbenzenes,7,0.07,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),CAME,alkylbenzenes,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),TALL,alkylbenzenes,7,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p4),MFAT,alkylbenzenes,7,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,8,1.79,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,8,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,8,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,8,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,9,4.54,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,9,0.02,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,9,0.01,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,10,3.27,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,11,2.73,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,12,1.76,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,13,0.98,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,14,0.47,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,15,0.15,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylbenzenes,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylbenzenes,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylbenzenes,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylbenzenes,17,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,9,0.14,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,9,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,10,0.45,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,11,2.43,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,12,2.21,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,13,1.46,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,14,0.42,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,cycloaromatics,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,cycloaromatics,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,cycloaromatics,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,cycloaromatics,16,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylnaphthalenes,10,0.11,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylnaphthalenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylnaphthalenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylnaphthalenes,10,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),Jet A,alkylnaphthalenes,11,0.44,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),CAME,alkylnaphthalenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),TALL,alkylnaphthalenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p5),MFAT,alkylnaphthalenes,11,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),Jet A,alkylnaphthalenes,12,0.63,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),CAME,alkylnaphthalenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),TALL,alkylnaphthalenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),MFAT,alkylnaphthalenes,12,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),Jet A,alkylnaphthalenes,13,0.51,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),CAME,alkylnaphthalenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),TALL,alkylnaphthalenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),MFAT,alkylnaphthalenes,13,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),Jet A,alkylnaphthalenes,14,0.04,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),CAME,alkylnaphthalenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),TALL,alkylnaphthalenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),MFAT,alkylnaphthalenes,14,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),Jet A,alkylnaphthalenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),CAME,alkylnaphthalenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),TALL,alkylnaphthalenes,15,0.0,mass,wt%
+vozka2018_si,10.1021/acs.energyfuels.8b02787,Table S2 (SI p6),MFAT,alkylnaphthalenes,15,0.0,mass,wt%
