@@ -310,7 +310,7 @@ def test_predict_wrapper_keys():
 # ====================================================================================================================
 from fuelblend.api import predict_route as _pr3
 from fuelblend.eval import freezing_f1 as ff
-from fuelblend.eval.composition_route import ideal_sle_C, build_tmap
+from fuelblend.eval.composition_route import ideal_sle_C, build_tmap, build_tmap_designated
 
 
 def _t2_fuels(n, need_heat=False):
@@ -342,7 +342,7 @@ def _t2_fuels(n, need_heat=False):
 
 def test_freezing_svl_matches_route(ctx):
     reg = ctx.reg
-    tmap = build_tmap(reg, [i for i in range(len(reg.ik)) if reg.usable[i]])
+    tmap = build_tmap_designated(build_tmap(reg, [i for i in range(len(reg.ik)) if reg.usable[i]]))   # verified where present, else Coutinho
     fuels = _t2_fuels(5)
     assert len(fuels) == 5
     n_finite = 0
@@ -451,9 +451,11 @@ def test_uncertified_props_have_nan_interval():
     assert r["freezing_point_C"]["uncertified"] is True
     w = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], fuel_type="jet")
     assert "freezing_point_C" not in pb.UNCERTIFIED_PROPERTIES and "smoke_point_mm" not in pb.UNCERTIFIED_PROPERTIES
-    for p in ("freezing_point_C", "smoke_point_mm"):
-        assert w[p]["in_domain"] is False and math.isnan(w[p]["lo"])
-        assert w["uncertified"][p]["in_domain"] is False
+    assert w["smoke_point_mm"]["in_domain"] is False and math.isnan(w["smoke_point_mm"]["lo"])
+    assert w["uncertified"]["smoke_point_mm"]["in_domain"] is False
+    # v5 delta_freeze_margin: decane + dodecane are both in tm_dhfus_verified.csv, so the lab-liquidus margin applies (known composition)
+    fz = w["freezing_point_C"]
+    assert fz["in_domain"] is True and fz["margin"] == pytest.approx(16.975450975521966) and fz["safe_bound"] == fz["hi"]
 
 
 def test_k1_not_on_reconstructed():

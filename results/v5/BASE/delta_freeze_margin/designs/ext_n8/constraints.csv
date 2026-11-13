@@ -1,0 +1,15 @@
+design_id,constraint,model,lo,hi,prediction,applied_margin,status,slack,reason,spec_verification
+astm_jet_a__ext,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,781.0512220902937,4.5866,pass,0.022532647542979806,,
+astm_jet_a__ext,flash_point_C,le_chatelier_ideal,38.0,,51.52521690668317,2.206932808388615,pass,0.2978495815340672,lab_margin_set_by_one_system,
+astm_jet_a__ext,freezing_point_C,ideal_sle_mole_fraction,,-40.0,-57.87675709593742,16.975450975521966,pass,0.022532653010386382,,
+astm_jet_a__ext,kin_visc_m20C_cSt,refutas_raw,,8.0,2.9676225617072545,0.4153576080066075,pass,0.4380389770588984,,
+astm_jet_a__ext,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.95841620138744,0.1940195141400025,pass,0.02253263287961317,,
+astm_jet_a__ext,aromatics_wt_pct,class_mass_fraction,,25.0,0.0,0.0,by_construction,1.0,,
+astm_jet_a__ext,smoke_point_mm,ajftd_bulk_regression,25.0,,27.564566805231873,,uncertified,0.10258267220927493,"model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified)",secondary_sources_only
+bis_jet_a1__ext,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,789.3408925906746,4.5866,pass,0.15006603985653222,,
+bis_jet_a1__ext,flash_point_C,le_chatelier_ideal,38.0,,50.851958768600014,2.206932808388615,pass,0.28013226211082626,lab_margin_set_by_one_system,
+bis_jet_a1__ext,freezing_point_C,ideal_sle_mole_fraction,,-47.0,-64.88581056649761,16.975450975521966,pass,0.01936935299948181,,
+bis_jet_a1__ext,kin_visc_m20C_cSt,refutas_raw,,8.0,3.0148283927780177,0.4153576080066075,pass,0.4290998897707732,,
+bis_jet_a1__ext,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.82312084144388,0.1940195141400025,pass,0.019371526338875737,,
+bis_jet_a1__ext,aromatics_vol_pct,class_volume_fraction,,25.0,0.0,0.0,by_construction,1.0,,
+bis_jet_a1__ext,smoke_point_mm,ajftd_bulk_regression,25.0,,27.564566805231873,,uncertified,0.10258267220927493,"model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)",UNVERIFIED

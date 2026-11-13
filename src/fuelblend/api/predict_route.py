@@ -22,7 +22,8 @@ from rdkit.Chem import Descriptors, inchi
 
 from fuelblend.baselines.flash_unifac import _lookup, flash_point_unifac_detail
 from fuelblend.data.reconstruction_r3 import SubReps, subkind
-from fuelblend.eval.composition_route import NEAREST_ANY, RouteCtx, build_tmap, refutas_nu_safe
+from fuelblend.eval.composition_route import (NEAREST_ANY, VERIFIED_SOURCE, RouteCtx, build_tmap, build_tmap_designated,
+                                              build_tmap_verified, refutas_nu_safe)
 from fuelblend.mixture.common import CompoundRegistry, PurePropertyProvider
 
 RDLogger.DisableLog("rdApp.*")
@@ -179,6 +180,12 @@ def _tmap() -> dict:
     ctx = get_ctx()
     ok = [i for i in range(len(ctx.reg.ik)) if ctx.reg.usable[i]]
     return build_tmap(ctx.reg, ok)
+
+
+@lru_cache(maxsize=1)
+def _tmap_freezing() -> dict:
+    """Freezing constants: tm_dhfus_verified.csv where present, else the Coutinho entry (tagged ``source``)."""
+    return build_tmap_designated(_tmap(), build_tmap_verified())
 
 
 @lru_cache(maxsize=1)
@@ -620,14 +627,36 @@ def _mapped_input_weights(comps: list, pm: PropMap) -> dict:
     return out
 
 
-def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type) -> None:
+FREEZING_MARGIN_KEY = "freezing_point_C.lab_liquidus.svl_verified"
+
+
+def _freezing_margin_v5(prop: dict, iks: list, tmap: dict, composition_kind: str) -> bool:
+    """v5 delta_freeze_margin: the liquidus margin (direction under, added to the prediction: safe_bound = hi) applies only to a known
+    composition whose every mapped component has a verified Tm / dHfus and nothing was substituted or unmapped.  Returns True if applied."""
+    e = _v5_margins().get(FREEZING_MARGIN_KEY)
+    cov = prop["coverage"]
+    if (e is None or prop.get("value") is None or composition_kind != "known" or cov["substituted_mass"] > 1e-12 or cov["unmapped_mass"] > 1e-12
+            or not all((tmap.get(ik) or {}).get("source") == VERIFIED_SOURCE for ik in iks)):
+        return False
+    from fuelblend.api import predict_blend as pb
+    margin, unit, direction, _ = pb._applied_margin([FREEZING_MARGIN_KEY], _v5_margins())
+    if margin is None or direction != "under":
+        return False
+    lo, hi = pb.interval_from_margin(prop["value"], margin, unit)
+    prop.update(model_name=prop["method"], interval=[lo, hi], lo=lo, hi=hi, margin=margin, margin_unit=unit, margin_direction=direction,
+                safe_bound=hi, in_domain=True, domain_reasons=[], uncertified=False,
+                tuple=(prop["value"], lo, hi, prop["method"], True))
+    return True
+
+
+def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type, composition_kind: str = "known") -> None:
     from fuelblend.eval import freezing_f1 as ff
     from fuelblend.eval.composition_route import ideal_sle_C
     reg = ctx.reg
     iks = [reg.ik[int(i)] for i in pm.idx]
     x = pm.w / np.array([ctx.mw(reg.smiles[int(i)]) for i in pm.idx])
     x = x / x.sum()
-    tmap = _tmap()
+    tmap = _tmap_freezing()                              # verified constants where present, else the Coutinho entry (tagged)
 
     def has_sle(ik):
         t = tmap.get(ik)
@@ -636,14 +665,24 @@ def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type) -> None:
     no_sle = float(sum(w for w, ik in zip(pm.w, iks) if not has_sle(ik)))
     prop["coverage"]["sle_missing_mapped_mass"] = no_sle   # mapped mass (own or representative) with no Tm / dHfus; counts in x
     v = ideal_sle_C(x, iks, tmap)
+    v_old = ideal_sle_C(x, iks, _tmap())                  # all-Coutinho constants, the designated value before delta_freeze_margin
+    prop["variants"]["coutinho_constants"] = {
+        "value": float(v_old) if np.isfinite(v_old) else None,
+        "label": "ideal SvL in mole fraction on the Coutinho Tm / dHfus map only (value before delta_freeze_margin); uncertified"}
     if not np.isfinite(v):
         _no_value(prop, "non_finite", "no component with Tm / dHfus constants above x = 1e-4")
         prop["uncertified"] = True
     else:
         prop.update(value=float(v), status="ok")
-        _uncertified(prop, "uncertified: no skill shown over a constant; ideal SvL bias about +8 C; no yaml margin")
-    prop["label"] = "ideal SvL in mole fraction; no skill shown, bias about +8 C; uncertified"
-    prop["warnings"].append("freezing_uncertified_no_skill_shown")
+        if _freezing_margin_v5(prop, iks, tmap, composition_kind):
+            prop["warnings"].append("freezing_margin_from_lab_liquidus_binaries (delta_freeze_margin): verified constants for every component")
+        else:
+            _uncertified(prop, "uncertified: no freezing margin applies (needs a known composition, verified Tm / dHfus for every component, "
+                               "nothing substituted or unmapped)")
+    prop["label"] = ("ideal SvL in mole fraction on verified Tm / dHfus where available (else the Coutinho entry); "
+                     + ("lab-liquidus margin applied" if prop.get("uncertified") is False else "uncertified"))
+    if prop.get("uncertified") is not False:
+        prop["warnings"].append("freezing_uncertified")
     if no_sle > 0:
         prop["warnings"].append(f"components_without_sle_constants: mass {no_sle:.3f} is liquid solvent only")
     if str(fuel_type).lower() != "jet":                    # F1x variant: jet fuels with n-alkanes only
@@ -783,7 +822,7 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
             _no_value(r, "low_coverage", f"unmapped mass {pm.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
             r["uncertified"] = True
     else:
-        _freezing(props["freezing_point_C"], comps, ctx, pm, fuel_type)
+        _freezing(props["freezing_point_C"], comps, ctx, pm, fuel_type, composition_kind)
         _heat(props["heat_net_MJ_kg"], ctx, pm, fuel_type)
     out["freezing_point_C"] = props["freezing_point_C"]
     out["heat_net_MJ_kg"] = _finish(props["heat_net_MJ_kg"], HEAT_YAML_PROP, iks, T_K, fuel_type, composition_kind)

@@ -70,3 +70,39 @@ literature (NIST WebBook calorimetry rows), not from fitting to these liquidus p
 ## Outputs
 `scripts/v5/base/delta_freeze_margin.py` -> `rows.csv` (one row per scored point: system_id, sample, T_K, measured, pred_verified, pred_old, residual, status,
 scope flags), `summary.csv` (scope x constants: n_rows, n_systems, MAE, bias, constant MAE, margin), `readings.json`. Tests: `tests/test_delta_freeze_margin.py`.
+
+## Result (appended 2026-11-13; declared text above unchanged)
+Script `scripts/v5/base/delta_freeze_margin.py`; files `rows.csv`, `summary.csv`, `readings.json`; tests `tests/test_delta_freeze_margin.py`.
+
+| reading | value | verdict |
+|---|---|---|
+| R-FM-1 | 9 systems (77 rows, 0 unscored) | pass (threshold 9) |
+| R-FM-2 | SvL MAE 3.01 C vs leave-one-system-out constant 13.52 C; bootstrap (constant - SvL) 95 % interval [7.61, 13.52] C | pass (interval excludes 0) |
+| R-FM-3 | one-sided margin (alpha 0.10, under) 16.98 C | pass (finite) |
+
+Rule: all three passed, so `freezing_point_C.lab_liquidus.svl_verified` = 16.975450975521966 C (direction under, n_groups 9, n_rows 77) is WRITTEN to
+`configs/uncertainty_v5.yaml` (flash 2.2069 and smoke 7.8010 asserted unchanged). With 9 groups at alpha 0.10 the margin is the worst group's
+under-prediction, so it is set by one system. Bias on S_F -1.17 C; 52 % of rows are under-predicted.
+
+Descriptive (no decision): the same 47 rows that the old Coutinho map could score (4 systems): MAE 5.22 C old vs 2.89 C verified. All verified-constant
+ThermoML liquidus rows (any T, any carbon number, 36 systems): MAE 4.44 C. ASCENT 065A mixtures (7 rows): MAE 4.78 C. Vozka 2018 real fuels (22 rows,
+reconstructed composition, verified-only constants): MAE 7.77 C, bias +7.77 C (over-predicts, safe side), against 0.95 C for the unchanged F1x variant;
+the margin is not claimed for reconstructed real fuels.
+
+R-FM-4 (designs re-run, seed 42, same arguments, `designs/<run>/`): freezing passes with the margin in all 8 designs; 0 of 8 certified.
+
+| run | spec | freezing pred (C) | freezing status | smoke | category | forward check |
+|---|---|---|---|---|---|---|
+| v5pool | Jet A | -57.87 | pass | uncertified | B | fails only `kin_visc_m20C_cSt[tol]` |
+| v5pool | Jet A-1 | -64.87 | pass | uncertified | B | same |
+| ext_n30 | Jet A | -57.88 | pass | uncertified | B | same |
+| ext_n30 | Jet A-1 | -64.89 | pass | uncertified | B | same |
+| ext_n8 | Jet A | -57.88 | pass | uncertified | B | same |
+| ext_n8 | Jet A-1 | -64.89 | pass | uncertified | B | same |
+| guard4_v5pool | Jet A | -61.87 | pass | uncertified | B | same |
+| guard4_v5pool | Jet A-1 | -68.89 | pass | uncertified | B | same |
+
+Smoke blocks every design (aromatics 0 vol %, outside the regression domain; no margin), as the declared expectation said. The viscosity tolerance row
+fails because the API now designates the ML pair-residual viscosity (commit cc5f5ef) while the design side still uses Refutas; that is fixed separately
+(design viscosity consistency step), not here.
+Limits: S_F is not a fresh holdout (see the disclosure); the margin applies in the API only for known compositions whose every component has a verified constant.

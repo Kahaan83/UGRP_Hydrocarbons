@@ -202,21 +202,26 @@ def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
                                margin_missing_reason=why, by_construction=False, T_valid_C=None)
 
 
+FREEZING_MARGIN_KEY = "freezing_point_C.lab_liquidus.svl_verified"
+
+
 def _freezing_api_fn(L: RouteLibrary):
-    """Design freezing = the function ``predict_fuel`` uses: ideal Schroeder-van Laar in mole fraction (RDKit MW) on the
-    Coutinho ``build_tmap`` constants, for every pool member (D7, review C1).  The constants are route constants, so each
-    member is recorded as ``coutinho_table`` and the model is uncertified (freezing has no valid margin anyway)."""
-    from fuelblend.eval.composition_route import ideal_sle_C
+    """Design freezing = the function ``predict_fuel`` uses: ideal Schroeder-van Laar in mole fraction (RDKit MW) on the designated freezing
+    constants (``predict_route._tmap_freezing``: tm_dhfus_verified.csv where present, else the Coutinho entry).  A member whose constants come from the
+    verified csv is not recorded as non-verified; a member on the Coutinho entry is recorded ``coutinho_table`` (freezing then stays uncertified)."""
+    from fuelblend.eval.composition_route import VERIFIED_SOURCE, ideal_sle_C
 
     def fn(pool, w, T_C):
         pool = list(pool)
-        tmap = L._pr._tmap()
+        tmap = L._pr._tmap_freezing()
         iks = [L.ik(n) for n in pool]
         for n, ik in zip(pool, iks):
-            if not tmap.get(ik):
-                raise ModelUnavailable(f"{n}.Tm status=absent (no Coutinho table entry)")
-            L.nonverified_used.add(f"{n}.Tm={'coutinho_table'}")
-            L.nonverified_used.add(f"{n}.dHfus={'coutinho_table'}")
+            t = tmap.get(ik)
+            if not t:
+                raise ModelUnavailable(f"{n}.Tm status=absent (no verified or Coutinho table entry)")
+            if t.get("source") != VERIFIED_SOURCE:
+                L.nonverified_used.add(f"{n}.Tm={t.get('source', 'coutinho_table')}")
+                L.nonverified_used.add(f"{n}.dHfus={t.get('source', 'coutinho_table')}")
         w = np.asarray(w, float)
         mw = np.array([L._ctx.mw(L.smiles[n]) for n in pool])
         x = (w / w.sum()) / mw
@@ -240,7 +245,9 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     props, alts = models["props"], models["alternates"]
     mole = next(p for p in alts["freezing"] if p.name == "ideal_sle_mole_fraction")
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
-    props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"})
+    # the yaml key is attached unconditionally: a margins file without it gives the engine's "no such entry" reason (uncertified)
+    props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"},
+                                            margin_keys=(FREEZING_MARGIN_KEY,), margin_missing_reason="")
     models["props"] = {k: _flag(L, p) for k, p in props.items()}
     models["alternates"] = {k: [_flag(L, p) for p in v] for k, v in alts.items()}
     models["pool"] = list(L.pool)
@@ -412,7 +419,7 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
     notes = {
         "density_15C_kg_m3": "design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K",
         "flash_point_C": "design and API both use the LFL-overlay registry (U1)",
-        "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the Coutinho tmap constants",
+        "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",
         "nhoc_MJ_kg": "design primary model uses constant H = 13.8 wt%; the API uses composition H",
         "smoke_point_mm": "design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K)",
         "aromatics_wt_pct": "class mass fraction, by construction",
