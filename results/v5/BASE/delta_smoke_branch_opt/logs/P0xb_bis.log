@@ -1,0 +1,34 @@
+{
+ "design_id": "bis_jet_a1__P0xb_standin",
+ "spec": "bis:jet_a1",
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.0, \"n-undecane\": 0.1212, \"n-dodecane\": 0.0254, \"butylcyclohexane\": 0.3683, \"decalin_trans\": 0.2032, \"1,2,4-trimethylbenzene\": 0.1607, \"isooctane\": 0.045, \"tetralin\": 0.0, \"n-tridecane\": 0.0218, \"hexylbenzene\": 0.0545}",
+ "weights": "{\"n-undecane\": 0.12119, \"n-dodecane\": 0.02538, \"butylcyclohexane\": 0.36827, \"decalin_trans\": 0.20318, \"1,2,4-trimethylbenzene\": 0.16071, \"isooctane\": 0.04497, \"n-tridecane\": 0.02184, \"hexylbenzene\": 0.05445}",
+ "opt_best_objective": -0.13486173012478764,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 1,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": -0.10630662545519985,
+ "opt_uncertainty_U": 0.11422041855693199,
+ "opt_alt_standin": true,
+ "build_s": 11.1,
+ "design_s": 1326.7,
+ "pool": "P0xb",
+ "n_compounds": 10,
+ "d86": true,
+ "alt_standin": true
+}
+  density_15C_kg_m3              pass             pred 813.87 slack +0.35207 margin 4.5866  
+  flash_point_C                  fail             pred 36.167 slack -0.10631 margin 2.206932808388615  limit violated after applying the margin; lab_margin_set_by_one_system
+  freezing_point_C               fail             pred -58.979 slack -0.10631 margin 16.975450975521966  limit violated after applying the margin
+  kin_visc_m20C_cSt              pass             pred 3.2331 slack +0.46126 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.086 slack +0.00214 margin 0.1940195141400025  
+  aromatics_vol_pct              by_construction  pred 20.01 slack +0.29351 margin 0.0  
+  smoke_point_mm                 fail             pred 21.087 slack -0.10631 margin 4.107069860688682  limit violated after applying the margin; alt_min 19 not passed (status fail)
+  distillation_T10_C             uncertified      pred 138.65 slack +0.32368 margin None  outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_FBP_C             uncertified      pred 225.48 slack +0.24841 margin None  outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_T50_minus_T10_C   uncertified      pred 40.989 slack +1.73260 margin None  outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_T90_minus_T10_C   uncertified      pred 40.342 slack +0.00855 margin None  outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)

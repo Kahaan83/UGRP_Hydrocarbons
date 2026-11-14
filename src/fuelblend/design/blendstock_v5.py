@@ -473,8 +473,10 @@ def apply_represented_rule(res: E.DesignResult, represented_mass: float, models:
 
 def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_starts: int = 10, seed: int = 42, synthetic_blend: bool = True,
                 alt_limits: bool = True, recipe_margins: bool = True, d86: bool = True, lam: float = LAMBDA_UNC,
-                synthetic_cap: Optional[float] = None, max_iter: int = 120) -> tuple:
-    """-> (DesignResult on the compound pool, top-level weights dict, optimiser info)."""
+                synthetic_cap: Optional[float] = None, max_iter: int = 120, alt_standin: bool = False) -> tuple:
+    """-> (DesignResult on the compound pool, top-level weights dict, optimiser info).
+
+    ``alt_standin`` (delta_smoke_branch_opt, default False): ``engine_v4._Sides(alt_point_standin=...)``, optimiser only."""
     pool = list(models["pool"])
     blocked = E.blocked_result(spec_name, pool, models, seed, synthetic_blend)
     if blocked is not None:
@@ -482,7 +484,7 @@ def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_sta
     spec = E.load_spec(spec_name, synthetic_blend=synthetic_blend, alt_limits=alt_limits, d86=d86)
     margins = E.load_margins(margins_path)
     use = LR.with_recipe_margins(models, margins) if recipe_margins else models
-    sides = E._Sides(spec, pool, use, margins, graded=bool(recipe_margins))
+    sides = E._Sides(spec, pool, use, margins, graded=bool(recipe_margins), alt_point_standin=bool(alt_standin))
     U = alternate_spread_fn(models, spec) if lam else None
     dom_pms = [use["props"][c] for c, _ in D86_PROPS.values() if d86 and c in use["props"]]
 
@@ -510,6 +512,8 @@ def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_sta
                          n_converged=int(info["n_converged"]), n_starts=int(info["n_starts"]), seed=int(seed), lam=float(lam),
                          min_slack=float(np.nanmin([c.slack for c in res.constraints])) if res.constraints else float("nan"),
                          uncertainty_U=float(U(pool, bp.expand(u))) if U else float("nan"))
+    if alt_standin:                                   # recorded only when on, so feature-off outputs keep their columns
+        res.optimiser["alt_standin"] = True
     return res, dict(zip(bp.names, map(float, u))), info
 
 
