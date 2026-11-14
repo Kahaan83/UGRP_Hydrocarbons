@@ -462,7 +462,9 @@ def test_k1_only_at_fitted_T():
 
 
 def test_uncertified_props_have_nan_interval():
-    r = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")
+    # BLEND3 (toluene) is no longer usable here: CLM-65 (a6b526c) upgraded toluene's Tm/dHfus to verified, so BLEND3 now gets the
+    # delta_freeze_margin interval.  Hexylbenzene was NOT upgraded (CLM-65), so this blend keeps a non-verified freezing constant.
+    r = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.3, "CCCCCCc1ccccc1": 0.2}, T_K=298.15, fuel_type="jet")
     assert math.isnan(r["freezing_point_C"]["lo"]) and math.isnan(r["freezing_point_C"]["hi"]) and r["freezing_point_C"]["in_domain"] is False
     assert r["freezing_point_C"]["uncertified"] is True
     w = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], fuel_type="jet")
