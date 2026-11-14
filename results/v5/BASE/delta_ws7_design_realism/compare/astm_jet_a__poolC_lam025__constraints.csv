@@ -1,0 +1,9 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+astm_jet_a__poolC_lam025,density_15C_kg_m3,pass,785.4081197236361,4.5866,0.08956184190209429,775.0,840.0,ideal_volume_rho15,,
+astm_jet_a__poolC_lam025,flash_point_C,pass,40.89937450001963,2.206932808388615,0.01822214977976363,38.0,,le_chatelier_ideal,,lab_margin_set_by_one_system
+astm_jet_a__poolC_lam025,freezing_point_C,pass,-58.638214788975546,16.975450975521966,0.0415690953363395,,-40.0,ideal_sle_mole_fraction,,
+astm_jet_a__poolC_lam025,kin_visc_m20C_cSt,pass,2.9042832347741054,0.28747778594508044,0.5160516684173883,,8.0,refutas+ml_pair_gn,,
+astm_jet_a__poolC_lam025,nhoc_MJ_kg,pass,43.77391504011123,0.1940195141400025,0.01822185808343989,42.8,,gcv_group_additivity_constH,,
+astm_jet_a__poolC_lam025,aromatics_wt_pct,by_construction,9.310572272257286,0.0,0.6275771091097085,,25.0,class_mass_fraction,,
+astm_jet_a__poolC_lam025,aromatics_vol_pct,uncertified,8.309771661255247,0.0,0.018221862426779263,8.0,25.0,class_volume_fraction,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+astm_jet_a__poolC_lam025,smoke_point_mm,uncertified,24.87470089142597,4.107069860688682,0.15375727948540488,25.0,,ajftd_bulk_regression,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: secondary_sources_only (an unverified limit is never certified))

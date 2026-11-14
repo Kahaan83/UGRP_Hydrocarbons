@@ -1,0 +1,12 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+bis_jet_a1__P0,density_15C_kg_m3,pass,795.1970473325221,4.5866,0.24016072819264747,775.0,840.0,ideal_volume_rho15,,
+bis_jet_a1__P0,flash_point_C,fail,31.680912016694208,2.206932808388615,-0.2243689682024844,38.0,,le_chatelier_ideal,,limit violated after applying the margin; lab_margin_set_by_one_system
+bis_jet_a1__P0,freezing_point_C,fail,-53.430109485804024,16.975450975521966,-0.22436896786633917,,-47.0,ideal_sle_mole_fraction,,limit violated after applying the margin
+bis_jet_a1__P0,kin_visc_m20C_cSt,pass,2.613127494133684,0.28747778594508044,0.5645677130050957,,8.0,refutas+ml_pair_gn,,
+bis_jet_a1__P0,nhoc_MJ_kg,pass,43.39117907314432,0.1940195141400025,0.009279428948699117,42.8,,gcv_group_additivity_constH,,
+bis_jet_a1__P0,aromatics_vol_pct,uncertified,22.99999948223494,0.0,0.1176470892802976,8.0,25.0,class_volume_fraction,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+bis_jet_a1__P0,smoke_point_mm,fail,20.119486826286728,4.107069860688682,-0.11042127968899745,25.0,,ajftd_bulk_regression,UNVERIFIED,spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 not passed (status fail)
+bis_jet_a1__P0,distillation_T10_C,uncertified,124.71690597937167,7.927706228297922,0.3529531111820996,,205.0,antoine_tb_d86:T10,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+bis_jet_a1__P0,distillation_FBP_C,uncertified,206.90047310284424,3.2620795453688913,0.29945815783928953,,300.0,antoine_tb_d86:FBP,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+bis_jet_a1__P0,distillation_T50_minus_T10_C,uncertified,49.497519672451304,18.68126547110495,1.0544169467564235,15.0,,antoine_tb_d86:T50_T10,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+bis_jet_a1__P0,distillation_T90_minus_T10_C,fail,49.49751970056023,18.246505125791458,-0.21872463563078065,40.0,,antoine_tb_d86:T90_T10,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin
