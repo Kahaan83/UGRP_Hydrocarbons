@@ -1,0 +1,8 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+bis_jet_a1__poolC_lam0,density_15C_kg_m3,pass,792.766359211728,4.5866,0.20276552633427644,775.0,840.0,ideal_volume_rho15,,
+bis_jet_a1__poolC_lam0,flash_point_C,pass,40.79763389085991,2.206932808388615,0.015544765328192062,38.0,,le_chatelier_ideal,,lab_margin_set_by_one_system
+bis_jet_a1__poolC_lam0,freezing_point_C,pass,-64.70605496115542,16.975450975521966,0.015544765651775547,,-47.0,ideal_sle_mole_fraction,,
+bis_jet_a1__poolC_lam0,kin_visc_m20C_cSt,pass,2.9120944557657302,0.28747778594508044,0.514750064179462,,8.0,refutas+ml_pair_gn,,
+bis_jet_a1__poolC_lam0,nhoc_MJ_kg,pass,43.65933548360054,0.1940195141400025,0.015544765641601484,42.8,,gcv_group_additivity_constH,,
+bis_jet_a1__poolC_lam0,aromatics_vol_pct,uncertified,8.264261008112578,0.0,0.01554476518309285,8.0,25.0,class_volume_fraction,secondary_sources_only,spec limit verification: secondary_sources_only (an unverified limit is never certified)
+bis_jet_a1__poolC_lam0,smoke_point_mm,uncertified,24.889432650563744,4.107069860688682,0.15457571054861458,25.0,,ajftd_bulk_regression,UNVERIFIED,spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: UNVERIFIED (an unverified limit is never certified))

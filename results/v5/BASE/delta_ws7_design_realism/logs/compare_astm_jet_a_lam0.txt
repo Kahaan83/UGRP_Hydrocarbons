@@ -1,0 +1,29 @@
+{
+ "design_id": "astm_jet_a__poolC_lam0",
+ "spec": "astm:jet_a",
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.1597, \"n-undecane\": 0.1357, \"n-dodecane\": 0.0283, \"butylcyclohexane\": 0.5568, \"decalin_trans\": 0.0, \"1,2,4-trimethylbenzene\": 0.0934, \"isooctane\": 0.0261}",
+ "weights": "{\"n-decane\": 0.15972, \"n-undecane\": 0.13569, \"n-dodecane\": 0.02835, \"butylcyclohexane\": 0.55679, \"1,2,4-trimethylbenzene\": 0.09337, \"isooctane\": 0.0261}",
+ "opt_best_objective": 0.018733230437428455,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 17,
+ "opt_n_starts": 30,
+ "opt_seed": 42,
+ "opt_lam": 0.0,
+ "opt_min_slack": 0.01873323043741948,
+ "opt_uncertainty_U": NaN,
+ "build_s": 14.7,
+ "design_s": 1442.5,
+ "pool": "C",
+ "n_compounds": 7,
+ "d86": false
+}
+  density_15C_kg_m3              pass             pred 784 slack 0.0682 margin 4.5866  
+  flash_point_C                  pass             pred 40.92 slack 0.01873 margin 2.206932808388615  lab_margin_set_by_one_system
+  freezing_point_C               pass             pred -57.72 slack 0.01873 margin 16.975450975521966  
+  kin_visc_m20C_cSt              pass             pred 2.901 slack 0.5165 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.8 slack 0.01873 margin 0.1940195141400025  
+  aromatics_wt_pct               by_construction  pred 9.337 slack 0.6265 margin 0.0  
+  aromatics_vol_pct              uncertified      pred 8.318 slack 0.01873 margin 0.0  spec limit verification: secondary_sources_only (an unverified limit is never certified)
+  smoke_point_mm                 uncertified      pred 24.87 slack 0.1536 margin 4.107069860688682  spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certi
