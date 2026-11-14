@@ -22,6 +22,13 @@ Written 2026-11-14 at the user's request. Purpose: show in the methodology, repo
 ## Open user decisions recorded by these workstreams
 Spec `verification:` flags (smoke, aromatics); adopt WS6 cold-viscosity offset margins; designate any WS4/WS5/WS6 variant (evidence says no); refresh `antoine_refit.csv` (see note below; NOT done); treat `pure_props_v5.csv` registry values as verified; curate n-octane/n-nonane Tm from Finke 1954.
 
+## User decisions 2026-11-14 (second round)
+- Spec flags: the user will read D7566, D1655 and IS 1571 and upgrade the `verification:` flags themselves; nothing is certified until then. Then re-run pool C.
+- WS6 cold-viscosity offset margins: NOT adopted (keep current margins).
+- D86 margins: adopt only after the D86 limits are verified.
+- `pure_props_v5.csv` registry values: source primary papers first; tiers unchanged until then.
+- Next work: re-run pool C after the flags; find a real SAK composition; find multicomponent freezing data (8+ systems per class mix).
+
 ## Decided 2026-11-14
 - **Lab test cannot happen** (user). No lab measurement of any design is possible, so every design stays a model prediction. `results/v5/BASE/delta_ws7_design_realism/LAB_TEST_REQUEST.md` is superseded; the report must say designs are unmeasured and "certified" means certified under the model and declared margins only.
 - Items 5 and 6 were handled before merging: the three failing tests (`test_predict_blend::test_pure_component_viscosity_follows_composition_kind`, `test_base_delta_representatives`, `test_v4_provenance`) all pass on the main `v5` checkout (14 passed), so those failures were worktree-environment artifacts. `antoine_refit.csv` was deliberately NOT overwritten: it is a gitignored artifact the original refit script for which is not in the repo, and it feeds the live anchored-Antoine flash route, so refreshing it would change frozen BASE flash numbers and the 2.21 C margin. The exploratory fresh refit is in `results/v5/BASE/delta_ws3_pure_gaps/antoine_exploratory_fresh_refit.csv` (`results/v5/BASE/delta_ws3_pure_gaps/`).
