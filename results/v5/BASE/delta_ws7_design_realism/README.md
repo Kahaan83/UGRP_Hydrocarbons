@@ -133,3 +133,50 @@ adopting them into `configs/uncertainty_v5.yaml` is a user decision.
 Registry-Antoine Tb minus literature: n-C10 -1.9, n-C11 -3.4, n-C12 -5.4, butylcyclohexane -1.9, isooctane 0.0, 1,2,4-TMB -0.3, trans-decalin
 -6.9 C. Tb is biased low by up to 7 C for C11+ and bicyclics (Antoine extrapolated beyond its fitted range); the D86 margins absorb this
 only to the extent the real fuels share it.
+
+### R-W7-4 feature off unchanged (unit tests, `tests/test_v5_ws7_design_realism.py`, 13 passed)
+
+With `d86=False` (default) all 24 spec loads equal the pre-change fixture (`tests/data/ws7_feature_off_fixture.json`, written before the
+engine/yaml change) and the pool C stored recipes give identical statuses, reasons, predictions, slacks and margins. One blendstock at weight 1
+(ATJ) equals the rep-level `evaluate_recipe` exactly. `tests/test_v4_design.py`, `test_v5_aromatics_min.py`, `test_v5_smoke_alt_limit.py`: 43 passed.
+
+### R-W7-5 optimiser comparison on pool C (seed 42, 30 starts, D86 off) (`compare/`, `r_designs.csv`)
+
+| spec | engine 6dc66f8 min slack | new optimiser, lambda 0 | new optimiser, lambda 0.25 | reading |
+|---|---|---|---|---|
+| Jet A | 0.018733 | **0.018733** (same recipe to 4 decimals, 17/30 converged) | 0.018222 (BCH 0.579, TMB 0.093; U lower) | **reproduces**; penalty costs 0.0005 slack |
+| Jet A-1 | 0.015545 | **0.015545** (same recipe) | 0.014701 (TMB 0.100, aromatics 9.05 vol %) | **reproduces**; penalty costs 0.0008 slack |
+
+The uncertainty penalty moves the recipe slightly away from the alternate-model disagreement (freezing slack 0.019 -> 0.042) at the cost of a
+small loss in the binding slacks. All four keep `would_certify_if_specs_verified = True` (blocked only by the aromatics vol % and smoke spec flags).
+
+### R-W7-6 designs with D86 on (seed 42, 10 starts, lambda 0.25) (`designs/P*/`, `r_designs.csv`)
+
+| design | top-level recipe (wt) | n pass / fail / uncertified | failing constraints (point estimate or with margin) | counterfactual |
+|---|---|---|---|---|
+| P0 Jet A (pool C) | n-C10 0.18, n-C11 0.21, n-C12 0.06, BCH 0.05, decalin 0.18, TMB 0.26, isooctane 0.06 | 3 / 5 / 4 | flash 32.3 C, freezing -49.4 (margin), aromatics wt 25.5, smoke 20.1, **T90-T10 49.9 < 40+18.2** | False |
+| P0 Jet A-1 | similar | 3 / 4 / 4 | flash, freezing, smoke, T90-T10 49.5 | False |
+| P1 Jet A (Jet A base + pure) | Jet A base 0.85, n-C12 0.09, isooctane 0.03, n-C11 0.02 | 0 / 4 / 7 | flash 35.8 < 38 (nominal), freezing -39.8 > -40 (nominal), T50-T10 32.8 and T90-T10 55.9 (with margin) | False |
+| P1 Jet A-1 | Jet A base 0.91, n-C12 0.06, isooctane 0.03 | 0 / 3 / 8 | flash 35.3, freezing -43.6 > -47, T50-T10 32.6 | False |
+| P2 Jet A (SAF) | Jet A base 0.54, HEFA 0.46, ATJ 0, TMB 0.001 | 0 / 2 / 9 | density 774.9 < 775 and aromatics 7.99 < 8 vol % (both nominal, normalised slack -0.0008) | False |
+| P2 Jet A-1 (SAF) | Jet A base 0.49, HEFA 0.10, ATJ 0.40, TMB 0.01 (synthetic cap 0.50 active) | 0 / 2 / 9 | freezing -46.96 > -47 and aromatics 7.99 < 8 (nominal, slack -0.0008) | False |
+
+Readings:
+* **0 of 10 designs certified** (and 0 of the 6 R-W7-6 designs). As declared, the 4 pool C comparisons would certify only if the two spec flags
+  were verified; every design with D86 on or with a real blendstock has a non-spec blocker, so their counterfactual is False.
+* **D86 is the binding problem for pure-compound pools (P0)**: no pool C recipe reaches T90-T10 >= 58.2 C (40 + the 18.2 C margin); widening
+  the curve with isooctane drives flash below 38 C. This was the expected outcome.
+* **A real Jet A base widens the curve (P1/P2 TBP spread inside the domain; P2 T90-T10 86-116 C passes with margin, T10 and FBP pass with
+  margin)** but brings its own limits: POSF-10325 as represented here predicts flash ~35-36 C and freezing near -40 C, so P1 fails flash and
+  freezing at the point estimate. The SAF pool P2 meets flash, freezing (Jet A), viscosity, NHOC and all four D86 limits at the point estimate
+  and ends at the very edge of density (775) and aromatics (8 vol %): the max-min optimum sits at normalised slack -0.0008, i.e. it cannot meet
+  both the D7566 aromatics minimum and the density minimum with the declared penalty on. Not a pass; reported as fail.
+* Every P1/P2 model-predicted constraint is uncertified for two reasons that are not spec flags: (a) non-verified constants of the GCxGC
+  representatives (route_grid rho15, route_anchored flash, Coutinho Tm/dHfus; 19-20 representatives lack Tm/dHfus altogether), so density,
+  flash, freezing and aromatics vol % have no margin and the optimiser steered on point estimates; (b) the declared represented-blendstock rule.
+  Realism therefore costs certifiability until real-fuel margins (WS6) and verified representative constants exist.
+* n_converged: P0 2/10, P2 10/10 (other values in `r_designs.csv`); a flag, not proof of a global optimum.
+
+### R-W7-7 final check
+
+`LAB_TEST_REQUEST.md` (needs user decision; nobody contacted).
