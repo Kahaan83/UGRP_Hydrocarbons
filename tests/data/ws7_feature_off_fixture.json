@@ -4,9 +4,9 @@
    "aromatics_vol_pct": {
     "margin": 0.0,
     "prediction": 8.321346125090653,
-    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified)",
+    "reason": "",
     "slack": 0.018902713240626624,
-    "status": "uncertified"
+    "status": "by_construction"
    },
    "aromatics_wt_pct": {
     "margin": 0.0,
@@ -53,18 +53,18 @@
    "smoke_point_mm": {
     "margin": 4.107069860688682,
     "prediction": 24.870954247473453,
-    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: secondary_sources_only (an unverified limit is never certified))",
+    "reason": "limit used: alt_min 18 with naphthalenes_vol_pct_max: by_construction (pred 0)",
     "slack": 0.15354913259915393,
-    "status": "uncertified"
+    "status": "pass"
    }
   },
   "bis:jet_a1": {
    "aromatics_vol_pct": {
     "margin": 0.0,
     "prediction": 8.260916252877392,
-    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified)",
+    "reason": "",
     "slack": 0.015348014875140696,
-    "status": "uncertified"
+    "status": "by_construction"
    },
    "density_15C_kg_m3": {
     "margin": 4.5866,
@@ -104,9 +104,9 @@
    "smoke_point_mm": {
     "margin": 4.107069860688682,
     "prediction": 24.890515344946202,
-    "reason": "spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: UNVERIFIED (an unverified limit is never certified))",
-    "slack": 0.15463586023652887,
-    "status": "uncertified"
+    "reason": "limit used: alt_min 19 with naphthalenes_vol_pct_max: by_construction (pred 0)",
+    "slack": 0.09386555180302736,
+    "status": "pass"
    }
   }
  },
@@ -444,7 +444,7 @@
      "min": 25.0,
      "test_method": "ASTM D1322 / D1840",
      "uncertainty_margin": null,
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     }
    },
    "grade": "Jet A",
@@ -491,7 +491,7 @@
      "min": 25.0,
      "test_method": "ASTM D1322 / D1840",
      "uncertainty_margin": null,
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     }
    },
    "grade": "Jet A",
@@ -505,8 +505,8 @@
      "applies_to": "synthetic_blend",
      "max": 25.0,
      "min": 8.0,
-     "source": "D7566 Table 1 (secondary, D7566-12a)",
-     "verification": "secondary_sources_only"
+     "source": "D7566 Table 1 (checked by user against the standard 2026-11-14)",
+     "verification": "verified"
     },
     "aromatics_wt_pct": {
      "max": 25.0,
@@ -546,7 +546,7 @@
      "min": 25.0,
      "test_method": "ASTM D1322 / D1840",
      "uncertainty_margin": null,
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     }
    },
    "grade": "Jet A",
@@ -559,8 +559,8 @@
      "applies_to": "synthetic_blend",
      "max": 25.0,
      "min": 8.0,
-     "source": "D7566 Table 1 (secondary, D7566-12a)",
-     "verification": "secondary_sources_only"
+     "source": "D7566 Table 1 (checked by user against the standard 2026-11-14)",
+     "verification": "verified"
     },
     "aromatics_wt_pct": {
      "max": 25.0,
@@ -600,7 +600,7 @@
      "min": 25.0,
      "test_method": "ASTM D1322 / D1840",
      "uncertainty_margin": null,
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     }
    },
    "grade": "Jet A",
@@ -929,14 +929,14 @@
      "uncertainty_margin": 0.28
     },
     "smoke_point_mm": {
-     "alt_min": 18.0,
+     "alt_min": 19.0,
      "alt_requires": {
       "naphthalenes_vol_pct_max": 3.0
      },
      "min": 25.0,
-     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "test_method": "IS 1448 [P:31] / ISO 3014",
      "uncertainty_margin": null,
-     "verification": "UNVERIFIED"
+     "verification": "verified"
     }
    },
    "grade": "Aviation Turbine Fuel (Jet A-1)",
@@ -976,14 +976,14 @@
      "uncertainty_margin": 0.28
     },
     "smoke_point_mm": {
-     "alt_min": 18.0,
+     "alt_min": 19.0,
      "alt_requires": {
       "naphthalenes_vol_pct_max": 3.0
      },
      "min": 25.0,
-     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "test_method": "IS 1448 [P:31] / ISO 3014",
      "uncertainty_margin": null,
-     "verification": "UNVERIFIED"
+     "verification": "verified"
     }
    },
    "grade": "Aviation Turbine Fuel (Jet A-1)",
@@ -996,9 +996,9 @@
     "aromatics_vol_pct": {
      "max": 25.0,
      "min": 8.0,
-     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "source": "D7566 Table 1 (checked by user against the standard 2026-11-14)",
      "test_method": "IS 1448 [P:23] / ASTM D1319",
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     },
     "density_15C_kg_m3": {
      "max": 840.0,
@@ -1027,14 +1027,14 @@
      "uncertainty_margin": 0.28
     },
     "smoke_point_mm": {
-     "alt_min": 18.0,
+     "alt_min": 19.0,
      "alt_requires": {
       "naphthalenes_vol_pct_max": 3.0
      },
      "min": 25.0,
-     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "test_method": "IS 1448 [P:31] / ISO 3014",
      "uncertainty_margin": null,
-     "verification": "UNVERIFIED"
+     "verification": "verified"
     }
    },
    "grade": "Aviation Turbine Fuel (Jet A-1)",
@@ -1046,9 +1046,9 @@
     "aromatics_vol_pct": {
      "max": 25.0,
      "min": 8.0,
-     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "source": "D7566 Table 1 (checked by user against the standard 2026-11-14)",
      "test_method": "IS 1448 [P:23] / ASTM D1319",
-     "verification": "secondary_sources_only"
+     "verification": "verified"
     },
     "density_15C_kg_m3": {
      "max": 840.0,
@@ -1077,14 +1077,14 @@
      "uncertainty_margin": 0.28
     },
     "smoke_point_mm": {
-     "alt_min": 18.0,
+     "alt_min": 19.0,
      "alt_requires": {
       "naphthalenes_vol_pct_max": 3.0
      },
      "min": 25.0,
-     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "test_method": "IS 1448 [P:31] / ISO 3014",
      "uncertainty_margin": null,
-     "verification": "UNVERIFIED"
+     "verification": "verified"
     }
    },
    "grade": "Aviation Turbine Fuel (Jet A-1)",

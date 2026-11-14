@@ -47,7 +47,7 @@
    "pred": 27.564566805231873,
    "slack": 0.10258267220927493,
    "margin": null,
-   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: secondary_sources_only (an unverified limit is never certified)"
+   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
   }
  },
  "bis_jet_a1__v5pool": {
@@ -98,7 +98,7 @@
    "pred": 27.564566805231873,
    "slack": 0.10258267220927493,
    "margin": null,
-   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); spec limit verification: UNVERIFIED (an unverified limit is never certified)"
+   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
   }
  }
 }
