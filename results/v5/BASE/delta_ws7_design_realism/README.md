@@ -193,3 +193,11 @@ Pool = Jet A POSF-10325, HEFA-CAME, ATJ POSF11498, SAK (Feldhausen 2022), 1,2,4-
 * ASTM Jet A: SAK weight 0.0011 (Jet A 0.54, HEFA 0.46). Density fails by 0.0008 slack (774.9) and aromatics vol% by the same 0.0008 (7.986 vs 8); flash, freezing, viscosity, NHOC, D86 uncertified.
 * BIS Jet A-1: SAK weight 0.0 (Jet A 0.49, ATJ 0.40, HEFA 0.10). Freezing fails by 0.0008 and aromatics vol% by 0.0008.
 * Reading: SAK is not selected. It adds nothing the HEFA/ATJ blendstocks do not already give, so the pool-P2 conclusion (0 of 6 certified) is unchanged. Matches the declared expectation (uncertified). Reasons for `uncertified` remain: D86 limits `secondary_sources_only`, GCxGC-represented blendstock margins not validated, route-grid constants for several pool members. No gate moved.
+
+## Re-run with user-verified D86 limits (2026-11-14/15)
+The user checked the four D86 limits (T10 <= 205, FBP <= 300, T50-T10 >= 15, T90-T10 >= 40 C; D1655 / D7566 / IS 1571) against the standards; flags set to `verified` in `configs/specs_astm.yaml` and `configs/specs_bis.yaml`. All 8 designs (P0-P3 x ASTM Jet A, BIS Jet A-1, 10 starts, seed 42, D86 on) re-run; logs `logs/verified_*.log`, tables `designs/P*/`.
+* Result: **0 of 8 certified.** The D86 constraints no longer carry the `secondary_sources_only` clause.
+* P0 ASTM: T10, FBP, T50-T10 pass; T90-T10, flash, freezing and smoke fail. P0 BIS: D86 uncertified (TBP T90-T10 81.8 C outside the D86 fit domain); flash, freezing, smoke fail.
+* P1: flash and T50-T10 fail on both specs; freezing fails (ASTM -0.005, BIS -0.072 slack).
+* P2/P3: ASTM density and aromatics vol% fail by 0.0008 slack; BIS freezing and aromatics fail by 0.0008. All other constraints, including the four D86 limits, are `uncertified` for the remaining reasons: GCxGC-represented blendstock margins not validated on real fuels (WS6), route-grid / Coutinho-table constants for several pool members.
+* Reading: verifying the D86 limits removed one blocker but not the others; the optimiser sits 0.0008 below the density/aromatics/freezing limits, so these are tolerance-level misses, not structural ones. Certification now needs the represented-blendstock margin and the pool-member constants verified.
