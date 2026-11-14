@@ -102,6 +102,18 @@ def _table_smiles() -> dict:
     return dict(zip(d.compound, d.smiles))
 
 
+def _table_ik() -> dict:
+    """InChIKey -> table name; when several table names share an InChIKey the one with the most ``verified`` rows wins (ties: name order)."""
+    pp = pd.read_csv(LR.PURE_PROPS_V5)
+    nver = pp[pp.status == "verified"].groupby("compound").size()
+    best: dict = {}
+    for n, s in sorted(_table_smiles().items()):
+        k = _ik(s)
+        if k not in best or nver.get(n, 0) > nver.get(best[k], 0):
+            best[k] = n
+    return best
+
+
 def load_blendstock(name: str) -> Blendstock:
     from fuelblend.eval.composition_route import kind_bins, map_bins
     if name not in BLENDSTOCKS:
@@ -136,7 +148,10 @@ class BlendPool:
         if len({m.name for m in self.members}) != len(self.members):
             raise ValueError("duplicate blendstock names")
         tab = _table_smiles()
-        tab_ik = {_ik(s): n for n, s in tab.items()}
+        tab_ik = _table_ik()
+        for m in self.members:                       # a pure member's own table name wins for its InChIKey
+            if not m.represented:
+                tab_ik[_ik(tab[m.smiles[0]])] = m.smiles[0]
         ids, pos = [], {}
         cols = []
         for m in self.members:
