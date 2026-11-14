@@ -53,3 +53,16 @@ Reading:
 * Caveats of the counterfactual (not to be read as certification): (1) the smoke result needs the D1655 alternative branch (>= 18 mm), which is itself on an unverified limit; the primary 25 mm limit fails with the 4.107 mm margin (pred 24.87 < 25). (2) Slacks are thin: 0.016-0.019 at flash, freezing, NHOC and aromatics (an equalised max-min, so they are tied by construction, not a safety reserve). (3) Aromatics sit at 8.3 vol %, at the very edge of the 8 vol % minimum and the 8-23 vol % smoke regression domain; flash margin 2.21 C is the lab margin set by one system (`lab_margin_set_by_one_system`), not a real-fuel margin. (4) Freezing margin 16.98 C is measured on binaries with verified constants. (5) The optimum is from 30 starts of a graded SLSQP objective; `n_converged` is 15/30 (Jet A) and 10/30 (Jet A-1) and is a flag, not proof of a global optimum.
 * Spec flags untouched. Needs user decision: whether to upgrade the `verification` flag of the aromatics-vol-% and smoke limits (Task 1.0); until then 0 of 14 designs (12 earlier + these 2) are certified.
 * No other verified aromatic exists in the constants table (toluene, hexylbenzene, mesitylene, xylenes, ethylbenzene and tetralin are Coutinho-only); 1,2,4-trimethylbenzene is both the verified aromatic and the one the earlier v5 pool already contained. The "iso-paraffin" role is isooctane only (isododecane rho15 disputed, heptamethylnonane Tm/dHfus disputed).
+
+## Re-run with the user-verified spec flags (2026-11-14)
+
+The user checked D1655, D7566 and IS 1571 against the standards and upgraded the smoke-point and aromatics vol % flags to `verified` (commit ffc42b4). IS 1571 gives the smoke-point alternative as >= 19.0 mm (D1655: 18.0), so BIS `alt_min` is now 19.0. Same protocol and seed as above, run on the merged v5 code (merge commit 7766a5f); output `designs/poolC_isooctane_tmb_verified/` (the unverified-flag run stays as evidence).
+
+| | Jet A (astm) | Jet A-1 (bis) |
+|---|---|---|
+| recipe (wt) | unchanged: BCH 0.557, n-C10 0.160, n-C11 0.136, TMB 0.093, n-C12 0.028, isooctane 0.026 | unchanged: BCH 0.695, n-C10 0.094, n-C11 0.080, TMB 0.092, isooctane 0.026, n-C12 0.014 |
+| aromatics vol % (min 8) | by_construction, 8.32, slack 0.0187 | by_construction, 8.26, slack 0.0155 |
+| smoke | pass, pred 24.87 mm, slack 0.154 (alt branch >= 18 mm, naphthalenes 0 by construction) | pass, pred 24.89 mm, slack 0.0938 (alt branch >= 19 mm; was 0.1546 at 18) |
+| category / passed | C_certified / True | C_certified / True |
+
+Reading: both designs are certified, the first certified designs in v5 (2 of 16). Certified means certified under the model and the declared margins only: no lab measurement exists or is possible. Caveats: the smoke result relies on the alternative branch (the primary 25 mm limit fails with the 4.107 mm margin) and on naphthalenes = 0 by construction (no naphthalene in the pool); the tightest slacks are the aromatics-min, flash, freezing and NHOC (0.016 to 0.019, binding); the smoke margin is a transferred real-fuel value with a class-mix gate. The D86 limits remain `secondary_sources_only` and were not used here.
