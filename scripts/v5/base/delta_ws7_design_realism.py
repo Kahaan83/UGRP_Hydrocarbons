@@ -169,9 +169,8 @@ def run_one(pool, spec, d86, lam, tag, out_dir, n_starts, cap=None, max_iter=120
 
 def cmd_compare(args):
     out = D / "compare"
-    for spec in SPECS:
-        for lam, tag in ((0.0, "poolC_lam0"), (B.LAMBDA_UNC, "poolC_lam025")):
-            run_one("C", spec, False, lam, tag, out, args.n_starts)
+    lam, tag = (B.LAMBDA_UNC, "poolC_lam025") if args.lam_on else (0.0, "poolC_lam0")
+    run_one("C", args.spec, False, lam, tag, out, args.n_starts)
 
 
 def cmd_design(args):
@@ -236,6 +235,7 @@ def main():
     ap.add_argument("--pool", default="P1")
     ap.add_argument("--spec", default="astm:jet_a")
     ap.add_argument("--n-starts", type=int, default=10)
+    ap.add_argument("--lam-on", action="store_true")
     a = ap.parse_args()
     D.mkdir(parents=True, exist_ok=True)
     {"blendstocks": lambda: cmd_blendstocks(), "margins": lambda: cmd_margins(), "compare": lambda: cmd_compare(a),
