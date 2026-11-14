@@ -1,0 +1,9 @@
+05:03:58 config {'epochs': 60, 'seeds': 5, 'width': 64, 'batch': 512, 'lr': 0.002, 'wd': 0.0001, 'threads': 2, 'device': 'cpu', 'torch': '2.15.0+cpu', 'cands': ['pds']}
+05:04:15 viscosity rows 15827, systems 334, molecules 77; aligned with baseline rows_scored
+max abs diff predicted 4.998942017664376e-06 max rel 8.017640418406938e-09
+05:04:24 density rows 10900, systems 208, molecules 60 (no graph: 0), ln_eta missing share 0.000; aligned with baseline rows_scored
+05:06:02 final pds: train rows [10681], 98s
+05:07:16 final pds: train rows [8077], 74s
+05:07:16 viscosity/pds: R1 False R2 False (locked pair 0.0311 -> 0.03374, [-0.007018, 0.001732]) R3 True (tern pair 0.03984 cand 0.03901) GATE False
+05:07:17 density/pds: R1 False R2 False (locked pair 0.8972 -> 0.8962, [-0.1421, 0.1435]) R3 True (tern pair 3.922 cand 3.574) GATE False
+05:07:18 locked stage done
