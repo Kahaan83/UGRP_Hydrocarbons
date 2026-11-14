@@ -30,3 +30,29 @@ Registry values converted from degC to K.
 - o-xylene has a tiny 0.031 kJ/mol II -> I transition at 208 K; negligible.
 - Spread of dHfus across WebBook rows for toluene and n-hexane is ~0.1-0.7 kJ/mol; I took the adiabatic row with the best-documented Tm.
 - Net: for 7 of 9 compounds the registry values are reproduced by a public compilation, so these would move from "old registry" to "WebBook-backed" without numerical change; hexylbenzene Tm is the one real discrepancy.
+
+## Addendum: Acree & Chickos JPCRD 39, 043101 (2010) compendium (second source)
+File: `candidate_rows_acree_chickos2010.csv`; source note `acree_chickos_jpcrd2010/SOURCES.md` (sha256 of the user's local PDF; PDF not copied into the repo).
+**This is a compilation, not primary papers read.** Values were read off page images of Tables 6-9 (printed pages 043101-247, -248, -282, -337, -369, -398, -414, -437, -525). For fusion rows the compendium
+overwhelmingly cites Domalski & Hearing 1996 (JPCRD 25, 1; key 1996DOM/HEA), the same compilation the WebBook uses, so it is **not independent** of the WebBook values; it only adds DSC rows (Mondieig et al. 2004 for octane and nonane) and confirms nothing beyond DOM/HEA.
+
+| compound | compendium Tfus / fusH | vs WebBook | vs registry |
+|---|---|---|---|
+| toluene | 178 K / 6.61 (DOM/HEA, SOU/AND) | agrees | agrees |
+| n-hexane | 177.8 / 13.08 | agrees | agrees |
+| n-octane | 216.4 / 20.74 (DOM/HEA); 216.6 / 21.8 DSC | agrees | agrees (20.73) |
+| tetralin | 237.4 / 12.45 | agrees | supports 12.4 |
+| o-xylene | 247.8 / 13.6 | agrees | agrees (Tm +0.15 K vs registry) |
+| mesitylene | 228.4 / 9.51 | agrees | agrees |
+| 2-methylpentane | 119.6 / 6.27 | agrees | agrees |
+| n-nonane | 219.7 / 15.48 fusion; separate row II->I 6.28 @217.2 K; DSC 219.5 / 15.0, trs 6.2 @218.2 | agrees | not in registry |
+| hexylbenzene | **no fusion entry** (only vaporization 60.2 / 61.6 / 60.0 kJ/mol) | nothing to compare | registry Tm 212.15 K and dHfus 17.5 remain unsupported |
+
+- **Hexylbenzene:** the compendium has no Tfus or dHfus, so the one remaining datum is the WebBook TRC Tm 209.7 K (Mears, Stanley et al. 1963; Jessup & Stanley 1961; Simon 1929 206.4 K). The registry's 212.15 K (-61.0 degC) and dHfus 17.5 are unsupported by both sources. A likely primary for Mears 1963 is J. Res. NBS 67A, 475 (doi 10.6028/jres.067a.049, "seven twelve-carbon hydrocarbons"); title match only, not confirmed to contain hexylbenzene.
+- **n-nonane:** the compendium (like the WebBook) lists fusion and the solid-solid transition separately: fusion-only 15.48 kJ/mol at 219.7 K, crystal II->I 6.28 at 217.2 K. Total from below 217 K is 21.76 kJ/mol (DSC: 15.0 + 6.2 = 21.2). Which to use in SLE (fusion only vs total) stays your decision.
+
+### Citation fixes (Crossref-checked 2026-11-14) in `candidate_rows.csv`
+- tetralin: McCullough, Finke, Messerly, Todd, Kincheloe et al., J. Phys. Chem. 61, 1105 (1957), doi 10.1021/j150554a016 (not JACS 79, 4289).
+- mesitylene: Taylor & Kilpatrick, J. Chem. Phys. 23, 1232 (1955), doi 10.1063/1.1742247 (not J. Res. NBS 55, 15).
+- also confirmed and DOI added: Scott et al. 1962 (J. Phys. Chem. 66, 911), Douslin & Huffman 1946 (JACS 68, 1704), Pitzer & Scott 1943 (JACS 65, 803).
+- The compendium's reference list does not carry the McCullough 1957 or Taylor & Kilpatrick 1955 papers for these rows (it cites DOM/HEA), so these two were confirmed by Crossref only, not by the compendium.
