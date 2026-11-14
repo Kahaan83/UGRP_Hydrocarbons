@@ -521,10 +521,15 @@ class _Sides:
     v5 Task 1.5: (1) a model with ``margin_fn`` gets its margin per weight vector; ``None`` makes that constraint's sides
     infeasible (``BAD_SLACK``), never margin 0.  (2) With ``spec["use_alt_limits"]`` a constraint carrying ``alt_min`` /
     ``alt_requires`` gets slack = max(primary slack, min(alternative-limit slack, requirement slacks)), the same number
-    ``engine_v4._evaluate_with_alt`` reports (alternative limit scaled by |alt_min|, a requirement by its own bound)."""
+    ``engine_v4._evaluate_with_alt`` reports (alternative limit scaled by |alt_min|, a requirement by its own bound).
 
-    def __init__(self, spec, pool, models, margins, graded: bool = False):
+    ``alt_point_standin`` (delta_smoke_branch_opt; default False = unchanged): an ``alt_requires`` requirement without a margin uses
+    margin 0 (its point slack, the number the judge reports) instead of making the whole alternative branch dead.  Optimiser only:
+    the judge is unchanged and still reports such a branch ``uncertified``."""
+
+    def __init__(self, spec, pool, models, margins, graded: bool = False, alt_point_standin: bool = False):
         self.graded = bool(graded)
+        self.alt_point_standin = bool(alt_point_standin)
         self.pool, self.models, self.margins, self.spec = list(pool), models, margins, spec
         self.items = []                      # (key, c, pm, T_C, (m, ln) lower side, (m, ln) upper side, sc)
         self.excluded = {}
@@ -592,7 +597,9 @@ class _Sides:
             else:
                 r = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, self.margins, T_C, nm if sided else None)
                 if r[0] is None:                                   # no margin for a non-by_construction requirement: never margin 0
-                    return None
+                    if not self.alt_point_standin:
+                        return None
+                    r = (0.0, r[1])                                # optimiser stand-in: point slack (judge unchanged)
                 m = (r[0], r[1])
             sc = _scale(None, rval) if sgn > 0 else _scale(rval, None)
             reqs.append((pm, T_C, float(rval), sgn, sc, m))
@@ -609,7 +616,9 @@ class _Sides:
             if m is None:
                 mm, ln = _fn_margin(pm2, self.pool, w, T2)[:2]
                 if mm is None:
-                    return BAD_SLACK
+                    if not self.alt_point_standin:
+                        return BAD_SLACK
+                    mm = 0.0                                       # optimiser stand-in: point slack (judge unchanged)
             else:
                 mm, ln = m
             try:

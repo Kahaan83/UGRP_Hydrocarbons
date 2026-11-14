@@ -1,0 +1,34 @@
+{
+ "design_id": "bis_jet_a1__P3_standin",
+ "spec": "bis:jet_a1",
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"jetA_posf10325\": 0.2811, \"hefa_came\": 0.3376, \"atj_posf11498\": 0.1624, \"sak_virent_feldhausen2022\": 0.0, \"1,2,4-trimethylbenzene\": 0.2189}",
+ "weights": "{\"tetralin\": 0.00937, \"Cc1ccc(C(C)C)cc1\": 0.01599, \"butylcyclohexane\": 0.01239, \"n-decane\": 0.01415, \"n-undecane\": 0.01524, \"hexylbenzene\": 0.00628, \"n-dodecane\": 0.01281, \"n-tridecane\": 0.00972, \"CCCCCCCCc1ccccc1\": 0.00228, \"n-tetradecane\": 0.00659, \"CCCCCCCCCCCCCCC\": 0.0045, \"CCCCCCCCCCc1ccccc1\": 0.0004, \"n-hexadecane\": 0.00189, \"CCCCCCCCCCCCCCCCC\": 0.00101, \"n-octadecane\": 0.00014, \"c1ccccc1\": 3e-05, \"methylcyclohexane\": 0.00138, \"n-heptane\": 0.00049, \"CC(C)CC(C)C\": 0.00047, \"toluene\": 0.00043, \"o-xylene\": 0.00319, \"CCC1CCCCC1\": 0.00878, \"n-octane\": 0.00433, \"CCC(C)CC(C)C\": 0.00736, \"mesitylene\": 0.00866, \"CCCC1CCCCC1\": 0.00841, \"CCCCCCCCC\": 0.01059, \"decalin_trans\": 0.01883, \"CCCCCC(C)CCC\": 0.04994, \"CCCCCC1CCCCC1\": 0.01581, \"CCCCCCCCC(C)C\": 0.04981, \"CCCCCCC1CCCCC1\": 0.01079, \"CCCCCCCCC(C)CC\": 0.24882, \"CCCCCCCC1CCCCC1\": 0.01209, \"CCCCCCCCC1CCCCC1\": 0.00633, \"CCCCCCCCCC1CCCCC1\": 0.00382, \"CCCCCCCCCCC1CCCCC1\": 0.00174, \"CCCCCCCCCCCCC1CCCCC1\": 0.00012, \"c1ccc2c(c1)CCC2\": 6e-05, \"CCCCC(C)CCC\": 0.04075, \"CCCCCCCCCCCCCC(C)C\": 0.06218, \"CCCCCCCCCC(C)CCCCCC\": 0.09309, \"1,2,4-trimethylbenzene\": 0.21893}",
+ "opt_best_objective": -0.022975207147644155,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 10,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": 0.015550677858837224,
+ "opt_uncertainty_U": 0.15410354002592486,
+ "opt_alt_standin": true,
+ "build_s": 14.9,
+ "design_s": 443.1,
+ "pool": "P3",
+ "n_compounds": 43,
+ "d86": true,
+ "alt_standin": true
+}
+  density_15C_kg_m3              uncertified      pred 790.82 slack +0.24346 margin None  non-verified constant(s): CC(C)CC(C)C.rho15=route_grid, CCC(C)CC(C)C.rho15=route_grid, CCC1CCCCC1.rho15=route_grid, CCCC1CCCCC1.rho15=route_grid, CCCC
+  flash_point_C                  uncertified      pred 44.494 slack +0.17090 margin None  non-verified constant(s): CC(C)CC(C)C.flash=route_anchored, CCC(C)CC(C)C.flash=route_anchored, CCC1CCCCC1.flash=route_anchored, CCCC1CCCCC1.flash=rout
+  freezing_point_C               uncertified      pred -48.59 slack +0.03383 margin None  non-verified constant(s): CC(C)CC(C)C.Tm=coutinho_table, CC(C)CC(C)C.dHfus=coutinho_table, CCC(C)CC(C)C.Tm=coutinho_table, CCC(C)CC(C)C.dHfus=coutinho
+  kin_visc_m20C_cSt              uncertified      pred 2.9295 slack +0.44527 margin 0.4153576080066075  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  nhoc_MJ_kg                     uncertified      pred 43.66 slack +0.01555 margin 0.1940195141400025  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  aromatics_vol_pct              uncertified      pred 23.852 slack +0.06756 margin None  non-verified constant(s): CC(C)CC(C)C.rho15=route_grid, CCC(C)CC(C)C.rho15=route_grid, CCC1CCCCC1.rho15=route_grid, CCCC1CCCCC1.rho15=route_grid, CCCC
+  smoke_point_mm                 uncertified      pred 19.844 slack +0.04441 margin None  model emitted OutOfDomainWarning: aromatics 23.85151146487238 vol % outside training domain 8-23; non-verified constant(s): CC(C)CC(C)C.rho15=route_gr
+  distillation_T10_C             uncertified      pred 173.76 slack +0.11372 margin 7.927706228297922  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_FBP_C             uncertified      pred 292.07 slack +0.01555 margin 3.2620795453688913  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_T50_minus_T10_C   uncertified      pred 33.915 slack +0.01555 margin 18.68126547110495  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_T90_minus_T10_C   uncertified      pred 91.504 slack +0.83144 margin 18.246505125791458  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
