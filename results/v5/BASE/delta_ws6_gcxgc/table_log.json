@@ -1,0 +1,60 @@
+{
+ "n_fuels_chosen": 145,
+ "n_comp_ok": 142,
+ "comp_not_ok": [
+  "FuelLib:FUELLIB_posf10264",
+  "FuelLib:FUELLIB_posf10289",
+  "FuelLib:FUELLIB_posf10325"
+ ],
+ "smoke_ajftd_insample_excluded": [],
+ "smoke_aromatics_out_of_domain": [
+  "AJFTD:97",
+  "AJFTD:98",
+  "AJFTD:131",
+  "AJFTD:161",
+  "AJFTD:174",
+  "AJFTD:189",
+  "AJFTD:215",
+  "AJFTD:239",
+  "AJFTD:275",
+  "AJFTD:293",
+  "AJFTD:337",
+  "AJFTD:348",
+  "AJFTD:24567",
+  "AV-33-22:CRC_AV3322_19"
+ ],
+ "counts": {
+  "density_288": 61,
+  "flash": 67,
+  "visc_253": 62,
+  "visc_233": 45,
+  "freezing": 54,
+  "smoke": 59
+ },
+ "counts_by_family": {
+  "density_288": {
+   "av3322": 35,
+   "ajftd": 26
+  },
+  "flash": {
+   "av3322": 35,
+   "ajftd": 32
+  },
+  "visc_253": {
+   "av3322": 35,
+   "ajftd": 27
+  },
+  "visc_233": {
+   "av3322": 35,
+   "ajftd": 10
+  },
+  "freezing": {
+   "av3322": 34,
+   "ajftd": 20
+  },
+  "smoke": {
+   "av3322": 35,
+   "ajftd": 24
+  }
+ }
+}

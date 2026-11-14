@@ -1,0 +1,27 @@
+# PROPOSED ONLY (WS6, exploratory/dev). NOT in configs/. Needs user decision. Source: margins.csv, readings.json (R-WS6-3).
+# One-sided group conformal margins, alpha 0.10, out-of-fold on real GCxGC fuels (AV-33-22 + AJFTD); under-prediction is the unsafe side.
+# The model for these margins is C2 = physics (raw Refutas / F1x) + constant offset fitted on training fuels (K1-style), NOT the raw physics.
+# The offset itself is part of the proposal: the margin applies to the offset-corrected value.
+cold_viscosity_real_fuels:
+  basis: ln(nu_pred / nu_meas)
+  T_253_15K:
+    margin_ln_pooled: 0.135
+    margin_ln_set_on_ajftd: 0.186
+    groups: 62
+    transfer_coverage_ajftd_by_av3322: 0.778
+    reading_R_WS6_3: not_held
+  T_233_15K:
+    margin_ln_pooled: 0.215
+    margin_ln_set_on_ajftd: 0.432
+    groups: 45
+    transfer_coverage_ajftd_by_av3322: 0.90
+    transfer_coverage_av3322_by_ajftd: 1.0
+    reading_R_WS6_3: held
+  note: the conservative, transferable value is the AJFTD-set one; AJFTD has only 10 groups at 233.15 K
+freezing_real_fuels_F1x:
+  basis: pred - meas in C; unsafe = under-prediction of the freezing point
+  margin_C_pooled: 5.32
+  margin_C_set_on_ajftd: 7.14
+  groups: 54
+  transfer_coverage_ajftd_by_av3322: 0.80
+  status: not shown to transfer at 90 %
