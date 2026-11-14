@@ -128,6 +128,18 @@ readings in `readings_antoine.json` and `readings_fusion.json` (two files instea
   hexylbenzene (pool B) has neither in these tiers. Observation (not changed): the pool A designs record freezing as uncertified because of
   "toluene.Tm=coutinho_table" although the final recipes contain 0 % toluene; the blocker comes from pool membership, not from the recipe.
 
+### Post-result notes (added after review; no tier, gate or value changed)
+* Gap-table scope as run differs from the declared wording: the AJFTD representatives come from `get_ctx().reps` (class `SubReps`) mapped over
+  all 116 fuels in the GCxGC composition file (not only the 113 mappable ones), plus the 9 `SubRepsV5.CANDIDATES`; not a SubRepsV5 selection run.
+* The declared tier rule did not consult `data/processed/v5/pure_props_v5.csv`, which lists Tm / dHfus with status `verified` (source mostly
+  `inverse_design_v2.CANDIDATE_REGISTRY`, not primary calorimetry citations). `scripts/v5/base/delta_ws3_annotate_pure_props.py` adds columns
+  `tm_pure_props_v5` / `dh_pure_props_v5` to `gap_table.csv` and `fusion_ml_estimated.csv` (22 of 55 gap compounds have an entry). 8 rows of
+  `fusion_ml_estimated.csv` hold an ML estimate where pure_props_v5 lists a `verified` value: toluene (dHfus 6.64), hexylbenzene (Tm -61 C),
+  tetralin (Tm -35.8 C), o-xylene (Tm -25.2 C), n-octane (Tm -56.8 C, dHfus 20.73), mesitylene (Tm -44.7 C, dHfus 9.51), n-hexane (Tm -95.3 C,
+  dHfus 13.08), 2-methylpentane (Tm -153.7 C, dHfus 6.27). Those estimates must not be used where the listed value exists; the file stays unread.
+* "Nothing reads it" checked by grep over `src/` and `scripts/` for `thermoml_fusion`, `fusion_ml_estimated`, `antoine_interpolated` and for globs
+  over `data/processed`: the only readers are the delta scripts of this folder and `scripts/v5/base/delta_ws2_freeze_multicomp.py` (ThermoML tier only).
+
 ### Needs user decision / follow-ups
 * Whether to refresh `antoine_refit.csv` from `measurements_dedup.csv` (C14, C16 fit their measured data to 0.01 log10 when refit). Not done here.
 * Whether to curate primary-source Tm/dHfus (WebBook calorimetry, the `tm_dhfus_verified.csv` method) for toluene, hexylbenzene, n-octane, n-nonane,

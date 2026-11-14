@@ -87,7 +87,7 @@ from delta_ws3_pure_gaps); ml_estimated never used. Dedup removed 1 row (the Oak
 
 **Finding: the data are too thin; no class-mix margin exists.** The 16.98 C freezing margin stays the binary margin, applied to
 multicomponent recipes by transfer, "not validated on multicomponent data". Nothing is proposed for the yaml.
-Two limits, separately: (i) there are few multicomponent systems at all (11, of which 4 are C18-C36 wax mixtures and only 7 are jet-relevant);
+Two limits, separately: (i) there are few multicomponent systems at all (11, of which 4 are C18-C36 wax mixtures; 7 excluding those 4 Dauphin wax systems);
 (ii) 8 of the 11 are not scorable because a component has no verified or ThermoML-measured Tm AND dHfus: n-hexane, n-octane, n-nonane, p-xylene,
 stereo-unspecified decahydronaphthalene, and the odd heavy waxes C19, C23, C27, C29, C31, C33, C35 (`systems.csv`, column `missing_constants`).
 Even with all of those constants, alkane_only would reach exactly 8 only by counting the 4 Dauphin wax systems; the other two class mixes would
@@ -112,6 +112,12 @@ R-W2-3 (descriptive; scored rows: Shariatrad 30 rows / 1 system, ASCENT nC16/nC1
   3 systems, not a validation.
 * Verified-only sensitivity (`summary.csv`, constants `verified_only`): 3 rows / 2 systems scorable (Shariatrad needs n-C18, which is
   thermoml_measured only).
+
+Post-result note (after review; nothing rescored): "no verified constant" above means not in `tm_dhfus_verified.csv` (the declared tier).
+`data/processed/v5/pure_props_v5.csv` lists Tm and dHfus as `verified` for n-hexane and n-octane (from `inverse_design_v2.CANDIDATE_REGISTRY`);
+under the declared rule they were not used. Even if they were, the gate outcome cannot change (alkane_only would need all 8 systems incl. the 4 waxes).
+The cheapest next step: `tm_dhfus_verified.csv` already cites Finke et al. 1954 (nine n-paraffins, octane to hexadecane), so n-octane and n-nonane
+calorimetric values come from a paper already cited; curating them would make up to two more ASCENT systems scorable (nC16/nC13/nC8; the 8-component n-alkane fuel if its other members are covered) (a curation decision, not done here).
 
 Needs user decision: none from this delta (no margin to propose). Follow-ups (not done): primary-source Tm/dHfus (WebBook calorimetry, as in
 `tm_dhfus_verified.csv`) for n-hexane, n-octane, n-nonane, p-xylene and the odd C19-C35 waxes would make 8 more systems scorable; predictive
