@@ -1,0 +1,322 @@
+file,doi,prop,value,P_kPa,phases,name,inchikey,smiles,source
+10.1016/j.fluid.2006.02.001.xml,10.1016/j.fluid.2006.02.001,tm,269.01,,Crystal|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2006.02.001.xml,10.1016/j.fluid.2006.02.001,tm,280.1,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.fluid.2006.02.001.xml,10.1016/j.fluid.2006.02.001,tm,291.45,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2006.02.001.xml,10.1016/j.fluid.2006.02.001,tm,309.51,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2006.05.031.xml,10.1016/j.fluid.2006.05.031,tm,450.0,,Crystal|Liquid|Air at 1 atmosphere,".psi.,.psi.-carotene",OAIJSZIZWZSQBC-GYZMGTAESA-N,CC(C)=CCC/C(C)=C/C=C/C(C)=C/C=C/C(C)=C/C=C/C=C(C)/C=C/C=C(C)/C=C/C=C(\C)CCC=C(C)C,thermoml_measured
+10.1016/j.fluid.2006.07.015.xml,10.1016/j.fluid.2006.07.015,tm,345.0,,Crystal|Liquid|Air at 1 atmosphere,"19,24-dioctadecyldotetracontane",XRWKLCUUSVWUNG-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCC(CCCCCCCCCCCCCCCCCC)CCCCC(CCCCCCCCCCCCCCCCCC)CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2007.01.029.xml,10.1016/j.fluid.2007.01.029,tm,278.59,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1016/j.fluid.2007.01.029.xml,10.1016/j.fluid.2007.01.029,tm,279.63,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.fluid.2007.01.029.xml,10.1016/j.fluid.2007.01.029,tm,353.14,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.fluid.2007.01.029.xml,10.1016/j.fluid.2007.01.029,tm,242.71,,Crystal|Liquid|Air at 1 atmosphere,trans-decahydronaphthalene,NNBZCPXTIHJBJL-MGCOHNPYSA-N,C1CC[C@H]2CCCC[C@@H]2C1,thermoml_measured
+10.1016/j.fluid.2007.01.029.xml,10.1016/j.fluid.2007.01.029,tm,228.07,,Crystal|Liquid|Air at 1 atmosphere,cis-decahydronaphthalene,NNBZCPXTIHJBJL-AOOOYVTPSA-N,C1CC[C@H]2CCCC[C@H]2C1,thermoml_measured
+10.1016/j.fluid.2007.04.014.xml,10.1016/j.fluid.2007.04.014,tm,295.35,,Crystal|Liquid|Air at 1 atmosphere,heptadecane,NDJKXXJCMXVBJW-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2008.02.016.xml,10.1016/j.fluid.2008.02.016,tm,351.75,,Crystal|Liquid|Air at 1 atmosphere,"2,2-bis(p-tolyl)propane",XIAHSJTUQAWUAW-UHFFFAOYSA-N,Cc1ccc(C(C)(C)c2ccc(C)cc2)cc1,thermoml_measured
+10.1016/j.fluid.2008.02.016.xml,10.1016/j.fluid.2008.02.016,dhfus,21.2,,Crystal|Liquid|Air at 1 atmosphere,"2,2-bis(p-tolyl)propane",XIAHSJTUQAWUAW-UHFFFAOYSA-N,Cc1ccc(C(C)(C)c2ccc(C)cc2)cc1,thermoml_measured
+10.1016/j.fluid.2009.12.013.xml,10.1016/j.fluid.2009.12.013,dhfus,21.48,,Crystal|Liquid|Air at 1 atmosphere,acenaphthene,CWRYPZZKDGJXCA-UHFFFAOYSA-N,c1cc2c3c(cccc3c1)CC2,thermoml_measured
+10.1016/j.fluid.2009.12.013.xml,10.1016/j.fluid.2009.12.013,tm,366.35,,Crystal|Liquid|Air at 1 atmosphere,acenaphthene,CWRYPZZKDGJXCA-UHFFFAOYSA-N,c1cc2c3c(cccc3c1)CC2,thermoml_measured
+10.1016/j.fluid.2012.01.031.xml,10.1016/j.fluid.2012.01.031,tm,387.53,,Crystal|Liquid|Air at 1 atmosphere,fluorene,NIHNNTQXNPWCJQ-UHFFFAOYSA-N,c1ccc2c(c1)Cc1ccccc1-2,thermoml_measured
+10.1016/j.fluid.2012.12.036.xml,10.1016/j.fluid.2012.12.036,tm,490.05,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.fluid.2014.04.020.xml,10.1016/j.fluid.2014.04.020,dhfus,61.65,,Crystal|Liquid|Gas,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2014.04.020.xml,10.1016/j.fluid.2014.04.020,tm,300.95,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2014.12.036.xml,10.1016/j.fluid.2014.12.036,tm,279.4,,Crystal|Liquid|Air at 1 atmosphere,tetradecane,BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2014.12.036.xml,10.1016/j.fluid.2014.12.036,tm,291.5,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2014.12.036.xml,10.1016/j.fluid.2014.12.036,tm,301.6,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2015.09.038.xml,10.1016/j.fluid.2015.09.038,dhfus,45.28,,Crystal|Liquid|Air at 1 atmosphere,dodecylcyclohexane,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,CCCCCCCCCCCCC1CCCCC1,thermoml_measured
+10.1016/j.fluid.2015.09.038.xml,10.1016/j.fluid.2015.09.038,tm,286.78,,Crystal|Liquid|Air at 1 atmosphere,dodecylcyclohexane,BLRBGKYYWDBAQQ-UHFFFAOYSA-N,CCCCCCCCCCCCC1CCCCC1,thermoml_measured
+10.1016/j.fluid.2015.12.021.xml,10.1016/j.fluid.2015.12.021,tm,353.41,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.fluid.2015.12.021.xml,10.1016/j.fluid.2015.12.021,tm,372.39,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.fluid.2016.01.044.xml,10.1016/j.fluid.2016.01.044,tm,244.63,,Crystal|Liquid|Air at 1 atmosphere,decane,DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2016.01.044.xml,10.1016/j.fluid.2016.01.044,dhfus,28.83,,Crystal|Liquid|Air at 1 atmosphere,decane,DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2016.11.012.xml,10.1016/j.fluid.2016.11.012,dhfus,11.73,,Crystal|Liquid|Air at 1 atmosphere,acenaphthylene,HXGDTGSAIMULJN-UHFFFAOYSA-N,C1=Cc2cccc3cccc1c23,thermoml_measured
+10.1016/j.fluid.2016.11.012.xml,10.1016/j.fluid.2016.11.012,tm,365.15,,Crystal|Liquid|Air at 1 atmosphere,acenaphthylene,HXGDTGSAIMULJN-UHFFFAOYSA-N,C1=Cc2cccc3cccc1c23,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,tm,308.18,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,dhfus,72.49,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,tm,321.21,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,dhfus,60.98,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,tm,341.1,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.fluid.2017.03.012.xml,10.1016/j.fluid.2017.03.012,dhfus,19.51,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,316.6,,Crystal 1|Liquid|Air at 1 atmosphere,docosane,HOWGUJZVBDQJKV-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,41.496245504,,Crystal 1|Liquid|Air at 1 atmosphere,docosane,HOWGUJZVBDQJKV-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,323.1,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,51.00126228,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,328.8,,Crystal 1|Liquid|Air at 1 atmosphere,hexacosane,HMSWAIKSFDFLKN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,55.336080264,,Crystal 1|Liquid|Air at 1 atmosphere,hexacosane,HMSWAIKSFDFLKN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,333.4,,Crystal 1|Liquid|Air at 1 atmosphere,octacosane,ZYURHZPYMFLWSH-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,63.35899926,,Crystal 1|Liquid|Air at 1 atmosphere,octacosane,ZYURHZPYMFLWSH-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,337.1,,Crystal 1|Liquid|Air at 1 atmosphere,triacontane,JXTPJDDICSTXJX-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,69.891035184,,Crystal 1|Liquid|Air at 1 atmosphere,triacontane,JXTPJDDICSTXJX-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,tm,342.0,,Crystal 1|Liquid|Air at 1 atmosphere,dotriacontane,QHMGJGNTMQDRQA-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2018.08.016.xml,10.1016/j.fluid.2018.08.016,dhfus,75.475042056,,Crystal 1|Liquid|Air at 1 atmosphere,dotriacontane,QHMGJGNTMQDRQA-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2019.04.023.xml,10.1016/j.fluid.2019.04.023,tm,265.25,,Crystal 1|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2019.04.023.xml,10.1016/j.fluid.2019.04.023,tm,268.15,,Crystal 1|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2019.04.023.xml,10.1016/j.fluid.2019.04.023,dhfus,28.741945378,,Crystal 1|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1016/j.fluid.2019.04.023.xml,10.1016/j.fluid.2019.04.023,dhfus,28.170424976,,Crystal 1|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2004.04.003.xml,10.1016/j.jct.2004.04.003,dhfus,13.396,,Crystal 1|Liquid|Gas,"1,1'-bicyclopentyl",MAWOHFOSAIXURX-UHFFFAOYSA-N,C1CCC(C2CCCC2)C1,thermoml_measured
+10.1016/j.jct.2004.04.003.xml,10.1016/j.jct.2004.04.003,ttp,237.82,,Crystal 1|Liquid|Gas,"1,1'-bicyclopentyl",MAWOHFOSAIXURX-UHFFFAOYSA-N,C1CCC(C2CCCC2)C1,thermoml_measured
+10.1016/j.jct.2004.06.009.xml,10.1016/j.jct.2004.06.009,dhfus,1.541,,Crystal 1|Liquid|Gas,"1,3-dimethyladamantane",CWNOIUTVJRWADX-UHFFFAOYSA-N,CC12CC3CC(C1)CC(C)(C3)C2,thermoml_measured
+10.1016/j.jct.2004.06.009.xml,10.1016/j.jct.2004.06.009,ttp,247.79,,Crystal 1|Liquid|Gas,"1,3-dimethyladamantane",CWNOIUTVJRWADX-UHFFFAOYSA-N,CC12CC3CC(C1)CC(C)(C3)C2,thermoml_measured
+10.1016/j.jct.2004.06.009.xml,10.1016/j.jct.2004.06.009,dhfus,11.28,,Crystal|Liquid|Gas,1-ethyladamantane,LXTHCCWEYOKFSR-UHFFFAOYSA-N,CCC12CC3CC(CC(C3)C1)C2,thermoml_measured
+10.1016/j.jct.2004.06.009.xml,10.1016/j.jct.2004.06.009,ttp,225.56,,Crystal|Liquid|Gas,1-ethyladamantane,LXTHCCWEYOKFSR-UHFFFAOYSA-N,CCC12CC3CC(CC(C3)C1)C2,thermoml_measured
+10.1016/j.jct.2005.06.001.xml,10.1016/j.jct.2005.06.001,tm,354.8,,Crystal|Liquid|Air at 1 atmosphere,9-methylanthracene,CPGPAVAKSZHMBP-UHFFFAOYSA-N,Cc1c2ccccc2cc2ccccc12,thermoml_measured
+10.1016/j.jct.2005.06.001.xml,10.1016/j.jct.2005.06.001,tm,427.6,,Crystal|Liquid|Air at 1 atmosphere,2-ethylanthracene,ZXAGXLDEMUNQSH-UHFFFAOYSA-N,CCc1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.jct.2005.06.001.xml,10.1016/j.jct.2005.06.001,tm,459.5,,Crystal|Liquid|Air at 1 atmosphere,"9,10-dimethylanthracene",JTGMTYWYUZDRBK-UHFFFAOYSA-N,Cc1c2ccccc2c(C)c2ccccc12,thermoml_measured
+10.1016/j.jct.2005.12.004.xml,10.1016/j.jct.2005.12.004,dhfus,19.69,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2005.12.004.xml,10.1016/j.jct.2005.12.004,tm,342.37,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2006.04.004.xml,10.1016/j.jct.2006.04.004,dhfus,19.072,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2006.04.004.xml,10.1016/j.jct.2006.04.004,tm,353.11,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2006.10.009.xml,10.1016/j.jct.2006.10.009,tm,178.1,,Crystal|Liquid|Air at 1 atmosphere,toluene,YXFVVABEGXRONW-UHFFFAOYSA-N,Cc1ccccc1,thermoml_measured
+10.1016/j.jct.2006.10.009.xml,10.1016/j.jct.2006.10.009,tm,174.1,,Crystal|Liquid|Air at 1 atmosphere,propylbenzene,ODLMAHJVESYWTB-UHFFFAOYSA-N,CCCc1ccccc1,thermoml_measured
+10.1016/j.jct.2006.10.009.xml,10.1016/j.jct.2006.10.009,tm,178.8,,Crystal|Liquid|Air at 1 atmosphere,hexane,VLKZOEOYAKHREP-UHFFFAOYSA-N,CCCCCC,thermoml_measured
+10.1016/j.jct.2006.10.009.xml,10.1016/j.jct.2006.10.009,tm,291.1,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2008.01.009.xml,10.1016/j.jct.2008.01.009,dhfus,10.543,,Crystal 1|Liquid|Air at 1 atmosphere,"1,2-dihydronaphthalene",KEIFWROAQVVDBN-UHFFFAOYSA-N,C1=Cc2ccccc2CC1,thermoml_measured
+10.1016/j.jct.2008.01.009.xml,10.1016/j.jct.2008.01.009,ttp,264.38,,Crystal 1|Liquid|Gas,"1,2-dihydronaphthalene",KEIFWROAQVVDBN-UHFFFAOYSA-N,C1=Cc2ccccc2CC1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,dhfus,17.9,,Crystal|Liquid|Air at 1 atmosphere,2-phenylnaphthalene,TURIHPLQSRVWHU-UHFFFAOYSA-N,c1ccc(-c2ccc3ccccc3c2)cc1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,tm,373.5,,Crystal|Liquid|Air at 1 atmosphere,2-phenylnaphthalene,TURIHPLQSRVWHU-UHFFFAOYSA-N,c1ccc(-c2ccc3ccccc3c2)cc1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,dhfus,25.1,,Crystal|Liquid|Air at 1 atmosphere,2-(biphen-4-yl)naphthalene,NLTKCRFWOKREQZ-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccc4ccccc4c3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,tm,489.5,,Crystal|Liquid|Air at 1 atmosphere,2-(biphen-4-yl)naphthalene,NLTKCRFWOKREQZ-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccc4ccccc4c3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,dhfus,18.5,,Crystal|Liquid|Air at 1 atmosphere,2-(biphen-3-yl)naphthalene,CFFQABJAVCOJAH-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccc4ccccc4c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2008.04.010.xml,10.1016/j.jct.2008.04.010,tm,346.3,,Crystal|Liquid|Air at 1 atmosphere,2-(biphen-3-yl)naphthalene,CFFQABJAVCOJAH-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccc4ccccc4c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2008.10.005.xml,10.1016/j.jct.2008.10.005,dhfus,19.01,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2008.10.005.xml,10.1016/j.jct.2008.10.005,tm,353.25,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2008.10.008.xml,10.1016/j.jct.2008.10.008,dhfus,8.394,,Crystal|Liquid|Gas,"(1,1-dimethylethyl)benzene",YTZKOQUCBOVLHL-UHFFFAOYSA-N,CC(C)(C)c1ccccc1,thermoml_measured
+10.1016/j.jct.2008.10.008.xml,10.1016/j.jct.2008.10.008,ttp,215.313,,Crystal|Liquid|Gas,"(1,1-dimethylethyl)benzene",YTZKOQUCBOVLHL-UHFFFAOYSA-N,CC(C)(C)c1ccccc1,thermoml_measured
+10.1016/j.jct.2008.10.008.xml,10.1016/j.jct.2008.10.008,dhfus,8.212,,Crystal 1|Liquid|Gas,"1,4-bis(1,1-dimethylethyl)benzene",OOWNNCMFKFBNOF-UHFFFAOYSA-N,CC(C)(C)c1ccc(C(C)(C)C)cc1,thermoml_measured
+10.1016/j.jct.2008.10.008.xml,10.1016/j.jct.2008.10.008,ttp,350.78,,Crystal|Liquid|Gas,"1,4-bis(1,1-dimethylethyl)benzene",OOWNNCMFKFBNOF-UHFFFAOYSA-N,CC(C)(C)c1ccc(C(C)(C)C)cc1,thermoml_measured
+10.1016/j.jct.2008.12.015.xml,10.1016/j.jct.2008.12.015,tm,400.8,,Crystal|Liquid|Air at 1 atmosphere,"4,4'-bis(1,1-dimethylethyl)-1,1'-biphenyl",CDKCEZNPAYWORX-UHFFFAOYSA-N,CC(C)(C)c1ccc(-c2ccc(C(C)(C)C)cc2)cc1,thermoml_measured
+10.1016/j.jct.2008.12.015.xml,10.1016/j.jct.2008.12.015,tm,324.7,,Crystal|Liquid|Air at 1 atmosphere,"4-(1,1-dimethylethyl)-1,1'-biphenyl",CDOYZTOFTGTGBC-UHFFFAOYSA-N,CC(C)(C)c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2009.03.010.xml,10.1016/j.jct.2009.03.010,dhfus,21.2,,Crystal|Liquid|Air at 1 atmosphere,coronene,VPUGDVKSAQVFFS-UHFFFAOYSA-N,c1cc2ccc3ccc4ccc5ccc6ccc1c1c2c3c4c5c61,thermoml_measured
+10.1016/j.jct.2009.03.010.xml,10.1016/j.jct.2009.03.010,tm,709.0,,Crystal|Liquid|Air at 1 atmosphere,coronene,VPUGDVKSAQVFFS-UHFFFAOYSA-N,c1cc2ccc3ccc4ccc5ccc6ccc1c1c2c3c4c5c61,thermoml_measured
+10.1016/j.jct.2010.05.002.xml,10.1016/j.jct.2010.05.002,dhfus,12.29,,Crystal|Liquid|Gas,4-methylbiphenyl,ZZLCFHIKESPLTH-UHFFFAOYSA-N,Cc1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2010.05.002.xml,10.1016/j.jct.2010.05.002,ttp,320.33,,Crystal|Liquid|Gas,4-methylbiphenyl,ZZLCFHIKESPLTH-UHFFFAOYSA-N,Cc1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2010.05.002.xml,10.1016/j.jct.2010.05.002,dhfus,19.87,,Crystal|Liquid|Gas,"4-(1,1-dimethylethyl)-1,1'-biphenyl",CDOYZTOFTGTGBC-UHFFFAOYSA-N,CC(C)(C)c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2010.05.002.xml,10.1016/j.jct.2010.05.002,ttp,324.76,,Crystal|Liquid|Gas,"4-(1,1-dimethylethyl)-1,1'-biphenyl",CDOYZTOFTGTGBC-UHFFFAOYSA-N,CC(C)(C)c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2010.05.003.xml,10.1016/j.jct.2010.05.003,dhfus,34.2939,,Crystal|Liquid|Gas,dodecane,SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2010.05.003.xml,10.1016/j.jct.2010.05.003,dhfus,20.7421,,Crystal|Liquid|Gas,octane,TVMXDCGIABBOFY-UHFFFAOYSA-N,CCCCCCCC,thermoml_measured
+10.1016/j.jct.2010.05.003.xml,10.1016/j.jct.2010.05.003,dhfus,14.0379,,Crystal|Liquid|Gas,heptane,IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,dhfus,18.3,,Crystal|Liquid|Air at 1 atmosphere,benz[e]acephenanthrylene,FTOVXSOBNPWTSH-UHFFFAOYSA-N,c1ccc2c(c1)-c1cccc3c1c-2cc1ccccc13,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,tm,441.15,,Crystal|Liquid|Air at 1 atmosphere,benz[e]acephenanthrylene,FTOVXSOBNPWTSH-UHFFFAOYSA-N,c1ccc2c(c1)-c1cccc3c1c-2cc1ccccc13,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,dhfus,26.5,,Crystal|Liquid|Air at 1 atmosphere,benzo[k]fluoranthene,HAXBIWFMXWRORI-UHFFFAOYSA-N,c1ccc2cc3c(cc2c1)-c1cccc2cccc-3c12,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,tm,490.15,,Crystal|Liquid|Air at 1 atmosphere,benzo[k]fluoranthene,HAXBIWFMXWRORI-UHFFFAOYSA-N,c1ccc2cc3c(cc2c1)-c1cccc2cccc-3c12,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,dhfus,16.3,,Crystal|Liquid|Air at 1 atmosphere,benzo[ghi]perylene,GYFAGKUZYNFMBN-UHFFFAOYSA-N,c1cc2ccc3ccc4ccc5cccc6c(c1)c2c3c4c56,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,tm,545.65,,Crystal|Liquid|Air at 1 atmosphere,benzo[ghi]perylene,GYFAGKUZYNFMBN-UHFFFAOYSA-N,c1cc2ccc3ccc4ccc5cccc6c(c1)c2c3c4c56,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,dhfus,22.9,,Crystal|Liquid|Air at 1 atmosphere,"indeno[1,2,3-cd]pyrene",SXQBHARYMNFBPS-UHFFFAOYSA-N,c1ccc2c(c1)-c1ccc3ccc4cccc5cc-2c1c3c45,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,tm,435.15,,Crystal|Liquid|Air at 1 atmosphere,"indeno[1,2,3-cd]pyrene",SXQBHARYMNFBPS-UHFFFAOYSA-N,c1ccc2c(c1)-c1ccc3ccc4cccc5cc-2c1c3c45,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,dhfus,24.5,,Crystal|Liquid|Air at 1 atmosphere,"dibenz[a,h]anthracene",LHRCREOYAASXPZ-UHFFFAOYSA-N,c1ccc2c(c1)ccc1cc3c(ccc4ccccc43)cc12,thermoml_measured
+10.1016/j.jct.2011.05.030.xml,10.1016/j.jct.2011.05.030,tm,542.65,,Crystal|Liquid|Air at 1 atmosphere,"dibenz[a,h]anthracene",LHRCREOYAASXPZ-UHFFFAOYSA-N,c1ccc2c(c1)ccc1cc3c(ccc4ccccc43)cc12,thermoml_measured
+10.1016/j.jct.2011.09.006.xml,10.1016/j.jct.2011.09.006,tm,388.0,,Crystal|Liquid|Air at 1 atmosphere,fluorene,NIHNNTQXNPWCJQ-UHFFFAOYSA-N,c1ccc2c(c1)Cc1ccccc1-2,thermoml_measured
+10.1016/j.jct.2011.09.006.xml,10.1016/j.jct.2011.09.006,dhfus,20.3,,Crystal|Liquid|Air at 1 atmosphere,fluorene,NIHNNTQXNPWCJQ-UHFFFAOYSA-N,c1ccc2c(c1)Cc1ccccc1-2,thermoml_measured
+10.1016/j.jct.2011.12.010.xml,10.1016/j.jct.2011.12.010,dhfus,15.382,,Crystal|Liquid|Gas,"(2,2-dimethylpropyl)benzene",CJGXJKVMUHXVHL-UHFFFAOYSA-N,CC(C)(C)Cc1ccccc1,thermoml_measured
+10.1016/j.jct.2011.12.010.xml,10.1016/j.jct.2011.12.010,ttp,255.43,,Crystal|Liquid|Gas,"(2,2-dimethylpropyl)benzene",CJGXJKVMUHXVHL-UHFFFAOYSA-N,CC(C)(C)Cc1ccccc1,thermoml_measured
+10.1016/j.jct.2011.12.037.xml,10.1016/j.jct.2011.12.037,tm,278.6,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1016/j.jct.2012.01.025.xml,10.1016/j.jct.2012.01.025,tm,382.84,,Crystal|Liquid|Air at 1 atmosphere,fluoranthene,GVEPBJHOBDJJJI-UHFFFAOYSA-N,c1ccc2c(c1)-c1cccc3cccc-2c13,thermoml_measured
+10.1016/j.jct.2012.01.025.xml,10.1016/j.jct.2012.01.025,dhfus,19.36,,Crystal|Liquid|Air at 1 atmosphere,fluoranthene,GVEPBJHOBDJJJI-UHFFFAOYSA-N,c1ccc2c(c1)-c1cccc3cccc-2c13,thermoml_measured
+10.1016/j.jct.2012.09.019.xml,10.1016/j.jct.2012.09.019,tm,279.8,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.jct.2012.09.019.xml,10.1016/j.jct.2012.09.019,tm,291.2,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2012.09.019.xml,10.1016/j.jct.2012.09.019,tm,291.1,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2013.01.019.xml,10.1016/j.jct.2013.01.019,dhfus,61.65,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2013.01.019.xml,10.1016/j.jct.2013.01.019,tm,300.95,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,329.4,,Crystal|Liquid|Air at 1 atmosphere,o-terphenyl,OIAQMFOKAXHPNH-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,17.0,,Crystal|Liquid|Air at 1 atmosphere,o-terphenyl,OIAQMFOKAXHPNH-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,361.8,,Crystal|Liquid|Air at 1 atmosphere,m-terphenyl,YJTKZCDBKVTVBY-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccccc3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,25.5,,Crystal|Liquid|Air at 1 atmosphere,m-terphenyl,YJTKZCDBKVTVBY-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccccc3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,490.9,,Crystal|Liquid|Air at 1 atmosphere,p-terphenyl,XJKSTNDFUHDPQJ-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccccc3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,32.9,,Crystal|Liquid|Air at 1 atmosphere,p-terphenyl,XJKSTNDFUHDPQJ-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccccc3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,390.6,,Crystal|Liquid|Air at 1 atmosphere,o-quaterphenyl,YAVCXSHORWKJQQ-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,27.2,,Crystal|Liquid|Air at 1 atmosphere,o-quaterphenyl,YAVCXSHORWKJQQ-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,360.0,,Crystal|Liquid|Air at 1 atmosphere,metaquaterphenyl,OWPJBAYCIXEHFA-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3cccc(-c4ccccc4)c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,27.7,,Crystal|Liquid|Air at 1 atmosphere,metaquaterphenyl,OWPJBAYCIXEHFA-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3cccc(-c4ccccc4)c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,594.4,,Crystal|Liquid|Air at 1 atmosphere,"1,1':4',1'':4'',1'''-quaterphenyl",GPRIERYVMZVKTC-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccc(-c4ccccc4)cc3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,53.4,,Crystal|Liquid|Air at 1 atmosphere,"1,1':4',1'':4'',1'''-quaterphenyl",GPRIERYVMZVKTC-UHFFFAOYSA-N,c1ccc(-c2ccc(-c3ccc(-c4ccccc4)cc3)cc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,428.8,,Crystal|Liquid|Air at 1 atmosphere,o-quinquephenyl,KXUNJFGMPLAPPY-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,32.4,,Crystal|Liquid|Air at 1 atmosphere,o-quinquephenyl,KXUNJFGMPLAPPY-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,ttp,387.1,,Crystal|Liquid|Air at 1 atmosphere,"1,1':3',1'':3'',1'':3'',1''''-quinquephenyl",XQCZQOSQCGDDPQ-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3cccc(-c4cccc(-c5ccccc5)c4)c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.03.026.xml,10.1016/j.jct.2013.03.026,dhfus,31.2,,Crystal|Liquid|Air at 1 atmosphere,"1,1':3',1'':3'',1'':3'',1''''-quinquephenyl",XQCZQOSQCGDDPQ-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3cccc(-c4cccc(-c5ccccc5)c4)c3)c2)cc1,thermoml_measured
+10.1016/j.jct.2013.11.038.xml,10.1016/j.jct.2013.11.038,tm,301.46,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2013.11.038.xml,10.1016/j.jct.2013.11.038,dhfus,61.34,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2013.12.012.xml,10.1016/j.jct.2013.12.012,tm,317.6,,Crystal|Liquid|Air at 1 atmosphere,"2,2-dimethyl-3-methylenebicyclo[2.2.1]heptane",CRPUJAZIXJMDBK-UHFFFAOYSA-N,C=C1C2CCC(C2)C1(C)C,thermoml_measured
+10.1016/j.jct.2013.12.012.xml,10.1016/j.jct.2013.12.012,dhfus,2.7,,Crystal|Liquid|Air at 1 atmosphere,"2,2-dimethyl-3-methylenebicyclo[2.2.1]heptane",CRPUJAZIXJMDBK-UHFFFAOYSA-N,C=C1C2CCC(C2)C1(C)C,thermoml_measured
+10.1016/j.jct.2014.01.006.xml,10.1016/j.jct.2014.01.006,ttp,297.473,,Crystal|Liquid|Gas,1-phenylnaphthalene,IYDMICQAKLQHLA-UHFFFAOYSA-N,c1ccc(-c2cccc3ccccc23)cc1,thermoml_measured
+10.1016/j.jct.2014.01.006.xml,10.1016/j.jct.2014.01.006,dhfus,15.548,,Crystal|Liquid|Gas,1-phenylnaphthalene,IYDMICQAKLQHLA-UHFFFAOYSA-N,c1ccc(-c2cccc3ccccc23)cc1,thermoml_measured
+10.1016/j.jct.2014.01.006.xml,10.1016/j.jct.2014.01.006,ttp,374.767,,Crystal|Liquid|Gas,2-phenylnaphthalene,TURIHPLQSRVWHU-UHFFFAOYSA-N,c1ccc(-c2ccc3ccccc3c2)cc1,thermoml_measured
+10.1016/j.jct.2014.01.006.xml,10.1016/j.jct.2014.01.006,dhfus,22.618,,Crystal|Liquid|Gas,2-phenylnaphthalene,TURIHPLQSRVWHU-UHFFFAOYSA-N,c1ccc(-c2ccc3ccccc3c2)cc1,thermoml_measured
+10.1016/j.jct.2014.03.029.xml,10.1016/j.jct.2014.03.029,tm,342.1,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2014.03.029.xml,10.1016/j.jct.2014.03.029,dhfus,18.53577756,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.jct.2015.06.021.xml,10.1016/j.jct.2015.06.021,dhfus,27.39382804,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.jct.2015.06.021.xml,10.1016/j.jct.2015.06.021,tm,490.0,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.jct.2015.06.021.xml,10.1016/j.jct.2015.06.021,dhfus,15.149482,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.jct.2015.06.021.xml,10.1016/j.jct.2015.06.021,tm,372.0,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.jct.2015.07.008.xml,10.1016/j.jct.2015.07.008,tm,423.9,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1016/j.jct.2015.07.008.xml,10.1016/j.jct.2015.07.008,dhfus,17.4,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1016/j.jct.2015.12.005.xml,10.1016/j.jct.2015.12.005,ttp,221.786,,Crystal 1|Liquid|Gas,indane,PQNFLJBBNBOBRQ-UHFFFAOYSA-N,c1ccc2c(c1)CCC2,thermoml_measured
+10.1016/j.jct.2015.12.005.xml,10.1016/j.jct.2015.12.005,dhfus,8.554,,Crystal 1|Liquid|Gas,indane,PQNFLJBBNBOBRQ-UHFFFAOYSA-N,c1ccc2c(c1)CCC2,thermoml_measured
+10.1016/j.jct.2016.05.007.xml,10.1016/j.jct.2016.05.007,ttp,395.9,,Crystal 1|Liquid|Air at 1 atmosphere,"2,7-di-tert-butylfluorene",DFZYPLLGAQIQTD-UHFFFAOYSA-N,CC(C)(C)c1ccc2c(c1)Cc1cc(C(C)(C)C)ccc1-2,thermoml_measured
+10.1016/j.jct.2016.05.007.xml,10.1016/j.jct.2016.05.007,dhfus,15.6,,Crystal 1|Liquid|Air at 1 atmosphere,"2,7-di-tert-butylfluorene",DFZYPLLGAQIQTD-UHFFFAOYSA-N,CC(C)(C)c1ccc2c(c1)Cc1cc(C(C)(C)C)ccc1-2,thermoml_measured
+10.1016/j.jct.2016.05.008.xml,10.1016/j.jct.2016.05.008,dhfus,61.65,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2016.05.008.xml,10.1016/j.jct.2016.05.008,tm,300.95,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2016.10.032.xml,10.1016/j.jct.2016.10.032,tm,279.05,,Crystal|Liquid|Air at 1 atmosphere,tetradecane,BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2016.10.032.xml,10.1016/j.jct.2016.10.032,dhfus,48.009896,,Crystal|Liquid|Air at 1 atmosphere,tetradecane,BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2016.12.030.xml,10.1016/j.jct.2016.12.030,tm,177.39,,Crystal|Liquid|Air at 1 atmosphere,hexane,VLKZOEOYAKHREP-UHFFFAOYSA-N,CCCCCC,thermoml_measured
+10.1016/j.jct.2017.09.006.xml,10.1016/j.jct.2017.09.006,tm,368.1,,Crystal|Liquid|Air at 1 atmosphere,"2,7-dimethylnaphthalene",LRQYSMQNJLZKPS-UHFFFAOYSA-N,Cc1ccc2ccc(C)cc2c1,thermoml_measured
+10.1016/j.jct.2017.09.006.xml,10.1016/j.jct.2017.09.006,dhfus,25.3,,Crystal|Liquid|Air at 1 atmosphere,"2,7-dimethylnaphthalene",LRQYSMQNJLZKPS-UHFFFAOYSA-N,Cc1ccc2ccc(C)cc2c1,thermoml_measured
+10.1016/j.jct.2018.05.023.xml,10.1016/j.jct.2018.05.023,tm,280.0,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.jct.2018.05.023.xml,10.1016/j.jct.2018.05.023,tm,308.1,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2018.05.023.xml,10.1016/j.jct.2018.05.023,tm,291.0,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2018.05.023.xml,10.1016/j.jct.2018.05.023,tm,263.7,,Crystal|Liquid|Air at 1 atmosphere,dodecane,SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2018.05.023.xml,10.1016/j.jct.2018.05.023,tm,278.9,,Crystal|Liquid|Air at 1 atmosphere,tetradecane,BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.jct.2018.09.012.xml,10.1016/j.jct.2018.09.012,tm,352.3,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2018.09.012.xml,10.1016/j.jct.2018.09.012,dhfus,19.123041584,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.jct.2018.11.025.xml,10.1016/j.jct.2018.11.025,tm,371.71,,Crystal 1|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,dhfus,19.55,,Crystal 1|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,tm,354.69,,Crystal 1|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,dhfus,69.03,,Crystal 1|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,tm,311.6,,Crystal 1|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,dhfus,55.53,,Crystal 1|Liquid|Air at 1 atmosphere,pentacosane,YKNWIILGEFFOPE-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,tm,325.92,,Crystal 1|Liquid|Air at 1 atmosphere,pentacosane,YKNWIILGEFFOPE-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,dhfus,81.55,,Crystal 1|Liquid|Air at 1 atmosphere,hexatriacontane,YDLYQMBWCWFRAI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.03.011.xml,10.1016/j.tca.2006.03.011,tm,350.19,,Crystal 1|Liquid|Air at 1 atmosphere,hexatriacontane,YDLYQMBWCWFRAI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,dhfus,95.638,,Crystal 1|Liquid|Air at 1 atmosphere,tetratriacontane,GWVDBZWVFGFBCN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,ttp,346.1,,Crystal 1|Liquid|Air at 1 atmosphere,tetratriacontane,GWVDBZWVFGFBCN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,dhfus,102.51,,Crystal 1|Liquid|Air at 1 atmosphere,hexatriacontane,YDLYQMBWCWFRAI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,ttp,349.2,,Crystal 1|Liquid|Air at 1 atmosphere,hexatriacontane,YDLYQMBWCWFRAI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,dhfus,143.941,,Crystal 1|Liquid|Air at 1 atmosphere,tetracontane,KUPLEGDPSCCPJI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,ttp,354.6,,Crystal 1|Liquid|Air at 1 atmosphere,tetracontane,KUPLEGDPSCCPJI-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,dhfus,165.967,,Crystal 1|Liquid|Air at 1 atmosphere,dotetracontane,FTJPDYTXORWVLU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2006.06.022.xml,10.1016/j.tca.2006.06.022,ttp,357.3,,Crystal 1|Liquid|Air at 1 atmosphere,dotetracontane,FTJPDYTXORWVLU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2007.03.018.xml,10.1016/j.tca.2007.03.018,dhfus,70.0,,Crystal 1|Liquid|Gas,"1,1'-biadamantane",MPXKIFWZOQVOLN-UHFFFAOYSA-N,C1C2CC3CC1CC(C14CC5CC(CC(C5)C1)C4)(C2)C3,thermoml_measured
+10.1016/j.tca.2007.03.018.xml,10.1016/j.tca.2007.03.018,ttp,561.0,,Crystal 1|Liquid|Gas,"1,1'-biadamantane",MPXKIFWZOQVOLN-UHFFFAOYSA-N,C1C2CC3CC1CC(C14CC5CC(CC(C5)C1)C4)(C2)C3,thermoml_measured
+10.1016/j.tca.2008.09.010.xml,10.1016/j.tca.2008.09.010,dhfus,16.685,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.tca.2008.09.010.xml,10.1016/j.tca.2008.09.010,tm,372.05,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.tca.2012.02.020.xml,10.1016/j.tca.2012.02.020,dhfus,19.3,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2012.02.020.xml,10.1016/j.tca.2012.02.020,tm,343.65,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2012.03.028.xml,10.1016/j.tca.2012.03.028,tm,353.4,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.tca.2012.03.028.xml,10.1016/j.tca.2012.03.028,dhfus,18.83,,Crystal|Liquid|Gas,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1016/j.tca.2012.03.028.xml,10.1016/j.tca.2012.03.028,tm,342.1,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2012.03.028.xml,10.1016/j.tca.2012.03.028,dhfus,18.51,,Crystal|Liquid|Gas,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2012.04.032.xml,10.1016/j.tca.2012.04.032,dhfus,25.51,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.tca.2012.04.032.xml,10.1016/j.tca.2012.04.032,ttp,487.75,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.tca.2013.05.039.xml,10.1016/j.tca.2013.05.039,ttp,279.8601,,Crystal|Liquid|Gas,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.tca.2013.05.039.xml,10.1016/j.tca.2013.05.039,dhfus,2.686,,Crystal|Liquid|Gas,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1016/j.tca.2013.08.001.xml,10.1016/j.tca.2013.08.001,ttp,318.081,,Crystal 1|Liquid|Air at 1 atmosphere,docosane,HOWGUJZVBDQJKV-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2013.08.001.xml,10.1016/j.tca.2013.08.001,dhfus,48.77,,Crystal 1|Liquid|Air at 1 atmosphere,docosane,HOWGUJZVBDQJKV-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2014.02.023.xml,10.1016/j.tca.2014.02.023,tm,342.08,,Crystal 1|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2014.02.023.xml,10.1016/j.tca.2014.02.023,dhfus,18.8904555,,Crystal 1|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2014.09.022.xml,10.1016/j.tca.2014.09.022,dhfus,63.95113944,,Crystal 1|Liquid|Air at 1 atmosphere,octacosane,ZYURHZPYMFLWSH-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2014.09.022.xml,10.1016/j.tca.2014.09.022,ttp,335.65,,Crystal 1|Liquid|Air at 1 atmosphere,octacosane,ZYURHZPYMFLWSH-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.05.015.xml,10.1016/j.tca.2015.05.015,dhfus,50.04349636,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.05.015.xml,10.1016/j.tca.2015.05.015,tm,290.0,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.05.015.xml,10.1016/j.tca.2015.05.015,dhfus,59.29717656,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.05.015.xml,10.1016/j.tca.2015.05.015,tm,298.0,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.10.001.xml,10.1016/j.tca.2015.10.001,tm,301.55,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2015.10.001.xml,10.1016/j.tca.2015.10.001,dhfus,57.795660072,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,tm,310.05,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,dhfus,68.8,,Crystal|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,tm,324.1,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,dhfus,51.35,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,tm,364.95,,Crystal|Liquid|Air at 1 atmosphere,pentacontane,PFLUOWJPZLHUEA-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2016.10.003.xml,10.1016/j.tca.2016.10.003,dhfus,195.34,,Crystal|Liquid|Air at 1 atmosphere,pentacontane,PFLUOWJPZLHUEA-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2017.06.013.xml,10.1016/j.tca.2017.06.013,tm,301.15,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2017.06.013.xml,10.1016/j.tca.2017.06.013,dhfus,65.27779308,,Crystal|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,tm,371.9,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,dhfus,17.95,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,tm,423.0,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,dhfus,17.47,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,tm,489.5,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.tca.2017.06.024.xml,10.1016/j.tca.2017.06.024,dhfus,30.41,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.tca.2017.09.013.xml,10.1016/j.tca.2017.09.013,dhfus,27.2690676,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1016/j.tca.2017.09.023.xml,10.1016/j.tca.2017.09.023,dhfus,20.559776244,,Crystal|Liquid|Air at 1 atmosphere,hexamethylbenzene,YUWFEBAXEOLKSG-UHFFFAOYSA-N,Cc1c(C)c(C)c(C)c(C)c1C,thermoml_measured
+10.1016/j.tca.2017.09.023.xml,10.1016/j.tca.2017.09.023,tm,439.2,,Crystal 1|Liquid|Air at 1 atmosphere,hexamethylbenzene,YUWFEBAXEOLKSG-UHFFFAOYSA-N,Cc1c(C)c(C)c(C)c(C)c1C,thermoml_measured
+10.1016/j.tca.2017.09.023.xml,10.1016/j.tca.2017.09.023,tm,440.6,,Crystal 1|Liquid|Air at 1 atmosphere,hexamethylbenzene,YUWFEBAXEOLKSG-UHFFFAOYSA-N,Cc1c(C)c(C)c(C)c(C)c1C,thermoml_measured
+10.1016/j.tca.2017.09.023.xml,10.1016/j.tca.2017.09.023,tm,330.3,,Crystal|Liquid|Air at 1 atmosphere,o-terphenyl,OIAQMFOKAXHPNH-UHFFFAOYSA-N,c1ccc(-c2ccccc2-c2ccccc2)cc1,thermoml_measured
+10.1016/j.tca.2017.09.024.xml,10.1016/j.tca.2017.09.024,tm,278.7,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1016/j.tca.2018.04.001.xml,10.1016/j.tca.2018.04.001,ttp,313.65,,Crystal 1|Liquid|Air at 1 atmosphere,heneicosane,FNAZRRHPUDJQCJ-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2018.04.001.xml,10.1016/j.tca.2018.04.001,dhfus,41.550025806,,Crystal 1|Liquid|Air at 1 atmosphere,heneicosane,FNAZRRHPUDJQCJ-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1016/j.tca.2018.08.015.xml,10.1016/j.tca.2018.08.015,tm,361.0,,Crystal|Liquid|Air at 1 atmosphere,m-terphenyl,YJTKZCDBKVTVBY-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccccc3)c2)cc1,thermoml_measured
+10.1016/j.tca.2018.08.015.xml,10.1016/j.tca.2018.08.015,dhfus,23.82,,Crystal|Liquid|Air at 1 atmosphere,m-terphenyl,YJTKZCDBKVTVBY-UHFFFAOYSA-N,c1ccc(-c2cccc(-c3ccccc3)c2)cc1,thermoml_measured
+10.1021/acs.jced.6b00355.xml,10.1021/acs.jced.6b00355,tm,291.3,,Crystal|Liquid|Air at 1 atmosphere,hexadecane,DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/acs.jced.6b00688.xml,10.1021/acs.jced.6b00688,tm,264.95,,Crystal|Liquid|Air at 1 atmosphere,dodecane,SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,thermoml_measured
+10.1021/acs.jced.6b00688.xml,10.1021/acs.jced.6b00688,tm,147.85,,Crystal|Liquid|Air at 1 atmosphere,methylcyclohexane,UAEPNZWRGJTJPN-UHFFFAOYSA-N,CC1CCCCC1,thermoml_measured
+10.1021/acs.jced.7b01026.xml,10.1021/acs.jced.7b01026,tm,224.9,,Crystal|Liquid|Air at 1 atmosphere,hexylcyclohexane,QHWAQXOSHHKCFK-UHFFFAOYSA-N,CCCCCCC1CCCCC1,thermoml_measured
+10.1021/acs.jced.7b01026.xml,10.1021/acs.jced.7b01026,dhfus,20.53491312,,Crystal|Liquid|Air at 1 atmosphere,hexylcyclohexane,QHWAQXOSHHKCFK-UHFFFAOYSA-N,CCCCCCC1CCCCC1,thermoml_measured
+10.1021/acs.jced.7b01034.xml,10.1021/acs.jced.7b01034,tm,423.9,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1021/acs.jced.7b01034.xml,10.1021/acs.jced.7b01034,dhfus,17.36,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1021/acs.jced.7b01034.xml,10.1021/acs.jced.7b01034,tm,489.7,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/acs.jced.7b01034.xml,10.1021/acs.jced.7b01034,dhfus,30.66,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/acs.jced.8b00536.xml,10.1021/acs.jced.8b00536,ttp,623.75,,Crystal|Liquid|Air at 1 atmosphere,"2,3-benzanthracene",IFLREYGFSNHWGE-UHFFFAOYSA-N,c1ccc2cc3cc4ccccc4cc3cc2c1,thermoml_measured
+10.1021/acs.jced.8b00536.xml,10.1021/acs.jced.8b00536,dhfus,37.4,,Crystal|Liquid|Air at 1 atmosphere,"2,3-benzanthracene",IFLREYGFSNHWGE-UHFFFAOYSA-N,c1ccc2cc3cc4ccccc4cc3cc2c1,thermoml_measured
+10.1021/acs.jced.8b00666.xml,10.1021/acs.jced.8b00666,tm,279.95,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1021/acs.jced.8b01209.xml,10.1021/acs.jced.8b01209,ttp,384.41,,Crystal|Liquid|Air at 1 atmosphere,"2,6-dimethylnaphthalene",YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,thermoml_measured
+10.1021/acs.jced.8b01209.xml,10.1021/acs.jced.8b01209,dhfus,24.89,,Crystal|Liquid|Air at 1 atmosphere,"2,6-dimethylnaphthalene",YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,thermoml_measured
+10.1021/acs.jced.9b00064.xml,10.1021/acs.jced.9b00064,ttp,355.04,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/acs.jced.9b00064.xml,10.1021/acs.jced.9b00064,dhfus,20.87,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/acs.jced.9b00234.xml,10.1021/acs.jced.9b00234,tm,490.15,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/je030206q.xml,10.1021/je030206q,tm,301.7,,Crystal 1|Liquid|Air at 1 atmosphere,octadecane,RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je030206q.xml,10.1021/je030206q,tm,305.6,,Crystal 1|Liquid|Air at 1 atmosphere,nonadecane,LQERIDTXQFOHKA-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je030206q.xml,10.1021/je030206q,tm,310.35,,Crystal 1|Liquid|Air at 1 atmosphere,eicosane,CBFCDTFDPHXCNY-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je030206q.xml,10.1021/je030206q,tm,323.85,,Crystal 1|Liquid|Air at 1 atmosphere,tetracosane,POOSGDOYLQNASK-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je030236t.xml,10.1021/je030236t,dhfus,31.1,,Crystal|Liquid|Gas,"1,3,5-triphenylbenzene",SXWIAEOZZQADEY-UHFFFAOYSA-N,c1ccc(-c2cc(-c3ccccc3)cc(-c3ccccc3)c2)cc1,thermoml_measured
+10.1021/je049607b.xml,10.1021/je049607b,tm,385.0,,Crystal|Liquid|Air at 1 atmosphere,"2,6-dimethylnaphthalene",YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,thermoml_measured
+10.1021/je049607b.xml,10.1021/je049607b,tm,369.1,,Crystal|Liquid|Air at 1 atmosphere,"2,7-dimethylnaphthalene",LRQYSMQNJLZKPS-UHFFFAOYSA-N,Cc1ccc2ccc(C)cc2c1,thermoml_measured
+10.1021/je050034s.xml,10.1021/je050034s,dhfus,19.008,,Crystal|Liquid|Gas,diphenylmethane,CZZYITDELCSZES-UHFFFAOYSA-N,c1ccc(Cc2ccccc2)cc1,thermoml_measured
+10.1021/je050034s.xml,10.1021/je050034s,ttp,298.365,,Crystal|Liquid|Gas,diphenylmethane,CZZYITDELCSZES-UHFFFAOYSA-N,c1ccc(Cc2ccccc2)cc1,thermoml_measured
+10.1021/je050039p.xml,10.1021/je050039p,tm,269.01,,Crystal 1|Liquid|Air at 1 atmosphere,tridecane,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,thermoml_measured
+10.1021/je050039p.xml,10.1021/je050039p,tm,279.05,,Crystal 1|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1021/je0502851.xml,10.1021/je0502851,dhfus,19.55,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/je0502851.xml,10.1021/je0502851,tm,354.69,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/je060229f.xml,10.1021/je060229f,tm,278.95,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1021/je060229f.xml,10.1021/je060229f,tm,279.96,,Crystal 1|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1021/je060380p.xml,10.1021/je060380p,tm,489.0,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/je1001945.xml,10.1021/je1001945,tm,488.0,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/je100208e.xml,10.1021/je100208e,dhfus,27.8037552,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/je100208e.xml,10.1021/je100208e,tm,490.0,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured
+10.1021/je100208e.xml,10.1021/je100208e,dhfus,16.180048,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1021/je100208e.xml,10.1021/je100208e,tm,424.0,,Crystal|Liquid|Air at 1 atmosphere,pyrene,BBEAQIROQSPTKN-UHFFFAOYSA-N,c1cc2ccc3cccc4ccc(c1)c2c34,thermoml_measured
+10.1021/je100526j.xml,10.1021/je100526j,tm,278.6,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1021/je100526j.xml,10.1021/je100526j,tm,280.0,,Crystal|Liquid|Air at 1 atmosphere,cyclohexane,XDTMQSROBMDMFD-UHFFFAOYSA-N,C1CCCCC1,thermoml_measured
+10.1021/je100658y.xml,10.1021/je100658y,dhfus,14.0607,,Crystal|Liquid|Air at 1 atmosphere,heptane,IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,thermoml_measured
+10.1021/je100658y.xml,10.1021/je100658y,ttp,182.55,,Crystal|Liquid|Gas,heptane,IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,thermoml_measured
+10.1021/je200673a.xml,10.1021/je200673a,dhfus,21.04,,Crystal|Liquid|Gas,"1,2-diphenylethyne",JRXXLCKWQFKACW-UHFFFAOYSA-N,C(#Cc1ccccc1)c1ccccc1,thermoml_measured
+10.1021/je200673a.xml,10.1021/je200673a,ttp,332.02,,Crystal|Liquid|Gas,"1,2-diphenylethyne",JRXXLCKWQFKACW-UHFFFAOYSA-N,C(#Cc1ccccc1)c1ccccc1,thermoml_measured
+10.1021/je400606c.xml,10.1021/je400606c,tm,243.45,,Crystal|Liquid|Air at 1 atmosphere,decane,DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,thermoml_measured
+10.1021/je400606c.xml,10.1021/je400606c,tm,263.55,,Crystal|Liquid|Air at 1 atmosphere,dodecane,SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,thermoml_measured
+10.1021/je5001389.xml,10.1021/je5001389,ttp,329.21,,Crystal 1|Liquid|Air at 1 atmosphere,hexacosane,HMSWAIKSFDFLKN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je5001389.xml,10.1021/je5001389,dhfus,68.345,,Crystal 1|Liquid|Air at 1 atmosphere,hexacosane,HMSWAIKSFDFLKN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCCCCCCCCCC,thermoml_measured
+10.1021/je5001389.xml,10.1021/je5001389,ttp,340.69,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1021/je5001389.xml,10.1021/je5001389,dhfus,18.608,,Crystal|Liquid|Air at 1 atmosphere,biphenyl,ZUOUZKKEUPVFJK-UHFFFAOYSA-N,c1ccc(-c2ccccc2)cc1,thermoml_measured
+10.1021/je500275j.xml,10.1021/je500275j,tm,275.75,,Crystal|Liquid|Air at 1 atmosphere,"1,1'-bicyclohexyl",WVIIMZNLDWSIRH-UHFFFAOYSA-N,C1CCC(C2CCCCC2)CC1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,242.2,,Crystal|Liquid|Air at 1 atmosphere,1-methylnaphthalene,QPUYECUOLPXSFR-UHFFFAOYSA-N,Cc1cccc2ccccc12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,307.85,,Crystal|Liquid|Air at 1 atmosphere,2-methylnaphthalene,QIMMUPPBPVKWKM-UHFFFAOYSA-N,Cc1ccc2ccccc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,25.3,,Crystal|Liquid|Air at 1 atmosphere,"2,6-dimethylnaphthalene",YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,385.15,,Crystal|Liquid|Air at 1 atmosphere,"2,6-dimethylnaphthalene",YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,22.2,,Crystal|Liquid|Air at 1 atmosphere,"2,7-dimethylnaphthalene",LRQYSMQNJLZKPS-UHFFFAOYSA-N,Cc1ccc2ccc(C)cc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,370.15,,Crystal|Liquid|Air at 1 atmosphere,"2,7-dimethylnaphthalene",LRQYSMQNJLZKPS-UHFFFAOYSA-N,Cc1ccc2ccc(C)cc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,23.97,,Crystal|Liquid|Air at 1 atmosphere,"2,3-dimethylnaphthalene",WWGUMAYGTYQSGA-UHFFFAOYSA-N,Cc1cc2ccccc2cc1C,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,377.15,,Crystal|Liquid|Air at 1 atmosphere,"2,3-dimethylnaphthalene",WWGUMAYGTYQSGA-UHFFFAOYSA-N,Cc1cc2ccccc2cc1C,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,8.5,,Crystal|Liquid|Air at 1 atmosphere,"1,6-dimethylnaphthalene",CBMXCNPQDUJNHT-UHFFFAOYSA-N,Cc1ccc2c(C)cccc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,256.95,,Crystal|Liquid|Air at 1 atmosphere,"1,6-dimethylnaphthalene",CBMXCNPQDUJNHT-UHFFFAOYSA-N,Cc1ccc2c(C)cccc2c1,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,10.6,,Crystal|Liquid|Air at 1 atmosphere,"1,4-dimethylnaphthalene",APQSQLNWAIULLK-UHFFFAOYSA-N,Cc1ccc(C)c2ccccc12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,279.15,,Crystal|Liquid|Air at 1 atmosphere,"1,4-dimethylnaphthalene",APQSQLNWAIULLK-UHFFFAOYSA-N,Cc1ccc(C)c2ccccc12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,18.53,,Crystal|Liquid|Air at 1 atmosphere,"1,8-dimethylnaphthalene",XAABPYINPXYOLM-UHFFFAOYSA-N,Cc1cccc2cccc(C)c12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,338.15,,Crystal|Liquid|Air at 1 atmosphere,"1,8-dimethylnaphthalene",XAABPYINPXYOLM-UHFFFAOYSA-N,Cc1cccc2cccc(C)c12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,dhfus,20.0,,Crystal|Liquid|Air at 1 atmosphere,"1,5-dimethylnaphthalene",SDDBCEWUYXVGCQ-UHFFFAOYSA-N,Cc1cccc2c(C)cccc12,thermoml_measured
+10.1021/je700088n.xml,10.1021/je700088n,tm,355.15,,Crystal|Liquid|Air at 1 atmosphere,"1,5-dimethylnaphthalene",SDDBCEWUYXVGCQ-UHFFFAOYSA-N,Cc1cccc2c(C)cccc12,thermoml_measured
+10.1021/je700179q.xml,10.1021/je700179q,tm,389.15,,Crystal|Liquid|Air at 1 atmosphere,fluorene,NIHNNTQXNPWCJQ-UHFFFAOYSA-N,c1ccc2c(c1)Cc1ccccc1-2,thermoml_measured
+10.1021/je700486g.xml,10.1021/je700486g,tm,381.5,,Crystal|Liquid|Air at 1 atmosphere,fluoranthene,GVEPBJHOBDJJJI-UHFFFAOYSA-N,c1ccc2c(c1)-c1cccc3cccc-2c13,thermoml_measured
+10.1021/je800300x.xml,10.1021/je800300x,dhfus,22.6,,Crystal|Liquid|Air at 1 atmosphere,biphenylene,IFVTZJHWGZSXFD-UHFFFAOYSA-N,c1ccc2c(c1)-c1ccccc1-2,thermoml_measured
+10.1021/je800300x.xml,10.1021/je800300x,tm,385.4,,Crystal|Liquid|Air at 1 atmosphere,biphenylene,IFVTZJHWGZSXFD-UHFFFAOYSA-N,c1ccc2c(c1)-c1ccccc1-2,thermoml_measured
+10.1021/je800382b.xml,10.1021/je800382b,dhfus,36.8,,Crystal 1|Liquid|Air at 1 atmosphere,"2,3-benzanthracene",IFLREYGFSNHWGE-UHFFFAOYSA-N,c1ccc2cc3cc4ccccc4cc3cc2c1,thermoml_measured
+10.1021/je800382b.xml,10.1021/je800382b,tm,626.2,,Crystal 1|Liquid|Air at 1 atmosphere,"2,3-benzanthracene",IFLREYGFSNHWGE-UHFFFAOYSA-N,c1ccc2cc3cc4ccccc4cc3cc2c1,thermoml_measured
+10.1021/je800428r.xml,10.1021/je800428r,tm,356.9,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/je800628a.xml,10.1021/je800628a,dhfus,17.828519332,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/je800628a.xml,10.1021/je800628a,tm,356.1,,Crystal|Liquid|Air at 1 atmosphere,naphthalene,UFWIBTONFRDIAS-UHFFFAOYSA-N,c1ccc2ccccc2c1,thermoml_measured
+10.1021/je8006309.xml,10.1021/je8006309,tm,278.29,,Crystal|Liquid|Air at 1 atmosphere,benzene,UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,thermoml_measured
+10.1021/je8006309.xml,10.1021/je8006309,tm,278.29,,Crystal|Liquid|Air at 1 atmosphere,ethylbenzene,YNQLUTRBYVCPMQ-UHFFFAOYSA-N,CCc1ccccc1,thermoml_measured
+10.1021/je900027h.xml,10.1021/je900027h,tm,378.07,,Crystal|Liquid|Air at 1 atmosphere,phenanthrene,YNPNZTXNASCQKK-UHFFFAOYSA-N,c1ccc2c(c1)ccc1ccccc12,thermoml_measured
+10.1021/je900137r.xml,10.1021/je900137r,ttp,85.525,,Crystal|Liquid|Gas,propane,ATUOYWHBWRKTHZ-UHFFFAOYSA-N,CCC,thermoml_measured
+10.1021/je900137r.xml,10.1021/je900137r,dhfus,3.508,,Crystal|Liquid|Gas,propane,ATUOYWHBWRKTHZ-UHFFFAOYSA-N,CCC,thermoml_measured
+10.1021/je9001575.xml,10.1021/je9001575,dhfus,4.494,,Crystal|Liquid|Gas,2-methylpropane,NNPPMTNAJDCUHE-UHFFFAOYSA-N,CC(C)C,thermoml_measured
+10.1021/je9001575.xml,10.1021/je9001575,ttp,113.707,,Crystal|Liquid|Gas,2-methylpropane,NNPPMTNAJDCUHE-UHFFFAOYSA-N,CC(C)C,thermoml_measured
+10.1021/je900653p.xml,10.1021/je900653p,tm,204.6,,Crystal|Liquid|Air at 1 atmosphere,1-(1-methylethyl)-4-methylbenzene,HFPZCAJZSCWRBC-UHFFFAOYSA-N,Cc1ccc(C(C)C)cc1,thermoml_measured
+10.1021/je900653p.xml,10.1021/je900653p,tm,324.2,,Crystal|Liquid|Air at 1 atmosphere,"2,2-dimethyl-3-methylenebicyclo[2.2.1]heptane",CRPUJAZIXJMDBK-UHFFFAOYSA-N,C=C1C2CCC(C2)C1(C)C,thermoml_measured
+10.1021/je900653p.xml,10.1021/je900653p,tm,211.6,,Crystal|Liquid|Air at 1 atmosphere,"(1S,5S)-6,6-dimethyl-2-methylenebicyclo[3.1.1]heptane",WTARULDDTDQWMU-IUCAKERBSA-N,C=C1CC[C@H]2C[C@@H]1C2(C)C,thermoml_measured
+10.1021/je900852t.xml,10.1021/je900852t,tm,488.0,,Crystal|Liquid|Air at 1 atmosphere,anthracene,MWPLVEDNUUSJAV-UHFFFAOYSA-N,c1ccc2cc3ccccc3cc2c1,thermoml_measured

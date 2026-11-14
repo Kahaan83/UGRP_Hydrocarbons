@@ -1,0 +1,225 @@
+{
+  "dedup_dropped": [
+    {
+      "source": "oakley2017",
+      "sample": "Mix4_C6_pxylene_C16",
+      "T_K": 260.79999999999995
+    }
+  ],
+  "binary_margin_C": 16.975450975521966,
+  "R-W2-1": {
+    "alkane_naphthene": {
+      "n_systems_in_M": 1,
+      "n_systems_scored": 1
+    },
+    "alkane_only": {
+      "n_systems_in_M": 8,
+      "n_systems_scored": 2
+    },
+    "with_aromatic": {
+      "n_systems_in_M": 2,
+      "n_systems_scored": 0
+    },
+    "pooled": {
+      "n_systems_in_M": 11,
+      "n_systems_scored": 3
+    }
+  },
+  "R-W2-2": {
+    "alkane_naphthene": {
+      "gate_systems": 8,
+      "passed": false,
+      "margin": NaN
+    },
+    "alkane_only": {
+      "gate_systems": 8,
+      "passed": false,
+      "margin": NaN
+    },
+    "with_aromatic": {
+      "gate_systems": 8,
+      "passed": false,
+      "margin": NaN
+    }
+  },
+  "R-W2-3": [
+    {
+      "model": "coutinho_empirical_depression",
+      "class_mix": "alkane_naphthene",
+      "n_scored": 1,
+      "n_systems_scored": 1,
+      "mae": 17.889999999999993,
+      "bias": -17.889999999999993,
+      "frac_under": 1.0,
+      "max_under": 17.889999999999993
+    },
+    {
+      "model": "coutinho_empirical_depression",
+      "class_mix": "alkane_only",
+      "n_scored": 32,
+      "n_systems_scored": 2,
+      "mae": 9.665625,
+      "bias": -9.665625,
+      "frac_under": 1.0,
+      "max_under": 20.25
+    },
+    {
+      "model": "coutinho_empirical_depression",
+      "class_mix": "with_aromatic",
+      "n_scored": 0,
+      "n_systems_scored": 0,
+      "mae": NaN,
+      "bias": NaN,
+      "frac_under": NaN,
+      "max_under": NaN
+    },
+    {
+      "model": "coutinho_empirical_depression",
+      "class_mix": "pooled",
+      "n_scored": 33,
+      "n_systems_scored": 3,
+      "mae": 9.914848484848486,
+      "bias": -9.914848484848486,
+      "frac_under": 1.0,
+      "max_under": 20.25
+    },
+    {
+      "model": "ideal_solid_solution_nalkanes",
+      "class_mix": "alkane_naphthene",
+      "n_scored": 1,
+      "n_systems_scored": 1,
+      "mae": 2.817832369786885,
+      "bias": -2.817832369786885,
+      "frac_under": 1.0,
+      "max_under": 2.817832369786885
+    },
+    {
+      "model": "ideal_solid_solution_nalkanes",
+      "class_mix": "alkane_only",
+      "n_scored": 32,
+      "n_systems_scored": 2,
+      "mae": 4.922286538894014,
+      "bias": 4.904024161750204,
+      "frac_under": 0.03125,
+      "max_under": 0.29219803430095226
+    },
+    {
+      "model": "ideal_solid_solution_nalkanes",
+      "class_mix": "with_aromatic",
+      "n_scored": 0,
+      "n_systems_scored": 0,
+      "mae": NaN,
+      "bias": NaN,
+      "frac_under": NaN,
+      "max_under": NaN
+    },
+    {
+      "model": "ideal_solid_solution_nalkanes",
+      "class_mix": "pooled",
+      "n_scored": 33,
+      "n_systems_scored": 3,
+      "mae": 4.858515200436222,
+      "bias": 4.670028509279383,
+      "frac_under": 0.06060606060606061,
+      "max_under": 2.817832369786885
+    },
+    {
+      "model": "svl_ideal",
+      "class_mix": "alkane_naphthene",
+      "n_scored": 1,
+      "n_systems_scored": 1,
+      "mae": 2.8178322834486096,
+      "bias": -2.8178322834486096,
+      "frac_under": 1.0,
+      "max_under": 2.8178322834486096
+    },
+    {
+      "model": "svl_ideal",
+      "class_mix": "alkane_only",
+      "n_scored": 32,
+      "n_systems_scored": 2,
+      "mae": 1.1684253351276013,
+      "bias": -0.6045903600303486,
+      "frac_under": 0.6875,
+      "max_under": 3.0819036552166494
+    },
+    {
+      "model": "svl_ideal",
+      "class_mix": "with_aromatic",
+      "n_scored": 0,
+      "n_systems_scored": 0,
+      "mae": NaN,
+      "bias": NaN,
+      "frac_under": NaN,
+      "max_under": NaN
+    },
+    {
+      "model": "svl_ideal",
+      "class_mix": "pooled",
+      "n_scored": 33,
+      "n_systems_scored": 3,
+      "mae": 1.2184073638646016,
+      "bias": -0.6716582971036292,
+      "frac_under": 0.696969696969697,
+      "max_under": 3.0819036552166494
+    },
+    {
+      "model": "svl_unifac",
+      "class_mix": "alkane_naphthene",
+      "n_scored": 1,
+      "n_systems_scored": 1,
+      "mae": 4.637396810537638,
+      "bias": -4.637396810537638,
+      "frac_under": 1.0,
+      "max_under": 4.637396810537638
+    },
+    {
+      "model": "svl_unifac",
+      "class_mix": "alkane_only",
+      "n_scored": 32,
+      "n_systems_scored": 2,
+      "mae": 1.248348162784593,
+      "bias": -0.8506939667380315,
+      "frac_under": 0.71875,
+      "max_under": 3.3101424482505877
+    },
+    {
+      "model": "svl_unifac",
+      "class_mix": "with_aromatic",
+      "n_scored": 0,
+      "n_systems_scored": 0,
+      "mae": NaN,
+      "bias": NaN,
+      "frac_under": NaN,
+      "max_under": NaN
+    },
+    {
+      "model": "svl_unifac",
+      "class_mix": "pooled",
+      "n_scored": 33,
+      "n_systems_scored": 3,
+      "mae": 1.3510466066558973,
+      "bias": -0.9654425377622621,
+      "frac_under": 0.7272727272727273,
+      "max_under": 4.637396810537638
+    }
+  ],
+  "R-W2-4": {
+    "alkane_naphthene": {
+      "n_scored": 1,
+      "covered": 1
+    },
+    "alkane_only": {
+      "n_scored": 32,
+      "covered": 32
+    },
+    "with_aromatic": {
+      "n_scored": 0,
+      "covered": 0
+    },
+    "pooled": {
+      "n_scored": 33,
+      "covered": 33
+    }
+  }
+}
