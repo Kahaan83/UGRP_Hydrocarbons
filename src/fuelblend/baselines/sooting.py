@@ -128,13 +128,19 @@ def _bulk_model():
     return fit_bulk(pd.read_csv(DATA / "smoke_point_ajftd.csv"))
 
 
+DOMAIN_TOL_VOL_PCT = 1e-6
+
+
 def smoke_point_from_bulk(aromatics_vol: float, diaromatics_vol: float | None = None) -> float:
     """Smoke point (mm) of a jet fuel from D1319 aromatics and diaromatics (vol %).
 
     Trained on 100 AJFTD jet fuels (aromatics ~8-23 vol %, SP 19.3-25 mm); do not use outside.
     Emits OutOfDomainWarning if aromatics is outside [8, 23] vol % or the result is outside
-    [19, 25] mm (trust range); the value is still returned. Clamped to [0, 50] mm."""
-    if not (8.0 <= aromatics_vol <= 23.0):
+    [19, 25] mm (trust range); the value is still returned. Clamped to [0, 50] mm.
+
+    Domain edge tolerance: the aromatics check allows 1e-6 vol % beyond each edge (DOMAIN_TOL_VOL_PCT), so a recipe
+    sitting on the D7566 aromatics minimum (8.0 vol %, to float round-off) does not warn; 7.9 still warns."""
+    if not (8.0 - DOMAIN_TOL_VOL_PCT <= aromatics_vol <= 23.0 + DOMAIN_TOL_VOL_PCT):
         warnings.warn(f"aromatics {aromatics_vol} vol % outside training domain 8-23", OutOfDomainWarning)
     coef, means = _bulk_model()
     d = pd.DataFrame({BULK_FEATURES[0]: [aromatics_vol],

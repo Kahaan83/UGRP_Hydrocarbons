@@ -1,0 +1,83 @@
+{
+ "gate_per_gated_set": {
+  "S-LAB": {
+   "dMAE": 0.7013526339365082,
+   "ci95": [
+    0.14502336656234394,
+    1.333303563392319
+   ],
+   "over5_ideal": 0.007936507936507936,
+   "over5_gh": 0.007936507936507936,
+   "gate_pass": false
+  },
+  "S-CRC": {
+   "dMAE": 0.20424179999999925,
+   "ci95": [
+    -0.3023001149999991,
+    0.7207803505555549
+   ],
+   "over5_ideal": 0.044444444444444446,
+   "over5_gh": 0.022222222222222223,
+   "gate_pass": false
+  },
+  "S-T2": {
+   "dMAE": 1.0889580857142853,
+   "ci95": [
+    0.8487700999999995,
+    1.3136428817857149
+   ],
+   "over5_ideal": 0.05714285714285714,
+   "over5_gh": 0.05714285714285714,
+   "gate_pass": false
+  }
+ },
+ "gate_overall_pass": false,
+ "locked_crc_unsafe_rate_rises": false,
+ "R4_lab_margins": {
+  "ideal": {
+   "with_mesitylene": 3.698768000000001,
+   "without_mesitylene": 2.2069329999999994,
+   "diff": 1.4918350000000018,
+   "within_0p5": false
+  },
+  "wilson": {
+   "with_mesitylene": 0.7004169999999998,
+   "without_mesitylene": 0.7004169999999998,
+   "diff": 0.0,
+   "within_0p5": true
+  },
+  "ideal_mesitylene_antoine_fixed": {
+   "with_mesitylene": 2.2069329999999994,
+   "without_mesitylene": 2.2069329999999994,
+   "diff": 0.0,
+   "within_0p5": true
+  },
+  "wilson_mesitylene_antoine_fixed": {
+   "with_mesitylene": 0.7004169999999998,
+   "without_mesitylene": 0.7004169999999998,
+   "diff": 0.0,
+   "within_0p5": true
+  },
+  "wilson_ad_gated": {
+   "with_mesitylene": 0.7004169999999998,
+   "without_mesitylene": 0.7004169999999998,
+   "diff": 0.0,
+   "within_0p5": true
+  }
+ },
+ "R4_mesitylene_system_mean_error": {
+  "ideal": -0.6871521111111115,
+  "wilson": -3.3011116666666687,
+  "ideal_mesitylene_antoine_fixed": -4.739175444444446,
+  "wilson_mesitylene_antoine_fixed": -7.344341333333334,
+  "wilson_ad_gated": -3.3011116666666687
+ },
+ "R4_mesitylene_system_max_error": {
+  "ideal": 3.698768000000001,
+  "wilson": -0.5766320000000036,
+  "ideal_mesitylene_antoine_fixed": -3.8305950000000024,
+  "wilson_mesitylene_antoine_fixed": -6.846373,
+  "wilson_ad_gated": -0.5766320000000036
+ },
+ "expectation_stated": "loss or tie likely"
+}

@@ -1,0 +1,143 @@
+{
+  "task": "1.4",
+  "reading": "R-SC-2",
+  "alpha": 0.1,
+  "direction": "over",
+  "gate_passed": true,
+  "gate_rule": ">=200 in-domain fuels (counted in groups with >=40) and >=5 groups with >=40 fuels",
+  "certifying_margin_mm": 4.107069860688682,
+  "fuel_level_margin_mm": 2.9473593199111683,
+  "per_group_margin_mm": {
+    "JA": 0.1614902521024888,
+    "JAA": 1.7875112440785585,
+    "JETSCREEN": Infinity,
+    "JFK": 4.107069860688682,
+    "LAB_REPORT": 2.765092270364601,
+    "NUMERIC_ID": 0.07461118164778568,
+    "OTHER": 1.5508840757499378,
+    "PAREN_BATCH": 1.1804053484261203
+  },
+  "per_group_n": {
+    "JA": 432,
+    "JAA": 665,
+    "JETSCREEN": 1,
+    "JFK": 348,
+    "LAB_REPORT": 269,
+    "NUMERIC_ID": 70,
+    "OTHER": 140,
+    "PAREN_BATCH": 65
+  },
+  "eligible_groups": [
+    "JA",
+    "JAA",
+    "JFK",
+    "LAB_REPORT",
+    "NUMERIC_ID",
+    "OTHER",
+    "PAREN_BATCH"
+  ],
+  "n_in_domain_fuels": 1990,
+  "n_in_eligible_groups": 1989,
+  "n_groups_all": 8,
+  "n_censored_excluded": 14,
+  "coverage_oof": 0.9809045226130654,
+  "oof_residual_mean": -0.06141617494072815,
+  "oof_residual_median": 0.03484104930009124,
+  "oof_residual_q90": 2.9473593199111683,
+  "sensitivity_smoke25_removed": {
+    "margin": 3.8638840108033676,
+    "fuel_level": 2.727734240653003,
+    "n_rows": 1791,
+    "per_group": {
+      "JA": 0.9936186985311082,
+      "JAA": 1.4918307318838728,
+      "JETSCREEN": Infinity,
+      "JFK": 3.8638840108033676,
+      "LAB_REPORT": 2.4715499710826165,
+      "NUMERIC_ID": 0.6520071820092923,
+      "OTHER": 1.3097114349915664,
+      "PAREN_BATCH": 0.8987345319976541
+    }
+  },
+  "leaky_stored_coefficient_reference": {
+    "fuel_level_margin": 2.3206407889695697,
+    "n": 1990,
+    "per_group": {
+      "PAREN_BATCH": 1.220063723828094,
+      "NUMERIC_ID": -0.053058347836749675,
+      "LAB_REPORT": 2.126421306885778,
+      "OTHER": 1.3171734648699882,
+      "JFK": 3.1587912205664104,
+      "JA": 0.3784459681316754,
+      "JAA": 1.737982342718201
+    },
+    "certifying": 3.1587912205664104
+  },
+  "lab_margin_mm": 7.8,
+  "max_margin_that_certifies_mm_by_arom_vol_pct": {
+    "8": 6.97,
+    "10": 6.33,
+    "12": 5.68,
+    "15": 4.71,
+    "20": 3.09
+  },
+  "margin_vs_lab_ratio": 0.5265474180370106,
+  "certifies_at": {
+    "8": true,
+    "10": true,
+    "12": true,
+    "15": true,
+    "20": false
+  },
+  "class_mix_range_mass_frac": {
+    "cyclo": [
+      0.0,
+      0.7087641803031823
+    ],
+    "nparaffin": [
+      0.0,
+      0.5084576118506656
+    ],
+    "isoparaffin": [
+      0.006814310051107325,
+      0.9946925695974363
+    ]
+  },
+  "r_sc_2c": {
+    "margin": 3.1587912205664104,
+    "fuel_level_margin": 2.414283205911886,
+    "per_group_margin": {
+      "NUMERIC_ID": -0.053058347836749675,
+      "OTHER": 1.3732425153569388,
+      "LAB_REPORT": 2.1911611342470394,
+      "JFK": 3.1587912205664104,
+      "JA": 0.3784459681316754,
+      "JAA": 1.737982342718201,
+      "JETSCREEN": Infinity
+    },
+    "per_group_n": {
+      "NUMERIC_ID": 70,
+      "OTHER": 106,
+      "LAB_REPORT": 268,
+      "JFK": 348,
+      "JA": 432,
+      "JAA": 665,
+      "JETSCREEN": 1
+    },
+    "eligible_groups": [
+      "NUMERIC_ID",
+      "OTHER",
+      "LAB_REPORT",
+      "JFK",
+      "JA",
+      "JAA"
+    ],
+    "n_in_domain": 1990,
+    "n_matched_training_fuels": 100,
+    "n_scored": 1890,
+    "gate_passed": true,
+    "max_abs_pred_diff_refit_vs_stored_mm": 1.865787928457621
+  },
+  "certifying_margin_final": 4.107069860688682,
+  "user_decision_required": "R-SC-2b: yaml key not added; needs a quoted user answer"
+}

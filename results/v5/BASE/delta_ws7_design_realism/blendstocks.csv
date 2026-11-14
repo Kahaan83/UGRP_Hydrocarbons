@@ -1,0 +1,7 @@
+name,label,source,fuel_id,n_representatives,unmapped_fraction,synthetic,status,wt_aromatic,wt_cycloalkane,wt_iso_paraffin,wt_n_paraffin
+jetA_posf10325,"Jet A base (AJFTD GCxGC fuel 2, label 10325, POSF-10325)",ajftd,2,42.0,0.02468887996788427,False,used,0.1658,0.3243,0.305,0.2049
+hefa_came,HEFA-SPK (FuelLib HEFA-CAME),fuellib,FUELLIB_hefa-came,25.0,-2.220446049250313e-16,True,used,0.0003,0.0276,0.9013,0.0708
+atj_posf11498,ATJ-SPK (FuelLib C-1 POSF11498 ATJ),fuellib,FUELLIB_posf11498,8.0,0.004401760704281665,True,used,,,1.0,
+SAK,SAK,,,,,,blocked: no named SAK composition in data/real_fuels or data/raw (AJFTD fuels 47/139 are ~97 % aromatic but unlabelled),,,,
+ajftd_47,unlabelled aromatic stream,ajftd,47,,,,not used: no pathway label,,,,
+ajftd_139,unlabelled aromatic stream,ajftd,139,,,,not used: no pathway label,,,,

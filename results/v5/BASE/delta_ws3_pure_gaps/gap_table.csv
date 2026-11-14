@@ -1,0 +1,56 @@
+inchikey,smiles,label,used_in,tm_tier,dh_tier,family,n_carbon,tm_pure_props_v5,dh_pure_props_v5
+DIOQZVSQGTUSAI-UHFFFAOYSA-N,CCCCCCCCCC,n-decane,ajftd_gcxgc_rep+ext+poolA+poolB+v5pool,verified,verified,n_alkane,10,verified: -29.7 C,verified: 28.72 kJ/mol
+RSJKGSCJYJTIGS-UHFFFAOYSA-N,CCCCCCCCCCC,n-undecane,ajftd_gcxgc_rep+ext+poolA+poolB+v5pool,verified,verified,n_alkane,11,verified: -25.6 C,verified: 22.2 kJ/mol
+SNRUBQQJIBEYMU-UHFFFAOYSA-N,CCCCCCCCCCCC,n-dodecane,ajftd_gcxgc_rep+ext+poolA+poolB+v5pool,verified,verified,n_alkane,12,verified: -9.6 C,verified: 36.84 kJ/mol
+GGBJHURWWWLEQH-UHFFFAOYSA-N,CCCCC1CCCCC1,butylcyclohexane,ajftd_gcxgc_rep+ext+poolA+poolB+v5pool,verified,verified,cycloalkane_mono,10,verified: -75 C,verified: 15 kJ/mol
+NNBZCPXTIHJBJL-MGCOHNPYSA-N,C1CC[C@H]2CCCC[C@@H]2C1,decalin_trans,ajftd_gcxgc_rep+ext+poolA+poolB+v5pool,verified,verified,cycloalkane_poly,10,verified: -30.4 C,verified: 14.414 kJ/mol
+GWHJZXXIDMPWGX-UHFFFAOYSA-N,Cc1ccc(C)c(C)c1,"1,2,4-trimethylbenzene",ext+poolA+poolB+subreps_v5_candidate+v5pool,verified,verified,benzene_mono,9,verified: -43.8 C,verified: 12.3 kJ/mol
+IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,n-tridecane,ajftd_gcxgc_rep+ext,verified,verified,n_alkane,13,verified: -5.4 C,verified: 28.5 kJ/mol
+BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,n-tetradecane,ajftd_gcxgc_rep+ext,verified,verified,n_alkane,14,verified: 5.9 C,verified: 45.1 kJ/mol
+YXFVVABEGXRONW-UHFFFAOYSA-N,Cc1ccccc1,toluene,ajftd_gcxgc_rep+poolA,thermoml_measured,needs_estimate,benzene_mono,7,verified: -95 C,verified: 6.64 kJ/mol
+NHTMVDHEPJAVLT-UHFFFAOYSA-N,CC(C)CC(C)(C)C,isooctane,poolA+poolB,verified,verified,iso_alkane,8,verified: -107.4 C,verified: 9.22 kJ/mol
+LTEQMZWBSYACLV-UHFFFAOYSA-N,CCCCCCc1ccccc1,hexylbenzene,ajftd_gcxgc_rep+poolB,needs_estimate,needs_estimate,benzene_mono,12,verified: -61 C,disputed: 17.5 kJ/mol
+CXWXQJXEFPUFDZ-UHFFFAOYSA-N,c1ccc2c(c1)CCCC2,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,aromatic_naphthenic,10,verified: -35.8 C,disputed: 12.4 kJ/mol
+HFPZCAJZSCWRBC-UHFFFAOYSA-N,Cc1ccc(C(C)C)cc1,,ajftd_gcxgc_rep,thermoml_measured,needs_estimate,benzene_mono,10,,
+CDKDZKXSXLNROY-UHFFFAOYSA-N,CCCCCCCCc1ccccc1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,benzene_mono,14,,
+YCOZIPAWZNQLMR-UHFFFAOYSA-N,CCCCCCCCCCCCCCC,,ajftd_gcxgc_rep,verified,verified,n_alkane,15,,
+UZILCZKGXMQEQR-UHFFFAOYSA-N,CCCCCCCCCCc1ccccc1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,benzene_mono,16,,
+DCAYPVUWAIABOU-UHFFFAOYSA-N,CCCCCCCCCCCCCCCC,,ajftd_gcxgc_rep,verified,verified,n_alkane,16,verified: 18.2 C,verified: 53.3 kJ/mol
+NDJKXXJCMXVBJW-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCC,,ajftd_gcxgc_rep,thermoml_measured,needs_estimate,n_alkane,17,,
+RZJRJXONCZWCBN-UHFFFAOYSA-N,CCCCCCCCCCCCCCCCCC,,ajftd_gcxgc_rep,thermoml_measured,thermoml_measured,n_alkane,18,verified: 28.2 C,verified: 61.7 kJ/mol
+UHOVQNZJYSORNB-UHFFFAOYSA-N,c1ccccc1,,ajftd_gcxgc_rep,verified,verified,benzene_mono,6,,
+UAEPNZWRGJTJPN-UHFFFAOYSA-N,CC1CCCCC1,,ajftd_gcxgc_rep,verified,verified,cycloalkane_mono,7,verified: -126.6 C,verified: 6.74 kJ/mol
+IMNFDUFMRHMDMM-UHFFFAOYSA-N,CCCCCCC,,ajftd_gcxgc_rep,thermoml_measured,thermoml_measured,n_alkane,7,verified: -90.6 C,verified: 14.12 kJ/mol
+BZHMBWZPUJHVEE-UHFFFAOYSA-N,CC(C)CC(C)C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,7,,
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,Cc1ccccc1C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,benzene_mono,8,verified: -25.2 C,reference_only: 13.6 kJ/mol
+IIEWJVIFRVWJOD-UHFFFAOYSA-N,CCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,8,,
+TVMXDCGIABBOFY-UHFFFAOYSA-N,CCCCCCCC,,ajftd_gcxgc_rep,needs_estimate,thermoml_measured,n_alkane,8,verified: -56.8 C,verified: 20.73 kJ/mol
+HDGQICNBXPAKLR-UHFFFAOYSA-N,CCC(C)CC(C)C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,8,,
+AUHZEENZYGFFBQ-UHFFFAOYSA-N,Cc1cc(C)cc(C)c1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,benzene_mono,9,verified: -44.7 C,verified: 9.51 kJ/mol
+DEDZSLCZHWTGOR-UHFFFAOYSA-N,CCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,9,,
+BKIMMITUMNQMOS-UHFFFAOYSA-N,CCCCCCCCC,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,n_alkane,9,,
+IALRSQMWHFKJJA-UHFFFAOYSA-N,CCCCCC(C)CCC,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,10,,
+HLTMUYBTNSVOFY-UHFFFAOYSA-N,CCCCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,11,,
+CNPVJWYWYZMPDS-UHFFFAOYSA-N,CCCCCCCCC(C)C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,11,,
+QHWAQXOSHHKCFK-UHFFFAOYSA-N,CCCCCCC1CCCCC1,,ajftd_gcxgc_rep,thermoml_measured,thermoml_measured,cycloalkane_mono,12,,
+HTZWVZNRDDOFEI-UHFFFAOYSA-N,CCCCCCCCC(C)CC,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,12,,
+MSTLSCNJAHAQNU-UHFFFAOYSA-N,CCCCCCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,13,,
+FBXWCEKQCVOOLT-UHFFFAOYSA-N,CCCCCCCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,14,,
+CLMFECCMAVQYQA-UHFFFAOYSA-N,CCCCCCCCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,15,,
+STWFZICHPLEOIC-UHFFFAOYSA-N,CCCCCCCCCCC1CCCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,16,,
+BLRBGKYYWDBAQQ-UHFFFAOYSA-N,CCCCCCCCCCCCC1CCCCC1,,ajftd_gcxgc_rep,thermoml_measured,thermoml_measured,cycloalkane_mono,18,,
+PQNFLJBBNBOBRQ-UHFFFAOYSA-N,c1ccc2c(c1)CCC2,,ajftd_gcxgc_rep,thermoml_measured,thermoml_measured,aromatic_naphthenic,9,,
+DOGIHOCMZJUJNR-UHFFFAOYSA-N,CCCCC(C)CCC,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,9,,
+BANXPJUEBPWEOT-UHFFFAOYSA-N,CCCCCCCCCCCCCC(C)C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,16,,
+HZRSSYSIMDTFLT-UHFFFAOYSA-N,CCCCCCCCCC(C)CCCCCC,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,17,,
+GDOPTJXRTPNYNR-UHFFFAOYSA-N,CC1CCCC1,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,cycloalkane_mono,6,,
+VLKZOEOYAKHREP-UHFFFAOYSA-N,CCCCCC,,ajftd_gcxgc_rep,thermoml_measured,needs_estimate,n_alkane,6,verified: -95.3 C,verified: 13.08 kJ/mol
+AFABGHUZZDYHJO-UHFFFAOYSA-N,CCCC(C)C,,ajftd_gcxgc_rep,needs_estimate,needs_estimate,iso_alkane,6,verified: -153.7 C,verified: 6.27 kJ/mol
+ODLMAHJVESYWTB-UHFFFAOYSA-N,CCCc1ccccc1,n-propylbenzene,subreps_v5_candidate,thermoml_measured,needs_estimate,benzene_mono,9,,
+QPUYECUOLPXSFR-UHFFFAOYSA-N,Cc1cccc2ccccc12,1-methylnaphthalene,subreps_v5_candidate,verified,verified,aromatic_poly,11,disputed: -30.5 C,disputed: 14.8 kJ/mol
+YGYNBBAUIYTWBF-UHFFFAOYSA-N,Cc1ccc2cc(C)ccc2c1,"2,6-dimethylnaphthalene",subreps_v5_candidate,verified,verified,aromatic_poly,12,,
+GNMCGMFNBARSIY-UHFFFAOYSA-N,C1CCC2C(C1)CCC1CCCCC12,perhydrophenanthrene,subreps_v5_candidate,needs_estimate,needs_estimate,cycloalkane_poly,14,,
+OLWAZOBRCQWWDB-UHFFFAOYSA-N,C1CCC2C(C1)CC1CCCCC12,perhydrofluorene,subreps_v5_candidate,needs_estimate,needs_estimate,cycloalkane_poly,13,,
+APBBTKKLSNPFDP-UHFFFAOYSA-N,CC1CCCc2ccccc21,1-methyltetralin,subreps_v5_candidate,needs_estimate,needs_estimate,aromatic_naphthenic,11,,
+GCKPJUYBKVPDAU-UHFFFAOYSA-N,CCCCC1CCCc2ccccc21,n-butyltetralin,subreps_v5_candidate,needs_estimate,needs_estimate,aromatic_naphthenic,14,,
+GREARFRXIFVLGB-UHFFFAOYSA-N,CC1CCC2CCCCC2C1,2-methyldecalin,subreps_v5_candidate,needs_estimate,needs_estimate,cycloalkane_poly,11,,

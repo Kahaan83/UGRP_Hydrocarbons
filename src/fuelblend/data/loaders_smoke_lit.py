@@ -21,7 +21,7 @@ from rdkit.Chem import inchi
 ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw" / "smoke_lit"
 FILES = ["S3_mensch2009_smoke_tsi.csv", "S4_rainville2025_smoke.csv", "S5_botero_smoke_tsi.csv",
-         "S6_boehm2022_smoke_tsi.csv", "S7_ysi_unified_hc.csv"]
+         "S6_boehm2022_smoke_tsi.csv", "S7_ysi_unified_hc.csv", "S8_yang2006_smoke_tsi.csv"]
 
 
 def _mol(smiles: str):
@@ -62,3 +62,11 @@ def load_smoke_lit(raw_dir: Path | str = RAW, files=FILES) -> pd.DataFrame:
     d = pd.DataFrame(out)
     d["is_hc"] = d["is_hc"].astype("boolean")
     return d
+
+
+def load_yang_fuel_class(raw_dir: Path | str = RAW) -> pd.DataFrame:
+    """Bulk class composition (P, N, MA, DA), hydrogen content and MW of the Yang 2006 fuels (S8_yang2006_fuel_class.csv).
+
+    One row per fuel; ``sample_id`` matches ``load_smoke_lit`` (system_id ``fuel:S8_yang2006:<sample_id>``).  Bases: P and N wt %;
+    MA and DA wt % for the Table 1 fuels, vol % for the Pande and Hardy fuels (see ``MADA_basis``).  Blank cells are NaN."""
+    return pd.read_csv(Path(raw_dir) / "S8_yang2006_fuel_class.csv")

@@ -5,6 +5,7 @@ Reads data/raw/freezing_lit/ (see SOURCES.md there):
   vozka2018_properties.csv   measured freezing points (Jet A, three neat HEFAs, 18 blends) and three densities
   ascent065A_freezing.csv    pure and mixture freezing points of named hydrocarbons (mole basis)
   kittel2023_fuels.csv       seven real fuels, bulk properties
+  oakley2017_liquidus.csv    DSC liquidus temperatures of hexane/heptane + hexadecane mixtures and pure hexane (mole basis; stored in C)
 
 ``load_properties`` returns one row per measured value with InChIKeys resolved through RDKit (``comp_inchikeys`` sorted, ``fractions`` aligned),
 ``system_id`` = md5[:12] of the sorted InChIKey set (named compounds) or ``fuel:<source>:<sample>`` (real fuels, blends of real fuels), ``is_hc``.
@@ -25,7 +26,8 @@ from rdkit.Chem import inchi
 
 ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw" / "freezing_lit"
-PROPERTY_FILES = ("vozka2018_properties.csv", "ascent065A_freezing.csv", "kittel2023_fuels.csv")
+PROPERTY_FILES = ("vozka2018_properties.csv", "ascent065A_freezing.csv", "kittel2023_fuels.csv",
+                  "oakley2017_liquidus.csv")
 
 # paper class -> (AJFTD hc_class as in ajftd_gcxgc_composition.csv, mixture.common.CLASSES entry, reconstruction_r3 subkind)
 CLASS_MAP = {

@@ -1,0 +1,133 @@
+{
+ "margins": {
+  "T10": 7.927706228297922,
+  "FBP": 3.2620795453688913,
+  "T50_T10": 18.68126547110495,
+  "T90_T10": 18.246505125791458,
+  "T50": 14.962257132355518,
+  "T90": 26.66366345986779
+ },
+ "domain": {
+  "tbp_spread_min": 30.108505086978028,
+  "tbp_spread_max": 163.63082880048358
+ },
+ "fit": {
+  "T10": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 6.365207166815935,
+   "per_source": {
+    "av3322": 4.0041735602071356,
+    "ajftd": 7.927706228297922
+   },
+   "certifying_margin": 7.927706228297922,
+   "bias": -0.6914521696994095,
+   "mae": 4.519152918617372,
+   "mae_constant": 8.19395886165117
+  },
+  "FBP": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 0.8219196466297944,
+   "per_source": {
+    "av3322": 0.8219196466297944,
+    "ajftd": 3.2620795453688913
+   },
+   "certifying_margin": 3.2620795453688913,
+   "bias": 15.108196511362525,
+   "mae": 15.752817627429364,
+   "mae_constant": 16.521030149337843
+  },
+  "T50_T10": {
+   "direction": "over",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 11.023679395142068,
+   "per_source": {
+    "av3322": 3.602073754539191,
+    "ajftd": 18.68126547110495
+   },
+   "certifying_margin": 18.68126547110495,
+   "bias": -1.583290840271696,
+   "mae": 7.668724378219764,
+   "mae_constant": 9.320997464074388
+  },
+  "T90_T10": {
+   "direction": "over",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 8.7928767819065,
+   "per_source": {
+    "av3322": 0.0,
+    "ajftd": 18.246505125791458
+   },
+   "certifying_margin": 18.246505125791458,
+   "bias": -8.984381073924629,
+   "mae": 12.564167517075298,
+   "mae_constant": 16.530431107354183
+  },
+  "T50": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 12.457094574046408,
+   "per_source": {
+    "av3322": 14.962257132355518,
+    "ajftd": 8.953370862288125
+   },
+   "certifying_margin": 14.962257132355518,
+   "bias": -2.2747430099711057,
+   "mae": 8.74983621601107,
+   "mae_constant": 11.449994928148772
+  },
+  "T90": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 20.53737345471174,
+   "per_source": {
+    "av3322": 17.56342052126618,
+    "ajftd": 26.66366345986779
+   },
+   "certifying_margin": 26.66366345986779,
+   "bias": -9.675833243624036,
+   "mae": 13.063081761951764,
+   "mae_constant": 15.307635953789797
+  }
+ },
+ "n_fuels_used": 65,
+ "excluded": {
+  "low_coverage": 0,
+  "no_composition": 0
+ },
+ "n_double_count_dropped": 9,
+ "ajftd_rows_without_method": 0,
+ "alpha": 0.1,
+ "note": "R-W7-2 declared in README; adopting into configs/uncertainty_v5.yaml is a user decision (not done)"
+}

@@ -90,3 +90,14 @@ full run of the first version gave 581 passed).
 
 Update (reruns completed): ext_n8 and guard4_v5pool also finished: all four designs in each are category B (8 of 8 designs B, smoke uncertified, 0 certified).
 Full pytest after the fix: 582 passed, 0 failed.
+
+Rows for the two late runs (added 2026-11-13; same columns as the table above; recipes compared with `delta_flash_margin_q2/designs/<run>`):
+
+| run | design | smoke status | smoke margin | category | vs 9ee34cc |
+|---|---|---|---|---|---|
+| ext_n8 | Jet A | uncertified | none | B | recipe identical (max weight change 0.0000) |
+| ext_n8 | Jet A-1 | uncertified | none | B | recipe identical |
+| guard4_v5pool | Jet A | uncertified | none | B | recipe identical |
+| guard4_v5pool | Jet A-1 | uncertified | none | B | recipe identical |
+
+Correction to the update line above: each run holds two designs (Jet A, Jet A-1), so the four runs hold 8 designs; all 8 are category B, 0 certified.

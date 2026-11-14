@@ -1,0 +1,17 @@
+04:50:26 config {'epochs': 60, 'seeds': 5, 'width': 64, 'batch': 512, 'lr': 0.002, 'wd': 0.0001, 'threads': 2, 'device': 'cpu', 'torch': '2.15.0+cpu', 'cands': ['gnn']}
+04:50:44 viscosity rows 15827, systems 334, molecules 77; aligned with baseline rows_scored
+max abs diff predicted 4.998942017664376e-06 max rel 8.017640418406938e-09
+04:50:54 density rows 10900, systems 208, molecules 60 (no graph: 0), ln_eta missing share 0.000; aligned with baseline rows_scored
+04:54:44 viscosity fold 0 gnn: train rows [8722], 230s
+04:57:59 viscosity fold 1 gnn: train rows [8515], 195s
+05:01:12 viscosity fold 2 gnn: train rows [8507], 193s
+05:04:06 viscosity fold 3 gnn: train rows [8487], 173s
+05:07:00 viscosity fold 4 gnn: train rows [8493], 174s
+05:08:57 density fold 0 gnn: train rows [6446], 117s
+05:10:58 density fold 1 gnn: train rows [6590], 122s
+05:13:06 density fold 2 gnn: train rows [6428], 128s
+05:15:06 density fold 3 gnn: train rows [6442], 120s
+05:17:11 density fold 4 gnn: train rows [6402], 124s
+05:17:12 R-WS4-1 viscosity/gnn: pair 0.05989 -> cand 0.06109, gain [-0.004025, 0.001662] pass False
+05:17:12 R-WS4-1 density/gnn: pair 0.9578 -> cand 1.057, gain [-0.2121, 0.01151] pass False
+05:17:12 dev stage done; locked systems not scored

@@ -10,10 +10,10 @@ from fuelblend.data import loaders_freezing_lit as L
 def test_row_counts():
     p = L.load_properties()
     assert p.groupby("source_id").size().to_dict() == {"vozka2018_si": 25, "ascent065A_2025_f2": 11, "ascent065A_slides2024_f3": 8,
-                                                      "kittel2023": 79}
+                                                      "kittel2023": 79, "oakley2017": 6}
     assert (p[p.source_id == "vozka2018_si"].property == "freezing_point_C").sum() == 22
     assert (p[p.source_id == "kittel2023"].property == "freezing_point_C").sum() == 7
-    assert (p.property == "freezing_point_C").sum() == 22 + 19 + 7
+    assert (p.property == "freezing_point_C").sum() == 22 + 19 + 7 + 6
     assert len(L.load_vozka_gcxgc()) == 272
 
 
@@ -79,3 +79,18 @@ def test_blend_composition():
     a = L.vozka_as_ajftd_composition()
     assert abs(b.mass_pct.sum() - (0.7 * a[a.fuel_id == "Jet A"].mass_pct.sum() + 0.3 * a[a.fuel_id == "CAME"].mass_pct.sum())) < 1e-6
     assert list(L.blend_composition("Jet A").columns) == list(b.columns)
+
+
+def test_oakley2017_liquidus():
+    p = L.load_properties()
+    o = p[p.source_id == "oakley2017"].reset_index(drop=True)
+    assert len(o) == 6 and (o.property == "freezing_point_C").all() and (o.fraction_basis == "mole").all()
+    v = o.set_index(["sample_id", "method"]).value
+    assert abs(o[o.sample_id == "Mix1_C7_C16"].value.iloc[0] - (279.17 - 273.15)) < 0.006   # Table 4 end-set, PDF p11
+    assert abs(o[o.sample_id == "Mix3_C6_C16"].value.iloc[0] - (261.62 - 273.15)) < 0.006
+    assert abs(o[o.sample_id == "Mix4_C6_pxylene_C16"].value.iloc[0] - (260.80 - 273.15)) < 0.006
+    assert abs(o[o.sample_id == "hexane_pure"].value.iloc[0] - (177.39 - 273.15)) < 0.006      # Table 3, PDF p5
+    t = o[o.sample_id == "Mix4_C6_pxylene_C16"].iloc[0]
+    assert sorted(json.loads(t.fractions_norm)) == [0.096, 0.2004, 0.7036] and t.is_hc
+    m1 = o[o.sample_id.str.startswith("Mix1")]
+    assert len(m1) == 2 and m1.system_id.nunique() == 1 and (m1.qualifier == "liquidus;replicate").sum() == 1
