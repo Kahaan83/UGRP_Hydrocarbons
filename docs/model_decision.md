@@ -127,6 +127,7 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 >>>>>>> worktree-agent-a9e86284246eb2de4
 =======
 - The design optimiser and its certification still use the Refutas viscosity margins (engine_v4 path, not changed); the design forward check carries one report-only ML viscosity row.
+<<<<<<< HEAD
 
 
 ## v5 WS6: GCxGC class x carbon-number models on real fuels (2026-11-14, exploratory)
@@ -136,3 +137,6 @@ Evidence: `docs/FULL_REPORT_v4.md` and `results/v4/*/README.md`. Sections 1-4 ab
 * The constant cold offset is the robust piece: real-fuel one-sided margin 0.135 ln (-20 C) / 0.215 ln (-40 C), transfer holds at -40 C only. Proposal in `proposed_margins.yaml`; the yaml `inf` is unchanged (user decision).
 * Freezing correction: F1x beats a constant on 54 real fuels (3.55 vs 6.11 C), so "no skill over a constant" applies to the v4 designated route, not to F1x. Models on top of F1x do not improve it.
 >>>>>>> worktree-agent-ab5aceb174f266a9b
+=======
+- GH-GNN activity coefficients in the flash (delta_ws5_ghgnn, 2026-11-14): ln gamma_inf from GH-GNN, inverted to per-pair Wilson parameters, used as modified Raoult in the Le Chatelier solver. Gate NOT met (dMAE +0.70 lab, +0.20 CRC, +1.09 T2 C; CIs above 0 on lab and T2). Not exposed, not designated; live flash route unchanged. User decision needed only if it is to be revisited. SVL freezing with GH-GNN not run.
+>>>>>>> worktree-agent-a96b8f938718f9e90
