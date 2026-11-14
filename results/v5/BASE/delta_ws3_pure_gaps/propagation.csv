@@ -1,0 +1,5 @@
+pool,design_id,spec,components,estimated_components,mole_frac_estimated,freezing_C_tiered,max_abs_change_pm1rmse_C,missing_constants
+poolA,astm_jet_a__custom,astm:jet_a,"[""n-undecane"", ""n-dodecane"", ""butylcyclohexane"", ""1,2,4-trimethylbenzene"", ""isooctane""]",[],0.0,-40.82766788151267,0.0,[]
+poolA,bis_jet_a1__custom,bis:jet_a1,"[""n-decane"", ""n-undecane"", ""n-dodecane"", ""butylcyclohexane"", ""1,2,4-trimethylbenzene"", ""isooctane""]",[],0.0,-47.957050710653135,0.0,[]
+poolB,astm_jet_a__custom,astm:jet_a,"[""n-undecane"", ""n-dodecane"", ""butylcyclohexane"", ""1,2,4-trimethylbenzene"", ""isooctane""]",[],0.0,-40.82766788151267,0.0,[]
+poolB,bis_jet_a1__custom,bis:jet_a1,"[""n-decane"", ""n-undecane"", ""n-dodecane"", ""butylcyclohexane"", ""1,2,4-trimethylbenzene"", ""isooctane""]",[],0.0,-47.957050710653135,0.0,[]
