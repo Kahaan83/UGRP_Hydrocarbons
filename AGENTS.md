@@ -91,8 +91,9 @@ temperature**, kinematic viscosity at the temperature(s) of interest.
 * Python 3.12.5; pandas 3.0.6; numpy 2.5.3; rdkit 2026.03.6; requests 2.34.2; lxml 6.1.3; openpyxl 3.1.5; scipy.
 * **Move the project out of OneDrive** (≈800 small files + ~600 MB of raw data sync badly; deep zip paths can hit
   Windows' 260-char limit). The audit script warns about this.
-* Extra packages needed for AJFTD tools (not yet in `requirements.txt` — **add them**):
-  `beautifulsoup4` (offline HTML parser), `playwright` + `python -m playwright install chromium` (scraper).
+* AJFTD tools need `beautifulsoup4` (offline HTML parser) and `playwright` (scraper); both are in `requirements.txt`. After install run
+  `python -m playwright install chromium`.
+* ThermoML `phase_of()` bug: fixed in v5 (`2aa665b`, CLM-37); see `results/v5/thermoml_reextract/README.md`.
 * pandas 3 gotchas already hit: assigning mixed-type lists via `.loc[k, [cols]] = [...]` fails → assign per column.
 * Windows/PowerShell: use `python script.py`; long-running scripts print progress; Ctrl-C handling exists in `fetch.py`.
 * University CS-lab compute is available for model training.
@@ -256,7 +257,7 @@ Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/clai
   210 gasoline octane blend rows, no diesel. Only POSF-10325 is a headline GC fuel (n = 1).
 * Designs: 0 of 13 certified (D2 re-run with known-composition lab margins); diesel unvalidated; freezing models show no skill over a constant.
 * r2 reconstruction flipped CRC flash bias to the unsafe (over-prediction) side (+4.2 C raw, dev); causes not isolated.
-* Open: ThermoML `phase_of()` default-mode bug (recorded, not fixed), thin locked sets, cold-viscosity lab margin is `inf`; full list in report section 11 and 13.4.
+* Open: thin locked sets, cold-viscosity lab margin is `inf`; full list in report section 11 and 13.4.
 * Tests: pytest 308 passed / 42 failed at the v4 baseline (all pre-existing missing-deliverable asserts; `results/v4/baseline_pytest.txt`).
 
 ### 8.1 HISTORIC (v1-era, 2026-10-29 and earlier; numbers below predate v4 and several rest on v3-style or contaminated data; do not quote without checking `docs/claims_register.md`)
