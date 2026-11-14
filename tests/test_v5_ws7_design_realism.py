@@ -42,12 +42,12 @@ def test_specs_unchanged_with_d86_off():
         assert now[k] == fx[k], k
 
 
-def test_d86_flag_adds_four_unverified_constraints():
+def test_d86_flag_adds_four_verified_constraints():
     for sp in ("astm:jet_a", "bis:jet_a1"):
         c = E.load_spec(sp, d86=True)["constraints"]
         for k, lim in (("distillation_T10_C", ("max", 205.0)), ("distillation_FBP_C", ("max", 300.0)),
                        ("distillation_T50_minus_T10_C", ("min", 15.0)), ("distillation_T90_minus_T10_C", ("min", 40.0))):
-            assert c[k][lim[0]] == lim[1] and c[k]["verification"] == "secondary_sources_only"
+            assert c[k][lim[0]] == lim[1] and c[k]["verification"] == "verified"
             assert E.canonical_property(k)[0] is not None
         assert not any(k.startswith("distillation_") for k in E.load_spec(sp)["constraints"])
 

@@ -78,30 +78,30 @@ families:
         verification: "verified"
         uncertainty_margin: null
       # v5 WS7 (delta_ws7_design_realism): D86 limits, used ONLY with engine_v4.load_spec(..., d86=True) (applies_to: d86_design).
-      # IS 1571 text NOT read; values are the usual Jet A-1 / D1655 numbers and the D7566 Table 1 slope minimums (secondary sources).
+      # IS 1571 / D1655 / D7566 D86 limits: checked by user against the standards 2026-11-14.
       distillation_T10_C:
         max: 205.0
         test_method: "ASTM D86"
-        source: "D1655 / Jet A-1 Table 1 (secondary; IS 1571 text not read)"
-        verification: secondary_sources_only
+        source: "D1655 / Jet A-1 Table 1 (checked by user 2026-11-14)"
+        verification: verified
         applies_to: d86_design
       distillation_FBP_C:
         max: 300.0
         test_method: "ASTM D86"
-        source: "D1655 / Jet A-1 Table 1 (secondary; IS 1571 text not read)"
-        verification: secondary_sources_only
+        source: "D1655 / Jet A-1 Table 1 (checked by user 2026-11-14)"
+        verification: verified
         applies_to: d86_design
       distillation_T50_minus_T10_C:
         min: 15.0
         test_method: "ASTM D86"
-        source: "D7566 Table 1 (secondary)"
-        verification: secondary_sources_only
+        source: "D7566 Table 1 (checked by user 2026-11-14)"
+        verification: verified
         applies_to: d86_design
       distillation_T90_minus_T10_C:
         min: 40.0
         test_method: "ASTM D86"
-        source: "D7566 Table 1 (secondary)"
-        verification: secondary_sources_only
+        source: "D7566 Table 1 (checked by user 2026-11-14)"
+        verification: verified
         applies_to: d86_design
 
   diesel_bs6:
