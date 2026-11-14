@@ -1,0 +1,1095 @@
+{
+ "pool_c": {
+  "astm:jet_a": {
+   "aromatics_vol_pct": {
+    "margin": 0.0,
+    "prediction": 8.321346125090653,
+    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified)",
+    "slack": 0.018902713240626624,
+    "status": "uncertified"
+   },
+   "aromatics_wt_pct": {
+    "margin": 0.0,
+    "prediction": 9.34,
+    "reason": "",
+    "slack": 0.6264,
+    "status": "by_construction"
+   },
+   "density_15C_kg_m3": {
+    "margin": 4.5866,
+    "prediction": 784.024046047085,
+    "reason": "",
+    "slack": 0.06826840072438489,
+    "status": "pass"
+   },
+   "flash_point_C": {
+    "margin": 2.206932808388615,
+    "prediction": 40.91734321328602,
+    "reason": "lab_margin_set_by_one_system",
+    "slack": 0.018695010655194796,
+    "status": "pass"
+   },
+   "freezing_point_C": {
+    "margin": 16.975450975521966,
+    "prediction": -57.723634189463894,
+    "reason": "",
+    "slack": 0.018704580348548206,
+    "status": "pass"
+   },
+   "kin_visc_m20C_cSt": {
+    "margin": 0.28747778594508044,
+    "prediction": 2.9012610932207425,
+    "reason": "",
+    "slack": 0.5165552557896682,
+    "status": "pass"
+   },
+   "nhoc_MJ_kg": {
+    "margin": 0.1940195141400025,
+    "prediction": 43.79569474,
+    "reason": "",
+    "slack": 0.018730729576168278,
+    "status": "pass"
+   },
+   "smoke_point_mm": {
+    "margin": 4.107069860688682,
+    "prediction": 24.870954247473453,
+    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: secondary_sources_only (an unverified limit is never certified))",
+    "slack": 0.15354913259915393,
+    "status": "uncertified"
+   }
+  },
+  "bis:jet_a1": {
+   "aromatics_vol_pct": {
+    "margin": 0.0,
+    "prediction": 8.260916252877392,
+    "reason": "spec limit verification: secondary_sources_only (an unverified limit is never certified)",
+    "slack": 0.015348014875140696,
+    "status": "uncertified"
+   },
+   "density_15C_kg_m3": {
+    "margin": 4.5866,
+    "prediction": 792.7596840274923,
+    "reason": "",
+    "slack": 0.2026628311921898,
+    "status": "pass"
+   },
+   "flash_point_C": {
+    "margin": 2.206932808388615,
+    "prediction": 40.79162670484965,
+    "reason": "lab_margin_set_by_one_system",
+    "slack": 0.01538668148581666,
+    "status": "pass"
+   },
+   "freezing_point_C": {
+    "margin": 16.975450975521966,
+    "prediction": -64.67843983616811,
+    "reason": "",
+    "slack": 0.014957209800981789,
+    "status": "pass"
+   },
+   "kin_visc_m20C_cSt": {
+    "margin": 0.28747778594508044,
+    "prediction": 2.91213743869712,
+    "reason": "",
+    "slack": 0.5147429018208864,
+    "status": "pass"
+   },
+   "nhoc_MJ_kg": {
+    "margin": 0.1940195141400025,
+    "prediction": 43.659466179999995,
+    "reason": "",
+    "slack": 0.015547819295794294,
+    "status": "pass"
+   },
+   "smoke_point_mm": {
+    "margin": 4.107069860688682,
+    "prediction": 24.890515344946202,
+    "reason": "spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: UNVERIFIED (an unverified limit is never certified))",
+    "slack": 0.15463586023652887,
+    "status": "uncertified"
+   }
+  }
+ },
+ "specs": {
+  "astm:diesel_no2|sb=False|alt=False": {
+   "_family": "diesel_no2",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 35.0,
+     "test_method": "ASTM D1319"
+    },
+    "cloud_point_C": {
+     "max": -5.0,
+     "test_method": "ASTM D2500",
+     "uncertainty_margin": 3.5
+    },
+    "dcn": {
+     "min": 40.0,
+     "test_method": "ASTM D6890 / D613",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 860.0,
+     "min": 820.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 52.0,
+     "test_method": "ASTM D93",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.1,
+     "min": 1.9,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    }
+   },
+   "grade": "Grade No. 2-D S15",
+   "standard": "ASTM D975"
+  },
+  "astm:diesel_no2|sb=False|alt=True": {
+   "_family": "diesel_no2",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 35.0,
+     "test_method": "ASTM D1319"
+    },
+    "cloud_point_C": {
+     "max": -5.0,
+     "test_method": "ASTM D2500",
+     "uncertainty_margin": 3.5
+    },
+    "dcn": {
+     "min": 40.0,
+     "test_method": "ASTM D6890 / D613",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 860.0,
+     "min": 820.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 52.0,
+     "test_method": "ASTM D93",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.1,
+     "min": 1.9,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    }
+   },
+   "grade": "Grade No. 2-D S15",
+   "standard": "ASTM D975",
+   "use_alt_limits": true
+  },
+  "astm:diesel_no2|sb=True|alt=False": {
+   "_family": "diesel_no2",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 35.0,
+     "test_method": "ASTM D1319"
+    },
+    "cloud_point_C": {
+     "max": -5.0,
+     "test_method": "ASTM D2500",
+     "uncertainty_margin": 3.5
+    },
+    "dcn": {
+     "min": 40.0,
+     "test_method": "ASTM D6890 / D613",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 860.0,
+     "min": 820.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 52.0,
+     "test_method": "ASTM D93",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.1,
+     "min": 1.9,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    }
+   },
+   "grade": "Grade No. 2-D S15",
+   "standard": "ASTM D975"
+  },
+  "astm:diesel_no2|sb=True|alt=True": {
+   "_family": "diesel_no2",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 35.0,
+     "test_method": "ASTM D1319"
+    },
+    "cloud_point_C": {
+     "max": -5.0,
+     "test_method": "ASTM D2500",
+     "uncertainty_margin": 3.5
+    },
+    "dcn": {
+     "min": 40.0,
+     "test_method": "ASTM D6890 / D613",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 860.0,
+     "min": 820.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 52.0,
+     "test_method": "ASTM D93",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.1,
+     "min": 1.9,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    }
+   },
+   "grade": "Grade No. 2-D S15",
+   "standard": "ASTM D975",
+   "use_alt_limits": true
+  },
+  "astm:gasoline|sb=False|alt=False": {
+   "_family": "gasoline",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_T50_C": {
+     "max": 121.0,
+     "min": 77.0,
+     "test_method": "ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 70.0,
+     "min": 45.0,
+     "test_method": "ASTM D5191",
+     "uncertainty_margin": 5.0
+    },
+    "mon": {
+     "min": 82.0,
+     "test_method": "ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 87.0,
+     "test_method": "ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Regular Unleaded (Class AA / A)",
+   "standard": "ASTM D4814"
+  },
+  "astm:gasoline|sb=False|alt=True": {
+   "_family": "gasoline",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_T50_C": {
+     "max": 121.0,
+     "min": 77.0,
+     "test_method": "ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 70.0,
+     "min": 45.0,
+     "test_method": "ASTM D5191",
+     "uncertainty_margin": 5.0
+    },
+    "mon": {
+     "min": 82.0,
+     "test_method": "ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 87.0,
+     "test_method": "ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Regular Unleaded (Class AA / A)",
+   "standard": "ASTM D4814",
+   "use_alt_limits": true
+  },
+  "astm:gasoline|sb=True|alt=False": {
+   "_family": "gasoline",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_T50_C": {
+     "max": 121.0,
+     "min": 77.0,
+     "test_method": "ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 70.0,
+     "min": 45.0,
+     "test_method": "ASTM D5191",
+     "uncertainty_margin": 5.0
+    },
+    "mon": {
+     "min": 82.0,
+     "test_method": "ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 87.0,
+     "test_method": "ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Regular Unleaded (Class AA / A)",
+   "standard": "ASTM D4814"
+  },
+  "astm:gasoline|sb=True|alt=True": {
+   "_family": "gasoline",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_T50_C": {
+     "max": 121.0,
+     "min": 77.0,
+     "test_method": "ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 70.0,
+     "min": 45.0,
+     "test_method": "ASTM D5191",
+     "uncertainty_margin": 5.0
+    },
+    "mon": {
+     "min": 82.0,
+     "test_method": "ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 87.0,
+     "test_method": "ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Regular Unleaded (Class AA / A)",
+   "standard": "ASTM D4814",
+   "use_alt_limits": true
+  },
+  "astm:jet_a|sb=False|alt=False": {
+   "_family": "jet_a",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 25.0,
+     "test_method": "ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "ASTM D56",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -40.0,
+     "test_method": "ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "ASTM D1322 / D1840",
+     "uncertainty_margin": null,
+     "verification": "secondary_sources_only"
+    }
+   },
+   "grade": "Jet A",
+   "standard": "ASTM D1655"
+  },
+  "astm:jet_a|sb=False|alt=True": {
+   "_family": "jet_a",
+   "constraints": {
+    "aromatics_wt_pct": {
+     "max": 25.0,
+     "test_method": "ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "ASTM D56",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -40.0,
+     "test_method": "ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "ASTM D1322 / D1840",
+     "uncertainty_margin": null,
+     "verification": "secondary_sources_only"
+    }
+   },
+   "grade": "Jet A",
+   "standard": "ASTM D1655",
+   "use_alt_limits": true
+  },
+  "astm:jet_a|sb=True|alt=False": {
+   "_family": "jet_a",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "applies_to": "synthetic_blend",
+     "max": 25.0,
+     "min": 8.0,
+     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "verification": "secondary_sources_only"
+    },
+    "aromatics_wt_pct": {
+     "max": 25.0,
+     "test_method": "ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "ASTM D56",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -40.0,
+     "test_method": "ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "ASTM D1322 / D1840",
+     "uncertainty_margin": null,
+     "verification": "secondary_sources_only"
+    }
+   },
+   "grade": "Jet A",
+   "standard": "ASTM D1655"
+  },
+  "astm:jet_a|sb=True|alt=True": {
+   "_family": "jet_a",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "applies_to": "synthetic_blend",
+     "max": 25.0,
+     "min": 8.0,
+     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "verification": "secondary_sources_only"
+    },
+    "aromatics_wt_pct": {
+     "max": 25.0,
+     "test_method": "ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "ASTM D56",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -40.0,
+     "test_method": "ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "ASTM D1322 / D1840",
+     "uncertainty_margin": null,
+     "verification": "secondary_sources_only"
+    }
+   },
+   "grade": "Jet A",
+   "standard": "ASTM D1655",
+   "use_alt_limits": true
+  },
+  "bis:diesel_bs6|sb=False|alt=False": {
+   "_family": "diesel_bs6",
+   "constraints": {
+    "dcn": {
+     "min": 51.0,
+     "test_method": "IS 1448 [P:9] / ASTM D613 / ASTM D6890",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 845.0,
+     "min": 810.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 35.0,
+     "test_method": "IS 1448 [P:20] (Abel Closed Cup)",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.5,
+     "min": 2.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "pour_point_C": {
+     "max": 3.0,
+     "test_method": "IS 1448 [P:10] / ASTM D97",
+     "uncertainty_margin": 4.5
+    }
+   },
+   "grade": "Automotive Diesel Fuel BS VI",
+   "standard": "IS 1460:2017"
+  },
+  "bis:diesel_bs6|sb=False|alt=True": {
+   "_family": "diesel_bs6",
+   "constraints": {
+    "dcn": {
+     "min": 51.0,
+     "test_method": "IS 1448 [P:9] / ASTM D613 / ASTM D6890",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 845.0,
+     "min": 810.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 35.0,
+     "test_method": "IS 1448 [P:20] (Abel Closed Cup)",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.5,
+     "min": 2.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "pour_point_C": {
+     "max": 3.0,
+     "test_method": "IS 1448 [P:10] / ASTM D97",
+     "uncertainty_margin": 4.5
+    }
+   },
+   "grade": "Automotive Diesel Fuel BS VI",
+   "standard": "IS 1460:2017",
+   "use_alt_limits": true
+  },
+  "bis:diesel_bs6|sb=True|alt=False": {
+   "_family": "diesel_bs6",
+   "constraints": {
+    "dcn": {
+     "min": 51.0,
+     "test_method": "IS 1448 [P:9] / ASTM D613 / ASTM D6890",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 845.0,
+     "min": 810.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 35.0,
+     "test_method": "IS 1448 [P:20] (Abel Closed Cup)",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.5,
+     "min": 2.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "pour_point_C": {
+     "max": 3.0,
+     "test_method": "IS 1448 [P:10] / ASTM D97",
+     "uncertainty_margin": 4.5
+    }
+   },
+   "grade": "Automotive Diesel Fuel BS VI",
+   "standard": "IS 1460:2017"
+  },
+  "bis:diesel_bs6|sb=True|alt=True": {
+   "_family": "diesel_bs6",
+   "constraints": {
+    "dcn": {
+     "min": 51.0,
+     "test_method": "IS 1448 [P:9] / ASTM D613 / ASTM D6890",
+     "uncertainty_margin": 5.5
+    },
+    "density_15C_kg_m3": {
+     "max": 845.0,
+     "min": 810.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 35.0,
+     "test_method": "IS 1448 [P:20] (Abel Closed Cup)",
+     "uncertainty_margin": 4.2
+    },
+    "kin_visc_40C_cSt": {
+     "max": 4.5,
+     "min": 2.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "pour_point_C": {
+     "max": 3.0,
+     "test_method": "IS 1448 [P:10] / ASTM D97",
+     "uncertainty_margin": 4.5
+    }
+   },
+   "grade": "Automotive Diesel Fuel BS VI",
+   "standard": "IS 1460:2017",
+   "use_alt_limits": true
+  },
+  "bis:gasoline_e10|sb=False|alt=False": {
+   "_family": "gasoline_e10",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_E70_pct": {
+     "max": 45.0,
+     "min": 10.0,
+     "test_method": "IS 1448 [P:18] / ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 67.0,
+     "test_method": "ASTM D5191 / IS 1448 [P:101]",
+     "uncertainty_margin": 5.0
+    },
+    "ethanol_vol_pct": {
+     "max": 10.0,
+     "test_method": "IS 2796 Annex A"
+    },
+    "mon": {
+     "min": 81.0,
+     "test_method": "IS 1448 [P:27] / ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 91.0,
+     "test_method": "IS 1448 [P:26] / ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Motor Gasoline BS VI (E10 Blend)",
+   "standard": "IS 2796:2017"
+  },
+  "bis:gasoline_e10|sb=False|alt=True": {
+   "_family": "gasoline_e10",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_E70_pct": {
+     "max": 45.0,
+     "min": 10.0,
+     "test_method": "IS 1448 [P:18] / ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 67.0,
+     "test_method": "ASTM D5191 / IS 1448 [P:101]",
+     "uncertainty_margin": 5.0
+    },
+    "ethanol_vol_pct": {
+     "max": 10.0,
+     "test_method": "IS 2796 Annex A"
+    },
+    "mon": {
+     "min": 81.0,
+     "test_method": "IS 1448 [P:27] / ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 91.0,
+     "test_method": "IS 1448 [P:26] / ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Motor Gasoline BS VI (E10 Blend)",
+   "standard": "IS 2796:2017",
+   "use_alt_limits": true
+  },
+  "bis:gasoline_e10|sb=True|alt=False": {
+   "_family": "gasoline_e10",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_E70_pct": {
+     "max": 45.0,
+     "min": 10.0,
+     "test_method": "IS 1448 [P:18] / ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 67.0,
+     "test_method": "ASTM D5191 / IS 1448 [P:101]",
+     "uncertainty_margin": 5.0
+    },
+    "ethanol_vol_pct": {
+     "max": 10.0,
+     "test_method": "IS 2796 Annex A"
+    },
+    "mon": {
+     "min": 81.0,
+     "test_method": "IS 1448 [P:27] / ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 91.0,
+     "test_method": "IS 1448 [P:26] / ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Motor Gasoline BS VI (E10 Blend)",
+   "standard": "IS 2796:2017"
+  },
+  "bis:gasoline_e10|sb=True|alt=True": {
+   "_family": "gasoline_e10",
+   "constraints": {
+    "density_15C_kg_m3": {
+     "max": 775.0,
+     "min": 720.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "distillation_E70_pct": {
+     "max": 45.0,
+     "min": 10.0,
+     "test_method": "IS 1448 [P:18] / ASTM D86"
+    },
+    "dvpe_kPa": {
+     "max": 67.0,
+     "test_method": "ASTM D5191 / IS 1448 [P:101]",
+     "uncertainty_margin": 5.0
+    },
+    "ethanol_vol_pct": {
+     "max": 10.0,
+     "test_method": "IS 2796 Annex A"
+    },
+    "mon": {
+     "min": 81.0,
+     "test_method": "IS 1448 [P:27] / ASTM D2700",
+     "uncertainty_margin": 3.5
+    },
+    "ron": {
+     "min": 91.0,
+     "test_method": "IS 1448 [P:26] / ASTM D2699",
+     "uncertainty_margin": 3.5
+    }
+   },
+   "grade": "Motor Gasoline BS VI (E10 Blend)",
+   "standard": "IS 2796:2017",
+   "use_alt_limits": true
+  },
+  "bis:jet_a1|sb=False|alt=False": {
+   "_family": "jet_a1",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "max": 25.0,
+     "test_method": "IS 1448 [P:23] / ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "IS 1448 [P:20] (Abel)",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -47.0,
+     "test_method": "IS 1448 [P:11] / ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "IS 1448 [P:7] / ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "uncertainty_margin": null,
+     "verification": "UNVERIFIED"
+    }
+   },
+   "grade": "Aviation Turbine Fuel (Jet A-1)",
+   "standard": "IS 1571:2014"
+  },
+  "bis:jet_a1|sb=False|alt=True": {
+   "_family": "jet_a1",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "max": 25.0,
+     "test_method": "IS 1448 [P:23] / ASTM D1319"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "IS 1448 [P:20] (Abel)",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -47.0,
+     "test_method": "IS 1448 [P:11] / ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "IS 1448 [P:7] / ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "uncertainty_margin": null,
+     "verification": "UNVERIFIED"
+    }
+   },
+   "grade": "Aviation Turbine Fuel (Jet A-1)",
+   "standard": "IS 1571:2014",
+   "use_alt_limits": true
+  },
+  "bis:jet_a1|sb=True|alt=False": {
+   "_family": "jet_a1",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "max": 25.0,
+     "min": 8.0,
+     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "test_method": "IS 1448 [P:23] / ASTM D1319",
+     "verification": "secondary_sources_only"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "IS 1448 [P:20] (Abel)",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -47.0,
+     "test_method": "IS 1448 [P:11] / ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "IS 1448 [P:7] / ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "uncertainty_margin": null,
+     "verification": "UNVERIFIED"
+    }
+   },
+   "grade": "Aviation Turbine Fuel (Jet A-1)",
+   "standard": "IS 1571:2014"
+  },
+  "bis:jet_a1|sb=True|alt=True": {
+   "_family": "jet_a1",
+   "constraints": {
+    "aromatics_vol_pct": {
+     "max": 25.0,
+     "min": 8.0,
+     "source": "D7566 Table 1 (secondary, D7566-12a)",
+     "test_method": "IS 1448 [P:23] / ASTM D1319",
+     "verification": "secondary_sources_only"
+    },
+    "density_15C_kg_m3": {
+     "max": 840.0,
+     "min": 775.0,
+     "test_method": "IS 1448 [P:32] / ASTM D4052",
+     "uncertainty_margin": 8.0
+    },
+    "flash_point_C": {
+     "min": 38.0,
+     "test_method": "IS 1448 [P:20] (Abel)",
+     "uncertainty_margin": 4.2
+    },
+    "freezing_point_C": {
+     "max": -47.0,
+     "test_method": "IS 1448 [P:11] / ASTM D5972",
+     "uncertainty_margin": 5.0
+    },
+    "kin_visc_m20C_cSt": {
+     "max": 8.0,
+     "test_method": "IS 1448 [P:25] / ASTM D445",
+     "uncertainty_margin_factor": 1.25
+    },
+    "nhoc_MJ_kg": {
+     "min": 42.8,
+     "test_method": "IS 1448 [P:7] / ASTM D4809",
+     "uncertainty_margin": 0.28
+    },
+    "smoke_point_mm": {
+     "alt_min": 18.0,
+     "alt_requires": {
+      "naphthalenes_vol_pct_max": 3.0
+     },
+     "min": 25.0,
+     "test_method": "IS 1448 [P:31] / ASTM D1322",
+     "uncertainty_margin": null,
+     "verification": "UNVERIFIED"
+    }
+   },
+   "grade": "Aviation Turbine Fuel (Jet A-1)",
+   "standard": "IS 1571:2014",
+   "use_alt_limits": true
+  }
+ }
+}
