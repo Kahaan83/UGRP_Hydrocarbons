@@ -65,8 +65,8 @@ families:
       aromatics_vol_pct:
         min: 8.0
         max: 25.0
-        source: "D7566 Table 1 (secondary, D7566-12a)"
-        verification: secondary_sources_only
+        source: "D7566 Table 1 (checked by user against the standard 2026-11-14)"
+        verification: verified
         applies_to: synthetic_blend
       # v4 Task 14. D1655 Table 1: smoke point >= 25.0 mm, OR >= 18.0 mm AND naphthalenes <= 3.00 vol %
       # (D1322 / D1840). Limits confirmed only from secondary sources (supplier specification sheets that
@@ -77,7 +77,7 @@ families:
         alt_min: 18.0
         alt_requires: {naphthalenes_vol_pct_max: 3.0}
         test_method: "ASTM D1322 / D1840"
-        verification: "secondary_sources_only"
+        verification: "verified"  # user checked D1655 Table 1 against the standard 2026-11-14
         uncertainty_margin: null  # model skill vs constant baseline not established (results/v4/SP)
       # v5 WS7 (delta_ws7_design_realism): D86 limits, used ONLY with engine_v4.load_spec(..., d86=True) (applies_to: d86_design).
       # D1655 Table 1 (T10 <= 205 C, FBP <= 300 C) and D7566 Table 1 (T50-T10 >= 15 C, T90-T10 >= 40 C): secondary sources only, standard text not read.

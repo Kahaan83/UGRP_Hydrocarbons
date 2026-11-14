@@ -66,17 +66,16 @@ families:
         # v5 Task 1.3: merged into this entry by engine_v4.load_spec ONLY with synthetic_blend=True (D7566 aromatics 8.0-25.0 vol %).
         synthetic_blend_overrides:
           min: 8.0
-          source: "D7566 Table 1 (secondary, D7566-12a)"
-          verification: secondary_sources_only
-      # v4 Task 14. UNVERIFIED: IS 1571 text not read. BIS lab-scope listing confirms smoke point and
-      # naphthalenes are Table 1 requirements but gives no numbers; values below assume the usual
-      # Jet A-1 pair (>= 25 mm, or >= 18 mm with naphthalenes <= 3.0 % v/v) seen in other Jet A-1 specs.
+          source: "D7566 Table 1 (checked by user against the standard 2026-11-14)"
+          verification: verified
+      # IS 1571 Table 1, checked by the user against the standard 2026-11-14: smoke point >= 25.0 mm, OR
+      # >= 19.0 mm (not 18.0 as in D1655) with naphthalenes <= 3.00 % v/v (IS 1448 [P:118]); method IS 1448 [P:31] / ISO 3014.
       smoke_point_mm:
         min: 25.0
-        alt_min: 18.0
+        alt_min: 19.0
         alt_requires: {naphthalenes_vol_pct_max: 3.0}
-        test_method: "IS 1448 [P:31] / ASTM D1322"  # UNVERIFIED method number
-        verification: "UNVERIFIED"
+        test_method: "IS 1448 [P:31] / ISO 3014"
+        verification: "verified"
         uncertainty_margin: null
       # v5 WS7 (delta_ws7_design_realism): D86 limits, used ONLY with engine_v4.load_spec(..., d86=True) (applies_to: d86_design).
       # IS 1571 text NOT read; values are the usual Jet A-1 / D1655 numbers and the D7566 Table 1 slope minimums (secondary sources).
