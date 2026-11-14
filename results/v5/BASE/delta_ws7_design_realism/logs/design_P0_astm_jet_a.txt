@@ -1,0 +1,33 @@
+{
+ "design_id": "astm_jet_a__P0",
+ "spec": "astm:jet_a",
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.1795, \"n-undecane\": 0.2134, \"n-dodecane\": 0.0624, \"butylcyclohexane\": 0.0526, \"decalin_trans\": 0.1761, \"1,2,4-trimethylbenzene\": 0.255, \"isooctane\": 0.061}",
+ "weights": "{\"n-decane\": 0.17954, \"n-undecane\": 0.21344, \"n-dodecane\": 0.0624, \"butylcyclohexane\": 0.05257, \"decalin_trans\": 0.17606, \"1,2,4-trimethylbenzene\": 0.25499, \"isooctane\": 0.06101}",
+ "opt_best_objective": -0.2592029547463638,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 2,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": -0.20782410470078538,
+ "opt_uncertainty_U": 0.2055154001823137,
+ "build_s": 15.8,
+ "design_s": 1265.4,
+ "pool": "P0",
+ "n_compounds": 7,
+ "d86": true
+}
+  density_15C_kg_m3              pass             pred 793.8 slack 0.2179 margin 4.5866  
+  flash_point_C                  fail             pred 32.31 slack -0.2078 margin 2.206932808388615  limit violated after applying the margin; lab_margin_set_by_one_system
+  freezing_point_C               fail             pred -49.39 slack -0.1897 margin 16.975450975521966  limit violated after applying the margin
+  kin_visc_m20C_cSt              pass             pred 2.631 slack 0.5615 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.43 slack 0.01017 margin 0.1940195141400025  
+  aromatics_wt_pct               fail             pred 25.5 slack -0.01996 margin 0.0  recipe violates the limit
+  aromatics_vol_pct              uncertified      pred 23 slack 0.1177 margin 0.0  spec limit verification: secondary_sources_only (an unverified limit is never certified)
+  smoke_point_mm                 fail             pred 20.12 slack -0.1104 margin 4.107069860688682  spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 not passed (statu
+  distillation_T10_C             uncertified      pred 125.6 slack 0.3484 margin 7.927706228297922  spec limit verification: secondary_sources_only (an unverified limit is never certified)
+  distillation_FBP_C             uncertified      pred 208.1 slack 0.2955 margin 3.2620795453688913  spec limit verification: secondary_sources_only (an unverified limit is never certified)
+  distillation_T50_minus_T10_C   uncertified      pred 49.93 slack 1.083 margin 18.68126547110495  spec limit verification: secondary_sources_only (an unverified limit is never certified)
+  distillation_T90_minus_T10_C   fail             pred 49.93 slack -0.2078 margin 18.246505125791458  spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin

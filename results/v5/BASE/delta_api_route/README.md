@@ -177,3 +177,4 @@ Left unfixed, with the reason:
 - The K1 variant at a temperature is built from a single group at some temperatures (no minimum n); not changed.
 Update 2026-11-13: flash margin changed to 2.21 C, see ../delta_flash_margin_q2/
 Update 2026-11-13: smoke margin 7.8 mm added, see ../delta_smoke_margin/
+Update 2026-11-13: freezing margin 16.98 C (verified constants) added, see ../delta_freeze_margin/

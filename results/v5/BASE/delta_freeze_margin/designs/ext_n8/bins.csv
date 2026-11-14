@@ -1,0 +1,7 @@
+subkind,nC,n_registry,n_grid,n_flash,n_sle,n_qualifying,inchikey,smiles,outcome
+n_paraffin,13,1,1,1,1,1,IIYFAKIEWZDVMP-UHFFFAOYSA-N,CCCCCCCCCCCCC,added
+n_paraffin,14,1,1,1,1,1,BGHCVCJVXZWKCC-UHFFFAOYSA-N,CCCCCCCCCCCCCC,added
+cyclo_mono,9,19,3,7,0,0,,,"empty bin, skipped (no registry compound has own grid, flash and SLE data)"
+cyclo_mono,10,16,1,7,0,0,,,"empty bin, skipped (no registry compound has own grid, flash and SLE data)"
+indan_tetralin,10,3,1,1,0,0,,,"empty bin, skipped (no registry compound has own grid, flash and SLE data)"
+aromatic_di,11,2,1,0,1,0,,,"empty bin, skipped (no registry compound has own grid, flash and SLE data)"

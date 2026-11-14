@@ -53,6 +53,12 @@ Boehm, Yang, Heyne, Energy & Fuels 2022, doi 10.1021/acs.energyfuels.1c03794 (AC
   toluene/iso-octane fuel. A/B TSI values (100, 5) are assigned anchors, qualifier `anchor_assigned`. The other Table 2 columns
   (Mensch, Olson, Hunt) are compilations of other campaigns and were not ingested (Mensch values are already in S3).
 * The Energy & Fuels SI with binary-mixture data is not staged and not ingested.
+* Re-check 2026-11-13: a second copy of the article (user download `dot_64807_DS1.pdf`, a US DOT repository copy, staged as
+  `extras/staging/lit/DOT64807_DS1.pdf`, sha256 f7cf15709a1af3f0caff2d431ba04b96df379e61b22e8f17c9537ffe66c8fef6, 14 pages) is the same
+  article (ASAP version). Its PDF metadata carries the ACS open-access stamp CC BY-NC-ND 4.0, so the licence is that, not "not stated".
+  Table 5 (text layer) and Table 2 "This work" (rendered page 5) match every row of this file; no new measured data. Tables 3-4 are model
+  coefficients; Figures 10-11 (binary mixtures with toluene / iso-octane) are plots only; Table 2 Olson and Hunt columns are secondary.
+  Nothing added.
 
 ## S7 YSI unified (file S7_ysi_unified_hc.csv, 229 rows of 447)
 Das, St. John, McEnally, Kim, Pfefferle, Combustion and Flame 2018; database "Yield Sooting Index Database Volume 2", Harvard Dataverse,
@@ -65,3 +71,19 @@ Hydrocarbon filter: SMILES contains only carbon atoms (rdkit); oxygenates are dr
 unified-scale error is in the note. The database lists some compounds more than once (cyclopentene, cyclohexene, cycloheptene,
 1-methylcyclopentene, 1-phenylcyclohexene) from different original campaigns; they are kept as separate rows with the same sample_id (not
 aggregated here). Species are pure compounds; no mixture data. T_C blank (flame measurement).
+
+## S8 Yang 2006 (files S8_yang2006_smoke_tsi.csv 46 rows = 23 SP + 23 TSI; S8_yang2006_fuel_class.csv 23 rows)
+Yang, Boehman, Santoro, Combustion and Flame 149 (2007) 191-205 (online 2007, file name says 2006), doi 10.1016/j.combustflame.2006.11.007 (Elsevier; licence not stated,
+numbers only). Staged as `extras/staging/Jet_fuel_soothing_tendency_Yang_et_al_2006.pdf` (15 pages, sha256 5a280caa0a6f9dec0e61a14a5ba399b78137894010d7180c6e576156376fb4e4). Not previously in the repo (the S6 Boehm 2022 note
+mentions only a different paper). Loader `load_smoke_lit` (property rows) and `load_yang_fuel_class` (bulk composition).
+* Table 1 (PDF p10): 12 JP-900 candidate fuels (hydrotreated HDT and saturated SAT coal-derived, EI-001..EI-036) plus JP-8 and JP-8+100 (reference): measured smoke point,
+  H (wt %), P, N, MA, DA (wt %, MA includes tetralin), MW and TSI. TSI is calculated by the paper from class composition (Eq. 27), qualifier `model_calculated`: it is not an
+  independent measurement and must not be treated as one. EI-002 class sums to 99.82 as printed. JP-8 and JP-8+100 have no printed BP or H; JP-8+100 MA printed 12.1.
+  Smoke point on an ASTM standard lamp (section 4.2); no recipe or molecule list (kind real_fuel, no InChIKeys).
+* Table 3 (PDF p12): 9 Pande and Hardy (Energy Fuels 9, 448, 1995) fuels (Jet A-1 reference, HT3, HC2, AVCAT, HC27, high-naphthene kerosene, North Sea MGO, HC29, ERBS2): SP, H,
+  P and N (wt %), MA and DA (vol %), normalized exhaust soot and flame radiation (relative to Jet A-1; HC29 flame radiation 'na'), TSI calculated by Yang. These are secondary
+  (quoted from Pande and Hardy), qualifier `secondary_source`.
+* Checked twice (rendered page images and the PDF text layer; the text layer of Table 3 drops decimal digits, so Table 3 was read from the images and cross-checked against it).
+* Not ingested: Table 2 (TSI of four representative compounds, taken from Olson et al.), Table 4 (R2 values), Figs 3-6 (plots), literature fuel sets behind Fig 4 (Cookson, Ramaswamy).
+* Use: bulk smoke-point validation for hydrotreated/saturated coal-derived aromatic-rich fuels (smoke points 5-24 mm, aromatics up to 98 %), a range not covered by AJFTD jet fuels.
+  The paper's TSI-from-composition rule (TSI = 3.18 MW/SP, a = 3.52, b = -7.42 for the 14 JP-900 fuels in Fig 3) is a fit, not data.

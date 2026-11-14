@@ -1,0 +1,106 @@
+{
+  "R-W3-1": {
+    "knots": [
+      8,
+      9,
+      10,
+      11,
+      21,
+      22
+    ],
+    "non_knots": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "exploratory_fresh_refit_NOT_A_GATE": [
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 9,
+      "left_knot": 8,
+      "right_knot": 10,
+      "gap": 2,
+      "n_points": 103,
+      "rms_grid": 0.003209333945601769,
+      "bias": -0.00039467673627415216
+    },
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 10,
+      "left_knot": 9,
+      "right_knot": 11,
+      "gap": 2,
+      "n_points": 84,
+      "rms_grid": 0.024626048395562386,
+      "bias": 0.0043516373947695575
+    },
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 11,
+      "left_knot": 10,
+      "right_knot": 14,
+      "gap": 4,
+      "n_points": 7,
+      "rms_grid": 0.002414936857723204,
+      "bias": -8.380167874119262e-05
+    },
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 14,
+      "left_knot": 11,
+      "right_knot": 16,
+      "gap": 5,
+      "n_points": 25,
+      "rms_grid": 0.04854417840269355,
+      "bias": -0.02958183273974183
+    },
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 16,
+      "left_knot": 14,
+      "right_knot": 21,
+      "gap": 7,
+      "n_points": 32,
+      "rms_grid": 0.07198926548454838,
+      "bias": 0.04211661232574028
+    },
+    {
+      "knots_fresh": "[8, 9, 10, 11, 14, 16, 21, 22]",
+      "n_held_out": 21,
+      "left_knot": 16,
+      "right_knot": 22,
+      "gap": 6,
+      "n_points": 15,
+      "rms_grid": 0.048919622554203075,
+      "bias": -0.045044429150913466
+    }
+  ],
+  "R-W3-2": {
+    "pooled_rms_grid": 0.01588980724536316,
+    "pooled_rms_param_comparator": 0.01659569472789175,
+    "gap4_cases": {
+      "12": {
+        "present": false,
+        "rms": null,
+        "gap": null,
+        "passed": false
+      },
+      "14": {
+        "present": false,
+        "rms": null,
+        "gap": null,
+        "passed": false
+      }
+    },
+    "threshold": 0.03,
+    "passed": false
+  },
+  "C11_check": []
+}

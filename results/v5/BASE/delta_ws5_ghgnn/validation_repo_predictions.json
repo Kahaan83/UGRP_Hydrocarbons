@@ -1,0 +1,7 @@
+{
+  "n_hc_rows_available": 547,
+  "n_checked": 400,
+  "max_abs_diff": 0.00023680929780578452,
+  "mean_abs_diff": 4.2626135217053234e-05,
+  "note": "stored column GH-GNN in the repo's *_predictions.csv (ln gamma_inf); wrapper uses the repo model/features/loader unchanged"
+}

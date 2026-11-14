@@ -1,0 +1,50 @@
+{
+  "S_F": {
+    "n_rows_scope": 77,
+    "n_scored": 77,
+    "n_unscored": 0,
+    "n_systems": 9,
+    "systems": [
+      "26a166195d71",
+      "3cb8853b2842",
+      "898f827ffb96",
+      "9b7e224adfb7",
+      "9f7c1271ff42",
+      "a34071cfc715",
+      "cbc85653bf3b",
+      "f47258641e8d",
+      "ffd8e7cf5721"
+    ],
+    "bias_C": -1.1667112567913518,
+    "max_group_under_prediction_C": 16.975450975521966,
+    "measured_range_C": [
+      -68.39999999999998,
+      0.0
+    ]
+  },
+  "R-FM-1": {
+    "n_systems": 9,
+    "threshold": 9,
+    "passed": true
+  },
+  "R-FM-2": {
+    "mae_C": 3.0122646897430094,
+    "const_mae_C": 13.517788777741307,
+    "macro_mae_C": 3.716552383387141,
+    "macro_const_C": 14.05534311711896,
+    "bootstrap95_const_minus_svl": [
+      7.60664351797977,
+      13.517358927141402
+    ],
+    "interval_excludes_zero": true,
+    "passed": true
+  },
+  "R-FM-3": {
+    "margin_C": 16.975450975521966,
+    "finite": true,
+    "passed": true,
+    "direction": "under",
+    "alpha": 0.1
+  },
+  "rule_write_margin": true
+}

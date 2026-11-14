@@ -10,6 +10,7 @@ domain_status(smiles_list, T_K).  Heavy objects (registry, frozen pure grid, boo
 from __future__ import annotations
 
 import json
+from functools import lru_cache
 from itertools import combinations_with_replacement
 from pathlib import Path
 
@@ -118,7 +119,13 @@ def pair_features(smiles_i: str, smiles_j: str, T_K: float) -> pd.DataFrame:
 
 
 def interaction_matrix(smiles_list, T_K: float) -> np.ndarray:
-    """Symmetric (n, n) matrix of g, zero diagonal."""
+    """Symmetric (n, n) matrix of g, zero diagonal.  Memoised on (members, T): g does not depend on the fractions, so an optimiser
+    that re-evaluates many recipes of one pool at one temperature pays for the LightGBM call once (a copy is returned)."""
+    return _interaction_matrix_cached(tuple(smiles_list), float(T_K)).copy()
+
+
+@lru_cache(maxsize=4096)
+def _interaction_matrix_cached(smiles_list: tuple, T_K: float) -> np.ndarray:
     ctx = context()
     idx = [ctx.index_of(s) for s in smiles_list]
     if not all(ctx.usable(i) for i in idx):
@@ -141,11 +148,16 @@ def ln_correction(smiles_list, x_mole, T_K: float) -> float:
     return float(0.5 * x @ G @ x)
 
 
+@lru_cache(maxsize=1)
+def _meta() -> dict:
+    return json.loads((MODEL_DIR / "meta.json").read_text())
+
+
 def domain_status(smiles_list, T_K: float) -> dict:
     """in_domain per the declared adoption rule: every component has own grid data, every class pair has >= 5 training systems,
     T inside the cold gate, known composition (the caller must pass False for reconstructed real fuels)."""
     ctx = context()
-    meta = json.loads((MODEL_DIR / "meta.json").read_text())
+    meta = _meta()
     idx = [ctx.index_of(s) for s in smiles_list]
     if not all(ctx.usable(i) for i in idx):
         return dict(in_domain=False, reason="component without grid data")

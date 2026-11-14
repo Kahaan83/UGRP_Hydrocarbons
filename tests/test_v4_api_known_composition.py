@@ -14,6 +14,12 @@ from fuelblend.api import predict_blend as pb  # noqa: E402
 from fuelblend.api.predict_blend import predict  # noqa: E402
 
 DEC, DOD = "CCCCCCCCCC", "CCCCCCCCCCCC"
+ML = "refutas+ml_pair_gn"   # v5 (cc5f5ef, user decision): designated viscosity in the ML domain; Refutas kept as variants['refutas_raw']
+
+
+def _refutas(r: dict) -> dict:
+    """The Refutas result: the designated entry itself, or variants['refutas_raw'] where the ML value is designated."""
+    return r["variants"]["refutas_raw"] if r["method"] == ML else r
 
 
 def test_binary_is_continuous_with_pure():
@@ -22,27 +28,32 @@ def test_binary_is_continuous_with_pure():
     # silently drops to the gn_mass / gn_fallback paths; octane is used for that colder check.)
     pure = predict([(DEC, 1.0)], T_K=283.15, composition_kind="known")["viscosity_dyn_mPas"]
     near = predict([(DEC, 0.999), (DOD, 0.001)], T_K=283.15, composition_kind="known")["viscosity_dyn_mPas"]
-    assert pure["method"] == near["method"] == "refutas_raw"
+    assert _refutas(pure)["method"] == _refutas(near)["method"] == "refutas_raw"
+    assert pure["method"] == near["method"]
     assert abs(near["value"] / pure["value"] - 1) < 0.01
+    assert abs(_refutas(near)["value"] / _refutas(pure)["value"] - 1) < 0.01
     # Cold check (253.15 K): v5 reads the frozen 230-470 K grid, so the cold path is raw Refutas too and stays continuous
-    # (the v4 gn_mass / gn_fallback paths, a 12 % jump, are gone).  The cold lab bins have no margin: nothing is certified.
+    # (the v4 gn_mass / gn_fallback paths, a 12 % jump, are gone).  The cold Refutas lab bins have no margin: Refutas is
+    # uncertified there; the designated ML value carries its own R-MLV-6 margin (T < 263 K bin).
     pc = predict([(DEC, 1.0)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
     nc = predict([(DEC, 0.999), ("CCCCCCCC", 0.001)], T_K=253.15, composition_kind="known")["viscosity_dyn_mPas"]
-    assert pc["method"] == nc["method"] == "refutas_raw"
-    assert pc["in_domain"] is False and nc["in_domain"] is False
+    assert _refutas(pc)["method"] == _refutas(nc)["method"] == "refutas_raw"
+    assert _refutas(pc)["in_domain"] is False and _refutas(nc)["in_domain"] is False
     assert abs(nc["value"] / pc["value"] - 1) < 0.01
+    assert abs(_refutas(nc)["value"] / _refutas(pc)["value"] - 1) < 0.01
 
 
 def test_known_composition_never_uses_recalibration():
     r = predict([(DEC, 0.5), (DOD, 0.5)], T_K=283.15, composition_kind="known")
-    assert r["viscosity_dyn_mPas"]["method"] == "refutas_raw"
+    assert r["viscosity_dyn_mPas"]["method"] in ("refutas_raw", ML)
+    assert _refutas(r["viscosity_dyn_mPas"])["method"] == "refutas_raw"
     r1 = predict([(DEC, 1.0)], T_K=293.15, composition_kind="known")
-    assert r1["viscosity_dyn_mPas"]["method"] == "refutas_raw"        # no single-component special case
+    assert _refutas(r1["viscosity_dyn_mPas"])["method"] == "refutas_raw"   # no single-component special case
 
 
 def test_known_is_default():
     r = predict([(DEC, 0.5), (DOD, 0.5)], T_K=293.15)
-    assert r["viscosity_dyn_mPas"]["method"] == "refutas_raw"
+    assert _refutas(r["viscosity_dyn_mPas"])["method"] == "refutas_raw"
 
 
 def test_reconstructed_keeps_recalibrated_path_and_jet_requirement():
@@ -77,14 +88,14 @@ def test_known_uses_lab_margins_by_temperature_bin(monkeypatch):
     monkeypatch.setattr(pb, "_margins_cache", margins)
     comp = [(DEC, 0.5), (DOD, 0.5)]
     warm = predict(comp, T_K=303.15, fuel_type=None, composition_kind="known")
-    v = warm["viscosity_dyn_mPas"]
+    v = _refutas(warm["viscosity_dyn_mPas"])                       # Refutas keeps the yaml lab margin (monkeypatched 0.2)
     assert v["margin"] == pytest.approx(0.2) and v["lo"] == pytest.approx(v["value"] * math.exp(-0.2))
     assert v["in_domain"] is True                                   # lab margins are not jet specific
     d = warm["density_kg_m3"]
     assert d["lo"] == pytest.approx(d["value"] - 4.0) and d["hi"] == pytest.approx(d["value"] + 2.0)
     assert d["in_domain"] is True
     for T in (253.15, 273.15):                                      # both cold bins are inf: nothing borrowed
-        c = predict(comp, T_K=T, composition_kind="known")["viscosity_dyn_mPas"]
+        c = _refutas(predict(comp, T_K=T, composition_kind="known")["viscosity_dyn_mPas"])
         assert c["margin"] is None and math.isnan(c["lo"]) and c["in_domain"] is False
 
 

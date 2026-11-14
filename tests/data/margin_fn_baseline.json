@@ -1,0 +1,1376 @@
+{
+ "evaluate_recipe": {
+  "ext_n30-astm_jet_a__ext|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.0496664024085,
+    "slack": 0.022508713883208797,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.52542176421895,
+    "slack": 0.29785497252185084,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.80532679666254,
+    "slack": 0.020746895528514386,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.2550105772895033,
+    "slack": 0.45760905158909815,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.95844800919908,
+    "slack": 0.022533376052782283,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n30-astm_jet_a__ext|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.0496664024085,
+    "slack": 0.022508713883208797,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.52542176421895,
+    "slack": 0.29785497252185084,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.80532679666254,
+    "slack": 0.020746895528514386,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.2550105772895033,
+    "slack": 0.45760905158909815,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.95844800919908,
+    "slack": 0.022533376052782283,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.5313648225128819,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n30-bis_jet_a1__ext|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.3421738884678,
+    "slack": 0.15008575213027353,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.851577256688984,
+    "slack": 0.28012222232369394,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.85741137422355,
+    "slack": 0.018765114865991056,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.197024113823217,
+    "slack": 0.4672714880597849,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.82308864,
+    "slack": 0.019370773968691638,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n30-bis_jet_a1__ext|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.3421738884678,
+    "slack": 0.15008575213027353,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.851577256688984,
+    "slack": 0.28012222232369394,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.85741137422355,
+    "slack": 0.018765114865991056,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.197024113823217,
+    "slack": 0.4672714880597849,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.82308864,
+    "slack": 0.019370773968691638,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.45076667395957226,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 19 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n8-astm_jet_a__ext|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.0496664024085,
+    "slack": 0.022508713883208797,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.52542176421895,
+    "slack": 0.29785497252185084,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.80532679666254,
+    "slack": 0.020746895528514386,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.2550105772895033,
+    "slack": 0.45760905158909815,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.95844800919908,
+    "slack": 0.022533376052782283,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n8-astm_jet_a__ext|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.0496664024085,
+    "slack": 0.022508713883208797,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.52542176421895,
+    "slack": 0.29785497252185084,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.80532679666254,
+    "slack": 0.020746895528514386,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.2550105772895033,
+    "slack": 0.45760905158909815,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.95844800919908,
+    "slack": 0.022533376052782283,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.5313648225128819,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n8-bis_jet_a1__ext|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.3421738884678,
+    "slack": 0.15008575213027353,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.851577256688984,
+    "slack": 0.28012222232369394,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.85741137422355,
+    "slack": 0.018765114865991056,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.197024113823217,
+    "slack": 0.4672714880597849,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.82308864,
+    "slack": 0.019370773968691638,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "ext_n8-bis_jet_a1__ext|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.3421738884678,
+    "slack": 0.15008575213027353,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.851577256688984,
+    "slack": 0.28012222232369394,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.85741137422355,
+    "slack": 0.018765114865991056,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.197024113823217,
+    "slack": 0.4672714880597849,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.82308864,
+    "slack": 0.019370773968691638,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.45076667395957226,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 19 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "guard4_v5pool-astm_jet_a__v5pool|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 786.7041168955894,
+    "slack": 0.10950025993214554,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.81622737775149,
+    "slack": 0.27919196235165455,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -61.86288440317932,
+    "slack": 0.1221858356914339,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1643127597350387,
+    "slack": 0.472722266773526,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.8622484,
+    "slack": 0.020285721632242966,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "guard4_v5pool-astm_jet_a__v5pool|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 786.7041168955894,
+    "slack": 0.10950025993214554,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.81622737775149,
+    "slack": 0.27919196235165455,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -61.86288440317932,
+    "slack": 0.1221858356914339,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1643127597350387,
+    "slack": 0.472722266773526,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.8622484,
+    "slack": 0.020285721632242966,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.5313648225128819,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "guard4_v5pool-bis_jet_a1__v5pool|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 793.2511490039274,
+    "slack": 0.21022383082965218,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.5020463445523,
+    "slack": 0.27092404042536006,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -68.88042556068453,
+    "slack": 0.10436116138643751,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.145627518907009,
+    "slack": 0.4758358374527465,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.759227130000006,
+    "slack": 0.01787868261355156,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "guard4_v5pool-bis_jet_a1__v5pool|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 793.2511490039274,
+    "slack": 0.21022383082965218,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.5020463445523,
+    "slack": 0.27092404042536006,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -68.88042556068453,
+    "slack": 0.10436116138643751,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.145627518907009,
+    "slack": 0.4758358374527465,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.759227130000006,
+    "slack": 0.01787868261355156,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.45076667395957226,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 19 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "v5pool-astm_jet_a__v5pool|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.3896158647276,
+    "slack": 0.027738705611194257,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.092612835607554,
+    "slack": 0.2864652638741826,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.85808387228036,
+    "slack": 0.02206582241895987,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1724633786984375,
+    "slack": 0.47136410776152826,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.94728388438844,
+    "slack": 0.022272532015150486,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "v5pool-astm_jet_a__v5pool|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 781.3896158647276,
+    "slack": 0.027738705611194257,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 51.092612835607554,
+    "slack": 0.2864652638741826,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -57.85808387228036,
+    "slack": 0.02206582241895987,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1724633786984375,
+    "slack": 0.47136410776152826,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.94728388438844,
+    "slack": 0.022272532015150486,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_wt_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_mass_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.5313648225128819,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "v5pool-bis_jet_a1__v5pool|alt=False": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.8900145058785,
+    "slack": 0.15851406932120846,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.66055338606958,
+    "slack": 0.2750952783600254,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.86576699897469,
+    "slack": 0.018942894116015453,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1563900348071376,
+    "slack": 0.47404245120476096,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.81188471,
+    "slack": 0.01910899990327106,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.10258267220927493,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  },
+  "v5pool-bis_jet_a1__v5pool|alt=True": {
+   "density_15C_kg_m3": {
+    "status": "pass",
+    "pred": 789.8900145058785,
+    "slack": 0.15851406932120846,
+    "margin": 4.5866,
+    "reason": "",
+    "model": "ideal_volume_rho15",
+    "margin_keys": [
+     "density_kg_m3.lab_mixtures.ideal_volume.over",
+     "density_kg_m3.lab_mixtures.ideal_volume.under"
+    ]
+   },
+   "flash_point_C": {
+    "status": "pass",
+    "pred": 50.66055338606958,
+    "slack": 0.2750952783600254,
+    "margin": 2.206932808388615,
+    "reason": "lab_margin_set_by_one_system",
+    "model": "le_chatelier_ideal",
+    "margin_keys": [
+     "flash_point_C.lab_mixtures.ideal",
+     "flash_point_C.real_fuels_D93_reconstructed.ideal"
+    ]
+   },
+   "freezing_point_C": {
+    "status": "pass",
+    "pred": -64.86576699897469,
+    "slack": 0.018942894116015453,
+    "margin": 16.975450975521966,
+    "reason": "",
+    "model": "ideal_sle_mole_fraction",
+    "margin_keys": [
+     "freezing_point_C.lab_liquidus.svl_verified"
+    ]
+   },
+   "kin_visc_m20C_cSt": {
+    "status": "pass",
+    "pred": 3.1563900348071376,
+    "slack": 0.47404245120476096,
+    "margin": 0.28747778594508044,
+    "reason": "designated ML pair-residual viscosity (as predict_fuel) with its R-MLV-6 ln margin (results/v5/BASE/delta_ml_viscosity/readings.json); judged after the optimiser",
+    "model": "refutas+ml_pair_gn",
+    "margin_keys": [
+     "results/v5/BASE/delta_ml_viscosity/readings.json:R-MLV-6"
+    ]
+   },
+   "nhoc_MJ_kg": {
+    "status": "pass",
+    "pred": 43.81188471,
+    "slack": 0.01910899990327106,
+    "margin": 0.1940195141400025,
+    "reason": "",
+    "model": "gcv_group_additivity_constH",
+    "margin_keys": [
+     "heat_of_combustion_net_MJ_kg.crc647.group_additivity_v2_constH13.8"
+    ]
+   },
+   "aromatics_vol_pct": {
+    "status": "by_construction",
+    "pred": 0.0,
+    "slack": 1.0,
+    "margin": 0.0,
+    "reason": "",
+    "model": "class_volume_fraction",
+    "margin_keys": []
+   },
+   "smoke_point_mm": {
+    "status": "uncertified",
+    "pred": 27.564566805231873,
+    "slack": 0.45076667395957226,
+    "margin": null,
+    "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry); alt_min 19 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry))",
+    "model": "ajftd_bulk_regression",
+    "margin_keys": [
+     "smoke_point_mm.ajftd100_bulk.selected_in_fold"
+    ]
+   }
+  }
+ },
+ "robustness": [
+  [
+   "density_15C_kg_m3",
+   "ideal_volume_rho15",
+   "pass",
+   781.6763828571587,
+   4.5866
+  ],
+  [
+   "flash_point_C",
+   "le_chatelier_ideal",
+   "pass",
+   51.13103749248711,
+   2.206932808388615
+  ],
+  [
+   "flash_point_C",
+   "le_chatelier_unifac",
+   "pass",
+   51.057811375088704,
+   1.5582460479421325
+  ],
+  [
+   "freezing_point_C",
+   "ideal_sle_mole_fraction",
+   "fail",
+   -56.90385324568297,
+   16.975450975521966
+  ],
+  [
+   "freezing_point_C",
+   "coutinho_library",
+   "pass",
+   -67.79,
+   4.049999999999997
+  ],
+  [
+   "freezing_point_C",
+   "ideal_svl_library",
+   "uncertified",
+   -55.08,
+   null
+  ],
+  [
+   "kin_visc_m20C_cSt",
+   "refutas_raw",
+   "pass",
+   3.178216608854194,
+   0.4153576080066075
+  ],
+  [
+   "kin_visc_m20C_cSt",
+   "refutas_recalibrated",
+   "pass",
+   4.154560215398566,
+   0.3465490828831994
+  ],
+  [
+   "kin_visc_m20C_cSt",
+   "refutas+structured_ridge",
+   "uncertified",
+   NaN,
+   null
+  ],
+  [
+   "nhoc_MJ_kg",
+   "gcv_group_additivity_constH",
+   "pass",
+   43.943175000000004,
+   0.1940195141400025
+  ],
+  [
+   "nhoc_MJ_kg",
+   "gcv_group_additivity_compH",
+   "pass",
+   43.74639313495192,
+   0.2240266433640911
+  ],
+  [
+   "aromatics_wt_pct",
+   "class_mass_fraction",
+   "by_construction",
+   0.0,
+   0.0
+  ],
+  [
+   "smoke_point_mm",
+   "ajftd_bulk_regression",
+   "uncertified",
+   27.564566805231873,
+   null
+  ],
+  [
+   "smoke_point_mm",
+   "ysi_route",
+   "uncertified",
+   NaN,
+   null
+  ]
+ ],
+ "stub": {
+  "weights": [
+   0.09285714285714287,
+   0.7835777360441458,
+   0.12356512109871128
+  ],
+  "best": -0.07142857142857138
+ }
+}

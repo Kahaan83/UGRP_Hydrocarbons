@@ -1,0 +1,427 @@
+{
+ "n_ordered_pairs": 4970,
+ "share_pairs_in_domain": 0.9517102615694165,
+ "n_interpolation_pairs": 1867,
+ "n_pairs_out_of_domain": 240,
+ "out_of_domain_reasons": {
+  "low_tanimoto": 0,
+  "class_count_lt25": 240
+ },
+ "class_pair_table": [
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 156,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 450
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Indanes",
+   "n_pairs": 13,
+   "share_in_domain": 0.7692307692307693,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 13,
+   "share_in_domain": 0.7692307692307693,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 13,
+   "share_in_domain": 0.7692307692307693,
+   "n_class_pair_training": 7
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 689,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 876
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Tetralins",
+   "n_pairs": 13,
+   "share_in_domain": 0.7692307692307693,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Benzene and substituted derivatives",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 13,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 218
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 13,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Tetralins",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Indanes",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 13,
+   "share_in_domain": 0.8461538461538461,
+   "n_class_pair_training": 1
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Indanes",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 0.6415094339622641,
+   "n_class_pair_training": 8
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Tetralins",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Polycyclic hydrocarbons",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 4
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 13,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 26
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Indanes",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 44
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Tetralins",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Prenol lipids",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 20
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 689,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 134
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Indanes",
+   "n_pairs": 53,
+   "share_in_domain": 0.49056603773584906,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 0.49056603773584906,
+   "n_class_pair_training": 4
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 53,
+   "share_in_domain": 0.49056603773584906,
+   "n_class_pair_training": 5
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 2756,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 395
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Tetralins",
+   "n_pairs": 53,
+   "share_in_domain": 0.49056603773584906,
+   "n_class_pair_training": 1
+  },
+  {
+   "class_solvent": "Saturated hydrocarbons",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 95
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 13,
+   "share_in_domain": 0.8461538461538461,
+   "n_class_pair_training": 1
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Indanes",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 0.6415094339622641,
+   "n_class_pair_training": 2
+  },
+  {
+   "class_solvent": "Tetralins",
+   "class_solute": "Unsaturated hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 4
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Benzene and substituted derivatives",
+   "n_pairs": 13,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 44
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Indanes",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Polycyclic hydrocarbons",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Prenol lipids",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 4
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Saturated hydrocarbons",
+   "n_pairs": 53,
+   "share_in_domain": 1.0,
+   "n_class_pair_training": 37
+  },
+  {
+   "class_solvent": "Unsaturated hydrocarbons",
+   "class_solute": "Tetralins",
+   "n_pairs": 1,
+   "share_in_domain": 0.0,
+   "n_class_pair_training": 0
+  }
+ ],
+ "class_source_counts": {
+  "repo_table/repo_table": 3306,
+  "repo_table/rule": 754,
+  "rule/repo_table": 754,
+  "rule/rule": 156
+ },
+ "brouwer_hc_rows": 2372,
+ "brouwer_hc_T_C": {
+  "min": 0.0,
+  "p5": 20.0,
+  "median": 60.0,
+  "p95": 139.0,
+  "max": 180.0
+ },
+ "brouwer_hc_unique_pairs": 805,
+ "per_set": {
+  "S-CRC": {
+   "pair_weight_in_domain_median": 0.68611691,
+   "p10": 0.636614792,
+   "min": 0.54197901,
+   "n_mixtures": 45,
+   "n_mixtures_all_pairs_in_domain": 0,
+   "flash_T_C": {
+    "min": 39.899785,
+    "median": 49.001148,
+    "max": 59.87312
+   },
+   "pairs_wilson_failed_total": 0,
+   "pairs_total": 10839,
+   "mixtures_with_failed_pairs": 0,
+   "gamma_min": 0.8272582,
+   "gamma_max": 1.8916974,
+   "wilson_status_not_ok": 0
+  },
+  "S-CRCL": {
+   "pair_weight_in_domain_median": 0.7057671999999999,
+   "p10": 0.673774702,
+   "min": 0.62195779,
+   "n_mixtures": 12,
+   "n_mixtures_all_pairs_in_domain": 0,
+   "flash_T_C": {
+    "min": 43.039393,
+    "median": 46.4345855,
+    "max": 55.971631
+   },
+   "pairs_wilson_failed_total": 0,
+   "pairs_total": 3007,
+   "mixtures_with_failed_pairs": 0,
+   "gamma_min": 0.90446429,
+   "gamma_max": 1.9206548,
+   "wilson_status_not_ok": 0
+  },
+  "S-LAB": {
+   "pair_weight_in_domain_median": 1.0,
+   "p10": 1.0,
+   "min": 1.0,
+   "n_mixtures": 126,
+   "n_mixtures_all_pairs_in_domain": 126,
+   "flash_T_C": {
+    "min": -5.1125047,
+    "median": 40.7517755,
+    "max": 150.9538
+   },
+   "pairs_wilson_failed_total": 0,
+   "pairs_total": 132,
+   "mixtures_with_failed_pairs": 0,
+   "gamma_min": 0.58724566,
+   "gamma_max": 2.2275636,
+   "wilson_status_not_ok": 0
+  },
+  "S-LI": {
+   "pair_weight_in_domain_median": 1.0,
+   "p10": 1.0,
+   "min": 1.0,
+   "n_mixtures": 33,
+   "n_mixtures_all_pairs_in_domain": 33,
+   "flash_T_C": {
+    "min": 15.868516,
+    "median": 38.452973,
+    "max": 53.436525
+   },
+   "pairs_wilson_failed_total": 0,
+   "pairs_total": 75,
+   "mixtures_with_failed_pairs": 0,
+   "gamma_min": 0.99038388,
+   "gamma_max": 1.2229878,
+   "wilson_status_not_ok": 0
+  },
+  "S-T2": {
+   "pair_weight_in_domain_median": 0.751832225,
+   "p10": 0.653957093,
+   "min": 0.60157732,
+   "n_mixtures": 70,
+   "n_mixtures_all_pairs_in_domain": 3,
+   "flash_T_C": {
+    "min": 15.50809,
+    "median": 44.4745115,
+    "max": 67.388072
+   },
+   "pairs_wilson_failed_total": 0,
+   "pairs_total": 52418,
+   "mixtures_with_failed_pairs": 0,
+   "gamma_min": 0.51263754,
+   "gamma_max": 1.8984832,
+   "wilson_status_not_ok": 0
+  }
+ }
+}

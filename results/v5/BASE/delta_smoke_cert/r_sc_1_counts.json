@@ -1,0 +1,30 @@
+{
+  "fuels_in_table": 2314,
+  "fuels_with_smoke": 2183,
+  "fuels_censored_only": 14,
+  "smoke_and_aromatics": 2092,
+  "R-SC-1_smoke_aromatics_naphthalenes": 36,
+  "in_domain_aromatics_8_23_smoke_uncensored": 1990,
+  "source_group_counts_fuels_with_aromatics": {
+    "JAA": 672,
+    "JA": 452,
+    "JFK": 348,
+    "LAB_REPORT": 271,
+    "NUMERIC_ID": 190,
+    "OTHER": 170,
+    "PAREN_BATCH": 65,
+    "HR": 49,
+    "JETSCREEN": 2,
+    "CRC": 2
+  },
+  "source_group_counts_fuels_with_smoke_and_aromatics": {
+    "JAA": 672,
+    "JA": 446,
+    "JFK": 348,
+    "LAB_REPORT": 270,
+    "OTHER": 164,
+    "NUMERIC_ID": 125,
+    "PAREN_BATCH": 65,
+    "JETSCREEN": 2
+  }
+}

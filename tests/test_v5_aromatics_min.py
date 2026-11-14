@@ -1,0 +1,129 @@
+"""v5 delta_smoke_cert 1.3: aromatics minimum (8 vol %) as a declared design option (synthetic_blend), --alt-limits flag."""
+import json
+import warnings
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+from fuelblend.baselines.sooting import OutOfDomainWarning, smoke_point_from_bulk
+from fuelblend.design import engine_v4 as E, library_route as LR
+
+ROOT = Path(__file__).resolve().parents[1]
+BASE = ROOT / "tests" / "data" / "smoke_alt_baseline.json"
+MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
+BASE_COMMIT = "b037496"      # last commit before the aromatics_min block was added to the specs
+
+
+def _aro_warnings(a):
+    with warnings.catch_warnings(record=True) as rec:
+        warnings.simplefilter("always")
+        smoke_point_from_bulk(a)
+    return [w for w in rec if issubclass(w.category, OutOfDomainWarning) and "aromatics" in str(w.message)]
+
+
+def test_aromatics_edge_no_warning():
+    assert not _aro_warnings(8.0)
+    assert not _aro_warnings(8.0 - 1e-9)
+    assert not _aro_warnings(23.0 + 1e-9)
+    assert _aro_warnings(7.9)
+
+
+def test_pool_without_aromatics_blocked():
+    models = LR.build_route_models(["n-decane", "n-undecane", "n-dodecane"])
+    res = LR.design_routed("astm:jet_a", models, n_starts=2, margins_path=MARGINS, synthetic_blend=True)
+    assert res.category == "blocked_aromatics_min_infeasible"
+    assert res.passed is False
+    assert any(b["reason"] == "blocked: aromatics_min infeasible for pool" for b in res.binding_constraints)
+    assert res.optimiser.get("n_starts") == 0            # no optimisation run
+
+
+def test_synthetic_blend_adds_constraint_only_when_set():
+    for sp in ("astm:jet_a", "bis:jet_a1"):
+        c = E.load_spec(sp, synthetic_blend=True)["constraints"]["aromatics_vol_pct"]
+        assert c["min"] == 8.0 and c["max"] == 25.0 and c["verification"] == "verified"
+    assert "aromatics_vol_pct" not in E.load_spec("astm:jet_a")["constraints"]
+
+
+def test_bis_spec_unchanged_when_flag_off():
+    import subprocess
+    old = subprocess.run(["git", "show", f"{BASE_COMMIT}:configs/specs_bis.yaml"], capture_output=True, text=True, cwd=ROOT).stdout
+    import yaml
+    # smoke_point_mm is excluded: the user verified it against D1655 / IS 1571 on 2026-11-14 (flag -> verified; BIS alt_min 18.0 -> 19.0)
+    def _no_smoke(c):
+        return {k: v for k, v in c.items() if k != "smoke_point_mm"}
+    for fam, d in yaml.safe_load(old)["families"].items():
+        assert _no_smoke(E.load_spec(f"bis:{fam}")["constraints"]) == _no_smoke(d["constraints"]), fam
+    old_a = yaml.safe_load(subprocess.run(["git", "show", f"{BASE_COMMIT}:configs/specs_astm.yaml"], capture_output=True, text=True, cwd=ROOT).stdout)
+    for fam, d in old_a["families"].items():
+        assert _no_smoke(E.load_spec(f"astm:{fam}")["constraints"]) == _no_smoke(d["constraints"]), fam
+
+
+def test_aromatics_min_enforced_with_synthetic_blend():
+    pool = ["n-decane", "n-dodecane", "1,2,4-trimethylbenzene"]
+    models = LR.build_route_models(pool)
+    spec = E.load_spec("astm:jet_a", synthetic_blend=True)
+    m = E.load_margins(MARGINS)
+    wd = {"n-decane": 0.5, "n-dodecane": 0.49, "1,2,4-trimethylbenzene": 0.01}
+    lo = E.evaluate_blend(spec, models["pool"], np.array([wd[n] for n in models["pool"]]), models, m)
+    ar = [c for c in lo if c.key == "aromatics_vol_pct"][0]
+    assert ar.status == E.STATUS_FAIL
+
+
+def test_alt_limits_flag_sets_spec_without_mutating_caller():
+    spec = E.load_spec("astm:jet_a")
+    assert "use_alt_limits" not in spec or spec["use_alt_limits"] is False
+    s2 = E.load_spec("astm:jet_a", alt_limits=True)
+    assert s2["use_alt_limits"] is True and not spec.get("use_alt_limits", False)
+
+
+def test_flag_off_identical():
+    """R-SC-4: synthetic_blend=False and alt_limits=False give exactly the results frozen before the change."""
+    import importlib.util
+    s = importlib.util.spec_from_file_location("gen_base", ROOT / "tests" / "data" / "gen_smoke_alt_baseline.py")
+    g = importlib.util.module_from_spec(s)
+    s.loader.exec_module(g)
+    now = json.loads(json.dumps(g.snapshot(), default=str))
+    old = json.loads(BASE.read_text())
+    assert now.keys() == old.keys()
+    for did in old:
+        assert now[did].keys() == old[did].keys(), did
+        for k in old[did]:
+            a, b = now[did][k], old[did][k]
+            assert a["status"] == b["status"] and a["reason"] == b["reason"], (did, k)
+            for f in ("pred", "slack", "margin"):
+                x, y = a[f], b[f]
+                assert (x is None and y is None) or (str(x) == "nan" and str(y) == "nan") or x == y, (did, k, f)
+
+
+def test_blocked_on_every_call_path_no_optimiser(monkeypatch):
+    """The guard-band path (E.design directly, then LR.evaluate_recipe) must also be blocked, without running the optimiser."""
+    models = LR.build_route_models(["n-decane", "n-undecane", "n-dodecane"])
+    called = []
+    monkeypatch.setattr(E, "_optimise", lambda *a, **k: called.append(1))
+    opt = E.design("astm:jet_a", models["pool"], models, n_starts=2, margins_path=MARGINS, synthetic_blend=True)
+    assert opt.category == "blocked_aromatics_min_infeasible" and not called
+    res = LR.evaluate_recipe("astm:jet_a", models, opt.weights, margins_path=MARGINS, synthetic_blend=True)
+    assert res.category == "blocked_aromatics_min_infeasible"
+    # CLI guard-band route
+    import importlib.util
+    s = importlib.util.spec_from_file_location("ru", ROOT / "scripts/v5/run_design_userpool_v5.py")
+    ru = importlib.util.module_from_spec(s); s.loader.exec_module(ru)
+    out = ROOT / "results" / "_tmp_t13_blocked"
+    try:
+        ru.main(["--spec", "astm:jet_a", "--pool", "n-decane,n-undecane,n-dodecane", "--synthetic-blend",
+                 "--freezing-guard-K", "4", "--out", str(out)])
+        import pandas as pd
+        d = pd.read_csv(out / "designs.csv")
+        assert list(d.category) == ["blocked_aromatics_min_infeasible"] and not called
+    finally:
+        import shutil; shutil.rmtree(out, ignore_errors=True)
+
+
+def test_smoke_limits_verified_by_user():
+    """2026-11-14: user checked D1655 and IS 1571 Table 1. ASTM alt 18.0 mm; BIS (IS 1571) alt 19.0 mm; both with naphthalenes <= 3.0 vol %."""
+    a = E.load_spec("astm:jet_a")["constraints"]["smoke_point_mm"]
+    b = E.load_spec("bis:jet_a1")["constraints"]["smoke_point_mm"]
+    assert a["min"] == 25.0 and a["alt_min"] == 18.0 and a["verification"] == "verified"
+    assert b["min"] == 25.0 and b["alt_min"] == 19.0 and b["verification"] == "verified"
+    assert a["alt_requires"] == b["alt_requires"] == {"naphthalenes_vol_pct_max": 3.0}

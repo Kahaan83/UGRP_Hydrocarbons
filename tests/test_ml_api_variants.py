@@ -85,3 +85,11 @@ def test_density_ml_variant_binary_has_margin_designated_unchanged():
 def test_density_ml_ternary_no_margin():
     v = _fresh(BLEND_B, 298.15)["density_kg_m3"]["variants"]["ml_pair_excess_volume"]
     assert v["margin"] is None and v["in_domain"] is False
+
+
+def test_ml_margin_bin_edges_match_scoring_bins():
+    """R-MLV-6 margins were scored with bins split at 263.15 and 283.15 K (edges go to the warmer bin)."""
+    from fuelblend.api import predict_route as pr
+    m = pr._ml_visc_margins()
+    assert pr._ml_margin_for(263.10) == m["T_lt_263K"] and pr._ml_margin_for(263.15) == m["T_263_283K"]
+    assert pr._ml_margin_for(283.10) == m["T_263_283K"] and pr._ml_margin_for(283.15) == m["T_ge_283K"]

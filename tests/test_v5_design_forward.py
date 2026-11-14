@@ -146,7 +146,7 @@ def test_category_b_designs_meet_limits_on_api_value():
 
 
 def test_design_freezing_equals_api_freezing():
-    """The design freezing model is the API function (ideal SvL, mole fraction, Coutinho tmap): same value for a recipe."""
+    """The design freezing model is the API function (ideal SvL, mole fraction, designated verified-else-Coutinho tmap): same value for a recipe."""
     from fuelblend.api import predict_route as pr
     models = LR.build_route_models(V5POOL)
     w = {"n-undecane": 0.25, "n-dodecane": 0.15, "butylcyclohexane": 0.6}
@@ -155,7 +155,8 @@ def test_design_freezing_equals_api_freezing():
     comp = {s: res.weights[n] for n, s in zip(V5POOL, _smiles(V5POOL)) if res.weights[n] > 0}
     f = pr.predict_fuel(comp, T_K=288.15, fuel_type="jet")["freezing_point_C"]["value"]
     assert abs(c.prediction - f) < 1e-9
-    assert "coutinho_table" in models["props"]["freezing"].margin_missing_reason     # route constants: never certifiable
+    fz = models["props"]["freezing"]                      # v5 delta_freeze_margin: verified constants carry the lab-liquidus margin key
+    assert fz.margin_keys == ("freezing_point_C.lab_liquidus.svl_verified",) and fz.margin_missing_reason == ""
 
 
 def test_forward_check_none_safe(monkeypatch):
@@ -219,17 +220,45 @@ def test_visc_T_mismatch_raises():
 
 
 def test_smoke_margin_design_side_domain_gated():
-    """Smoke margin 7.8 mm applies on the design side only inside the regression domain; at 0 vol % aromatics the constraint
-    stays uncertified (not fail) with margin None; in domain it is judged with the margin."""
+    """Smoke margin on the design side, domain- and class-mix-gated.  User decision R-SC-2b, 'Yes, replace (Recommended)': inside the
+    regression domain AND the real-fuel class-mix range the margin is 4.107069860688682 mm (configs/uncertainty_v5.yaml, replacing the
+    7.8 mm lab margin); in the domain but outside the class-mix range it is uncertified (reason class_mix_outside_real_fuel_range, margin
+    None); out of the domain (0 vol % aromatics) it stays uncertified with the OutOfDomainWarning reason, as before."""
     import math
     from fuelblend.design import library_route as LR
-    models = LR.build_route_models(["n-decane", "n-dodecane", "1,2,4-trimethylbenzene"])
+    new_margin = 4.107069860688682
+    models = LR.build_route_models(["n-decane", "n-dodecane", "isooctane", "butylcyclohexane", "1,2,4-trimethylbenzene"])
     mp = ROOT / "configs/uncertainty_v5.yaml"
     out = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.5, "n-dodecane": 0.5}, margins_path=mp)
     s = next(c for c in out.constraints if c.key == "smoke_point_mm")
     assert s.status == "uncertified" and s.applied_margin is None and "OutOfDomainWarning" in s.reason
-    ind = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.45, "n-dodecane": 0.4, "1,2,4-trimethylbenzene": 0.15}, margins_path=mp)
+    ind = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.2, "n-dodecane": 0.1, "isooctane": 0.2, "butylcyclohexane": 0.3,
+                                                    "1,2,4-trimethylbenzene": 0.2}, margins_path=mp)
     t = next(c for c in ind.constraints if c.key == "smoke_point_mm")
-    assert "OutOfDomainWarning" not in t.reason and t.applied_margin == 7.8009965628100595
-    assert t.slack == pytest.approx((t.prediction - 7.8009965628100595 - 25.0) / 25.0)
+    assert "OutOfDomainWarning" not in t.reason and t.applied_margin == new_margin
+    assert t.slack == pytest.approx((t.prediction - new_margin - 25.0) / 25.0)
     assert t.status == ("fail" if t.slack < 0 else t.status)
+    nomix = LR.evaluate_recipe("astm:jet_a", models, {"n-decane": 0.45, "n-dodecane": 0.4, "1,2,4-trimethylbenzene": 0.15}, margins_path=mp)
+    u = next(c for c in nomix.constraints if c.key == "smoke_point_mm")        # in the aromatics domain, but no iso-paraffin
+    assert "OutOfDomainWarning" not in u.reason and u.applied_margin is None and u.status != "pass"
+
+
+def test_design_viscosity_is_api_designated_with_ml_margin():
+    """Design viscosity = predict_fuel designated value (ML pair residual in its domain, cc5f5ef) and is judged with the
+    R-MLV-6 ln margin of the T bin (0.287 below 263 K); out of the ML domain Refutas and its yaml margin stay."""
+    import math
+    from fuelblend.api import predict_route as pr
+    models = LR.build_route_models(V5POOL)
+    w = {"n-undecane": 0.25, "n-dodecane": 0.15, "butylcyclohexane": 0.6}
+    res = LR.evaluate_recipe("astm:jet_a", models, w, margins_path=MARGINS)
+    c = next(c for c in res.constraints if c.prop == "viscosity")
+    comp = {s: res.weights[n] for n, s in zip(V5POOL, _smiles(V5POOL)) if res.weights[n] > 0}
+    api = pr.predict_fuel(comp, T_K=253.15, fuel_type="jet")["viscosity_kin_cSt"]
+    assert api["method"] == "refutas+ml_pair_gn"
+    assert abs(c.prediction / api["value"] - 1) < 1e-6
+    assert c.model == "refutas+ml_pair_gn" and c.applied_margin == pytest.approx(api["margin"])
+    assert c.applied_margin == pytest.approx(0.28747778594508044)
+    assert c.slack == pytest.approx((8.0 - c.prediction * math.exp(c.applied_margin)) / 8.0)
+    assert c.status == "pass"
+    st = LR.visc_ml_status(["CCCCCCCCCC"], [1.0], 150.0)     # outside the 233-393 K training range: Refutas kept
+    assert st["in_domain"] is False and st["margin"] is None and st["g"] == 0.0

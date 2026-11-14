@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import re
 import warnings
+from pathlib import Path
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -155,6 +156,37 @@ def build_tmap(reg, idx) -> dict:
     info["cls"] = [hc_class(m) for m in mols]
     info["n_carbon"] = [float(sum(a.GetSymbol() == "C" for a in m.GetAtoms())) for m in mols]
     return get_pure_thermal_properties(info)
+
+
+VERIFIED_SLE_CSV = Path(__file__).resolve().parents[3] / "data" / "raw" / "sle_constants" / "tm_dhfus_verified.csv"
+
+
+def build_tmap_verified(path=None) -> dict:
+    """{inchikey: {tm_K, dh_fus_J_mol, source}} from the primary-source table ``tm_dhfus_verified.csv`` (v5 delta_freeze_margin).
+
+    dHfus is ``svl_dhfus_kJ_mol`` x 1000 (the total incl. solid-solid convention for odd n-alkanes).  A row with a blank Tm or dHfus has no entry.
+    Independent of ``get_pure_thermal_properties`` (which is frozen and has a SMILES-substring defect for fluorene / phenanthrene / 2-methylnaphthalene)."""
+    d = pd.read_csv(path or VERIFIED_SLE_CSV)
+    out = {}
+    for r in d.itertuples():
+        tm, dh = float(r.tm_K), float(r.svl_dhfus_kJ_mol)
+        if np.isfinite(tm) and np.isfinite(dh) and dh > 0:
+            out[r.inchikey] = {"tm_K": tm, "dh_fus_J_mol": dh * 1000.0, "source": "tm_dhfus_verified.csv", "name": r.name}
+    return out
+
+
+VERIFIED_SOURCE = "tm_dhfus_verified.csv"
+COUTINHO_SOURCE = "coutinho_table"
+
+
+def build_tmap_designated(base_tmap: dict, verified: dict | None = None) -> dict:
+    """Freezing constants of the API and the designs: the verified entry where one exists, else the Coutinho entry, each tagged
+    with ``source`` (``tm_dhfus_verified.csv`` | ``coutinho_table``).  Scoring uses ``build_tmap_verified`` alone."""
+    verified = build_tmap_verified() if verified is None else verified
+    out = {ik: {**t, "source": COUTINHO_SOURCE} for ik, t in (base_tmap or {}).items() if t}
+    for ik, t in verified.items():
+        out[ik] = {**t, "source": VERIFIED_SOURCE}
+    return out
 
 
 @dataclass

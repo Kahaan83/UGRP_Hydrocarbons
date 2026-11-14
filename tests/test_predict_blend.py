@@ -114,6 +114,8 @@ def test_determinism():
 
 import math
 
+import numpy as np
+
 import yaml
 
 
@@ -213,9 +215,11 @@ def test_not_certified_cases(monkeypatch):
     for prop in ("ron", "mon", "dcn", "dvpe_kpa", "pour_point_C"):
         val, lo, hi, name, ok = t[prop]
         assert val is None and math.isnan(lo) and math.isnan(hi) and ok is False
-    for prop in ("freezing_point_C", "smoke_point_mm"):          # v5 Task 3: the route gives a value, still no interval, never in domain
+    for prop in ("smoke_point_mm",):                             # v5 Task 3: the route gives a value, still no interval, never in domain
         val, lo, hi, name, ok = t[prop]
         assert math.isnan(lo) and math.isnan(hi) and ok is False
+    val, lo, hi, name, ok = t["freezing_point_C"]                # v5 delta_freeze_margin: decane + dodecane have verified constants -> lab-liquidus interval
+    assert np.isfinite(val) and np.isfinite(lo) and np.isfinite(hi) and hi - val == pytest.approx(lo * -1 + val) and ok is True
     # temperature outside the viscosity window: raw Refutas, no certified interval
     r = _predict(comp, T_K=310.0, fuel_type="jet", composition_kind="reconstructed")
     assert r["viscosity_dyn_mPas"]["method"] != "refutas_recalibrated"

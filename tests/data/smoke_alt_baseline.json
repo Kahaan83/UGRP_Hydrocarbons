@@ -1,0 +1,104 @@
+{
+ "astm_jet_a__v5pool": {
+  "density_15C_kg_m3": {
+   "status": "pass",
+   "pred": 781.3896158647276,
+   "slack": 0.027738705611194257,
+   "margin": 4.5866,
+   "reason": ""
+  },
+  "flash_point_C": {
+   "status": "pass",
+   "pred": 51.092612835607554,
+   "slack": 0.2864652638741826,
+   "margin": 2.206932808388615,
+   "reason": ""
+  },
+  "freezing_point_C": {
+   "status": "pass",
+   "pred": -57.85808387228036,
+   "slack": 0.02206582241895987,
+   "margin": 16.975450975521966,
+   "reason": ""
+  },
+  "kin_visc_m20C_cSt": {
+   "status": "pass",
+   "pred": 3.1724633786984375,
+   "slack": 0.39924949063909143,
+   "margin": 0.4153576080066075,
+   "reason": ""
+  },
+  "nhoc_MJ_kg": {
+   "status": "pass",
+   "pred": 43.94728388438844,
+   "slack": 0.022272532015150486,
+   "margin": 0.1940195141400025,
+   "reason": ""
+  },
+  "aromatics_wt_pct": {
+   "status": "by_construction",
+   "pred": 0.0,
+   "slack": 1.0,
+   "margin": 0.0,
+   "reason": ""
+  },
+  "smoke_point_mm": {
+   "status": "uncertified",
+   "pred": 27.564566805231873,
+   "slack": 0.10258267220927493,
+   "margin": null,
+   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
+  }
+ },
+ "bis_jet_a1__v5pool": {
+  "density_15C_kg_m3": {
+   "status": "pass",
+   "pred": 789.8900145058785,
+   "slack": 0.15851406932120846,
+   "margin": 4.5866,
+   "reason": ""
+  },
+  "flash_point_C": {
+   "status": "pass",
+   "pred": 50.66055338606958,
+   "slack": 0.2750952783600254,
+   "margin": 2.206932808388615,
+   "reason": ""
+  },
+  "freezing_point_C": {
+   "status": "pass",
+   "pred": -64.86576699897469,
+   "slack": 0.018942894116015453,
+   "margin": 16.975450975521966,
+   "reason": ""
+  },
+  "kin_visc_m20C_cSt": {
+   "status": "pass",
+   "pred": 3.1563900348071376,
+   "slack": 0.4022932041125604,
+   "margin": 0.4153576080066075,
+   "reason": ""
+  },
+  "nhoc_MJ_kg": {
+   "status": "pass",
+   "pred": 43.81188471,
+   "slack": 0.01910899990327106,
+   "margin": 0.1940195141400025,
+   "reason": ""
+  },
+  "aromatics_vol_pct": {
+   "status": "by_construction",
+   "pred": 0.0,
+   "slack": 1.0,
+   "margin": 0.0,
+   "reason": ""
+  },
+  "smoke_point_mm": {
+   "status": "uncertified",
+   "pred": 27.564566805231873,
+   "slack": 0.10258267220927493,
+   "margin": null,
+   "reason": "model emitted OutOfDomainWarning: aromatics 0.0 vol % outside training domain 8-23; predicted smoke point 27.6 mm outside trusted range 19-25 mm; smoke_point_mm.ajftd100_bulk.selected_in_fold: no valid margin (applied_margin absent: too few independent groups, see yaml entry)"
+  }
+ }
+}

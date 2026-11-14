@@ -1,0 +1,258 @@
+{
+  "training": {
+    "n_compounds": 109,
+    "n_verified_tm": 38,
+    "n_thermoml_tm": 71,
+    "n_with_dh": 94,
+    "families": {
+      "aromatic_poly": 48,
+      "n_alkane": 27,
+      "benzene_mono": 10,
+      "cycloalkane_poly": 7,
+      "cycloalkane_mono": 5,
+      "iso_alkane": 5,
+      "cycloalkene": 3,
+      "aromatic_naphthenic": 2,
+      "acyclic_unsaturated": 2
+    }
+  },
+  "R-W3-3": {
+    "n_C8_C20": 70,
+    "mae_tm_lofo_K": 47.74740408253937,
+    "mae_tm_joback_K": 40.672164285714295,
+    "threshold_K": 5.0,
+    "passed": false,
+    "expected": "fail"
+  },
+  "R-W3-4": {
+    "n": 60,
+    "mae_dh_lofo_kJ": 8.505210647337828,
+    "mape_dh_lofo_pct": 42.15131751122904,
+    "mae_dh_joback_kJ": 6.297734656066668,
+    "rmse_dh_lofo_kJ": 12.49352743524233
+  },
+  "R-W3-5": {
+    "mae_tm_random5_C8_C20_K": 47.67566989547956,
+    "mae_tm_lofo_all_K": 54.685741801016476
+  },
+  "R-W3-6": {
+    "n_gap_compounds": 55,
+    "tm_tiers": {
+      "needs_estimate": 30,
+      "verified": 15,
+      "thermoml_measured": 10
+    },
+    "dh_tiers": {
+      "needs_estimate": 34,
+      "verified": 15,
+      "thermoml_measured": 6
+    },
+    "needs_estimate": [
+      {
+        "label": "toluene",
+        "smiles": "Cc1ccccc1",
+        "used_in": "ajftd_gcxgc_rep+poolA"
+      },
+      {
+        "label": "hexylbenzene",
+        "smiles": "CCCCCCc1ccccc1",
+        "used_in": "ajftd_gcxgc_rep+poolB"
+      },
+      {
+        "label": "",
+        "smiles": "c1ccc2c(c1)CCCC2",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "Cc1ccc(C(C)C)cc1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCc1ccccc1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCCc1ccccc1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCCCCCCCCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CC(C)CC(C)C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "Cc1ccccc1C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCC(C)CC(C)C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "Cc1cc(C)cc(C)c1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCC(C)CCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCC(C)C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCC(C)CC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCCC1CCCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCC(C)CCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCCCCCC(C)C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCCCCCC(C)CCCCCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CC1CCCC1",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCCCC",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "",
+        "smiles": "CCCC(C)C",
+        "used_in": "ajftd_gcxgc_rep"
+      },
+      {
+        "label": "n-propylbenzene",
+        "smiles": "CCCc1ccccc1",
+        "used_in": "subreps_v5_candidate"
+      },
+      {
+        "label": "perhydrophenanthrene",
+        "smiles": "C1CCC2C(C1)CCC1CCCCC12",
+        "used_in": "subreps_v5_candidate"
+      },
+      {
+        "label": "perhydrofluorene",
+        "smiles": "C1CCC2C(C1)CC1CCCCC12",
+        "used_in": "subreps_v5_candidate"
+      },
+      {
+        "label": "1-methyltetralin",
+        "smiles": "CC1CCCc2ccccc21",
+        "used_in": "subreps_v5_candidate"
+      },
+      {
+        "label": "n-butyltetralin",
+        "smiles": "CCCCC1CCCc2ccccc21",
+        "used_in": "subreps_v5_candidate"
+      },
+      {
+        "label": "2-methyldecalin",
+        "smiles": "CC1CCC2CCCCC2C1",
+        "used_in": "subreps_v5_candidate"
+      }
+    ]
+  },
+  "R-W3-7": [
+    {
+      "pool": "poolA",
+      "spec": "astm:jet_a",
+      "estimated_components": "[]",
+      "freezing_C_tiered": -40.82766788151267,
+      "max_abs_change_pm1rmse_C": 0.0
+    },
+    {
+      "pool": "poolA",
+      "spec": "bis:jet_a1",
+      "estimated_components": "[]",
+      "freezing_C_tiered": -47.957050710653135,
+      "max_abs_change_pm1rmse_C": 0.0
+    },
+    {
+      "pool": "poolB",
+      "spec": "astm:jet_a",
+      "estimated_components": "[]",
+      "freezing_C_tiered": -40.82766788151267,
+      "max_abs_change_pm1rmse_C": 0.0
+    },
+    {
+      "pool": "poolB",
+      "spec": "bis:jet_a1",
+      "estimated_components": "[]",
+      "freezing_C_tiered": -47.957050710653135,
+      "max_abs_change_pm1rmse_C": 0.0
+    }
+  ]
+}

@@ -32,6 +32,7 @@ Models are injected (``models`` dict) so the engine itself holds no property phy
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 import re
 import warnings
@@ -49,6 +50,7 @@ UNCERTAINTY_YAML = CONFIGS / "uncertainty_v4.yaml"
 
 # Non-spec engineering constants (the AST test allows exactly these numeric literals; see tests/test_v4_design.py).
 EXTRAP_WT_THRESHOLD = 0.6      # wt fraction of absent-class mass above which a design is flagged extrapolating
+GRADED_FLOOR = 0.01            # penalty of a recipe whose margin is None for a reason the distance penalty does not explain
 BAD_SLACK = -100.0             # normalised slack assigned to a non-finite prediction inside the optimiser
 MAX_ITER = 120
 
@@ -70,12 +72,18 @@ _CANON = [
     (r"^nhoc_MJ_kg$", "nhoc"),
     (r"^aromatics_wt_pct$", "aromatics_wt"),
     (r"^aromatics_vol_pct$", "aromatics_vol"),
+    (r"^naphthalenes_vol_pct$", "naphthalenes_vol_pct"),
     (r"^smoke_point_mm$", "smoke_point"),
     (r"^dcn$", "dcn"),
     (r"^ron$", "ron"),
     (r"^mon$", "mon"),
     (r"^dvpe_kPa$", "dvpe"),
     (r"^distillation_T50_C$", "distillation_T50"),
+    # v5 WS7 (delta_ws7_design_realism): jet D86 constraints, present in a spec only with load_spec(..., d86=True)
+    (r"^distillation_T10_C$", "distillation_T10"),
+    (r"^distillation_FBP_C$", "distillation_FBP"),
+    (r"^distillation_T50_minus_T10_C$", "distillation_T50_T10"),
+    (r"^distillation_T90_minus_T10_C$", "distillation_T90_T10"),
     (r"^distillation_E70_pct$", "distillation_E70"),
     (r"^ethanol_vol_pct$", "ethanol_vol"),
 ]
@@ -101,6 +109,18 @@ class PropertyModel:
     margin_keys_by_side: Optional[dict] = None
     # margin_keys_fn(T_C of the constraint) -> keys; when set it replaces ``margin_keys`` (temperature-binned margins)
     margin_keys_fn: Optional[Callable] = None
+    # v5 Task 1.5: recipe-dependent margin.  margin_fn(pool, w, T_C) -> margin (>= 0) or None.  When set it OVERRIDES the yaml margin
+    # for that recipe; None means "no certified margin for this recipe": uncertified in the judge and an infeasible side in the
+    # optimiser (never margin 0).  ``margin_ln`` / ``margin_direction`` describe the returned margin (ln-ratio or additive;
+    # over | under | two_sided); an optional ``margin_fn.why(pool, w, T_C) -> str`` gives the reason for a None.
+    margin_fn: Optional[Callable] = None
+    margin_ln: bool = False
+    margin_direction: str = "two_sided"
+    margin_source: str = ""
+    # v5 optimiser-plateau fix (OPTIMISER ONLY; the judge never uses these): when ``_Sides(graded=True)`` and ``margin_fn`` returns None, the
+    # objective uses ``margin_stand_in`` and subtracts ``margin_penalty_fn(pool, w, T_C)`` (>= 0, smooth) instead of ``BAD_SLACK``.
+    margin_stand_in: Optional[float] = None
+    margin_penalty_fn: Optional[Callable] = None
 
 
 @dataclass
@@ -133,17 +153,39 @@ class DesignResult:
     pool: list = field(default_factory=list)
     absent_class_fraction: dict = field(default_factory=dict)
     optimiser: dict = field(default_factory=dict)
+    category: str = ""                               # "" normally; "blocked_aromatics_min_infeasible" when no optimisation was run
 
 
 # ----------------------------------------------------------------------------------------------- configuration
-def load_spec(spec_name: str, configs_dir: Optional[Path] = None) -> dict:
-    """``spec_name`` = ``"<standard>:<family>"`` e.g. ``"astm:jet_a"``, ``"bis:gasoline_e10"``."""
+def load_spec(spec_name: str, configs_dir: Optional[Path] = None, synthetic_blend: bool = False,
+              alt_limits: bool = False, d86: bool = False) -> dict:
+    """``spec_name`` = ``"<standard>:<family>"`` e.g. ``"astm:jet_a"``, ``"bis:gasoline_e10"``.
+
+    Constraints declaring ``applies_to: synthetic_blend`` (e.g. the D7566 aromatics minimum) are dropped unless
+    ``synthetic_blend`` is True, so they are inert by default.  ``alt_limits`` sets ``spec["use_alt_limits"]``.
+    Constraints declaring ``applies_to: d86_design`` (v5 WS7 jet D86 limits) are dropped unless ``d86`` is True."""
     std, fam = spec_name.split(":")
     cdir = CONFIGS if configs_dir is None else Path(configs_dir)
     with open(cdir / f"specs_{std}.yaml", "r", encoding="utf-8") as fh:
         doc = yaml.safe_load(fh)
     spec = dict(doc["families"][fam])
     spec["_family"] = fam
+    cons = {}
+    for k, c in spec["constraints"].items():
+        if isinstance(c, dict):
+            if not synthetic_blend and c.get("applies_to") == "synthetic_blend":
+                continue
+            if not d86 and c.get("applies_to") == "d86_design":
+                continue
+            if "synthetic_blend_overrides" in c:           # merged only for synthetic blends; otherwise the entry is unchanged
+                c = dict(c)
+                ov = c.pop("synthetic_blend_overrides")
+                if synthetic_blend:
+                    c.update(ov)
+        cons[k] = c
+    spec["constraints"] = cons
+    if alt_limits:
+        spec["use_alt_limits"] = True
     return spec
 
 
@@ -226,6 +268,8 @@ def _keys_for(pm: PropertyModel, T_C, side: Optional[str]):
 
 def _resolved_keys(pm: PropertyModel, T_C: Optional[float]) -> tuple:
     """The yaml keys this model is judged by at ``T_C`` (for reporting)."""
+    if pm.margin_fn is not None:
+        return (pm.margin_source,) if pm.margin_source else ()
     if pm.margin_keys_by_side is not None:
         return tuple(pm.margin_keys_by_side.get("over", [])) + tuple(pm.margin_keys_by_side.get("under", []))
     return tuple(_keys_for(pm, T_C, None)[0])
@@ -247,6 +291,31 @@ def _combined_margin(pm: PropertyModel, margins: dict, T_C: Optional[float] = No
     return max(vals), ("ln-ratio" in units), dirs, ""
 
 
+def _fn_margin(pm: PropertyModel, pool, w, T_C) -> tuple:
+    """``pm.margin_fn`` -> (margin, ln_space, directions, reason); margin None when the function declines (or raises)."""
+    try:
+        m = pm.margin_fn(list(pool), np.asarray(w, float), T_C)
+    except Exception as e:                                   # a margin function must never silently certify
+        return None, pm.margin_ln, set(), f"recipe margin function failed: {type(e).__name__}: {e}"
+    if m is None or isinstance(m, str) or not math.isfinite(float(m)):
+        why = getattr(pm.margin_fn, "why", None)
+        txt = ""
+        if why is not None:
+            try:
+                txt = str(why(list(pool), np.asarray(w, float), T_C))
+            except Exception:
+                txt = ""
+        return None, pm.margin_ln, set(), txt or "no certified margin for this recipe (margin_fn returned None)"
+    return float(m), pm.margin_ln, {pm.margin_direction}, ""
+
+
+def _sided_margin(pm: PropertyModel, margins: dict, pool, w, T_C, side: Optional[str]) -> tuple:
+    """Margin of one side of a limit: the recipe-dependent ``margin_fn`` when the model has one, else the yaml margin."""
+    if pm.margin_fn is not None and not pm.by_construction:
+        return _fn_margin(pm, pool, w, T_C)
+    return _combined_margin(pm, margins, T_C, side)
+
+
 def _call(pm: PropertyModel, pool, w, T_C):
     with warnings.catch_warnings(record=True) as rec:
         warnings.simplefilter("always")
@@ -265,8 +334,76 @@ def forced_extrapolation(pool, classes: dict, validated) -> bool:
 
 
 def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
-                        kind: Optional[str] = None) -> ConstraintResult:
-    """Evaluate one spec constraint for blend ``w`` with the primary (or an override) property model."""
+                        kind: Optional[str] = None, use_alt: bool = False) -> ConstraintResult:
+    """Evaluate one spec constraint for blend ``w`` with the primary (or an override) property model.
+
+    ``use_alt`` (spec flag ``use_alt_limits``, default off = v4/v5 behaviour): honour ``c["alt_min"]`` / ``c["alt_requires"]``."""
+    if use_alt and c.get("alt_min") is not None and c.get("min") is not None:
+        return _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind)
+    return _evaluate_primary(key, c, pool, w, models, margins, pm_override, kind)
+
+
+def _alt_requirement(rkey: str, rval, pool, w, models: dict, margins: dict, kind) -> ConstraintResult:
+    """``naphthalenes_vol_pct_max: 3.0`` -> the constraint ``naphthalenes_vol_pct`` with ``max: 3.0`` (``_min`` likewise)."""
+    mo = re.match(r"^(.*)_(max|min)$", rkey)
+    if not mo:
+        return ConstraintResult(key=rkey, prop="?", lo=None, hi=None, model="none", prediction=float("nan"),
+                                applied_margin=None, margin_keys=(), status=STATUS_UNCERTIFIED, slack=float("nan"),
+                                reason=f"unparseable alt_requires key {rkey!r}")
+    return _evaluate_primary(mo.group(1), {mo.group(2): rval}, pool, w, models, margins, None, kind)
+
+
+def _alt_combo_slack(ra: ConstraintResult, reqs: list) -> Optional[float]:
+    """Slack of the alternative branch = min(alternative-limit slack, every requirement slack); None if any is not computable."""
+    vals = [ra.slack] + [q.slack for _, q in reqs]
+    if not reqs or not all(v == v and math.isfinite(v) for v in vals):
+        return None
+    return float(min(vals))
+
+
+def _with_alt_slack(res: ConstraintResult, r: ConstraintResult, combo: Optional[float]) -> ConstraintResult:
+    """Reported slack under the alternative limit = max(primary slack, alternative-branch slack) (the optimiser's objective,
+    ``_Sides.vector``); unchanged when the alternative branch is not computable."""
+    if combo is None or not (r.slack == r.slack and math.isfinite(r.slack)):
+        return res
+    return dataclasses.replace(res, slack=float(max(r.slack, combo)))
+
+
+def _evaluate_with_alt(key, c, pool, w, models, margins, pm_override, kind) -> ConstraintResult:
+    r = _evaluate_primary(key, c, pool, w, models, margins, pm_override, kind)
+    c_alt = {k: v for k, v in c.items() if k not in ("alt_min", "alt_requires")}
+    c_alt["min"] = c["alt_min"]
+    ra = _evaluate_primary(key, c_alt, pool, w, models, margins, pm_override, kind)
+    reqs = [(k, _alt_requirement(k, v, pool, w, models, margins, kind)) for k, v in (c.get("alt_requires") or {}).items()]
+    combo = _alt_combo_slack(ra, reqs)
+    if r.status == STATUS_PASS:
+        return _with_alt_slack(dataclasses.replace(r, reason=(r.reason + "; " if r.reason else "") + "limit used: primary"), r, combo)
+    sep = (r.reason + "; " if r.reason else "")
+    if _status_rank(ra.status) == 0:                      # the alternative limit itself is violated (nominally or with its margin)
+        return _with_alt_slack(dataclasses.replace(r, reason=sep + f"alt_min {c['alt_min']:g} not passed (status {ra.status})"), r, combo)
+    if not reqs:                                          # alt_min without a requirement is not a defined D1655 alternative
+        return dataclasses.replace(r, reason=sep + "alt_min has no alt_requires: not used")
+    desc = "; ".join(f"{k}: {q.status} (pred {q.prediction:.3g})" for k, q in reqs)
+    # alternative branch = worse of (alternative limit, every requirement); overall = better of (primary, alternative branch)
+    alt_rank = min([_status_rank(ra.status)] + [_status_rank(q.status) for _, q in reqs])
+    if alt_rank == 0:                                     # a requirement is violated: the branch fails, the primary result stands
+        return _with_alt_slack(dataclasses.replace(r, reason=sep + f"alt_min requirement violated ({desc})"), r, combo)
+    if alt_rank == 1:                                     # branch met but not certifiable (unverified spec / margin or requirement not established)
+        why = "; ".join(x for x in [ra.reason] + [q.reason for _, q in reqs] if x)
+        st = STATUS_UNCERTIFIED if _status_rank(r.status) == 0 else r.status
+        return _with_alt_slack(dataclasses.replace(r, status=st, reason=sep + f"alt_min {c['alt_min']:g} met but not certified ({desc}; {why})"),
+                               r, combo)
+    return _with_alt_slack(dataclasses.replace(ra, reason=(ra.reason + "; " if ra.reason else "")
+                                               + f"limit used: alt_min {c['alt_min']:g} with {desc}"), r, combo)
+
+
+def _status_rank(status: str) -> int:
+    """0 = fail, 1 = uncertified (not established), 2 = pass-like."""
+    return 0 if status == STATUS_FAIL else 1 if status == STATUS_UNCERTIFIED else 2
+
+
+def _evaluate_primary(key, c: dict, pool, w, models: dict, margins: dict, pm_override: Optional[PropertyModel] = None,
+                      kind: Optional[str] = None) -> ConstraintResult:
     lo, hi = c.get("min"), c.get("max")
     prop, T_C = canonical_property(key)
     ver = str(c.get("verification", ""))
@@ -298,7 +435,7 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
         if pm.by_construction:
             msides[sd] = (0.0, False, set(), "")
         else:
-            msides[sd] = _combined_margin(pm, margins, T_C, (("over" if sd == "lo" else "under") if sided else None))
+            msides[sd] = _sided_margin(pm, margins, pool, w, T_C, (("over" if sd == "lo" else "under") if sided else None))
     finite = [v[0] for v in msides.values() if v[0] is not None]
     m = None if (any(v[0] is None for v in msides.values()) or not finite) else max(finite)
     sc = _scale(lo, hi)
@@ -372,17 +509,27 @@ def evaluate_constraint(key, c: dict, pool, w, models: dict, margins: dict, pm_o
 
 def evaluate_blend(spec: dict, pool, w, models: dict, margins: dict) -> list:
     kind = fuel_kind(spec)
-    return [evaluate_constraint(k, c, pool, w, models, margins, kind=kind) for k, c in spec["constraints"].items()]
+    use_alt = bool(spec.get("use_alt_limits", False))
+    return [evaluate_constraint(k, c, pool, w, models, margins, kind=kind, use_alt=use_alt)
+            for k, c in spec["constraints"].items()]
 
 
 # ----------------------------------------------------------------------------------------------- optimiser
 class _Sides:
-    """Normalised margin-adjusted slack of every optimisable constraint side, cached per weight vector."""
+    """Normalised margin-adjusted slack of every optimisable constraint side, cached per weight vector.
 
-    def __init__(self, spec, pool, models, margins):
+    v5 Task 1.5: (1) a model with ``margin_fn`` gets its margin per weight vector; ``None`` makes that constraint's sides
+    infeasible (``BAD_SLACK``), never margin 0.  (2) With ``spec["use_alt_limits"]`` a constraint carrying ``alt_min`` /
+    ``alt_requires`` gets slack = max(primary slack, min(alternative-limit slack, requirement slacks)), the same number
+    ``engine_v4._evaluate_with_alt`` reports (alternative limit scaled by |alt_min|, a requirement by its own bound)."""
+
+    def __init__(self, spec, pool, models, margins, graded: bool = False):
+        self.graded = bool(graded)
         self.pool, self.models, self.margins, self.spec = list(pool), models, margins, spec
         self.items = []                      # (key, c, pm, T_C, (m, ln) lower side, (m, ln) upper side, sc)
         self.excluded = {}
+        self.alt = {}                        # key -> dict(alt_min, sc, reqs=[(pm, T_C, bound, sgn, sc, (m, ln) | None)]) | None (dead)
+        use_alt = bool(spec.get("use_alt_limits", False))
         for key, c in spec["constraints"].items():
             prop, T_C = canonical_property(key)
             pm = models["props"].get(prop)
@@ -400,9 +547,14 @@ class _Sides:
             sided = pm.margin_keys_by_side is not None
             ms = {}
             for sd, nm in (("lo", "over"), ("hi", "under")):
+                if pm.margin_fn is not None and not pm.by_construction:
+                    ms[sd] = (0.0, pm.margin_ln)                    # placeholder: the margin is read per weight vector
+                    continue
                 r = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, margins, T_C, nm if sided else None)
                 ms[sd] = (0.0 if r[0] is None else r[0], r[1])
             self.items.append((key, c, pm, T_C, ms["lo"], ms["hi"], _scale(c.get("min"), c.get("max"))))
+            if use_alt and c.get("alt_min") is not None and c.get("min") is not None:
+                self.alt[key] = self._build_alt(c)
         self.extrap_sets = []                # distinct validated sets of the models in use (not forced)
         seen = []
         for key, c, pm, *_ in self.items:
@@ -417,31 +569,111 @@ class _Sides:
                 self.extrap_sets.append(fv)
         self._k, self._v = None, None
 
+    def _build_alt(self, c):
+        """Alternative branch of a constraint; None when a requirement cannot be evaluated (the branch is then infeasible)."""
+        reqs = []
+        for rkey, rval in (c.get("alt_requires") or {}).items():
+            mo = re.match(r"^(.*)_(max|min)$", rkey)
+            if not mo:
+                return None
+            prop, T_C = canonical_property(mo.group(1))
+            pm = self.models["props"].get(prop)
+            if pm is None:
+                return None
+            try:
+                pm.fn(self.pool, np.full(len(self.pool), 1.0 / len(self.pool)), T_C)
+            except Exception:
+                return None
+            sgn = +1 if mo.group(2) == "max" else -1
+            sided = pm.margin_keys_by_side is not None
+            nm = "under" if sgn > 0 else "over"
+            if pm.margin_fn is not None and not pm.by_construction:
+                m = None                                           # read per weight vector
+            else:
+                r = (0.0, False, set(), "") if pm.by_construction else _combined_margin(pm, self.margins, T_C, nm if sided else None)
+                if r[0] is None:                                   # no margin for a non-by_construction requirement: never margin 0
+                    return None
+                m = (r[0], r[1])
+            sc = _scale(None, rval) if sgn > 0 else _scale(rval, None)
+            reqs.append((pm, T_C, float(rval), sgn, sc, m))
+        if not reqs:
+            return None                                            # alt_min without a requirement is not an alternative
+        return dict(alt_min=float(c["alt_min"]), sc=_scale(c["alt_min"], None), reqs=reqs)
+
+    def _alt_slack(self, a, p, m_lo, ln_lo, w) -> float:
+        """min(alternative-limit slack, requirement slacks) at ``w``; ``BAD_SLACK`` if not computable."""
+        if a is None or m_lo is None or not math.isfinite(p):
+            return BAD_SLACK
+        vals = [(_adjust(p, m_lo, ln_lo, -1) - a["alt_min"]) / a["sc"]]
+        for pm2, T2, bound, sgn, sc2, m in a["reqs"]:
+            if m is None:
+                mm, ln = _fn_margin(pm2, self.pool, w, T2)[:2]
+                if mm is None:
+                    return BAD_SLACK
+            else:
+                mm, ln = m
+            try:
+                q = float(pm2.fn(self.pool, w, T2))
+            except Exception:
+                return BAD_SLACK
+            if not math.isfinite(q):
+                return BAD_SLACK
+            vals.append((bound - _adjust(q, mm, ln, +1)) / sc2 if sgn > 0 else (_adjust(q, mm, ln, -1) - bound) / sc2)
+        return float(min(vals))
+
     def vector(self, w) -> np.ndarray:
         w = np.asarray(w, float)
         kb = w.tobytes()
         if kb == self._k:
             return self._v
         out = []
+        gpen = 0.0                       # graded objective: total distance penalty, lowers the WHOLE max-min objective
         for key, c, pm, T_C, (m_lo, ln_lo), (m_hi, ln_hi), sc in self.items:
+            pen = 0.0
             try:
                 p = float(pm.fn(self.pool, w, T_C))
             except Exception:
                 p = float("nan")
+            if pm.margin_fn is not None and not pm.by_construction:
+                mm, ln, _d, _why = _fn_margin(pm, self.pool, w, T_C)      # recipe-dependent margin; None = infeasible
+                pen = 0.0
+                if self.graded and pm.margin_stand_in is not None:      # graded objective (optimiser only), continuous
+                    try:
+                        pen = float(pm.margin_penalty_fn(self.pool, w, T_C)) if pm.margin_penalty_fn is not None else 0.0
+                    except Exception:
+                        pen = 0.0
+                    if not math.isfinite(pen):
+                        pen = 1.0
+                    if mm is None:
+                        mm = float(pm.margin_stand_in)
+                        if pen <= 0.0:
+                            pen = GRADED_FLOOR                       # margin None with no distance to explain it
+                    gpen += pen
+                    pen = 0.0
+                m_lo = m_hi = mm
+                ln_lo = ln_hi = ln
             lo, hi = c.get("min"), c.get("max")
             for bound, sgn in ((lo, -1), (hi, +1)):
                 if bound is None:
                     continue
-                if not math.isfinite(p):
+                m_s, ln_s = (m_lo, ln_lo) if sgn < 0 else (m_hi, ln_hi)
+                if not math.isfinite(p) or m_s is None:
                     out.append(BAD_SLACK)
-                elif sgn < 0:
-                    out.append((_adjust(p, m_lo, ln_lo, -1) - bound) / sc)
+                    continue
+                if sgn < 0:
+                    sl = (_adjust(p, m_s, ln_s, -1) - bound) / sc
+                    if key in self.alt:
+                        sl = max(sl, self._alt_slack(self.alt[key], p, m_s, ln_s, w))
+                    out.append(sl - pen)
                 else:
-                    out.append((bound - _adjust(p, m_hi, ln_hi, +1)) / sc)
+                    out.append((bound - _adjust(p, m_s, ln_s, +1)) / sc - pen)
         classes = self.models.get("classes", {})
         for v in self.extrap_sets:
             out.append((EXTRAP_WT_THRESHOLD - absent_fraction(self.pool, w, classes, v)) / EXTRAP_WT_THRESHOLD)
-        self._k, self._v = kb, np.array(out, float)
+        arr = np.array(out, float)
+        if gpen > 0.0:
+            arr = np.where(arr > BAD_SLACK, arr - gpen, arr)
+        self._k, self._v = kb, arr
         return self._v
 
 
@@ -473,14 +705,39 @@ def _optimise(sides: _Sides, n: int, n_starts: int, seed: int) -> tuple:
     return best_w, best_score, n_ok
 
 
+BLOCKED_AROMATICS = "blocked_aromatics_min_infeasible"
+BLOCKED_AROMATICS_REASON = "blocked: aromatics_min infeasible for pool"
+
+
+def blocked_result(spec_name: str, pool: list, models: dict, seed: int = 42, synthetic_blend: bool = False) -> Optional[DesignResult]:
+    """With ``synthetic_blend`` (aromatics minimum) and no aromatic member in ``pool`` the minimum cannot be met:
+    return a blocked ``DesignResult`` (category ``blocked_aromatics_min_infeasible``, no optimisation); otherwise None.
+    Called at the top of ``design`` and ``library_route.evaluate_recipe`` so no caller can skip it."""
+    if not synthetic_blend or any(models.get("classes", {}).get(n) == "aromatic" for n in pool):
+        return None
+    return DesignResult(weights={n: float("nan") for n in pool}, predictions={}, margins={}, passed=False,
+                        extrapolating=False,
+                        binding_constraints=[dict(constraint="aromatics_vol_pct", status=STATUS_FAIL,
+                                                  reason=BLOCKED_AROMATICS_REASON, slack=float("nan"))],
+                        constraints=[], spec_name=spec_name, pool=list(pool),
+                        optimiser=dict(best_min_slack=float("nan"), n_starts=0, n_converged=0, seed=int(seed),
+                                       excluded_from_optimiser={}),
+                        category=BLOCKED_AROMATICS)
+
+
 def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: int = 42,
-           margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None) -> DesignResult:
+           margins_path: Optional[Path] = None, configs_dir: Optional[Path] = None,
+           synthetic_blend: bool = False, alt_limits: bool = False, graded_objective: bool = False) -> DesignResult:
     """Search the simplex of ``pool`` for the blend with the largest worst-case normalised slack, then report the
-    honest status of every constraint (see module docstring)."""
-    spec = load_spec(spec_name, configs_dir)
+    honest status of every constraint (see module docstring).  ``synthetic_blend`` adds the aromatics minimum
+    (spec entries with ``applies_to: synthetic_blend``); ``alt_limits`` sets ``use_alt_limits`` on the spec copy."""
+    blocked = blocked_result(spec_name, pool, models, seed, synthetic_blend)
+    if blocked is not None:
+        return blocked
+    spec = load_spec(spec_name, configs_dir, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
     margins = load_margins(margins_path)
     pool = list(pool)
-    sides = _Sides(spec, pool, models, margins)
+    sides = _Sides(spec, pool, models, margins, graded=graded_objective)
     w, score, n_ok = _optimise(sides, len(pool), n_starts, seed)
     w = np.where(w < 1e-6, 0.0, w)
     w = w / w.sum()
@@ -530,17 +787,19 @@ def design(spec_name: str, pool: list, models: dict, n_starts: int = 30, seed: i
         passed=passed, extrapolating=bool(extrap), binding_constraints=binding, constraints=cons,
         spec_name=spec_name, pool=pool, absent_class_fraction=absent,
         optimiser=dict(best_min_slack=float(score), n_starts=int(n_starts), n_converged=int(n_ok), seed=int(seed),
-                       excluded_from_optimiser=dict(sides.excluded)))
+                       excluded_from_optimiser=dict(sides.excluded), graded_objective=bool(graded_objective)))
 
 
 # ----------------------------------------------------------------------------------------------- robustness
 def robustness_table(spec_name: str, pool: list, weights, models: dict, margins_path: Optional[Path] = None,
-                     configs_dir: Optional[Path] = None) -> list:
+                     configs_dir: Optional[Path] = None, alt_limits: bool = False, synthetic_blend: bool = False) -> list:
     """Evaluate every constraint with EVERY available model form (primary + ``models['alternates'][prop]``).
 
     Each model function is actually called (once per constraint); nothing is added to a prediction as an offset.
-    Each model form is judged with its OWN yaml margin (or reported uncertified when it has none)."""
-    spec = load_spec(spec_name, configs_dir)
+    Each model form is judged with its OWN yaml margin (or reported uncertified when it has none).  With ``alt_limits`` (spec flag
+    ``use_alt_limits``) the alternative limits of the spec are honoured, like ``evaluate_blend``."""
+    spec = load_spec(spec_name, configs_dir, synthetic_blend=synthetic_blend, alt_limits=alt_limits)
+    use_alt = bool(spec.get("use_alt_limits", False))
     margins = load_margins(margins_path)
     w = np.asarray(weights, float)
     rows = []
@@ -551,7 +810,7 @@ def robustness_table(spec_name: str, pool: list, weights, models: dict, margins_
             forms.append((True, models["props"][prop]))
         forms += [(False, pm) for pm in models.get("alternates", {}).get(prop, [])]
         for primary, pm in forms:
-            cr = evaluate_constraint(key, c, pool, w, models, margins, pm_override=pm, kind=fuel_kind(spec))
+            cr = evaluate_constraint(key, c, pool, w, models, margins, pm_override=pm, kind=fuel_kind(spec), use_alt=use_alt)
             rows.append(dict(spec=spec_name, constraint=key, model=pm.name, is_primary=primary,
                              prediction=cr.prediction, applied_margin=cr.applied_margin, lo=cr.lo, hi=cr.hi,
                              status=cr.status, reason=cr.reason))

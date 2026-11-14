@@ -1,0 +1,16 @@
+design_id,constraint,model,lo,hi,prediction,applied_margin,status,slack,reason,spec_verification
+astm_jet_a__custom,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,780.9302823376203,4.5866,pass,0.020672035963389134,,
+astm_jet_a__custom,flash_point_C,le_chatelier_ideal,38.0,,48.48949616391167,2.206932808388615,pass,0.21796219356639612,lab_margin_set_by_one_system,
+astm_jet_a__custom,freezing_point_C,ideal_sle_mole_fraction,,-40.0,-40.826881438538805,,uncertified,0.020672035963470135,"non-verified constant(s): hexylbenzene.Tm=coutinho_table, hexylbenzene.dHfus=coutinho_table",
+astm_jet_a__custom,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,3.1215164792033843,0.28747778594508044,pass,0.47985352322718466,,
+astm_jet_a__custom,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.87878265337517,0.1940195141400025,pass,0.02067203596343852,,
+astm_jet_a__custom,aromatics_wt_pct,class_mass_fraction,,25.0,9.410895984227311,0.0,by_construction,0.6235641606309076,,
+astm_jet_a__custom,aromatics_vol_pct,class_volume_fraction,8.0,25.0,8.351424611377967,0.0,uncertified,0.0206720359634098,spec limit verification: secondary_sources_only (an unverified limit is never certified),secondary_sources_only
+astm_jet_a__custom,smoke_point_mm,ajftd_bulk_regression,25.0,,24.861217867425808,4.107069860688682,uncertified,0.15300822259650695,spec limit verification: secondary_sources_only (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: secondary_sources_only (an unverified limit is never certified)),secondary_sources_only
+bis_jet_a1__custom,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,780.9112685783891,4.5866,pass,0.02037951659060232,,
+bis_jet_a1__custom,flash_point_C,le_chatelier_ideal,38.0,,47.143214522878964,2.206932808388615,pass,0.18253372932869338,lab_margin_set_by_one_system,
+bis_jet_a1__custom,freezing_point_C,ideal_sle_mole_fraction,,-47.0,-47.95783750425832,,uncertified,0.020379521367198335,"non-verified constant(s): hexylbenzene.Tm=coutinho_table, hexylbenzene.dHfus=coutinho_table",
+bis_jet_a1__custom,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,3.0280064659971457,0.28747778594508044,pass,0.49543534194774996,,
+bis_jet_a1__custom,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.86626282421778,0.1940195141400025,pass,0.020379516590602286,,
+bis_jet_a1__custom,aromatics_vol_pct,class_volume_fraction,8.0,25.0,8.346451782040512,0.0,uncertified,0.020379516590618377,spec limit verification: secondary_sources_only (an unverified limit is never certified),secondary_sources_only
+bis_jet_a1__custom,smoke_point_mm,ajftd_bulk_regression,25.0,,24.86282756798983,4.107069860688682,uncertified,0.15309765040561926,spec limit verification: UNVERIFIED (an unverified limit is never certified); limit violated after applying the margin; alt_min 18 met but not certified (naphthalenes_vol_pct_max: by_construction (pred 0); spec limit verification: UNVERIFIED (an unverified limit is never certified)),UNVERIFIED
