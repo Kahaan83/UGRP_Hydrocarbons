@@ -1,0 +1,27 @@
+group_type,species,peak_label,mass_pct,smiles,n_carbon
+C9 cycloaromatic,indane,p,0.799,C1CCc2ccccc12,9
+C8 alkylbenzene,p-xylene,b*,0.384,Cc1ccc(C)cc1,8
+C8 alkylbenzene,m-xylene,b*,1.274,Cc1cccc(C)c1,8
+C8 alkylbenzene,ethylbenzene,a,0.181,CCc1ccccc1,8
+C8 alkylbenzene,o-xylene,c,1.844,Cc1ccccc1C,8
+C9 alkylbenzene,1-methyl-3-ethylbenzene,f*,20.604,CCc1cccc(C)c1,9
+C9 alkylbenzene,1-methyl-4-ethylbenzene,f*,10.879,CCc1ccc(C)cc1,9
+C9 alkylbenzene,"1,3,5-trimethylbenzene",f*,0.148,Cc1cc(C)cc(C)c1,9
+C9 alkylbenzene,"1,2,4-trimethylbenzene",h*,26.686,Cc1ccc(C)c(C)c1,9
+C9 alkylbenzene,isopropylbenzene,d,0.275,CC(C)c1ccccc1,9
+C9 alkylbenzene,n-propylbenzene,e,1.92,CCCc1ccccc1,9
+C9 alkylbenzene,1-methyl-2-ethylbenzene,g,1.356,CCc1ccccc1C,9
+C9 alkylbenzene,"1,2,3-trimethylbenzene",l,0.163,Cc1cccc(C)c1C,9
+C10 alkylbenzene,sec-butylbenzene,i*,0.156,CCC(C)c1ccccc1,10
+C10 alkylbenzene,"1,3-diethylbenzene",m*,4.445,CCc1cccc(CC)c1,10
+C10 alkylbenzene,1-methyl-3-n-propylbenzene,m*,3.213,CCCc1cccc(C)c1,10
+C10 alkylbenzene,1-methyl-4-n-propylbenzene,m*,1.535,CCCc1ccc(C)cc1,10
+C10 alkylbenzene,"1,3-dimethyl-5-ethylbenzene",n*,1.122,CCc1cc(C)cc(C)c1,10
+C10 alkylbenzene,"1,4-diethylbenzene",n*,0.811,CCc1ccc(CC)cc1,10
+C10 alkylbenzene,1-methyl-3-isopropylbenzene,j,0.739,CC(C)c1cccc(C)c1,10
+C10 alkylbenzene,1-methyl-4-isopropylbenzene,k,0.332,CC(C)c1ccc(C)cc1,10
+C10 alkylbenzene,1-methyl-2-n-propylbenzene,o,0.145,CCCc1ccccc1C,10
+C10 alkylbenzene,"1,4-dimethyl-2-ethylbenzene",q,0.678,CCc1cc(C)ccc1C,10
+C10 alkylbenzene,"1,3-dimethyl-4-ethylbenzene",r,2.443,CCc1ccc(C)cc1C,10
+C10 alkylbenzene,"1,2-dimethyl-4-ethylbenzene",s,10.089,CCc1ccc(C)c(C)c1,10
+C10 alkylbenzene,"1,2,4,5-tetramethylbenzene",t,1.36,Cc1cc(C)c(C)cc1C,10

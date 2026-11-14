@@ -1,0 +1,7 @@
+hc_class,n_carbon,mass_pct,basis,source_locus
+alkylbenzene,8,3.7,GCxGC group-type (Striebich template) main text sec 3.1,Feldhausen 2022 Fuel 326:125002 sec 3.1
+alkylbenzene,9,62.0,GCxGC group-type main text sec 3.1,same
+alkylbenzene,10,27.5,GCxGC group-type main text sec 3.1,same
+indan_tetralin,9,0.8,GCxGC group-type main text sec 3.1 (cycloaromatic C9),same
+indan_tetralin,10,1.2,GCxGC group-type main text sec 3.1 (cycloaromatic C10),same
+no_rep:cycloalkane_and_isoalkane_C8-C10,9,4.8,remainder to 100: 'various cycloalkane and iso-alkane groups each <1.5 %m across C8 to C10' (split not in main text; Supp Table 4 not obtained),same
