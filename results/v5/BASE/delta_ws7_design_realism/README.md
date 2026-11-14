@@ -88,4 +88,48 @@ judge says so, and the judge never certifies an unverified limit.
 
 ## Results
 
-(appended after the runs)
+### Implementation deviations (mechanical, stated before the design readings were read)
+
+* `build_route_models` normally refuses a pool member without Tm/dHfus. Many GCxGC representatives have none (iso-paraffins: 8 of 8 ATJ reps,
+  19-20 compounds in P1/P2), so `blendstock_v5.build_models` requires grid + flash data only; a member without Tm/dHfus makes freezing
+  `model unavailable` (uncertified, and the constraint drops out of the optimiser) instead of refusing the pool. Listed in `models['sle_gaps']`.
+* A Jet A representative shares its InChIKey with pool C's isooctane under the table name `2,2,4-trimethylpentane` (no verified MW/rho15); a pure
+  member now keeps its own table name and shared InChIKeys resolve to the most-verified table name (commit bd4647a).
+* Design runs use 10 starts (P0/P1/P2, about 43-50 compounds per pool, 0.06-0.14 s per objective evaluation plus 0.07-0.2 s for the
+  uncertainty term); the optimiser comparison on pool C uses 30 starts, like the 6dc66f8 engine runs.
+
+### R-W7-1 blendstocks (`blendstocks.csv`)
+
+| name | source | reps | unmapped | class wt (aro / cyclo / iso / n) | status |
+|---|---|---|---|---|---|
+| jetA_posf10325 | AJFTD GCxGC fuel 2 (POSF-10325 Jet A) | 42 | 0.0247 | 0.166 / 0.324 / 0.305 / 0.205 | used (Jet A base) |
+| hefa_came | FuelLib HEFA-CAME | 25 | 0.0 | 0.000 / 0.028 / 0.901 / 0.071 | used (HEFA-SPK) |
+| atj_posf11498 | FuelLib C-1 POSF11498 ATJ | 8 | 0.0044 | 0 / 0 / 1.000 / 0 | used (ATJ-SPK) |
+| SAK | - | - | - | - | **blocked**: no named SAK composition in the repo |
+| ajftd 47, 139 | AJFTD GCxGC | - | - | ~97 % aromatic | not used: no pathway label |
+
+### R-W7-2 D86 margins (`d86_fit_rows.csv`, `d86_margins.json`)
+
+65 fuels used (AV-33-22 35, AJFTD GCxGC 30); 9 dropped as double-count duplicates; 0 below coverage; every AJFTD distillation row had a D86 method.
+**Gate passed for every quantity.** Distillation domain (TBP T90-T10 of the fit fuels): 30.1-163.6 C.
+
+| quantity | direction | pooled | AV-33-22 | AJFTD | **certifying margin (C)** | bias pred-meas | MAE | MAE constant |
+|---|---|---|---|---|---|---|---|---|
+| T10 (max 205) | under | 6.37 | 4.00 | 7.93 | **7.93** | -0.69 | 4.52 | 8.19 |
+| FBP (max 300) | under | 0.82 | 0.82 | 3.26 | **3.26** | +15.11 | 15.75 | 16.52 |
+| T50-T10 (min 15) | over | 11.02 | 3.60 | 18.68 | **18.68** | -1.58 | 7.67 | 9.32 |
+| T90-T10 (min 40) | over | 8.79 | 0.00 | 18.25 | **18.25** | -8.98 | 12.56 | 16.53 |
+| T50 (no limit) | under | 12.46 | 14.96 | 8.95 | 14.96 | -2.27 | 8.75 | 11.45 |
+| T90 (no limit) | under | 20.54 | 17.56 | 26.66 | 26.66 | -9.68 | 13.06 | 15.31 |
+
+Reading: the baseline beats the constant predictor on every quantity (T10 MAE 4.5 vs 8.2 C) but the slope quantities need margins of about
+18 C because of the AJFTD fuels, so a design needs predicted T50-T10 >= 33.7 C and T90-T10 >= 58.2 C to clear the D7566 minimums with the
+margin. The FBP model (TBP at 99 vol %) over-predicts by 15 C on average, so its under-prediction margin is small (3.3 C); it is conservative,
+not accurate. The Engler offsets' provenance is unverified (possible in-sample use of AV-33-22). The margins live in `d86_margins.json` only;
+adopting them into `configs/uncertainty_v5.yaml` is a user decision.
+
+### R-W7-3 Tb sanity (`tb_sanity.csv`)
+
+Registry-Antoine Tb minus literature: n-C10 -1.9, n-C11 -3.4, n-C12 -5.4, butylcyclohexane -1.9, isooctane 0.0, 1,2,4-TMB -0.3, trans-decalin
+-6.9 C. Tb is biased low by up to 7 C for C11+ and bicyclics (Antoine extrapolated beyond its fitted range); the D86 margins absorb this
+only to the extent the real fuels share it.
