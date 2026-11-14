@@ -79,6 +79,32 @@ families:
         test_method: "ASTM D1322 / D1840"
         verification: "secondary_sources_only"
         uncertainty_margin: null  # model skill vs constant baseline not established (results/v4/SP)
+      # v5 WS7 (delta_ws7_design_realism): D86 limits, used ONLY with engine_v4.load_spec(..., d86=True) (applies_to: d86_design).
+      # D1655 Table 1 (T10 <= 205 C, FBP <= 300 C) and D7566 Table 1 (T50-T10 >= 15 C, T90-T10 >= 40 C): secondary sources only, standard text not read.
+      distillation_T10_C:
+        max: 205.0
+        test_method: "ASTM D86"
+        source: "D1655 Table 1 (secondary)"
+        verification: secondary_sources_only
+        applies_to: d86_design
+      distillation_FBP_C:
+        max: 300.0
+        test_method: "ASTM D86"
+        source: "D1655 Table 1 (secondary)"
+        verification: secondary_sources_only
+        applies_to: d86_design
+      distillation_T50_minus_T10_C:
+        min: 15.0
+        test_method: "ASTM D86"
+        source: "D7566 Table 1 (secondary)"
+        verification: secondary_sources_only
+        applies_to: d86_design
+      distillation_T90_minus_T10_C:
+        min: 40.0
+        test_method: "ASTM D86"
+        source: "D7566 Table 1 (secondary)"
+        verification: secondary_sources_only
+        applies_to: d86_design
 
   diesel_no2:
     standard: "ASTM D975"

@@ -79,6 +79,11 @@ _CANON = [
     (r"^mon$", "mon"),
     (r"^dvpe_kPa$", "dvpe"),
     (r"^distillation_T50_C$", "distillation_T50"),
+    # v5 WS7 (delta_ws7_design_realism): jet D86 constraints, present in a spec only with load_spec(..., d86=True)
+    (r"^distillation_T10_C$", "distillation_T10"),
+    (r"^distillation_FBP_C$", "distillation_FBP"),
+    (r"^distillation_T50_minus_T10_C$", "distillation_T50_T10"),
+    (r"^distillation_T90_minus_T10_C$", "distillation_T90_T10"),
     (r"^distillation_E70_pct$", "distillation_E70"),
     (r"^ethanol_vol_pct$", "ethanol_vol"),
 ]
@@ -153,11 +158,12 @@ class DesignResult:
 
 # ----------------------------------------------------------------------------------------------- configuration
 def load_spec(spec_name: str, configs_dir: Optional[Path] = None, synthetic_blend: bool = False,
-              alt_limits: bool = False) -> dict:
+              alt_limits: bool = False, d86: bool = False) -> dict:
     """``spec_name`` = ``"<standard>:<family>"`` e.g. ``"astm:jet_a"``, ``"bis:gasoline_e10"``.
 
     Constraints declaring ``applies_to: synthetic_blend`` (e.g. the D7566 aromatics minimum) are dropped unless
-    ``synthetic_blend`` is True, so they are inert by default.  ``alt_limits`` sets ``spec["use_alt_limits"]``."""
+    ``synthetic_blend`` is True, so they are inert by default.  ``alt_limits`` sets ``spec["use_alt_limits"]``.
+    Constraints declaring ``applies_to: d86_design`` (v5 WS7 jet D86 limits) are dropped unless ``d86`` is True."""
     std, fam = spec_name.split(":")
     cdir = CONFIGS if configs_dir is None else Path(configs_dir)
     with open(cdir / f"specs_{std}.yaml", "r", encoding="utf-8") as fh:
@@ -168,6 +174,8 @@ def load_spec(spec_name: str, configs_dir: Optional[Path] = None, synthetic_blen
     for k, c in spec["constraints"].items():
         if isinstance(c, dict):
             if not synthetic_blend and c.get("applies_to") == "synthetic_blend":
+                continue
+            if not d86 and c.get("applies_to") == "d86_design":
                 continue
             if "synthetic_blend_overrides" in c:           # merged only for synthetic blends; otherwise the entry is unchanged
                 c = dict(c)
