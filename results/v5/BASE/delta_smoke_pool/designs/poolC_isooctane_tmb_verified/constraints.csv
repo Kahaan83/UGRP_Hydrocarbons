@@ -1,0 +1,16 @@
+design_id,constraint,model,lo,hi,prediction,applied_margin,status,slack,reason,spec_verification
+astm_jet_a__custom,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,784.0197382978536,4.5866,pass,0.06820212765928597,,
+astm_jet_a__custom,flash_point_C,le_chatelier_ideal,38.0,,40.91879555838648,2.206932808388615,pass,0.018733230263101655,lab_margin_set_by_one_system,
+astm_jet_a__custom,freezing_point_C,ideal_sle_mole_fraction,,-40.0,-57.72478018605429,16.975450975521966,pass,0.018733230263308087,,
+astm_jet_a__custom,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,2.90137770017521,0.28747778594508044,pass,0.516535825267056,,
+astm_jet_a__custom,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.79580176940246,0.1940195141400025,pass,0.018733230263141575,,
+astm_jet_a__custom,aromatics_wt_pct,class_mass_fraction,,25.0,9.336817387569154,0.0,by_construction,0.6265273044972338,,
+astm_jet_a__custom,aromatics_vol_pct,class_volume_fraction,8.0,25.0,8.318464914473655,0.0,by_construction,0.018733230263156157,,verified
+astm_jet_a__custom,smoke_point_mm,ajftd_bulk_regression,18.0,,24.87188689286313,4.107069860688682,pass,0.1536009462319138,limit used: alt_min 18 with naphthalenes_vol_pct_max: by_construction (pred 0),verified
+bis_jet_a1__custom,density_15C_kg_m3,ideal_volume_rho15,775.0,840.0,792.7663583740025,4.5866,pass,0.20276551344619256,,
+bis_jet_a1__custom,flash_point_C,le_chatelier_ideal,38.0,,40.79763391536636,2.206932808388615,pass,0.0155447659730986,lab_margin_set_by_one_system,
+bis_jet_a1__custom,freezing_point_C,ideal_sle_mole_fraction,,-47.0,-64.7060550341246,16.975450975521966,pass,0.015544767204311425,,
+bis_jet_a1__custom,kin_visc_m20C_cSt,refutas+ml_pair_gn,,8.0,2.912094469906535,0.28747778594508044,pass,0.5147500618231426,,
+bis_jet_a1__custom,nhoc_MJ_kg,gcv_group_additivity_constH,42.8,,43.659335497787474,0.1940195141400025,pass,0.015544765973071828,,
+bis_jet_a1__custom,aromatics_vol_pct,class_volume_fraction,8.0,25.0,8.26426102154206,0.0,by_construction,0.015544765973062353,,verified
+bis_jet_a1__custom,smoke_point_mm,ajftd_bulk_regression,19.0,,24.889432646216633,4.107069860688682,pass,0.09380856765936585,limit used: alt_min 19 with naphthalenes_vol_pct_max: by_construction (pred 0),verified
