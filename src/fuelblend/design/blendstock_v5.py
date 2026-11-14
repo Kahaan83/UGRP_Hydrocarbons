@@ -56,7 +56,13 @@ BLENDSTOCKS = {
     "hefa_came": ("fuellib", "FUELLIB_hefa-came", "HEFA-SPK (FuelLib HEFA-CAME)"),
     "atj_posf11498": ("fuellib", "FUELLIB_posf11498", "ATJ-SPK (FuelLib C-1 POSF11498 ATJ)"),
 }
-BLOCKED_BLENDSTOCKS = {"SAK": "no named SAK composition in data/real_fuels or data/raw (AJFTD fuels 47/139 are ~97 % aromatic but unlabelled)"}
+# opt-in blendstocks (never part of ``BLENDSTOCKS`` iteration, so default pools and reports are unchanged): name -> (source, key, label).
+# SAK: Virent SAK, class x carbon-number bins from Feldhausen et al. 2022 (Fuel 326:125002, CC BY), data/real_fuels/v5/sak_feldhausen2022_bins.csv.
+# 4.8 % of the sample (cycloalkane / iso-alkane groups, split not published in the main text) is unmapped and renormalised away.
+OPTIONAL_BLENDSTOCKS = {
+    "sak_virent_feldhausen2022": ("sak_feldhausen2022", "virent_sak", "SAK (Virent synthetic aromatic kerosene, Feldhausen 2022 GCxGC-VUV)"),
+}
+BLOCKED_BLENDSTOCKS = {"SAK": "was blocked in WS7; now available as opt-in 'sak_virent_feldhausen2022' (OPTIONAL_BLENDSTOCKS), not in any default pool"}
 
 
 # ------------------------------------------------------------------------------------------------ registry / reps
@@ -116,10 +122,15 @@ def _table_ik() -> dict:
 
 def load_blendstock(name: str) -> Blendstock:
     from fuelblend.eval.composition_route import kind_bins, map_bins
-    if name not in BLENDSTOCKS:
-        raise KeyError(f"{name}: not a declared blendstock ({sorted(BLENDSTOCKS)}); blocked: {BLOCKED_BLENDSTOCKS}")
-    src, fid, label = BLENDSTOCKS[name]
+    if name not in BLENDSTOCKS and name not in OPTIONAL_BLENDSTOCKS:
+        raise KeyError(f"{name}: not a declared blendstock ({sorted(BLENDSTOCKS)} + optional {sorted(OPTIONAL_BLENDSTOCKS)}); blocked: {BLOCKED_BLENDSTOCKS}")
+    src, fid, label = BLENDSTOCKS[name] if name in BLENDSTOCKS else OPTIONAL_BLENDSTOCKS[name]
     reg, _prov, reps = _reg_prov_reps()
+    if src == "sak_feldhausen2022":
+        bins = pd.read_csv(V5 / "sak_feldhausen2022_bins.csv")[["hc_class", "n_carbon", "mass_pct"]]
+        m = map_bins(bins, reps)
+        return Blendstock(name=name, label=label, source=src, fuel_id=fid, smiles=[reg.smiles[i] for i in m.idx], w=np.asarray(m.w, float),
+                          unmapped_fraction=float(m.unmapped_fraction), represented=True, synthetic=True)
     if src == "ajftd":
         df = pd.read_csv(V5 / "ajftd_gcxgc_composition.csv")
         sub = df[df.fuel_id == fid]
