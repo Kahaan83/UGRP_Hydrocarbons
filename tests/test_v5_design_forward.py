@@ -12,6 +12,7 @@ from rdkit.Chem import inchi
 from fuelblend.design import engine_v4 as E
 from fuelblend.design import library_route as LR
 from fuelblend.design import models_v4 as M
+from fuelblend.eval.composition_route import build_tmap_verified
 
 ROOT = Path(__file__).resolve().parents[1]
 MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
@@ -64,10 +65,11 @@ def test_smiles_pool_equals_name_pool():
 def _first_absent_nalkane():
     L = LR.RouteLibrary(V5POOL)
     tab = set(L._table_ik)
+    ver = set(build_tmap_verified())        # verified Tm/dHfus constants (e.g. n-nonane since 25fafd9) also lift the freezing uncertification
     for n in range(5, 19):
         s = "C" * n
         ik = inchi.MolToInchiKey(Chem.MolFromSmiles(s))
-        if ik in tab:
+        if ik in tab or ik in ver:
             continue
         try:
             LR.RouteLibrary(V5POOL + [s])
@@ -80,7 +82,9 @@ def _first_absent_nalkane():
 
 def test_nontable_compound_uncertifies():
     s, models = _first_absent_nalkane()
-    assert s == "C" * 9                                           # n-nonane: first n-alkane absent from the table
+    # first n-alkane absent from the table and from the verified Tm/dHfus map (n-nonane was it until 25fafd9 verified its constants)
+    assert set(s) == {"C"} and 5 <= len(s) <= 18
+    assert inchi.MolToInchiKey(Chem.MolFromSmiles(s)) not in set(build_tmap_verified())
     res = E.design("astm:jet_a", models["pool"], models, n_starts=8, seed=42, margins_path=MARGINS)
     cons = {c.key: c for c in res.constraints}
     assert len(models["pool"]) == 7

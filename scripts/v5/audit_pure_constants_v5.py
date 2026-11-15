@@ -39,7 +39,11 @@ T_LO, T_HI = 278.0, 313.0
 MAX_EXTRAP_K = 5.0
 MIN_TEMPS, MIN_REFS = 3, 2
 P_MAX_KPA = 150.0
-THRESH = {"rho15": ("rel", 0.01), "dHfus": ("rel", 0.10), "Tm": ("abs", 2.0)}   # identical to v4 THRESH
+# User decision 2026-11-15 (docs/decisions_2026-11-15.md #7): cis-decalin MW is verified against its molecular formula.
+# Probable cause of the gap: the chemicals lookup that gave decalin_trans its ref_value missed the cis stereo SMILES.
+FORMULA_MW_VERIFIED = {"decalin_cis": "C10H18"}
+THRESH = {"rho15": ("rel", 0.01), "dHfus": ("rel", 0.10), "Tm": ("abs", 2.0),
+          "MW": ("rel", 0.01)}   # entries identical to v4 THRESH (MW added for the formula-verified loop)
 
 
 def inchikey(smiles: str):
@@ -107,6 +111,21 @@ def build() -> tuple:
         pp.at[i, "delta"], pp.at[i, "status"] = d, st
         pp.at[i, "note"] = "v5 primary listing (configs/pure_constant_listings_v5.csv); " + str(r.note)
         log(i, "primary listing added")
+
+    from rdkit import Chem
+    from rdkit.Chem import Descriptors
+    for comp, formula in FORMULA_MW_VERIFIED.items():
+        hit = pp.index[(pp.compound == comp) & (pp.prop == "MW")]
+        if len(hit) != 1:
+            raise SystemExit(f"FORMULA_MW_VERIFIED {comp}.MW: expected exactly one row")
+        i = hit[0]
+        old = dict(old_status=pp.at[i, "status"], old_ref_value=pp.at[i, "ref_value"], old_ref_source=pp.at[i, "ref_source"])
+        ref = float(Descriptors.MolWt(Chem.MolFromSmiles(pp.at[i, "smiles"])))
+        d, st = _status("MW", float(pp.at[i, "listed_value"]), ref)
+        pp.at[i, "ref_value"] = ref
+        pp.at[i, "ref_source"] = f"formula {formula} (RDKit MolWt); user decision 2026-11-15, docs/decisions_2026-11-15.md #7"
+        pp.at[i, "delta"], pp.at[i, "status"] = d, st
+        log(i, "MW reference -> formula (user decision)")
     return pp, pd.DataFrame(changes)
 
 
