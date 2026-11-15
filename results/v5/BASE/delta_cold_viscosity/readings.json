@@ -1,10 +1,10 @@
 {
   "reading_margin_below_raw": true,
-  "margin_minus20": 0.17211457979492617,
+  "margin_minus20": 0.18663936624713884,
   "raw": 0.4153576080066075,
   "reading_coverage_other_source_ge_0p90": false,
   "coverage_minus20": [
-    0.75,
+    0.8571428571428571,
     1.0
   ],
   "ml_extrapolation_mass_fraction_of_mapped_mass": {

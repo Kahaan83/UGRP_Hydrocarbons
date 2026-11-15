@@ -11,8 +11,8 @@
   "diesel_below_10pct_v4": 4,
   "n_diesel": 9,
   "reading_diesel_pass": false,
-  "visc40_abs_bias_change_ln": 0.009465296695618547,
-  "density15_abs_bias_change": -0.25220944367578957,
+  "visc40_abs_bias_change_ln": 0.009604403050858842,
+  "density15_abs_bias_change": -0.2529930859252998,
   "reading_t2_pass": true,
   "reading_pass": false
 }

@@ -28,4 +28,14 @@ def test_delta_readings_pass():
     c = pd.read_csv(base / "cells_t2_flash.csv")
     cell = c[(c.set == "pooled") & (c.variant == "lfl_overlay") & (c.model == "ideal_le_chatelier")]
     assert len(cell) == 1
-    assert abs(float(d.loc["R-API-1", "after_bias"]) - float(cell.bias.iloc[0])) < 1e-6
+    # delta_api_route was measured against the pre-adoption BASE.  After U4 (2026-11-15) the BASE cell moved -0.69151175 -> 0.096130515
+    # (decision 3, D3_overlay); the committed after_bias is checked against the pre-adoption value recorded in drift.csv, and the adopted
+    # cell against drift.csv `new` and against the adopted api_as_shipped pooled cell (the API still equals the lfl_overlay route).
+    dr = pd.read_csv(base / "delta_adopt_rescore" / "drift.csv")
+    key = ("property=flash_point_C;tier=T2_measured;set=pooled;model=ideal_le_chatelier;variant=lfl_overlay;label=descriptive|bias")
+    row = dr[(dr.path == "results/v5/BASE/cells_t2_flash.csv") & (dr.cell == key)]
+    assert len(row) == 1
+    assert abs(float(d.loc["R-API-1", "after_bias"]) - float(row.old.iloc[0])) < 1e-6
+    assert abs(float(cell.bias.iloc[0]) - float(row.new.iloc[0])) < 1e-6
+    api = c[(c.set == "pooled") & (c.model == "api_as_shipped")]
+    assert len(api) == 1 and abs(float(api.bias.iloc[0]) - float(cell.bias.iloc[0])) < 1e-6
