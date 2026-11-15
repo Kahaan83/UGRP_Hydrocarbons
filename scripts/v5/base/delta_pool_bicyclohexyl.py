@@ -182,6 +182,49 @@ def cmd_checks():
     print(out.drop(columns=["weights"]).to_string())
 
 
+def cmd_flash5(a):
+    """R-BC-5: mixture flash of the P0y-b optima with bicyclohexyl's Antoine A shifted so its pure Le Chatelier flash = 74.0 C.
+    One process per variant (``--variant overlay|shift74``) because registry lookups are cached."""
+    _env()
+    from fuelblend.baselines import flash_unifac as fu
+    add = pd.read_csv(ADD)
+    ik = NEW["bicyclohexyl"][0]
+    i = add.index[add.inchikey == ik][0]
+    A, Bc, Cc, lfl = (float(add.loc[i, k]) for k in ("antoine_A", "antoine_B", "antoine_C", "lfl_vol_pct"))
+    if a.variant == "shift74":
+        A = math.log10(lfl / 100.0 * P_ATM) + Bc / (74.0 + 273.15 + Cc)
+        add.loc[i, "antoine_A"] = A
+        tmp = OUT / "r_bc_5_additions_shift74.csv"
+        add.to_csv(tmp, index=False)
+        fu.REGISTRY_ADDITIONS_CSV = tmp
+    fu._default_registry.cache_clear()
+    from fuelblend.design import blendstock_v5 as B
+    tb = Bc / (A - math.log10(P_ATM)) - Cc - 273.15
+    pure_lc = Bc / (A - math.log10(lfl / 100.0 * P_ATM)) - Cc - 273.15
+    bp1 = B.BlendPool([B.pure_component("bicyclohexyl")])
+    m1 = B.build_models(bp1)
+    pure_model = float(m1["props"]["flash"].fn(list(m1["pool"]), np.array([1.0]), None))
+    bp = B.BlendPool([B.pure_component(n) for n in pool_members("P0yb")])
+    models = B.build_models(bp)
+    rows = []
+    for f in sorted((OUT / "designs" / "P0yb").glob("*__designs.csv")):
+        d = pd.read_csv(f).iloc[0]
+        wd = json.loads(d.weights)
+        u = np.array([wd.get(n, 0.0) for n in bp.names], float)
+        fl = float(models["props"]["flash"].fn(list(models["pool"]), bp.expand(u), None))
+        rows.append(dict(variant=a.variant, design_id=d.design_id, antoine_A=A, tb_antoine_C=tb, pure_lc_flash_C=pure_lc,
+                         pure_model_flash_C=pure_model, mixture_flash_C=fl, margin_C=2.206932808388615, limit_C=38.0,
+                         bound_C=fl - 2.206932808388615, flash_data_dependent=bool(fl - 2.206932808388615 < 38.0)))
+    out = pd.DataFrame(rows)
+    fn = OUT / "r_bc_5.csv"
+    old = pd.read_csv(fn) if fn.exists() else pd.DataFrame()
+    if len(old):
+        old = old[old.variant != a.variant]
+    pd.concat([old, out], ignore_index=True).to_csv(fn, index=False, float_format="%.5f")
+    pd.set_option("display.width", 250)
+    print(out.to_string())
+
+
 def cmd_table():
     rows = []
     for f in sorted((OUT / "designs").glob("*/*__designs.csv")):
@@ -202,12 +245,13 @@ def cmd_table():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["data", "design", "checks", "table"])
+    ap.add_argument("cmd", choices=["data", "design", "checks", "table", "flash5"])
+    ap.add_argument("--variant", default="overlay", choices=["overlay", "shift74"])
     ap.add_argument("--spec", default="astm:jet_a")
     ap.add_argument("--n-starts", type=int, default=10)
     ap.add_argument("--pool", default="P0y", choices=["P0y", "P0yb"])
     a = ap.parse_args()
-    {"data": cmd_data, "design": lambda: cmd_design(a), "checks": cmd_checks, "table": cmd_table}[a.cmd]()
+    {"data": cmd_data, "design": lambda: cmd_design(a), "checks": cmd_checks, "table": cmd_table, "flash5": lambda: cmd_flash5(a)}[a.cmd]()
 
 
 if __name__ == "__main__":

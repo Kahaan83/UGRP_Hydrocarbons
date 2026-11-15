@@ -103,3 +103,28 @@ They are therefore reported as **certified by the judge, conditional**, not as c
   91.85-92.2 C (x4), so the overlay is on the unsafe side of the lower cluster. For each P0y-b optimum the mixture flash is recomputed with the
   same flash model and bicyclohexyl's Antoine A shifted (B, C unchanged) so that its pure Le Chatelier flash equals 74.0 C. If prediction
   minus the 2.21 C margin falls below 38 C, the design is flagged `flash_data_dependent`. Reported; it does not change the judge's result.
+
+## Results R-BC-5 (appended 2026-11-15 after the run; nothing above was edited)
+
+`python scripts/v5/base/delta_pool_bicyclohexyl.py flash5 --variant overlay|shift74` -> `r_bc_5.csv` (shifted overlay in `r_bc_5_additions_shift74.csv`, never read by default).
+
+| variant | bicyclohexyl A | Tb from Antoine (C) | pure flash, Le Chatelier / model (C) | mixture flash Jet A / Jet A-1 (C) | bound = pred - 2.21 (limit 38) | flag |
+|---|---|---|---|---|---|---|
+| overlay (as certified) | 7.3398 | 232.5 | 85.5 / 84.6 | 40.65 / 40.43 (reproduces the judge) | 38.44 / 38.22 | - |
+| shift to 74.0 C | 7.5889 | 210.0 | 74.0 / 73.3 | 40.45 / 40.02 | 38.25 / **37.82** | Jet A-1 **flash_data_dependent** |
+
+Reading. As expected the mixture flash is set mostly by the light members (n-decane, TMB, butylcyclohexane, isooctane), so the shift moves
+it by 0.2 C (Jet A, 17 % bicyclohexyl) and 0.4 C (Jet A-1, 36 %). Jet A keeps a 0.25 C flash slack; Jet A-1 loses its slack.
+Data-consistency finding: with the registry (Jones) LFL, a pure flash of 74 C needs an Antoine whose Tb is 210 C, against the literature
+239 C (the overlay's 232.5 C already reads 6.5 C low). The 74 C measured cluster, the literature Tb and the Jones LFL cannot all hold; the
+92 C cluster is the one consistent with Tb. Not a gate; recorded.
+
+## Summary of the conditions (for the user decision)
+| design | judge | overlay needed | Rayleigh D86 slopes | bicyclohexyl dH with transition | flash at the 74 C cluster | UNIFAC-SvL + 13.84 (R-FU-3, counterfactual) |
+|---|---|---|---|---|---|---|
+| P0y-b Jet A | certified | yes | miss (9.5 / 35.4 vs 16.2 / 45.3) | passes (bicyclohexyl not first to freeze) | passes (38.25) | -43.1 vs -40, passes |
+| P0y-b Jet A-1 | certified | yes | miss (14.6 / 44.0) | **fails** (-23.7 vs -47) | **fails** (37.82) | -49.7 vs -47, passes |
+
+The Jet A design is the stronger one: its only open conditions are the overlay and the D86 model. Thermodynamically the fusion-only dHfus
+is the less defensible choice for a liquidus far below bicyclohexyl's solid-solid transition (about 3 K below its melt), and the Jet A-1
+liquidus (-64 C) is about 64 K below it (Tm 276.8 K, transition about 273.5 K), so the Jet A-1 design should be read as failing freezing unless the user decides otherwise.
