@@ -3,6 +3,14 @@
 Recorded 2026-11-15 from the user's answers. **Not applied yet**: the user asked that no re-runs start until another session has added new
 data. Apply after that data lands, as declared deltas, then re-score.
 
+## Applying (2026-11-15)
+
+- Gate: user gave the go in chat on 2026-11-15; other session's data landed as commits 25fafd9 and 1f9b89d (primary-paper calorimetry).
+- New verified Tm/dHfus rows (n-nonane, 2,3-dimethylbutane, m-xylene, p-xylene) and 3 xylene eutectics (Pitzer & Scott 1943) in thermoml_sle_hc.csv -> Tasks 3 and 5.
+- New vapour-pressure rows (Pitzer & Scott 1943) -> read for Task 7 only, not merged.
+- New real fuels / GCxGC data: none -> Task 9 not touched by data.
+- Application plan: docs/superpowers/plans/2026-11-15-apply-decisions-and-audit-fixes.md.
+
 | # | decision | user's choice | what applying it needs (later) |
 |---|---|---|---|
 | 1 | freezing model | **Adopt UNIFAC-SvL** (`svl_unifac`, margin 13.84 C); ideal SvL kept as a reported variant | `configs/uncertainty_v5.yaml` key + `predict_fuel` + judge freezing route; re-derive the margin if the new data adds SLE systems; re-run design judgements |

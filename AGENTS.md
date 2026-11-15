@@ -120,7 +120,9 @@ Other root items: `fuels.csv` (read by v2/v3 scripts), `Makefile`, `pytest.ini`,
 (written by `reproduce_all.py`), `archive/` (baseline manifests), `jobs/v4_gpu/`, `runs/` (gitignored). The v1 module names
 (`build_unified.py`, `fetch.py`, ...) live on only inside `extras/` and in git history; `common.py` helpers now sit under `src/fuelblend/`.
 
-## 5. Pipeline — commands in order
+## 5. Pipeline (HISTORIC v1 commands; current entry points below)
+
+Current: `python scripts/v4/reproduce_all.py` (v4), `python scripts/v5/base/reproduce_base.py [--full]` (v5 BASE), `.venv/Scripts/python.exe -m pytest -q` (tests). The v1 scripts below survive only in `extras/` and git history.
 
 ```powershell
 pip install -r requirements.txt      # + beautifulsoup4 playwright
@@ -358,7 +360,9 @@ Viscosity: 17,020 of 18,322 HC records have all components with a measured pure 
 
 ---
 
-## 11. Tests (`python tests/<name>.py`, plain asserts, no pytest needed)
+## 11. Tests (HISTORIC v1 list; the suite now runs with pytest)
+
+Current: `.venv/Scripts/python.exe -m pytest -q` (741 passed, 11 skipped on 2026-11-15, `docs/audit_2026-11-15.md` §1).
 
 | suite | covers |
 |---|---|
@@ -384,6 +388,8 @@ v5: work continues on branch `v5` (current). Update 2026-11-12: the v5 full-base
 v5 delta_api_route (2026-11-13): `predict()` and a new `predict_fuel` now run on the BASE scoring route (frozen pure-property grid, Refutas viscosity, ideal-volume density, anchored-Antoine Le Chatelier flash with the LFL overlay), and inverse design runs on user pools of names / SMILES / InChIKeys through `scripts/v5/run_design_userpool_v5.py`. No design is certified. Readings, design tables, usage examples and the list of changed tests are in `results/v5/BASE/delta_api_route/README.md`.
 
 v5 ML (2026-11-13): `predict_fuel` exposes viscosity variant `ml_pair_residual` (passed R-MLV-1..4, margins 0.287/0.608/0.134 ln by T bin, known compositions only); update: by user decision it is the designated viscosity in domain, Refutas kept as variant `refutas_raw` and used elsewhere; design certification now also on the ML value and its margin in domain (3ee904c, delta_design_ml_visc); freezing margin 16.98 C for known compositions with verified constants (5d57504, delta_freeze_margin; measured on binaries); density variant `ml_pair_excess_volume` (passed dev and locked, failed ternaries; margin for known binaries only); DCN ML not feasible (31 systems); ML-YSI failed its gates and is not exposed (`docs/model_decision.md`, "v5 ML components").
+
+v5 overnight 2026-11-15: `docs/overnight_2026-11-15.md` (D86 Rayleigh opt-in, UNIFAC-SvL freezing, P0y-b conditional, strict_constraints guard); user decisions in `docs/decisions_2026-11-15.md`; their application plan `docs/superpowers/plans/2026-11-15-apply-decisions-and-audit-fixes.md`.
 
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 
