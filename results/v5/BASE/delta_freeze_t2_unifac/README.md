@@ -87,3 +87,44 @@ fails, nothing is read.
 
 `rows.csv` (per fuel: entity, source, group, role, measured, C, I_s5_check, the four columns, fallbacks, missing constants),
 `summary.csv` (per set x column: make_row fields, coverage of the margin, intersection MAE/bias), `readings.json`.
+
+## Results (run 2026-11-15, `python scripts/v5/base/delta_freeze_t2_unifac.py`, a few seconds)
+
+Sanity check PASSED: `I_s5` reproduces S5 `I` on all 58 rows (max |diff| 7e-15 C, NaN pattern identical); the `I_s5` cells
+reproduce the rerun scoreboard ideal-SvL cells for pooled, pooled_locked, AV-33-22, AJFTD, FuelLib, AJFTD_locked (max |diff|
+5e-8 on n, bias, MAE, trivial MAE, CI; verdicts identical). No UNIFAC fallback on any row; no mapped InChIKey lacks a
+designated constant; no fuel has all-verified constants (so the API would withhold the margin for all 58).
+
+Main cells (C; pred - measured; trivial = S5 `C`, logo_constant; CI = 95 % paired group bootstrap of MAE(trivial) - MAE(model)):
+
+| set | column | n | bias | MAE | trivial MAE | CI | verdict | coverage (margin) |
+|---|---|---|---|---|---|---|---|---|
+| pooled | **unifac_desig (designated route)** | 50 | +5.878 | 8.425 | 6.413 | [-4.33, +0.44] | no_skill_shown | 0.98 (13.84) |
+| pooled | ideal_desig | 50 | +6.263 | 8.825 | 6.413 | [-4.75, +0.04] | no_skill_shown | 0.98 (16.98) |
+| pooled | unifac_s5 | 49 | +7.586 | 7.586 | 5.936 | [-3.51, +0.50] | no_skill_shown | 1.00 (13.84) |
+| pooled | I_s5 (= scoreboard) | 49 | +7.986 | 7.986 | 5.936 | [-3.92, +0.12] | no_skill_shown | 1.00 (16.98) |
+| AV-33-22 | unifac_desig | 34 | +6.907 | 6.907 | 5.858 | [-2.90, +0.99] | no_skill_shown | 1.00 |
+| AJFTD | unifac_desig | 13 | +2.824 | 12.620 | 9.126 | [-10.69, +4.05] | no_skill_shown | 0.92 |
+| FuelLib | unifac_desig | 3 | +7.447 | 7.447 | 0.951 | [-7.74, -4.70] | n_too_small | 1.00 |
+| pooled_locked | **unifac_desig** | 8 | +4.286 | 9.310 | 5.176 | [-7.71, -0.04] | worse_than_trivial | 0.875 |
+| pooled_locked | I_s5 (= scoreboard) | 8 | +4.639 | 9.555 | 5.176 | [-7.88, -0.31] | worse_than_trivial | 0.875 |
+
+Like-for-like (the 49 pooled rows finite for all four columns; descriptive, no verdict): MAE unifac_desig 7.297, ideal_desig
+7.698, unifac_s5 7.586, I_s5 7.986, constant 5.936. Every one of these 49 errors is positive for all four columns (the
+models over-predict the freezing point of every headline fuel but AJFTD:325).
+
+Reading (honest, no spin):
+* **The designated UNIFAC-SvL route does not beat the constant on real fuels.** Pooled: `no_skill_shown`, MAE 8.42 C vs 6.41 C
+  for the constant, the CI almost entirely on the worse side. Locked AJFTD fuels: `worse_than_trivial` (9.31 vs 5.18 C), as for
+  ideal SvL. The real-fuel verdicts of the scoreboard are unchanged by the model switch.
+* UNIFAC vs ideal: UNIFAC lowers the predictions by about 0.4 C on average (MAE 7.30 vs 7.70 on the same 49 fuels, designated
+  constants; 7.59 vs 7.99 on S5's constants). The declared expectation (UNIFAC no better, likely a larger positive bias) is
+  refuted on its second half: the bias is slightly smaller. The difference is small next to the +7 C bias common to both and
+  carries no verdict (UNIFAC vs ideal was not a declared comparison with a rule).
+* The pooled n rises from 49 to 50 with the designated constants because AJFTD:325 (measured -81 C, S5 constants gave no
+  value) now gets a value, -144.7 C (error -63.7 C). That single fuel pulls the pooled bias from +7.3 to +5.9 C and the AJFTD
+  MAE from 8.4 to 12.6 C; the constant's pooled MAE moves from 5.94 to 6.41 C on the 50 rows.
+* Margin coverage 0.98 pooled (49 of 50; the uncovered fuel is AJFTD:325, under-predicted by 63.7 C) and 0.875 locked
+  (AJFTD:97, -61 C measured, under-predicted by 19.7 C). As declared, with a +6 C bias this coverage is near-trivial and does not
+  validate the 13.84 C margin on real fuels; the API withholds the margin for all these fuels anyway.
+* Nothing adopted or changed. Designated model, margins, gates, verdict rules, frozen BASE files and the scoreboard are untouched.
