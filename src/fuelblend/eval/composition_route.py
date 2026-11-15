@@ -147,15 +147,16 @@ def ideal_sle_C(x, iks, tmap) -> float:
     return best
 
 
-def build_tmap(reg, idx) -> dict:
-    """{inchikey: {tm_K, dh_fus_J_mol, ...}} for the registry compounds at ``idx`` (same call S3 made)."""
+def build_tmap(reg, idx, aromatic_match: str = "exact") -> dict:
+    """{inchikey: {tm_K, dh_fus_J_mol, ...}} for the registry compounds at ``idx`` (same call S3 made, but with exact aromatic matching:
+    decision 5, the legacy substring match mis-assigned benzene / p-xylene / naphthalene constants to 112 other aromatics)."""
     idx = sorted(set(int(i) for i in idx))
     info = pd.DataFrame(index=[reg.ik[i] for i in idx])
     info["smiles"] = [reg.smiles[i] for i in idx]
     mols = [Chem.MolFromSmiles(s) for s in info.smiles]
     info["cls"] = [hc_class(m) for m in mols]
     info["n_carbon"] = [float(sum(a.GetSymbol() == "C" for a in m.GetAtoms())) for m in mols]
-    return get_pure_thermal_properties(info)
+    return get_pure_thermal_properties(info, aromatic_match=aromatic_match)
 
 
 VERIFIED_SLE_CSV = Path(__file__).resolve().parents[3] / "data" / "raw" / "sle_constants" / "tm_dhfus_verified.csv"
