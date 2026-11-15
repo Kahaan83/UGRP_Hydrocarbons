@@ -1,10 +1,10 @@
-commit,date,subject
-a5afab1,2026-11-15,v5 delta_adopt_rescore: results (BASE re-score under the adopted defaults; frozen BASE and manifest unchanged)
-28dfe8d,2026-11-15,"v5 delta_adopt_designs: results (16 designs; P0y Jet A, P0y-b Jet A and Jet A-1 judge-certified under the model; P0y-b Jet A-1 freezing expectation refuted)"
-adb5972,2026-11-15,v5 delta_adopt_rescore: declaration (before re-run)
-fc618b5,2026-11-15,v5 delta_adopt_designs: runner script
-457f236,2026-11-15,v5 delta_adopt_designs: declaration (before run)
-1b196e3,2026-11-15,"v5 docs: CLM-73 (designated freezing route UNIFAC-SvL, adopted, margin 13.8427 C), CLM-70 superseded note; decisions 2026-11-15 'applied in' column and applied status"
-9fbff24,2026-11-15,"v5 delta_freeze_adopt: ideal and UNIFAC SvL margins re-derived (A old / B new constants / C new scope incl. eutectics); rule prefers UNIFAC on C (13.84 vs 16.98, MAE 3.93 vs 4.47, 0 fallbacks); add_freezing_unifac writes freezing_point_C.lab_liquidus.svl_unifac"
-5986a6b,2026-11-15,v5 decision 3: flash-registry additions overlay on by default (FUELBLEND_FLASH_REGISTRY_ADDITIONS=0 restores the v2 registry); overlay-off equals base frame test; strict-constraints guard test re-pointed at a pool that still drops a constraint (decalin_cis MW now verified)
-5a62e20,2026-11-12,"v5 BASE: full-baseline scoreboard, data-gap list, drift-checked manifest"
+commit,subject
+a5afab1,v5 delta_adopt_rescore: results (BASE re-score under the adopted defaults; frozen BASE and manifest unchanged)
+28dfe8d,"v5 delta_adopt_designs: results (16 designs; P0y Jet A, P0y-b Jet A and Jet A-1 judge-certified under the model; P0y-b Jet A-1 freezing expectation refuted)"
+adb5972,v5 delta_adopt_rescore: declaration (before re-run)
+fc618b5,v5 delta_adopt_designs: runner script
+457f236,v5 delta_adopt_designs: declaration (before run)
+1b196e3,"v5 docs: CLM-73 (designated freezing route UNIFAC-SvL, adopted, margin 13.8427 C), CLM-70 superseded note; decisions 'applied in' column and applied status"
+9fbff24,"v5 delta_freeze_adopt: ideal and UNIFAC SvL margins re-derived (A old / B new constants / C new scope incl. eutectics); rule prefers UNIFAC on C (13.84 vs 16.98, MAE 3.93 vs 4.47, 0 fallbacks); add_freezing_unifac writes freezing_point_C.lab_liquidus.svl_unifac"
+5986a6b,v5 decision 3: flash-registry additions overlay on by default (FUELBLEND_FLASH_REGISTRY_ADDITIONS=0 restores the v2 registry); overlay-off equals base frame test; strict-constraints guard test re-pointed at a pool that still drops a constraint (decalin_cis MW now verified)
+5a62e20,"v5 BASE: full-baseline scoreboard, data-gap list, drift-checked manifest"
