@@ -25,6 +25,16 @@ def _ik(s):
     return inchi.MolToInchiKey(Chem.MolFromSmiles(s))
 
 
+@pytest.fixture(autouse=True)
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; this file pins the legacy ideal SvL route and its margin."""
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
 def test_verified_map_content():
     t = build_tmap_verified()
     assert len(t) == 49                                           # 51 csv rows (39 + 7 upgraded 2026-11-14 + hexylbenzene 2026-11-15 + n-nonane, 2,3-dimethylbutane, m-/p-xylene from primary papers 2026-11-15); stereo-unspecified decalin and 1-hexyne have no constants

@@ -296,7 +296,20 @@ def test_margin_fn_matches_rejudge_smoke_in_domain():
             assert o.status == n.status, (spec, alt, o.status, n.status)     # review fix A: independent flags-off path vs margin_fn path, both ways
 
 
-def test_margin_fn_absent_unchanged():
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route
+    (the frozen JSON baseline was generated under it).  Design models fix the freezing margin key when built, so they are built inside the test."""
+    from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    monkeypatch.setitem(globals(), "_MODELS", {})       # fresh model cache: models built under the legacy model, restored after
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_margin_fn_absent_unchanged(legacy_freezing):
     """R-SC-4: with recipe_margins off (default) the results equal the frozen pre-change results."""
     frozen = json.loads(BASELINE.read_text())
     assert dataclasses.fields(E.PropertyModel)                      # imports fine

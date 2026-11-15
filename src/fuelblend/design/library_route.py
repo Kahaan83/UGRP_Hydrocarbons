@@ -8,7 +8,7 @@ design to the name-based pool).  A compound that is not in the table gets route 
     rho15               pure-property grid at 288.15 K        route_grid
     Tm, dHfus           ``build_tmap`` (Coutinho table)       coutinho_table
     flash               anchored Antoine / LFL registry       route_anchored
-    freezing            the API function: ideal SvL in mole fraction on the Coutinho tmap for every member
+    freezing            the API function (designated model, decision 1: UNIFAC SvL) on the Coutinho tmap for every member
                         (so every member's Tm/dHfus is recorded as coutinho_table and freezing is uncertified)
     RON, MON, DCN, Psat37_8   none                            absent  (ModelUnavailable)
 
@@ -205,14 +205,31 @@ def _flag(L: RouteLibrary, pm: E.PropertyModel) -> E.PropertyModel:
                                margin_missing_reason=why, by_construction=False, T_valid_C=None)
 
 
-FREEZING_MARGIN_KEY = "freezing_point_C.lab_liquidus.svl_verified"
+def freezing_margin_key() -> str:
+    """yaml key of the designated freezing model's margin; the same function as ``predict_route.freezing_margin_key``."""
+    from fuelblend.api import predict_route as pr
+    return pr.freezing_margin_key()
+
+
+def _pool_gamma(L: RouteLibrary, pool) -> tuple:
+    """(gamma_fn, fallback) of ``make_unifac_gamma_fn_vec`` for one pool order, cached on the library (one build per pool, not per
+    optimiser evaluation; a zero-weight member keeps gamma = 1 and adds nothing, so one cache entry serves every weight vector)."""
+    cache = L.__dict__.setdefault("_gamma", {})
+    key = tuple(pool)
+    g = cache.get(key)
+    if g is None:
+        g = cache[key] = fu.make_unifac_gamma_fn_vec([L.smiles[n] for n in pool])
+    return g
 
 
 def _freezing_api_fn(L: RouteLibrary):
-    """Design freezing = the function ``predict_fuel`` uses: ideal Schroeder-van Laar in mole fraction (RDKit MW) on the designated freezing
-    constants (``predict_route._tmap_freezing``: tm_dhfus_verified.csv where present, else the Coutinho entry).  A member whose constants come from the
-    verified csv is not recorded as non-verified; a member on the Coutinho entry is recorded ``coutinho_table`` (freezing then stays uncertified)."""
-    from fuelblend.eval.composition_route import VERIFIED_SOURCE, ideal_sle_C
+    """Design freezing = the function ``predict_fuel`` uses: the designated freezing model (``composition_route.freezing_C``; decision 1:
+    UNIFAC Schroeder-van Laar, legacy ``ideal_svl``) in mole fraction (RDKit MW) on the designated freezing constants
+    (``predict_route._tmap_freezing``: tm_dhfus_verified.csv where present, else the Coutinho entry).  A member whose constants come from the
+    verified csv is not recorded as non-verified; a member on the Coutinho entry is recorded ``coutinho_table``, and under UNIFAC a member with
+    x > 1e-4 and no UNIFAC groups is recorded ``UNIFAC=fallback`` (freezing then stays uncertified)."""
+    from fuelblend.eval import composition_route as CR
+    from fuelblend.eval.composition_route import VERIFIED_SOURCE
 
     def fn(pool, w, T_C):
         pool = list(pool)
@@ -229,7 +246,11 @@ def _freezing_api_fn(L: RouteLibrary):
         mw = np.array([L._ctx.mw(L.smiles[n]) for n in pool])
         x = (w / w.sum()) / mw
         x = x / x.sum()
-        v = ideal_sle_C(x, iks, tmap)
+        model = CR.designated_freezing_model()
+        gamma = _pool_gamma(L, pool) if model == "svl_unifac" else None
+        v, info = CR.freezing_C(x, iks, [L.smiles[n] for n in pool], tmap, model=model, gamma=gamma)
+        for i in info["unifac_fallback"]:
+            L.nonverified_used.add(f"{pool[i]}.UNIFAC=fallback")
         if not np.isfinite(v):
             raise ModelUnavailable("no crystallising component with Tm and dHfus")
         return float(v)
@@ -312,7 +333,7 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
     # the yaml key is attached unconditionally: a margins file without it gives the engine's "no such entry" reason (uncertified)
     props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"},
-                                            margin_keys=(FREEZING_MARGIN_KEY,), margin_missing_reason="")
+                                            margin_keys=(freezing_margin_key(),), margin_missing_reason="")
     # viscosity: same value as predict_fuel (ML pair residual designated in its domain, cc5f5ef); the optimiser runs with the
     # Refutas yaml margin of the T bin, the final recipe is re-judged with the ML margin in ``annotate`` (``_rejudge_viscosity``)
     props["viscosity"] = dataclasses.replace(props["viscosity"], fn=_visc_designated_fn(L, props["viscosity"].fn))
@@ -767,6 +788,7 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
     tolerance (R-API-4): flash 0.01 C against the API designated (overlay) flash, viscosity 1e-6 relative, net heat exact
     (1e-9) for the composition-H model.  ``pass`` is judged on those tolerance rows; the other rows are reported."""
     from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
     names = _name_smiles()
     pool = list(result.pool) or list(result.weights)
     smi = {n: names.get(n, n) for n in pool}
@@ -800,7 +822,10 @@ def design_forward_check(result: E.DesignResult, T_C_visc: float | None = None) 
     notes = {
         "density_15C_kg_m3": "design: ideal volume mixing of the table rho15; API: pure-property grid rho at 288.15 K",
         "flash_point_C": "design and API both use the LFL-overlay registry (U1)",
-        "freezing_point_C": "design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)",
+        "freezing_point_C": ("design and API both use ideal Schroeder-van Laar in mole fraction on the designated freezing constants (verified csv, else Coutinho)"
+                             if CR.designated_freezing_model() == "ideal_svl" else
+                             "design and API both use UNIFAC Schroeder-van Laar (pure solids) in mole fraction on the designated freezing constants "
+                             "(verified csv, else Coutinho)"),
         "nhoc_MJ_kg": "design primary model uses constant H = 13.8 wt%; the API uses composition H",
         "smoke_point_mm": "design and API both use the AJFTD bulk regression on aromatics vol % (API aromatics from the grid rho at 288.15 K)",
         "aromatics_wt_pct": "class mass fraction, by construction",

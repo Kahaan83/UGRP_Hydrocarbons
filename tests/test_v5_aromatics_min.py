@@ -77,7 +77,19 @@ def test_alt_limits_flag_sets_spec_without_mutating_caller():
     assert s2["use_alt_limits"] is True and not spec.get("use_alt_limits", False)
 
 
-def test_flag_off_identical():
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route
+    (the frozen JSON baseline was generated under it).  Design models fix the freezing margin key when built, so they are built inside the test."""
+    from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_flag_off_identical(legacy_freezing):
     """R-SC-4: synthetic_blend=False and alt_limits=False give exactly the results frozen before the change."""
     import importlib.util
     s = importlib.util.spec_from_file_location("gen_base", ROOT / "tests" / "data" / "gen_smoke_alt_baseline.py")
