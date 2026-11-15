@@ -1,0 +1,56 @@
+bis_jet_a1__P0xa_standin: start 2026-11-15 16:46:08 n_starts=10 seed=42 {"git_head": "adb5972598c04ec38be7f30a90a9f759094f5f81", "code_dirty": false, "freezing_model": "svl_unifac", "registry_overlay": true}
+bis_jet_a1__P0xa_standin: built 9 compounds in 3.9 s
+{
+ "design_id": "bis_jet_a1__P0xa_standin",
+ "spec": "bis:jet_a1",
+ "pool": "P0xa",
+ "n_starts_declared": 10,
+ "seed_declared": 42,
+ "alt_standin": true,
+ "strict_constraints": true,
+ "synthetic_cap": null,
+ "d86": true,
+ "git_head": "adb5972598c04ec38be7f30a90a9f759094f5f81",
+ "code_dirty": false,
+ "freezing_model": "svl_unifac",
+ "registry_overlay": true,
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.0, \"n-undecane\": 0.1663, \"n-dodecane\": 0.0378, \"butylcyclohexane\": 0.3273, \"decalin_trans\": 0.14, \"1,2,4-trimethylbenzene\": 0.1697, \"isooctane\": 0.0516, \"tetralin\": 0.0727, \"n-tridecane\": 0.0345}",
+ "opt_best_objective": -0.16273417560172873,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 0,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": -0.13626018744324142,
+ "opt_uncertainty_U": 0.10589595263218732,
+ "opt_alt_standin": true,
+ "status": "designed",
+ "stage": "done",
+ "message": "",
+ "top_weights_full": "{\"n-decane\": 0.0, \"n-undecane\": 0.16633504959129847, \"n-dodecane\": 0.037831400339023886, \"butylcyclohexane\": 0.3272614730612459, \"decalin_trans\": 0.1400147251365608, \"1,2,4-trimethylbenzene\": 0.16969153637660428, \"isooctane\": 0.051575482786634326, \"tetralin\": 0.07274928879161055, \"n-tridecane\": 0.03454104391702177}",
+ "min_slack": -0.13626018744324142,
+ "binding": "flash_point_C,freezing_point_C,smoke_point_mm,distillation_T90_minus_T10_C",
+ "n_pass": 6,
+ "n_fail": 4,
+ "n_uncertified": 0,
+ "failing": "flash_point_C,freezing_point_C,smoke_point_mm,distillation_T90_minus_T10_C",
+ "uncertified": "",
+ "n_compounds": 9,
+ "build_s": 3.9,
+ "design_s": 1439.4,
+ "labels": ""
+}
+  density_15C_kg_m3              pass             pred 812.82 slack +0.36819 margin 4.5866  
+  flash_point_C                  fail             pred 35.029 slack -0.13626 margin 2.206932808388615  limit violated after applying the margin; lab_margin_set_by_one_system
+  freezing_point_C               fail             pred -54.439 slack -0.13626 margin 13.84274050383641  limit violated after applying the margin
+  kin_visc_m20C_cSt              pass             pred 3.1171 slack +0.48058 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.131 slack +0.00321 margin 0.1940195141400025  
+  aromatics_vol_pct              by_construction  pred 21.768 slack +0.19009 margin 0.0  
+  smoke_point_mm                 fail             pred 20.518 slack -0.13626 margin 4.107069860688682  limit violated after applying the margin; alt_min 19 not passed (status fail)
+  distillation_T10_C             pass             pred 134.1 slack +0.30718 margin 7.927706228297922  
+  distillation_FBP_C             pass             pred 223.6 slack +0.24378 margin 3.2620795453688913  
+  distillation_T50_minus_T10_C   pass             pred 46.072 slack +0.82605 margin 18.68126547110495  
+  distillation_T90_minus_T10_C   fail             pred 52.796 slack -0.13626 margin 18.246505125791458  limit violated after applying the margin
+readings: {"flash_status": "fail", "flash_model": "le_chatelier_ideal", "flash_pred_C": 35.029050507012755, "flash_margin_C": 2.206932808388615, "flash_bound_C": 32.82211769862414, "flash_limit_C": 38.0, "flash_slack": -0.13626006056252263, "freezing_status": "fail", "freezing_model": "ideal_sle_mole_fraction", "freezing_pred_C": -54.438512613695536, "freezing_margin_C": 13.84274050383641, "freezing_bound_C": -40.595772109859126, "freezing_limit_C": -47.0, "freezing_slack": -0.13626016787533773, "freezing_ideal_svl_C": -54.53611733679094, "freezing_ideal_svl_margin_C": 16.975450975521966, "freezing_ideal_svl_bound_C": -37.56066636126897, "freezing_spec_limit_C": -47.0, "freezing_route": "svl_unifac", "engler_T10_C_pred": 134.09969575311834, "engler_T10_C_slack": 0.30718340496870117, "engler_T10_C_status": "pass", "engler_FBP_C_pred": 223.60266037093808, "engler_FBP_C_slack": 0.24378420027897676, "engler_FBP_C_status": "pass", "engler_T50_minus_T10_C_pred": 46.07206573608275, "engler_T50_minus_T10_C_slack": 0.8260533509985198, "engler_T50_minus_T10_C_status": "pass", "engler_T90_minus_T10_C_pred": 52.7960976280618, "engler_T90_minus_T10_C_slack": -0.13626018744324142, "engler_T90_minus_T10_C_status": "fail", "rayleigh_T10": 174.54025474410264, "rayleigh_T50": 184.07033614617575, "rayleigh_T90": 193.4557217283484, "rayleigh_FBP": 212.49039073652744, "rayleigh_T50_T10": 9.530081402073108, "rayleigh_T90_T10": 18.915466984245768, "rayleigh_slack_T50_T10_C": -6.712588531172457, "rayleigh_slack_T90_T10_C": -26.390268112099363, "rayleigh_status": "ok", "dicycloparaffin_wt_frac": 0.1400147251365608, "labels": ""}
