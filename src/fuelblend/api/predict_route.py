@@ -438,7 +438,86 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     _add_density_ml(out, ctx, pm, T_K, composition_kind)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
+    _add_distillation(out, comps, ctx, P, pf)
     return out
+
+
+# ====================================================================================================================
+# ASTM D86 distillation (delta_d86_rayleigh): designated = WS7 Engler route, variant = Rayleigh single-stage distillation
+# ====================================================================================================================
+D86_QS = ("T10", "T50", "T90", "FBP", "T50_T10", "T90_T10")
+D86_UNSAFE = {"T10": "under", "FBP": "under", "T50_T10": "over", "T90_T10": "over", "T50": "under", "T90": "under"}
+
+
+def _d86_margin_files() -> tuple:
+    import json as _json
+    from fuelblend.design import blendstock_v5 as B5
+    e = B5.load_d86_margins()
+    rp = Path(__file__).resolve().parents[3] / "results" / "v5" / "BASE" / "delta_d86_rayleigh" / "d86_rayleigh_margins.json"
+    r = _json.load(open(rp, encoding="utf-8")) if rp.exists() else {"margins": {q: "inf" for q in D86_QS}}
+    return e, r
+
+
+def _d86_block(q: dict, margins: dict, method: str) -> dict:
+    vals, bounds, mg = {}, {}, {}
+    for k in D86_QS:
+        v = float(q[k])
+        m = margins.get(k, "inf")
+        m = math.inf if isinstance(m, str) else float(m)
+        vals[k] = v
+        mg[k] = m
+        # one-sided safe bound on the unsafe side: 'under' (true value may be higher) -> hi = v + m; 'over' -> lo = v - m
+        bounds[k] = {"hi": v + m} if D86_UNSAFE[k] == "under" else {"lo": v - m}
+    return {"method": method, "value": vals, "margin": mg, "safe_bound": bounds, "unit": "C"}
+
+
+def _add_distillation(out: dict, comps, ctx, P: dict, pf: PropMap) -> None:
+    """D86 T10/T50/T90/FBP (C) and the slopes.  Uses the flash-registry Antoine (Tb / vapour pressure) and pure-grid rho at 288.15 K.
+    Margins: WS7 R-W7-2 (Engler, measured-GCxGC real fuels) and delta_d86_rayleigh R-DR-2 (Rayleigh); neither is in
+    configs/uncertainty_v5.yaml (adoption is a user decision), so in_domain is reported but the property is labelled not adopted."""
+    from fuelblend.design import blendstock_v5 as B5
+    res = {"status": "no_value", "method": "engler_tbp_offsets", "value": None, "warnings": [], "variants": {},
+           "adopted_in_uncertainty_yaml": False, "coverage": _coverage(pf),
+           "note": ("D86 margins live in results/v5/BASE/delta_ws7_design_realism/d86_margins.json (Engler) and "
+                    "delta_d86_rayleigh/d86_rayleigh_margins.json (Rayleigh); not adopted into configs/uncertainty_v5.yaml")}
+    out["distillation_D86_C"] = res
+    if pf.unmapped_mass > LOW_COVERAGE_MASS or pf.idx.size == 0:
+        res.update(status="low_coverage", reason=f"unmapped mass {pf.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
+        return
+    smi = [ctx.reg.smiles[i] for i in pf.idx]
+    ok_grid = np.array([bool(ctx.prov.valid[i]) for i in pf.idx])
+    if not ok_grid.all():
+        res.update(status="no_density", reason="a mapped component has no pure-grid density at 288.15 K")
+        return
+    _, rho = ctx.prov.lookup(pf.idx[None, :], 288.15)
+    rho = np.asarray(rho[0], float)
+    tbs = np.array([B5.tb_C(s) for s in smi])
+    if not np.all(np.isfinite(tbs)):
+        res.update(status="no_antoine_tb", reason="a mapped component has no Antoine-derived Tb")
+        return
+    w = pf.w / pf.w.sum()
+    vol = w / rho
+    qe = B5.d86_quantities(tbs, vol / vol.sum())
+    e, r = _d86_margin_files()
+    res.update(_d86_block(qe, e["margins"], "engler_tbp_offsets"), status="ok")
+    dist = B5.domain_distance(qe, e["domain"])
+    res["in_domain"] = bool(dist == 0)
+    res["tbp_spread_C"] = float(qe["tbp_spread"])
+    res["monotone"] = bool(qe["monotone"])
+    if dist > 0:
+        res["warnings"].append(f"outside_distillation_domain: TBP T90-T10 {qe['tbp_spread']:.1f} C (fit range "
+                               f"{e['domain']['tbp_spread_min']:.1f}-{e['domain']['tbp_spread_max']:.1f}) or non-monotone curve")
+    if pf.substituted_mass > 0:
+        res["warnings"].append(f"substituted_mass {pf.substituted_mass:.3f}: representatives stand in for some components")
+    try:
+        qr = B5.rayleigh_quantities_smiles(smi, w, rho)
+        res["variants"]["rayleigh"] = dict(_d86_block(qr, r["margins"], "rayleigh_single_stage"), status="ok",
+                                           note="delta_d86_rayleigh: better T50/T90 on 65 real fuels, T10 +11.6 C bias; not designated")
+        if abs(qr["T90_T10"] - qe["T90_T10"]) > 20.0:
+            res["warnings"].append(f"d86_models_disagree: T90-T10 Engler {qe['T90_T10']:.1f} vs Rayleigh {qr['T90_T10']:.1f} C "
+                                   "(narrow recipes with a light minor component: Engler inflates the slopes)")
+    except Exception as ex:  # noqa: BLE001
+        res["variants"]["rayleigh"] = {"status": "unavailable", "reason": str(ex)}
 
 
 # ====================================================================================================================
