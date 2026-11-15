@@ -119,7 +119,8 @@ REGISTRY_ADDITIONS_ENV = "FUELBLEND_FLASH_REGISTRY_ADDITIONS"
 
 
 def _with_additions(reg: pd.DataFrame) -> pd.DataFrame:
-    """delta_pool_bicyclohexyl: rows of ``REGISTRY_ADDITIONS_CSV`` replace the same-InChIKey base rows (opt-in, env var = "1")."""
+    """delta_pool_bicyclohexyl: rows of ``REGISTRY_ADDITIONS_CSV`` replace the same-InChIKey base rows (default on by user decision
+    2026-11-15 (#3); ``FUELBLEND_FLASH_REGISTRY_ADDITIONS=0`` restores the v2 registry)."""
     add = pd.read_csv(REGISTRY_ADDITIONS_CSV)
     keep = reg[~reg["inchikey"].isin(add["inchikey"])]
     return pd.concat([keep, add[[c for c in reg.columns if c in add.columns]]], ignore_index=True)
@@ -127,8 +128,10 @@ def _with_additions(reg: pd.DataFrame) -> pd.DataFrame:
 
 @lru_cache(maxsize=1)
 def _default_registry() -> pd.DataFrame:
+    """Flash registry (anchored Antoine + LFL), overlay merged unless the env var is "0".  lru_cached: a test that flips the env var
+    must call ``_default_registry.cache_clear()`` before and after."""
     reg = pd.read_csv(REGISTRY_CSV)
-    if os.environ.get(REGISTRY_ADDITIONS_ENV) == "1":
+    if os.environ.get(REGISTRY_ADDITIONS_ENV) != "0":
         reg = _with_additions(reg)
     reg["can"] = reg["smiles"].map(lambda s: Chem.MolToSmiles(Chem.MolFromSmiles(s)))
     return reg.drop_duplicates("can").set_index("can")
