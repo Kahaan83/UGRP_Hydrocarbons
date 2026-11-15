@@ -52,3 +52,18 @@ def test_add_d86_models_default_is_engler_unchanged():
     import inspect
     sig = inspect.signature(B.add_d86_models)
     assert sig.parameters["d86_model"].default == "engler"
+
+
+def test_predict_fuel_reports_d86_block():
+    import warnings
+    from fuelblend.api.predict_route import predict_fuel
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        r = predict_fuel({"CCCCCCCCCC": 0.4, "CCCCCCCCCCCC": 0.3, "Cc1ccc(C)c(C)c1": 0.2, "CC(C)CC(C)(C)C": 0.1})
+    d = r["distillation_D86_C"]
+    assert d["status"] == "ok" and d["method"] == "engler_tbp_offsets" and d["adopted_in_uncertainty_yaml"] is False
+    v = d["value"]
+    assert v["T10"] <= v["T50"] <= v["T90"]
+    rv = d["variants"]["rayleigh"]["value"]
+    assert rv["T10"] <= rv["T50"] <= rv["T90"] <= rv["FBP"]
+    assert any(w.startswith("d86_models_disagree") for w in d["warnings"])
