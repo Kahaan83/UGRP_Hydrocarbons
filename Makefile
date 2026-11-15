@@ -1,23 +1,9 @@
-# Makefile for UGRP Hydrocarbons v2 Reproduction and Testing
+# Minimal entry points (run with the venv python: make PYTHON=.venv/Scripts/python.exe test)
 PYTHON ?= python
 
-.PHONY: reproduce test verify clean help v4
-
-help:
-	@echo "Available targets:"
-	@echo "  make reproduce  - Run complete v2 reproduction pipeline (Phases A-E)"
-	@echo "  make test       - Run all pytest test suites"
-	@echo "  make verify     - Verify presence and integrity of all v2 deliverables"
-	@echo "  make v4         - Run the v4 integrity reproduction (scripts/v4/reproduce_all.py)"
-
-reproduce:
-	$(PYTHON) scripts/v2/reproduce_all.py
-
-verify:
-	$(PYTHON) scripts/v2/reproduce_all.py --verify-only
+.PHONY: reproduce test
+reproduce:   ## rebuild the frozen v5 scoreboard and check it against SHA256SUMS_v5_base.txt
+	$(PYTHON) scripts/v5/base/reproduce_base.py
 
 test:
-	$(PYTHON) -m pytest tests/
-
-v4:
-	$(PYTHON) scripts/v4/reproduce_all.py
+	$(PYTHON) -m pytest -q
