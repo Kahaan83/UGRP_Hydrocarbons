@@ -63,7 +63,7 @@ decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,flash,57.0,57.0,purchasable_compounds.csv,
 decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,DCN,38.0,38.0,purchasable_compounds.csv,,,31.8,"NREL cetane compendium (Yanowitz 2017), data/processed/v2/cetane_nrel_compendium.csv",6.199999999999999,pure,disputed,purchasable_compounds.csv,listed value differs from reference beyond threshold; value kept as listed
 decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,RON,45.0,45.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
 decalin_trans,C1CC[C@H]2CCCC[C@@H]2C1,MON,40.0,40.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
-decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MW,138.25,138.25,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
+decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,MW,138.25,138.25,purchasable_compounds.csv,,,138.254,"formula C10H18 (RDKit MolWt); user decision 2026-11-15, docs/decisions_2026-11-15.md #7",-2.8932255124558263e-05,pure,verified,purchasable_compounds.csv,
 decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,rho15,896.5,896.5,purchasable_compounds.csv,,,900.6500000000001,"measured ThermoML liquid density, linear fit extrapolated 5.0 K to 288.15 K (4 temperatures 293.15-308.15 K, 2 references)",-0.004607783267640138,pure,verified,purchasable_compounds.csv,v5: reference is measured density (v4 used thermo-computed nan); value kept as listed
 decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tb,195.7,195.7,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
 decalin_cis,C1CC[C@H]2CCCC[C@H]2C1,Tm,-43.0,-43.0,purchasable_compounds.csv,,,,,,pure,unverified,purchasable_compounds.csv,
