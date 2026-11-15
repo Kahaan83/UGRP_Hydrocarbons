@@ -41,7 +41,9 @@ def legacy_parts_ctx():
     representative choice of T2 fuels (AJFTD:2 and others).  The S3 reproduction test compares the live route with the frozen S3 file,
     written before the decision, so it is pointed at the legacy v2 registry (FUELBLEND_FLASH_REGISTRY_ADDITIONS=0).  SubReps and RouteCtx
     read the registry at construction (has_extra, flash_reg), so building them under the env var is enough.  Expected values unchanged;
-    the drift is listed in results/v5/BASE/delta_adopt_rescore/drift.csv."""
+    the drift is listed in results/v5/BASE/delta_adopt_rescore/drift.csv.
+    Kept on the legacy switch after the BASE adoption (U4, 2026-11-15): the reference here is results/v5/S3, a separate committed
+    pre-decision result that the adoption does not regenerate, so the test checks the route still reproduces it with the switch off."""
     from fuelblend.baselines import flash_unifac as fu
     with pytest.MonkeyPatch.context() as mp:
         mp.setenv(fu.REGISTRY_ADDITIONS_ENV, "0")

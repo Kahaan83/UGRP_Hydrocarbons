@@ -402,24 +402,10 @@ def test_f1x_variant_jet_with_nalkanes_only():
     assert "f1x_recalibrated" not in pr.predict_fuel({TOLUENE: 1.0}, fuel_type="jet")["freezing_point_C"]["variants"]
 
 
-@pytest.fixture
-def legacy_flash_registry(monkeypatch):
-    """Decision 3 (2026-11-15) put the flash-registry additions overlay (bicyclohexyl, cis-decalin) on by default; it changes the
-    representative choice of T2 fuels.  Tests using this fixture compare the live route with frozen BASE rows written before the decision,
-    so they pin the legacy v2 registry (FUELBLEND_FLASH_REGISTRY_ADDITIONS=0).  The frozen values are unchanged; the drift is listed in
-    results/v5/BASE/delta_adopt_rescore/drift.csv."""
-    from fuelblend.baselines import flash_unifac as fu
-    caches = (fu._default_registry, pr.get_ctx, pr._overlay_ctx)          # _overlay_ctx holds get_ctx().reps
-    monkeypatch.setenv(fu.REGISTRY_ADDITIONS_ENV, "0")
-    for c in caches:
-        c.cache_clear()
-    yield
-    monkeypatch.delenv(fu.REGISTRY_ADDITIONS_ENV, raising=False)
-    for c in caches:
-        c.cache_clear()
-
-
-def test_heat_matches_bulk_rows(ctx, legacy_flash_registry):
+def test_heat_matches_bulk_rows(ctx):
+    # Adopted BASE (U4, 2026-11-15): rows_t2_bulk.csv was regenerated under the default flash-registry overlay (decision 3), so the live
+    # default route is compared with it directly (AJFTD:2 43.508441 pre-adoption -> 43.528702 adopted; the legacy-registry fixture
+    # used before adoption is no longer needed).
     rows = pd.read_csv(pr.ROOT / "results/v5/BASE/rows_t2_bulk.csv")
     h = rows[(rows.property == "heat_of_combustion_net_MJ_kg") & (rows.model == "ga_comp_H") & (rows.status == "ok")]
     fuels = _t2_fuels(5, need_heat=True)

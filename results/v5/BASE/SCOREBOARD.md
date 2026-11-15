@@ -10,11 +10,11 @@
 
 | cell | observed | committed | diff | tol | within | committed_source | cause |
 |---|---|---|---|---|---|---|---|
-| flash T2 AJFTD GCxGC, all 37 eligible rows: bias | -0.426 | -0.426 | -3.21e-08 | 0.05 | True | results/v5/G1/summary.csv |  |
-| flash T2 AJFTD GCxGC, all 37 eligible rows: MAE | 3.54 | 3.54 | 1.08e-07 | 0.05 | True | results/v5/G1/summary.csv |  |
-| flash T2 AJFTD GCxGC, headline one-per-group (31): bias | -0.634 | -0.426 | -0.208 | 0.05 | False | results/v5/G1/summary.csv | BASE scores one fuel per double-count group (31); G1 scored all 37 eligible rows (6 duplicate-group fuels); the 37-row rerun above matches G1 |
-| ln viscosity AV-33-22 233.15 K: bias | -0.637 | -0.637 | -0.000286 | 0.005 | True | results/v5/C1 (R-C1-5, rounded to 3 decimals) |  |
-| ln viscosity AV-33-22 313.15 K: bias | 0.0656 | 0.066 | -0.00036 | 0.005 | True | results/v5/C1 (R-C1-5, rounded to 3 decimals) |  |
+| flash T2 AJFTD GCxGC, all 37 eligible rows: bias | 0.141 | -0.426 | 0.567 | 0.05 | False | results/v5/G1/summary.csv |  |
+| flash T2 AJFTD GCxGC, all 37 eligible rows: MAE | 3.09 | 3.54 | -0.448 | 0.05 | False | results/v5/G1/summary.csv |  |
+| flash T2 AJFTD GCxGC, headline one-per-group (31): bias | -0.152 | -0.426 | 0.275 | 0.05 | False | results/v5/G1/summary.csv | BASE scores one fuel per double-count group (31); G1 scored all 37 eligible rows (6 duplicate-group fuels); the 37-row rerun above matches G1 |
+| ln viscosity AV-33-22 233.15 K: bias | -0.574 | -0.637 | 0.063 | 0.005 | False | results/v5/C1 (R-C1-5, rounded to 3 decimals) | C1 used S3's mapping route; BASE uses the shared composition route |
+| ln viscosity AV-33-22 313.15 K: bias | 0.109 | 0.066 | 0.0426 | 0.005 | False | results/v5/C1 (R-C1-5, rounded to 3 decimals) | C1 used S3's mapping route; BASE uses the shared composition route |
 | flash CRC 647 r3 dev (45): bias | 0.436 | 0.436 | 1.27e-09 | 0.05 | True | results/v5/L1/comparison.csv (before) |  |
 | freezing T2 pooled F1: MAE | 3.46 | 3.46 | 0.00429 | 0.05 | True | results/v5/S5 (README, rounded) |  |
 
@@ -23,7 +23,7 @@
 | property | beats | no_skill | worse | too_small_only |
 |---|---|---|---|---|
 | density_kg_m3 | T2_measured | CRC647_r3 | - | diesel |
-| flash_point_C | CRC647_r3, T2_measured | T2_measured, T3_ajftd | T2_measured | diesel |
+| flash_point_C | CRC647_r3, T2_measured | T2_measured, T3_ajftd | - | diesel |
 | freezing_point_C | T3_ajftd | CRC647_r3, T2_measured, T3_ajftd | - | - |
 | heat_of_combustion_net_MJ_kg | T3_ajftd | T2_measured, T3_ajftd | CRC647_r3, T3_ajftd | - |
 | mon | - | - | T1_lab | - |
@@ -50,69 +50,69 @@ Designated (v4 routing) stays unchanged until the user decides.  Each row: the s
 | LFL overlay | flash_point_C | CRC647_r3 | crc647_r3 |  | ideal_le_chatelier | lfl_overlay | dev | 45 | 0.436 | -0.726 | 4.03 | 4.09 | 0.133 | 0.0444 |
 | LFL overlay | flash_point_C | CRC647_r3 | crc647_r3 |  | ideal_le_chatelier | lfl_overlay | fold_b | 12 | 2.46 | 1.41 | 3.72 | 3.26 | 0.25 | 0.0833 |
 | LFL overlay | flash_point_C | T1_lab | lab_mixtures_31_systems |  | ideal_le_chatelier | lfl_overlay | dev | 31 | -3.3 | -3.25 | 3.74 | 3.69 | 0.00794 | 0.00794 |
-| LFL overlay | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay | descriptive | 31 | -0.634 | -0.478 | 3.38 | 3.31 | 0.0968 | 0.0968 |
-| LFL overlay | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 31 | -0.634 | -0.841 | 3.38 | 3.65 | 0.0968 | 0.0968 |
-| LFL overlay | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay | descriptive | 35 | -1.06 | -1.14 | 1.5 | 1.55 | 0 | 0 |
-| LFL overlay | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 35 | -1.06 | -1.46 | 1.5 | 1.69 | 0 | 0 |
-| LFL overlay | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay | descriptive | 28 | -1.07 | -1.13 | 1.56 | 1.61 | 0 | 0 |
-| LFL overlay | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 28 | -1.07 | -1.42 | 1.56 | 1.7 | 0 | 0 |
-| LFL overlay | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay | descriptive | 32 | -0.387 | -0.271 | 3.1 | 3.05 | 0.0938 | 0.0938 |
-| LFL overlay | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 32 | -0.387 | -0.661 | 3.1 | 3.38 | 0.0938 | 0.0938 |
-| LFL overlay | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay | descriptive | 10 | -0.921 | -0.799 | 3.79 | 3.77 | 0.1 | 0.1 |
-| LFL overlay | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 10 | -0.921 | -1.12 | 3.79 | 4.09 | 0.1 | 0.1 |
-| LFL overlay | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay | descriptive | 4 | 1.36 | 1.57 | 5.82 | 5.86 | 0.25 | 0.25 |
-| LFL overlay | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 4 | 1.36 | 1.31 | 5.82 | 6.12 | 0.25 | 0.25 |
-| LFL overlay | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay | descriptive | 70 | -0.734 | -0.692 | 2.58 | 2.58 | 0.0571 | 0.0571 |
-| LFL overlay | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 70 | -0.734 | -1.03 | 2.58 | 2.81 | 0.0571 | 0.0571 |
+| LFL overlay | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay | descriptive | 31 | -0.152 | 0.00194 | 3 | 2.92 | 0.0968 | 0.0968 |
+| LFL overlay | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 31 | -0.152 | -0.371 | 3 | 3.27 | 0.0968 | 0.0968 |
+| LFL overlay | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay | descriptive | 35 | -0.0275 | -0.112 | 1.2 | 1.24 | 0 | 0 |
+| LFL overlay | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 35 | -0.0275 | -0.46 | 1.2 | 1.22 | 0 | 0 |
+| LFL overlay | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay | descriptive | 28 | 0.0904 | 0.013 | 1.29 | 1.31 | 0 | 0 |
+| LFL overlay | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 28 | 0.0904 | -0.297 | 1.29 | 1.25 | 0 | 0 |
+| LFL overlay | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay | descriptive | 32 | -0.0446 | 0.0688 | 2.88 | 2.84 | 0.0938 | 0.0938 |
+| LFL overlay | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 32 | -0.0446 | -0.329 | 2.88 | 3.13 | 0.0938 | 0.0938 |
+| LFL overlay | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay | descriptive | 10 | 0.3 | 0.417 | 2.57 | 2.55 | 0.1 | 0.1 |
+| LFL overlay | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 10 | 0.3 | 0.0672 | 2.57 | 2.9 | 0.1 | 0.1 |
+| LFL overlay | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay | descriptive | 4 | 2.44 | 2.64 | 4.73 | 4.78 | 0.25 | 0.25 |
+| LFL overlay | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 4 | 2.44 | 2.36 | 4.73 | 5.07 | 0.25 | 0.25 |
+| LFL overlay | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay | descriptive | 70 | 0.0585 | 0.0961 | 2.2 | 2.19 | 0.0571 | 0.0571 |
+| LFL overlay | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 70 | 0.0585 | -0.26 | 2.2 | 2.35 | 0.0571 | 0.0571 |
 | Corrected mesitylene Antoine set | flash_point_C | T1_lab | lab_mixtures_31_systems |  | ideal_le_chatelier | mesitylene_fixed | dev | 31 | -3.3 | -3.59 | 3.74 | 3.89 | 0.00794 | 0.00794 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 31 | -0.634 | -0.841 | 3.38 | 3.65 | 0.0968 | 0.0968 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 31 | -0.634 | -0.994 | 3.38 | 3.72 | 0.0968 | 0.0968 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 35 | -1.06 | -1.46 | 1.5 | 1.69 | 0 | 0 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 35 | -1.06 | -1.39 | 1.5 | 1.62 | 0 | 0 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 28 | -1.07 | -1.42 | 1.56 | 1.7 | 0 | 0 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 28 | -1.07 | -1.35 | 1.56 | 1.65 | 0 | 0 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 32 | -0.387 | -0.661 | 3.1 | 3.38 | 0.0938 | 0.0938 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 32 | -0.387 | -0.775 | 3.1 | 3.41 | 0.0938 | 0.0938 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 10 | -0.921 | -1.12 | 3.79 | 4.09 | 0.1 | 0.1 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 10 | -0.921 | -1.24 | 3.79 | 4.11 | 0.1 | 0.1 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 4 | 1.36 | 1.31 | 5.82 | 6.12 | 0.25 | 0.25 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 4 | 1.36 | 1.1 | 5.82 | 6.07 | 0.25 | 0.25 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 70 | -0.734 | -1.03 | 2.58 | 2.81 | 0.0571 | 0.0571 |
-| Corrected mesitylene Antoine set | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 70 | -0.734 | -1.07 | 2.58 | 2.81 | 0.0571 | 0.0571 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 10 | -0.698 | -0.0607 | 0.698 | 0.108 | 1 | 0.1 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 28 | -0.291 | -0.0269 | 0.344 | 0.124 | 0.179 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.0753 | -0.0199 | 0.0753 | 0.0199 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.00338 | -0.0225 | 0.00909 | 0.0225 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | 0.00233 | -0.0332 | 0.0206 | 0.0332 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 16 | -0.00696 | -0.0726 | 0.0541 | 0.0744 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.0753 | -0.0199 | 0.0753 | 0.0199 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 17 | -0.018 | -0.0746 | 0.0441 | 0.0763 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 28 | -0.405 | -0.0209 | 0.458 | 0.134 | 0.464 | 0.0357 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.637 | 0.0607 | 0.637 | 0.116 | 0.914 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.264 | 0.0269 | 0.264 | 0.0624 | 0.0286 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.0554 | 0.0199 | 0.062 | 0.042 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.0191 | 0.0225 | 0.0309 | 0.0326 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.0355 | 0.0332 | 0.0401 | 0.0384 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.0656 | 0.0726 | 0.0656 | 0.0726 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.0554 | 0.0199 | 0.062 | 0.042 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.0191 | 0.0225 | 0.0309 | 0.0326 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.637 | 0.0607 | 0.637 | 0.116 | 0.914 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.664 | -0.0272 | 0.664 | 0.125 | 1 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.312 | -0.048 | 0.312 | 0.0844 | 0.25 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | 0.0325 | -0.0331 | 0.0325 | 0.0331 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 373 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.0197 | -0.0127 | 0.0197 | 0.0127 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | 0.0319 | -0.0332 | 0.0319 | 0.0332 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.664 | -0.0272 | 0.664 | 0.125 | 1 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 48 | -0.65 | 0.0312 | 0.65 | 0.115 | 0.938 | 0.0208 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 65 | -0.275 | 0.00332 | 0.298 | 0.0888 | 0.0923 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | -0.057 | 0.0167 | 0.063 | 0.0403 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | 0.0173 | 0.019 | 0.0292 | 0.0318 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 39 | 0.0321 | 0.0264 | 0.0381 | 0.0379 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 54 | 0.042 | 0.0234 | 0.0601 | 0.0712 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 373 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.008 | -0.0127 | 0.0162 | 0.0127 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | -0.057 | 0.0167 | 0.063 | 0.0403 | 0 | 0 |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 53 | 0.00976 | -0.00893 | 0.0356 | 0.0459 |  |  |
-| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 65 | -0.547 | 0.0254 | 0.57 | 0.125 | 0.738 | 0.0154 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 31 | -0.152 | -0.371 | 3 | 3.27 | 0.0968 | 0.0968 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | ajftd_gcxgc |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 31 | -0.152 | -0.523 | 3 | 3.34 | 0.0968 | 0.0968 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 35 | -0.0275 | -0.46 | 1.2 | 1.22 | 0 | 0 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | av3322 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 35 | -0.0275 | -0.378 | 1.2 | 1.18 | 0 | 0 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 28 | 0.0904 | -0.297 | 1.29 | 1.25 | 0 | 0 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D56 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 28 | 0.0904 | -0.221 | 1.29 | 1.21 | 0 | 0 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 32 | -0.0446 | -0.329 | 2.88 | 3.13 | 0.0938 | 0.0938 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_D93_or_IP170 |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 32 | -0.0446 | -0.441 | 2.88 | 3.18 | 0.0938 | 0.0938 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 10 | 0.3 | 0.0672 | 2.57 | 2.9 | 0.1 | 0.1 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | family_other |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 10 | 0.3 | -0.0506 | 2.57 | 2.92 | 0.1 | 0.1 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 4 | 2.44 | 2.36 | 4.73 | 5.07 | 0.25 | 0.25 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | fuellib |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 4 | 2.44 | 2.16 | 4.73 | 5.01 | 0.25 | 0.25 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive | 70 | 0.0585 | -0.26 | 2.2 | 2.35 | 0.0571 | 0.0571 |
+| Corrected mesitylene Antoine set | flash_point_C | T2_measured | pooled |  | ideal_le_chatelier | mesitylene_fixed | descriptive | 70 | 0.0585 | -0.297 | 2.2 | 2.36 | 0.0571 | 0.0571 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 10 | -0.687 | -0.113 | 0.687 | 0.128 | 1 | 0.1 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 28 | -0.273 | -0.0661 | 0.326 | 0.146 | 0.0714 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.0421 | -0.0393 | 0.0421 | 0.0393 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | 0.0276 | -0.0404 | 0.0276 | 0.0404 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | 0.0412 | -0.042 | 0.0412 | 0.042 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 16 | -0.000297 | -0.109 | 0.0594 | 0.109 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | -0.0421 | -0.0393 | 0.0421 | 0.0393 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 17 | -0.00696 | -0.108 | 0.0492 | 0.108 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | ajftd_gcxgc_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 28 | -0.386 | -0.0617 | 0.439 | 0.147 | 0.357 | 0.0357 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.574 | 0.113 | 0.574 | 0.135 | 0.886 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.207 | 0.0661 | 0.207 | 0.0769 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.00283 | 0.0393 | 0.0318 | 0.0461 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.068 | 0.0404 | 0.068 | 0.0418 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.0832 | 0.042 | 0.0832 | 0.0423 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322 | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.109 | 0.109 | 0.109 | 0.109 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.00283 | 0.0393 | 0.0318 | 0.0461 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | 0.068 | 0.0404 | 0.068 | 0.0418 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | av3322_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 35 | -0.574 | 0.113 | 0.574 | 0.135 | 0.886 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.628 | -0.0544 | 0.628 | 0.0965 | 1 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.279 | -0.0727 | 0.279 | 0.0727 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | 0.0573 | -0.0513 | 0.0573 | 0.0513 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib | 373 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | 0.00342 | -0.0186 | 0.0144 | 0.0217 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | 0.0567 | -0.0431 | 0.0567 | 0.0431 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | fuellib_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 4 | -0.628 | -0.0544 | 0.628 | 0.0965 | 1 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 233 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 48 | -0.599 | 0.0567 | 0.599 | 0.131 | 0.917 | 0.0208 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 253 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 65 | -0.236 | 0.00602 | 0.259 | 0.105 | 0.0308 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 273 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | -0.00593 | 0.0331 | 0.0327 | 0.0455 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 288 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | 0.0648 | 0.0341 | 0.0648 | 0.0417 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 293 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 39 | 0.0789 | 0.0333 | 0.0789 | 0.0422 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 313 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 54 | 0.0733 | 0.0353 | 0.091 | 0.106 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled | 373 | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 3 | 0.0205 | -0.0186 | 0.0216 | 0.0217 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_263_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 38 | -0.00593 | 0.0331 | 0.0327 | 0.0455 | 0 | 0 |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_ge_283K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 53 | 0.045 | -0.00834 | 0.0626 | 0.0626 |  |  |
+| K1 cold offset | viscosity_kin_cSt | T2_measured | pooled_T_lt_263K |  | refutas_raw+k1 | k1_cold_offset_loso | descriptive | 65 | -0.504 | 0.0341 | 0.527 | 0.138 | 0.692 | 0.0154 |
 | SLE2 two-compilations tier | freezing_point_C | T1_lab | sle_alkane_blends |  | ideal_svl | sle2_single_compilation | dev | 38 | -1.1 | -4.02 | 2.02 | 7.03 |  |  |
 | SLE2 two-compilations tier | freezing_point_C | T1_lab | sle_alkane_blends |  | ideal_svl | sle2_two_compilations | dev | 11 | -1.1 | -1.41 | 2.02 | 2.13 |  |  |
 
@@ -130,17 +130,17 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | T1_lab | T_ge_283K | refutas_raw | designated | dev |  | 264 | 0.0245 | 0.068 |  | not_applicable | 0.186 | 0.909 |
 | T1_lab | T_lt_263K | refutas_raw | designated | already_read |  | 3 | -0.079 | 0.0973 | 0 | not_applicable | 0.415 | 1 |
 | T1_lab | T_lt_263K | refutas_raw | designated | dev |  | 20 | -0.113 | 0.118 | 0.0354 | not_applicable | 0.415 | 0.9 |
-| T2_measured | ajftd_gcxgc_T_263_283K | refutas_raw | designated | descriptive |  | 3 | -0.0753 | 0.0753 | 0 | n_too_small | inf |  |
-| T2_measured | ajftd_gcxgc_T_ge_283K | refutas_raw | designated | descriptive |  | 17 | -0.018 | 0.0441 |  | beats_trivial | 0.186 | 0.941 |
-| T2_measured | ajftd_gcxgc_T_lt_263K | refutas_raw | designated | descriptive |  | 28 | -0.405 | 0.458 | 0.464 | worse_than_trivial | inf |  |
-| T2_measured | av3322_T_263_283K | refutas_raw | designated | descriptive |  | 35 | -0.0554 | 0.062 | 0 | beats_trivial | inf |  |
-| T2_measured | av3322_T_ge_283K | refutas_raw | designated | descriptive |  | 35 | 0.0191 | 0.0309 |  | beats_trivial | 0.186 | 1 |
-| T2_measured | av3322_T_lt_263K | refutas_raw | designated | descriptive |  | 35 | -0.637 | 0.637 | 0.914 | worse_than_trivial | inf |  |
-| T2_measured | fuellib_T_ge_283K | refutas_raw | designated | descriptive |  | 4 | 0.0319 | 0.0319 |  | n_too_small | 0.186 | 1 |
-| T2_measured | fuellib_T_lt_263K | refutas_raw | designated | descriptive |  | 4 | -0.664 | 0.664 | 1 | n_too_small | inf |  |
-| T2_measured | pooled_T_263_283K | refutas_raw | designated | descriptive |  | 38 | -0.057 | 0.063 | 0 | beats_trivial | inf |  |
-| T2_measured | pooled_T_ge_283K | refutas_raw | designated | descriptive |  | 54 | 0.00976 | 0.0356 |  | beats_trivial | 0.186 | 0.981 |
-| T2_measured | pooled_T_lt_263K | refutas_raw | designated | descriptive |  | 65 | -0.547 | 0.57 | 0.738 | worse_than_trivial | inf |  |
+| T2_measured | ajftd_gcxgc_T_263_283K | refutas_raw | designated | descriptive |  | 3 | -0.0421 | 0.0421 | 0 | n_too_small | inf |  |
+| T2_measured | ajftd_gcxgc_T_ge_283K | refutas_raw | designated | descriptive |  | 17 | -0.00696 | 0.0492 |  | beats_trivial | 0.186 | 0.941 |
+| T2_measured | ajftd_gcxgc_T_lt_263K | refutas_raw | designated | descriptive |  | 28 | -0.386 | 0.439 | 0.357 | worse_than_trivial | inf |  |
+| T2_measured | av3322_T_263_283K | refutas_raw | designated | descriptive |  | 35 | -0.00283 | 0.0318 | 0 | beats_trivial | inf |  |
+| T2_measured | av3322_T_ge_283K | refutas_raw | designated | descriptive |  | 35 | 0.068 | 0.068 |  | beats_trivial | 0.186 | 1 |
+| T2_measured | av3322_T_lt_263K | refutas_raw | designated | descriptive |  | 35 | -0.574 | 0.574 | 0.886 | worse_than_trivial | inf |  |
+| T2_measured | fuellib_T_ge_283K | refutas_raw | designated | descriptive |  | 4 | 0.0567 | 0.0567 |  | n_too_small | 0.186 | 1 |
+| T2_measured | fuellib_T_lt_263K | refutas_raw | designated | descriptive |  | 4 | -0.628 | 0.628 | 1 | n_too_small | inf |  |
+| T2_measured | pooled_T_263_283K | refutas_raw | designated | descriptive |  | 38 | -0.00593 | 0.0327 | 0 | beats_trivial | inf |  |
+| T2_measured | pooled_T_ge_283K | refutas_raw | designated | descriptive |  | 54 | 0.045 | 0.0626 |  | beats_trivial | 0.186 | 0.981 |
+| T2_measured | pooled_T_lt_263K | refutas_raw | designated | descriptive |  | 65 | -0.504 | 0.527 | 0.692 | worse_than_trivial | inf |  |
 | T3_ajftd | ajftd_bulk_locked_all | const | designated | already_read |  | 7 | 0.201 | 0.654 |  | not_applicable | 1.14 | 0.946 |
 | T3_ajftd | ajftd_bulk_locked_all | hgb | designated | already_read |  | 7 | -0.118 | 0.323 |  | n_too_small | 1.66 | 0.965 |
 | T3_ajftd | ajftd_bulk_locked_all | ridge | designated | already_read |  | 7 | -0.0177 | 0.514 |  | n_too_small | 2.26 | 0.96 |
@@ -163,39 +163,39 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | CRC647_r3 | crc647_r3 | Walther (D341) | carried | fold_b |  | 12 | -0.349 | 0.353 | 0.361 | worse_than_trivial |  |  |
 | CRC647_r3 | crc647_r3 | Walther + recalibration | carried | dev |  | 45 | 0.069 | 0.109 | 0 | beats_trivial |  |  |
 | CRC647_r3 | crc647_r3 | Walther + recalibration | carried | fold_b |  | 12 | 0.0934 | 0.156 | 0 | beats_trivial |  |  |
-| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | known | descriptive |  | 3 | -0.0157 | 0.0157 | 0 | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 3 | -0.0157 | 0.0157 | 0 | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 3 | -0.0199 | 0.0199 | 0 | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | known | descriptive |  | 17 | 0.0243 | 0.068 |  | beats_trivial |  | 0.75 |
-| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 17 | 0.0243 | 0.068 |  | beats_trivial |  |  |
-| T2_measured | ajftd_gcxgc_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 17 | -0.0746 | 0.0763 |  | beats_trivial |  |  |
-| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | known | descriptive |  | 28 | -0.263 | 0.359 | 0.321 | no_skill_shown |  |  |
-| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 28 | -0.263 | 0.359 | 0.321 | no_skill_shown |  |  |
-| T2_measured | ajftd_gcxgc_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 28 | -0.0209 | 0.134 | 0.0357 | beats_trivial |  |  |
-| T2_measured | av3322_T_263_283K | api_as_shipped | known | descriptive |  | 35 | -0.0128 | 0.0422 | 0 | beats_trivial |  |  |
-| T2_measured | av3322_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 35 | -0.0128 | 0.0422 | 0 | beats_trivial |  |  |
-| T2_measured | av3322_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.0199 | 0.042 | 0 | beats_trivial |  |  |
-| T2_measured | av3322_T_ge_283K | api_as_shipped | known | descriptive |  | 35 | 0.0477 | 0.0529 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 35 | 0.0477 | 0.0529 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.0225 | 0.0326 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_lt_263K | api_as_shipped | known | descriptive |  | 35 | -0.604 | 0.604 | 0.829 | worse_than_trivial |  |  |
-| T2_measured | av3322_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 35 | -0.604 | 0.604 | 0.829 | worse_than_trivial |  |  |
-| T2_measured | av3322_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.0607 | 0.116 | 0 | beats_trivial |  |  |
-| T2_measured | fuellib_T_ge_283K | api_as_shipped | known | descriptive |  | 4 | 0.0709 | 0.0709 |  | n_too_small |  | 1 |
-| T2_measured | fuellib_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 4 | 0.0709 | 0.0709 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 3 | -0.0332 | 0.0332 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_lt_263K | api_as_shipped | known | descriptive |  | 4 | -0.651 | 0.651 | 1 | n_too_small |  |  |
-| T2_measured | fuellib_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 4 | -0.651 | 0.651 | 1 | n_too_small |  |  |
-| T2_measured | fuellib_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 4 | -0.0272 | 0.125 | 0 | n_too_small |  |  |
-| T2_measured | pooled_T_263_283K | api_as_shipped | known | descriptive |  | 38 | -0.013 | 0.0401 | 0 | beats_trivial |  |  |
-| T2_measured | pooled_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 38 | -0.013 | 0.0401 | 0 | beats_trivial |  |  |
-| T2_measured | pooled_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 38 | 0.0167 | 0.0403 | 0 | beats_trivial |  |  |
-| T2_measured | pooled_T_ge_283K | api_as_shipped | known | descriptive |  | 54 | 0.0413 | 0.0584 |  | beats_trivial |  | 0.8 |
-| T2_measured | pooled_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 54 | 0.0413 | 0.0584 |  | beats_trivial |  |  |
-| T2_measured | pooled_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 53 | -0.00893 | 0.0459 |  | beats_trivial |  |  |
-| T2_measured | pooled_T_lt_263K | api_as_shipped | known | descriptive |  | 65 | -0.472 | 0.513 | 0.646 | worse_than_trivial |  |  |
-| T2_measured | pooled_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 65 | -0.472 | 0.513 | 0.646 | worse_than_trivial |  |  |
-| T2_measured | pooled_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 65 | 0.0254 | 0.125 | 0.0154 | beats_trivial |  |  |
+| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | known | descriptive |  | 3 | -0.0421 | 0.0421 | 0 | n_too_small |  |  |
+| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 3 | 0.0918 | 0.0918 | 0 | n_too_small |  | 1 |
+| T2_measured | ajftd_gcxgc_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 3 | -0.0393 | 0.0393 | 0 | n_too_small |  |  |
+| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | known | descriptive |  | 17 | -0.00696 | 0.0492 |  | beats_trivial |  | 0.941 |
+| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 17 | -0.0144 | 0.0472 |  | beats_trivial |  | 1 |
+| T2_measured | ajftd_gcxgc_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 17 | -0.108 | 0.108 |  | no_skill_shown |  |  |
+| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | known | descriptive |  | 28 | -0.386 | 0.439 | 0.357 | worse_than_trivial |  |  |
+| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 28 | 0.0467 | 0.125 | 0.0357 | beats_trivial |  | 0.929 |
+| T2_measured | ajftd_gcxgc_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 28 | -0.0617 | 0.147 | 0.0357 | beats_trivial |  |  |
+| T2_measured | av3322_T_263_283K | api_as_shipped | known | descriptive |  | 35 | -0.00283 | 0.0318 | 0 | beats_trivial |  |  |
+| T2_measured | av3322_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 35 | 0.131 | 0.131 | 0 | no_skill_shown |  | 1 |
+| T2_measured | av3322_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.0393 | 0.0461 | 0 | beats_trivial |  |  |
+| T2_measured | av3322_T_ge_283K | api_as_shipped | known | descriptive |  | 35 | 0.068 | 0.068 |  | beats_trivial |  | 1 |
+| T2_measured | av3322_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 35 | 0.0588 | 0.0588 |  | beats_trivial |  | 1 |
+| T2_measured | av3322_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.0404 | 0.0418 |  | beats_trivial |  |  |
+| T2_measured | av3322_T_lt_263K | api_as_shipped | known | descriptive |  | 35 | -0.574 | 0.574 | 0.886 | worse_than_trivial |  |  |
+| T2_measured | av3322_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 35 | 0.0319 | 0.0995 | 0 | beats_trivial |  | 1 |
+| T2_measured | av3322_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 35 | 0.113 | 0.135 | 0 | beats_trivial |  |  |
+| T2_measured | fuellib_T_ge_283K | api_as_shipped | known | descriptive |  | 4 | 0.0567 | 0.0567 |  | n_too_small |  | 1 |
+| T2_measured | fuellib_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 4 | 0.0567 | 0.0567 |  | n_too_small |  |  |
+| T2_measured | fuellib_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 3 | -0.0431 | 0.0431 |  | n_too_small |  |  |
+| T2_measured | fuellib_T_lt_263K | api_as_shipped | known | descriptive |  | 4 | -0.628 | 0.628 | 1 | n_too_small |  |  |
+| T2_measured | fuellib_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 4 | -0.0226 | 0.0965 | 0 | n_too_small |  | 1 |
+| T2_measured | fuellib_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 4 | -0.0544 | 0.0965 | 0 | n_too_small |  |  |
+| T2_measured | pooled_T_263_283K | api_as_shipped | known | descriptive |  | 38 | -0.00593 | 0.0327 | 0 | beats_trivial |  |  |
+| T2_measured | pooled_T_263_283K | api_as_shipped | reconstructed_route | descriptive |  | 38 | 0.128 | 0.128 | 0 | no_skill_shown |  | 1 |
+| T2_measured | pooled_T_263_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 38 | 0.0331 | 0.0455 | 0 | beats_trivial |  |  |
+| T2_measured | pooled_T_ge_283K | api_as_shipped | known | descriptive |  | 54 | 0.045 | 0.0626 |  | beats_trivial |  | 0.981 |
+| T2_measured | pooled_T_ge_283K | api_as_shipped | reconstructed_route | descriptive |  | 54 | 0.0386 | 0.0563 |  | beats_trivial |  | 1 |
+| T2_measured | pooled_T_ge_283K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 53 | -0.00834 | 0.0626 |  | beats_trivial |  |  |
+| T2_measured | pooled_T_lt_263K | api_as_shipped | known | descriptive |  | 65 | -0.504 | 0.527 | 0.692 | worse_than_trivial |  |  |
+| T2_measured | pooled_T_lt_263K | api_as_shipped | reconstructed_route | descriptive |  | 65 | 0.0348 | 0.111 | 0.0154 | beats_trivial |  | 0.969 |
+| T2_measured | pooled_T_lt_263K | refutas_raw+k1 | k1_cold_offset_loso | descriptive |  | 65 | 0.0341 | 0.138 | 0.0154 | beats_trivial |  |  |
 
 ## density_kg_m3
 
@@ -211,31 +211,31 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | T1_lab | T_ge_283K | ideal_volume | designated | dev |  | 167 | 0.258 | 1.35 |  | not_applicable |  |  |
 | T1_lab | T_lt_263K | ideal_volume | designated | dev |  | 8 | 0.55 | 0.837 |  | not_applicable |  |  |
 | T1_lab | thermoml2020_new_systems | ideal_volume | designated | dev |  | 4 | 1.28 | 1.34 |  | not_applicable | 4.59 | 0.75 |
-| T2_measured | ajftd_gcxgc_T_263_283K | ideal_volume | designated | descriptive |  | 3 | -8.13 | 8.13 |  | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_ge_283K | ideal_volume | designated | descriptive |  | 32 | -5.3 | 7.55 |  | beats_trivial |  |  |
-| T2_measured | ajftd_gcxgc_T_lt_263K | ideal_volume | designated | descriptive |  | 3 | -7.49 | 7.49 |  | n_too_small |  |  |
-| T2_measured | av3322_T_263_283K | ideal_volume | designated | descriptive |  | 35 | -1.87 | 2.22 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_ge_283K | ideal_volume | designated | descriptive |  | 35 | -2.22 | 2.47 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_lt_263K | ideal_volume | designated | descriptive |  | 35 | -0.874 | 1.85 |  | beats_trivial |  |  |
-| T2_measured | fuellib_T_263_283K | ideal_volume | designated | descriptive |  | 4 | -7.21 | 7.21 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_ge_283K | ideal_volume | designated | descriptive |  | 4 | -8.18 | 8.18 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_lt_263K | ideal_volume | designated | descriptive |  | 2 | -7.74 | 7.74 |  | n_too_small |  |  |
-| T2_measured | pooled_T_263_283K | ideal_volume | designated | descriptive |  | 41 | -2.67 | 2.97 |  | beats_trivial |  |  |
-| T2_measured | pooled_T_ge_283K | ideal_volume | designated | descriptive |  | 69 | -3.8 | 4.97 |  | beats_trivial |  |  |
-| T2_measured | pooled_T_lt_263K | ideal_volume | designated | descriptive |  | 39 | -1.54 | 2.41 |  | beats_trivial |  |  |
+| T2_measured | ajftd_gcxgc_T_263_283K | ideal_volume | designated | descriptive |  | 3 | -6.94 | 6.94 |  | n_too_small |  |  |
+| T2_measured | ajftd_gcxgc_T_ge_283K | ideal_volume | designated | descriptive |  | 32 | -4.57 | 6.81 |  | beats_trivial |  |  |
+| T2_measured | ajftd_gcxgc_T_lt_263K | ideal_volume | designated | descriptive |  | 3 | -6.35 | 6.35 |  | n_too_small |  |  |
+| T2_measured | av3322_T_263_283K | ideal_volume | designated | descriptive |  | 35 | 0.23 | 1.67 |  | beats_trivial |  |  |
+| T2_measured | av3322_T_ge_283K | ideal_volume | designated | descriptive |  | 35 | -0.103 | 1.55 |  | beats_trivial |  |  |
+| T2_measured | av3322_T_lt_263K | ideal_volume | designated | descriptive |  | 35 | 1.18 | 1.99 |  | beats_trivial |  |  |
+| T2_measured | fuellib_T_263_283K | ideal_volume | designated | descriptive |  | 4 | -6.12 | 6.12 |  | n_too_small |  |  |
+| T2_measured | fuellib_T_ge_283K | ideal_volume | designated | descriptive |  | 4 | -7.06 | 7.06 |  | n_too_small |  |  |
+| T2_measured | fuellib_T_lt_263K | ideal_volume | designated | descriptive |  | 2 | -6.93 | 6.93 |  | n_too_small |  |  |
+| T2_measured | pooled_T_263_283K | ideal_volume | designated | descriptive |  | 41 | -0.716 | 2.34 |  | beats_trivial |  |  |
+| T2_measured | pooled_T_ge_283K | ideal_volume | designated | descriptive |  | 69 | -2.38 | 4.15 |  | beats_trivial |  |  |
+| T2_measured | pooled_T_lt_263K | ideal_volume | designated | descriptive |  | 39 | 0.402 | 2.44 |  | beats_trivial |  |  |
 | diesel | face_diesel | ideal_volume | designated | descriptive |  | 4 | 5.84 | 15 |  | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | known | descriptive |  | 3 | -4.82 | 4.82 |  | n_too_small |  |  |
-| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | known | descriptive |  | 32 | -1.55 | 4.96 |  | beats_trivial |  | 0.5 |
-| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | known | descriptive |  | 3 | -14.9 | 14.9 |  | n_too_small |  |  |
-| T2_measured | av3322_T_263_283K | api_as_shipped | known | descriptive |  | 35 | 3.63 | 3.63 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_ge_283K | api_as_shipped | known | descriptive |  | 35 | 4.67 | 4.67 |  | beats_trivial |  |  |
-| T2_measured | av3322_T_lt_263K | api_as_shipped | known | descriptive |  | 35 | -6.56 | 6.56 |  | no_skill_shown |  |  |
-| T2_measured | fuellib_T_263_283K | api_as_shipped | known | descriptive |  | 4 | -4.39 | 4.39 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_ge_283K | api_as_shipped | known | descriptive |  | 4 | -4.11 | 4.11 |  | n_too_small |  |  |
-| T2_measured | fuellib_T_lt_263K | api_as_shipped | known | descriptive |  | 2 | -15.8 | 15.8 |  | n_too_small |  |  |
-| T2_measured | pooled_T_263_283K | api_as_shipped | known | descriptive |  | 41 | 2.44 | 3.75 |  | beats_trivial |  |  |
-| T2_measured | pooled_T_ge_283K | api_as_shipped | known | descriptive |  | 69 | 1.49 | 4.83 |  | beats_trivial |  | 0.5 |
-| T2_measured | pooled_T_lt_263K | api_as_shipped | known | descriptive |  | 39 | -7.44 | 7.44 |  | no_skill_shown |  |  |
+| T2_measured | ajftd_gcxgc_T_263_283K | api_as_shipped | known | descriptive |  | 3 | -6.94 | 6.94 |  | n_too_small |  | 0 |
+| T2_measured | ajftd_gcxgc_T_ge_283K | api_as_shipped | known | descriptive |  | 32 | -4.57 | 6.81 |  | beats_trivial |  | 0.188 |
+| T2_measured | ajftd_gcxgc_T_lt_263K | api_as_shipped | known | descriptive |  | 3 | -6.35 | 6.35 |  | n_too_small |  | 0 |
+| T2_measured | av3322_T_263_283K | api_as_shipped | known | descriptive |  | 35 | 0.23 | 1.67 |  | beats_trivial |  | 0.971 |
+| T2_measured | av3322_T_ge_283K | api_as_shipped | known | descriptive |  | 35 | -0.103 | 1.55 |  | beats_trivial |  | 0.943 |
+| T2_measured | av3322_T_lt_263K | api_as_shipped | known | descriptive |  | 35 | 1.18 | 1.99 |  | beats_trivial |  | 0.943 |
+| T2_measured | fuellib_T_263_283K | api_as_shipped | known | descriptive |  | 4 | -6.12 | 6.12 |  | n_too_small |  | 0.25 |
+| T2_measured | fuellib_T_ge_283K | api_as_shipped | known | descriptive |  | 4 | -7.06 | 7.06 |  | n_too_small |  | 0.25 |
+| T2_measured | fuellib_T_lt_263K | api_as_shipped | known | descriptive |  | 2 | -6.93 | 6.93 |  | n_too_small |  | 0 |
+| T2_measured | pooled_T_263_283K | api_as_shipped | known | descriptive |  | 41 | -0.716 | 2.34 |  | beats_trivial |  | 0.854 |
+| T2_measured | pooled_T_ge_283K | api_as_shipped | known | descriptive |  | 69 | -2.38 | 4.15 |  | beats_trivial |  | 0.58 |
+| T2_measured | pooled_T_lt_263K | api_as_shipped | known | descriptive |  | 39 | 0.402 | 2.44 |  | beats_trivial |  | 0.846 |
 
 ## flash_point_C
 
@@ -246,17 +246,17 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | CRC647_r3 | crc647_r3 | ideal_le_chatelier | designated | dev |  | 45 | 0.436 | 4.03 | 0.133 | beats_trivial |  |  |
 | CRC647_r3 | crc647_r3 | ideal_le_chatelier | designated | fold_b |  | 12 | 2.46 | 3.72 | 0.25 | beats_trivial |  |  |
 | T1_lab | lab_mixtures_31_systems | ideal_le_chatelier | designated | dev |  | 31 | -3.3 | 3.74 | 0.00794 | not_applicable | 3.7 | 0.935 |
-| T2_measured | ajftd_gcxgc | api_as_shipped | designated | descriptive |  | 31 | -23.4 | 24 | 0.0323 | worse_than_trivial |  | 0 |
-| T2_measured | ajftd_gcxgc | ideal_le_chatelier | designated | descriptive |  | 31 | -0.634 | 3.38 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
-| T2_measured | av3322 | api_as_shipped | designated | descriptive |  | 35 | -19.7 | 19.7 | 0 | worse_than_trivial |  | 0 |
-| T2_measured | av3322 | ideal_le_chatelier | designated | descriptive |  | 35 | -1.06 | 1.5 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D56 | ideal_le_chatelier | designated | descriptive |  | 28 | -1.07 | 1.56 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | designated | descriptive |  | 32 | -0.387 | 3.1 | 0.0938 | beats_trivial | 3.7 | 0.906 |
-| T2_measured | family_other | ideal_le_chatelier | designated | descriptive |  | 10 | -0.921 | 3.79 | 0.1 | no_skill_shown | 3.7 | 0.9 |
-| T2_measured | fuellib | api_as_shipped | designated | descriptive |  | 4 | -24.8 | 24.8 | 0 | n_too_small |  | 0 |
-| T2_measured | fuellib | ideal_le_chatelier | designated | descriptive |  | 4 | 1.36 | 5.82 | 0.25 | n_too_small | 3.7 | 0.75 |
-| T2_measured | pooled | api_as_shipped | designated | descriptive |  | 70 | -21.7 | 21.9 | 0.0143 | worse_than_trivial |  | 0 |
-| T2_measured | pooled | ideal_le_chatelier | designated | descriptive |  | 70 | -0.734 | 2.58 | 0.0571 | beats_trivial | 3.7 | 0.943 |
+| T2_measured | ajftd_gcxgc | api_as_shipped | designated | descriptive |  | 31 | 0.00194 | 2.92 | 0.0968 | beats_trivial | 2.21 | 0.839 |
+| T2_measured | ajftd_gcxgc | ideal_le_chatelier | designated | descriptive |  | 31 | -0.152 | 3 | 0.0968 | beats_trivial | 3.7 | 0.871 |
+| T2_measured | av3322 | api_as_shipped | designated | descriptive |  | 35 | -0.112 | 1.24 | 0 | beats_trivial | 2.21 | 0.971 |
+| T2_measured | av3322 | ideal_le_chatelier | designated | descriptive |  | 35 | -0.0275 | 1.2 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D56 | ideal_le_chatelier | designated | descriptive |  | 28 | 0.0904 | 1.29 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | designated | descriptive |  | 32 | -0.0446 | 2.88 | 0.0938 | beats_trivial | 3.7 | 0.875 |
+| T2_measured | family_other | ideal_le_chatelier | designated | descriptive |  | 10 | 0.3 | 2.57 | 0.1 | no_skill_shown | 3.7 | 0.9 |
+| T2_measured | fuellib | api_as_shipped | designated | descriptive |  | 4 | 2.64 | 4.78 | 0.25 | n_too_small | 2.21 | 0.75 |
+| T2_measured | fuellib | ideal_le_chatelier | designated | descriptive |  | 4 | 2.44 | 4.73 | 0.25 | n_too_small | 3.7 | 0.75 |
+| T2_measured | pooled | api_as_shipped | designated | descriptive |  | 70 | 0.0961 | 2.19 | 0.0571 | beats_trivial | 2.21 | 0.9 |
+| T2_measured | pooled | ideal_le_chatelier | designated | descriptive |  | 70 | 0.0585 | 2.2 | 0.0571 | beats_trivial | 3.7 | 0.929 |
 | T3_ajftd | ajftd_bulk_locked_all | const | designated | already_read |  | 8 | 1.28 | 4.69 |  | not_applicable | 7.03 | 0.864 |
 | T3_ajftd | ajftd_bulk_locked_all | hgb | designated | already_read |  | 8 | 0.322 | 2.55 |  | no_skill_shown | 13.4 | 0.992 |
 | T3_ajftd | ajftd_bulk_locked_all | ridge | designated | already_read |  | 8 | 1.33 | 3.76 |  | no_skill_shown | 23.8 | 1 |
@@ -274,27 +274,27 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | CRC647_r3 | crc647_r3 | unifac_le_chatelier | unifac_lfl_overlay | fold_b |  | 12 | 0.514 | 3.15 | 0.0833 | not_applicable |  |  |
 | T1_lab | lab_mixtures_31_systems | ideal_le_chatelier | lfl_overlay | dev |  | 31 | -3.25 | 3.69 | 0.00794 | not_applicable |  |  |
 | T1_lab | lab_mixtures_31_systems | ideal_le_chatelier | mesitylene_fixed | dev |  | 31 | -3.59 | 3.89 | 0.00794 | not_applicable |  |  |
-| T2_measured | ajftd_gcxgc | ideal_le_chatelier | lfl_overlay | descriptive |  | 31 | -0.478 | 3.31 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
-| T2_measured | ajftd_gcxgc | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 31 | -0.841 | 3.65 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
-| T2_measured | ajftd_gcxgc | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 31 | -0.994 | 3.72 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
-| T2_measured | av3322 | ideal_le_chatelier | lfl_overlay | descriptive |  | 35 | -1.14 | 1.55 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | av3322 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 35 | -1.46 | 1.69 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | av3322 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 35 | -1.39 | 1.62 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D56 | ideal_le_chatelier | lfl_overlay | descriptive |  | 28 | -1.13 | 1.61 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D56 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 28 | -1.42 | 1.7 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D56 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 28 | -1.35 | 1.65 | 0 | beats_trivial | 3.7 | 1 |
-| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | lfl_overlay | descriptive |  | 32 | -0.271 | 3.05 | 0.0938 | beats_trivial | 3.7 | 0.906 |
-| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 32 | -0.661 | 3.38 | 0.0938 | beats_trivial | 3.7 | 0.906 |
-| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 32 | -0.775 | 3.41 | 0.0938 | beats_trivial | 3.7 | 0.906 |
-| T2_measured | family_other | ideal_le_chatelier | lfl_overlay | descriptive |  | 10 | -0.799 | 3.77 | 0.1 | no_skill_shown | 3.7 | 0.9 |
-| T2_measured | family_other | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 10 | -1.12 | 4.09 | 0.1 | no_skill_shown | 3.7 | 0.9 |
-| T2_measured | family_other | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 10 | -1.24 | 4.11 | 0.1 | no_skill_shown | 3.7 | 0.9 |
-| T2_measured | fuellib | ideal_le_chatelier | lfl_overlay | descriptive |  | 4 | 1.57 | 5.86 | 0.25 | n_too_small | 3.7 | 0.75 |
-| T2_measured | fuellib | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 4 | 1.31 | 6.12 | 0.25 | n_too_small | 3.7 | 0.75 |
-| T2_measured | fuellib | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 4 | 1.1 | 6.07 | 0.25 | n_too_small | 3.7 | 0.75 |
-| T2_measured | pooled | ideal_le_chatelier | lfl_overlay | descriptive |  | 70 | -0.692 | 2.58 | 0.0571 | beats_trivial | 3.7 | 0.943 |
-| T2_measured | pooled | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 70 | -1.03 | 2.81 | 0.0571 | beats_trivial | 3.7 | 0.943 |
-| T2_measured | pooled | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 70 | -1.07 | 2.81 | 0.0571 | beats_trivial | 3.7 | 0.943 |
+| T2_measured | ajftd_gcxgc | ideal_le_chatelier | lfl_overlay | descriptive |  | 31 | 0.00194 | 2.92 | 0.0968 | beats_trivial | 3.7 | 0.871 |
+| T2_measured | ajftd_gcxgc | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 31 | -0.371 | 3.27 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
+| T2_measured | ajftd_gcxgc | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 31 | -0.523 | 3.34 | 0.0968 | no_skill_shown | 3.7 | 0.903 |
+| T2_measured | av3322 | ideal_le_chatelier | lfl_overlay | descriptive |  | 35 | -0.112 | 1.24 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | av3322 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 35 | -0.46 | 1.22 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | av3322 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 35 | -0.378 | 1.18 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D56 | ideal_le_chatelier | lfl_overlay | descriptive |  | 28 | 0.013 | 1.31 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D56 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 28 | -0.297 | 1.25 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D56 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 28 | -0.221 | 1.21 | 0 | beats_trivial | 3.7 | 1 |
+| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | lfl_overlay | descriptive |  | 32 | 0.0688 | 2.84 | 0.0938 | beats_trivial | 3.7 | 0.875 |
+| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 32 | -0.329 | 3.13 | 0.0938 | beats_trivial | 3.7 | 0.906 |
+| T2_measured | family_D93_or_IP170 | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 32 | -0.441 | 3.18 | 0.0938 | beats_trivial | 3.7 | 0.906 |
+| T2_measured | family_other | ideal_le_chatelier | lfl_overlay | descriptive |  | 10 | 0.417 | 2.55 | 0.1 | no_skill_shown | 3.7 | 0.9 |
+| T2_measured | family_other | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 10 | 0.0672 | 2.9 | 0.1 | no_skill_shown | 3.7 | 0.9 |
+| T2_measured | family_other | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 10 | -0.0506 | 2.92 | 0.1 | no_skill_shown | 3.7 | 0.9 |
+| T2_measured | fuellib | ideal_le_chatelier | lfl_overlay | descriptive |  | 4 | 2.64 | 4.78 | 0.25 | n_too_small | 3.7 | 0.75 |
+| T2_measured | fuellib | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 4 | 2.36 | 5.07 | 0.25 | n_too_small | 3.7 | 0.75 |
+| T2_measured | fuellib | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 4 | 2.16 | 5.01 | 0.25 | n_too_small | 3.7 | 0.75 |
+| T2_measured | pooled | ideal_le_chatelier | lfl_overlay | descriptive |  | 70 | 0.0961 | 2.19 | 0.0571 | beats_trivial | 3.7 | 0.929 |
+| T2_measured | pooled | ideal_le_chatelier | lfl_overlay+mesitylene_fixed | descriptive |  | 70 | -0.26 | 2.35 | 0.0571 | beats_trivial | 3.7 | 0.943 |
+| T2_measured | pooled | ideal_le_chatelier | mesitylene_fixed | descriptive |  | 70 | -0.297 | 2.36 | 0.0571 | beats_trivial | 3.7 | 0.943 |
 | T3_ajftd | ajftd_bulk_locked_all | api_2b7_t10 | unverified_coefficients | already_read |  | 8 | 6.27 | 6.35 |  | no_skill_shown | 11.1 | 0.936 |
 | T3_ajftd | ajftd_bulk_locked_all | butler_t10 | unverified_coefficients | already_read |  | 8 | 2.65 | 3.91 |  | no_skill_shown | 7.33 | 0.941 |
 | T3_ajftd | ajftd_bulk_logo_all | api_2b7_t10 | unverified_coefficients | dev |  | 32 | 1.96 | 9.5 |  | worse_than_trivial | 11.1 | 0.901 |
@@ -350,9 +350,9 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | CRC647_r3 | crc647_r3 | ga_comp_H | designated | dev |  | 45 | 0.376 | 0.376 |  | worse_than_trivial | 0.224 | 0.0222 |
 | CRC647_r3 | crc647_r3 | ga_comp_H | designated | fold_b |  | 12 | 0.395 | 0.395 |  | worse_than_trivial | 0.224 | 0.0833 |
-| T2_measured | ajftd_gcxgc_measured | ga_comp_H | designated | descriptive |  | 28 | 0.348 | 0.35 |  | no_skill_shown |  |  |
-| T2_measured | av3322 | ga_comp_H | designated | descriptive |  | 35 | 0.0938 | 0.0971 |  | no_skill_shown |  |  |
-| T2_measured | measured_pooled | ga_comp_H | designated | descriptive |  | 28 | 0.348 | 0.35 |  | no_skill_shown |  |  |
+| T2_measured | ajftd_gcxgc_measured | ga_comp_H | designated | descriptive |  | 28 | 0.358 | 0.36 |  | no_skill_shown |  |  |
+| T2_measured | av3322 | ga_comp_H | designated | descriptive |  | 35 | 0.131 | 0.131 |  | no_skill_shown |  |  |
+| T2_measured | measured_pooled | ga_comp_H | designated | descriptive |  | 28 | 0.358 | 0.36 |  | no_skill_shown |  |  |
 | T3_ajftd | R-S4b-1_measured | C_all | designated | dev |  | 16 |  | 0.407 |  | worse_than_trivial |  |  |
 | T3_ajftd | R-S4b-1_measured | hgb | designated | dev |  | 16 |  | 0.203 |  | beats_trivial |  |  |
 | T3_ajftd | R-S4b-1_measured | ridge | designated | dev |  | 16 |  | 0.26 |  | beats_trivial |  |  |
@@ -373,9 +373,9 @@ Designated rows first, then variants and alternative models.  Rows with a temper
 | T3_ajftd | ajftd_bulk_logo_all | ridge | designated | dev |  | 33 | -0.00713 | 0.16 |  | beats_trivial | 0.377 | 0.901 |
 | CRC647_r3 | crc647_r3 | ga_const_H | const_H | dev |  | 45 | 0.433 | 0.433 |  | worse_than_trivial | 0.194 | 0.0222 |
 | CRC647_r3 | crc647_r3 | ga_const_H | const_H | fold_b |  | 12 | 0.47 | 0.47 |  | worse_than_trivial | 0.194 | 0.0833 |
-| T2_measured | ajftd_gcxgc_measured | ga_const_H | const_H | descriptive |  | 28 | 0.553 | 0.553 |  | worse_than_trivial |  |  |
-| T2_measured | av3322 | ga_const_H | const_H | descriptive |  | 35 | 0.102 | 0.113 |  | no_skill_shown |  |  |
-| T2_measured | measured_pooled | ga_const_H | const_H | descriptive |  | 28 | 0.553 | 0.553 |  | worse_than_trivial |  |  |
+| T2_measured | ajftd_gcxgc_measured | ga_const_H | const_H | descriptive |  | 28 | 0.564 | 0.564 |  | worse_than_trivial |  |  |
+| T2_measured | av3322 | ga_const_H | const_H | descriptive |  | 35 | 0.143 | 0.143 |  | worse_than_trivial |  |  |
+| T2_measured | measured_pooled | ga_const_H | const_H | descriptive |  | 28 | 0.564 | 0.564 |  | worse_than_trivial |  |  |
 
 ## smoke_point_mm
 
