@@ -1,0 +1,13 @@
+path,cause,n_rows
+results/v5/BASE/SCOREBOARD.md,derived (rendered from scoreboard.csv / cells_*.csv: cause as for the source cells),1
+results/v5/BASE/rows_t2_bulk.csv,D3_overlay:by_code_path,6
+results/v5/BASE/rows_t2_bulk.csv,D3_overlay:by_recompute,3
+results/v5/BASE/rows_t2_bulk.csv,PRE_api_route+D3_overlay:by_recompute,9
+results/v5/BASE/rows_t2_bulk.csv,PRE_api_route:by_recompute,17
+results/v5/BASE/rows_t2_flash.csv,D3_overlay:by_code_path,4
+results/v5/BASE/rows_t2_flash.csv,PRE_api_route+D3_overlay:by_recompute,2
+results/v5/BASE/rows_t2_flash.csv,PRE_api_route:by_recompute,5
+results/v5/BASE/rows_t2_flash_api_differences.csv,D3_overlay:by_code_path,1
+results/v5/BASE/rows_t2_flash_api_differences.csv,PRE_api_route+D3_overlay:by_recompute,2
+results/v5/BASE/rows_t2_flash_api_differences.csv,PRE_api_route:by_recompute,4
+results/v5/BASE/rows_t2_flash_outliers.csv,D3_overlay:by_code_path,2

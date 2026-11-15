@@ -1,0 +1,3 @@
+property,tier,set,model,variant,label,n_systems,n_rows,mae,bias,mae_constant,margin_alpha10,frac_unsafe,source
+freezing_point_C,T1_lab,lab_liquidus_S_F,svl_unifac,designated (CLM-73),dev,12,73,3.9346358792270113,2.4663329942773733,15.634119098176043,13.84274050383641,0.2602739726027397,results/v5/BASE/delta_freeze_adopt/summary.csv
+freezing_point_C,T1_lab,lab_liquidus_S_F,svl_verified,variant (ideal SvL),dev,12,73,4.474105164918062,1.1699911108508088,15.634119098176043,16.975450975521966,0.3287671232876712,results/v5/BASE/delta_freeze_adopt/summary.csv
