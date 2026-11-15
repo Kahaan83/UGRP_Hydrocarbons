@@ -17,6 +17,8 @@ and ``flash_point_unifac_detail`` reports ``fallback_components``.
 """
 from __future__ import annotations
 
+import os
+
 import warnings
 from functools import lru_cache
 from pathlib import Path
@@ -112,9 +114,22 @@ def unifac_subgroups(smiles: str) -> Optional[Dict[int, int]]:
 
 
 # --------------------------------------------------------------------------- registry
+REGISTRY_ADDITIONS_CSV = Path(__file__).resolve().parents[3] / "data" / "processed" / "v5" / "flash_registry_additions.csv"
+REGISTRY_ADDITIONS_ENV = "FUELBLEND_FLASH_REGISTRY_ADDITIONS"
+
+
+def _with_additions(reg: pd.DataFrame) -> pd.DataFrame:
+    """delta_pool_bicyclohexyl: rows of ``REGISTRY_ADDITIONS_CSV`` replace the same-InChIKey base rows (opt-in, env var = "1")."""
+    add = pd.read_csv(REGISTRY_ADDITIONS_CSV)
+    keep = reg[~reg["inchikey"].isin(add["inchikey"])]
+    return pd.concat([keep, add[[c for c in reg.columns if c in add.columns]]], ignore_index=True)
+
+
 @lru_cache(maxsize=1)
 def _default_registry() -> pd.DataFrame:
     reg = pd.read_csv(REGISTRY_CSV)
+    if os.environ.get(REGISTRY_ADDITIONS_ENV) == "1":
+        reg = _with_additions(reg)
     reg["can"] = reg["smiles"].map(lambda s: Chem.MolToSmiles(Chem.MolFromSmiles(s)))
     return reg.drop_duplicates("can").set_index("can")
 

@@ -1,0 +1,3 @@
+compound,inchikey,thermo_method,A,B,C,max_abs_log10_resid,tb_antoine_C,tb_literature_C,tb_diff_C,gate_tb_within_10C,lfl_vol_pct,lfl_source,flash_pure_pred_C,flash_meas_C,flash_meas_median_C
+bicyclohexyl,WVIIMZNLDWSIRH-UHFFFAOYSA-N,LANDOLT,7.33984,2697.29,2.4595e-10,1.50102e-13,232.517,239,-6.48295,True,0.6507,estimated: 0.55*Cst (Jones rule),85.4969,91.85;74.00;92.20;74.00;91.85;74.00;73.85;91.85;74.00,74
+decalin_cis,NNBZCPXTIHJBJL-AOOOYVTPSA-N,ANTOINE_POLING,7.28543,2406.36,-5.07415,0.0030189,187.698,195.8,-8.10174,True,0.7834,estimated: 0.55*Cst (Jones rule),57.7359,56.85;57.20;58.00;58.00;57.85;50.00,57.525

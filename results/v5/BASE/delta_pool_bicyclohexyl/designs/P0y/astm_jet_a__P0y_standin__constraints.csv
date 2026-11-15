@@ -1,0 +1,13 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+astm_jet_a__P0y_standin,density_15C_kg_m3,pass,787.518126179523,4.5866,0.12202347968497039,775.0,840.0,ideal_volume_rho15,,
+astm_jet_a__P0y_standin,flash_point_C,uncertified,,,,38.0,,le_chatelier_ideal,,model unavailable: decalin_cis.MW status=unverified
+astm_jet_a__P0y_standin,freezing_point_C,pass,-100.40871921778415,16.975450975521966,1.0858317060565548,,-40.0,ideal_sle_mole_fraction,,
+astm_jet_a__P0y_standin,kin_visc_m20C_cSt,pass,2.665899326761924,0.28747778594508044,0.5557742041457643,,8.0,refutas+ml_pair_gn,,
+astm_jet_a__P0y_standin,nhoc_MJ_kg,uncertified,,,,42.8,,gcv_group_additivity_constH,,model unavailable: decalin_cis.MW status=unverified
+astm_jet_a__P0y_standin,aromatics_wt_pct,by_construction,11.42372602458967,0.0,0.5430509590164132,,25.0,class_mass_fraction,,
+astm_jet_a__P0y_standin,aromatics_vol_pct,by_construction,10.074399154651884,0.0,0.12202347968540493,8.0,25.0,class_volume_fraction,verified,
+astm_jet_a__P0y_standin,smoke_point_mm,pass,24.303492495028788,4.107069860688682,0.12202347968556143,18.0,,ajftd_bulk_regression,verified,limit used: alt_min 18 with naphthalenes_vol_pct_max: by_construction (pred 0)
+astm_jet_a__P0y_standin,distillation_T10_C,pass,116.43634265681565,7.927706228297922,0.39334610299944595,,205.0,antoine_tb_d86:T10,verified,
+astm_jet_a__P0y_standin,distillation_FBP_C,pass,230.3091515835339,3.2620795453688913,0.22142922957032407,,300.0,antoine_tb_d86:FBP,verified,
+astm_jet_a__P0y_standin,distillation_T50_minus_T10_C,pass,47.74334854906279,18.68126547110495,0.9374722051971891,15.0,,antoine_tb_d86:T50_T10,verified,
+astm_jet_a__P0y_standin,distillation_T90_minus_T10_C,pass,78.94171976676772,18.246505125791458,0.5173803660244065,40.0,,antoine_tb_d86:T90_T10,verified,
