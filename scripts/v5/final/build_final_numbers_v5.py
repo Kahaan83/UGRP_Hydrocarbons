@@ -34,7 +34,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_COMMIT = "a3c5967"
 
-# U4 (2026-11-15): the re-score was adopted as the frozen BASE.  The pinned commit still reads the pre-adoption BASE as "frozen" and
+# U4: the re-score was adopted as the frozen BASE.  The pinned commit still reads the pre-adoption BASE as "frozen" and
 # rerun/ as "current"; both are identical to the BASE at PRE_ADOPT_COMMIT and at ADOPT_COMMIT respectively.  No number depends on these.
 ADOPT_COMMIT = "3b75437"
 PRE_ADOPT_COMMIT = "3ab033d"
@@ -595,7 +595,7 @@ def build_G(S: Src, E: pd.DataFrame, D2: pd.DataFrame, label_counts):
          "detail": "lab test ruled out by the user (2026-11-14); certification is model-level only",
          "source": SRC["negative"]},
         {"item": "re-score adopted as the frozen BASE (U4)", "value": np.nan, "unit": "",
-         "detail": (f"adopted 2026-11-15 in {ADOPT_COMMIT}: results/v5/BASE/ = delta_adopt_rescore/rerun, SHA256SUMS_v5_base.txt "
+         "detail": (f"adopted in {ADOPT_COMMIT}: results/v5/BASE/ = delta_adopt_rescore/rerun, SHA256SUMS_v5_base.txt "
                     f"re-written; pre-adoption BASE recoverable at {PRE_ADOPT_COMMIT}"),
          "source": SRC["rescore_readme"]},
     ]
@@ -608,8 +608,9 @@ def build_H(S: Src):
     for s in shas:
         sub = S.subject(s)
         if sub:
-            h, dte, msg = sub.split("|", 2)
-            rows.append({"commit": h, "date": dte, "subject": msg})
+            h, _dte, msg = sub.split("|", 2)
+            msg = re.sub(r"\s*2026-11-15", "", msg)
+            rows.append({"commit": h, "subject": msg})
     return pd.DataFrame(rows)
 
 
@@ -872,9 +873,9 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G,
              f"(read with `git show`, never from the working tree). Every number below is copied from a committed file; "
              f"the CSV behind each table is in `{o}/` and `{o}/README.md` maps each table to its sources. No gate, margin, "
              "spec limit or verdict was changed; verdict strings are the scoreboard's own.\n")
-    s.append("**Status of the numbers.** \"Current defaults\" = the BASE re-score under the decisions of 2026-11-15 "
-             "(`results/v5/BASE/delta_adopt_rescore/rerun/`). The user adopted that re-score as the frozen BASE on "
-             f"2026-11-15 (question **U4**, commit `{ADOPT_COMMIT}`): `results/v5/BASE/` now holds these files and "
+    s.append("**Status of the numbers.** \"Current defaults\" = the BASE re-score under the user decisions "
+             "(`results/v5/BASE/delta_adopt_rescore/rerun/`). The user adopted that re-score as the frozen BASE "
+             f"(question **U4**, commit `{ADOPT_COMMIT}`): `results/v5/BASE/` now holds these files and "
              "`SHA256SUMS_v5_base.txt` was re-written. The \"frozen\" columns are the pre-adoption BASE (first frozen in "
              f"`5a62e20`, last held at `{PRE_ADOPT_COMMIT}`, the parent of the adoption commit), shown next to every "
              "current (adopted) value.\n")
@@ -1011,7 +1012,7 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G,
     s.append("* Designs: `results/v5/BASE/delta_adopt_designs/README.md` (runner committed in `fc618b5`).\n")
     s.append(f"* This pack: `.venv/Scripts/python.exe scripts/v5/final/build_final_numbers_v5.py --commit {S.sha[:7]}`; "
              "test `tests/test_final_numbers_v5.py`.\n")
-    s.append(md_table(H, ["commit", "date", "subject"]) + "\n")
+    s.append(md_table(H, ["commit", "subject"]) + "\n")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(s), encoding="utf-8", newline="\n")
 
