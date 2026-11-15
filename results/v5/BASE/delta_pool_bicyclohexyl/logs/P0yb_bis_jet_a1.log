@@ -1,0 +1,37 @@
+bicyclohexyl registry entry: ((7.33984236901912, 2697.291637695059, 2.4594958906412785e-10), 0.6507)
+decalin_cis registry entry: ((7.285434417901836, 2406.358667164254, -5.074150706116378), 0.7834)
+{
+ "design_id": "bis_jet_a1__P0yb_standin",
+ "spec": "bis:jet_a1",
+ "passed": true,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.093, \"n-undecane\": 0.0786, \"n-dodecane\": 0.0143, \"butylcyclohexane\": 0.2473, \"decalin_trans\": 0.0164, \"1,2,4-trimethylbenzene\": 0.1435, \"isooctane\": 0.0348, \"tetralin\": 0.0, \"n-tridecane\": 0.013, \"hexylbenzene\": 0.0, \"bicyclohexyl\": 0.3592}",
+ "weights": "{\"n-decane\": 0.093, \"n-undecane\": 0.07857, \"n-dodecane\": 0.01433, \"butylcyclohexane\": 0.24734, \"decalin_trans\": 0.01637, \"1,2,4-trimethylbenzene\": 0.1435, \"isooctane\": 0.03476, \"n-tridecane\": 0.01298, \"bicyclohexyl\": 0.35916}",
+ "opt_best_objective": -0.024667679979930916,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 3,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": 0.005765303917903663,
+ "opt_uncertainty_U": 0.12173193559136175,
+ "opt_alt_standin": true,
+ "build_s": 11.7,
+ "design_s": 1523.8,
+ "pool": "P0yb",
+ "n_compounds": 11,
+ "d86": true,
+ "alt_standin": true,
+ "registry_additions": true
+}
+  density_15C_kg_m3              pass             pred 823.7 slack +0.20073 margin 4.5866  
+  flash_point_C                  pass             pred 40.426 slack +0.00577 margin 2.206932808388615  lab_margin_set_by_one_system
+  freezing_point_C               pass             pred -64.246 slack +0.00577 margin 16.975450975521966  
+  kin_visc_m20C_cSt              pass             pred 4.2291 slack +0.29529 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.241 slack +0.00577 margin 0.1940195141400025  
+  aromatics_vol_pct              by_construction  pred 13.432 slack +0.31953 margin 0.0  
+  smoke_point_mm                 pass             pred 23.217 slack +0.00577 margin 4.107069860688682  limit used: alt_min 19 with naphthalenes_vol_pct_max: by_construction (pred 0)
+  distillation_T10_C             pass             pred 146.95 slack +0.24451 margin 7.927706228297922  
+  distillation_FBP_C             pass             pred 232.39 slack +0.21449 margin 3.2620795453688913  
+  distillation_T50_minus_T10_C   pass             pred 33.768 slack +0.00577 margin 18.68126547110495  
+  distillation_T90_minus_T10_C   pass             pred 69.245 slack +0.27497 margin 18.246505125791458  

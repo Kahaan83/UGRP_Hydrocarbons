@@ -1,0 +1,12 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+bis_jet_a1__P0yb_standin,density_15C_kg_m3,pass,823.7027486713383,4.5866,0.2007287758255643,775.0,840.0,ideal_volume_rho15,,
+bis_jet_a1__P0yb_standin,flash_point_C,pass,40.4260143595007,2.206932808388615,0.005765303976633767,38.0,,le_chatelier_ideal,,lab_margin_set_by_one_system
+bis_jet_a1__P0yb_standin,freezing_point_C,pass,-64.24642025966344,16.975450975521966,0.005765303917903663,,-47.0,ideal_sle_mole_fraction,,
+bis_jet_a1__P0yb_standin,kin_visc_m20C_cSt,pass,4.229100993566693,0.28747778594508044,0.29529381107688146,,8.0,refutas+ml_pair_gn,,
+bis_jet_a1__P0yb_standin,nhoc_MJ_kg,pass,43.24077452433848,0.1940195141400025,0.0057653039765999305,42.8,,gcv_group_additivity_constH,,
+bis_jet_a1__P0yb_standin,aromatics_vol_pct,by_construction,13.432090712027067,0.0,0.3195347477662981,8.0,25.0,class_volume_fraction,verified,
+bis_jet_a1__P0yb_standin,smoke_point_mm,pass,23.21661063624459,4.107069860688682,0.005765303976626662,19.0,,ajftd_bulk_regression,verified,limit used: alt_min 19 with naphthalenes_vol_pct_max: by_construction (pred 0)
+bis_jet_a1__P0yb_standin,distillation_T10_C,pass,146.9476548870266,7.927706228297922,0.24451043358378283,,205.0,antoine_tb_d86:T10,verified,
+bis_jet_a1__P0yb_standin,distillation_FBP_C,pass,232.39063711347976,3.2620795453688913,0.2144909444705045,,300.0,antoine_tb_d86:FBP,verified,
+bis_jet_a1__P0yb_standin,distillation_T50_minus_T10_C,pass,33.7677450307786,18.68126547110495,0.005765303978243234,15.0,,antoine_tb_d86:T50_T10,verified,
+bis_jet_a1__P0yb_standin,distillation_T90_minus_T10_C,pass,69.24526283601568,18.246505125791458,0.2749689427556056,40.0,,antoine_tb_d86:T90_T10,verified,
