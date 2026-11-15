@@ -27,7 +27,7 @@ def _ik(s):
 
 def test_verified_map_content():
     t = build_tmap_verified()
-    assert len(t) == 45                                           # 47 csv rows (39 + 7 upgraded 2026-11-14 + hexylbenzene 2026-11-15); stereo-unspecified decalin and 1-hexyne have no constants
+    assert len(t) == 49                                           # 51 csv rows (39 + 7 upgraded 2026-11-14 + hexylbenzene 2026-11-15 + n-nonane, 2,3-dimethylbutane, m-/p-xylene from primary papers 2026-11-15); stereo-unspecified decalin and 1-hexyne have no constants
     u = t[_ik(UNDECANE)]
     assert u["tm_K"] == pytest.approx(247.59) and u["dh_fus_J_mol"] == pytest.approx(29037.0)    # total incl. solid-solid for the odd alkane
     assert t[_ik("c1ccc2c(c1)Cc1ccccc1-2")]["tm_K"] == pytest.approx(387.94)       # fluorene: not benzene's 278.7 K (Coutinho defect)
@@ -117,7 +117,7 @@ def test_design_model_carries_margin_key_and_flags_coutinho_members():
     c = E.evaluate_constraint("freezing_point_C", {"max": 0.0}, models["pool"], np.array([0.4, 0.2, 0.4]), models, margins, kind="jet")
     assert c.applied_margin == pytest.approx(margins[KEY]["applied_margin"]) and c.status in ("pass", "fail")
     assert c.slack == pytest.approx((0.0 - (c.prediction + c.applied_margin)) / 1.0) or c.status == "fail"
-    # a pool member on a Coutinho entry (n-nonane has no verified constant) keeps freezing uncertified
-    m2 = LR.build_route_models(names + ["C" * 9])
+    # a pool member on a Coutinho entry (ethylbenzene has no verified constant; n-nonane gained one 2026-11-15) keeps freezing uncertified
+    m2 = LR.build_route_models(names + ["CCc1ccccc1"])
     c2 = E.evaluate_constraint("freezing_point_C", {"max": 0.0}, m2["pool"], np.array([0.3, 0.2, 0.3, 0.2]), m2, margins, kind="jet")
     assert c2.status == "uncertified" and "non-verified constant" in c2.reason
