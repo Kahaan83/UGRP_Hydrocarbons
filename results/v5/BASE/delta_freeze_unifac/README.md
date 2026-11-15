@@ -54,3 +54,18 @@ user decision.
 
 ### R-FU-2 (all verified ThermoML, any T and carbon number, 40 systems, 643 rows; descriptive)
 svl_verified MAE 4.24, margin 17.81; svl_unifac MAE 3.92, margin 17.23. UNIFAC is a small improvement on the wider set too.
+
+### R-FU-3 (stored pure-pool optima, counterfactual; `r_fu_3_designs.csv`)
+UNIFAC moves the predicted freezing point of these alkane-dominated recipes by only 0.3-5 C; the change that matters is the margin
+(16.98 -> 13.84 C). Freezing bound (prediction + margin) vs limit:
+
+| recipe | limit | ideal + 16.98 | UNIFAC + 13.84 |
+|---|---|---|---|
+| pool C Jet A (lam 0.25) | -40 | -41.7 pass | -44.5 pass |
+| pool C Jet A-1 (lam 0.25) | -47 | -49.0 pass | -51.8 pass |
+| P0 Jet A / Jet A-1 | -40 / -47 | -33.7 / -36.5 fail | -36.5 / -38.8 fail |
+| P0x-a Jet A / Jet A-1 | | -36.1 / -39.9 fail | -38.4 / -42.2 fail |
+| P0x-b Jet A / Jet A-1 | | -37.0 / -42.0 fail | **-39.6** / -44.8 fail (Jet A short by 0.4 C) |
+
+No stored recipe flips. P0x-a/b also fail flash, smoke and (physically, delta_d86_rayleigh) T90-T10, so adoption alone would not certify
+them; it would give a re-run optimiser about 3 C more freezing room.

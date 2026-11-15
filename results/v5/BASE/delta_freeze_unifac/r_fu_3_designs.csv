@@ -1,0 +1,13 @@
+file,design_id,spec,limit_C,ideal_C,ideal_bound_C,ideal_pass,unifac_C,unifac_bound_C,unifac_pass,unifac_fallback
+delta_ws7_design_realism,astm_jet_a__poolC_lam025,astm:jet_a,-40.000,-58.638,-41.663,True,-58.368,-44.526,True,False
+delta_ws7_design_realism,astm_jet_a__poolC_lam0,astm:jet_a,-40.000,-57.723,-40.748,True,-57.463,-43.620,True,False
+delta_ws7_design_realism,bis_jet_a1__poolC_lam025,bis:jet_a1,-47.000,-65.936,-48.961,True,-65.603,-51.761,True,False
+delta_ws7_design_realism,bis_jet_a1__poolC_lam0,bis:jet_a1,-47.000,-64.706,-47.730,True,-64.395,-50.552,True,False
+delta_ws7_design_realism,astm_jet_a__P0,astm:jet_a,-40.000,-50.680,-33.705,False,-50.356,-36.513,False,False
+delta_ws7_design_realism,bis_jet_a1__P0,bis:jet_a1,-47.000,-53.430,-36.454,False,-52.674,-38.831,False,False
+delta_smoke_branch_opt,astm_jet_a__P0xa_standin,astm:jet_a,-40.000,-53.052,-36.077,False,-52.266,-38.423,False,False
+delta_smoke_branch_opt,bis_jet_a1__P0xa_standin,bis:jet_a1,-47.000,-56.883,-39.907,False,-56.020,-42.178,False,False
+delta_smoke_branch_opt,astm_jet_a__P0xb_standin,astm:jet_a,-40.000,-54.011,-37.036,False,-53.421,-39.578,False,False
+delta_smoke_branch_opt,bis_jet_a1__P0xb_standin,bis:jet_a1,-47.000,-58.981,-42.005,False,-58.666,-44.823,False,False
+P0y,astm_jet_a__P0y_standin,astm:jet_a,-40.000,-100.408,-83.433,True,-95.397,-81.554,True,False
+P0y,bis_jet_a1__P0y_standin,bis:jet_a1,-47.000,-100.648,-83.672,True,-95.388,-81.545,True,False
