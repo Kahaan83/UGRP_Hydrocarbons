@@ -94,7 +94,7 @@ def add_freezing_unifac(doc):
     doc["margins"][FU_KEY] = {
         "value": m, "unit": "C", "direction": "under", "alpha": 0.1, "n_groups": n_sys, "group_unit": "system_id",
         "n_rows": n_rows, "residual_file": "results/v5/BASE/delta_freeze_adopt/rows.csv", "applied_margin": m,
-        "model": "UNIFAC (thermo, Dortmund groups as flash_unifac.make_unifac_gamma_fn) Schroeder-van Laar, verified Tm / dHfus",
+        "model": "UNIFAC (thermo, original UNIFAC groups, flash_unifac.make_unifac_gamma_fn; vectorised as flash_unifac.make_unifac_gamma_fn_vec) Schroeder-van Laar, verified Tm / dHfus",
         "scope": ideal["scope"] + (f" [delta_freeze_adopt scope (C): the same rule plus measured eutectic points (ThermoML eutectics of in-scope "
                                    f"systems and Pitzer & Scott 1943 xylene eutectics), {n_sys} systems, {n_rows} rows, one ternary.]"),
         "residual_convention": ideal["residual_convention"],

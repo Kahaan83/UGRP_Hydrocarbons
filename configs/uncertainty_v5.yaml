@@ -2519,7 +2519,7 @@ margins:
     n_rows: 73
     residual_file: results/v5/BASE/delta_freeze_adopt/rows.csv
     applied_margin: 13.84274050383641
-    model: UNIFAC (thermo, Dortmund groups as flash_unifac.make_unifac_gamma_fn) Schroeder-van Laar, verified Tm / dHfus
+    model: UNIFAC (thermo, original UNIFAC groups, flash_unifac.make_unifac_gamma_fn; vectorised as flash_unifac.make_unifac_gamma_fn_vec) Schroeder-van Laar, verified Tm / dHfus
     scope: 'ThermoML liquidus rows, all components C8-C16 hydrocarbons with verified constants, T <= 273.15 K (scope S_F): binaries of n-alkanes,
       naphthalenes, decalins and bicyclohexyl, 9 systems. Valid for known compositions whose every component has a verified Tm and dHfus. [delta_freeze_adopt
       scope (C): the same rule plus measured eutectic points (ThermoML eutectics of in-scope systems and Pitzer & Scott 1943 xylene eutectics),
