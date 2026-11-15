@@ -251,6 +251,11 @@ De-dup rules: (1) drop exact repeats (same source+ref+value) — ~⅓ of raw NIS
 ### 8.0a v5 baseline (2026-11-12)
 The v5 full baseline is frozen in `results/v5/BASE/SCOREBOARD.md` (commit `5a62e20`; plan `docs/superpowers/plans/2026-11-12-v5-full-baseline.md`).
 Part C deltas live in `results/v5/BASE/delta_*/`; claims CLM-42 to CLM-48. Reproduce with `python scripts/v5/base/reproduce_base.py`.
+**Adopted re-score (U4, 2026-11-15, commit 3b75437):** the `delta_adopt_rescore` re-score under the 2026-11-15 defaults is now the frozen BASE
+(`results/v5/BASE/` = `delta_adopt_rescore/rerun/` up to CSV precision; `SHA256SUMS_v5_base.txt` re-written with `--update-manifest`; CLM-74).
+The pre-adoption BASE is recoverable at commit `3ab033d` (parent of the adoption commit). Headline: flash T2 AJFTD GCxGC bias -0.634 -> -0.152 C,
+`no_skill_shown` -> `beats_trivial`; old -> new for every cell in `delta_adopt_rescore/drift.csv`. Do not `git checkout` the BASE CSVs: the manifest
+hashes the CRLF working-tree files while `.gitattributes` stores LF.
 
 ### 8.0 v4/r3 state (tag `v4-r3-final`; latest commit "v4 r3: CRC 647 compositions from measured hydrocarbon types (Table G.1), re-scored")
 Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/claims_register.md`. Facts as reported there:

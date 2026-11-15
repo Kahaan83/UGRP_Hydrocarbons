@@ -34,6 +34,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_COMMIT = "a3c5967"
 
+# U4 (2026-11-15): the re-score was adopted as the frozen BASE.  The pinned commit still reads the pre-adoption BASE as "frozen" and
+# rerun/ as "current"; both are identical to the BASE at PRE_ADOPT_COMMIT and at ADOPT_COMMIT respectively.  No number depends on these.
+ADOPT_COMMIT = "3b75437"
+PRE_ADOPT_COMMIT = "3ab033d"
 RERUN = "results/v5/BASE/delta_adopt_rescore/rerun"
 FROZEN = "results/v5/BASE"
 SRC = {
@@ -590,8 +594,9 @@ def build_G(S: Src, E: pd.DataFrame, D2: pd.DataFrame, label_counts):
         {"item": "no lab validation", "value": 0, "unit": "designs measured",
          "detail": "lab test ruled out by the user (2026-11-14); certification is model-level only",
          "source": SRC["negative"]},
-        {"item": "re-score pending adoption (U4)", "value": np.nan, "unit": "",
-         "detail": "current-default numbers live in delta_adopt_rescore/rerun; frozen BASE and SHA256SUMS_v5_base.txt unchanged",
+        {"item": "re-score adopted as the frozen BASE (U4)", "value": np.nan, "unit": "",
+         "detail": (f"adopted 2026-11-15 in {ADOPT_COMMIT}: results/v5/BASE/ = delta_adopt_rescore/rerun, SHA256SUMS_v5_base.txt "
+                    f"re-written; pre-adoption BASE recoverable at {PRE_ADOPT_COMMIT}"),
          "source": SRC["rescore_readme"]},
     ]
     return pd.DataFrame(G)
@@ -868,9 +873,11 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G,
              f"the CSV behind each table is in `{o}/` and `{o}/README.md` maps each table to its sources. No gate, margin, "
              "spec limit or verdict was changed; verdict strings are the scoreboard's own.\n")
     s.append("**Status of the numbers.** \"Current defaults\" = the BASE re-score under the decisions of 2026-11-15 "
-             "(`results/v5/BASE/delta_adopt_rescore/rerun/`). Adopting that re-score as the frozen BASE is user question "
-             "**U4** and has NOT happened: the frozen BASE (`results/v5/BASE/`, commit `5a62e20`) and "
-             "`SHA256SUMS_v5_base.txt` are unchanged, and are shown next to every current value.\n")
+             "(`results/v5/BASE/delta_adopt_rescore/rerun/`). The user adopted that re-score as the frozen BASE on "
+             f"2026-11-15 (question **U4**, commit `{ADOPT_COMMIT}`): `results/v5/BASE/` now holds these files and "
+             "`SHA256SUMS_v5_base.txt` was re-written. The \"frozen\" columns are the pre-adoption BASE (first frozen in "
+             f"`5a62e20`, last held at `{PRE_ADOPT_COMMIT}`, the parent of the adoption commit), shown next to every "
+             "current (adopted) value.\n")
     s.append("**Certification** means: passes the design judge under the model and the declared margins. No design has "
              "been measured and no lab test is possible (user decision 2026-11-14).\n")
 
@@ -915,8 +922,8 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G,
     s.append("* **D86.** All distillation cells are `no_evaluation` (exploratory) in the scoreboard; no D86 accuracy is "
              "claimed here.\n")
 
-    s.append("## B. What changed versus the frozen BASE, and why\n")
-    s.append(f"{total} scoreboard cells changed between the frozen BASE and the re-score. Cause per cell from "
+    s.append("## B. What changed versus the pre-adoption BASE, and why\n")
+    s.append(f"{total} scoreboard cells changed between the pre-adoption frozen BASE and the re-score (now adopted). Cause per cell from "
              "`drift.csv` (no cell traces to decisions D1, D4, D5 or D7, and none is unattributed):\n")
     s.append(md_table(B, ["cause", "n_cells", "n_designated_rows"]) + "\n")
     s.append("`D3_overlay` = decision 3, flash-registry additions (bicyclohexyl, cis-decalin Antoine + LFL) on by default. "
@@ -998,9 +1005,9 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G,
              "(every T2 fuel has been read); lab flash and freezing margins rest on mostly binary systems.\n")
 
     s.append("## H. Reproduction\n")
-    s.append("* Re-score (current defaults): `.venv/Scripts/python.exe scripts/v5/base/reproduce_base.py --full` "
-             "(writes into `results/v5/BASE/`; see `results/v5/BASE/delta_adopt_rescore/README.md` for the copy/restore "
-             "protocol). Frozen check: `reproduce_base.py` (default).\n")
+    s.append("* Re-score (current defaults, adopted as the frozen BASE in U4): `.venv/Scripts/python.exe "
+             "scripts/v5/base/reproduce_base.py --full` (writes into `results/v5/BASE/`; see "
+             "`results/v5/BASE/delta_adopt_rescore/README.md`). Frozen check: `reproduce_base.py` (default).\n")
     s.append("* Designs: `results/v5/BASE/delta_adopt_designs/README.md` (runner committed in `fc618b5`).\n")
     s.append(f"* This pack: `.venv/Scripts/python.exe scripts/v5/final/build_final_numbers_v5.py --commit {S.sha[:7]}`; "
              "test `tests/test_final_numbers_v5.py`.\n")
@@ -1018,7 +1025,7 @@ Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values 
 
 | file | content | sources |
 |---|---|---|
-| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `{SRC['sb_rerun']}`, `{SRC['sb_frozen']}`, `{SRC['freeze_t2']}` |
+| `table_A_headline.csv` | headline designated rows (current defaults = re-score, adopted as the frozen BASE in U4, plus the pre-adoption BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `{SRC['sb_rerun']}`, `{SRC['sb_frozen']}`, `{SRC['freeze_t2']}` |
 | `table_A_freezing_unifac_lab.csv` | UNIFAC vs ideal SvL on lab liquidus S_F | `{SRC['freeze_summary']}` |
 | `table_A2_t2_per_source.csv` | T2 per-source designated rows | same as table A |
 | `table_B_drift_by_cause.csv` | changed scoreboard cells by cause | `{SRC['drift']}` |
