@@ -1,0 +1,6 @@
+inchikey,name,paper,equation,phase,T_C_lo,T_C_hi,form,a,b,c,note
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,(1),liquid,0.0,50.0,"log10(p/mmHg) = a/T + b*log10(T) + c, T in K (t_C + 273.16)",-2866.53,-6.7,27.647,paper's own fit to Table VII; eq (5) is derived from eq (4) and the measured heat of fusion
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,(2),liquid,0.0,60.0,"log10(p/mmHg) = a/T + b*log10(T) + c, T in K (t_C + 273.16)",-3327.16,-8.0,31.7771,paper's own fit to Table VII; eq (5) is derived from eq (4) and the measured heat of fusion
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,(3),liquid,0.0,60.0,"log10(p/mmHg) = a/T + b*log10(T) + c, T in K (t_C + 273.16)",-2871.66,-5.0,22.927,paper's own fit to Table VII; eq (5) is derived from eq (4) and the measured heat of fusion
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,(4),liquid,13.23,60.0,"log10(p/mmHg) = a/T + b*log10(T) + c, T in K (t_C + 273.16)",-3080.31,-6.7,27.8581,paper's own fit to Table VII; eq (5) is derived from eq (4) and the measured heat of fusion
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,(5),solid,0.0,13.23,"log10(p/mmHg) = a/T + b*log10(T) + c, T in K (t_C + 273.16)",-3141.33,0.0,11.6092,paper's own fit to Table VII; eq (5) is derived from eq (4) and the measured heat of fusion
