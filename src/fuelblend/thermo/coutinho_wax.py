@@ -23,8 +23,33 @@ COUTINHO_BETA = 14.50   # K for solvent dilution (non-paraffin matrix)
 COUTINHO_GAMMA = 0.60   # baseline solid-solution depression
 
 
-def get_pure_thermal_properties(comp_df: pd.DataFrame | None = None) -> dict[str, dict[str, float]]:
-    """Return dictionary of inchikey -> {Tm_K, dHfus_J_mol, n_carbon, cls}."""
+_SPECIAL_AROMATICS = (  # (SMILES, Tm K, dHfus J/mol), in the legacy match order
+    ("Cc1cc(C)c(C)cc1C", 352.4, 21000.0),   # durene
+    ("c1ccc2ccccc2c1", 353.4, 19000.0),     # naphthalene
+    ("Cc1ccc(C)cc1", 286.4, 17100.0),       # p-xylene
+    ("c1ccccc1", 278.7, 9870.0),            # benzene
+)
+
+
+def _canonical_smiles(smi: str):
+    from rdkit import Chem
+    m = Chem.MolFromSmiles(smi) if smi else None
+    return Chem.MolToSmiles(m) if m is not None else None
+
+
+def get_pure_thermal_properties(comp_df: pd.DataFrame | None = None,
+                                aromatic_match: str = "substring") -> dict[str, dict[str, float]]:
+    """Return dictionary of inchikey -> {Tm_K, dHfus_J_mol, n_carbon, cls}.
+
+    ``aromatic_match`` selects how the four tabulated aromatics (durene, naphthalene, p-xylene, benzene) are recognised:
+    ``"substring"`` (default, legacy) tests ``fragment in smiles`` and therefore also hands benzene / p-xylene / naphthalene constants to
+    every alkylbenzene, fluorene, phenanthrene, ... (kept so v4 results reproduce); ``"exact"`` compares RDKit canonical SMILES, and every
+    other aromatic gets NaN."""
+    if aromatic_match not in ("substring", "exact"):
+        raise ValueError(f"aromatic_match must be 'substring' or 'exact', got {aromatic_match!r}")
+    if comp_df is None:
+        comp_df = pd.read_csv(COMPOUNDS_PATH).set_index("inchikey")
+    exact_table = {_canonical_smiles(s): (tm, dh) for s, tm, dh in _SPECIAL_AROMATICS} if aromatic_match == "exact" else None
     if comp_df is None:
         comp_df = pd.read_csv(COMPOUNDS_PATH).set_index("inchikey")
 
@@ -48,8 +73,10 @@ def get_pure_thermal_properties(comp_df: pd.DataFrame | None = None) -> dict[str
             dh_fus = (4.0 * nc - 10.6) * 1000.0  # J/mol
         elif cls == "aromatic":
             smi = str(row.get("smiles", ""))
-            # Known high-melting aromatics
-            if "Cc1cc(C)c(C)cc1C" in smi: # durene
+            if exact_table is not None:
+                tm_k, dh_fus = exact_table.get(_canonical_smiles(smi), (np.nan, np.nan))
+            # Known high-melting aromatics (legacy substring match)
+            elif "Cc1cc(C)c(C)cc1C" in smi: # durene
                 tm_k, dh_fus = 352.4, 21000.0
             elif "c1ccc2ccccc2c1" in smi: # naphthalene
                 tm_k, dh_fus = 353.4, 19000.0
