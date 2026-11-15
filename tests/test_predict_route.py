@@ -346,7 +346,17 @@ def _t2_fuels(n, need_heat=False):
     return out
 
 
-def test_freezing_svl_matches_route(ctx):
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route."""
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_freezing_svl_matches_route(ctx, legacy_freezing):
     reg = ctx.reg
     tmap = build_tmap_designated(build_tmap(reg, [i for i in range(len(reg.ik)) if reg.usable[i]]))   # verified where present, else Coutinho
     fuels = _t2_fuels(5)
@@ -461,7 +471,7 @@ def test_k1_only_at_fitted_T():
     assert "k1_cold_offset_in_sample" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
 
 
-def test_uncertified_props_have_nan_interval():
+def test_uncertified_props_have_nan_interval(legacy_freezing):
     # BLEND3 (toluene) is no longer usable here: CLM-65 (a6b526c) upgraded toluene's Tm/dHfus to verified, so BLEND3 now gets the
     # delta_freeze_margin interval.  Ethylbenzene is not in tm_dhfus_verified.csv (hexylbenzene was upgraded 2026-11-15), so this blend
     # keeps a non-verified (Coutinho) freezing constant.

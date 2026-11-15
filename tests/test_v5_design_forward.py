@@ -149,7 +149,18 @@ def test_category_b_designs_meet_limits_on_api_value():
             assert (lim.forward_pred.map(np.isfinite)).all()
 
 
-def test_design_freezing_equals_api_freezing():
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route."""
+    from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_design_freezing_equals_api_freezing(legacy_freezing):
     """The design freezing model is the API function (ideal SvL, mole fraction, designated verified-else-Coutinho tmap): same value for a recipe."""
     from fuelblend.api import predict_route as pr
     models = LR.build_route_models(V5POOL)

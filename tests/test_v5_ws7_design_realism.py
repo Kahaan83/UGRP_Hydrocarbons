@@ -52,7 +52,19 @@ def test_d86_flag_adds_four_verified_constraints():
         assert not any(k.startswith("distillation_") for k in E.load_spec(sp)["constraints"])
 
 
-def test_pool_c_recipes_identical_with_feature_off():
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route
+    (the frozen JSON baseline was generated under it).  Design models fix the freezing margin key when built, so they are built inside the test."""
+    from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_pool_c_recipes_identical_with_feature_off(legacy_freezing):
     fx = json.load(open(FIX, encoding="utf-8"))["pool_c"]
     now = FX.pool_c_snapshot()
     for spec in fx:

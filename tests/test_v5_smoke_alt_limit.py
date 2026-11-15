@@ -88,7 +88,19 @@ def test_naphthalenes_model_class_fraction():
     assert mod.fn(["methylcyclohexane", "n-decane"], np.array([0.5, 0.5]), None) == 0.0
 
 
-def test_alt_limit_off_unchanged():
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route
+    (the frozen JSON baseline was generated under it).  Design models fix the freezing margin key when built, so they are built inside the test."""
+    from fuelblend.api import predict_route as pr
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_alt_limit_off_unchanged(legacy_freezing):
     """Flag off: the v5pool recipes give exactly the results frozen before the change (tests/data/gen_smoke_alt_baseline.py)."""
     import importlib.util
     spec = importlib.util.spec_from_file_location("gen_base", ROOT / "tests" / "data" / "gen_smoke_alt_baseline.py")
