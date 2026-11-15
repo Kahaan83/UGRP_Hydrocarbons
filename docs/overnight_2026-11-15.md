@@ -86,6 +86,8 @@ are therefore physically far from the D7566 slope requirement (T90-T10 >= 40 C);
   ("T90-T10 Engler 70.4 vs Rayleigh 35.4 C"), so a user of the API sees the D86 caveat without reading this report.
 * Data-consistency finding: with the registry (Jones) LFL, bicyclohexyl's 74 C measured flash needs Tb 210 C (literature 239 C); the 92 C
   cluster is the one consistent with Tb.
+* Undeclared observation: the Jet A-1 recipe has 37.5 wt % dicycloparaffins, above every one of the 113 GCxGC real fuels (max 30 %); the smoke
+  domain rule bounds only total cycloparaffins, so it does not flag this. Jet A (17.3 %) is inside.
 * Opt-in guard `design_pool(..., strict_constraints=True)`: raises when `_Sides` dropped a constraint as unavailable; default off.
 
 ## Data search
