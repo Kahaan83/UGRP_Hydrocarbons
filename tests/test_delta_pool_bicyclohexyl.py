@@ -46,3 +46,10 @@ def test_strict_constraints_guard_raises_on_dropped_constraint(monkeypatch):
     finally:
         monkeypatch.delenv(fu.REGISTRY_ADDITIONS_ENV)
         fu._default_registry.cache_clear()
+
+
+def test_strict_constraints_is_default():
+    """Decision 6 (2026-11-15): a pool whose spec constraint is dropped by _Sides is refused unless the caller opts out."""
+    import inspect
+    from fuelblend.design import blendstock_v5 as B
+    assert inspect.signature(B.design_pool).parameters["strict_constraints"].default is True

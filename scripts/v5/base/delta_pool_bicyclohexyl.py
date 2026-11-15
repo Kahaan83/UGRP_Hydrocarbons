@@ -107,7 +107,10 @@ def cmd_design(a):
     models = B.add_d86_models(B.build_models(bp))
     t1 = time.time()
     res, top, info = B.design_pool(a.spec, bp, models, W.MARGINS, n_starts=a.n_starts, seed=42, d86=True, lam=B.LAMBDA_UNC,
-                                   synthetic_cap=None, alt_standin=True)
+                                   synthetic_cap=None, alt_standin=True,
+                                   # R-BC-2: P0y drops flash and NHOC (decalin_cis.MW unverified); the committed P0y run optimised without them.
+                                   # strict_constraints defaults to True (decision 6), so P0y opts out here to stay reproducible; P0yb is strict.
+                                   strict_constraints=(a.pool != "P0y"))
     d, c = W._rows(res, top, f"{a.pool}_standin", a.spec)
     d.update(build_s=round(t1 - t0, 1), design_s=round(time.time() - t1, 1), pool=a.pool, n_compounds=len(bp.comp_ids), d86=True,
              alt_standin=True, registry_additions=True)
