@@ -1,0 +1,10 @@
+{
+ "R_FU_1": {
+  "ideal_margin": 16.975450975521966,
+  "unifac_margin": 13.84274050383641,
+  "ideal_mae": 3.3270659944284486,
+  "unifac_mae": 2.623804003762152,
+  "any_fallback": false,
+  "unifac_preferred": true
+ }
+}
