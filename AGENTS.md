@@ -91,8 +91,9 @@ temperature**, kinematic viscosity at the temperature(s) of interest.
 * Python 3.12.5; pandas 3.0.6; numpy 2.5.3; rdkit 2026.03.6; requests 2.34.2; lxml 6.1.3; openpyxl 3.1.5; scipy.
 * **Move the project out of OneDrive** (≈800 small files + ~600 MB of raw data sync badly; deep zip paths can hit
   Windows' 260-char limit). The audit script warns about this.
-* Extra packages needed for AJFTD tools (not yet in `requirements.txt` — **add them**):
-  `beautifulsoup4` (offline HTML parser), `playwright` + `python -m playwright install chromium` (scraper).
+* AJFTD tools need `beautifulsoup4` (offline HTML parser) and `playwright` (scraper); both are in `requirements.txt`. After install run
+  `python -m playwright install chromium`.
+* ThermoML `phase_of()` bug: fixed in v5 (`2aa665b`, CLM-37); see `results/v5/thermoml_reextract/README.md`.
 * pandas 3 gotchas already hit: assigning mixed-type lists via `.loc[k, [cols]] = [...]` fails → assign per column.
 * Windows/PowerShell: use `python script.py`; long-running scripts print progress; Ctrl-C handling exists in `fetch.py`.
 * University CS-lab compute is available for model training.
@@ -119,7 +120,9 @@ Other root items: `fuels.csv` (read by v2/v3 scripts), `Makefile`, `pytest.ini`,
 (written by `reproduce_all.py`), `archive/` (baseline manifests), `jobs/v4_gpu/`, `runs/` (gitignored). The v1 module names
 (`build_unified.py`, `fetch.py`, ...) live on only inside `extras/` and in git history; `common.py` helpers now sit under `src/fuelblend/`.
 
-## 5. Pipeline — commands in order
+## 5. Pipeline (HISTORIC v1 commands; current entry points below)
+
+Current: `python scripts/v4/reproduce_all.py` (v4), `python scripts/v5/base/reproduce_base.py [--full]` (v5 BASE), `.venv/Scripts/python.exe -m pytest -q` (tests). The v1 scripts below survive only in `extras/` and git history.
 
 ```powershell
 pip install -r requirements.txt      # + beautifulsoup4 playwright
@@ -248,6 +251,11 @@ De-dup rules: (1) drop exact repeats (same source+ref+value) — ~⅓ of raw NIS
 ### 8.0a v5 baseline (2026-11-12)
 The v5 full baseline is frozen in `results/v5/BASE/SCOREBOARD.md` (commit `5a62e20`; plan `docs/superpowers/plans/2026-11-12-v5-full-baseline.md`).
 Part C deltas live in `results/v5/BASE/delta_*/`; claims CLM-42 to CLM-48. Reproduce with `python scripts/v5/base/reproduce_base.py`.
+**Adopted re-score (U4, 2026-11-15, commit 3b75437):** the `delta_adopt_rescore` re-score under the 2026-11-15 defaults is now the frozen BASE
+(`results/v5/BASE/` = `delta_adopt_rescore/rerun/` up to CSV precision; `SHA256SUMS_v5_base.txt` re-written with `--update-manifest`; CLM-74).
+The pre-adoption BASE is recoverable at commit `3ab033d` (parent of the adoption commit). Headline: flash T2 AJFTD GCxGC bias -0.634 -> -0.152 C,
+`no_skill_shown` -> `beats_trivial`; old -> new for every cell in `delta_adopt_rescore/drift.csv`. Do not `git checkout` the BASE CSVs: the manifest
+hashes the CRLF working-tree files while `.gitattributes` stores LF.
 
 ### 8.0 v4/r3 state (tag `v4-r3-final`; latest commit "v4 r3: CRC 647 compositions from measured hydrocarbon types (Table G.1), re-scored")
 Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/claims_register.md`. Facts as reported there:
@@ -256,7 +264,7 @@ Source of truth: `docs/FULL_REPORT_v4.md` (sections 0, 1, 11, 13) and `docs/clai
   210 gasoline octane blend rows, no diesel. Only POSF-10325 is a headline GC fuel (n = 1).
 * Designs: 0 of 13 certified (D2 re-run with known-composition lab margins); diesel unvalidated; freezing models show no skill over a constant.
 * r2 reconstruction flipped CRC flash bias to the unsafe (over-prediction) side (+4.2 C raw, dev); causes not isolated.
-* Open: ThermoML `phase_of()` default-mode bug (recorded, not fixed), thin locked sets, cold-viscosity lab margin is `inf`; full list in report section 11 and 13.4.
+* Open: thin locked sets, cold-viscosity lab margin is `inf`; full list in report section 11 and 13.4.
 * Tests: pytest 308 passed / 42 failed at the v4 baseline (all pre-existing missing-deliverable asserts; `results/v4/baseline_pytest.txt`).
 
 ### 8.1 HISTORIC (v1-era, 2026-10-29 and earlier; numbers below predate v4 and several rest on v3-style or contaminated data; do not quote without checking `docs/claims_register.md`)
@@ -357,7 +365,9 @@ Viscosity: 17,020 of 18,322 HC records have all components with a measured pure 
 
 ---
 
-## 11. Tests (`python tests/<name>.py`, plain asserts, no pytest needed)
+## 11. Tests (HISTORIC v1 list; the suite now runs with pytest)
+
+Current: `.venv/Scripts/python.exe -m pytest -q` (741 passed, 11 skipped on 2026-11-15, `docs/audit_2026-11-15.md` §1).
 
 | suite | covers |
 |---|---|
@@ -383,6 +393,8 @@ v5: work continues on branch `v5` (current). Update 2026-11-12: the v5 full-base
 v5 delta_api_route (2026-11-13): `predict()` and a new `predict_fuel` now run on the BASE scoring route (frozen pure-property grid, Refutas viscosity, ideal-volume density, anchored-Antoine Le Chatelier flash with the LFL overlay), and inverse design runs on user pools of names / SMILES / InChIKeys through `scripts/v5/run_design_userpool_v5.py`. No design is certified. Readings, design tables, usage examples and the list of changed tests are in `results/v5/BASE/delta_api_route/README.md`.
 
 v5 ML (2026-11-13): `predict_fuel` exposes viscosity variant `ml_pair_residual` (passed R-MLV-1..4, margins 0.287/0.608/0.134 ln by T bin, known compositions only); update: by user decision it is the designated viscosity in domain, Refutas kept as variant `refutas_raw` and used elsewhere; design certification now also on the ML value and its margin in domain (3ee904c, delta_design_ml_visc); freezing margin 16.98 C for known compositions with verified constants (5d57504, delta_freeze_margin; measured on binaries); density variant `ml_pair_excess_volume` (passed dev and locked, failed ternaries; margin for known binaries only); DCN ML not feasible (31 systems); ML-YSI failed its gates and is not exposed (`docs/model_decision.md`, "v5 ML components").
+
+v5 overnight 2026-11-15: `docs/overnight_2026-11-15.md` (D86 Rayleigh opt-in, UNIFAC-SvL freezing, P0y-b conditional, strict_constraints guard); user decisions in `docs/decisions_2026-11-15.md`; their application plan `docs/superpowers/plans/2026-11-15-apply-decisions-and-audit-fixes.md`.
 
 ## 12b. (v1-era plan, superseded by section 12 above) Exactly where we stopped
 

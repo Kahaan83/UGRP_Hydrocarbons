@@ -180,3 +180,24 @@ Readings:
 ### R-W7-7 final check
 
 `LAB_TEST_REQUEST.md` (needs user decision; nobody contacted).
+
+## SAK pool P3 (declared 2026-11-14 BEFORE any run)
+
+Now that an open SAK composition exists (delta_sak_blendstock, Feldhausen 2022), P3 = P2 + `sak_virent_feldhausen2022` (Jet A base POSF-10325, HEFA-CAME, ATJ POSF11498, SAK, 1,2,4-trimethylbenzene; synthetic cap 0.50 as in P2). Motivation: P2 missed density and aromatics vol % by 0.0008 normalised slack; SAK is an aromatic (about 62 % C9 alkylbenzene) synthetic stream. Same protocol as P0 to P2: D86 on, 10 starts, seed 42, uncertainty penalty lambda as in P2, margins `configs/uncertainty_v5.yaml`, run on the merged v5 code with the user-verified smoke and aromatics flags and the 7 upgraded freezing constants (toluene, n-hexane, n-octane, tetralin, o-xylene, mesitylene, 2-methylpentane; none is in P3 except as pure members, so they should not matter here).
+* **Reading, not a unit test.** Per spec: every constraint status, slack, margin and reason; binding constraints; certified or not; counterfactual column unchanged.
+* **Stated expectation:** uncertified, because the four D86 limits are still `secondary_sources_only` and the GCxGC fuel constants for the Jet A base, HEFA, ATJ and SAK are not verified (non-flag blockers 2(a)/(b) above). A design cannot certify under either. Pass or fail of the point-estimate constraints is the result.
+* No gate is moved; SAK composition is one 2022 development batch, not the D7566 annex product (see delta_sak_blendstock/README.md).
+
+### SAK pool P3 result (2026-11-14, 10 starts, seed 42, lam 0.25, D86 on, synthetic cap)
+Pool = Jet A POSF-10325, HEFA-CAME, ATJ POSF11498, SAK (Feldhausen 2022), 1,2,4-trimethylbenzene (43 compounds). Logs `logs/P3_run.log`, designs in `designs/P3/`.
+* ASTM Jet A: SAK weight 0.0011 (Jet A 0.54, HEFA 0.46). Density fails by 0.0008 slack (774.9) and aromatics vol% by the same 0.0008 (7.986 vs 8); flash, freezing, viscosity, NHOC, D86 uncertified.
+* BIS Jet A-1: SAK weight 0.0 (Jet A 0.49, ATJ 0.40, HEFA 0.10). Freezing fails by 0.0008 and aromatics vol% by 0.0008.
+* Reading: SAK is not selected. It adds nothing the HEFA/ATJ blendstocks do not already give, so the pool-P2 conclusion (0 of 6 certified) is unchanged. Matches the declared expectation (uncertified). Reasons for `uncertified` remain: D86 limits `secondary_sources_only`, GCxGC-represented blendstock margins not validated, route-grid constants for several pool members. No gate moved.
+
+## Re-run with user-verified D86 limits (2026-11-14/15)
+The user checked the four D86 limits (T10 <= 205, FBP <= 300, T50-T10 >= 15, T90-T10 >= 40 C; D1655 / D7566 / IS 1571) against the standards; flags set to `verified` in `configs/specs_astm.yaml` and `configs/specs_bis.yaml`. All 8 designs (P0-P3 x ASTM Jet A, BIS Jet A-1, 10 starts, seed 42, D86 on) re-run; logs `logs/verified_*.log`, tables `designs/P*/`.
+* Result: **0 of 8 certified.** The D86 constraints no longer carry the `secondary_sources_only` clause.
+* P0 ASTM: T10, FBP, T50-T10 pass; T90-T10, flash, freezing and smoke fail. P0 BIS: D86 uncertified (TBP T90-T10 81.8 C outside the D86 fit domain); flash, freezing, smoke fail.
+* P1: flash and T50-T10 fail on both specs; freezing fails (ASTM -0.005, BIS -0.072 slack).
+* P2/P3: ASTM density and aromatics vol% fail by 0.0008 slack; BIS freezing and aromatics fail by 0.0008. All other constraints, including the four D86 limits, are `uncertified` for the remaining reasons: GCxGC-represented blendstock margins not validated on real fuels (WS6), route-grid / Coutinho-table constants for several pool members.
+* Reading: verifying the D86 limits removed one blocker but not the others; the optimiser sits 0.0008 below the density/aromatics/freezing limits, so these are tolerance-level misses, not structural ones. Certification now needs the represented-blendstock margin and the pool-member constants verified.

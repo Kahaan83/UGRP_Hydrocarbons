@@ -18,16 +18,26 @@ from fuelblend.eval.composition_route import (COUTINHO_SOURCE, VERIFIED_SOURCE, 
 ROOT = Path(__file__).resolve().parents[1]
 D = ROOT / "results" / "v5" / "BASE" / "delta_freeze_margin"
 KEY = "freezing_point_C.lab_liquidus.svl_verified"
-UNDECANE, DODECANE, BCH, TOLUENE = "CCCCCCCCCCC", "CCCCCCCCCCCC", "CCCCC1CCCCC1", "Cc1ccccc1"
+UNDECANE, DODECANE, BCH, TOLUENE = "CCCCCCCCCCC", "CCCCCCCCCCCC", "CCCCC1CCCCC1", "CCc1ccccc1"   # TOLUENE now ethylbenzene: toluene gained verified constants 2026-11-14, hexylbenzene 2026-11-15; ethylbenzene has none
 
 
 def _ik(s):
     return inchi.MolToInchiKey(Chem.MolFromSmiles(s))
 
 
+@pytest.fixture(autouse=True)
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; this file pins the legacy ideal SvL route and its margin."""
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
 def test_verified_map_content():
     t = build_tmap_verified()
-    assert len(t) == 37                                           # 39 csv rows; stereo-unspecified decalin and 1-hexyne have no constants
+    assert len(t) == 49                                           # 51 csv rows (39 + 7 upgraded 2026-11-14 + hexylbenzene 2026-11-15 + n-nonane, 2,3-dimethylbutane, m-/p-xylene from primary papers 2026-11-15); stereo-unspecified decalin and 1-hexyne have no constants
     u = t[_ik(UNDECANE)]
     assert u["tm_K"] == pytest.approx(247.59) and u["dh_fus_J_mol"] == pytest.approx(29037.0)    # total incl. solid-solid for the odd alkane
     assert t[_ik("c1ccc2c(c1)Cc1ccccc1-2")]["tm_K"] == pytest.approx(387.94)       # fluorene: not benzene's 278.7 K (Coutinho defect)
@@ -96,7 +106,7 @@ def test_api_margin_withheld_for_reconstructed_and_for_unverified_component():
     rec = pr.predict_fuel({UNDECANE: 0.5, DODECANE: 0.5}, T_K=288.15, fuel_type="jet", composition_kind="reconstructed")["freezing_point_C"]
     assert rec["uncertified"] is True and rec["in_domain"] is False and math.isnan(rec["hi"]) and rec["value"] is not None
     tol = pr.predict_fuel({UNDECANE: 0.5, DODECANE: 0.3, TOLUENE: 0.2}, T_K=288.15, fuel_type="jet")["freezing_point_C"]
-    assert tol["uncertified"] is True and math.isnan(tol["hi"]) and tol["value"] is not None       # toluene has no verified constant
+    assert tol["uncertified"] is True and math.isnan(tol["hi"]) and tol["value"] is not None       # ethylbenzene has no verified constant
 
 
 def test_api_designated_value_uses_verified_constants():
@@ -117,7 +127,7 @@ def test_design_model_carries_margin_key_and_flags_coutinho_members():
     c = E.evaluate_constraint("freezing_point_C", {"max": 0.0}, models["pool"], np.array([0.4, 0.2, 0.4]), models, margins, kind="jet")
     assert c.applied_margin == pytest.approx(margins[KEY]["applied_margin"]) and c.status in ("pass", "fail")
     assert c.slack == pytest.approx((0.0 - (c.prediction + c.applied_margin)) / 1.0) or c.status == "fail"
-    # a pool member on a Coutinho entry (n-nonane has no verified constant) keeps freezing uncertified
-    m2 = LR.build_route_models(names + ["C" * 9])
+    # a pool member on a Coutinho entry (ethylbenzene has no verified constant; n-nonane gained one 2026-11-15) keeps freezing uncertified
+    m2 = LR.build_route_models(names + ["CCc1ccccc1"])
     c2 = E.evaluate_constraint("freezing_point_C", {"max": 0.0}, m2["pool"], np.array([0.3, 0.2, 0.3, 0.2]), m2, margins, kind="jet")
     assert c2.status == "uncertified" and "non-verified constant" in c2.reason

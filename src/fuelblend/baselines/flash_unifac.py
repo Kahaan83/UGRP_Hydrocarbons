@@ -17,6 +17,8 @@ and ``flash_point_unifac_detail`` reports ``fallback_components``.
 """
 from __future__ import annotations
 
+import os
+
 import warnings
 from functools import lru_cache
 from pathlib import Path
@@ -112,9 +114,25 @@ def unifac_subgroups(smiles: str) -> Optional[Dict[int, int]]:
 
 
 # --------------------------------------------------------------------------- registry
+REGISTRY_ADDITIONS_CSV = Path(__file__).resolve().parents[3] / "data" / "processed" / "v5" / "flash_registry_additions.csv"
+REGISTRY_ADDITIONS_ENV = "FUELBLEND_FLASH_REGISTRY_ADDITIONS"
+
+
+def _with_additions(reg: pd.DataFrame) -> pd.DataFrame:
+    """delta_pool_bicyclohexyl: rows of ``REGISTRY_ADDITIONS_CSV`` replace the same-InChIKey base rows (default on by user decision
+    2026-11-15 (#3); ``FUELBLEND_FLASH_REGISTRY_ADDITIONS=0`` restores the v2 registry)."""
+    add = pd.read_csv(REGISTRY_ADDITIONS_CSV)
+    keep = reg[~reg["inchikey"].isin(add["inchikey"])]
+    return pd.concat([keep, add[[c for c in reg.columns if c in add.columns]]], ignore_index=True)
+
+
 @lru_cache(maxsize=1)
 def _default_registry() -> pd.DataFrame:
+    """Flash registry (anchored Antoine + LFL), overlay merged unless the env var is "0".  lru_cached: a test that flips the env var
+    must call ``_default_registry.cache_clear()`` before and after."""
     reg = pd.read_csv(REGISTRY_CSV)
+    if os.environ.get(REGISTRY_ADDITIONS_ENV) != "0":
+        reg = _with_additions(reg)
     reg["can"] = reg["smiles"].map(lambda s: Chem.MolToSmiles(Chem.MolFromSmiles(s)))
     return reg.drop_duplicates("can").set_index("can")
 
@@ -155,6 +173,80 @@ def make_unifac_gamma_fn(smiles: Sequence[str]) -> Tuple[Callable, List[int]]:
                                   subgroups=UFSG, interaction_data=UFIP, version=0).gammas()
         for i, gi in zip(act, g):
             gam[i] = gi
+        return gam
+
+    return gamma_fn, fallback
+
+
+def make_unifac_gamma_fn_vec(smiles: Sequence[str]) -> Tuple[Callable, List[int]]:
+    """Same contract and same numbers (to round-off) as ``make_unifac_gamma_fn``, about 10x faster per call (v5 decision 1: the
+    designated freezing route evaluates gamma inside a root finder at every optimiser step).
+
+    One ``thermo`` UNIFAC object is built on all assignable molecules to read its parameters (psi_a/b/c, r, q, nu, Q, pure-component
+    Theta); each call then evaluates thermo's original-UNIFAC (version 0) formulas with numpy.  A molecule with x = 0 is kept with a
+    zero mole fraction: its groups get Theta = 0 and add exact zeros to every sum, which equals thermo's call on the active subset.
+    Semantics kept: gamma = 1 for unassignable molecules and for x = 0; fewer than two active assignable molecules -> all ones."""
+    from thermo.unifac import UFIP, UFSG, UNIFAC
+
+    groups = [unifac_subgroups(s) for s in smiles]
+    ok = [i for i, g in enumerate(groups) if g is not None]
+    fallback = [i for i, g in enumerate(groups) if g is None]
+    n = len(smiles)
+    if len(ok) < 2:
+        return (lambda T_K, x: np.ones(n)), fallback
+    base = UNIFAC.from_subgroups(T=298.15, xs=[1.0 / len(ok)] * len(ok), chemgroups=[groups[i] for i in ok],
+                                 subgroups=UFSG, interaction_data=UFIP, version=0)
+    ok_a = np.array(ok, dtype=np.int64)
+    pa, pb_, pc = (np.asarray(getattr(base, k), float) for k in ("psi_a", "psi_b", "psi_c"))
+    a_only = not (pb_.any() or pc.any())                  # version 0: psi = exp(-a/T) exactly (b = c = 0)
+    rs, qs, Qs = np.asarray(base.rs, float), np.asarray(base.qs, float), np.asarray(base.Qs, float)
+    vs = np.asarray(base.vs, float)                       # (groups, molecules)
+    vsT = vs.T
+    th_all = np.vstack([np.zeros(len(Qs)), np.asarray(base.Thetas_pure(), float)])   # row 0: mixture Theta; rows 1..: pure Theta^(i)
+    memo: dict = {}                                       # composition-only terms of the last x (a root finder varies T only)
+
+    def _x_terms(x):
+        key = np.asarray(x, float).tobytes()
+        hit = memo.get("key")
+        if hit is not None and hit == key:
+            return memo["val"]
+        xo = np.asarray(x, float)[ok_a]
+        act = xo > 0.0
+        val = None
+        if int(act.sum()) >= 2:
+            xs = np.where(act, xo, 0.0)
+            xs = xs / xs.sum()
+            X = vs @ xs
+            X = X / X.sum()
+            th = Qs * X
+            th = th / th.sum()
+            V = rs / (rs @ xs)
+            F = qs / (qs @ xs)
+            VF = V / F
+            ln_c = 1.0 - V + np.log(V) - 5.0 * qs * (1.0 - VF + np.log(VF))     # combinatorial part: T-independent
+            TH = th_all.copy()
+            TH[0] = th
+            val = (act, ok_a[act], TH, ln_c, {})          # last item: {T: gamma} for this x (every root bracket starts at 60 K)
+        memo["key"], memo["val"] = key, val
+        return val
+
+    def gamma_fn(T_K: float, x: Sequence[float]) -> np.ndarray:
+        xt = _x_terms(x)
+        if xt is None:
+            return np.ones(n)
+        act, idx, TH, ln_c, tcache = xt
+        T = float(T_K)
+        hit = tcache.get(T)
+        if hit is not None:
+            return hit.copy()
+        psis = np.exp(pa * (-1.0 / T)) if a_only else np.exp(pa * (-1.0 / T) - pb_ - pc * T)
+        S = TH @ psis                                     # row 0: sum_m Theta_m psi_mk (mixture); rows 1..: pure molecules
+        ln_G = Qs * (1.0 - np.log(S) - (TH / S) @ psis.T)
+        ln_r = vsT @ ln_G[0] - (vsT * ln_G[1:]).sum(axis=1)
+        gam = np.ones(n)
+        gam[idx] = np.exp(ln_r + ln_c)[act]
+        if len(tcache) < 256:
+            tcache[T] = gam.copy()
         return gam
 
     return gamma_fn, fallback

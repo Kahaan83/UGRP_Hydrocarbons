@@ -147,15 +147,16 @@ def ideal_sle_C(x, iks, tmap) -> float:
     return best
 
 
-def build_tmap(reg, idx) -> dict:
-    """{inchikey: {tm_K, dh_fus_J_mol, ...}} for the registry compounds at ``idx`` (same call S3 made)."""
+def build_tmap(reg, idx, aromatic_match: str = "exact") -> dict:
+    """{inchikey: {tm_K, dh_fus_J_mol, ...}} for the registry compounds at ``idx`` (same call S3 made, but with exact aromatic matching:
+    decision 5, the legacy substring match mis-assigned benzene / p-xylene / naphthalene constants to 112 other aromatics)."""
     idx = sorted(set(int(i) for i in idx))
     info = pd.DataFrame(index=[reg.ik[i] for i in idx])
     info["smiles"] = [reg.smiles[i] for i in idx]
     mols = [Chem.MolFromSmiles(s) for s in info.smiles]
     info["cls"] = [hc_class(m) for m in mols]
     info["n_carbon"] = [float(sum(a.GetSymbol() == "C" for a in m.GetAtoms())) for m in mols]
-    return get_pure_thermal_properties(info)
+    return get_pure_thermal_properties(info, aromatic_match=aromatic_match)
 
 
 VERIFIED_SLE_CSV = Path(__file__).resolve().parents[3] / "data" / "raw" / "sle_constants" / "tm_dhfus_verified.csv"
@@ -187,6 +188,49 @@ def build_tmap_designated(base_tmap: dict, verified: dict | None = None) -> dict
     for ik, t in verified.items():
         out[ik] = {**t, "source": VERIFIED_SOURCE}
     return out
+
+
+# v5 decision 1 (2026-11-15): the designated freezing model of the API and the design judge.  Model name -> yaml margin key.
+FREEZING_MODELS = {"ideal_svl": "freezing_point_C.lab_liquidus.svl_verified",
+                   "svl_unifac": "freezing_point_C.lab_liquidus.svl_unifac"}
+DESIGNATED_FREEZING_MODEL: str = "svl_unifac"
+FREEZING_METHODS = {"ideal_svl": "ideal_svl_mole_fraction", "svl_unifac": "svl_unifac_mole_fraction"}
+FREEZING_X_MIN = 1e-4                       # members at or below this mole fraction do not crystallise (both models)
+
+
+def designated_freezing_model() -> str:
+    """Read at call time, so a test or script that sets ``DESIGNATED_FREEZING_MODEL`` switches every caller."""
+    m = DESIGNATED_FREEZING_MODEL
+    if m not in FREEZING_MODELS:
+        raise ValueError(f"unknown freezing model {m!r}; one of {sorted(FREEZING_MODELS)}")
+    return m
+
+
+def freezing_C(x, iks, smiles, tmap, model: str | None = None, gamma=None) -> tuple[float, dict]:
+    """Freezing (liquidus) point in degC of a mole-fraction composition and ``info = {"model", "unifac_fallback"}``.
+
+    ``ideal_svl``: ``ideal_sle_C(x, iks, tmap)``.  ``svl_unifac``: ``freeze_multicomp.svl_activity_C`` with pure solids and original
+    UNIFAC liquid activity (same model as delta_freeze_adopt, whose rows set the svl_unifac margin); constants (tm_K, dh_fus_J_mol)
+    from ``tmap`` per InChIKey, None (does not crystallise) where missing or non-finite.  ``unifac_fallback`` lists the indices of members
+    with x > 1e-4 that have no UNIFAC groups (gamma = 1 was used for them).  ``gamma`` = a precomputed ``(gamma_fn, fallback)`` for
+    ``smiles`` (the design library caches it per pool); default: ``flash_unifac.make_unifac_gamma_fn_vec(smiles)``."""
+    model = designated_freezing_model() if model is None else model
+    if model not in FREEZING_MODELS:
+        raise ValueError(f"unknown freezing model {model!r}; one of {sorted(FREEZING_MODELS)}")
+    x = np.asarray(x, float)
+    if model == "ideal_svl":
+        return float(ideal_sle_C(x, iks, tmap)), {"model": model, "unifac_fallback": []}
+    from fuelblend.baselines import flash_unifac as fu
+    from fuelblend.eval.freeze_multicomp import svl_activity_C
+    consts = []
+    for ik in iks:
+        t = tmap.get(ik)
+        ok = bool(t) and np.isfinite(t.get("tm_K", np.nan)) and np.isfinite(t.get("dh_fus_J_mol", np.nan))
+        consts.append((float(t["tm_K"]), float(t["dh_fus_J_mol"])) if ok else None)
+    gamma_fn, fb = fu.make_unifac_gamma_fn_vec(list(smiles)) if gamma is None else gamma
+    with np.errstate(all="ignore"):
+        v = svl_activity_C(x, consts, gamma_fn)
+    return float(v), {"model": model, "unifac_fallback": [int(i) for i in fb if x[i] > FREEZING_X_MIN]}
 
 
 @dataclass

@@ -438,7 +438,86 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     _add_density_ml(out, ctx, pm, T_K, composition_kind)
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
+    _add_distillation(out, comps, ctx, P, pf)
     return out
+
+
+# ====================================================================================================================
+# ASTM D86 distillation (delta_d86_rayleigh): designated = WS7 Engler route, variant = Rayleigh single-stage distillation
+# ====================================================================================================================
+D86_QS = ("T10", "T50", "T90", "FBP", "T50_T10", "T90_T10")
+D86_UNSAFE = {"T10": "under", "FBP": "under", "T50_T10": "over", "T90_T10": "over", "T50": "under", "T90": "under"}
+
+
+def _d86_margin_files() -> tuple:
+    import json as _json
+    from fuelblend.design import blendstock_v5 as B5
+    e = B5.load_d86_margins()
+    rp = Path(__file__).resolve().parents[3] / "results" / "v5" / "BASE" / "delta_d86_rayleigh" / "d86_rayleigh_margins.json"
+    r = _json.load(open(rp, encoding="utf-8")) if rp.exists() else {"margins": {q: "inf" for q in D86_QS}}
+    return e, r
+
+
+def _d86_block(q: dict, margins: dict, method: str) -> dict:
+    vals, bounds, mg = {}, {}, {}
+    for k in D86_QS:
+        v = float(q[k])
+        m = margins.get(k, "inf")
+        m = math.inf if isinstance(m, str) else float(m)
+        vals[k] = v
+        mg[k] = m
+        # one-sided safe bound on the unsafe side: 'under' (true value may be higher) -> hi = v + m; 'over' -> lo = v - m
+        bounds[k] = {"hi": v + m} if D86_UNSAFE[k] == "under" else {"lo": v - m}
+    return {"method": method, "value": vals, "margin": mg, "safe_bound": bounds, "unit": "C"}
+
+
+def _add_distillation(out: dict, comps, ctx, P: dict, pf: PropMap) -> None:
+    """D86 T10/T50/T90/FBP (C) and the slopes.  Uses the flash-registry Antoine (Tb / vapour pressure) and pure-grid rho at 288.15 K.
+    Margins: WS7 R-W7-2 (Engler, measured-GCxGC real fuels) and delta_d86_rayleigh R-DR-2 (Rayleigh); neither is in
+    configs/uncertainty_v5.yaml (adoption is a user decision), so in_domain is reported but the property is labelled not adopted."""
+    from fuelblend.design import blendstock_v5 as B5
+    res = {"status": "no_value", "method": "engler_tbp_offsets", "value": None, "warnings": [], "variants": {},
+           "adopted_in_uncertainty_yaml": False, "coverage": _coverage(pf),
+           "note": ("D86 margins live in results/v5/BASE/delta_ws7_design_realism/d86_margins.json (Engler) and "
+                    "delta_d86_rayleigh/d86_rayleigh_margins.json (Rayleigh); not adopted into configs/uncertainty_v5.yaml")}
+    out["distillation_D86_C"] = res
+    if pf.unmapped_mass > LOW_COVERAGE_MASS or pf.idx.size == 0:
+        res.update(status="low_coverage", reason=f"unmapped mass {pf.unmapped_mass:.3f} > {LOW_COVERAGE_MASS}")
+        return
+    smi = [ctx.reg.smiles[i] for i in pf.idx]
+    ok_grid = np.array([bool(ctx.prov.valid[i]) for i in pf.idx])
+    if not ok_grid.all():
+        res.update(status="no_density", reason="a mapped component has no pure-grid density at 288.15 K")
+        return
+    _, rho = ctx.prov.lookup(pf.idx[None, :], 288.15)
+    rho = np.asarray(rho[0], float)
+    tbs = np.array([B5.tb_C(s) for s in smi])
+    if not np.all(np.isfinite(tbs)):
+        res.update(status="no_antoine_tb", reason="a mapped component has no Antoine-derived Tb")
+        return
+    w = pf.w / pf.w.sum()
+    vol = w / rho
+    qe = B5.d86_quantities(tbs, vol / vol.sum())
+    e, r = _d86_margin_files()
+    res.update(_d86_block(qe, e["margins"], "engler_tbp_offsets"), status="ok")
+    dist = B5.domain_distance(qe, e["domain"])
+    res["in_domain"] = bool(dist == 0)
+    res["tbp_spread_C"] = float(qe["tbp_spread"])
+    res["monotone"] = bool(qe["monotone"])
+    if dist > 0:
+        res["warnings"].append(f"outside_distillation_domain: TBP T90-T10 {qe['tbp_spread']:.1f} C (fit range "
+                               f"{e['domain']['tbp_spread_min']:.1f}-{e['domain']['tbp_spread_max']:.1f}) or non-monotone curve")
+    if pf.substituted_mass > 0:
+        res["warnings"].append(f"substituted_mass {pf.substituted_mass:.3f}: representatives stand in for some components")
+    try:
+        qr = B5.rayleigh_quantities_smiles(smi, w, rho)
+        res["variants"]["rayleigh"] = dict(_d86_block(qr, r["margins"], "rayleigh_single_stage"), status="ok",
+                                           note="delta_d86_rayleigh: better T50/T90 on 65 real fuels, T10 +11.6 C bias; not designated")
+        if abs(qr["T90_T10"] - qe["T90_T10"]) > 20.0:
+            res["warnings"].append(f"d86_models_disagree: T90-T10 Engler {qe['T90_T10']:.1f} vs Rayleigh {qr['T90_T10']:.1f} C "
+                                   "(narrow recipes with a light minor component: Engler inflates the slopes)")
+    except Exception as ex:  # noqa: BLE001
+        res["variants"]["rayleigh"] = {"status": "unavailable", "reason": str(ex)}
 
 
 # ====================================================================================================================
@@ -647,19 +726,29 @@ def _mapped_input_weights(comps: list, pm: PropMap) -> dict:
     return out
 
 
-FREEZING_MARGIN_KEY = "freezing_point_C.lab_liquidus.svl_verified"
+def freezing_margin_key() -> str:
+    """yaml key of the designated freezing model's margin (single source: ``composition_route.FREEZING_MODELS``)."""
+    from fuelblend.eval import composition_route as CR
+    return CR.FREEZING_MODELS[CR.designated_freezing_model()]
 
 
-def _freezing_margin_v5(prop: dict, iks: list, tmap: dict, composition_kind: str) -> bool:
-    """v5 delta_freeze_margin: the liquidus margin (direction under, added to the prediction: safe_bound = hi) applies only to a known
-    composition whose every mapped component has a verified Tm / dHfus and nothing was substituted or unmapped.  Returns True if applied."""
-    e = _v5_margins().get(FREEZING_MARGIN_KEY)
+def _freezing_margin_eligible(prop: dict, iks: list, tmap: dict, composition_kind: str) -> bool:
     cov = prop["coverage"]
-    if (e is None or prop.get("value") is None or composition_kind != "known" or cov["substituted_mass"] > 1e-12 or cov["unmapped_mass"] > 1e-12
-            or not all((tmap.get(ik) or {}).get("source") == VERIFIED_SOURCE for ik in iks)):
+    return not (prop.get("value") is None or composition_kind != "known" or cov["substituted_mass"] > 1e-12 or cov["unmapped_mass"] > 1e-12
+                or not all((tmap.get(ik) or {}).get("source") == VERIFIED_SOURCE for ik in iks))
+
+
+def _freezing_margin_v5(prop: dict, iks: list, tmap: dict, composition_kind: str, key: Optional[str] = None,
+                        unifac_fallback=()) -> bool:
+    """v5 delta_freeze_margin: the liquidus margin (direction under, added to the prediction: safe_bound = hi) applies only to a known
+    composition whose every mapped component has a verified Tm / dHfus and nothing was substituted or unmapped.  Under the UNIFAC model a
+    member with x > 1e-4 and no UNIFAC groups (``unifac_fallback``) withholds it too (decision 1, Review Focus 1).  Returns True if applied."""
+    key = freezing_margin_key() if key is None else key
+    e = _v5_margins().get(key)
+    if e is None or unifac_fallback or not _freezing_margin_eligible(prop, iks, tmap, composition_kind):
         return False
     from fuelblend.api import predict_blend as pb
-    margin, unit, direction, _ = pb._applied_margin([FREEZING_MARGIN_KEY], _v5_margins())
+    margin, unit, direction, _ = pb._applied_margin([key], _v5_margins())
     if margin is None or direction != "under":
         return False
     lo, hi = pb.interval_from_margin(prop["value"], margin, unit)
@@ -671,12 +760,16 @@ def _freezing_margin_v5(prop: dict, iks: list, tmap: dict, composition_kind: str
 
 def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type, composition_kind: str = "known") -> None:
     from fuelblend.eval import freezing_f1 as ff
+    from fuelblend.eval import composition_route as CR
     from fuelblend.eval.composition_route import ideal_sle_C
     reg = ctx.reg
     iks = [reg.ik[int(i)] for i in pm.idx]
-    x = pm.w / np.array([ctx.mw(reg.smiles[int(i)]) for i in pm.idx])
+    smiles = [reg.smiles[int(i)] for i in pm.idx]
+    x = pm.w / np.array([ctx.mw(s) for s in smiles])
     x = x / x.sum()
     tmap = _tmap_freezing()                              # verified constants where present, else the Coutinho entry (tagged)
+    model = CR.designated_freezing_model()
+    prop["method"] = CR.FREEZING_METHODS[model]
 
     def has_sle(ik):
         t = tmap.get(ik)
@@ -684,22 +777,46 @@ def _freezing(prop: dict, comps, ctx, pm: PropMap, fuel_type, composition_kind: 
 
     no_sle = float(sum(w for w, ik in zip(pm.w, iks) if not has_sle(ik)))
     prop["coverage"]["sle_missing_mapped_mass"] = no_sle   # mapped mass (own or representative) with no Tm / dHfus; counts in x
-    v = ideal_sle_C(x, iks, tmap)
+    v, info = CR.freezing_C(x, iks, smiles, tmap, model=model)
+    fallback = info["unifac_fallback"]
     v_old = ideal_sle_C(x, iks, _tmap())                  # all-Coutinho constants, the designated value before delta_freeze_margin
     prop["variants"]["coutinho_constants"] = {
         "value": float(v_old) if np.isfinite(v_old) else None,
         "label": "ideal SvL in mole fraction on the Coutinho Tm / dHfus map only (value before delta_freeze_margin); uncertified"}
+    if model != "ideal_svl":                             # decision 1: the ideal value with its own margin, reported only
+        vi = ideal_sle_C(x, iks, tmap)
+        sb = None
+        if np.isfinite(vi):
+            e = CR.FREEZING_MODELS["ideal_svl"]
+            from fuelblend.api import predict_blend as pb
+            m_i, _u, d_i, _ = pb._applied_margin([e], _v5_margins())
+            if (m_i is not None and d_i == "under" and e in _v5_margins()
+                    and _freezing_margin_eligible({**prop, "value": float(vi)}, iks, tmap, composition_kind)):
+                sb = float(pb.interval_from_margin(float(vi), m_i, _u)[1])
+        prop["variants"]["ideal_svl"] = {
+            "value": float(vi) if np.isfinite(vi) else None, "safe_bound": sb,
+            "label": "ideal SvL in mole fraction on the designated constants; safe_bound = value + the svl_verified margin where it would "
+                     "apply (known composition, verified constants); reported only, not designated"}
     if not np.isfinite(v):
         _no_value(prop, "non_finite", "no component with Tm / dHfus constants above x = 1e-4")
         prop["uncertified"] = True
     else:
         prop.update(value=float(v), status="ok")
-        if _freezing_margin_v5(prop, iks, tmap, composition_kind):
-            prop["warnings"].append("freezing_margin_from_lab_liquidus_binaries (delta_freeze_margin): verified constants for every component")
+        if _freezing_margin_v5(prop, iks, tmap, composition_kind, key=CR.FREEZING_MODELS[model], unifac_fallback=fallback):
+            prop["warnings"].append("freezing_margin_from_lab_liquidus_binaries (delta_freeze_margin): verified constants for every component"
+                                    if model == "ideal_svl" else
+                                    "freezing_margin_from_lab_liquidus_binaries (delta_freeze_adopt, svl_unifac): verified constants for "
+                                    "every component, UNIFAC groups for every component")
         else:
             _uncertified(prop, "uncertified: no freezing margin applies (needs a known composition, verified Tm / dHfus for every component, "
-                               "nothing substituted or unmapped)")
-    prop["label"] = ("ideal SvL in mole fraction on verified Tm / dHfus where available (else the Coutinho entry); "
+                               "nothing substituted or unmapped" + (", UNIFAC groups for every component" if model != "ideal_svl" else "")
+                         + ")")
+    if fallback:
+        prop["warnings"].append("unifac_fallback: " + ", ".join(smiles[i] for i in fallback)
+                                + " (no UNIFAC groups; gamma = 1 used for them; uncertified)")
+    head = ("ideal SvL in mole fraction" if model == "ideal_svl" else
+            "Schroeder-van Laar with original-UNIFAC liquid activity, pure solids, in mole fraction")
+    prop["label"] = (head + " on verified Tm / dHfus where available (else the Coutinho entry); "
                      + ("lab-liquidus margin applied" if prop.get("uncertified") is False else "uncertified"))
     if prop.get("uncertified") is not False:
         prop["warnings"].append("freezing_uncertified")
@@ -840,7 +957,9 @@ def _add_task3_props(out: dict, comps, ctx, fuel_type, T_K: float, composition_k
     P = predicates(ctx)
     iks = [c.ik for c in comps]
     pm = map_for(comps, HAS_ANY_REGISTRY, ctx.reps)             # the scoring route's property-independent mapping
-    props = {k: _new_prop(k, m, pm) for k, m in (("freezing_point_C", "ideal_svl_mole_fraction"), ("heat_net_MJ_kg", "ga_comp_H"),
+    from fuelblend.eval import composition_route as CR
+    fz_method = CR.FREEZING_METHODS[CR.designated_freezing_model()]
+    props = {k: _new_prop(k, m, pm) for k, m in (("freezing_point_C", fz_method), ("heat_net_MJ_kg", "ga_comp_H"),
                                                   ("smoke_point_mm", "ajftd_bulk_regression"))}
     if pm.unmapped_mass > LOW_COVERAGE_MASS or pm.idx.size == 0:
         for r in props.values():

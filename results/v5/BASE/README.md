@@ -100,3 +100,18 @@ What was and was not run on this machine:
 ## Note 2026-11-12 (frozen reference)
 
 The frozen scoreboard is the one committed in `5a62e20`. Part C deltas are measured against it; `scoreboard.csv` is never edited by a delta.
+
+## Note 2026-11-15 (U4: re-score adopted as the frozen BASE)
+
+The user adopted the `delta_adopt_rescore` re-score as the frozen v5 BASE on 2026-11-15 (question U4, "Yea adopt"). The text above is unchanged.
+* The top-level files of this folder are the `reproduce_base.py --full` re-run under the adopted defaults (decisions 2026-11-15), as the fixed point
+  of the default `--from-rows` pass: equal to `delta_adopt_rescore/rerun/` up to CSV precision (5 files differ by at most 1.0e-5 absolute); `SHA256SUMS_v5_base.txt` was re-written with `--update-manifest`. The pre-adoption frozen BASE (first frozen in
+  `5a62e20`) is recoverable at commit `3ab033d`, the parent of the adoption commit. Every changed cell, old -> new, with its cause, is in
+  `delta_adopt_rescore/drift.csv` (2,021 scoreboard cells; no cause D1/D4/D5/D7, none unattributed).
+* R-BASE-2 after adoption (reported only; no tolerance or gate moved). The flash AJFTD GCxGC rows no longer reproduce G1: 37-row bias
+  -0.426 -> 0.141 C, MAE 3.536 -> 3.088 C (16 of 37 rows still within 0.05 C of G1); headline one-per-group (31) bias -0.634 -> -0.152 C,
+  MAE 3.381 -> 2.995 C, verdict `no_skill_shown` -> `beats_trivial`. AV-33-22 ln viscosity bias vs C1: 233.15 K -0.637 -> -0.574, 313.15 K
+  0.066 -> 0.109. Cause for all four: decision 3 (flash-registry additions overlay on by default; `D3_overlay`), which changes the
+  representative choice of the T2 fuels whose GCxGC bins map to bicyclohexyl or cis-decalin. G1 and C1 are pre-decision results and are not
+  regenerated. The re-run `SCOREBOARD.md` cause text for the 31-row headline ("the 37-row rerun above matches G1") is the generic text of
+  `build_scoreboard.py` and no longer holds after adoption; this note supersedes it. CRC 647 and freezing rows are unchanged and within tolerance.

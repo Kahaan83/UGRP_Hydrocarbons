@@ -30,7 +30,7 @@ C16 53.4 vs 53.36). The formula does not separate odd and even chains, so for od
 Caveat: I inferred the convention from the code's numbers; I did not read Coutinho's papers in this session. A user decision is needed.
 Physically, between the transition temperature and Tm only the rotator phase is the equilibrium solid and dHfus alone applies; below the transition the
 total applies. For the non-alkanes with a transition close to the melt (1,1'-bicyclohexyl 3.3 K, 1-methylnaphthalene 2.0 K, 2-methylnaphthalene 19 K) I kept
-fusion only and flagged it; the totals are in the CSV.
+fusion only and flagged it; the totals are in the CSV. **Update 2026-11-15:** for 1,1'-bicyclohexyl the user chose fusion + II->I transition (13.94 kJ/mol) for SvL (docs/decisions_2026-11-15.md #4); the other two stay fusion only.
 
 ## Judgement calls
 * **Decalin.** WebBook cross-labels the McCullough et al. 1957 enthalpy rows: the stereo-unspecified page shows 14.414 kJ/mol at 242.78 K, the trans page shows

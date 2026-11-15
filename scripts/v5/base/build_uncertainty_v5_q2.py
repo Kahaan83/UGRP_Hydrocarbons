@@ -69,6 +69,45 @@ def add_freezing(doc):
         "source": "results/v5/BASE/delta_freeze_margin/summary.csv row S_F,svl_verified margin_alpha10"}
 
 
+FU_DIR = ROOT / "results/v5/BASE/delta_freeze_adopt"
+FU_KEY = "freezing_point_C.lab_liquidus.svl_unifac"
+
+
+def add_freezing_unifac(doc):
+    """v5 delta_freeze_adopt (user decision 2026-11-15 #1): UNIFAC-SvL liquidus margin, written ONLY if the declared preference rule
+    preferred UNIFAC on scope (C) (readings.json rule_prefers_unifac, no stop_reason).  Raises otherwise.  Mirrors add_freezing; the ideal
+    key FREEZE_KEY is read, never modified."""
+    import copy
+    import json
+    rd = json.loads((FU_DIR / "readings.json").read_text(encoding="utf-8"))
+    if not rd["rule_prefers_unifac"] or rd["stop_reason"]:
+        raise SystemExit(f"delta_freeze_adopt rule does not prefer UNIFAC ({rd['stop_reason']}): svl_unifac margin not written")
+    sm = pd.read_csv(FU_DIR / "summary.csv").query("scope == 'S_F' and model == 'svl_unifac'").iloc[0]
+    m = float(sm["margin_alpha10"])
+    assert m == rd["margin_unifac_C"] and sm["margin_direction"] == "under" and int(sm["n_systems"]) >= 9
+    assert int(sm["n_systems"]) == rd["n_systems"] and int(sm["n_scored"]) == rd["n_rows"] and rd["unifac_fallbacks"] == 0
+    assert FU_KEY not in doc["margins"]
+    ideal = doc["margins"][FREEZE_KEY]
+    n_sys, n_rows = int(sm["n_systems"]), int(sm["n_scored"])
+    rr = pd.read_csv(FU_DIR / "rows.csv").query("in_SF and system_id == '74aede3c6579'").iloc[0]
+    om_res = float(rr["pred_unifac"] - rr["measured"])
+    doc["margins"][FU_KEY] = {
+        "value": m, "unit": "C", "direction": "under", "alpha": 0.1, "n_groups": n_sys, "group_unit": "system_id",
+        "n_rows": n_rows, "residual_file": "results/v5/BASE/delta_freeze_adopt/rows.csv", "applied_margin": m,
+        "model": "UNIFAC (thermo, original UNIFAC groups, flash_unifac.make_unifac_gamma_fn; vectorised as flash_unifac.make_unifac_gamma_fn_vec) Schroeder-van Laar, verified Tm / dHfus",
+        "scope": ideal["scope"] + (f" [delta_freeze_adopt scope (C): the same rule plus measured eutectic points (ThermoML eutectics of in-scope "
+                                   f"systems and Pitzer & Scott 1943 xylene eutectics), {n_sys} systems, {n_rows} rows, one ternary.]"),
+        "residual_convention": ideal["residual_convention"],
+        "caveats": copy.deepcopy(ideal["caveats"]) + [
+            "exploratory: ideal residuals were seen before the delta_freeze_unifac declaration",
+            f"The 9-system / binaries-only caveats above describe the ideal key's S_F; this key has {n_sys} systems (k = n, so the margin is the "
+            "worst system, 1-methylnaphthalene + 2,6-dimethylnaphthalene, aromatic-aromatic, where UNIFAC gamma is about 1) and one ternary.",
+            "Pitzer & Scott 1943 eutectic compositions are deduced, not analysed, and assumed mole fractions; the o-xylene + m-xylene row is "
+            f"over-predicted by {om_res:.1f} C (safe side), consistent with swapped o/m fractions in the transcription (see delta_freeze_adopt README)."],
+        "user_decision": "2026-11-15 'Adopt UNIFAC-SvL (Recommended)' (docs/decisions_2026-11-15.md #1)",
+        "source": "results/v5/BASE/delta_freeze_adopt/summary.csv row S_F,svl_unifac margin_alpha10"}
+
+
 def main():
     row = pd.read_csv(CSV).query("variant == 'designated' and scope == 'old_plus_new_minus_mesitylene'").iloc[0]
     new = float(row["margin"])
@@ -98,11 +137,12 @@ def main():
     assert doc["margins"][KEY]["applied_margin"] == FLASH_MARGIN
     assert doc["margins"][SMOKE_KEY]["applied_margin"] == SMOKE_MARGIN
     add_freezing(doc)
+    add_freezing_unifac(doc)
     add_smoke_cert(doc)
     doc["version"] = "5.0-S1+Q2+SM+FM+SC"
     doc["generated_by"] = "scripts/v5/base/build_uncertainty_v5_q2.py"
     head = ("# GENERATED - do not edit. Produced by scripts/v5/base/build_uncertainty_v5_q2.py from results/v5/S1/uncertainty_v5.yaml.\n"
-            f"# Changes vs S1: {KEY}.applied_margin (3.698768343688585 -> {new}); new entries {SMOKE_KEY} (7.8009965628100595) and {FREEZE_KEY}. Read applied_margin only.\n")
+            f"# Changes vs S1: {KEY}.applied_margin (3.698768343688585 -> {new}); new entries {SMOKE_KEY} (7.8009965628100595), {FREEZE_KEY} and {FU_KEY}. Read applied_margin only.\n")
     OUT.write_text(head + yaml.safe_dump(doc, sort_keys=False, width=140), encoding="utf-8")
     print("wrote", OUT)
 

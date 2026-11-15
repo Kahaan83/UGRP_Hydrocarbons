@@ -1,0 +1,24 @@
+inchikey,name,paper,table_ref,T_C_published,T_K_published_basis,phase,p_obs_mmHg,p_calc_mmHg,p_obs_kPa,p_calc_kPa,note
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,VII,0.0,273.16,liquid,6.75,6.75,0.8999,0.8999,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,VII,12.5,285.66,liquid,14.4,14.38,1.9198,1.9172,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,VII,25.0,298.16,liquid,28.4,28.45,3.7864,3.793,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,VII,37.5,310.66,liquid,52.7,52.65,7.0261,7.0194,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,VII,50.0,323.16,liquid,92.0,91.98,12.2657,12.263,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,0.0,273.16,liquid,1.3,1.27,0.1733,0.1693,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,12.5,285.66,liquid,3.0,3.04,0.4,0.4053,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,25.0,298.16,liquid,6.6,6.64,0.8799,0.8853,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,37.5,310.66,liquid,13.5,13.45,1.7999,1.7932,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,50.0,323.16,liquid,25.5,25.48,3.3997,3.3971,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,VII,60.0,333.16,liquid,40.6,40.63,5.4129,5.4169,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,0.0,273.16,liquid,1.75,1.71,0.2333,0.228,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,12.5,285.66,liquid,3.9,3.94,0.52,0.5253,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,25.0,298.16,liquid,8.35,8.39,1.1132,1.1186,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,37.5,310.66,liquid,16.65,16.66,2.2198,2.2212,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,50.0,323.16,liquid,31.2,31.17,4.1597,4.1557,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,VII,60.0,333.16,liquid,49.5,49.49,6.5995,6.5981,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,0.0,273.16,solid,1.35,1.29,0.18,0.172,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,12.5,285.66,solid,4.05,4.1,0.54,0.5466,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,25.0,298.16,liquid,8.9,8.87,1.1866,1.1826,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,37.5,310.66,liquid,17.5,17.55,2.3331,2.3398,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,50.0,323.16,liquid,32.6,32.61,4.3463,4.3476,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,VII,60.0,333.16,liquid,51.35,51.32,6.8461,6.8421,manometer readings reduced to 0 degC and standard gravity; 0.05 mm cathetometer sensitivity

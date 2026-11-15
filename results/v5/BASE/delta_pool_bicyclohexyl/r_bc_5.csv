@@ -1,0 +1,5 @@
+variant,design_id,antoine_A,tb_antoine_C,pure_lc_flash_C,pure_model_flash_C,mixture_flash_C,margin_C,limit_C,bound_C,flash_data_dependent
+overlay,astm_jet_a__P0yb_standin,7.33984,232.51705,85.49687,84.58968,40.64544,2.20693,38.00000,38.43851,False
+overlay,bis_jet_a1__P0yb_standin,7.33984,232.51705,85.49687,84.58968,40.42687,2.20693,38.00000,38.21994,False
+shift74,astm_jet_a__P0yb_standin,7.58891,209.95882,74.00000,73.31339,40.45482,2.20693,38.00000,38.24789,False
+shift74,bis_jet_a1__P0yb_standin,7.58891,209.95882,74.00000,73.31339,40.02199,2.20693,38.00000,37.81506,True

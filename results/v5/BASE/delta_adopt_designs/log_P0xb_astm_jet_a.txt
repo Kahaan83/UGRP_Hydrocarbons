@@ -1,0 +1,57 @@
+astm_jet_a__P0xb_standin: start 2026-11-15 16:22:52 n_starts=10 seed=42 {"git_head": "fc618b535abca7509e6c7373c5931b56e048c1da", "code_dirty": false, "freezing_model": "svl_unifac", "registry_overlay": true}
+astm_jet_a__P0xb_standin: built 10 compounds in 14.0 s
+{
+ "design_id": "astm_jet_a__P0xb_standin",
+ "spec": "astm:jet_a",
+ "pool": "P0xb",
+ "n_starts_declared": 10,
+ "seed_declared": 42,
+ "alt_standin": true,
+ "strict_constraints": true,
+ "synthetic_cap": null,
+ "d86": true,
+ "git_head": "fc618b535abca7509e6c7373c5931b56e048c1da",
+ "code_dirty": false,
+ "freezing_model": "svl_unifac",
+ "registry_overlay": true,
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"n-decane\": 0.0023, \"n-undecane\": 0.2056, \"n-dodecane\": 0.0494, \"butylcyclohexane\": 0.342, \"decalin_trans\": 0.1, \"1,2,4-trimethylbenzene\": 0.2183, \"isooctane\": 0.0375, \"tetralin\": 0.0, \"n-tridecane\": 0.0448, \"hexylbenzene\": 0.0002}",
+ "opt_best_objective": -0.08281361910368845,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 1,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": -0.05671894093730643,
+ "opt_uncertainty_U": 0.10437871270121851,
+ "opt_alt_standin": true,
+ "status": "designed",
+ "stage": "done",
+ "message": "",
+ "top_weights_full": "{\"n-decane\": 0.002306215046825551, \"n-undecane\": 0.20557459619698235, \"n-dodecane\": 0.04935854505208326, \"butylcyclohexane\": 0.3419530696704839, \"decalin_trans\": 0.1000190014994237, \"1,2,4-trimethylbenzene\": 0.21831546791061307, \"isooctane\": 0.03751802385413424, \"tetralin\": 0.0, \"n-tridecane\": 0.04479426498938711, \"hexylbenzene\": 0.00016081578006691492}",
+ "min_slack": -0.05671894093730643,
+ "binding": "flash_point_C,freezing_point_C,smoke_point_mm",
+ "n_pass": 3,
+ "n_fail": 3,
+ "n_uncertified": 4,
+ "failing": "flash_point_C,freezing_point_C,smoke_point_mm",
+ "uncertified": "distillation_T10_C,distillation_FBP_C,distillation_T50_minus_T10_C,distillation_T90_minus_T10_C",
+ "n_compounds": 10,
+ "build_s": 14.0,
+ "design_s": 2082.1,
+ "labels": ""
+}
+  density_15C_kg_m3              pass             pred 801.57 slack +0.33813 margin 4.5866  
+  flash_point_C                  fail             pred 38.129 slack -0.05469 margin 2.206932808388615  limit violated after applying the margin; lab_margin_set_by_one_system
+  freezing_point_C               fail             pred -51.574 slack -0.05672 margin 13.84274050383641  limit violated after applying the margin
+  kin_visc_m20C_cSt              pass             pred 2.9421 slack +0.50974 margin 0.28747778594508044  
+  nhoc_MJ_kg                     pass             pred 43.39 slack +0.00924 margin 0.1940195141400025  
+  aromatics_wt_pct               by_construction  pred 21.848 slack +0.12609 margin 0.0  
+  aromatics_vol_pct              by_construction  pred 19.901 slack +0.29996 margin 0.0  
+  smoke_point_mm                 fail             pred 21.123 slack -0.05468 margin 4.107069860688682  limit violated after applying the margin; alt_min 18 not passed (status fail)
+  distillation_T10_C             uncertified      pred 136.35 slack +0.33487 margin None  outside_distillation_domain (TBP T90-T10 73.3 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_FBP_C             uncertified      pred 226.9 slack +0.24365 margin None  outside_distillation_domain (TBP T90-T10 73.3 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_T50_minus_T10_C   uncertified      pred 43.561 slack +1.90405 margin None  outside_distillation_domain (TBP T90-T10 73.3 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+  distillation_T90_minus_T10_C   uncertified      pred 41.04 slack +0.02601 margin None  outside_distillation_domain (TBP T90-T10 73.3 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)
+readings: {"flash_status": "fail", "flash_model": "le_chatelier_ideal", "flash_pred_C": 38.1288831218975, "flash_margin_C": 2.206932808388615, "flash_bound_C": 35.92195031350889, "flash_limit_C": 38.0, "flash_slack": -0.054685518065555605, "freezing_status": "fail", "freezing_model": "ideal_sle_mole_fraction", "freezing_pred_C": -51.57398286634415, "freezing_margin_C": 13.84274050383641, "freezing_bound_C": -37.73124236250774, "freezing_limit_C": -40.0, "freezing_slack": -0.05671894093730643, "freezing_ideal_svl_C": -51.54516053288717, "freezing_ideal_svl_margin_C": 16.975450975521966, "freezing_ideal_svl_bound_C": -34.5697095573652, "freezing_spec_limit_C": -40.0, "freezing_route": "svl_unifac", "engler_T10_C_pred": 136.35196766461007, "engler_T10_C_slack": 0.33486845041653623, "engler_T10_C_status": "uncertified", "engler_FBP_C_pred": 226.90461690989866, "engler_FBP_C_slack": 0.24365127696700445, "engler_FBP_C_status": "uncertified", "engler_T50_minus_T10_C_pred": 43.560676419377586, "engler_T50_minus_T10_C_slack": 1.9040450946251724, "engler_T50_minus_T10_C_status": "uncertified", "engler_T90_minus_T10_C_pred": 41.04045328707056, "engler_T90_minus_T10_C_slack": 0.026011332176764056, "engler_T90_minus_T10_C_status": "uncertified", "rayleigh_T10": 175.37175988662716, "rayleigh_T50": 182.63925249832863, "rayleigh_T90": 192.25318706017185, "rayleigh_FBP": 215.5854785417303, "rayleigh_T50_T10": 7.267492611701471, "rayleigh_T90_T10": 16.881427173544694, "rayleigh_slack_T50_T10_C": -8.975177321544095, "rayleigh_slack_T90_T10_C": -28.424307922800438, "rayleigh_status": "ok", "dicycloparaffin_wt_frac": 0.10001900149942368, "labels": ""}

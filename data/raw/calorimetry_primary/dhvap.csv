@@ -1,0 +1,10 @@
+inchikey,name,paper,citation,table_ref,T_K,P_atm,dHvap_cal_mol,dHvap_unc_cal_mol,dHvap_kJ_mol,selected,note
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,PS43,"Pitzer, Scott, J. Am. Chem. Soc. 1943, 65, 803-829",text after Table VII,298.16,,9115.0,50.0,38.137,True,"Clapeyron on Table VII, Berthelot gas-imperfection correction 26 cal/mol"
+CTQNGGLPUBDAKN-UHFFFAOYSA-N,o-xylene,PS43,"Pitzer, Scott, J. Am. Chem. Soc. 1943, 65, 803-829",text after Table VII,298.16,,10470.0,50.0,43.806,True,gas-imperfection correction 10 cal/mol
+IVSZLXZYQVIEFR-UHFFFAOYSA-N,m-xylene,PS43,"Pitzer, Scott, J. Am. Chem. Soc. 1943, 65, 803-829",text after Table VII,298.16,,10160.0,50.0,42.509,True,gas-imperfection correction 12 cal/mol
+URLKBWYHVLBVBO-UHFFFAOYSA-N,p-xylene,PS43,"Pitzer, Scott, J. Am. Chem. Soc. 1943, 65, 803-829",text after Table VII,298.16,,10110.0,50.0,42.3,True,gas-imperfection correction 11 cal/mol
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,S62,"Scott, Guthrie, Messerly, Todd, Berg, Hossenlopp, McCullough, J. Phys. Chem. 1962, 66, 911-914",VII,341.27,0.25,8521.0,4.0,35.652,True,vapor-flow calorimetry
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,S62,"Scott, Guthrie, Messerly, Todd, Berg, Hossenlopp, McCullough, J. Phys. Chem. 1962, 66, 911-914",VII,361.06,0.5,8254.0,3.0,34.535,True,vapor-flow calorimetry
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,S62,"Scott, Guthrie, Messerly, Todd, Berg, Hossenlopp, McCullough, J. Phys. Chem. 1962, 66, 911-914",VII,383.77,1.0,7933.0,3.0,33.192,True,vapor-flow calorimetry (normal boiling point region)
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,S62,"Scott, Guthrie, Messerly, Todd, Berg, Hossenlopp, McCullough, J. Phys. Chem. 1962, 66, 911-914",VII,410.11,2.0,7538.0,2.0,31.539,True,vapor-flow calorimetry
+YXFVVABEGXRONW-UHFFFAOYSA-N,toluene,S62,"Scott, Guthrie, Messerly, Todd, Berg, Hossenlopp, McCullough, J. Phys. Chem. 1962, 66, 911-914",eq (2),,,,,,True,"empirical: dHv = 11637 - 4.823 T - 1.260e-2 T^2 cal/mol, T in K, valid 298-410 K (fits Osborne-Ginnings at 298.15 within +/-3 cal/mol)"

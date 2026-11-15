@@ -240,10 +240,46 @@ def domain_distance(q: dict, dom: dict) -> float:
     return float(d) / 100.0
 
 
-def add_d86_models(models: dict, d86: Optional[dict] = None) -> dict:
+def rayleigh_quantities_smiles(smiles, w, rho) -> dict:
+    """delta_d86_rayleigh model: Rayleigh D86 quantities (plus the Engler route's tbp_spread / monotone for the domain rule) from SMILES,
+    mass fractions and rho at 288.15 K."""
+    from fuelblend.baselines.distillation_rayleigh import rayleigh_quantities
+    w = np.asarray(w, float)
+    keep = w > 0
+    smi = [s for s, k in zip(smiles, keep) if k]
+    abc = []
+    for s in smi:
+        r = _lookup(s, None)
+        if r is None:
+            raise E.ModelUnavailable("no Antoine for a recipe member")
+        abc.append(r[0])
+    abc = np.asarray(abc, float)
+    mw = np.array([_mw(s) for s in smi])
+    rho = np.asarray(rho, float)[keep]
+    q = rayleigh_quantities(abc[:, 0], abc[:, 1], abc[:, 2], w[keep], mw, rho, fbp_cut=FBP_CUT_PCT)
+    tbs = np.array([tb_C(s) for s in smi])
+    vol = w[keep] / rho
+    tbp = predict_tbp_cuts(tbs, vol / vol.sum(), cut_percents=(10.0, 90.0))
+    q["tbp_spread"] = tbp["T90_TBP_C"] - tbp["T10_TBP_C"]
+    q["monotone"] = bool(q["T10"] <= q["T50"] <= q["T90"] <= q["FBP"])
+    return q
+
+
+@functools.lru_cache(maxsize=4096)
+def _mw(smiles: str) -> float:
+    from rdkit.Chem.Descriptors import MolWt
+    return float(MolWt(Chem.MolFromSmiles(smiles)))
+
+
+def add_d86_models(models: dict, d86: Optional[dict] = None, d86_model="engler") -> dict:
     """Copy of route ``models`` (compound pool) with the four D86 PropertyModels; margins as recipe ``margin_fn`` (None outside the domain
-    or when the R-W7-2 margin is inf); optimiser-only graded stand-in = the margin (0 when inf) plus the domain distance penalty."""
+    or when the R-W7-2 margin is inf); optimiser-only graded stand-in = the margin (0 when inf) plus the domain distance penalty.
+
+    ``d86_model``: "engler" (default, WS7 route, unchanged) or "rayleigh" (delta_d86_rayleigh) for every quantity, or a dict
+    {quantity: "engler" | "rayleigh"}.  ``d86`` then must carry the margins of the chosen model per quantity."""
     d86 = load_d86_margins() if d86 is None else d86
+    choice = {qn: d86_model for qn in D86_PROPS} if isinstance(d86_model, str) else {qn: d86_model.get(qn, "engler") for qn in D86_PROPS}
+    rcache: dict = {}
     L = models["library"]
     cache: dict = {}
 
@@ -265,16 +301,35 @@ def add_d86_models(models: dict, d86: Optional[dict] = None) -> dict:
             q = cache[key] = d86_quantities(tbs, vol / vol.sum())
         return q
 
+    def r_quantities(pool, w):
+        key = (tuple(pool), np.asarray(w, float).tobytes())
+        q = rcache.get(key)
+        if q is None:
+            if len(rcache) > 4096:
+                rcache.clear()
+            w = np.asarray(w, float)
+            smi = [L.smiles[n] for n in pool]
+            rho = np.array([_rho15(L, n) for n in pool])
+            if not np.all(np.isfinite(rho[w > 0])):
+                raise E.ModelUnavailable("no grid rho at 288.15 K for a recipe member")
+            q = rcache[key] = rayleigh_quantities_smiles(smi, w, np.where(np.isfinite(rho), rho, 1.0))
+        return q
+
+    def qfun(qn):
+        return r_quantities if choice[qn] == "rayleigh" else quantities
+
     props = dict(models["props"])
     for qn, (canon, side) in D86_PROPS.items():
         raw = d86["margins"].get(qn, "inf")
         m_fit = None if (isinstance(raw, str) or not math.isfinite(float(raw))) else float(raw)
 
-        def fn(pool, w, T_C, _q=qn):
-            return float(quantities(pool, w)[_q])
+        Q = qfun(qn)
 
-        def compute(pool, w, T_C, _m=m_fit):
-            q = quantities(pool, w)
+        def fn(pool, w, T_C, _q=qn, _Q=Q):
+            return float(_Q(pool, w)[_q])
+
+        def compute(pool, w, T_C, _m=m_fit, _Q=Q):
+            q = _Q(pool, w)
             if domain_distance(q, d86["domain"]) > 0:
                 return None, (f"{DOMAIN_REASON} (TBP T90-T10 {q['tbp_spread']:.1f} C, domain {d86['domain'].get('tbp_spread_min')}-"
                               f"{d86['domain'].get('tbp_spread_max')}; D86 monotone {q['monotone']})")
@@ -282,14 +337,16 @@ def add_d86_models(models: dict, d86: Optional[dict] = None) -> dict:
                 return None, "no valid D86 margin (R-W7-2 gate failed: margin inf)"
             return _m, None
 
-        def pen(pool, w, T_C):
-            return domain_distance(quantities(pool, w), d86["domain"])
+        def pen(pool, w, T_C, _Q=Q):
+            return domain_distance(_Q(pool, w), d86["domain"])
 
         props[canon] = E.PropertyModel(
-            name=f"antoine_tb_d86:{qn}", fn=fn, margin_fn=LR._RecipeMargin(compute), margin_ln=False,
-            margin_direction="under" if side == "hi" else "over", margin_source=f"delta_ws7_design_realism/d86_margins.json:{qn}",
+            name=(f"antoine_tb_d86:{qn}" if choice[qn] == "engler" else f"rayleigh_d86:{qn}"), fn=fn, margin_fn=LR._RecipeMargin(compute), margin_ln=False,
+            margin_direction="under" if side == "hi" else "over", margin_source=(f"delta_ws7_design_realism/d86_margins.json:{qn}" if choice[qn] == "engler"
+                                                                      else f"{d86.get('source', 'delta_d86_rayleigh')}:{qn}"),
             margin_stand_in=float(m_fit) if m_fit is not None else 0.0, margin_penalty_fn=pen,
-            notes="Tb from the flash-registry Antoine (extrapolated to Tb); Engler offsets of baselines/distillation.py")
+            notes=("Tb from the flash-registry Antoine (extrapolated to Tb); Engler offsets of baselines/distillation.py" if choice[qn] == "engler"
+                   else "ideal single-stage Rayleigh distillation (baselines/distillation_rayleigh.py), flash-registry Antoine"))
     out = dict(models)
     out["props"] = props
     return out
@@ -473,8 +530,13 @@ def apply_represented_rule(res: E.DesignResult, represented_mass: float, models:
 
 def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_starts: int = 10, seed: int = 42, synthetic_blend: bool = True,
                 alt_limits: bool = True, recipe_margins: bool = True, d86: bool = True, lam: float = LAMBDA_UNC,
-                synthetic_cap: Optional[float] = None, max_iter: int = 120) -> tuple:
-    """-> (DesignResult on the compound pool, top-level weights dict, optimiser info)."""
+                synthetic_cap: Optional[float] = None, max_iter: int = 120, alt_standin: bool = True,
+                strict_constraints: bool = True) -> tuple:
+    """-> (DesignResult on the compound pool, top-level weights dict, optimiser info).
+
+    ``alt_standin`` (delta_smoke_branch_opt; default True by user decision U7, CLM-67; pass False for the old behaviour): ``engine_v4._Sides(alt_point_standin=...)``, optimiser only.
+    ``strict_constraints`` (delta_pool_bicyclohexyl; default True by user decision 2026-11-15, decisions doc #6): raise ``E.ModelUnavailable`` before optimising when ``_Sides`` dropped a
+    spec constraint because its model is unavailable for the pool (otherwise the optimiser ignores that constraint; see R-BC-2)."""
     pool = list(models["pool"])
     blocked = E.blocked_result(spec_name, pool, models, seed, synthetic_blend)
     if blocked is not None:
@@ -482,7 +544,11 @@ def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_sta
     spec = E.load_spec(spec_name, synthetic_blend=synthetic_blend, alt_limits=alt_limits, d86=d86)
     margins = E.load_margins(margins_path)
     use = LR.with_recipe_margins(models, margins) if recipe_margins else models
-    sides = E._Sides(spec, pool, use, margins, graded=bool(recipe_margins))
+    sides = E._Sides(spec, pool, use, margins, graded=bool(recipe_margins), alt_point_standin=bool(alt_standin))
+    if strict_constraints:
+        bad = {k: v for k, v in sides.excluded.items() if not str(v).startswith("no model")}
+        if bad:
+            raise E.ModelUnavailable(f"constraints dropped from the optimiser: {bad}")
     U = alternate_spread_fn(models, spec) if lam else None
     dom_pms = [use["props"][c] for c, _ in D86_PROPS.values() if d86 and c in use["props"]]
 
@@ -510,6 +576,8 @@ def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_sta
                          n_converged=int(info["n_converged"]), n_starts=int(info["n_starts"]), seed=int(seed), lam=float(lam),
                          min_slack=float(np.nanmin([c.slack for c in res.constraints])) if res.constraints else float("nan"),
                          uncertainty_U=float(U(pool, bp.expand(u))) if U else float("nan"))
+    if alt_standin:                                   # recorded only when on, so feature-off outputs keep their columns
+        res.optimiser["alt_standin"] = True
     return res, dict(zip(bp.names, map(float, u))), info
 
 

@@ -45,12 +45,19 @@ def test_designated_columns_untouched_by_variants():        # Review Focus 5
     s = pd.read_csv(BASE / "scoreboard.csv")
     d = s[(s.property == "flash_point_C") & (s.tier == "T2_measured") & (s.set == "ajftd_gcxgc") & (s.model == "ideal_le_chatelier") & (s.variant == "designated")].iloc[0]
     # headline = one fuel per double-count group (31); G1's 37-row number is reproduced from rows_t2_flash.csv in R-BASE-2
-    assert d.n_groups == 31 and d.bias == pytest.approx(-0.634, abs=0.01) and d.mae == pytest.approx(3.381, abs=0.01)
+    # Adopted BASE (U4, 2026-11-15): pre-adoption pins bias -0.634 / MAE 3.381 / no_skill_shown -> -0.152 / 2.995 / beats_trivial (D3_overlay)
+    assert d.n_groups == 31 and d.bias == pytest.approx(-0.152, abs=0.01) and d.mae == pytest.approx(2.995, abs=0.01)
+    assert d.verdict == "beats_trivial"
     v = s[(s.property == "flash_point_C") & (s.tier == "T2_measured") & (s.set == "ajftd_gcxgc") & (s.model == "ideal_le_chatelier") & (s.variant == "lfl_overlay")].iloc[0]
     assert v.bias != d.bias                                  # the variant is its own row; the designated row did not move
     r2 = bs.r_base_2()
     g1 = r2[r2.cell.str.contains("all 37")]
-    assert g1.within.all() and len(g1) == 2                  # G1's -0.426 / 3.536 reproduced on its own 37 rows
+    # pre-adoption: G1's -0.426 / 3.536 reproduced on its own 37 rows (within 0.05).  Adopted BASE (U4): decision 3 moves the 37-row
+    # rerun to 0.141 / 3.088, outside tolerance of G1 (the README R-BASE-2 adopt note gives the cause)
+    assert len(g1) == 2 and not g1.within.any()
+    obs = dict(zip(g1.cell.str.endswith("bias"), g1.observed))
+    assert obs[True] == pytest.approx(0.141, abs=0.005) and obs[False] == pytest.approx(3.088, abs=0.005)
+    assert sorted(g1.committed.round(3)) == [-0.426, 3.536]
 
 
 def test_tampered_file_makes_reproduce_exit_1(tmp_path):    # same pattern as tests/test_reproduce_drift.py

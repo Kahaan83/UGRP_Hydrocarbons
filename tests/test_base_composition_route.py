@@ -20,8 +20,7 @@ ALL_TARGETS_9T = pd.DataFrame(
        for T in (233.15, 243.15, 253.15, 263.15, 273.15, 283.15, 288.15, 298.15, 313.15)])
 
 
-@pytest.fixture(scope="module")
-def parts():
+def _make_parts():
     from fuelblend.baselines.flash_unifac import _lookup
     from fuelblend.data.reconstruction_r3 import SubReps
     from fuelblend.mixture.common import CompoundRegistry, PurePropertyProvider
@@ -29,6 +28,31 @@ def parts():
     prov = PurePropertyProvider(reg, ROOT / "data" / "cache" / "pure_grid.npz", verbose=False)
     reps = SubReps(reg, prov, vp_lookup=lambda s: _lookup(s, None))
     return reg, prov, reps
+
+
+@pytest.fixture(scope="module")
+def parts():
+    return _make_parts()
+
+
+@pytest.fixture(scope="module")
+def legacy_parts_ctx():
+    """Decision 3 (2026-11-15) put the flash-registry additions overlay (bicyclohexyl, cis-decalin) on by default; it changes the
+    representative choice of T2 fuels (AJFTD:2 and others).  The S3 reproduction test compares the live route with the frozen S3 file,
+    written before the decision, so it is pointed at the legacy v2 registry (FUELBLEND_FLASH_REGISTRY_ADDITIONS=0).  SubReps and RouteCtx
+    read the registry at construction (has_extra, flash_reg), so building them under the env var is enough.  Expected values unchanged;
+    the drift is listed in results/v5/BASE/delta_adopt_rescore/drift.csv.
+    Kept on the legacy switch after the BASE adoption (U4, 2026-11-15): the reference here is results/v5/S3, a separate committed
+    pre-decision result that the adoption does not regenerate, so the test checks the route still reproduces it with the switch off."""
+    from fuelblend.baselines import flash_unifac as fu
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setenv(fu.REGISTRY_ADDITIONS_ENV, "0")
+        fu._default_registry.cache_clear()
+        p = _make_parts()
+        reg, prov, reps = p
+        ctx = RouteCtx(reg, prov, build_tmap(reg, sorted({i for v in reps.by.values() for i in v})))
+    fu._default_registry.cache_clear()
+    return p, ctx
 
 
 @pytest.fixture(scope="module")
@@ -119,7 +143,8 @@ def _score_like_s3(parts, route_ctx):
     return pd.concat(rows, ignore_index=True)
 
 
-def test_reproduces_s3_corrected_M_predictions(parts, route_ctx):
+def test_reproduces_s3_corrected_M_predictions(legacy_parts_ctx):
+    parts, route_ctx = legacy_parts_ctx
     ref = pd.read_csv(S3 / "corrected_2026-11-12_predictions.csv")
     ref = ref[ref.status_M == "ok"].copy()
     new = _score_like_s3(parts, route_ctx).rename(columns={"pred": "pred_new", "status": "status_new"})

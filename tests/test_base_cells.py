@@ -41,7 +41,13 @@ def test_cells_t2_flash():
     g1 = pd.read_csv(ROOT / "results/v5/G1/predictions.csv", dtype={"fuel_id": str})
     g1 = g1[(g1.property == "flash_point_C") & (g1.model == "ideal")]
     j = r[r.source == "ajftd_gcxgc"].merge(g1, on="fuel_id")
-    assert len(j) == 37 and np.allclose(j.pred_designated, j.pred, atol=0.05)          # R-BASE-2
+    # R-BASE-2.  Pre-adoption BASE: all 37 rows reproduced G1 within 0.05 C.  Adopted BASE (U4, 2026-11-15): decision 3 (flash-registry
+    # overlay) moves the fuels whose mapped composition holds bicyclohexyl / cis-decalin, so 16 of 37 rows still equal G1 (pre-adoption 37
+    # of 37); 37-row bias -0.426 -> 0.141 C, MAE 3.536 -> 3.088 C (delta_adopt_rescore/drift.csv, cause D3_overlay).
+    assert len(j) == 37 and int(np.isclose(j.pred_designated, j.pred, atol=0.05).sum()) == 16
+    a = r[(r.source == "ajftd_gcxgc") & (r.status == "ok")]
+    e = a.pred_designated - a.measured
+    assert len(a) == 37 and e.mean() == pytest.approx(0.141, abs=0.005) and e.abs().mean() == pytest.approx(3.088, abs=0.005)
     c = pd.read_csv(BASE / "cells_t2_flash.csv")
     _schema_ok(c)
     assert set(c.variant) == {"designated", "lfl_overlay", "mesitylene_fixed", "lfl_overlay+mesitylene_fixed"}
@@ -55,8 +61,10 @@ def test_cells_t2_bulk():
     a = vt[vt.source == "av3322"].set_index("T_K")
     assert len(a) == 9
     tol = 0.02                                                        # 0.05 if route_vs_s3_differences.csv existed (it does not)
-    assert a.loc[233.15, "bias_ln"] == pytest.approx(-0.637, abs=tol)      # C1 R-C1-5
-    assert a.loc[313.15, "bias_ln"] == pytest.approx(0.066, abs=tol)
+    # Adopted BASE (U4, 2026-11-15): C1 R-C1-5 values -0.637 / 0.066 were the pre-adoption pins; decision 3 moves them to -0.574 / 0.109
+    # (delta_adopt_rescore/drift.csv, D3_overlay), outside the R-BASE-2 tolerance of C1 by design.
+    assert a.loc[233.15, "bias_ln"] == pytest.approx(-0.574, abs=tol)
+    assert a.loc[313.15, "bias_ln"] == pytest.approx(0.109, abs=tol)
     c = pd.read_csv(BASE / "cells_t2_bulk.csv")
     _schema_ok(c)
     k1 = c[(c.property == "viscosity_kin_cSt") & (c.variant == "k1_cold_offset_loso") & (c.set == "ajftd_gcxgc") & (c.T_K == 253.15)]

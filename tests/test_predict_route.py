@@ -346,7 +346,17 @@ def _t2_fuels(n, need_heat=False):
     return out
 
 
-def test_freezing_svl_matches_route(ctx):
+@pytest.fixture
+def legacy_freezing(monkeypatch):
+    """Decision 1 (2026-11-15) made UNIFAC SvL the designated freezing model; tests using this fixture pin the legacy ideal SvL route."""
+    from fuelblend.eval import composition_route as CR
+    monkeypatch.setattr(CR, "DESIGNATED_FREEZING_MODEL", "ideal_svl")
+    pr._tmap_freezing.cache_clear()
+    yield
+    pr._tmap_freezing.cache_clear()
+
+
+def test_freezing_svl_matches_route(ctx, legacy_freezing):
     reg = ctx.reg
     tmap = build_tmap_designated(build_tmap(reg, [i for i in range(len(reg.ik)) if reg.usable[i]]))   # verified where present, else Coutinho
     fuels = _t2_fuels(5)
@@ -393,6 +403,9 @@ def test_f1x_variant_jet_with_nalkanes_only():
 
 
 def test_heat_matches_bulk_rows(ctx):
+    # Adopted BASE (U4, 2026-11-15): rows_t2_bulk.csv was regenerated under the default flash-registry overlay (decision 3), so the live
+    # default route is compared with it directly (AJFTD:2 43.508441 pre-adoption -> 43.528702 adopted; the legacy-registry fixture
+    # used before adoption is no longer needed).
     rows = pd.read_csv(pr.ROOT / "results/v5/BASE/rows_t2_bulk.csv")
     h = rows[(rows.property == "heat_of_combustion_net_MJ_kg") & (rows.model == "ga_comp_H") & (rows.status == "ok")]
     fuels = _t2_fuels(5, need_heat=True)
@@ -461,8 +474,11 @@ def test_k1_only_at_fitted_T():
     assert "k1_cold_offset_in_sample" not in pr.predict_fuel(BLEND3, T_K=240.0)["viscosity_kin_cSt"]["variants"]
 
 
-def test_uncertified_props_have_nan_interval():
-    r = pr.predict_fuel(BLEND3, T_K=298.15, fuel_type="jet")
+def test_uncertified_props_have_nan_interval(legacy_freezing):
+    # BLEND3 (toluene) is no longer usable here: CLM-65 (a6b526c) upgraded toluene's Tm/dHfus to verified, so BLEND3 now gets the
+    # delta_freeze_margin interval.  Ethylbenzene is not in tm_dhfus_verified.csv (hexylbenzene was upgraded 2026-11-15), so this blend
+    # keeps a non-verified (Coutinho) freezing constant.
+    r = pr.predict_fuel({DECANE: 0.5, DODECANE: 0.3, "CCc1ccccc1": 0.2}, T_K=298.15, fuel_type="jet")
     assert math.isnan(r["freezing_point_C"]["lo"]) and math.isnan(r["freezing_point_C"]["hi"]) and r["freezing_point_C"]["in_domain"] is False
     assert r["freezing_point_C"]["uncertified"] is True
     w = pb.predict([(DECANE, 0.5), (DODECANE, 0.5)], fuel_type="jet")

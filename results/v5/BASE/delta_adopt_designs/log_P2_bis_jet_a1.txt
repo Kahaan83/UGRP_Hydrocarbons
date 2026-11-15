@@ -1,0 +1,56 @@
+bis_jet_a1__P2_standin: start 2026-11-15 16:23:07 n_starts=10 seed=42 {"git_head": "fc618b535abca7509e6c7373c5931b56e048c1da", "code_dirty": false, "freezing_model": "svl_unifac", "registry_overlay": true}
+bis_jet_a1__P2_standin: built 44 compounds in 18.2 s
+{
+ "design_id": "bis_jet_a1__P2_standin",
+ "spec": "bis:jet_a1",
+ "pool": "P2",
+ "n_starts_declared": 10,
+ "seed_declared": 42,
+ "alt_standin": true,
+ "strict_constraints": true,
+ "synthetic_cap": 0.5,
+ "d86": true,
+ "git_head": "fc618b535abca7509e6c7373c5931b56e048c1da",
+ "code_dirty": false,
+ "freezing_model": "svl_unifac",
+ "registry_overlay": true,
+ "passed": false,
+ "category": "",
+ "top_weights": "{\"jetA_posf10325\": 0.2782, \"hefa_came\": 0.3591, \"atj_posf11498\": 0.1409, \"1,2,4-trimethylbenzene\": 0.2218}",
+ "opt_best_objective": -0.023124006302983332,
+ "opt_hard_feasible": true,
+ "opt_n_converged": 8,
+ "opt_n_starts": 10,
+ "opt_seed": 42,
+ "opt_lam": 0.25,
+ "opt_min_slack": 0.015535089665625227,
+ "opt_uncertainty_U": 0.15463638387443424,
+ "opt_alt_standin": true,
+ "status": "designed",
+ "stage": "done",
+ "message": "",
+ "top_weights_full": "{\"jetA_posf10325\": 0.27820074213339846, \"hefa_came\": 0.35906548532968496, \"atj_posf11498\": 0.14093451467031665, \"1,2,4-trimethylbenzene\": 0.22179925786659999}",
+ "min_slack": 0.015535089665625227,
+ "binding": "nhoc_MJ_kg,distillation_FBP_C,distillation_T50_minus_T10_C",
+ "n_pass": 0,
+ "n_fail": 0,
+ "n_uncertified": 11,
+ "failing": "",
+ "uncertified": "density_15C_kg_m3,flash_point_C,freezing_point_C,kin_visc_m20C_cSt,nhoc_MJ_kg,aromatics_vol_pct,smoke_point_mm,distillation_T10_C,distillation_FBP_C,distillation_T50_minus_T10_C,distillation_T90_minus_T10_C",
+ "n_compounds": 44,
+ "build_s": 18.2,
+ "design_s": 1063.8,
+ "labels": ""
+}
+  density_15C_kg_m3              uncertified      pred 791.3 slack +0.25083 margin None  non-verified constant(s): CC(C)CC(C)C.rho15=route_grid, CCC(C)CC(C)C.rho15=route_grid, CCC1CCCCC1.rho15=route_grid, CCCC1CCCCC1.rho15=route_grid, CCCC
+  flash_point_C                  uncertified      pred 44.292 slack +0.16559 margin None  non-verified constant(s): CC(C)CC(C)C.flash=route_anchored, CCC(C)CC(C)C.flash=route_anchored, CCC1CCCCC1.flash=route_anchored, CCCC1CCCCC1.flash=rout
+  freezing_point_C               uncertified      pred -48.956 slack +0.04161 margin None  non-verified constant(s): CC(C)CC(C)C.Tm=coutinho_table, CC(C)CC(C)C.dHfus=coutinho_table, CCC(C)CC(C)C.Tm=coutinho_table, CCC(C)CC(C)C.dHfus=coutinho
+  kin_visc_m20C_cSt              uncertified      pred 2.9396 slack +0.44335 margin 0.4153576080066075  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  nhoc_MJ_kg                     uncertified      pred 43.659 slack +0.01554 margin 0.1940195141400025  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  aromatics_vol_pct              uncertified      pred 24.082 slack +0.05400 margin None  non-verified constant(s): CC(C)CC(C)C.rho15=route_grid, CCC(C)CC(C)C.rho15=route_grid, CCC1CCCCC1.rho15=route_grid, CCCC1CCCCC1.rho15=route_grid, CCCC
+  smoke_point_mm                 uncertified      pred 19.769 slack +0.04049 margin None  model emitted OutOfDomainWarning: aromatics 24.082035263444986 vol % outside training domain 8-23; non-verified constant(s): CC(C)CC(C)C.rho15=route_g
+  distillation_T10_C             uncertified      pred 173.41 slack +0.11542 margin 7.927706228297922  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_FBP_C             uncertified      pred 292.08 slack +0.01554 margin 3.2620795453688913  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_T50_minus_T10_C   uncertified      pred 33.914 slack +0.01554 margin 18.68126547110495  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+  distillation_T90_minus_T10_C   uncertified      pred 100.43 slack +1.05453 margin 18.246505125791458  represented_blendstock_margin_not_validated: recipe contains a GCxGC-represented blendstock; margins were validated on known compositions only (real-f
+readings: {"flash_status": "uncertified", "flash_model": "le_chatelier_ideal", "flash_pred_C": 44.29241444936088, "flash_margin_C": null, "flash_bound_C": NaN, "flash_limit_C": 38.0, "flash_slack": 0.16558985393054937, "freezing_status": "uncertified", "freezing_model": "ideal_sle_mole_fraction", "freezing_pred_C": -48.955848513194695, "freezing_margin_C": null, "freezing_bound_C": NaN, "freezing_limit_C": -47.0, "freezing_slack": 0.04161379815307862, "freezing_ideal_svl_C": -48.44763440714698, "freezing_ideal_svl_margin_C": 16.975450975521966, "freezing_ideal_svl_bound_C": -31.472183431625012, "freezing_spec_limit_C": -47.0, "freezing_route": "svl_unifac", "engler_T10_C_pred": 173.4105192075667, "engler_T10_C_slack": 0.11542329055675797, "engler_T10_C_status": "uncertified", "engler_FBP_C_pred": 292.0773935549432, "engler_FBP_C_slack": 0.015535089665626174, "engler_FBP_C_status": "uncertified", "engler_T50_minus_T10_C_pred": 33.91429181608936, "engler_T50_minus_T10_C_slack": 0.01553508966562731, "engler_T50_minus_T10_C_status": "uncertified", "engler_T90_minus_T10_C_pred": 100.42767257540672, "engler_T90_minus_T10_C_slack": 1.0545291862403814, "engler_T90_minus_T10_C_status": "uncertified", "rayleigh_T10": 181.47938997132218, "rayleigh_T50": 202.18282917015227, "rayleigh_T90": 274.242656824537, "rayleigh_FBP": 289.2910368795392, "rayleigh_T50_T10": 20.703439198830097, "rayleigh_T90_T10": 92.76326685321482, "rayleigh_slack_T50_T10_C": 4.460769265584531, "rayleigh_slack_T90_T10_C": 47.457531756869685, "rayleigh_status": "ok", "dicycloparaffin_wt_frac": 0.018643683636015228, "labels": ""}

@@ -1,0 +1,13 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+astm_jet_a__P0xa_standin,density_15C_kg_m3,pass,802.5158403205193,4.5866,0.35275754339260434,775.0,840.0,ideal_volume_rho15,,
+astm_jet_a__P0xa_standin,flash_point_C,fail,38.12607356159697,2.206932808388615,-0.054759453862938075,38.0,,le_chatelier_ideal,,limit violated after applying the margin; lab_margin_set_by_one_system
+astm_jet_a__P0xa_standin,freezing_point_C,fail,-51.566435116876676,13.84274050383641,-0.05690763467399336,,-40.0,ideal_sle_mole_fraction,,limit violated after applying the margin
+astm_jet_a__P0xa_standin,kin_visc_m20C_cSt,pass,2.964809629658652,0.28747778594508044,0.5059659965137783,,8.0,refutas+ml_pair_gn,,
+astm_jet_a__P0xa_standin,nhoc_MJ_kg,pass,43.371757680954,0.1940195141400025,0.008825658103130797,42.8,,gcv_group_additivity_constH,,
+astm_jet_a__P0xa_standin,aromatics_wt_pct,by_construction,21.808742314446132,0.0,0.12765030742215472,,25.0,class_mass_fraction,,
+astm_jet_a__P0xa_standin,aromatics_vol_pct,by_construction,19.8884785963766,0.0,0.30067772962490585,8.0,25.0,class_volume_fraction,verified,
+astm_jet_a__P0xa_standin,smoke_point_mm,fail,21.12668345119389,4.107069860688682,-0.05446591163859951,25.0,,ajftd_bulk_regression,verified,limit violated after applying the margin; alt_min 18 not passed (status fail)
+astm_jet_a__P0xa_standin,distillation_T10_C,uncertified,136.32299993474555,,0.3350097564158753,,205.0,antoine_tb_d86:T10,verified,"outside_distillation_domain (TBP T90-T10 73.4 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+astm_jet_a__P0xa_standin,distillation_FBP_C,uncertified,224.63245094682867,,0.2512251635105711,,300.0,antoine_tb_d86:FBP,verified,"outside_distillation_domain (TBP T90-T10 73.4 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+astm_jet_a__P0xa_standin,distillation_T50_minus_T10_C,uncertified,43.851961777318905,,1.923464118487927,15.0,,antoine_tb_d86:T50_T10,verified,"outside_distillation_domain (TBP T90-T10 73.4 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+astm_jet_a__P0xa_standin,distillation_T90_minus_T10_C,uncertified,41.06983367897476,,0.026745841974369,40.0,,antoine_tb_d86:T90_T10,verified,"outside_distillation_domain (TBP T90-T10 73.4 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"

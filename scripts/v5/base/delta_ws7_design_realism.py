@@ -135,6 +135,9 @@ def make_pool(pool: str) -> B.BlendPool:
     if pool == "P2":
         return B.BlendPool([B.load_blendstock("jetA_posf10325"), B.load_blendstock("hefa_came"), B.load_blendstock("atj_posf11498"),
                             B.pure_component("1,2,4-trimethylbenzene")])
+    if pool == "P3":      # P2 + the opt-in SAK blendstock (Feldhausen 2022); declared in delta_ws7_design_realism/README.md "SAK pool P3"
+        return B.BlendPool([B.load_blendstock("jetA_posf10325"), B.load_blendstock("hefa_came"), B.load_blendstock("atj_posf11498"),
+                            B.load_blendstock("sak_virent_feldhausen2022"), B.pure_component("1,2,4-trimethylbenzene")])
     raise ValueError(pool)
 
 
@@ -155,7 +158,8 @@ def run_one(pool, spec, d86, lam, tag, out_dir, n_starts, cap=None, max_iter=120
     if d86:
         models = B.add_d86_models(models)
     t1 = time.time()
-    res, top, info = B.design_pool(spec, bp, models, MARGINS, n_starts=n_starts, seed=42, d86=d86, lam=lam, synthetic_cap=cap, max_iter=max_iter)
+    res, top, info = B.design_pool(spec, bp, models, MARGINS, n_starts=n_starts, seed=42, d86=d86, lam=lam, synthetic_cap=cap, max_iter=max_iter,
+                                   alt_standin=False)   # WS7 protocol: no stand-in (design_pool now defaults to True)
     d, c = _rows(res, top, tag, spec)
     d.update(build_s=round(t1 - t0, 1), design_s=round(time.time() - t1, 1), pool=pool, n_compounds=len(bp.comp_ids), d86=d86)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -174,7 +178,7 @@ def cmd_compare(args):
 
 
 def cmd_design(args):
-    cap = B.SYNTHETIC_CAP if args.pool == "P2" else None
+    cap = B.SYNTHETIC_CAP if args.pool in ("P2", "P3") else None
     run_one(args.pool, args.spec, True, B.LAMBDA_UNC, args.pool, D / "designs" / args.pool, args.n_starts, cap=cap)
 
 

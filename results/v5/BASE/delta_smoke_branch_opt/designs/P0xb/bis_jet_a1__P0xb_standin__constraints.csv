@@ -1,0 +1,12 @@
+design_id,constraint,status,prediction,applied_margin,slack,lo,hi,model,spec_verification,reason
+bis_jet_a1__P0xb_standin,density_15C_kg_m3,pass,813.8653997000952,4.5866,0.3520726061523821,775.0,840.0,ideal_volume_rho15,,
+bis_jet_a1__P0xb_standin,flash_point_C,fail,36.167281042928494,2.206932808388615,-0.1063066254068453,38.0,,le_chatelier_ideal,,limit violated after applying the margin; lab_margin_set_by_one_system
+bis_jet_a1__P0xb_standin,freezing_point_C,fail,-58.97903957912757,16.975450975521966,-0.10630662545519985,,-47.0,ideal_sle_mole_fraction,,limit violated after applying the margin
+bis_jet_a1__P0xb_standin,kin_visc_m20C_cSt,pass,3.233082179312559,0.28747778594508044,0.46126303804887503,,8.0,refutas+ml_pair_gn,,
+bis_jet_a1__P0xb_standin,nhoc_MJ_kg,pass,43.08563049805412,0.1940195141400025,0.002140443549395393,42.8,,gcv_group_additivity_constH,,
+bis_jet_a1__P0xb_standin,aromatics_vol_pct,by_construction,20.0103185037486,0.0,0.29351067625008237,8.0,25.0,class_volume_fraction,verified,
+bis_jet_a1__P0xb_standin,smoke_point_mm,fail,21.087243978349015,4.107069860688682,-0.10630662538629827,25.0,,ajftd_bulk_regression,verified,limit violated after applying the margin; alt_min 19 not passed (status fail)
+bis_jet_a1__P0xb_standin,distillation_T10_C,uncertified,138.64631946266883,,0.3236764904260057,,205.0,antoine_tb_d86:T10,verified,"outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+bis_jet_a1__P0xb_standin,distillation_FBP_C,uncertified,225.47721918717286,,0.24840926937609045,,300.0,antoine_tb_d86:FBP,verified,"outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+bis_jet_a1__P0xb_standin,distillation_T50_minus_T10_C,uncertified,40.98894700835618,,1.7325964672237453,15.0,,antoine_tb_d86:T50_T10,verified,"outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"
+bis_jet_a1__P0xb_standin,distillation_T90_minus_T10_C,uncertified,40.34217856116729,,0.008554464029182186,40.0,,antoine_tb_d86:T90_T10,verified,"outside_distillation_domain (TBP T90-T10 72.6 C, domain 30.108505086978028-163.63082880048358; D86 monotone False)"

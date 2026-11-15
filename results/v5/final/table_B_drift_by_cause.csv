@@ -1,0 +1,6 @@
+cause,n_cells,n_designated_rows,source
+D3_overlay:by_code_path,949,593,results/v5/BASE/delta_adopt_rescore/drift.csv
+PRE_api_route+D3_overlay:by_recompute,818,27,results/v5/BASE/delta_adopt_rescore/drift.csv
+PRE_api_route:by_recompute,246,11,results/v5/BASE/delta_adopt_rescore/drift.csv
+D3_overlay:by_recompute,4,0,results/v5/BASE/delta_adopt_rescore/drift.csv
+PRE_flash_margin_q2:by_recompute,4,4,results/v5/BASE/delta_adopt_rescore/drift.csv
