@@ -32,3 +32,15 @@ Expected consequence (from the committed readings, before any re-run): with deci
 Reading from the application (`results/v5/BASE/delta_freeze_adopt/`): decision 4 makes bicyclohexyl + butylcyclohexane over-predict freezing point by up to 33.6 C
 (safe side), system MAE 14.7 C; margins unchanged (13.8427 UNIFAC / 16.9755 ideal). The o-xylene + m-xylene eutectic composition in the Pitzer & Scott ingest
 appears transposed (MAE would be 4.19 ideal / 3.65 UNIFAC with the swap; margins unchanged); a data-owner check is open.
+
+## Answers to the open items (user)
+
+- U1: the two untracked 2026-11-12 plan files stay untracked (not committed).
+- U2: `data/raw/sak/dot_64804/dot_64804_DS1.pdf` untracked (`git rm --cached`); the file stays on disk and is covered by the `data/*` ignore rule.
+- U3: the `docs/claims_register.md` line in `SHA256SUMS_v4.txt` rehashed (only that line); no other v4 artefact touched.
+- U5: pushed.
+- U6: dicycloparaffin bound (0-30 %) in the smoke class-mix rule: **not added, no re-run.** The user's condition was to re-run only if the bound would improve results. It cannot raise the
+  certified count: it only restricts. Of the 3 certified designs, P0y Jet A (15.5 wt %) and P0y-b Jet A (15.1 wt %) are already inside 30 %; only P0y-b Jet A-1 (37.8 wt %) is outside, so the
+  best case is 3 of 16 unchanged and the likely case is 2 of 16 (freezing pushes the Jet A-1 optimum towards dicycloparaffins: P0x-b Jet A-1 at 19.8 wt % misses the limit). The 37.8 wt % caveat stays documented.
+- U7: `design_pool(alt_standin=...)` now defaults to True (CLM-67). The 16 designs in `delta_adopt_designs` already ran with it on, so their results are unchanged. The WS7 runner passes
+  `alt_standin=False` explicitly to keep reproducing its committed protocol. Test: `tests/test_alt_standin_default.py`.

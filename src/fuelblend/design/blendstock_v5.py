@@ -530,11 +530,11 @@ def apply_represented_rule(res: E.DesignResult, represented_mass: float, models:
 
 def design_pool(spec_name: str, bp: BlendPool, models: dict, margins_path, n_starts: int = 10, seed: int = 42, synthetic_blend: bool = True,
                 alt_limits: bool = True, recipe_margins: bool = True, d86: bool = True, lam: float = LAMBDA_UNC,
-                synthetic_cap: Optional[float] = None, max_iter: int = 120, alt_standin: bool = False,
+                synthetic_cap: Optional[float] = None, max_iter: int = 120, alt_standin: bool = True,
                 strict_constraints: bool = True) -> tuple:
     """-> (DesignResult on the compound pool, top-level weights dict, optimiser info).
 
-    ``alt_standin`` (delta_smoke_branch_opt, default False): ``engine_v4._Sides(alt_point_standin=...)``, optimiser only.
+    ``alt_standin`` (delta_smoke_branch_opt; default True by user decision U7, CLM-67; pass False for the old behaviour): ``engine_v4._Sides(alt_point_standin=...)``, optimiser only.
     ``strict_constraints`` (delta_pool_bicyclohexyl; default True by user decision 2026-11-15, decisions doc #6): raise ``E.ModelUnavailable`` before optimising when ``_Sides`` dropped a
     spec constraint because its model is unavailable for the pool (otherwise the optimiser ignores that constraint; see R-BC-2)."""
     pool = list(models["pool"])
