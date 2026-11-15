@@ -80,3 +80,38 @@ eutectics".
 `n_systems`, `n_rows`, `unifac_fallbacks`, `rule_prefers_unifac`, `stop_reason` for (C), plus the A / B / C-ps sub-readings).
 
 Status: **exploratory / dev** (the ideal residuals were seen before the `delta_freeze_unifac` declaration; no locked SLE set exists).
+
+## Amendment (2026-11-15, during the first run; declared readings unchanged)
+
+Two ThermoML eutectic rows (9b3569206a24 phenanthrene + naphthalene 321.88 K; 0c6aa597c154 biphenyl + hexacosane 321.96 K) have no
+`x_liquid`, and `scope_rows` cannot parse them. They are dropped before scoring. Both are above 273.15 K and outside S_F, so only the
+descriptive R-FA-2 row count is affected. `summary.csv` is written at full precision (not `%.4f` like `delta_freeze_unifac`) because the yaml
+margin is read from it.
+
+## Results (appended 2026-11-15 after the run; nothing above the amendment was edited)
+
+`scripts/v5/base/delta_freeze_adopt.py` -> `summary.csv`, `rows.csv`, `rows_A.csv`, `rows_B.csv`, `per_system_S_F.csv`, `readings.json`.
+
+| sub-reading | rows | systems | ideal margin | UNIFAC margin | ideal MAE | UNIFAC MAE | ideal bias | UNIFAC bias | fallbacks | rule |
+|---|---|---|---|---|---|---|---|---|---|---|
+| (A) old data, old constants | 67 | 9 | 16.9755 | 13.8427 | 3.3271 | 2.6238 | -1.21 | +0.13 | 0 | UNIFAC |
+| (B) 67 rows, new constants | 67 | 9 | 16.9755 | 13.8427 | 4.3963 | 3.7253 | +0.80 | +2.13 | 0 | UNIFAC |
+| **(C) headline** | **73** | **12** | **16.9755** | **13.8427** | **4.4741** | **3.9346** | +1.17 | +2.47 | **0** | **UNIFAC** |
+| (C-ps) B + Pitzer & Scott only | 70 | 12 | 16.9755 | 13.8427 | 4.6092 | 3.9670 | +1.16 | +2.44 | 0 | UNIFAC |
+| R-FA-2 (descriptive) | 654 | 44 | 17.2294 | 10.3990 | 4.3058 | 3.9738 | -0.05 | +0.17 | 16 | (not a gate) |
+
+* (A) reproduces `delta_freeze_unifac` R-FU-1 exactly, so B vs C is a valid attribution.
+* **A -> B (constants):** only the bicyclohexyl + butylcyclohexane system changes (bicyclohexyl dHfus 6.86 -> 13.94). Its predictions rise by
+  5.4-33.6 C. Its worst residual goes from -9.08 C (under) to +5.54 C (over, safe side), and its MAE rises to 14.7 C (ideal) / 14.8 C (UNIFAC).
+  Both pooled MAEs rise by about 1.1 C. The margins do not move, because the worst systems are unchanged (naphthalene + trans-decalin -16.98
+  ideal; 1-methylnaphthalene + 2,6-dimethylnaphthalene -13.84 UNIFAC).
+* **B -> C (data):** new systems a44fe03d18dd (m-xylene + p-xylene, +2.87 C), 74aede3c6579 (o-xylene + m-xylene, +22.04 C) and
+  d7d3558e3a17 (o-, m-, p-xylene ternary, +3.19 C). UNIFAC equals ideal for these three (gamma about 1). The three ThermoML eutectics add one
+  row each to naphthalene + trans-decalin, naphthalene + cis-decalin and dodecane + tetradecane. Margins are unchanged; MAE rises a little.
+* **Rule on (C): UNIFAC preferred** (13.84 < 16.98, 3.93 <= 4.47, 0 fallbacks); stop_reason null. The key
+  `freezing_point_C.lab_liquidus.svl_unifac` is written by `add_freezing_unifac` (value 13.84274050383641).
+* **Data concern (not fixed here):** the o-xylene + m-xylene eutectic row is stored as x = (0.666 o, 0.334 m). Ideal SvL predicts -39.7 C at that
+  composition but -60.6 C at the swapped (0.334 o, 0.666 m), against measured -61.75 C. The paper's own ideal-solution value (211.2 K) also
+  only matches the swapped composition, and a eutectic between o-xylene (Tm 247.8 K) and m-xylene (225.3 K) must be m-rich. So the o/m
+  fractions were most likely swapped in `ingest_calorimetry_primary.py` EUT. The error is on the safe side (over-prediction) and affects both
+  models equally, so neither margin nor the rule changes. Undeclared sensitivity with the swap: (C) MAE 4.19 (ideal) / 3.65 (UNIFAC).

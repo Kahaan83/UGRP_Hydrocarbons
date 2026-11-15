@@ -1,5 +1,5 @@
 # GENERATED - do not edit. Produced by scripts/v5/base/build_uncertainty_v5_q2.py from results/v5/S1/uncertainty_v5.yaml.
-# Changes vs S1: flash_point_C.lab_mixtures.ideal.applied_margin (3.698768343688585 -> 2.206932808388615); new entries smoke_point_mm.lab_mixtures.bulk_regression (7.8009965628100595) and freezing_point_C.lab_liquidus.svl_verified. Read applied_margin only.
+# Changes vs S1: flash_point_C.lab_mixtures.ideal.applied_margin (3.698768343688585 -> 2.206932808388615); new entries smoke_point_mm.lab_mixtures.bulk_regression (7.8009965628100595), freezing_point_C.lab_liquidus.svl_verified and freezing_point_C.lab_liquidus.svl_unifac. Read applied_margin only.
 version: 5.0-S1+Q2+SM+FM+SC
 generated_by: scripts/v5/base/build_uncertainty_v5_q2.py
 alpha: 0.1
@@ -2509,6 +2509,35 @@ margins:
     - Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed
       real fuels.
     source: results/v5/BASE/delta_freeze_margin/summary.csv row S_F,svl_verified margin_alpha10
+  freezing_point_C.lab_liquidus.svl_unifac:
+    value: 13.84274050383641
+    unit: C
+    direction: under
+    alpha: 0.1
+    n_groups: 12
+    group_unit: system_id
+    n_rows: 73
+    residual_file: results/v5/BASE/delta_freeze_adopt/rows.csv
+    applied_margin: 13.84274050383641
+    model: UNIFAC (thermo, Dortmund groups as flash_unifac.make_unifac_gamma_fn) Schroeder-van Laar, verified Tm / dHfus
+    scope: 'ThermoML liquidus rows, all components C8-C16 hydrocarbons with verified constants, T <= 273.15 K (scope S_F): binaries of n-alkanes,
+      naphthalenes, decalins and bicyclohexyl, 9 systems. Valid for known compositions whose every component has a verified Tm and dHfus. [delta_freeze_adopt
+      scope (C): the same rule plus measured eutectic points (ThermoML eutectics of in-scope systems and Pitzer & Scott 1943 xylene eutectics),
+      12 systems, 73 rows, one ternary.]'
+    residual_convention: predicted - measured liquidus temperature (C); the margin is ADDED to the prediction (safe_bound = hi)
+    caveats:
+    - 9 systems is the minimum for alpha = 0.10; the margin is the largest group score (worst system).
+    - Binaries only (2 components); 5 of the 9 systems were unscorable with the old Coutinho constants and were added after seeing that scoring.
+    - A liquidus is not an ASTM D5972 freezing point; transfer to multi-component jet fuels is not demonstrated.
+    - Real jet fuels (Vozka, reconstructed composition) are over-predicted by the same constants (safe side); the margin is not claimed for reconstructed
+      real fuels.
+    - 'exploratory: ideal residuals were seen before the delta_freeze_unifac declaration'
+    - The 9-system / binaries-only caveats above describe the ideal key's S_F; this key has 12 systems (k = n, so the margin is the worst system,
+      1-methylnaphthalene + 2,6-dimethylnaphthalene, aromatic-aromatic, where UNIFAC gamma is about 1) and one ternary.
+    - Pitzer & Scott 1943 eutectic compositions are deduced, not analysed, and assumed mole fractions; the o-xylene + m-xylene row is over-predicted
+      by 22.0 C (safe side), consistent with swapped o/m fractions in the transcription (see delta_freeze_adopt README).
+    user_decision: '2026-11-15 ''Adopt UNIFAC-SvL (Recommended)'' (docs/decisions_2026-11-15.md #1)'
+    source: results/v5/BASE/delta_freeze_adopt/summary.csv row S_F,svl_unifac margin_alpha10
   smoke_point_mm.ajftd_v5_in_domain.bulk_regression:
     value: 4.107069860688682
     unit: mm

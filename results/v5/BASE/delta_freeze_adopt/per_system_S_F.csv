@@ -1,0 +1,13 @@
+group,sample,n,n_eutectic,worst_ideal,worst_unifac,mae_ideal,mae_unifac,fallback
+cbc85653bf3b,naphthalene + trans-decahydronaphthalene,8,1,-16.9755,0.0600,5.5715,0.6143,False
+26a166195d71,naphthalene + cis-decahydronaphthalene,6,1,-14.5899,2.1100,5.9300,5.6496,False
+9f7c1271ff42,"1-methylnaphthalene + 2,6-dimethylnaphthalene",3,0,-13.8425,-13.8427,5.2322,5.2323,False
+3cb8853b2842,tridecane + pentadecane,11,0,-4.6852,-4.6931,2.0082,2.0204,False
+9b7e224adfb7,"1-methylnaphthalene + 1,5-dimethylnaphthalene",7,0,-3.8076,-4.4293,2.6818,3.0066,False
+898f827ffb96,dodecane + tetradecane,17,1,-0.9489,-0.9575,1.8189,1.8047,False
+a34071cfc715,"1,6-dimethylnaphthalene + 2,6-dimethylnaphthalene",6,0,0.0500,0.0500,3.0206,3.0206,False
+f47258641e8d,"1-methylnaphthalene + 2,7-dimethylnaphthalene",5,0,0.9889,0.5520,1.9366,1.7271,False
+a44fe03d18dd,m-xylene + p-xylene,1,1,2.8651,2.8651,2.8651,2.8651,False
+d7d3558e3a17,o-xylene + m-xylene + p-xylene,1,1,3.1859,3.1859,3.1859,3.1859,False
+ffd8e7cf5721,"1,1'-bicyclohexyl + butylcyclohexane",7,0,5.5419,5.5506,14.7253,14.8454,False
+74aede3c6579,o-xylene + m-xylene,1,1,22.0420,22.0420,22.0420,22.0420,False
