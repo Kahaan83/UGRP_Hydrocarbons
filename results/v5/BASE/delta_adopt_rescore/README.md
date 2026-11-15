@@ -378,3 +378,5 @@ The re-scored numbers live only in `rerun/` and `drift.csv`. Adopting the re-run
 * the parent README's R-BASE-2 statement.
 
 None of these is done here.
+
+**Update 2026-11-15 (U4):** the user adopted this re-score as the frozen BASE in `3b75437` (`--update-manifest` run then; see `results/v5/BASE/README.md`, note 2026-11-15, and CLM-74). The Status text above describes this task as it stood before adoption.

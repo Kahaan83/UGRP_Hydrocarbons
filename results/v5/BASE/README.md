@@ -104,8 +104,8 @@ The frozen scoreboard is the one committed in `5a62e20`. Part C deltas are measu
 ## Note 2026-11-15 (U4: re-score adopted as the frozen BASE)
 
 The user adopted the `delta_adopt_rescore` re-score as the frozen v5 BASE on 2026-11-15 (question U4, "Yea adopt"). The text above is unchanged.
-* The top-level files of this folder are the `reproduce_base.py --full` re-run under the adopted defaults (decisions 2026-11-15), equal to
-  `delta_adopt_rescore/rerun/`; `SHA256SUMS_v5_base.txt` was re-written with `--update-manifest`. The pre-adoption frozen BASE (first frozen in
+* The top-level files of this folder are the `reproduce_base.py --full` re-run under the adopted defaults (decisions 2026-11-15), as the fixed point
+  of the default `--from-rows` pass: equal to `delta_adopt_rescore/rerun/` up to CSV precision (5 files differ by at most 1.0e-5 absolute); `SHA256SUMS_v5_base.txt` was re-written with `--update-manifest`. The pre-adoption frozen BASE (first frozen in
   `5a62e20`) is recoverable at commit `3ab033d`, the parent of the adoption commit. Every changed cell, old -> new, with its cause, is in
   `delta_adopt_rescore/drift.csv` (2,021 scoreboard cells; no cause D1/D4/D5/D7, none unattributed).
 * R-BASE-2 after adoption (reported only; no tolerance or gate moved). The flash AJFTD GCxGC rows no longer reproduce G1: 37-row bias
