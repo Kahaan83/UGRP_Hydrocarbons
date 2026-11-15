@@ -5,7 +5,7 @@ Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values 
 
 | file | content | sources |
 |---|---|---|
-| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv`, `results/v5/BASE/scoreboard.csv`, `results/v5/BASE/delta_freeze_t2_unifac/summary.csv` |
+| `table_A_headline.csv` | headline designated rows (current defaults = re-score, adopted as the frozen BASE in U4, plus the pre-adoption BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv`, `results/v5/BASE/scoreboard.csv`, `results/v5/BASE/delta_freeze_t2_unifac/summary.csv` |
 | `table_A_freezing_unifac_lab.csv` | UNIFAC vs ideal SvL on lab liquidus S_F | `results/v5/BASE/delta_freeze_adopt/summary.csv` |
 | `table_A2_t2_per_source.csv` | T2 per-source designated rows | same as table A |
 | `table_B_drift_by_cause.csv` | changed scoreboard cells by cause | `results/v5/BASE/delta_adopt_rescore/drift.csv` |
