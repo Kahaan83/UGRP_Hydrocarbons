@@ -128,3 +128,11 @@ Data-consistency finding: with the registry (Jones) LFL, a pure flash of 74 C ne
 The Jet A design is the stronger one: its only open conditions are the overlay and the D86 model. Thermodynamically the fusion-only dHfus
 is the less defensible choice for a liquidus far below bicyclohexyl's solid-solid transition (about 3 K below its melt), and the Jet A-1
 liquidus (-64 C) is about 64 K below it (Tm 276.8 K, transition about 273.5 K), so the Jet A-1 design should be read as failing freezing unless the user decides otherwise.
+
+## Undeclared observation (2026-11-15, after R-BC-5; no gate, nothing re-run)
+Smoke binds in both P0y-b optima. The smoke class-mix domain rule (`design/smoke_margin_v5.class_mix_in_real_fuel_range`) bounds total
+cycloparaffins (mono + di + tri; real-fuel range 0-70.9 wt %), n-paraffins and iso-paraffins, but has no dicycloparaffin term. Total
+cyclo: Jet A 45.0 %, Jet A-1 62.2 % (inside). Dicycloparaffins (bicyclohexyl + trans-decalin) against the 113 mapped AJFTD GCxGC fuels
+(max 30.0 %, 95th percentile 17.3 %): Jet A 17.3 % (inside, at the 95th percentile), **Jet A-1 37.5 % (above every real fuel)**. The
+Jet A-1 smoke prediction is therefore an extrapolation in dicycloparaffin content that the domain rule does not see. A further reason to read
+Jet A as the stronger design.
