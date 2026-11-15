@@ -1,0 +1,10 @@
+item,value,unit,detail,source
+single GC fuel for D56 flash,1.0,fuels,"only 1 independent group (POSF-10325, headline n=1, statistics_allowed=False); no valid margin; no substitute number is given.",configs/uncertainty_v5.yaml
+thin locked sets: ML viscosity cold bins,3.0,locked systems (< 263 K),263-283 K: 4 locked systems; ML margin in that bin equals Refutas,results/v5/BASE/delta_ml_viscosity/readings.json
+thin locked sets: CRC 647 fold_b,12.0,fuels,n_groups of the CRC647_r3 fold_b scoreboard rows,results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv
+bicyclohexyl dHfus 13.94 kJ/mol over-predicts freezing (safe side),14.8454,C system MAE (UNIFAC),worst residual +5.55 C; predictions rise by 5.4-33.6 C vs the old constant,results/v5/BASE/delta_freeze_adopt/per_system_S_F.csv; results/v5/BASE/delta_freeze_adopt/README.md
+"o-/m-xylene eutectic composition likely transposed (ingest_calorimetry_primary.py EUT), NOT fixed",22.042,C residual on that row,with the swap MAE would be 4.19 (ideal) / 3.65 (UNIFAC); margins unchanged,results/v5/BASE/delta_freeze_adopt/per_system_S_F.csv; results/v5/BASE/delta_freeze_adopt/README.md
+certified Jet A-1 design outside AJFTD dicycloparaffin range,37.784,wt % dicyclo,AJFTD GCxGC maximum 30.0 %,results/v5/BASE/delta_adopt_designs/results_table.csv
+engine freezing label,16.0,design rows,designs.csv freezing_model_y = ideal_sle_mole_fraction (16); value and margin are UNIFAC SvL (freezing_route column),results/v5/BASE/delta_adopt_designs/designs.csv
+no lab validation,0.0,designs measured,lab test ruled out by the user (2026-11-14); certification is model-level only,docs/v5_negative_results.md
+re-score pending adoption (U4),,,current-default numbers live in delta_adopt_rescore/rerun; frozen BASE and SHA256SUMS_v5_base.txt unchanged,results/v5/BASE/delta_adopt_rescore/README.md

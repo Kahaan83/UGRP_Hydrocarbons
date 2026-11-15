@@ -1,0 +1,5 @@
+component,T_bin,margin_ml,margin_refutas,n_dev_systems,locked_systems,locked_covered_ml,locked_covered_refutas,source
+viscosity,T_lt_263K,0.28747778594508044,0.4153576080066075,20,3,3,3,results/v5/BASE/delta_ml_viscosity/readings.json
+viscosity,T_263_283K,0.6084381907110359,0.6084381907110359,16,4,4,4,results/v5/BASE/delta_ml_viscosity/readings.json
+viscosity,T_ge_283K,0.13426357484240542,0.18490773481188544,264,70,64,66,results/v5/BASE/delta_ml_viscosity/readings.json
+density,all,4.424828681837994,5.299263365613342,167,41,38,38,results/v5/BASE/delta_ml_density/readings.json (margin_refutas column = ideal-volume margin; both computed on locked)
