@@ -158,7 +158,8 @@ def run_one(pool, spec, d86, lam, tag, out_dir, n_starts, cap=None, max_iter=120
     if d86:
         models = B.add_d86_models(models)
     t1 = time.time()
-    res, top, info = B.design_pool(spec, bp, models, MARGINS, n_starts=n_starts, seed=42, d86=d86, lam=lam, synthetic_cap=cap, max_iter=max_iter)
+    res, top, info = B.design_pool(spec, bp, models, MARGINS, n_starts=n_starts, seed=42, d86=d86, lam=lam, synthetic_cap=cap, max_iter=max_iter,
+                                   alt_standin=False)   # WS7 protocol: no stand-in (design_pool now defaults to True)
     d, c = _rows(res, top, tag, spec)
     d.update(build_s=round(t1 - t0, 1), design_s=round(time.time() - t1, 1), pool=pool, n_compounds=len(bp.comp_ids), d86=d86)
     out_dir.mkdir(parents=True, exist_ok=True)
