@@ -1,11 +1,11 @@
 # v5 final numbers pack: tables and figures
 
-Built by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `a5afab1` (`git show`, never the working tree).
+Built by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `a3c5967` (`git show`, never the working tree).
 Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values are selected, joined and plotted.
 
 | file | content | sources |
 |---|---|---|
-| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path) | `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv`, `results/v5/BASE/scoreboard.csv` |
+| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv`, `results/v5/BASE/scoreboard.csv`, `results/v5/BASE/delta_freeze_t2_unifac/summary.csv` |
 | `table_A_freezing_unifac_lab.csv` | UNIFAC vs ideal SvL on lab liquidus S_F | `results/v5/BASE/delta_freeze_adopt/summary.csv` |
 | `table_A2_t2_per_source.csv` | T2 per-source designated rows | same as table A |
 | `table_B_drift_by_cause.csv` | changed scoreboard cells by cause | `results/v5/BASE/delta_adopt_rescore/drift.csv` |
@@ -14,8 +14,8 @@ Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values 
 | `table_D_ml_gates.csv` | ML gate readings (R-MLV-1..5, R-MLD-1..3) | `results/v5/BASE/delta_ml_viscosity/readings.json`, `results/v5/BASE/delta_ml_viscosity/readings_R-MLV-5.json`, `results/v5/BASE/delta_ml_density/readings.json` |
 | `table_D2_ml_margins.csv` | ML margins and locked coverage | `results/v5/BASE/delta_ml_viscosity/readings.json` (R-MLV-6), `results/v5/BASE/delta_ml_density/readings.json` (R-MLD-4) |
 | `table_E_designs.csv` | 16 designs | `results/v5/BASE/delta_adopt_designs/results_table.csv` |
-| `table_F_negative_results.csv` | negative results | `docs/v5_negative_results.md`, `docs/model_decision.md`, `results/v5/BASE/delta_ml_ysi/readings.json`, `results/v5/BASE/delta_ml_density/readings.json`, `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv` |
-| `table_G_limitations.csv` | limitations | `configs/uncertainty_v5.yaml`, `results/v5/BASE/delta_freeze_adopt/per_system_S_F.csv`, `results/v5/BASE/delta_freeze_adopt/README.md`, `results/v5/BASE/delta_adopt_designs/results_table.csv`, `results/v5/BASE/delta_adopt_designs/designs.csv` |
+| `table_F_negative_results.csv` | negative results | `docs/v5_negative_results.md`, `docs/model_decision.md`, `results/v5/BASE/delta_ml_ysi/readings.json`, `results/v5/BASE/delta_ml_density/readings.json`, `results/v5/BASE/delta_adopt_rescore/rerun/scoreboard.csv`, `results/v5/BASE/delta_freeze_t2_unifac/summary.csv`, `results/v5/BASE/delta_freeze_t2_unifac/rows.csv` |
+| `table_G_limitations.csv` | limitations | `configs/uncertainty_v5.yaml`, `results/v5/BASE/delta_freeze_adopt/per_system_S_F.csv`, `results/v5/BASE/delta_freeze_adopt/rows.csv`, `results/v5/BASE/delta_freeze_adopt/README.md`, `results/v5/BASE/delta_adopt_designs/results_table.csv`, `results/v5/BASE/delta_adopt_designs/designs.csv` |
 | `table_H_commits.csv` | commits for reproduction | git log |
 
 Headline selection rule: designated rows of the headline properties, no temperature split, T2 sets starting with `pooled`

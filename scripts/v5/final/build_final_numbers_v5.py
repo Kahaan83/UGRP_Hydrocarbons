@@ -32,7 +32,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
-DEFAULT_COMMIT = "a5afab1"
+DEFAULT_COMMIT = "a3c5967"
 
 RERUN = "results/v5/BASE/delta_adopt_rescore/rerun"
 FROZEN = "results/v5/BASE"
@@ -48,6 +48,10 @@ SRC = {
     "freeze_summary": "results/v5/BASE/delta_freeze_adopt/summary.csv",
     "freeze_systems": "results/v5/BASE/delta_freeze_adopt/per_system_S_F.csv",
     "freeze_readme": "results/v5/BASE/delta_freeze_adopt/README.md",
+    "freeze_rows": "results/v5/BASE/delta_freeze_adopt/rows.csv",
+    "freeze_t2": "results/v5/BASE/delta_freeze_t2_unifac/summary.csv",
+    "freeze_t2_rows": "results/v5/BASE/delta_freeze_t2_unifac/rows.csv",
+    "flash_lab_margin": "results/v5/BASE/delta_lab_flash_li2014/lab_margin.csv",
     "mlv": "results/v5/BASE/delta_ml_viscosity/readings.json",
     "mlv5": "results/v5/BASE/delta_ml_viscosity/readings_R-MLV-5.json",
     "mlv5_csv": "results/v5/BASE/delta_ml_viscosity/realfuel_transfer_R-MLV-5.csv",
@@ -197,6 +201,33 @@ def build_A(S: Src):
             "unsafe_rate_current", "n_groups_frozen", "bias_frozen", "mae_frozen", "verdict_frozen", "changed",
             "cells_file", "evidence_path", "source_current", "source_frozen"]
     A = m[cols].reset_index(drop=True)
+    A.insert(A.columns.get_loc("variant") + 1, "scoreboard_variant", A["variant"])
+
+    # superseded flash margin90 (the scoreboard carries the pre-Q2 yaml `value`, not the applied margin)
+    yf = S.yaml(SRC["yaml"])["margins"]["flash_point_C.lab_mixtures.ideal"]
+    A["margin90_note"] = ""
+    sup = (A.property == "flash_point_C") & np.isclose(A.margin90_current.astype(float), yf["value"], rtol=1e-6)
+    A.loc[sup, "margin90_note"] = (f"superseded (pre-Q2) {yf['value']:.4f}; applied {yf['applied_margin']:.4f} "
+                                   f"({yf['n_groups_applied']} groups)")
+
+    # freezing: scoreboard cells are ideal SvL, not the adopted designated route (UNIFAC SvL, CLM-73)
+    isv = (A.property == "freezing_point_C") & (A.model == "ideal_svl")
+    A.loc[isv, "variant"] = "ideal_svl, scoreboard cell, frozen/re-scored (not the adopted route)"
+    t2 = S.csv(SRC["freeze_t2"])
+    u = t2[(t2.model == "svl_unifac") & (t2.variant == "designated") & t2.set.isin(["pooled", "pooled_locked"])]
+    urows = pd.DataFrame({
+        "property": u.property, "tier": u.tier, "set": u.set, "model": u.model,
+        "variant": "designated (CLM-73; delta_freeze_t2_unifac)", "scoreboard_variant": "(not a scoreboard cell)",
+        "label": u.label, "status": u.status, "n_groups_current": u.n_groups, "bias_current": u.bias,
+        "mae_current": u.mae, "trivial_model_current": u.trivial_model, "mae_trivial_current": u.mae_trivial,
+        "verdict_current": u.verdict, "margin90_current": np.nan, "unsafe_rate_current": np.nan,
+        "n_groups_frozen": np.nan, "bias_frozen": np.nan, "mae_frozen": np.nan, "verdict_frozen": "",
+        "changed": False, "cells_file": "", "evidence_path": u.evidence_path, "source_current": SRC["freeze_t2"],
+        "source_frozen": "", "margin90_note": [f"coverage at applied {m:.4f} C margin: {c:g} (uninformative, bias "
+                                               f"{b:+.2f} C)" for m, c, b in zip(u.margin_used, u.coverage_margin, u.bias)]})
+    A = pd.concat([A, urows], ignore_index=True)
+    A["_o"] = A.property.map(order) * 10 + A.tier.map(tier_order)
+    A = A.sort_values("_o", kind="mergesort").drop(columns="_o").reset_index(drop=True)
 
     # UNIFAC SvL freezing (designated route since CLM-73) is scored only on the lab liquidus set S_F.
     fs = S.csv(SRC["freeze_summary"])
@@ -218,7 +249,7 @@ def build_A(S: Src):
              "verdict_current", "bias_frozen", "mae_frozen", "verdict_frozen"]].sort_values(
         ["property", "set", "model"]).reset_index(drop=True)
     A2["source_current"], A2["source_frozen"] = SRC["sb_rerun"], SRC["sb_frozen"]
-    return A, A_frz, A2
+    return A, A_frz, A2, t2
 
 
 # ----------------------------------------------------------------------------- table B
@@ -283,20 +314,46 @@ MARGIN_ROWS = [
 def build_C(S: Src, A: pd.DataFrame):
     y = S.yaml(SRC["yaml"])["margins"]
     lim = spec_limits(S)
+    lm = S.csv(SRC["flash_lab_margin"])
+    fsum = S.csv(SRC["freeze_summary"])
+    sf = fsum[fsum.scope == "S_F"].set_index("model")
+    mlv = S.json(SRC["mlv"])["R-MLV-6"]
     rows = []
     for key, role in MARGIN_ROWS:
         v = y[key]
         prop = key.split(".")[0]
+        n = v.get("n_groups_applied", v.get("n_groups"))
+        note, src = "", SRC["yaml"]
+        if "n_groups_applied" in v:
+            note = (f"applied margin derived on {v['n_groups_applied']} groups; the yaml `value` "
+                    f"{v['value']:.4f} (superseded) was derived on {v['n_groups']} groups")
+        if key == "flash_point_C.lab_mixtures.ideal":
+            r = lm[(lm.variant == "designated") & np.isclose(lm.margin, v["applied_margin"])].iloc[0]
+            assert int(r.n_groups) == int(n)
+            note += f"; {int(r.n_groups)} systems / {int(r.n_points)} points, scope {r.scope}"
+            src += "; " + SRC["flash_lab_margin"]
+        if key.startswith("freezing_point_C.lab_liquidus."):
+            mdl = key.split(".")[-1]
+            r = sf.loc[mdl]
+            same = np.isclose(r.margin_alpha10, v["applied_margin"])
+            note = (f"stored config value derived on {v['n_groups']} groups; the {int(r.n_systems)}-system S_F reading "
+                    f"(delta_freeze_adopt) gives {'the same' if same else 'a different'} {r.margin_alpha10:.4f}")
+            src += "; " + SRC["freeze_summary"]
+        if key == "viscosity_kin_cSt.lab_mixtures.raw_refutas.T_ge_283K":
+            r6 = mlv["refutas"]["T_ge_283K"]
+            note = (f"yaml config entry (lab raw Refutas, {v['n_groups']} groups); the ML delta recomputes Refutas on "
+                    f"its own {r6['n_dev_systems']} dev systems (R-MLV-6): {r6['margin']:.4f}")
         rows.append({"property": prop, "margin_key": key, "role": role, "model": v.get("model"),
                      "applied_margin": v.get("applied_margin", np.nan), "value": v.get("value"),
-                     "unit": v.get("unit"), "direction": v.get("direction"), "n_groups": v.get("n_groups"),
-                     "spec_jet_a": lim[prop][0], "spec_jet_a1": lim[prop][1], "source": SRC["yaml"]})
-    mlv = S.json(SRC["mlv"])["R-MLV-6"]
+                     "unit": v.get("unit"), "direction": v.get("direction"), "n_groups": n, "n_note": note,
+                     "spec_jet_a": lim[prop][0], "spec_jet_a1": lim[prop][1], "source": src})
     for b in ["T_lt_263K", "T_263_283K", "T_ge_283K"]:
         rows.append({"property": "viscosity_kin_cSt", "margin_key": f"ml_pair_residual.{b}",
                      "role": "designated in domain (ml_pair_residual)", "model": "LightGBM pair residual on Refutas",
                      "applied_margin": mlv["ml"][b]["margin"], "value": mlv["ml"][b]["margin"], "unit": "ln-ratio",
                      "direction": "two_sided", "n_groups": mlv["ml"][b]["n_dev_systems"],
+                     "n_note": (f"R-MLV-6 on the ML delta's dev systems; Refutas on the same systems "
+                                f"{mlv['refutas'][b]['margin']:.4f}"),
                      "spec_jet_a": lim["viscosity_kin_cSt"][0], "spec_jet_a1": lim["viscosity_kin_cSt"][1],
                      "source": SRC["mlv"] + " R-MLV-6"})
     mld = S.json(SRC["mld"])["R-MLD-4"]["ml"]
@@ -304,7 +361,9 @@ def build_C(S: Src, A: pd.DataFrame):
                  "role": "variant, known binaries only (computed on locked systems)",
                  "model": "LightGBM pair excess volume", "applied_margin": mld["locked_margin_kg_m3"],
                  "value": mld["locked_margin_kg_m3"], "unit": "kg/m3", "direction": "two_sided",
-                 "n_groups": S.json(SRC["mld"])["locked_systems"], "spec_jet_a": lim["density_kg_m3"][0],
+                 "n_groups": S.json(SRC["mld"])["locked_systems"],
+                 "n_note": "computed on the locked systems; locked coverage is therefore not an independent check",
+                 "spec_jet_a": lim["density_kg_m3"][0],
                  "spec_jet_a1": lim["density_kg_m3"][1], "source": SRC["mld"] + " R-MLD-4"})
     rows.append({"property": "density_kg_m3", "margin_key": "ml_pair_excess_volume.dev_oof",
                  "role": "variant, dev out-of-fold reading", "model": "LightGBM pair excess volume",
@@ -331,7 +390,8 @@ def build_D(S: Src):
     def gate(comp, g, set_, r, base, pass_, n_rows=None, note=""):
         rows.append({"component": comp, "gate": g, "set": set_, "n_systems": r.get("n_systems"), "n_rows": n_rows,
                      "baseline": base, "mae_baseline": r["mae_a"], "mae_ml": r["mae_b"], "gain": r["gain"],
-                     "gain_ci95_lo": r["lo"], "gain_ci95_hi": r["hi"], "pass": pass_, "note": note})
+                     "gain_ci95_lo": r["lo"], "gain_ci95_hi": r["hi"],
+                     "ci_basis": "per-system group bootstrap, same basis as gain", "pass": pass_, "note": note})
 
     gate("ml_pair_residual (viscosity, ln)", "R-MLV-1", "dev (system-grouped OOF)", v["R-MLV-1"]["ml"], "Refutas",
          v["R-MLV-1"]["pass"], note=f"constant-offset comparator MAE {v['R-MLV-1']['const']['mae_b']:.4f}")
@@ -341,7 +401,8 @@ def build_D(S: Src):
     rows.append({"component": "ml_pair_residual (viscosity, ln)", "gate": "R-MLV-3", "set": "ternaries+ (row-level)",
                  "n_systems": t["systems"], "n_rows": t["rows"], "baseline": "Refutas", "mae_baseline": t["mae_refutas"],
                  "mae_ml": t["mae_ml"], "gain": t["mae_refutas"] - t["mae_ml"], "gain_ci95_lo": np.nan,
-                 "gain_ci95_hi": np.nan, "pass": v["R-MLV-3"]["pass"], "note": "row-level MAE over all rows"})
+                 "gain_ci95_hi": np.nan, "ci_basis": "no CI (row-level reading)", "pass": v["R-MLV-3"]["pass"],
+                 "note": "row-level MAE over all rows"})
     gate("ml_pair_residual (viscosity, ln)", "R-MLV-3", "ternaries+ (per-system macro)", t["macro"], "Refutas",
          v["R-MLV-3"]["pass"], n_rows=t["rows"], note="system-macro MAE with bootstrap CI")
     r4 = v["R-MLV-4"]
@@ -351,7 +412,7 @@ def build_D(S: Src):
                  "set": "T2 real fuels (frozen rows_t2_bulk)", "n_systems": np.nan, "n_rows": v5["n_rows"],
                  "baseline": "Refutas", "mae_baseline": v5["mae_ln_refutas"], "mae_ml": v5["mae_ln_ml"],
                  "gain": v5["mae_ln_refutas"] - v5["mae_ln_ml"], "gain_ci95_lo": np.nan, "gain_ci95_hi": np.nan,
-                 "pass": "descriptive (MIXED)",
+                 "ci_basis": "no CI (descriptive)", "pass": "descriptive (MIXED)",
                  "note": f"ML not worse in {v5['temps_ml_not_worse']} of {v5['temps_total']} source x T cells"})
     gate("ml_pair_excess_volume (density, kg/m3)", "R-MLD-1", "dev (system-grouped OOF)", d["R-MLD-1"]["ml"],
          "ideal volume", d["R-MLD-1"]["pass"])
@@ -361,26 +422,39 @@ def build_D(S: Src):
     rows.append({"component": "ml_pair_excess_volume (density, kg/m3)", "gate": "R-MLD-3", "set": "ternaries+ (row-level)",
                  "n_systems": t["systems"], "n_rows": t["rows"], "baseline": "ideal volume", "mae_baseline": t["mae_ideal"],
                  "mae_ml": t["mae_ml"], "gain": t["mae_ideal"] - t["mae_ml"], "gain_ci95_lo": t["macro"]["lo"],
-                 "gain_ci95_hi": t["macro"]["hi"], "pass": d["R-MLD-3"]["pass"],
-                 "note": "FAILED; CI columns are the per-system macro gain"})
+                 "gain_ci95_hi": t["macro"]["hi"],
+                 "ci_basis": (f"MIXED BASIS: gain is row-level; the CI is the per-system macro CI (macro gain "
+                              f"{t['macro']['gain']:.4f})"),
+                 "pass": d["R-MLD-3"]["pass"], "note": "FAILED"})
     D = pd.DataFrame(rows)
     D["source"] = np.where(D.component.str.startswith("ml_pair_residual"), SRC["mlv"], SRC["mld"])
     D.loc[D.gate.str.startswith("R-MLV-5"), "source"] = SRC["mlv5"]
     D2 = []
+    ym = S.yaml(SRC["yaml"])["margins"]
     for b in ["T_lt_263K", "T_263_283K", "T_ge_283K"]:
         m = v["R-MLV-6"]
+        yv = ym[f"viscosity_kin_cSt.lab_mixtures.raw_refutas.{b}"]
         D2.append({"component": "viscosity", "T_bin": b, "margin_ml": m["ml"][b]["margin"],
-                   "margin_refutas": m["refutas"][b]["margin"], "n_dev_systems": m["ml"][b]["n_dev_systems"],
+                   "margin_physics_baseline": m["refutas"][b]["margin"],
+                   "physics_baseline": f"Refutas recomputed on the ML delta's {m['refutas'][b]['n_dev_systems']} dev systems (R-MLV-6)",
+                   "applied_physics_margin_yaml": f"{yv['applied_margin']:.4f} ({yv['n_groups']} groups, yaml raw_refutas.{b})",
+                   "n_dev_systems": m["ml"][b]["n_dev_systems"],
                    "locked_systems": m["locked_coverage"]["ml"][b]["locked_systems"],
                    "locked_covered_ml": m["locked_coverage"]["ml"][b]["covered"],
-                   "locked_covered_refutas": m["locked_coverage"]["refutas"][b]["covered"], "source": SRC["mlv"]})
+                   "locked_covered_physics": m["locked_coverage"]["refutas"][b]["covered"],
+                   "source": SRC["mlv"] + "; " + SRC["yaml"]})
     m = d["R-MLD-4"]
+    yo, yu = ym["density_kg_m3.lab_mixtures.ideal_volume.over"], ym["density_kg_m3.lab_mixtures.ideal_volume.under"]
     D2.append({"component": "density", "T_bin": "all", "margin_ml": m["ml"]["locked_margin_kg_m3"],
-               "margin_refutas": m["ideal"]["locked_margin_kg_m3"], "n_dev_systems": d["dev_systems"],
+               "margin_physics_baseline": m["ideal"]["locked_margin_kg_m3"],
+               "physics_baseline": f"ideal volume, computed on the {d['locked_systems']} locked systems (R-MLD-4)",
+               "applied_physics_margin_yaml": (f"{yo['applied_margin']:.4f} over / {yu['applied_margin']:.4f} under "
+                                               f"({yo['n_groups']} systems, yaml ideal_volume)"),
+               "n_dev_systems": d["dev_systems"],
                "locked_systems": m["ml"]["locked_coverage_by_locked_margin"][1],
                "locked_covered_ml": m["ml"]["locked_coverage_by_locked_margin"][0],
-               "locked_covered_refutas": m["ideal"]["locked_coverage_by_locked_margin"][0],
-               "source": SRC["mld"] + " (margin_refutas column = ideal-volume margin; both computed on locked)"})
+               "locked_covered_physics": m["ideal"]["locked_coverage_by_locked_margin"][0],
+               "source": SRC["mld"] + "; " + SRC["yaml"]})
     return D, pd.DataFrame(D2), v, d
 
 
@@ -437,6 +511,25 @@ def build_F(S: Src, A: pd.DataFrame, D: pd.DataFrame):
                       "what": f"{r.tier} {r.set} ({r.label})",
                       "outcome": f"MAE {fmt(r.mae_current)} C vs trivial {fmt(r.mae_trivial_current)}; verdict {r.verdict_current}",
                       "where": SRC["sb_rerun"], "source": SRC["sb_rerun"]})
+    for _, r in A[(A.property == "freezing_point_C") & (A.model == "svl_unifac")].iterrows():
+        extra.append({"item": f"freezing, UNIFAC SvL (designated) on real fuels ({r.tier} {r.set}, {r.label})",
+                      "what": "designated route on T2, delta_freeze_t2_unifac",
+                      "outcome": (f"MAE {fmt(r.mae_current)} C vs trivial {fmt(r.mae_trivial_current)} "
+                                  f"(n {int(r.n_groups_current)}), bias {fmt(r.bias_current)} C; verdict {r.verdict_current}"),
+                      "where": SRC["freeze_t2"], "source": SRC["freeze_t2"]})
+    t2r = S.csv(SRC["freeze_t2_rows"]).set_index("entity")
+    a325 = t2r.loc["AJFTD:325"]
+    sbn = A[(A.property == "freezing_point_C") & (A.model == "ideal_svl") & (A.tier == "T2_measured")
+            & (A.set == "pooled")].n_groups_current
+    un = A[(A.property == "freezing_point_C") & (A.model == "svl_unifac") & (A.set == "pooled")].n_groups_current
+    extra.append({"item": "freezing caveat: AJFTD:325 under the designated constants",
+                  "what": "UNIFAC SvL designated constants on AJFTD:325 (12 components)",
+                  "outcome": (f"predicted {a325.unifac_desig:.1f} C (UNIFAC; ideal {a325.ideal_desig:.1f} C) vs measured "
+                              f"{a325.freezing_C:.0f} C, error {a325.unifac_desig - a325.freezing_C:+.1f} C; the fuel has no "
+                              f"scoreboard prediction (I_scoreboard empty), hence the designated pooled n = "
+                              f"{int(un.iloc[0]) if len(un) else '?'} vs the scoreboard's "
+                              f"{int(sbn.iloc[0]) if len(sbn) else '?'}"),
+                  "where": SRC["freeze_t2_rows"], "source": SRC["freeze_t2_rows"]})
     for _, r in A[(A.property == "viscosity_kin_cSt") & (A.set == "pooled_T_lt_263K")].iterrows():
         extra.append({"item": "cold viscosity on real fuels (< 263 K)", "what": f"{r.model}, T2 pooled",
                       "outcome": f"MAE {fmt(r.mae_current)} ln, unsafe rate {fmt(r.unsafe_rate_current)}, verdict "
@@ -461,6 +554,12 @@ def build_G(S: Src, E: pd.DataFrame, D2: pd.DataFrame, label_counts):
     bch = fsys.loc["ffd8e7cf5721"]
     xyl = fsys.loc["74aede3c6579"]
     cert = E[E.certified == "Y"]
+    sb = S.csv(SRC["sb_rerun"])
+    crc_fb = sb[(sb.tier == "CRC647_r3") & (sb.label == "fold_b") & (sb.variant == "designated")].n_groups.dropna().max()
+    fr = S.csv(SRC["freeze_rows"])
+    fr = fr[(fr.group == "ffd8e7cf5721") & (fr.in_SF == True)]  # noqa: E712
+    res_i, res_u = fr.pred_verified - fr.measured, fr.pred_unifac - fr.measured
+    i_max = res_u.idxmax()
     G = [
         {"item": "single GC fuel for D56 flash", "value": y["flash_point_C.real_fuels_D56.ideal"]["n_groups"],
          "unit": "fuels", "detail": y["flash_point_C.real_fuels_D56.ideal"]["reason"], "source": SRC["yaml"]},
@@ -468,13 +567,15 @@ def build_G(S: Src, E: pd.DataFrame, D2: pd.DataFrame, label_counts):
          "unit": "locked systems (< 263 K)",
          "detail": f"263-283 K: {int(D2.loc[1, 'locked_systems'])} locked systems; ML margin in that bin equals Refutas",
          "source": SRC["mlv"]},
-        {"item": "thin locked sets: CRC 647 fold_b", "value": 12, "unit": "fuels",
+        {"item": "thin locked sets: CRC 647 fold_b", "value": int(crc_fb), "unit": "fuels",
          "detail": "n_groups of the CRC647_r3 fold_b scoreboard rows", "source": SRC["sb_rerun"]},
         {"item": "bicyclohexyl dHfus 13.94 kJ/mol over-predicts freezing (safe side)", "value": bch["mae_unifac"],
          "unit": "C system MAE (UNIFAC)",
-         "detail": (f"worst residual +{bch['worst_unifac']:.2f} C; predictions rise by "
+         "detail": (f"all {len(fr)} S_F rows over-predict; largest over-prediction +{res_i.max():.1f} C (ideal) / "
+                    f"+{res_u.max():.1f} C (UNIFAC) at T = {fr.loc[i_max, 'T_K']:.2f} K; smallest over-prediction "
+                    f"+{bch['worst_unifac']:.2f} C (UNIFAC; the `worst_unifac` column of per_system_S_F.csv); predictions rise by "
                     f"{m_rise.group(1) if m_rise else '?'}-{m_rise.group(2) if m_rise else '?'} C vs the old constant"),
-         "source": SRC["freeze_systems"] + "; " + SRC["freeze_readme"]},
+         "source": SRC["freeze_systems"] + "; " + SRC["freeze_rows"] + "; " + SRC["freeze_readme"]},
         {"item": "o-/m-xylene eutectic composition likely transposed (ingest_calorimetry_primary.py EUT), NOT fixed",
          "value": xyl["worst_unifac"], "unit": "C residual on that row",
          "detail": (f"with the swap MAE would be {m_swap.group(1) if m_swap else '?'} (ideal) / "
@@ -505,6 +606,24 @@ def build_H(S: Src):
             h, dte, msg = sub.split("|", 2)
             rows.append({"commit": h, "date": dte, "subject": msg})
     return pd.DataFrame(rows)
+
+
+def p1p3_wording(E: pd.DataFrame) -> str:
+    q = E[E.pool.isin(["P1", "P2", "P3"])]
+    sp = lambda x: x.replace("astm:", "").replace("bis:", "")
+    fail = q[q.n_fail > 0]
+    rest = q[q.n_fail == 0]
+    parts = [f"{r.pool} {sp(r.spec)} fails {int(r.n_fail)} constraint{'s' if r.n_fail != 1 else ''} "
+             f"({str(r.failing).replace(',', ', ')})" for r in fail.itertuples()]
+    un = sorted(set(int(x) for x in rest.n_uncertified))
+    parts.append(f"the other {len(rest)} P1-P3 rows fail none but leave "
+                 f"{' / '.join(str(x) for x in un)} constraints uncertified (no declared margins)")
+    return "P1-P3 are not certified: " + "; ".join(parts)
+
+
+def dicyclo_max(S: Src):
+    m = re.search(r"max ([\d.]+) %", S.text(SRC["designs_readme"]))
+    return float(m.group(1)) if m else float("nan")
 
 
 # ----------------------------------------------------------------------------- figures
@@ -663,8 +782,12 @@ def fig_ml_bars(D: pd.DataFrame, out: Path):
     save(fig, out / "e_ml_before_after.png")
 
 
-def fig_designs(E: pd.DataFrame, out: Path):
+def fig_designs(E: pd.DataFrame, C: pd.DataFrame, out: Path):
     q = E[E.flash_bound_C.notna()].copy()
+    fmg = float(q.flash_margin_C.iloc[0])
+    flim = float(q.flash_limit_C.iloc[0])
+    umg = float(q.freezing_unifac_margin_C.iloc[0])
+    img = float(C.loc[C.margin_key == "freezing_point_C.lab_liquidus.svl_verified", "applied_margin"].iloc[0])
     q["name"] = q.pool + " " + q.spec.str.replace("astm:", "").str.replace("bis:", "")
     q["flash_head"] = q.flash_bound_C - q.flash_limit_C
     q["frz_unifac_head"] = q.freezing_limit_C - q.freezing_unifac_bound_C
@@ -673,10 +796,10 @@ def fig_designs(E: pd.DataFrame, out: Path):
     fig, axs = plt.subplots(1, 2, figsize=(11, 5.4), sharey=True)
     y = np.arange(len(q))
     cert = (q.certified == "Y").values
-    for ax, cols, ttl in [(axs[0], [("flash_head", OI["blue"], "flash: bound - 38 C limit")],
-                           "Flash (bound = prediction - 2.21 C margin)"),
-                          (axs[1], [("frz_unifac_head", OI["blue"], "UNIFAC SvL (designated, +13.84 C)"),
-                                    ("frz_ideal_head", OI["grey"], "ideal SvL variant (+16.98 C)")],
+    for ax, cols, ttl in [(axs[0], [("flash_head", OI["blue"], f"flash: bound - {flim:g} C limit")],
+                           f"Flash (bound = prediction - {fmg:.2f} C margin)"),
+                          (axs[1], [("frz_unifac_head", OI["blue"], f"UNIFAC SvL (designated, +{umg:.2f} C)"),
+                                    ("frz_ideal_head", OI["grey"], f"ideal SvL variant (+{img:.2f} C)")],
                            "Freezing (limit - safe bound)")]:
         w = 0.8 / len(cols)
         for k, (c, col, lab) in enumerate(cols):
@@ -691,7 +814,7 @@ def fig_designs(E: pd.DataFrame, out: Path):
         if c:
             t.set_fontweight("bold")
     axs[0].invert_yaxis()
-    fig.suptitle("Designs with declared margins (P0 family; P1-P3 have no margin and are uncertified by construction)",
+    fig.suptitle("Designs with declared margins (P0 family; P1-P3 have no declared margins and are not shown)",
                  fontsize=10)
     save(fig, out / "f_design_headroom.png")
 
@@ -711,7 +834,7 @@ def fig_drift(B: pd.DataFrame, total: int, out: Path):
 
 
 # ----------------------------------------------------------------------------- document
-def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, label_counts, flash_checks, out):
+def write_doc(path: Path, S: Src, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G, H, label_counts, flash_checks, out):
     rel = lambda p: Path(p).resolve().relative_to(REPO).as_posix() if Path(p).resolve().is_relative_to(REPO) else str(p)
     o = rel(out)
     ncert = int((E.certified == "Y").sum())
@@ -721,8 +844,23 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
     fm = C[C.margin_key == "flash_point_C.lab_mixtures.ideal"].iloc[0]
     fz_u = C[C.margin_key == "freezing_point_C.lab_liquidus.svl_unifac"].iloc[0]
     fz_i = C[C.margin_key == "freezing_point_C.lab_liquidus.svl_verified"].iloc[0]
-    ta = ["property", "tier", "set", "model", "label", "status", "n_groups_current", "bias_current", "mae_current",
-          "mae_trivial_current", "verdict_current", "bias_frozen", "mae_frozen", "verdict_frozen"]
+    ta = ["property", "tier", "set", "model", "variant", "label", "status", "n_groups_current", "bias_current",
+          "mae_current", "mae_trivial_current", "verdict_current", "margin90_current", "margin90_note", "bias_frozen",
+          "mae_frozen", "verdict_frozen"]
+    yy = S.yaml(SRC["yaml"])["margins"]
+    yfl = yy["flash_point_C.lab_mixtures.ideal"]
+    fu = A[(A.property == "freezing_point_C") & (A.model == "svl_unifac")].set_index("set")
+    tu = t2[(t2.model == "svl_unifac") & (t2.variant == "designated")].set_index("set")
+    fsf = A_frz.set_index("model").loc["svl_unifac"]
+    bias_lo, bias_hi = fu.bias_current.min(), fu.bias_current.max()
+    n_sb_frz = int(A[(A.property == "freezing_point_C") & (A.model == "ideal_svl") & (A.tier == "T2_measured")
+                     & (A.set == "pooled")].n_groups_current.iloc[0])
+    v1 = D2[D2.T_bin == "T_ge_283K"].iloc[0]
+    cert = E[E.certified == "Y"]
+    umg = float(cert.freezing_unifac_margin_C.iloc[0])
+    all_ideal_exceed = bool((cert.ideal_svl_bound_minus_limit_C > 0).all())
+    pyb = E[(E.pool == "P0y-b") & (E.spec == "bis:jet_a1")].iloc[0]
+    dmax = dicyclo_max(S)
     s = []
     s.append("# v5 final numbers (report and presentation pack)\n")
     s.append(f"Generated by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `{S.sha[:7]}` "
@@ -744,13 +882,30 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
              "`mae_trivial` is the scoreboard's trivial comparator (leave-one-group-out constant). Tier: T1 = lab "
              "pure/mixture data, T2 = real fuels with measured composition, T3 = AJFTD bulk-property regressions, "
              "CRC647_r3 = real fuels with reconstructed composition.\n")
+    s.append(f"**Freezing on real fuels, in plain words.** Neither freezing route beats the trivial constant on real fuels. "
+             f"The designated route (UNIFAC SvL, CLM-73) reads `{fu.loc['pooled', 'verdict_current']}` on the pooled T2 set "
+             f"(n {int(fu.loc['pooled', 'n_groups_current'])}, MAE {fmt(fu.loc['pooled', 'mae_current'])} C vs constant "
+             f"{fmt(fu.loc['pooled', 'mae_trivial_current'])} C) and `{fu.loc['pooled_locked', 'verdict_current']}` on the "
+             f"locked set (n {int(fu.loc['pooled_locked', 'n_groups_current'])}, MAE "
+             f"{fmt(fu.loc['pooled_locked', 'mae_current'])} C vs {fmt(fu.loc['pooled_locked', 'mae_trivial_current'])} C). "
+             f"UNIFAC SvL is validated only on the {int(fsf.n_systems)}-system lab liquidus set S_F. The real-fuel coverage "
+             f"of its {fmt(tu.loc['pooled', 'margin_used'])} C margin ({tu.loc['pooled', 'coverage_margin']:g} pooled / "
+             f"{tu.loc['pooled_locked', 'coverage_margin']:g} locked) is uninformative, because the bias is "
+             f"{bias_lo:+.1f} to {bias_hi:+.1f} C (over-prediction), so a one-sided margin covers it almost "
+             f"automatically. The UNIFAC rows are read from `{SRC['freeze_t2']}` (not scoreboard cells); the "
+             f"`ideal_svl` rows are the scoreboard cells. The pooled UNIFAC n is "
+             f"{int(fu.loc['pooled', 'n_groups_current'])} vs the scoreboard's {n_sb_frz}, because AJFTD:325 is scored "
+             "with the designated constants (see section F).\n")
     s.append(md_table(A, ta) + "\n")
+    s.append(f"Flash `margin90_current` is the scoreboard's pre-Q2 figure ({fmt(yfl['value'])} C, superseded); the applied "
+             f"flash margin is {fmt(yfl['applied_margin'])} C on {yfl['n_groups_applied']} groups (section C).\n")
     s.append(f"Table: `{o}/table_A_headline.csv` (full columns incl. margin90, unsafe rate, cells_file, evidence_path). "
              f"Per-source T2 rows: `{o}/table_A2_t2_per_source.csv`.\n")
     s.append("**Two route notes (read before quoting).**\n")
     s.append("* **Freezing.** The adopted designated freezing route is UNIFAC Schroeder-van Laar (CLM-73), but every BASE "
-             "freezing cell aggregates committed CSVs, so the scoreboard rows above are still the ideal SvL (`ideal_svl`) "
-             "route. UNIFAC SvL has been scored only on the lab liquidus set S_F, **not on real fuels (T2)**:\n")
+             "freezing cell aggregates committed CSVs, so the scoreboard freezing rows above are still the ideal SvL "
+             "(`ideal_svl`) route. UNIFAC SvL is scored on real fuels (T2) only in `delta_freeze_t2_unifac` (the "
+             "`svl_unifac` rows of Table A, no skill shown); its gated evidence is the lab liquidus set S_F:\n")
     s.append(md_table(A_frz, ["set", "model", "variant", "n_systems", "n_rows", "mae", "bias", "mae_constant",
                               "margin_alpha10", "frac_unsafe"]) + "\n")
     s.append("* **Viscosity.** The scoreboard's designated T2 viscosity route is `refutas_raw` (v4 routing), and its "
@@ -766,9 +921,9 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
     s.append(md_table(B, ["cause", "n_cells", "n_designated_rows"]) + "\n")
     s.append("`D3_overlay` = decision 3, flash-registry additions (bicyclohexyl, cis-decalin Antoine + LFL) on by default. "
              "`PRE_api_route` = code that changed before the decisions (`predict()` moved onto the BASE route in "
-             "delta_api_route); it moves the `api_as_shipped` rows. `PRE_flash_margin_q2` = the 2.21 C flash margin now "
-             "reported for the API rows.\n")
-    s.append(f"Headline example: flash T2 AJFTD GCxGC designated (31 fuels) bias {fmt(aj.bias_frozen)} -> "
+             "delta_api_route); it moves the `api_as_shipped` rows. `PRE_flash_margin_q2` = the "
+             f"{fmt(fm.applied_margin)} C flash margin now reported for the API rows.\n")
+    s.append(f"Headline example: flash T2 AJFTD GCxGC designated ({int(aj.n_groups_current)} fuels) bias {fmt(aj.bias_frozen)} -> "
              f"{fmt(aj.bias_current)} C, MAE {fmt(aj.mae_frozen)} -> {fmt(aj.mae_current)} C, verdict "
              f"{aj.verdict_frozen} -> {aj.verdict_current} (D3). Changed headline rows:\n")
     ch = A[A.changed]
@@ -782,9 +937,9 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
              "`readings.json`. The `uncertainty_margin` fields inside the spec yaml files are NOT applied by the judge "
              "and are not shown.\n")
     s.append(md_table(C, ["property", "margin_key", "role", "applied_margin", "value", "unit", "direction", "n_groups",
-                          "spec_jet_a", "spec_jet_a1"]) + "\n")
+                          "n_note", "spec_jet_a", "spec_jet_a1"]) + "\n")
     s.append(f"Notes: the flash margin applied is {fmt(fm.applied_margin)} C (the yaml `value` "
-             f"{fmt(fm.value)} C and the scoreboard `margin90` 3.7 C are the pre-Q2 figure). Freezing: UNIFAC "
+             f"{fmt(fm.value)} C and the scoreboard `margin90` {fmt(fl.margin90_current)} C are the pre-Q2 figure). Freezing: UNIFAC "
              f"{fmt(fz_u.applied_margin)} C vs ideal {fmt(fz_i.applied_margin)} C. The -20 C viscosity spec maps to the "
              "< 263 K bin. The 263-283 K ML margin equals the Refutas margin (no gain in that bin). The ML density margin "
              "was computed on the locked systems (dev out-of-fold reading shown alongside), so its locked coverage is not "
@@ -796,13 +951,19 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
              "`ml_pair_excess_volume` for density, a labelled variant (dev and locked passed, ternaries FAILED, "
              "`promotion_offered` false). Gains are baseline MAE - ML MAE with a group-bootstrap 95 % CI.\n")
     s.append(md_table(D, ["component", "gate", "set", "n_systems", "n_rows", "baseline", "mae_baseline", "mae_ml",
-                          "gain", "gain_ci95_lo", "gain_ci95_hi", "pass", "note"]) + "\n")
+                          "gain", "gain_ci95_lo", "gain_ci95_hi", "ci_basis", "pass", "note"]) + "\n")
     s.append("Margins and locked coverage (90 %, two-sided, ln for viscosity, kg/m3 for density):\n")
-    s.append(md_table(D2, ["component", "T_bin", "margin_ml", "margin_refutas", "n_dev_systems", "locked_systems",
-                           "locked_covered_ml", "locked_covered_refutas"]) + "\n")
+    s.append(md_table(D2, ["component", "T_bin", "margin_ml", "margin_physics_baseline", "physics_baseline",
+                           "applied_physics_margin_yaml", "n_dev_systems", "locked_systems", "locked_covered_ml",
+                           "locked_covered_physics"]) + "\n")
+    s.append("`margin_physics_baseline` is computed on the same systems as `margin_ml` (Refutas on the ML delta's dev "
+             "systems; ideal volume on the density delta's locked systems). `applied_physics_margin_yaml` is the margin "
+             "the yaml applies to the physics route, derived on its own system set; each carries its own n.\n")
     s.append("Reading: R-MLV-3 passed; the gate is the per-system macro row (bootstrap CI). The row-level figure is shown "
-             "too. At >= 283 K the ML margin is tighter (0.134 vs 0.185 ln) but covers 64 of 70 locked systems against "
-             "66 of 70 for Refutas. R-MLV-5 (real fuels, descriptive) is mixed: a large gain at 233/253 K, worse at several "
+             "too. R-MLD-3 mixes bases: its gain is row-level while its CI is the per-system macro CI (`ci_basis`). "
+             f"At >= 283 K the ML margin is tighter ({v1.margin_ml:.3f} vs {v1.margin_physics_baseline:.3f} ln) but covers "
+             f"{int(v1.locked_covered_ml)} of {int(v1.locked_systems)} locked systems against "
+             f"{int(v1.locked_covered_physics)} of {int(v1.locked_systems)} for Refutas. R-MLV-5 (real fuels, descriptive) is mixed: a large gain at 233/253 K, worse at several "
              "warm cells; no claim beyond lab mixtures is made. Sources: "
              "`results/v5/BASE/delta_ml_viscosity/readings.json`, `readings_R-MLV-5.json`, "
              "`results/v5/BASE/delta_ml_density/readings.json`; `docs/model_decision.md` (v5 ML components). Figures "
@@ -810,12 +971,14 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
              "(residual distributions; the row files store residuals only, so no parity plot).\n")
 
     s.append("## E. Inverse-design results (16 designs: 8 pools x 2 specs)\n")
-    s.append(f"Judge-certified under the model: **{ncert} of {len(E)}** ({certs}). None is lab-certified. All three "
+    s.append(f"Judge-certified under the model: **{ncert} of {len(E)}** ({certs}). None is lab-certified. All {ncert} "
              "carry `d86_model_dependent`, `freezing_route_dependent` and `overlay_dependent`, so none is certified under "
-             "every reported route. The freezing bound uses UNIFAC SvL + 13.84 C; the ideal SvL bound (+16.98 C) exceeds "
-             "the limit for all three. P0y-b Jet A-1 contains 37.8 wt % dicycloparaffin, above the AJFTD GCxGC maximum "
-             "of 30 %. The declared expectation that P0y-b Jet A-1 fails freezing is refuted for the designated route "
-             "(true only on the ideal SvL variant). P1-P3 are uncertified by construction.\n")
+             f"every reported route. The freezing bound uses UNIFAC SvL + {umg:.2f} C; the ideal SvL bound "
+             f"(+{fz_i.applied_margin:.2f} C) exceeds the limit for "
+             f"{'all ' + str(ncert) if all_ideal_exceed else 'some'} of them. P0y-b Jet A-1 contains "
+             f"{pyb.dicyclo_wt_pct:.1f} wt % dicycloparaffin, above the AJFTD GCxGC maximum of {dmax:g} %. The declared "
+             "expectation that P0y-b Jet A-1 fails freezing is refuted for the designated route (true only on the ideal "
+             f"SvL variant). {p1p3_wording(E)}.\n")
     s.append(md_table(E, ["pool", "spec", "certified", "n_pass", "n_fail", "n_uncertified", "min_slack",
                           "flash_bound_C", "freezing_unifac_bound_C", "freezing_limit_C",
                           "ideal_svl_bound_minus_limit_C", "rayleigh_T50_T10_C", "rayleigh_T90_T10_C",
@@ -846,7 +1009,8 @@ def write_doc(path: Path, S: Src, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, 
     path.write_text("\n".join(s), encoding="utf-8", newline="\n")
 
 
-def write_readme(out: Path, S: Src, figs_skipped: list[str]):
+def write_readme(out: Path, S: Src, figs_skipped: list[str], fm: float = float('nan')):
+    fm_txt = f"{fm:.2f}"
     t = f"""# v5 final numbers pack: tables and figures
 
 Built by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `{S.sha[:7]}` (`git show`, never the working tree).
@@ -854,7 +1018,7 @@ Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values 
 
 | file | content | sources |
 |---|---|---|
-| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path) | `{SRC['sb_rerun']}`, `{SRC['sb_frozen']}` |
+| `table_A_headline.csv` | headline designated rows (current defaults = re-score, plus frozen BASE side by side; join on the full key incl. cells_file/status/evidence_path); plus the UNIFAC SvL designated freezing rows on T2 pooled / pooled_locked (not scoreboard cells; `scoreboard_variant` = `(not a scoreboard cell)`) | `{SRC['sb_rerun']}`, `{SRC['sb_frozen']}`, `{SRC['freeze_t2']}` |
 | `table_A_freezing_unifac_lab.csv` | UNIFAC vs ideal SvL on lab liquidus S_F | `{SRC['freeze_summary']}` |
 | `table_A2_t2_per_source.csv` | T2 per-source designated rows | same as table A |
 | `table_B_drift_by_cause.csv` | changed scoreboard cells by cause | `{SRC['drift']}` |
@@ -863,8 +1027,8 @@ Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values 
 | `table_D_ml_gates.csv` | ML gate readings (R-MLV-1..5, R-MLD-1..3) | `{SRC['mlv']}`, `{SRC['mlv5']}`, `{SRC['mld']}` |
 | `table_D2_ml_margins.csv` | ML margins and locked coverage | `{SRC['mlv']}` (R-MLV-6), `{SRC['mld']}` (R-MLD-4) |
 | `table_E_designs.csv` | 16 designs | `{SRC['designs_table']}` |
-| `table_F_negative_results.csv` | negative results | `{SRC['negative']}`, `{SRC['model_decision']}`, `{SRC['mlysi']}`, `{SRC['mld']}`, `{SRC['sb_rerun']}` |
-| `table_G_limitations.csv` | limitations | `{SRC['yaml']}`, `{SRC['freeze_systems']}`, `{SRC['freeze_readme']}`, `{SRC['designs_table']}`, `{SRC['designs_csv']}` |
+| `table_F_negative_results.csv` | negative results | `{SRC['negative']}`, `{SRC['model_decision']}`, `{SRC['mlysi']}`, `{SRC['mld']}`, `{SRC['sb_rerun']}`, `{SRC['freeze_t2']}`, `{SRC['freeze_t2_rows']}` |
+| `table_G_limitations.csv` | limitations | `{SRC['yaml']}`, `{SRC['freeze_systems']}`, `{SRC['freeze_rows']}`, `{SRC['freeze_readme']}`, `{SRC['designs_table']}`, `{SRC['designs_csv']}` |
 | `table_H_commits.csv` | commits for reproduction | git log |
 
 Headline selection rule: designated rows of the headline properties, no temperature split, T2 sets starting with `pooled`
@@ -874,7 +1038,7 @@ Headline selection rule: designated rows of the headline properties, no temperat
 
 | figure | content | source |
 |---|---|---|
-| `a_flash_parity_t2.png` | flash parity, T2 real fuels (70 chosen rows), designated `pred_designated`; one-sided over-prediction band of the applied margin (2.21 C). The script asserts the rows reproduce the scoreboard per source. | `{SRC['flash_rows_rerun']}` |
+| `a_flash_parity_t2.png` | flash parity, T2 real fuels (70 chosen rows), designated `pred_designated`; one-sided over-prediction band of the applied margin ({fm_txt} C). The script asserts the rows reproduce the scoreboard per source. | `{SRC['flash_rows_rerun']}` |
 | `b_viscosity_refutas_vs_ml.png` | lab |ln resid| by T bin, Refutas vs ML; real-fuel R-MLV-5 MAE per source x T | `{SRC['mlv_rows']}`, `{SRC['mlv5_csv']}` |
 | `c_density_ideal_vs_ml.png` | lab |error| ideal vs ML by binary/ternary and dev/locked | `{SRC['mld_rows']}` |
 | `d_margins_vs_spec.png` | margins per property with the Jet A / Jet A-1 limits in the panel title | table C |
@@ -901,7 +1065,7 @@ def main(argv=None):
     (out / "figures").mkdir(parents=True, exist_ok=True)
     S = Src(a.commit)
 
-    A, A_frz, A2 = build_A(S)
+    A, A_frz, A2, t2 = build_A(S)
     B, total, B2 = build_B(S)
     C = build_C(S, A)
     D, D2, _, _ = build_D(S)
@@ -921,7 +1085,7 @@ def main(argv=None):
     fig_density(S, out / "figures")
     fig_margins(C, out / "figures")
     fig_ml_bars(D, out / "figures")
-    fig_designs(E, out / "figures")
+    fig_designs(E, C, out / "figures")
     fig_drift(B, total, out / "figures")
     notes = [
         "(a) the brief asked for a +-margin band; the flash margin is one-sided (direction `over`), so a one-sided band is drawn.",
@@ -929,8 +1093,8 @@ def main(argv=None):
         "predicted values), so residual distributions are plotted instead. No values were rebuilt by joining other files.",
         "(f) drawn as headroom bars (bound vs limit) for the 10 designs that have declared margins, instead of a heat map.",
     ]
-    write_readme(out, S, notes)
-    write_doc(Path(a.doc), S, A, A_frz, A2, B, total, C, D, D2, E, F, G, H, label_counts, flash_checks, out)
+    write_readme(out, S, notes, fm)
+    write_doc(Path(a.doc), S, A, A_frz, A2, t2, B, total, C, D, D2, E, F, G, H, label_counts, flash_checks, out)
     print(f"wrote {len(list(out.glob('*.csv')))} CSVs, {len(list((out / 'figures').glob('*.png')))} figures to {out}; doc {a.doc}")
 
 

@@ -60,10 +60,12 @@ def test_refuses_base(tmp_path):
 def test_headline_equals_scoreboards(pack):
     A = pd.read_csv(pack / "table_A_headline.csv")
     cur, frz = gcsv(MOD.SRC["sb_rerun"]), gcsv(MOD.SRC["sb_frozen"])
-    for _, r in A.iterrows():
+    sc = A[A.source_current == MOD.SRC["sb_rerun"]]
+    assert len(sc) + (A.source_current == MOD.SRC["freeze_t2"]).sum() == len(A)
+    for _, r in sc.iterrows():
         def pick(sb):
             q = sb[(sb.property == r.property) & (sb.tier == r.tier) & (sb.set == r.set) & (sb.model == r.model)
-                   & (sb.variant == r.variant) & (sb.label == r.label) & sb.T_K.isna() & (sb.status == r.status)
+                   & (sb.variant == r.scoreboard_variant) & (sb.label == r.label) & sb.T_K.isna() & (sb.status == r.status)
                    & (sb.cells_file == r.cells_file) & (sb.evidence_path.astype(str) == str(r.evidence_path))]
             assert len(q) == 1, (r.property, r.set, r.model)
             return q.iloc[0]
@@ -110,3 +112,41 @@ def test_ml_and_designs(pack):
     assert len(E) == len(rt)
     assert (E.certified == "Y").sum() == (rt.certified == "Y").sum()
     assert np.allclose(E.min_slack, rt.min_slack)
+
+
+def test_unifac_t2_rows_equal_summary(pack):
+    A = pd.read_csv(pack / "table_A_headline.csv")
+    t2 = gcsv(MOD.SRC["freeze_t2"])
+    u = A[(A.property == "freezing_point_C") & (A.model == "svl_unifac")].set_index("set")
+    assert sorted(u.index) == ["pooled", "pooled_locked"]
+    for s in ["pooled", "pooled_locked"]:
+        q = t2[(t2.model == "svl_unifac") & (t2.variant == "designated") & (t2.set == s)]
+        assert len(q) == 1
+        q = q.iloc[0]
+        r = u.loc[s]
+        assert int(r.n_groups_current) == int(q.n_groups)
+        for col, src in [("bias_current", q.bias), ("mae_current", q.mae), ("mae_trivial_current", q.mae_trivial)]:
+            assert r[col] == pytest.approx(src, rel=1e-12)
+        assert r.verdict_current == q.verdict
+        assert r.scoreboard_variant == "(not a scoreboard cell)"
+        assert r.source_current == MOD.SRC["freeze_t2"]
+    # the ideal_svl freezing rows are labelled as the scoreboard cells, not the adopted route
+    iv = A[(A.property == "freezing_point_C") & (A.model == "ideal_svl")]
+    assert len(iv) and iv.variant.str.startswith("ideal_svl, scoreboard cell").all()
+
+
+def test_flash_applied_margin_and_n(pack):
+    y = yaml.safe_load(git(MOD.SRC["yaml"]))["margins"]["flash_point_C.lab_mixtures.ideal"]
+    C = pd.read_csv(pack / "table_C_margins.csv").set_index("margin_key")
+    r = C.loc["flash_point_C.lab_mixtures.ideal"]
+    assert r.applied_margin == pytest.approx(y["applied_margin"])
+    assert int(r.n_groups) == int(y["n_groups_applied"])
+    lm = gcsv(MOD.SRC["flash_lab_margin"])
+    m = lm[(lm.variant == "designated") & np.isclose(lm.margin, y["applied_margin"])]
+    assert len(m) >= 1 and int(m.iloc[0].n_groups) == int(r.n_groups)
+    # Table A: the scoreboard flash margin90 that equals the superseded yaml value carries the note
+    A = pd.read_csv(pack / "table_A_headline.csv")
+    sup = A[(A.property == "flash_point_C") & np.isclose(A.margin90_current.astype(float), y["value"])]
+    assert len(sup) and sup.margin90_note.str.contains(f"applied {y['applied_margin']:.4f}").all()
+    doc = (pack / "doc.md").read_text(encoding="utf-8")
+    assert f"{y['n_groups_applied']} groups" in doc
