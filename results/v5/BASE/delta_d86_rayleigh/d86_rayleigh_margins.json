@@ -1,0 +1,134 @@
+{
+ "margins": {
+  "T10": 0.0,
+  "FBP": 6.09863551678265,
+  "T50_T10": 1.2426699332455655,
+  "T90_T10": 5.305735096345131,
+  "T50": 8.393572124512332,
+  "T90": 9.761295583416882
+ },
+ "domain": {
+  "tbp_spread_min": 30.108505086978028,
+  "tbp_spread_max": 163.63082880048358
+ },
+ "fit": {
+  "T10": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 0.0,
+   "per_source": {
+    "av3322": 0.0,
+    "ajftd": 0.0
+   },
+   "certifying_margin": 0.0,
+   "bias": 11.606473216828562,
+   "mae": 11.625127966123095,
+   "mae_constant": 8.193954082840236
+  },
+  "FBP": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 4.018800320847504,
+   "per_source": {
+    "av3322": 2.240398484168395,
+    "ajftd": 6.09863551678265
+   },
+   "certifying_margin": 6.09863551678265,
+   "bias": 7.614922125754869,
+   "mae": 9.542023895409304,
+   "mae_constant": 16.52104804733728
+  },
+  "T50_T10": {
+   "direction": "over",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 0.0,
+   "per_source": {
+    "av3322": 0.0,
+    "ajftd": 1.2426699332455655
+   },
+   "certifying_margin": 1.2426699332455655,
+   "bias": -10.516185339573743,
+   "mae": 10.877044113068525,
+   "mae_constant": 9.32099855621302
+  },
+  "T90_T10": {
+   "direction": "over",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 3.5451274516735225,
+   "per_source": {
+    "av3322": 0.0,
+    "ajftd": 5.305735096345131
+   },
+   "certifying_margin": 5.305735096345131,
+   "bias": -11.946892819052813,
+   "mae": 13.791249201830933,
+   "mae_constant": 16.530433372781065
+  },
+  "T50": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 8.311541698675967,
+   "per_source": {
+    "av3322": 8.393572124512332,
+    "ajftd": 7.6943954405210775
+   },
+   "certifying_margin": 8.393572124512332,
+   "bias": 1.090316031100973,
+   "mae": 6.183452897911981,
+   "mae_constant": 11.449991005917159
+  },
+  "T90": {
+   "direction": "under",
+   "n": 65,
+   "n_by_source": {
+    "av3322": 35,
+    "ajftd": 30
+   },
+   "gate_passed": true,
+   "pooled": 9.311612467927375,
+   "per_source": {
+    "av3322": 9.24050222028336,
+    "ajftd": 9.761295583416882
+   },
+   "certifying_margin": 9.761295583416882,
+   "bias": -0.3404072945319421,
+   "mae": 7.816980859741018,
+   "mae_constant": 15.3076449704142
+  }
+ },
+ "n_fuels_used": 65,
+ "adoption_R_DR_2": {
+  "T10": "engler",
+  "FBP": "engler",
+  "T50_T10": "engler",
+  "T90_T10": "engler"
+ },
+ "source": "delta_d86_rayleigh/d86_rayleigh_margins.json",
+ "alpha": 0.1,
+ "note": "R-DR-2 declared in README; designating the Rayleigh D86 model is a user decision (not done)"
+}
