@@ -69,3 +69,8 @@ UNIFAC moves the predicted freezing point of these alkane-dominated recipes by o
 
 No stored recipe flips. P0x-a/b also fail flash, smoke and (physically, delta_d86_rayleigh) T90-T10, so adoption alone would not certify
 them; it would give a re-run optimiser about 3 C more freezing room.
+
+### R-FU-3 addendum (2026-11-15, after delta_pool_bicyclohexyl R-BC-4)
+`r_fu_3` globs the delta_pool_bicyclohexyl designs, so a re-run added two rows (P0y-b Jet A / Jet A-1); the earlier rows are unchanged
+(git diff: 2 insertions). Ideal + 16.98: -40.46 / -47.27 (pass by 0.46 / 0.27 C). UNIFAC + 13.84: -43.13 / -49.68 (pass by 3.1 / 2.7 C).
+Counterfactual only.
