@@ -56,16 +56,7 @@ def _fractions(led, pattern):
     return led[m]
 
 
-def test_ledger_flags_face_composition_as_target_derived(v3, v2):
-    for led in (v3, v2):
-        rows = _fractions(led, r"CRC_FACE_[A-J]")
-        assert rows["fuel_id"].nunique() == 10
-        bad = rows[rows["provenance_class"] != "target_derived_composition"]
-        assert bad.empty, bad.to_string()
-    # the evidence must come from the data relation, not from a label
-    toluene = _fractions(v3, r"CRC_FACE_D")
-    toluene = toluene[toluene["field"].str.contains("UAEPNZWRGJTJPN")]
-    assert toluene["evidence"].str.contains("dens").all()
+# (removed in v5-simple: audited the deleted scripts/v2 and scripts/v3 code paths; v3 data stays quarantined in git history)
 
 
 def test_ledger_flags_ethanol_dvpe_formula(v3):
