@@ -1,0 +1,64 @@
+fuel_id,property,value,unit,T_K,method,lab,source_table
+FD1A,cetane_number_D613,30.7,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD1A,dcn,35.3,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD1A,viscosity_kin_cSt,1.741,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD1A,cloud_point_C,-27.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD1A,flash_point_C,57.22,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD1A,density_kg_m3,807.6,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD1A,heat_of_combustion_net_MJ_kg,42.803,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD2A,cetane_number_D613,28.7,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD2A,dcn,34.6,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD2A,viscosity_kin_cSt,1.96,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD2A,cloud_point_C,-51.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD2A,flash_point_C,53.33,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD2A,density_kg_m3,802.91,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD2A,heat_of_combustion_net_MJ_kg,43.155,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD3A,cetane_number_D613,30.7,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD3A,dcn,33.8,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD3A,viscosity_kin_cSt,1.32,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD3A,cloud_point_C,-35.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD3A,flash_point_C,60.56,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD3A,density_kg_m3,839.17,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD3A,heat_of_combustion_net_MJ_kg,42.147,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD4A,cetane_number_D613,28.5,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD4A,dcn,32.9,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD4A,viscosity_kin_cSt,1.785,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD4A,cloud_point_C,-50.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD4A,flash_point_C,59.44,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD4A,density_kg_m3,835.08,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD4A,heat_of_combustion_net_MJ_kg,42.495,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD5A,cetane_number_D613,55.0,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD5A,dcn,54.9,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD5A,viscosity_kin_cSt,1.795,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD5A,cloud_point_C,-29.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD5A,flash_point_C,55.0,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD5A,density_kg_m3,807.8,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD5A,heat_of_combustion_net_MJ_kg,42.897,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD6A,cetane_number_D613,54.1,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD6A,dcn,53.6,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD6A,viscosity_kin_cSt,3.097,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD6A,cloud_point_C,-25.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD6A,flash_point_C,74.44,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD6A,density_kg_m3,840.37,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD6A,heat_of_combustion_net_MJ_kg,42.797,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD7A,cetane_number_D613,45.9,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD7A,dcn,45.4,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD7A,viscosity_kin_cSt,1.759,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD7A,cloud_point_C,-21.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD7A,flash_point_C,65.0,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD7A,density_kg_m3,836.68,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD7A,heat_of_combustion_net_MJ_kg,42.359,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD8A,cetane_number_D613,49.0,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD8A,dcn,50.2,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD8A,viscosity_kin_cSt,3.278,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD8A,cloud_point_C,-20.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD8A,flash_point_C,70.0,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD8A,density_kg_m3,868.54,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD8A,heat_of_combustion_net_MJ_kg,42.196,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
+FD9A,cetane_number_D613,43.5,-,,ASTM D613,ORNL/SwRI,Table 2.2
+FD9A,dcn,44.6,-,,ASTM D6890 (IQT),NREL/CRC,Table 3.1
+FD9A,viscosity_kin_cSt,2.107,cSt,313.15,ASTM D445,ORNL/SwRI,Table 2.2
+FD9A,cloud_point_C,-30.0,C,,ASTM D2500,ORNL/SwRI,Table 2.2
+FD9A,flash_point_C,60.0,C,,ASTM D93 (closed cup),ORNL/SwRI,Table 2.2
+FD9A,density_kg_m3,845.57,kg/m3,288.71,ASTM D4052,ORNL/SwRI,Table 2.2
+FD9A,heat_of_combustion_net_MJ_kg,42.465,MJ/kg,298.15,ASTM D240,ORNL/SwRI,Table 2.2
