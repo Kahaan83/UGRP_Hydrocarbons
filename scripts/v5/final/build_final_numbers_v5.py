@@ -32,12 +32,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
-DEFAULT_COMMIT = "a3c5967"
+DEFAULT_COMMIT = "8f5d11c"
 
 # U4: the re-score was adopted as the frozen BASE.  The pinned commit still reads the pre-adoption BASE as "frozen" and
 # rerun/ as "current"; both are identical to the BASE at PRE_ADOPT_COMMIT and at ADOPT_COMMIT respectively.  No number depends on these.
-ADOPT_COMMIT = "3b75437"
-PRE_ADOPT_COMMIT = "3ab033d"
+ADOPT_COMMIT = "91f2380"
+PRE_ADOPT_COMMIT = "09e1366"
 RERUN = "results/v5/BASE/delta_adopt_rescore/rerun"
 FROZEN = "results/v5/BASE"
 SRC = {
@@ -603,7 +603,7 @@ def build_G(S: Src, E: pd.DataFrame, D2: pd.DataFrame, label_counts):
 
 
 def build_H(S: Src):
-    shas = ["a5afab1", "28dfe8d", "adb5972", "fc618b5", "457f236", "1b196e3", "9fbff24", "5986a6b", "5a62e20"]
+    shas = ["90ac16f", "63f91c2", "f3382ac", "7847d42", "2577acb", "80f9c34", "b028514", "0cfd9f2", "f6ed4bc"]
     rows = []
     for s in shas:
         sub = S.subject(s)

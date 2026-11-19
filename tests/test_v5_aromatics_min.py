@@ -12,7 +12,7 @@ from fuelblend.design import engine_v4 as E, library_route as LR
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "tests" / "data" / "smoke_alt_baseline.json"
 MARGINS = ROOT / "configs" / "uncertainty_v5.yaml"
-BASE_COMMIT = "b037496"      # last commit before the aromatics_min block was added to the specs
+BASE_COMMIT = "a3a65a2"      # last commit before the aromatics_min block was added to the specs
 
 
 def _aro_warnings(a):

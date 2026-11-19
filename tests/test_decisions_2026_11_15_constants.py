@@ -14,7 +14,7 @@ def test_cis_decalin_mw_verified_formula():
 
 def test_pure_props_only_cis_decalin_mw_changed():
     old = pd.read_csv(io.StringIO(subprocess.check_output(
-        ["git", "show", "d9309d3:data/processed/v5/pure_props_v5.csv"], text=True)))
+        ["git", "show", "eee2217:data/processed/v5/pure_props_v5.csv"], text=True)))
     new = pd.read_csv("data/processed/v5/pure_props_v5.csv")
     diff = old.merge(new, how="outer", indicator=True).query("_merge != 'both'")
     assert set(zip(diff.compound, diff.prop)) == {("decalin_cis", "MW")}

@@ -18,7 +18,7 @@ lk = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(lk)
 t_bin = lk.t_bin
 
-BASE_COMMIT = "65212cc"           # last commit before this plan added keys (HEAD would be vacuous after the commit)
+BASE_COMMIT = "ec78186"           # last commit before this plan added keys (HEAD would be vacuous after the commit)
 NEW_KEYS = ["density_kg_m3.lab_mixtures.ideal_volume.over", "density_kg_m3.lab_mixtures.ideal_volume.under",
             "viscosity_kin_cSt.lab_mixtures.raw_refutas.T_lt_263K", "viscosity_kin_cSt.lab_mixtures.raw_refutas.T_263_283K",
             "viscosity_kin_cSt.lab_mixtures.raw_refutas.T_ge_283K"]
