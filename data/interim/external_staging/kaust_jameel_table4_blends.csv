@@ -1,0 +1,124 @@
+s_no,blend_name,composition_vol_pct,ron,mon,source_ref,provenance
+1,PRF+10,"{'n-heptane': 54.0, 'i-octane': 36.0, 'ethanol': 10.0}",55.6,53.0,[7],Abdul Jameel (2018) Table 4
+2,PRF+20,"{'n-heptane': 48.0, 'i-octane': 32.0, 'ethanol': 20.0}",69.0,64.0,[7],Abdul Jameel (2018) Table 4
+3,PRF+30,"{'n-heptane': 42.0, 'i-octane': 28.0, 'ethanol': 30.0}",80.7,76.0,[7],Abdul Jameel (2018) Table 4
+4,PRF+40,"{'n-heptane': 36.0, 'i-octane': 24.0, 'ethanol': 40.0}",90.5,83.6,[7],Abdul Jameel (2018) Table 4
+5,PRF+50,"{'n-heptane': 30.0, 'i-octane': 20.0, 'ethanol': 50.0}",97.9,87.5,[7],Abdul Jameel (2018) Table 4
+6,PRF+60,"{'n-heptane': 24.0, 'i-octane': 16.0, 'ethanol': 60.0}",102.5,89.0,[7],Abdul Jameel (2018) Table 4
+7,PRF+70,"{'n-heptane': 18.0, 'i-octane': 12.0, 'ethanol': 70.0}",104.8,89.8,[7],Abdul Jameel (2018) Table 4
+8,PRF+80,"{'n-heptane': 12.0, 'i-octane': 8.0, 'ethanol': 80.0}",105.3,90.2,[7],Abdul Jameel (2018) Table 4
+9,PRF+90,"{'n-heptane': 6.0, 'i-octane': 4.0, 'ethanol': 90.0}",108.5,91.0,[7],Abdul Jameel (2018) Table 4
+10,TPRF 1+0,"{'n-heptane': 42.5, 'i-octane': 47.3, 'toluene': 10.2, 'ethanol': 0.0}",60.8,58.0,[7],Abdul Jameel (2018) Table 4
+11,TPRF 1+10,"{'n-heptane': 38.3, 'i-octane': 42.5, 'toluene': 9.2, 'ethanol': 10.0}",71.9,68.0,[7],Abdul Jameel (2018) Table 4
+12,TPRF 1+20,"{'n-heptane': 34.0, 'i-octane': 37.8, 'toluene': 8.2, 'ethanol': 20.0}",82.5,77.7,[7],Abdul Jameel (2018) Table 4
+13,TPRF 1+40,"{'n-heptane': 25.5, 'i-octane': 28.4, 'toluene': 6.1, 'ethanol': 40.0}",97.8,87.8,[7],Abdul Jameel (2018) Table 4
+14,TPRF 1+60,"{'n-heptane': 17.0, 'i-octane': 18.9, 'toluene': 4.1, 'ethanol': 60.0}",105.2,88.5,[7],Abdul Jameel (2018) Table 4
+15,TPRF 2+0,"{'n-heptane': 46.5, 'i-octane': 33.7, 'toluene': 19.8, 'ethanol': 0.0}",59.5,55.5,[7],Abdul Jameel (2018) Table 4
+16,TPRF 2+10,"{'n-heptane': 41.9, 'i-octane': 30.3, 'toluene': 17.8, 'ethanol': 10.0}",70.3,65.0,[7],Abdul Jameel (2018) Table 4
+17,TPRF 2+20,"{'n-heptane': 37.2, 'i-octane': 27.0, 'toluene': 15.8, 'ethanol': 20.0}",81.0,75.8,[7],Abdul Jameel (2018) Table 4
+18,TPRF 2+40,"{'n-heptane': 27.9, 'i-octane': 20.2, 'toluene': 11.9, 'ethanol': 40.0}",96.8,86.6,[7],Abdul Jameel (2018) Table 4
+19,TPRF 2+60,"{'n-heptane': 18.6, 'i-octane': 13.5, 'toluene': 7.9, 'ethanol': 60.0}",104.4,89.7,[7],Abdul Jameel (2018) Table 4
+20,TPRF 3+0,"{'n-heptane': 54.2, 'i-octane': 5.6, 'toluene': 40.2, 'ethanol': 0.0}",57.5,50.7,[7],Abdul Jameel (2018) Table 4
+21,TPRF 3+10,"{'n-heptane': 48.8, 'i-octane': 5.0, 'toluene': 36.2, 'ethanol': 10.0}",68.7,59.4,[7],Abdul Jameel (2018) Table 4
+22,TPRF 3+20,"{'n-heptane': 43.3, 'i-octane': 4.5, 'toluene': 32.2, 'ethanol': 20.0}",78.3,70.5,[7],Abdul Jameel (2018) Table 4
+23,TPRF 3+40,"{'n-heptane': 32.5, 'i-octane': 3.4, 'toluene': 24.1, 'ethanol': 40.0}",94.4,84.3,[7],Abdul Jameel (2018) Table 4
+24,TPRF 3+60,"{'n-heptane': 21.7, 'i-octane': 2.2, 'toluene': 16.1, 'ethanol': 60.0}",103.4,88.4,[7],Abdul Jameel (2018) Table 4
+25,TPRF 4+1,"{'n-heptane': 40.0, 'i-octane': 60.0, 'toluene': 0.0, 'ethanol': 0.0}",60.6,60.8,[71],Abdul Jameel (2018) Table 4
+26,TPRF 4+2,"{'n-heptane': 40.0, 'i-octane': 45.0, 'toluene': 15.0, 'ethanol': 0.0}",64.3,62.3,[71],Abdul Jameel (2018) Table 4
+27,TPRF 4+3,"{'n-heptane': 35.0, 'i-octane': 57.5, 'toluene': 7.5, 'ethanol': 0.0}",67.3,66.1,[71],Abdul Jameel (2018) Table 4
+28,TPRF 4+4,"{'n-heptane': 40.0, 'i-octane': 47.5, 'toluene': 7.5, 'ethanol': 5.0}",66.6,64.0,[71],Abdul Jameel (2018) Table 4
+29,TPRF 4+5,"{'n-heptane': 30.0, 'i-octane': 70.0, 'toluene': 0.0, 'ethanol': 0.0}",70.3,70.4,[71],Abdul Jameel (2018) Table 4
+30,TPRF 4+6,"{'n-heptane': 40.0, 'i-octane': 35.0, 'toluene': 15.0, 'ethanol': 10.0}",72.2,69.0,[71],Abdul Jameel (2018) Table 4
+31,TPRF 4+7,"{'n-heptane': 35.0, 'i-octane': 60.0, 'toluene': 0.0, 'ethanol': 5.0}",70.5,68.7,[71],Abdul Jameel (2018) Table 4
+32,TPRF 4+8,"{'n-heptane': 30.0, 'i-octane': 55.0, 'toluene': 15.0, 'ethanol': 0.0}",74.2,71.9,[71],Abdul Jameel (2018) Table 4
+33,TPRF 4+9,"{'n-heptane': 40.0, 'i-octane': 50.0, 'toluene': 0.0, 'ethanol': 10.0}",69.7,66.8,[71],Abdul Jameel (2018) Table 4
+34,TPRF 4+10,"{'n-heptane': 35.0, 'i-octane': 45.0, 'toluene': 15.0, 'ethanol': 5.0}",73.5,69.4,[71],Abdul Jameel (2018) Table 4
+35,TPRF 4+11,"{'n-heptane': 35.0, 'i-octane': 52.5, 'toluene': 7.5, 'ethanol': 5.0}",71.9,69.4,[71],Abdul Jameel (2018) Table 4
+36,TPRF 4+12,"{'n-heptane': 35.0, 'i-octane': 47.5, 'toluene': 7.5, 'ethanol': 10.0}",74.9,71.8,[71],Abdul Jameel (2018) Table 4
+37,TPRF 4+13,"{'n-heptane': 30.0, 'i-octane': 57.5, 'toluene': 7.5, 'ethanol': 5.0}",76.8,74.2,[71],Abdul Jameel (2018) Table 4
+38,TPRF 4+14,"{'n-heptane': 30.0, 'i-octane': 60.0, 'toluene': 0.0, 'ethanol': 10.0}",78.7,76.7,[71],Abdul Jameel (2018) Table 4
+39,TPRF 4+15,"{'n-heptane': 30.0, 'i-octane': 45.0, 'toluene': 15.0, 'ethanol': 10.0}",81.6,77.2,[71],Abdul Jameel (2018) Table 4
+40,TMB+0,"{'1,2,4-trimethylbenzene': 100.0, 'ethanol': 0.0}",109.5,108.0,[26],Abdul Jameel (2018) Table 4
+41,TMB+10,"{'1,2,4-trimethylbenzene': 90.0, 'ethanol': 10.0}",107.0,102.0,[26],Abdul Jameel (2018) Table 4
+42,TMB+25,"{'1,2,4-trimethylbenzene': 75.0, 'ethanol': 25.0}",105.0,95.5,[26],Abdul Jameel (2018) Table 4
+43,TMB+40,"{'1,2,4-trimethylbenzene': 60.0, 'ethanol': 40.0}",104.0,93.5,[26],Abdul Jameel (2018) Table 4
+44,TMB+60,"{'1,2,4-trimethylbenzene': 40.0, 'ethanol': 60.0}",103.8,91.0,[26],Abdul Jameel (2018) Table 4
+45,CP+0,"{'cyclopentane': 100.0, 'ethanol': 0.0}",100.0,85.6,[26],Abdul Jameel (2018) Table 4
+46,CP+10,"{'cyclopentane': 90.0, 'ethanol': 10.0}",101.0,85.9,[26],Abdul Jameel (2018) Table 4
+47,CP+25,"{'cyclopentane': 75.0, 'ethanol': 25.0}",102.3,86.3,[26],Abdul Jameel (2018) Table 4
+48,CP+40,"{'cyclopentane': 60.0, 'ethanol': 40.0}",103.3,86.6,[26],Abdul Jameel (2018) Table 4
+49,CP+60,"{'cyclopentane': 40.0, 'ethanol': 60.0}",104.8,87.2,[26],Abdul Jameel (2018) Table 4
+50,Hex+0,"{'1-hexene': 100.0, 'ethanol': 0.0}",73.6,64.5,[26],Abdul Jameel (2018) Table 4
+51,Hex+10,"{'1-hexene': 90.0, 'ethanol': 10.0}",81.0,68.5,[26],Abdul Jameel (2018) Table 4
+52,Hex+25,"{'1-hexene': 75.0, 'ethanol': 25.0}",89.2,74.5,[26],Abdul Jameel (2018) Table 4
+53,Hex+40,"{'1-hexene': 60.0, 'ethanol': 40.0}",96.5,79.5,[26],Abdul Jameel (2018) Table 4
+54,Hex+60,"{'1-hexene': 40.0, 'ethanol': 60.0}",101.7,84.0,[26],Abdul Jameel (2018) Table 4
+55,TPRF,{},92.3,80.7,[72],Abdul Jameel (2018) Table 4
+56,TPRF,{},93.7,90.3,[72],Abdul Jameel (2018) Table 4
+57,TPRF,{},93.0,85.8,[72],Abdul Jameel (2018) Table 4
+58,TPRF,{},93.0,86.7,[72],Abdul Jameel (2018) Table 4
+59,TPRF,{},97.7,86.2,[72],Abdul Jameel (2018) Table 4
+60,TPRF,{},95.2,90.5,[72],Abdul Jameel (2018) Table 4
+61,TPRF,{},96.3,87.3,[72],Abdul Jameel (2018) Table 4
+62,TPRF,{},86.6,84.2,[72],Abdul Jameel (2018) Table 4
+63,TPRF,{},85.7,84.6,[72],Abdul Jameel (2018) Table 4
+64,TPRF,{},96.3,88.3,[72],Abdul Jameel (2018) Table 4
+65,TPRF,{},98.0,87.4,[72],Abdul Jameel (2018) Table 4
+66,TPRF,{},39.0,37.0,[72],Abdul Jameel (2018) Table 4
+67,TPRF,{},87.0,84.0,[72],Abdul Jameel (2018) Table 4
+68,TPRF,{},65.9,57.7,[72],Abdul Jameel (2018) Table 4
+69,TPRF,{},76.2,70.9,[72],Abdul Jameel (2018) Table 4
+70,TPRF,{},75.6,66.9,[72],Abdul Jameel (2018) Table 4
+71,TPRF,{},85.2,74.8,[72],Abdul Jameel (2018) Table 4
+72,TPRF,{},89.3,78.2,[72],Abdul Jameel (2018) Table 4
+73,TPRF,{},93.4,81.5,[72],Abdul Jameel (2018) Table 4
+74,TPRF,{},96.9,85.2,[72],Abdul Jameel (2018) Table 4
+75,TPRF,{},99.8,88.7,[72],Abdul Jameel (2018) Table 4
+76,TPRF,{},66.0,64.4,[72],Abdul Jameel (2018) Table 4
+77,TPRF,{},84.5,82.0,[72],Abdul Jameel (2018) Table 4
+78,TPRF,{},73.6,70.0,[72],Abdul Jameel (2018) Table 4
+79,TPRF,{},89.1,85.6,[72],Abdul Jameel (2018) Table 4
+80,TPRF,{},53.2,48.0,[72],Abdul Jameel (2018) Table 4
+81,TPRF,{},66.1,61.0,[72],Abdul Jameel (2018) Table 4
+82,TPRF28,"{'n-heptane': 28.0, 'i-octane': 42.0, 'toluene': 30.0}",79.0,74.0,[72],Abdul Jameel (2018) Table 4
+83,TPRF,{},92.8,86.9,[72],Abdul Jameel (2018) Table 4
+84,TPRF,{},63.7,58.0,[72],Abdul Jameel (2018) Table 4
+85,TPRF,{},75.1,68.0,[72],Abdul Jameel (2018) Table 4
+86,TPRF,{},86.2,79.6,[72],Abdul Jameel (2018) Table 4
+87,TPRF,{},96.7,88.7,[72],Abdul Jameel (2018) Table 4
+88,TPRF,{},75.5,68.0,[72],Abdul Jameel (2018) Table 4
+89,TPRF,{},83.8,76.2,[72],Abdul Jameel (2018) Table 4
+90,TPRF,{},92.1,82.9,[72],Abdul Jameel (2018) Table 4
+91,TPRF,{},99.8,90.9,[72],Abdul Jameel (2018) Table 4
+92,TPRF,{},85.3,75.2,[72],Abdul Jameel (2018) Table 4
+93,TPRF,{},95.0,83.7,[72],Abdul Jameel (2018) Table 4
+94,TPRF,{},71.2,69.0,[72],Abdul Jameel (2018) Table 4
+95,TPRF,{},68.4,63.7,[72],Abdul Jameel (2018) Table 4
+96,TPRF,{},90.5,88.0,[72],Abdul Jameel (2018) Table 4
+97,TPRF,{},89.5,84.7,[72],Abdul Jameel (2018) Table 4
+98,MC,{},74.6,72.0,[72],Abdul Jameel (2018) Table 4
+99,MC,{},72.0,68.0,[72],Abdul Jameel (2018) Table 4
+100,MC,{},72.0,67.2,[72],Abdul Jameel (2018) Table 4
+101,MC,{},92.9,90.2,[72],Abdul Jameel (2018) Table 4
+102,MC,{},93.0,88.5,[72],Abdul Jameel (2018) Table 4
+103,MC,{},91.2,86.8,[72],Abdul Jameel (2018) Table 4
+104,MC,{},77.8,74.6,[72],Abdul Jameel (2018) Table 4
+105,MC,{},91.7,85.2,[72],Abdul Jameel (2018) Table 4
+106,MC,{},83.0,77.7,[72],Abdul Jameel (2018) Table 4
+107,MC,{},91.4,84.9,[72],Abdul Jameel (2018) Table 4
+108,MC,{},73.5,71.8,[72],Abdul Jameel (2018) Table 4
+109,MC,{},90.9,82.7,[72],Abdul Jameel (2018) Table 4
+110,MC,{},76.7,72.0,[72],Abdul Jameel (2018) Table 4
+111,MC,{},94.2,90.5,[72],Abdul Jameel (2018) Table 4
+112,MC,{},82.6,76.2,[72],Abdul Jameel (2018) Table 4
+113,MC,{},96.8,90.0,[72],Abdul Jameel (2018) Table 4
+114,MC,{},93.3,90.1,[72],Abdul Jameel (2018) Table 4
+115,MC,{},94.4,88.4,[72],Abdul Jameel (2018) Table 4
+116,MC,{},74.2,72.6,[72],Abdul Jameel (2018) Table 4
+117,MC,{},94.1,91.4,[72],Abdul Jameel (2018) Table 4
+118,MC,{},97.5,90.7,[72],Abdul Jameel (2018) Table 4
+119,MC,{},93.0,88.0,[72],Abdul Jameel (2018) Table 4
+120,MC,{},91.7,85.5,[72],Abdul Jameel (2018) Table 4
+121,MC,{},94.5,87.8,[72],Abdul Jameel (2018) Table 4
+122,MC,{},92.9,85.3,[72],Abdul Jameel (2018) Table 4
+123,MC,{},70.9,66.0,[72],Abdul Jameel (2018) Table 4
