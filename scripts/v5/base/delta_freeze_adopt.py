@@ -1,6 +1,6 @@
 """delta_freeze_adopt (results/v5/BASE/delta_freeze_adopt/README.md): ideal and UNIFAC SvL margins re-derived on the new constants / data.
 
-Sub-readings: (A) old SLE file + old constants (d9309d3), must reproduce delta_freeze_unifac R-FU-1; (B) same 67 rows, new constants;
+Sub-readings: (A) old SLE file + old constants (eee2217), must reproduce delta_freeze_unifac R-FU-1; (B) same 67 rows, new constants;
 (C) full new scope incl. eutectic points (headline); (C-ps) B + the Pitzer & Scott eutectics only; R-FA-2 descriptive.
 
     .venv/Scripts/python.exe scripts/v5/base/delta_freeze_adopt.py
@@ -41,8 +41,8 @@ FMG = _load("fm_margin", "scripts/v5/base/delta_freeze_margin.py")
 OLDM = FMG.OLDM
 SLE_REL = "data/processed/v5/thermoml_sle_hc.csv"
 TM_REL = "data/raw/sle_constants/tm_dhfus_verified.csv"
-OLD_SLE_REV = "1f9b89d~1"      # SLE file before the Pitzer & Scott eutectics
-OLD_TM_REV = "d9309d3"         # constants before Tasks 0-3 (bicyclohexyl 6.86, no n-nonane / 2,3-DMB / m- / p-xylene)
+OLD_SLE_REV = "5e17749~1"      # SLE file before the Pitzer & Scott eutectics
+OLD_TM_REV = "eee2217"         # constants before Tasks 0-3 (bicyclohexyl 6.86, no n-nonane / 2,3-DMB / m- / p-xylene)
 PS_FILE = "calorimetry_primary:PS43_TableX"
 REF_A = dict(margin_ideal=16.9755, margin_unifac=13.8427, mae_ideal=3.3271, mae_unifac=2.6238)   # delta_freeze_unifac/summary.csv S_F
 
