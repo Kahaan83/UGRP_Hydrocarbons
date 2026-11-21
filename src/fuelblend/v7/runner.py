@@ -84,3 +84,15 @@ def paired_boot_gain(err_a, err_b, groups, n: int = 4000, seed: int = 0) -> tupl
     idx = np.random.default_rng(seed).integers(0, len(ug), (n, len(ug)))
     est = S[idx].sum(1) / N[idx].sum(1)
     return float(np.percentile(est, 5)), float(np.percentile(est, 95))
+
+
+def fit_with_oom_retry(fit_fn, **kw):
+    """Call fit_fn(**kw); on CUDA OOM halve kw['bs'] once and retry with oom_retry=1 recorded in the second call's kwargs.
+    A second OOM is re-raised."""
+    import torch
+    try:
+        return fit_fn(**kw)
+    except torch.cuda.OutOfMemoryError:
+        torch.cuda.empty_cache()
+        kw = {**kw, "bs": max(1, int(kw.get("bs", 32)) // 2), "oom_retry": 1}
+        return fit_fn(**kw)

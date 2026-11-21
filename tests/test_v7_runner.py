@@ -39,3 +39,22 @@ def test_paired_boot_gain_sign():
     g = np.repeat(np.arange(20), 3)
     lo, hi = runner.paired_boot_gain(np.full(60, 1.0), np.full(60, 2.0), g)
     assert lo > 0 and hi > 0
+
+
+def test_oom_retry_halves_bs_once():
+    import pytest, torch
+    from fuelblend.v7.runner import fit_with_oom_retry
+    calls = []
+
+    def stub(**kw):
+        calls.append(kw)
+        if len(calls) == 1:
+            raise torch.cuda.OutOfMemoryError("x")
+        return "ok"
+    assert fit_with_oom_retry(stub, bs=64) == "ok" and calls[1]["bs"] == 32 and calls[1]["oom_retry"] == 1
+    calls.clear()
+
+    def always(**kw):
+        raise torch.cuda.OutOfMemoryError("x")
+    with pytest.raises(torch.cuda.OutOfMemoryError):
+        fit_with_oom_retry(always, bs=64)
