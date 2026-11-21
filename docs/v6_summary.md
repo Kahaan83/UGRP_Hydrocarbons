@@ -4,7 +4,7 @@ Status: 2026-11-21. v5 BASE stays frozen (`results/v6` and `scripts/v6` are new;
 `scripts/v5/base/reproduce_base.py` passes). Every number below is read from a committed file named in the last column. All results are
 model-level only: no lab measurements exist, nothing here is exposed in `predict_fuel`, and nothing is certified. Gates were declared and
 locked before fitting; failures are kept in `docs/v6_negative_results.md`. Plan: `docs/v6_plan_2026-11-21.md`; literature:
-`docs/literature_review_v6.md`.
+`docs/literature_review_v6.md`; gaps and proposed fixes from a literature check: `docs/literature_gaps_v6.md`.
 
 ## 1. Outcome at a glance
 | Track | Question | Result | Status |
@@ -43,6 +43,9 @@ locked before fitting; failures are kept in `docs/v6_negative_results.md`. Plan:
   RON 9.0 vs 16.6, MON 8.2 vs 14.5, cetane 9.0 vs 18.6, DCN 5.6 vs 18.4, dHfus 12.8 vs 19.1 kJ/mol, log10 viscosity 0.225 vs 0.457. Every
   90 % bootstrap gain interval excludes zero. The constant is a weak bar: absolute errors are too large to replace physics or measurements
   for flash (mean one-sided over-prediction 9.4 C) or density.
+- Literature context (not a benchmark; different data and splits): published graph-model flash MAE is 14 to 18 K on 10k+ molecules, and
+  organic Tm MAE is about 21 to 27 K on 100k+ compounds, so our errors are the same order. No classical descriptor baseline (RF or GBM)
+  was run for Track B; see `docs/literature_gaps_v6.md`, section 2.
 - Existing estimators on the same rows: Tm 30.4 K vs v5 fusion_estimate 28.4 K (**no improvement**, so Tm is not used to fill Track A
   constants); YSI 69.4 vs v4 ridge 106.5.
 - **YSI locked holdout** (`results/v6/gnn/ysi_holdout/`, declared and locked before fitting, scored once): 56 compounds, 17 scaffold
@@ -64,7 +67,7 @@ locked before fitting; failures are kept in `docs/v6_negative_results.md`. Plan:
 - Result: KAUST and Boehm fail (Boehm viscosity and density significant dev losses). Leenhouts MON passed dev (gain CI [0.04, 1.33]) and
   locked ([0.07, 0.98]). **Replication on 51 unscored system-disjoint rows** (15 systems, pure MON gaps filled by the Track B head): MAE
   MolPool 5.28 vs descriptor GBM 4.97, gain CI [-1.24, 0.58]; not replicated. Post-hoc head tuning (v2) did not help. Status: no skill shown
-  over the strongest comparator; the earlier pass is best read as chance.
+  over the strongest comparator; the replication CI includes both a gain and a loss, so it cannot separate the earlier pass from chance.
 
 ## 6. Flash arm, oxygenate mixtures (`results/v6/flash_oxy/`)
 Run in a separate session, summarised from its README. MolPool arm B vs descriptor GBM: dev (57 systems) MAE 3.44 vs 4.08, gain CI [0.16,
