@@ -30,3 +30,8 @@ multiplicity correction. The "corrected-pure" baseline was worse than linear mol
 Track C replication (2026-11-21): the single passing head (Leenhouts MON) was re-tested on 51 unscored, system-disjoint rows (15 systems,
 pure MON of missing components filled by the Track B head). MolPool 5.28 vs descriptor GBM 4.97 MAE, gain CI [-1.24, 0.58]: not replicated.
 Post-hoc v2 tuning (wider head grid, shrinkage) did not help either (dev only). Track C status: no skill shown over the strongest comparator.
+
+## Flash arm, oxygenate mixtures (2026-11-21; `results/v6/flash_oxy/README.md`)
+MolPool arm B beat the descriptor GBM on dev oxy (gain CI [0.16, 1.04]) but not on the locked oxy systems ([-0.47, 1.38]); primary gate
+failed. Hydrocarbon non-inferiority passed on 14 locked systems (upper bound 0.65) but failed on dev (3.29); not established. Le Chatelier
+is not evaluable on oxygenates (no constants). Status: no skill shown.
