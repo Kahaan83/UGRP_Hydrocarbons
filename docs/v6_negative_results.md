@@ -17,3 +17,7 @@ holdout was scored. Numbers come from the CSVs named in the last column.
 - One-sided margin from dev out-of-fold residuals (90th percentile of measured minus predicted, applied upward): 3.98 C for the LightGBM
   residual. On the holdout it covered 8 of 12 fuels (0.67), below the 0.90 target, so it is not adopted. Live freezing margin stays 13.84 C.
 - Nothing in v6 Track A changes `predict_fuel`. Do not re-score the holdout; `holdout_scored.flag` blocks it.
+
+## Track B: pure-compound D-MPNN (2026-11-21)
+- Tm head (MAE 30.4 K) does not beat the v5 fusion_estimate (28.4 K) on the same scaffold-grouped folds; not adopted for Track A.
+- Tb and LHV heads not trained (no Tb source; LHV units unverified). Details: `results/v6/gnn/README.md`.
