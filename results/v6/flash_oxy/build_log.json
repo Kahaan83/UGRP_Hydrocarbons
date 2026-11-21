@@ -1,0 +1,237 @@
+{
+ "loader": {
+  "rows_raw": 1006,
+  "rows_dropped": 0,
+  "rows_pre_dedup": 1006,
+  "rows_out": 1006,
+  "systems": 113,
+  "by_class": {
+   "hc": {
+    "rows": 126,
+    "systems": 31
+   },
+   "oxy": {
+    "rows": 880,
+    "systems": 82
+   }
+  },
+  "n_conflict": 0
+ },
+ "pure": {
+  "rows": 585,
+  "compounds": 585
+ },
+ "coverage": {
+  "kept": 980,
+  "dropped_low_coverage": 26,
+  "cov_min": 0.9,
+  "dropped": [
+   {
+    "fuel_id": "leenhouts_flash_mix_443",
+    "system_id": "4569154679ed",
+    "chem_class": "oxy",
+    "cov": 0.264
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_444",
+    "system_id": "4569154679ed",
+    "chem_class": "oxy",
+    "cov": 0.656
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_445",
+    "system_id": "4569154679ed",
+    "chem_class": "oxy",
+    "cov": 0.741
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_446",
+    "system_id": "4569154679ed",
+    "chem_class": "oxy",
+    "cov": 0.705
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_447",
+    "system_id": "4569154679ed",
+    "chem_class": "oxy",
+    "cov": 0.852
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_450",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.083
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_451",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.092
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_452",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.104
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_453",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.119
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_454",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.14
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_455",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.169
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_456",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.213
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_457",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.289
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_458",
+    "system_id": "ca5422e58cd9",
+    "chem_class": "oxy",
+    "cov": 0.448
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_608",
+    "system_id": "e3cc8551c9c8",
+    "chem_class": "oxy",
+    "cov": 0.645
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_609",
+    "system_id": "8fee972b40da",
+    "chem_class": "oxy",
+    "cov": 0.236
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_747",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.868
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_748",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.745
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_749",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.63
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_750",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.523
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_751",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.422
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_752",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.328
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_753",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.238
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_754",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.154
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_755",
+    "system_id": "aa52d844f917",
+    "chem_class": "oxy",
+    "cov": 0.075
+   },
+   {
+    "fuel_id": "leenhouts_flash_mix_756",
+    "system_id": "7338d64613a3",
+    "chem_class": "oxy",
+    "cov": 0.899
+   }
+  ],
+  "pure_missing_components": [
+   "KVZJLSYJROEPSQ-HTQZYQBOSA-N",
+   "KVZJLSYJROEPSQ-OCAPTIKFSA-N",
+   "QRMPKOFEUHIBNM-OCAPTIKFSA-N",
+   "QRMPKOFEUHIBNM-ZKCHVHJHSA-N",
+   "XEKOWRVHYACXOJ-UHFFFAOYSA-N"
+  ]
+ },
+ "counts": [
+  {
+   "chem_class": "hc",
+   "role": "dev",
+   "rows": 95,
+   "systems": 17
+  },
+  {
+   "chem_class": "hc",
+   "role": "locked",
+   "rows": 31,
+   "systems": 14
+  },
+  {
+   "chem_class": "oxy",
+   "role": "dev",
+   "rows": 641,
+   "systems": 57
+  },
+  {
+   "chem_class": "oxy",
+   "role": "locked",
+   "rows": 213,
+   "systems": 21
+  }
+ ],
+ "counts_n3_systems": [
+  {
+   "chem_class": "hc",
+   "role": "dev",
+   "systems_n3": 1
+  },
+  {
+   "chem_class": "oxy",
+   "role": "dev",
+   "systems_n3": 8
+  },
+  {
+   "chem_class": "oxy",
+   "role": "locked",
+   "systems_n3": 7
+  }
+ ]
+}
