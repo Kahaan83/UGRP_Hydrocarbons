@@ -1,0 +1,88 @@
+{
+ "bulk_fuels_v5": 2601,
+ "bulk_fuels_v6": 2623,
+ "bulk_fuels_added": [
+  20,
+  21,
+  22,
+  32,
+  64,
+  154,
+  155,
+  254,
+  255,
+  304,
+  305,
+  332,
+  357,
+  362,
+  363,
+  364,
+  24443,
+  24445,
+  24446,
+  24447,
+  24450,
+  24451
+ ],
+ "wide_columns_added": [
+  "distillation_T15_C"
+ ],
+ "gcxgc_fuels_v5": 116,
+ "gcxgc_fuels_v6": 132,
+ "gcxgc_fuels_added": [
+  17,
+  20,
+  21,
+  22,
+  32,
+  64,
+  154,
+  155,
+  332,
+  357,
+  362,
+  363,
+  364,
+  24401,
+  24427,
+  24429
+ ],
+ "gcxgc_added_with_freezing": [
+  20,
+  21,
+  22,
+  32,
+  64,
+  154,
+  155
+ ],
+ "gcxgc_added_complete": [
+  17,
+  20,
+  21,
+  22,
+  32,
+  64,
+  154,
+  155,
+  332,
+  357,
+  24401,
+  24427,
+  24429
+ ],
+ "gcxgc_added_sharing_posf_with_other_ids": {
+  "32": [
+   24450
+  ],
+  "24401": [
+   24445
+  ]
+ },
+ "checks": [
+  "v5 long rows preserved",
+  "v5 gcxgc composition rows preserved"
+ ],
+ "bulk_build_log": 2623
+}
