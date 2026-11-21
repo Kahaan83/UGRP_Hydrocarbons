@@ -1,7 +1,9 @@
-target,model,mae,rmse,bias,max_err
-RON,Linear Volume (ASTM),6.71,10.14,-3.77,38.5
-RON,Linear Molar,3.66,6.63,-0.12,38.5
-RON,Physics + GBM Residual (GroupKFold),2.93,4.42,0.29,29.81
-MON,Linear Volume (ASTM),6.01,8.32,-4.23,23.6
-MON,Linear Molar,3.41,4.97,-1.91,16.0
-MON,Physics + GBM Residual (GroupKFold),3.44,5.31,0.79,24.9
+target,model,n,mae,rmse,bias,max_err
+RON,Constant (train mean),120,12.476,14.825,1.541,49.38
+RON,Linear volume,120,5.748,7.986,-5.127,23.9
+RON,Linear molar,120,2.791,3.783,-1.141,13.87
+RON,Linear molar + GBM residual (GroupKFold),120,2.453,3.161,0.505,11.376
+MON,Constant (train mean),120,10.021,12.113,1.14,43.544
+MON,Linear volume,120,5.644,7.751,-4.767,23.6
+MON,Linear molar,120,3.101,4.364,-2.303,12.799
+MON,Linear molar + GBM residual (GroupKFold),120,2.092,2.815,0.133,10.156

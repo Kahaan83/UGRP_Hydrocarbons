@@ -1,284 +1,125 @@
 #!/usr/bin/env python3
-"""ingest_kaust_jameel.py - Ingest parsed KAUST octane data into canonical schema format.
+"""ingest_kaust_jameel.py - Stage KAUST octane data (Abdul Jameel et al. 2018) in canonical schema.
 
-Reads:
-  - data/interim/external_staging/kaust_jameel_table3_pure.csv
-  - data/interim/external_staging/kaust_jameel_table4_blends.csv
-  - data/interim/external_staging/kaust_jameel_table5_face.csv
-  - data/unified/compounds.csv (for reference / lookup)
+Reads the parsed Tables 3, 4, 5 from data/interim/external_staging/. Writes (staging only):
+  - kaust_jameel_canonical_measurements.csv
+  - kaust_jameel_compounds.csv
 
-Outputs:
-  - data/interim/external_staging/kaust_jameel_canonical_measurements.csv
-  - data/interim/external_staging/kaust_jameel_new_compounds.csv
-
-NOTE: Staged output ONLY. DOES NOT write to data/unified/ or alter the production pipeline.
+Rules:
+  - InChIKeys come from RDKit via the curated SMILES table in kaust_registry.py.
+  - system_id: production helper (fuelblend.data.thermoml_sle.system_id) for named-compound systems;
+    fuel:<source>:<sample> for FACE gasoline lumps.
+  - Oxygenates are allowed for octane only; is_hc tags them.
+  - Blend compositions are NOT renormalised silently: the volume-sum is recorded and checked.
+Does not touch data/unified/.
 """
+from __future__ import annotations
 
-from pathlib import Path
 import json
-import hashlib
-import ast
+
 import pandas as pd
-from rdkit import Chem
 
-STAGING_DIR = Path("data/interim/external_staging")
-COMPOUNDS_REF = Path("data/unified/compounds.csv")
+from _common import STAGING_DIR, UNIFIED_COMP, fuel_system_id, mol_info, system_id
+from kaust_registry import COMPONENTS, TABLE3_SMILES, densities, load_tables, pure_props
 
-# Standard component name to SMILES map for blends
-COMPONENT_SMILES = {
-    "n-heptane": "CCCCCCC",
-    "i-octane": "CC(C)CC(C)(C)C",
-    "toluene": "Cc1ccccc1",
-    "1,2,4-trimethylbenzene": "Cc1ccc(C)c(C)c1",
-    "cyclopentane": "C1CCCC1",
-    "1-hexene": "CCCCC=C",
-    "ethanol": "CCO",
-}
-
-# Densities at 20 °C (kg/m3) and MW (g/mol) for volume to mass conversion
-COMPONENT_DENSITY_MW = {
-    "CCCCCCC": {"density": 684.0, "mw": 100.20},
-    "CC(C)CC(C)(C)C": {"density": 692.0, "mw": 114.23},
-    "Cc1ccccc1": {"density": 867.0, "mw": 92.14},
-    "Cc1ccc(C)c(C)c1": {"density": 876.0, "mw": 120.19},
-    "C1CCCC1": {"density": 751.0, "mw": 70.13},
-    "CCCCC=C": {"density": 673.0, "mw": 84.16},
-    "CCO": {"density": 789.0, "mw": 46.07},
-}
+SOURCE = "kaust_jameel2018"
+TIER = "literature_compiled"
+P_KPA = 101.325
 
 
-def get_inchikey_from_smiles(smiles: str) -> str:
-    mol = Chem.MolFromSmiles(smiles)
-    if mol:
-        return Chem.MolToInchiKey(mol)
-    return ""
+def _kind(n):
+    return "pure" if n == 1 else ("binary" if n == 2 else "multi")
 
 
-def compute_system_id(inchikeys: list[str]) -> str:
-    sorted_keys = sorted(inchikeys)
-    return hashlib.md5("".join(sorted_keys).encode("utf-8")).hexdigest()[:12]
-
-
-def ingest_pure():
-    p = STAGING_DIR / "kaust_jameel_table3_pure.csv"
-    if not p.exists():
-        return [], []
-    df = pd.read_csv(p)
-    records = []
-    compounds = []
-
-    for _, row in df.iterrows():
-        name = row["name"].strip()
-        # Clean common names for RDKit parsing
-        clean_name = name.lower()
-        # Direct SMILES lookup for known standard compounds
-        smiles = None
-        if clean_name in ["propane"]:
-            smiles = "CCC"
-        elif clean_name in ["n-butane", "butane"]:
-            smiles = "CCCC"
-        elif clean_name in ["n-pentane", "pentane"]:
-            smiles = "CCCCC"
-        elif clean_name in ["n-hexane", "hexane"]:
-            smiles = "CCCCCC"
-        elif clean_name in ["n-heptane", "heptane"]:
-            smiles = "CCCCCCC"
-        elif clean_name in ["n-octane", "octane"]:
-            smiles = "CCCCCCCC"
-        elif clean_name in ["n-nonane", "nonane"]:
-            smiles = "CCCCCCCCC"
-        elif clean_name in ["n-decane", "decane"]:
-            smiles = "CCCCCCCCCC"
-        elif clean_name in ["benzene"]:
-            smiles = "c1ccccc1"
-        elif clean_name in ["toluene"]:
-            smiles = "Cc1ccccc1"
-        elif clean_name in ["cyclohexane"]:
-            smiles = "C1CCCCC1"
-        elif clean_name in ["ethanol"]:
-            smiles = "CCO"
-
-        # If not in simple list, try to resolve via RDKit if it's already a valid SMILES or IUPAC
-        mol = None
-        if smiles:
-            mol = Chem.MolFromSmiles(smiles)
-
-        if not mol:
-            # Generate placeholder or try IUPAC name conversion if possible
-            # We record compound name
-            continue
-
-        ik = Chem.MolToInchiKey(mol)
-        sys_id = compute_system_id([ik])
-
-        # Add RON record
-        if pd.notna(row["ron"]):
-            records.append({
-                "source": "kaust_jameel2018",
-                "property": "ron",
-                "value": float(row["ron"]),
-                "T_K": float("nan"),
-                "P_kPa": 101.325,
-                "kind": "pure",
-                "n_comp": 1,
-                "is_hc": not any(atom.GetSymbol() not in ["C", "H"] for atom in mol.GetAtoms()),
-                "system_id": sys_id,
-                "comp_inchikeys": json.dumps([ik]),
-                "x_mole": json.dumps([1.0]),
-                "w_mass": json.dumps([1.0]),
-                "fuel_id": "",
-                "ref": "Jameel2018:Table3",
-                "raw_value": float(row["ron"]),
-                "raw_unit": "ON",
-            })
-
-        # Add MON record
-        if pd.notna(row["mon"]):
-            records.append({
-                "source": "kaust_jameel2018",
-                "property": "mon",
-                "value": float(row["mon"]),
-                "T_K": float("nan"),
-                "P_kPa": 101.325,
-                "kind": "pure",
-                "n_comp": 1,
-                "is_hc": not any(atom.GetSymbol() not in ["C", "H"] for atom in mol.GetAtoms()),
-                "system_id": sys_id,
-                "comp_inchikeys": json.dumps([ik]),
-                "x_mole": json.dumps([1.0]),
-                "w_mass": json.dumps([1.0]),
-                "fuel_id": "",
-                "ref": "Jameel2018:Table3",
-                "raw_value": float(row["mon"]),
-                "raw_unit": "ON",
-            })
-
-    return records
-
-
-def ingest_blends():
-    p = STAGING_DIR / "kaust_jameel_table4_blends.csv"
-    if not p.exists():
-        return []
-    df = pd.read_csv(p)
-    records = []
-
-    for _, row in df.iterrows():
-        comp_dict_raw = row["composition_vol_pct"]
-        if isinstance(comp_dict_raw, str):
-            try:
-                comp_dict = ast.literal_eval(comp_dict_raw)
-            except Exception:
-                continue
-        else:
-            comp_dict = comp_dict_raw
-
-        if not comp_dict:
-            continue
-
-        # Convert vol fractions to mass and mole fractions
-        smiles_vol = []
-        for name, vol in comp_dict.items():
-            if vol > 0 and name in COMPONENT_SMILES:
-                smiles_vol.append((COMPONENT_SMILES[name], vol))
-
-        if not smiles_vol:
-            continue
-
-        # Sort by InChIKey
-        items = []
-        is_hc_all = True
-        for smi, vol in smiles_vol:
-            ik = get_inchikey_from_smiles(smi)
-            mol = Chem.MolFromSmiles(smi)
-            if any(atom.GetSymbol() not in ["C", "H"] for atom in mol.GetAtoms()):
-                is_hc_all = False
-            prop = COMPONENT_DENSITY_MW[smi]
-            # mass proportional to vol * density
-            mass_raw = vol * prop["density"]
-            items.append({
-                "inchikey": ik,
-                "smiles": smi,
-                "vol": vol,
-                "mass_raw": mass_raw,
-                "mw": prop["mw"],
-            })
-
-        items.sort(key=lambda x: x["inchikey"])
-        total_mass = sum(x["mass_raw"] for x in items)
-        for x in items:
-            x["w"] = x["mass_raw"] / total_mass
-            x["n_moles"] = x["w"] / x["mw"]
-        total_moles = sum(x["n_moles"] for x in items)
-        for x in items:
-            x["x"] = x["n_moles"] / total_moles
-
-        inchikeys = [x["inchikey"] for x in items]
-        w_mass = [round(x["w"], 6) for x in items]
-        x_mole = [round(x["x"], 6) for x in items]
-        sys_id = compute_system_id(inchikeys)
-        n_comp = len(items)
-        kind = "binary" if n_comp == 2 else "multi"
-
-        # RON
-        if pd.notna(row["ron"]):
-            records.append({
-                "source": "kaust_jameel2018",
-                "property": "ron",
-                "value": float(row["ron"]),
-                "T_K": float("nan"),
-                "P_kPa": 101.325,
-                "kind": kind,
-                "n_comp": n_comp,
-                "is_hc": is_hc_all,
-                "system_id": sys_id,
-                "comp_inchikeys": json.dumps(inchikeys),
-                "x_mole": json.dumps(x_mole),
-                "w_mass": json.dumps(w_mass),
-                "fuel_id": str(row["blend_name"]),
-                "ref": f"Jameel2018:Table4:{row['source_ref']}",
-                "raw_value": float(row["ron"]),
-                "raw_unit": "ON",
-            })
-
-        # MON
-        if pd.notna(row["mon"]):
-            records.append({
-                "source": "kaust_jameel2018",
-                "property": "mon",
-                "value": float(row["mon"]),
-                "T_K": float("nan"),
-                "P_kPa": 101.325,
-                "kind": kind,
-                "n_comp": n_comp,
-                "is_hc": is_hc_all,
-                "system_id": sys_id,
-                "comp_inchikeys": json.dumps(inchikeys),
-                "x_mole": json.dumps(x_mole),
-                "w_mass": json.dumps(w_mass),
-                "fuel_id": str(row["blend_name"]),
-                "ref": f"Jameel2018:Table4:{row['source_ref']}",
-                "raw_value": float(row["mon"]),
-                "raw_unit": "ON",
-            })
-
-    return records
+def _row(prop, val, kind, n_comp, is_hc, sid, iks, x, w, fuel_id, ref, family, extra=None):
+    r = {"source": SOURCE, "property": prop, "value": float(val), "T_K": float("nan"), "P_kPa": P_KPA,
+         "kind": kind, "n_comp": n_comp, "is_hc": bool(is_hc), "system_id": sid,
+         "comp_inchikeys": json.dumps(iks), "x_mole": json.dumps(x), "w_mass": json.dumps(w),
+         "fuel_id": fuel_id, "ref": ref, "raw_value": float(val), "raw_unit": "ON",
+         "provenance_tier": TIER, "family": family}
+    if extra:
+        r.update(extra)
+    return r
 
 
 def main():
-    print("Ingesting KAUST Jameel data into canonical schema...")
-    pure_records = ingest_pure()
-    blend_records = ingest_blends()
-    all_records = pure_records + blend_records
+    t3, t4, t5 = load_tables()
+    dens = densities()
+    keys, mw, hc = {}, {}, {}
+    for name, c in COMPONENTS.items():
+        ik, m, h = mol_info(c["smiles"])
+        keys[name], mw[name], hc[name] = ik, m, h
 
-    df_out = pd.DataFrame(all_records)
-    out_file = STAGING_DIR / "kaust_jameel_canonical_measurements.csv"
-    df_out.to_csv(out_file, index=False)
-    print(f"Staged {len(df_out)} canonical octane measurements to {out_file}")
-    print("Breakdown by property:")
-    print(df_out["property"].value_counts())
-    print("Breakdown by kind:")
-    print(df_out["kind"].value_counts())
+    rows, comp_rows = [], {}
+    prod_iks = set(pd.read_csv(UNIFIED_COMP, usecols=["inchikey"])["inchikey"])
+
+    # ---- Table 3: pure compounds (all 128 mapped via RDKit) ----
+    for r in t3.itertuples():
+        smi = TABLE3_SMILES[int(r.s_no)]
+        ik, m, h = mol_info(smi)
+        sid = system_id([ik])
+        comp_rows[ik] = {"inchikey": ik, "smiles": smi, "name": r.name, "mw_avg": m, "is_hc": h,
+                         "table3_s_no": int(r.s_no), "in_production_compounds": ik in prod_iks}
+        for prop, val in (("ron", r.ron), ("mon", r.mon)):
+            rows.append(_row(prop, val, "pure", 1, h, sid, [ik], [1.0], [1.0], "",
+                             f"Jameel2018:Table3:{r.source_ref}", ik))
+
+    # ---- Table 4: blends; single-component (+0) rows are pure ----
+    comp_by_name = {k: v for k, v in keys.items()}
+    sum_log = []
+    for r in t4.itertuples():
+        comp = json.loads(r.composition_vol_pct)
+        unknown = [c for c in comp if c not in COMPONENTS]
+        if unknown:
+            raise ValueError(f"{r.blend_name}: unmapped components {unknown}")
+        tot = sum(comp.values())
+        sum_log.append((r.blend_name, tot))
+        if abs(tot - 100.0) > 1.5:
+            raise ValueError(f"{r.blend_name}: volume percentages sum to {tot}, refusing to renormalise")
+        items = sorted(((comp_by_name[c], c, v / tot) for c, v in comp.items()))
+        iks = [i[0] for i in items]
+        wr = [i[2] * dens[i[1]][0] for i in items]
+        w = [x / sum(wr) for x in wr]
+        nr = [wi / mw[i[1]] for wi, i in zip(w, items)]
+        x = [n / sum(nr) for n in nr]
+        non_eth = sorted(c for c in comp if c != "ethanol")
+        family = "+".join(non_eth)
+        is_hc = all(hc[c] for c in comp)
+        n = len(items)
+        extra = {"vol_sum_pct": round(tot, 4), "vol_frac": json.dumps([round(i[2], 6) for i in items])}
+        for prop, val in (("ron", r.ron), ("mon", r.mon)):
+            rows.append(_row(prop, val, _kind(n), n, is_hc, system_id(iks), iks, [round(v, 6) for v in x],
+                             [round(v, 6) for v in w], str(r.blend_name),
+                             f"Jameel2018:Table4:{r.source_ref}", family, extra))
+        for c in comp:
+            ik = comp_by_name[c]
+            comp_rows.setdefault(ik, {"inchikey": ik, "smiles": COMPONENTS[c]["smiles"], "name": c,
+                                      "mw_avg": mw[c], "is_hc": hc[c], "table3_s_no": COMPONENTS[c]["t3"],
+                                      "in_production_compounds": ik in prod_iks})
+
+    # ---- Table 5: FACE gasoline + ethanol (volume basis; FACE is a lump, no per-component mass/mole) ----
+    eth = keys["ethanol"]
+    for r in t5.itertuples():
+        base = r.base_fuel.replace(" ", "_")
+        sid = fuel_system_id(SOURCE, f"{base}+ethanol")
+        has_eth = r.ethanol_vol_pct > 0
+        for prop, val in (("ron", r.ron), ("mon", r.mon)):
+            rows.append(_row(prop, val, "binary" if has_eth else "pure", 2 if has_eth else 1, not has_eth,
+                             sid, [eth] if has_eth else [], [], [], r.blend_name,
+                             f"Jameel2018:Table5:{r.source_ref}", f"{base}",
+                             {"vol_sum_pct": r.base_vol_pct + r.ethanol_vol_pct,
+                              "vol_frac": json.dumps([round(r.ethanol_vol_pct / 100.0, 4)]),
+                              "ethanol_vol_pct": r.ethanol_vol_pct}))
+
+    df = pd.DataFrame(rows)
+    df.to_csv(STAGING_DIR / "kaust_jameel_canonical_measurements.csv", index=False)
+    pd.DataFrame(list(comp_rows.values())).to_csv(STAGING_DIR / "kaust_jameel_compounds.csv", index=False)
+
+    print(f"Staged {len(df)} KAUST octane rows; {len(comp_rows)} compounds")
+    print(df.groupby(["kind"]).size())
+    print("Table 4 volume-sum range:", min(s for _, s in sum_log), max(s for _, s in sum_log))
+    print("Densities:", {k: (round(v[0], 1), v[1]) for k, v in dens.items()})
+    print("Pure octane props:", pure_props(t3, t4))
 
 
 if __name__ == "__main__":
