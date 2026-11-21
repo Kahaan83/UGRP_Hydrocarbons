@@ -40,3 +40,17 @@ bootstrap CI (over fuels) of (MAE constant minus MAE model) above 0; holdout sco
   designated-tmap entries have both Tm and dHfus. (e) therefore equals (b) on dev to 2 decimals. Isomer averaging is data-limited, not
   refuted; it needs Tm and dHfus for the missing isomers (Track B).
 - Dev LOGO results are in `dev_logo_summary.csv`; the model list and settings above were frozen at this commit, before `step4_holdout.py`.
+
+## Results (dev LOGO n 52, holdout n 12; MAE in C; full tables in dev_logo_summary.csv and holdout_summary.csv)
+| model | dev MAE | dev bias | holdout MAE | holdout bias | holdout vs constant |
+|---|---|---|---|---|---|
+| a constant | 6.64 | 0.00 | 6.86 | +3.54 | trivial |
+| b UNIFAC-SvL (v5) | 8.83 | +5.51 | 13.48 | -0.69 | worse |
+| c1 weighted Tm | 16.72 | +16.72 | 23.99 | +23.99 | worse |
+| c2 ridge | 6.43 | +2.66 | 6.06 | -0.95 | no skill (CI [-1.90, +4.07]) |
+| d control curve | 5.92 | -1.50 | 7.08 | -1.50 | no skill |
+| e isomer tiles | 8.83 | +5.51 | 13.48 | -0.69 | equals b (data-limited) |
+| f LightGBM residual | 3.31 | -0.16 | 9.30 | -1.77 | no skill (CI [-6.31, +1.31]) |
+
+Verdict: status "no skill shown" is unchanged. The dev LOGO gain of (f) did not replicate on the locked holdout. See `docs/v6_negative_results.md`.
+Holdout was scored once (`holdout_scored.flag`, entry in `reports/LOCKED_ACCESS.log`).
