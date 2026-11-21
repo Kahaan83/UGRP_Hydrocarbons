@@ -1,0 +1,42 @@
+# v6 Track A: freezing point (declared before any model beyond baseline (b) was scored)
+
+Status of the v5 reference: "status: no skill shown" (`docs/final_numbers_v5.md`): pooled n 50, MAE 8.425 C vs constant 6.413 C.
+
+## Data and lock
+- `dataset.csv`: 64 groups = v5 T2 entities plus AJFTD 21, 22, 64, 154, 155 (dev) and 20 (holdout). AJFTD 32 is the same fuel as FuelLib
+  posf10264 and is not added. One entity per `dup_group`. Rule and hashes in `holdout_lock.json` (committed as `dd65d08`).
+- Dev = 52 groups (leave-one-group-out, LOGO). Holdout = 12 groups, scored once, after the model list is frozen. Holdout = v5 S4 locked 8, plus
+  AJFTD 86, 195, 325 and 20, which are in the older `splits/locked.json` that the v5 headline did not honour.
+- Fuel 64 (iso-paraffin, 99.6 %): uncensored reading -90 C, censored `<-61` readings dropped. Baseline (b) gives -176 C for it (no constants for
+  the heavy iso-paraffin tile). Every result is reported with and without fuel 64.
+- Reproduction gate (`repro_gate.json`): baseline (b) reproduces v5 on the 50 headline rows (MAE 8.4246, bias +5.8778, max abs diff 3e-6 C, the
+  rounding of the stored v5 rows).
+- Baseline (b) predictions were also computed for the 12 holdout groups at step 2 (physics, no fitting, nothing selected on them).
+
+## Baselines (all scored LOGO on dev, then once on holdout)
+- (a) constant: mean of the other dev groups.
+- (b) v5 UNIFAC-SvL, designated constants, unchanged code.
+- (c1) fixed mass-weighted average of representative-tile Tm (no fitting). (c2) ridge on coarse features (n-paraffin %, n-paraffin C14+ %,
+  aromatic %, mean carbon number), alpha by inner LOO. Neither is claimed to be Shi 2017 or Watanasiri 2026 (method details not verified).
+- (d) single-species control curve, Bell-inspired (method details unverified): isotonic fit of freezing point on one n-paraffin carbon-number
+  mass % (or aromatic %); species chosen by inner LOO MAE inside each fold.
+- (e) UNIFAC-SvL with isomer-averaged tiles: each representative's Tm and dHfus replaced by the mean over the registry isomers of its tile
+  (`SubReps.by[(kind, n)]`) that have constants in the designated tmap (Hall 2022 idea; `src/fuelblend/data/tile_isomers.py`).
+
+## Residual model (declared a priori)
+- LightGBM on the residual (measured minus base), base = whichever of (b), (e) has the lower dev OOF MAE, base clipped to [-100, -20] C. Fixed
+  settings, no tuning: num_leaves 4, min_child_samples 8, n_estimators 60, learning_rate 0.05, no subsampling.
+- Features and monotone constraints (on the residual added to the base): n-paraffin C14+ % (+1), n-paraffin % (+1), mean carbon number (+1),
+  aromatic % (0).
+
+## Gates
+LOGO on dev; one-sided margin = 90th percentile of out-of-fold (measured minus predicted), added to the prediction; beat-trivial = paired
+bootstrap CI (over fuels) of (MAE constant minus MAE model) above 0; holdout scored once. A model that fails these is logged in
+`docs/v6_negative_results.md`.
+
+## Disclosures made after the dev run (before holdout scoring)
+- (e) first used only the 77 compounds that SubReps accepts (4 tiles changed, all C6 to C10) and equalled (b) exactly. It was then widened to
+  every registry compound with constants (564 structures in sub-kind tiles), which still changes only 4 representatives: only 86 of 1042
+  designated-tmap entries have both Tm and dHfus. (e) therefore equals (b) on dev to 2 decimals. Isomer averaging is data-limited, not
+  refuted; it needs Tm and dHfus for the missing isomers (Track B).
+- Dev LOGO results are in `dev_logo_summary.csv`; the model list and settings above were frozen at this commit, before `step4_holdout.py`.
