@@ -1,0 +1,29 @@
+{
+  "task": "debug_flash_vs_chemprop",
+  "n_models": 5,
+  "variants": {
+    "b_cosine150": {
+      "scheduler": "cosine",
+      "epochs": 150,
+      "patience": 25
+    },
+    "c_plateau150": {
+      "scheduler": "plateau",
+      "epochs": 150,
+      "patience": 25
+    },
+    "d_const1000": {
+      "scheduler": "none",
+      "epochs": 1000,
+      "patience": 100
+    }
+  },
+  "total_s": 1058.5898559093475,
+  "n_locked_ysi": 56,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "git_commit": "88d9516dcdb5f0c390ec3915c3ad6a6c2b525fb9",
+  "guard_drops": {}
+}
