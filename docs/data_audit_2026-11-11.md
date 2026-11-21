@@ -213,3 +213,26 @@ Checked and closed:
 * `extras/fuelblend_data/data/unified/BASELINE_VISCOSEITY_REPORT.md` is a 2-byte misspelled duplicate.
 * `extras/ajftd_session.json` and `extras/fuelblend_data/ajftd_session.json` hold login cookies. `extras/` is gitignored; keep it so.
 * `docs/data_sources.csv` lists `fill_lfl.py` as a user of `lfl_chemicals.csv`; it never read that file.
+* 2026-11-12 cleanup (user-approved, 499 files, 4.1 GB): removed from `extras/` the 16 untracked copies of root `data/` files
+  (`data/unified/*`, most of `data/processed/*.csv`), the unzipped Leenhouts and Bilodeau trees under `data/interim/` (the Zenodo
+  zips in `data/raw/zenodo/` were verified intact and stay; re-unzip to use the published splits), and the
+  `fuelblend_university_bundle/` folder (its `.zip` stays). Removed from both trees six unreferenced v1 outputs:
+  `runs/baseline_preds.csv`, `processed/dcn_hc.csv`, `measurements_flash_expanded.csv`, `measurements_low_temp_flow.csv`,
+  `measurements_real_fuels_heat_of_combustion.csv`, `distillation_ajftd.csv`. Section 1's "identical in both trees" now means
+  root only. Kept: `debug/` AJFTD pages, all `data/raw/` sources, everything in section 3, every git-tracked file.
+
+## 7. 2026-11-21: v6 AJFTD rebuild (re-scrape of 2026-11-20)
+
+Script `scripts/v6/data/build_ajftd_v6.py` writes to `data/real_fuels/v6/` with the unchanged v5 loaders; test
+`tests/test_v6_ajftd_tables.py` (12 passed). The v5 tables in `data/real_fuels/v5/` are reset to HEAD and stay frozen.
+
+* Bulk fuels: 2,601 (v5) to 2,623 (v6), 22 added; new wide column `distillation_T15_C`. Every v5 long row is unchanged.
+* GCxGC fuels: 116 to 132. Added: 17, 20, 21, 22, 32, 64, 154, 155, 332, 357, 362, 363, 364, 24401, 24427, 24429.
+  Complete within the 98 to 102 % closure window: all except 362, 363, 364 (composition-only pages, leaf sum about 80 %).
+  Every v5 GCxGC row is unchanged.
+* Added fuels with measured freezing point: 20, 21, 22, 32, 64, 154, 155.
+* Complete GCxGC fuels with each property (v6): flash 46, freezing 33, viscosity 41, density 38, net heat of combustion 45.
+* Duplicates: `ajftd_fuel_groups.csv` assigns `dup_group` from the POSF number in the label. New fuels sharing a POSF
+  with another id: 32 and 24450 (POSF10264), 24401 and 24445 (POSF3962). Use `dup_group` (not `fuel_id`) as the
+  CV group. FuelLib `posf10264` and `posf11498` duplicate AJFTD 32 and 64 and must join the same groups.
+* Fixed during the build: a missing POSF parsed as NaN had grouped 2,352 ids into one `posf:nan` group.

@@ -379,4 +379,6 @@ The re-scored numbers live only in `rerun/` and `drift.csv`. Adopting the re-run
 
 None of these is done here.
 
-**Update 2026-11-15 (U4):** the user adopted this re-score as the frozen BASE in `3b75437` (`--update-manifest` run then; see `results/v5/BASE/README.md`, note 2026-11-15, and CLM-74). The Status text above describes this task as it stood before adoption.
+**Update 2026-11-15 (U4):** the user adopted this re-score as the frozen BASE in `91f2380` (`--update-manifest` run then; see `results/v5/BASE/README.md`, note 2026-11-15, and CLM-74). The Status text above describes this task as it stood before adoption.
+
+**Note (history rewrite, commit 5604c05):** commit hashes were rewritten. Old -> new: `3b75437` -> `91f2380` (adoption), `3ab033d` -> `09e1366` (pre-adoption BASE, parent of adoption), `271fdcc` -> `c1b5dcb`. `results/v5/BASE/README.md` and `results/v5/BASE/START_COMMIT.txt` are hashed in `SHA256SUMS_v5_base.txt` and still carry the old hashes by design.

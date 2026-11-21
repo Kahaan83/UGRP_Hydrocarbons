@@ -13,32 +13,32 @@ NOTE: Staged output ONLY. DOES NOT modify data/unified/ or alter the production 
 
 from pathlib import Path
 import json
-import hashlib
 import pandas as pd
 from rdkit import Chem
-from rdkit.Chem.Descriptors import ExactMolWt
+from rdkit.Chem.Descriptors import MolWt
+
+from _common import UNIFIED_COMP, UNIFIED_MEAS, system_id
 
 IN_DIR = Path("data/interim/external_staging/ai4fuel")
 STAGING_DIR = Path("data/interim/external_staging")
 
-# Properties to include in canonical measurements
+# file key -> (canonical property, T_K, T_lo, T_hi, P_kPa, unit, scale)
+# T is only set where the source column header states it; ranges are kept as ranges and flagged.
+NAN = float("nan")
 CANONICAL_PROPS = {
-    "ron": ("ron", float("nan"), 101.325, "ON", 1.0),
-    "mon": ("mon", float("nan"), 101.325, "ON", 1.0),
-    "cetane_number_D613": ("cetane_number_D613", float("nan"), 101.325, "-", 1.0),
-    "dcn": ("dcn", float("nan"), 101.325, "-", 1.0),
-    "flash_point_C": ("flash_point_C", float("nan"), 101.325, "C", 1.0),
-    "melting_point_C": ("freezing_point_C", float("nan"), 101.325, "C", 1.0),
-    "viscosity_dyn_mPas": ("viscosity_dyn_mPas", 293.15, 101.325, "mPa*s", 1.0),
-    "density_g_cm3": ("density_kg_m3", 293.15, 101.325, "kg/m3", 1000.0),
-    "vapor_pressure_kPa": ("vapor_pressure_kPa", 298.15, 101.325, "kPa", 1.0),
-    "lfl_vol_pct": ("lfl_vol_pct", 298.15, 101.325, "vol%", 1.0),
-    "lhv_MJ_kg": ("heat_of_combustion_net_MJ_kg", 298.15, 101.325, "MJ/kg", 1.0),
+    "ron": ("ron", NAN, NAN, NAN, 101.325, "ON", 1.0),
+    "mon": ("mon", NAN, NAN, NAN, 101.325, "ON", 1.0),
+    # Sheet "CN": no ASTM method is stated in the column, so it is not labelled D613.
+    "cetane_number_D613": ("cetane_number", NAN, NAN, NAN, 101.325, "-", 1.0),
+    "dcn": ("dcn", NAN, NAN, NAN, 101.325, "-", 1.0),
+    "flash_point_C": ("flash_point_C", NAN, NAN, NAN, 101.325, "C", 1.0),
+    "melting_point_C": ("melting_point_C", NAN, NAN, NAN, 101.325, "C", 1.0),
+    "viscosity_dyn_mPas": ("viscosity_dyn_mPas", 293.15, NAN, NAN, 101.325, "mPa*s", 1.0),  # header: @20oC
+    "density_g_cm3": ("density_kg_m3", NAN, 288.15, 303.15, 101.325, "kg/m3", 1000.0),  # header: @15~30oC
+    "vapor_pressure_kPa": ("vapor_pressure_kPa", 298.15, NAN, NAN, 101.325, "kPa", 1.0),  # header: @25 C
+    "lfl_vol_pct": ("lfl_vol_pct", NAN, NAN, NAN, 101.325, "vol%", 1.0),
+    "lhv_MJ_kg": ("heat_of_combustion_net_MJ_kg", NAN, NAN, NAN, 101.325, "MJ/kg", 1.0),
 }
-
-
-def compute_system_id(inchikey: str) -> str:
-    return hashlib.md5(inchikey.encode("utf-8")).hexdigest()[:12]
 
 
 def main():
@@ -46,6 +46,9 @@ def main():
         print(f"ERROR: {IN_DIR} not found. Run parse_sjtu_ai4fuel.py first.")
         return
 
+    prod_comp = set(pd.read_csv(UNIFIED_COMP, usecols=["inchikey"])["inchikey"])
+    um = pd.read_csv(UNIFIED_MEAS, usecols=["property", "system_id"]).drop_duplicates()
+    prod_pairs = set(zip(um["property"], um["system_id"]))
     mol_cache = {}  # smiles -> (inchikey, inchi, formula, mw, is_hc)
     measurements = []
     compounds = {}
@@ -58,7 +61,7 @@ def main():
         if prop_file_key not in CANONICAL_PROPS:
             continue
 
-        canon_name, def_t_k, def_p_kpa, unit_str, scale_factor = CANONICAL_PROPS[prop_file_key]
+        canon_name, def_t_k, t_lo, t_hi, def_p_kpa, unit_str, scale_factor = CANONICAL_PROPS[prop_file_key]
         df = pd.read_csv(csv_path)
 
         for _, row in df.iterrows():
@@ -74,7 +77,7 @@ def main():
                     ik = Chem.MolToInchiKey(mol)
                     inchi = Chem.MolToInchi(mol)
                     formula = Chem.rdMolDescriptors.CalcMolFormula(mol)
-                    mw = float(ExactMolWt(mol))
+                    mw = float(MolWt(mol))
                     is_hc = not any(atom.GetSymbol() not in ["C", "H"] for atom in mol.GetAtoms())
                     mol_cache[smi] = (ik, inchi, formula, mw, is_hc)
 
@@ -89,7 +92,8 @@ def main():
                     "smiles": smi,
                     "inchi": inchi,
                     "formula": formula,
-                    "mw": mw,
+                    "mw": mw,  # average MolWt
+                    "in_unified_compounds": ik in prod_comp,
                     "is_hc": is_hc,
                     "cls": str(row.get("class", "other")),
                     "name": str(row.get("name", "")),
@@ -97,13 +101,16 @@ def main():
                 }
 
             val = float(row["value"]) * scale_factor
-            sys_id = compute_system_id(ik)
+            sys_id = system_id([ik])
 
             measurements.append({
                 "source": "sjtu_ai4fuel",
                 "property": canon_name,
                 "value": round(val, 4),
                 "T_K": def_t_k,
+                "T_K_lo": t_lo,
+                "T_K_hi": t_hi,
+                "T_uncertain": bool(pd.notna(t_lo)),
                 "P_kPa": def_p_kpa,
                 "kind": "pure",
                 "n_comp": 1,
@@ -116,6 +123,10 @@ def main():
                 "ref": "AI4fuel:NatureCommun2026",
                 "raw_value": float(row["value"]),
                 "raw_unit": unit_str,
+                "raw_column": row.get("raw_column", ""),
+                "provenance_tier": "compiled",  # CRC handbook / literature compilation, not a primary measurement
+                "dup_in_unified": (canon_name, sys_id) in prod_pairs,
+                "compound_in_unified": ik in prod_comp,
             })
 
     df_meas = pd.DataFrame(measurements)
@@ -124,13 +135,14 @@ def main():
     print(f"Staged {len(df_meas)} canonical measurements -> {out_meas}")
     print("Breakdown by property:")
     print(df_meas["property"].value_counts())
+    print("Rows duplicating (property, system_id) in unified:", int(df_meas["dup_in_unified"].sum()))
     print("Hydrocarbons vs non-hydrocarbons:")
     print(df_meas["is_hc"].value_counts())
 
     df_comp = pd.DataFrame(list(compounds.values()))
     out_comp = STAGING_DIR / "canonical_ai4fuel_compounds.csv"
     df_comp.to_csv(out_comp, index=False)
-    print(f"Staged {len(df_comp)} unique compounds -> {out_comp}")
+    print(f"Staged {len(df_comp)} unique compounds -> {out_comp}; overlap with unified compounds: {int(df_comp['in_unified_compounds'].sum())}")
 
 
 if __name__ == "__main__":

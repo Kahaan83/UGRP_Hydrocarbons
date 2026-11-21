@@ -1,0 +1,90 @@
+{
+ "leenhouts": {
+  "raw_rows": 292,
+  "dedup_rows": 292,
+  "dropped_cov_below_min": 51,
+  "kept": 241,
+  "cov_min": 0.9
+ },
+ "boehm": {
+  "mixture_rows_in": 804,
+  "kept": 796,
+  "skipped_no_pure_or_smiles": 8
+ },
+ "dedup_total": {
+  "before": 1277,
+  "after": 1277
+ },
+ "counts": [
+  {
+   "head": "boehm",
+   "prop": "density",
+   "role": "dev",
+   "n": 303,
+   "groups": 12
+  },
+  {
+   "head": "boehm",
+   "prop": "density",
+   "role": "locked",
+   "n": 95,
+   "groups": 11
+  },
+  {
+   "head": "boehm",
+   "prop": "ln_visc",
+   "role": "dev",
+   "n": 303,
+   "groups": 12
+  },
+  {
+   "head": "boehm",
+   "prop": "ln_visc",
+   "role": "locked",
+   "n": 95,
+   "groups": 11
+  },
+  {
+   "head": "kaust",
+   "prop": "mon",
+   "role": "dev",
+   "n": 90,
+   "groups": 5
+  },
+  {
+   "head": "kaust",
+   "prop": "mon",
+   "role": "locked",
+   "n": 30,
+   "groups": 3
+  },
+  {
+   "head": "kaust",
+   "prop": "ron",
+   "role": "dev",
+   "n": 90,
+   "groups": 5
+  },
+  {
+   "head": "kaust",
+   "prop": "ron",
+   "role": "locked",
+   "n": 30,
+   "groups": 3
+  },
+  {
+   "head": "leenhouts",
+   "prop": "mon",
+   "role": "dev",
+   "n": 181,
+   "groups": 34
+  },
+  {
+   "head": "leenhouts",
+   "prop": "mon",
+   "role": "locked",
+   "n": 60,
+   "groups": 18
+  }
+ ]
+}

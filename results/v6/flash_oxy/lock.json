@@ -1,0 +1,52 @@
+{
+ "row_max": 0.25,
+ "rule": "md5('v6f:'+system_id) ascending; per chem_class; lock a system while locked rows <= row_max of the class's rows",
+ "classes": {
+  "hc": {
+   "n_groups": 31,
+   "locked": [
+    "6b00f1bbc8c1",
+    "f70a95ecf8ed",
+    "cf91cc3631a6",
+    "cb680dfd1c38",
+    "4a46b7d7afd9",
+    "36a1c57c3f21",
+    "39a914ff0579",
+    "2905e4e4ab30",
+    "869a202eaad3",
+    "314cc4c34772",
+    "c63e4108c743",
+    "73561b87527d",
+    "43f938ddf729",
+    "518951b6119a"
+   ]
+  },
+  "oxy": {
+   "n_groups": 78,
+   "locked": [
+    "4debf7e4a7a1",
+    "9a1c766409ab",
+    "d1782dda389a",
+    "cc091bd256c4",
+    "06e0dd3aed62",
+    "44ca7b5d9de0",
+    "aae85b5af43c",
+    "1073143ba338",
+    "879dd35d5b5a",
+    "958105608eba",
+    "4ad75c55be54",
+    "b2cfb169b278",
+    "3329a8698e37",
+    "258a6a94a1ba",
+    "ace9c302a856",
+    "820ddb3c9306",
+    "40199f9f2f48",
+    "a7109334c338",
+    "c2ca1f1b7210",
+    "9dd28f0f1b7f",
+    "aa52d844f917"
+   ]
+  }
+ },
+ "rows_csv_sha256": "db5296c5af2240c7536ae51196814779a0a104fa947accb52609c3bc99692d40"
+}

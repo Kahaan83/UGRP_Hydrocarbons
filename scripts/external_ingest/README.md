@@ -1,5 +1,7 @@
 # External Datasets: Parsers & Staged Ingestion Suite
 
+> **Correction (2026-11-21):** Boehm, CRC FACE-1 and ternary-flash staging were deleted (duplicates of production). Counts and claims in the table below that mention them, and the old 124-row KAUST count, are superseded by `docs/EXTERNAL_DATASETS_EXECUTION_LOG.md`.
+
 > **Isolation Notice:** These scripts and datasets are strictly isolated from the active production pipeline (`data/unified/`, `data/real_fuels/v4/`, `scripts/v4/`, `scripts/v5/`). They download, parse, and stage experimental measurements in `data/interim/external_staging/` without modifying or triggering any active production pipeline workflows.
 
 ---

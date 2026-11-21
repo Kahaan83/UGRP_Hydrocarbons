@@ -1,65 +1,65 @@
-# Standalone Multi-Component Octane Blending Benchmark (KAUST Jameel 2018)
+# KAUST octane blending benchmark (computed)
 
-> **Dataset Source**: Abdul Jameel et al. *Energy & Fuels* 2018 ([DOI: 10.1021/acs.energyfuels.8b00556](https://doi.org/10.1021/acs.energyfuels.8b00556))  
-> **Staged Data**: `data/interim/external_staging/kaust_jameel_table4_blends.csv` (123 multi-component blends, 100% exact volume fractions)  
-> **Validation Scheme**: Strict 5-Fold **GroupKFold by Blend System** (`system_id`), preventing leakage across concentration series.  
-> **Execution Mode**: STRICT STANDALONE EVALUATION (Zero alterations to production pipeline)
+All numbers below are produced by `scripts/external_ingest/eval_octane_blending_benchmarks.py`.
+Data: KAUST Table 4, 123 rows, of which 3 single-component anchor rows (TMB+0, CP+0, Hex+0) define the pure values and are excluded from the metrics; 120 blends scored. Validation: GroupKFold, 5 splits, groups = component set with ethanol removed (8 groups, so ethanol blends share a fold with their base fuel).
 
----
+## Pure values used (from measured rows)
 
-## 1. Executive Summary & Benchmark Results
-
-Linear volume blending is the universal industrial baseline for Research Octane Number (RON) and Motor Octane Number (MON). However, autoignition kinetics exhibit substantial non-linear synergies when oxygenates (ethanol) and aromatics (toluene, 1,2,4-TMB) interact with paraffins.
-
-### Headline Benchmark Performance across all 123 Multi-Component Blends:
-
-| Target | Blending Model | MAE (ON) | RMSE (ON) | Bias (ON) | Max Error (ON) |
+| Component | RON | MON | Source | Density kg/m3 | Density source |
 |---|---|---|---|---|---|
-| **RON** | Linear Volume (ASTM) | **6.71** | 10.14 | -3.77 | 38.5 |
-| **RON** | Linear Molar | **3.66** | 6.63 | -0.12 | 38.5 |
-| **RON** | Physics + GBM Residual (GroupKFold) | **2.93** | 4.42 | +0.29 | 29.81 |
-| **MON** | Linear Volume (ASTM) | **6.01** | 8.32 | -4.23 | 23.6 |
-| **MON** | Linear Molar | **3.41** | 4.97 | -1.91 | 16.0 |
-| **MON** | Physics + GBM Residual (GroupKFold) | **3.44** | 5.31 | +0.79 | 24.9 |
+| n-heptane | 0.0 | 0.0 | PRF scale definition | 683.8 | data/unified (median, 292-294.5 K) |
+| i-octane | 100.0 | 100.0 | Table 3 row 21 | 691.9 | data/unified (median, 292-294.5 K) |
+| toluene | 118.0 | 100.3 | Table 3 row 101 | 866.8 | data/unified (median, 292-294.5 K) |
+| ethanol | 108.0 | 90.0 | Table 3 row 128 | 789.3 | AI4fuel CRC handbook (15-30 C) |
+| 1,2,4-trimethylbenzene | 109.5 | 108.0 | Table 4 row TMB+0 | 875.7 | data/unified (median, 292-294.5 K) |
+| cyclopentane | 100.0 | 85.6 | Table 4 row CP+0 | 744.5 | data/unified (median, 292-294.5 K) |
+| 1-hexene | 73.6 | 64.5 | Table 4 row Hex+0 | 673.4 | data/unified (median, 292-294.5 K) |
+| diisobutylene | 100.6 | 86.5 | Table 3 row 72 | 715.0 | AI4fuel CRC handbook (15-30 C) |
 
----
+Diisobutylene uses the Table 3 row 72 isomer (2,4,4-trimethyl-1-pentene) as a proxy; no pure diisobutylene row exists. n-Heptane uses the PRF scale definition (not tabulated in Table 3).
 
-## 2. Key Physical & Chemical Findings
+## Overall metrics (ON)
 
-1. **Failure of Linear Blending on Oxygenated / Multi-Component Fuels**:
-   - Linear volume blending underpredicts RON with a systematic negative bias of **-3.77 ON** and an MAE of **6.71 ON** (maximum underprediction up to **38.5 ON**).
-   - Linear molar blending is worse (RON MAE **3.66 ON**, MON MAE **3.41 ON**), showing that physical engine knock response scales closer to liquid volume fractions in the intake charge than vapor stoichiometry.
-2. **Superiority of Physics Baseline + Residual Learning**:
-   - The Gradient Boosted Tree residual model evaluated under **strict out-of-system GroupKFold validation** slashes the RON MAE from **6.71 ON** down to **2.93 ON** (a **56.3% error reduction**), and cuts MON MAE from **6.01 ON** down to **3.44 ON**.
-   - Max error is reduced by over half (from **38.5 ON** down to **29.81 ON**).
+| Target | Model | n | MAE | RMSE | Bias | Max |
+|---|---|---|---|---|---|---|
+| RON | Constant (train mean) | 120 | 12.476 | 14.825 | +1.541 | 49.38 |
+| RON | Linear volume | 120 | 5.748 | 7.986 | -5.127 | 23.9 |
+| RON | Linear molar | 120 | 2.791 | 3.783 | -1.141 | 13.87 |
+| RON | Linear molar + GBM residual (GroupKFold) | 120 | 2.453 | 3.161 | +0.505 | 11.376 |
+| MON | Constant (train mean) | 120 | 10.021 | 12.113 | +1.140 | 43.544 |
+| MON | Linear volume | 120 | 5.644 | 7.751 | -4.767 | 23.6 |
+| MON | Linear molar | 120 | 3.101 | 4.364 | -2.303 | 12.799 |
+| MON | Linear molar + GBM residual (GroupKFold) | 120 | 2.092 | 2.815 | +0.133 | 10.156 |
 
----
+## Skill checks (computed)
 
-## 3. System-by-System Error Breakdown
+- RON: linear molar MAE 2.791 vs constant 12.476 -> beats the constant; GBM residual MAE 2.453 vs linear molar 2.791 -> improves on it; linear volume MAE 5.748 vs linear molar 2.791.
+- MON: linear molar MAE 3.101 vs constant 10.021 -> beats the constant; GBM residual MAE 2.092 vs linear molar 3.101 -> improves on it; linear volume MAE 5.644 vs linear molar 3.101.
 
-| Blend System | Blend Count | RON Linear MAE | RON GBM MAE | MON Linear MAE | MON GBM MAE |
-|---|---|---|---|---|---|
-| `1,2,4-trimethylbenzene` | 1 | 38.5 | **3.07** | 16.0 | **1.83** |
-| `1,2,4-trimethylbenzene+ethanol` | 4 | 29.55 | **10.23** | 17.02 | **21.99** |
-| `1-hexene` | 1 | 2.8 | **3.5** | 1.1 | **1.84** |
-| `1-hexene+ethanol` | 4 | 5.03 | **4.08** | 4.25 | **3.38** |
-| `cyclopentane` | 1 | 0.1 | **1.23** | 0.7 | **0.53** |
-| `cyclopentane+ethanol` | 4 | 0.1 | **7.76** | 0.43 | **7.47** |
-| `diisobutylene+i-octane+n-heptane` | 10 | 4.52 | **4.35** | 3.66 | **3.84** |
-| `diisobutylene+i-octane+n-heptane+toluene` | 16 | 4.25 | **3.42** | 4.24 | **3.4** |
-| `ethanol+i-octane+n-heptane` | 12 | 14.23 | **3.94** | 13.23 | **4.13** |
-| `ethanol+i-octane+n-heptane+toluene` | 19 | 11.64 | **1.24** | 11.14 | **1.77** |
-| `i-octane+n-heptane` | 2 | 0.45 | **2.25** | 0.6 | **1.82** |
-| `i-octane+n-heptane+toluene` | 42 | 2.28 | **1.79** | 2.51 | **2.19** |
-| `n-heptane+toluene` | 7 | 6.27 | **2.21** | 7.68 | **2.2** |
+## Per base-fuel family (MAE, ON)
 
----
+| Group | n | RON lin. mol | RON lin. vol | RON GBM | MON lin. mol | MON lin. vol | MON GBM |
+|---|---|---|---|---|---|---|---|
+| `1,2,4-trimethylbenzene` | 4 | 3.786 | 4.044 | 5.517 | 3.337 | 6.425 | 3.413 |
+| `1-hexene` | 4 | 1.65 | 6.89 | 2.836 | 0.395 | 3.519 | 0.719 |
+| `cyclopentane` | 4 | 0.606 | 0.15 | 2.336 | 1.001 | 0.585 | 1.301 |
+| `diisobutylene+i-octane+n-heptane` | 10 | 5.085 | 4.524 | 4.736 | 4.195 | 3.657 | 4.236 |
+| `diisobutylene+i-octane+n-heptane+toluene` | 16 | 3.804 | 4.246 | 3.558 | 4.001 | 4.241 | 3.576 |
+| `i-octane+n-heptane` | 14 | 5.122 | 12.257 | 1.696 | 6.709 | 11.429 | 2.136 |
+| `i-octane+n-heptane+toluene` | 61 | 1.938 | 5.194 | 1.968 | 2.351 | 5.195 | 1.584 |
+| `n-heptane+toluene` | 7 | 1.296 | 6.265 | 0.502 | 1.408 | 7.684 | 0.446 |
 
-## 4. Comparison with Literature
+## Density sensitivity (linear molar MAE, diisobutylene density scaled)
 
-| Benchmark Source | Model Type | Validation | RON MAE | MON MAE |
-|---|---|---|---|---|
-| **Linear Volume Blending (This Work)** | Physics Baseline (ASTM) | Zero-shot | 6.71 | 6.01 |
-| **Physics + Residual GBM (This Work)** | Residual Learning | 5-Fold GroupKFold | **2.93** | **3.44** |
-| Abdul Jameel et al. (KAUST 2018) | NMR Spectroscopy + ANN | 5-Fold Cross-Val | ~1.3 | ~1.4 |
-| Zhang et al. (AI4fuel 2026) | Directed Message Passing GNN | Pure Molecules Only | 1.8 | 2.1 |
+| DIB density scale | RON MAE | MON MAE |
+|---|---|---|
+| 0.95 | 2.804 | 3.11 |
+| 1.05 | 2.778 | 3.091 |
+
+## FACE gasoline + ethanol (Table 5), linear volume between measured FACE+0 and ethanol
+
+n = 24 blends; RON MAE 7.044 (bias -7.044, max 13.100); MON MAE 4.960 (bias -4.960, max 11.050). No model is fitted here.
+
+## Scope
+
+Model-level benchmark on literature-compiled data. Oxygenate (ethanol) rows are in scope for octane only. No comparison to literature model errors is made because none is computed in this repository.

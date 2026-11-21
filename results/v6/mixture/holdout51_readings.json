@@ -1,0 +1,28 @@
+{
+ "n": 51,
+ "systems": 15,
+ "median_cov": 0.661,
+ "chosen_cfg": [
+  "{'d': 24, 'wd': 0.1}"
+ ],
+ "mae_lin_molar": 8.233013849206712,
+ "mae_corrected_pure": 5.258652884654419,
+ "mae_desc_gbm": 4.972553258569725,
+ "mae_molpool": 5.278999276460305,
+ "gain_vs_lin_molar": [
+  1.3142737878228337,
+  4.655460519012821
+ ],
+ "gain_vs_corrected_pure": [
+  -0.6565980018930025,
+  0.558272814759804
+ ],
+ "gain_vs_desc_gbm": [
+  -1.238218820028961,
+  0.5811176895438666
+ ],
+ "n_multi": 49,
+ "mae_multi_desc_gbm": 4.851668423177343,
+ "mae_multi_molpool": 5.223381122334227,
+ "gate_pass": false
+}

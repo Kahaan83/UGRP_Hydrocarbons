@@ -1,231 +1,207 @@
 #!/usr/bin/env python3
-"""eval_octane_blending_benchmarks.py - Standalone multi-component octane blending benchmark.
+"""eval_octane_blending_benchmarks.py - Octane blending benchmark on KAUST Table 4 (and Table 5 FACE).
 
-Evaluates:
-  1. Linear volume blending (ON = sum(v_i * ON_i))
-  2. Linear molar blending (ON = sum(x_i * ON_i))
-  3. Non-linear interaction / Gradient Boosted residual model with GroupKFold by system_id.
+Models (RON, MON):
+  - Constant: training-fold mean of the measured value (no-skill reference)
+  - Linear volume and linear molar blending, with pure RON/MON taken from measured single-component
+    rows (see kaust_registry.pure_props), not typed literals
+  - Linear molar + GBM residual, evaluated with GroupKFold over base-fuel families
 
-Data Sources:
-  - data/interim/external_staging/kaust_jameel_table4_blends.csv (123 blends: RON and MON)
-
-Outputs:
-  - results/external_benchmarks/octane_blending_summary.csv
-  - results/external_benchmarks/octane_blending_predictions.csv
-  - results/external_benchmarks/octane_blending_report.md
-
-NOTE: Standalone benchmark script. DOES NOT alter active production datasets or pipeline.
+Groups: the component set with ethanol removed, so a hydrocarbon base fuel and its ethanol blends
+(TMB+0 ... TMB+60, PRF + ethanol, TPRF + ethanol) always fall in the same fold.
+Single-component anchor rows (TMB+0, CP+0, Hex+0) define the pure values, so they are excluded from
+the error metrics. Report text contains computed values only.
+Does not touch data/unified/.
 """
+from __future__ import annotations
 
-from pathlib import Path
 import json
+
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import GroupKFold
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import GroupKFold
 
-OUT_DIR = Path("results/external_benchmarks")
+from _common import OUT_DIR, STAGING_DIR, mol_info
+from kaust_registry import COMPONENTS, densities, load_tables, pure_props
 
-# Reference pure component properties for KAUST blends
-PURE_PROPS = {
-    "n-heptane": {"mw": 100.20, "density": 0.684, "ron": 0.0, "mon": 0.0},
-    "i-octane": {"mw": 114.23, "density": 0.692, "ron": 100.0, "mon": 100.0},
-    "toluene": {"mw": 92.14, "density": 0.867, "ron": 118.0, "mon": 100.3},
-    "ethanol": {"mw": 46.07, "density": 0.789, "ron": 108.0, "mon": 90.0},
-    "1,2,4-trimethylbenzene": {"mw": 120.19, "density": 0.876, "ron": 148.0, "mon": 124.0},
-    "cyclopentane": {"mw": 70.13, "density": 0.745, "ron": 100.1, "mon": 84.9},
-    "1-hexene": {"mw": 84.16, "density": 0.673, "ron": 76.4, "mon": 63.4},
-    "diisobutylene": {"mw": 112.21, "density": 0.715, "ron": 100.6, "mon": 86.5},
-}
+NAMES = list(COMPONENTS)
+N_SPLITS = 5
+
+
+def build_table(t3, t4):
+    pp = pure_props(t3, t4)
+    dens = densities()
+    mw = {k: mol_info(v["smiles"])[1] for k, v in COMPONENTS.items()}
+    recs = []
+    for r in t4.itertuples():
+        comp = json.loads(r.composition_vol_pct)
+        tot = sum(comp.values())
+        v = {k: x / tot for k, x in comp.items()}
+        n = {k: v[k] * dens[k][0] / mw[k] for k in v}
+        nt = sum(n.values())
+        x = {k: n[k] / nt for k in n}
+        rec = {"blend_name": r.blend_name, "n_comp": len(comp),
+               "group": "+".join(sorted(c for c in comp if c != "ethanol")) or "ethanol",
+               "ethanol_vol_frac": v.get("ethanol", 0.0),
+               "ron_meas": float(r.ron), "mon_meas": float(r.mon)}
+        for t in ("ron", "mon"):
+            rec[f"{t}_lin_vol"] = sum(v[k] * pp[k][t] for k in v)
+            rec[f"{t}_lin_mol"] = sum(x[k] * pp[k][t] for k in x)
+        for k in NAMES:
+            rec[f"v_{k}"] = v.get(k, 0.0)
+        recs.append(rec)
+    return pd.DataFrame(recs), pp, dens
+
+
+def metrics(err):
+    err = np.asarray(err, dtype=float)
+    return {"mae": float(np.mean(np.abs(err))), "rmse": float(np.sqrt(np.mean(err ** 2))),
+            "bias": float(np.mean(err)), "max_err": float(np.max(np.abs(err)))}
+
+
+def cv_predictions(df, target):
+    X = df[[f"v_{k}" for k in NAMES]].values
+    y = df[f"{target}_meas"].values
+    base = df[f"{target}_lin_mol"].values
+    groups = df["group"].values
+    n_splits = min(N_SPLITS, len(set(groups)))
+    const = np.zeros(len(df))
+    gbm = np.zeros(len(df))
+    for tr, te in GroupKFold(n_splits=n_splits).split(X, y, groups):
+        const[te] = y[tr].mean()
+        m = GradientBoostingRegressor(n_estimators=45, max_depth=3, learning_rate=0.08, random_state=42)
+        m.fit(X[tr], y[tr] - base[tr])
+        gbm[te] = base[te] + m.predict(X[te])
+    return const, gbm, n_splits
+
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    kaust_csv = Path("data/interim/external_staging/kaust_jameel_table4_blends.csv")
-    if not kaust_csv.exists():
-        print(f"ERROR: {kaust_csv} not found.")
-        return
+    t3, t4, t5 = load_tables()
+    full, pp, dens = build_table(t3, t4)
+    anchors = full[full["n_comp"] == 1]
+    df = full[full["n_comp"] > 1].reset_index(drop=True)
 
-    df_kaust = pd.read_csv(kaust_csv)
-    records = []
+    models = {}
+    n_splits = None
+    for t in ("ron", "mon"):
+        const, gbm, n_splits = cv_predictions(df, t)
+        df[f"{t}_pred_const"] = const
+        df[f"{t}_pred_gbm"] = gbm
+        models[t] = {
+            "Constant (train mean)": df[f"{t}_pred_const"],
+            "Linear volume": df[f"{t}_lin_vol"],
+            "Linear molar": df[f"{t}_lin_mol"],
+            "Linear molar + GBM residual (GroupKFold)": df[f"{t}_pred_gbm"],
+        }
+    rows = []
+    for t, d in models.items():
+        for name, pred in d.items():
+            rows.append({"target": t.upper(), "model": name, "n": len(df),
+                         **{k: round(v, 3) for k, v in metrics(pred - df[f"{t}_meas"]).items()}})
+    summary = pd.DataFrame(rows)
 
-    for _, row in df_kaust.iterrows():
-        b_name = row["blend_name"]
-        comp_dict = json.loads(row["composition_vol_pct"]) if isinstance(row["composition_vol_pct"], str) else {}
-        ron_meas = float(row["ron"]) if pd.notna(row["ron"]) else None
-        mon_meas = float(row["mon"]) if pd.notna(row["mon"]) else None
+    fam_rows = []
+    for g, sub in df.groupby("group"):
+        r = {"group": g, "n": len(sub)}
+        for t in ("ron", "mon"):
+            r[f"{t}_mae_lin_mol"] = round(float(np.mean(np.abs(sub[f"{t}_lin_mol"] - sub[f"{t}_meas"]))), 3)
+            r[f"{t}_mae_lin_vol"] = round(float(np.mean(np.abs(sub[f"{t}_lin_vol"] - sub[f"{t}_meas"]))), 3)
+            r[f"{t}_mae_gbm"] = round(float(np.mean(np.abs(sub[f"{t}_pred_gbm"] - sub[f"{t}_meas"]))), 3)
+        fam_rows.append(r)
+    fam = pd.DataFrame(fam_rows)
 
-        if not comp_dict:
-            continue
+    # Density sensitivity: linear-molar MAE if every density is shifted by +/-5 percent
+    sens = []
+    for scale in (0.95, 1.05):
+        mw = {k: mol_info(v["smiles"])[1] for k, v in COMPONENTS.items()}
+        errs = {"ron": [], "mon": []}
+        for r in t4[t4["blend_name"].isin(df["blend_name"])].itertuples():
+            comp = json.loads(r.composition_vol_pct)
+            tot = sum(comp.values())
+            n = {k: (x / tot) * dens[k][0] * (scale if k == "diisobutylene" else 1.0) / mw[k] for k, x in comp.items()}
+            nt = sum(n.values())
+            for t in errs:
+                pred = sum(n[k] / nt * pp[k][t] for k in n)
+                errs[t].append(pred - float(getattr(r, t)))
+        sens.append({"dib_density_scale": scale,
+                     "ron_mae_lin_mol": round(float(np.mean(np.abs(errs["ron"]))), 3),
+                     "mon_mae_lin_mol": round(float(np.mean(np.abs(errs["mon"]))), 3)})
+    sens = pd.DataFrame(sens)
 
-        # System identifier: sorted component names
-        sys_id = "+".join(sorted(comp_dict.keys()))
+    # Table 5: FACE + ethanol, linear volume between the measured FACE+0 row and pure ethanol
+    eth = pp["ethanol"]
+    f_rows = []
+    for base, sub in t5.groupby("base_fuel"):
+        z = sub[sub["ethanol_vol_pct"] == 0].iloc[0]
+        for r in sub[sub["ethanol_vol_pct"] > 0].itertuples():
+            fe = r.ethanol_vol_pct / 100.0
+            f_rows.append({"base_fuel": base, "ethanol_vol_pct": r.ethanol_vol_pct,
+                           "ron_meas": r.ron, "mon_meas": r.mon,
+                           "ron_lin_vol": (1 - fe) * z.ron + fe * eth["ron"],
+                           "mon_lin_vol": (1 - fe) * z.mon + fe * eth["mon"]})
+    face = pd.DataFrame(f_rows)
+    face["ron_err"] = face["ron_lin_vol"] - face["ron_meas"]
+    face["mon_err"] = face["mon_lin_vol"] - face["mon_meas"]
+    face_m = {t: metrics(face[f"{t}_err"]) for t in ("ron", "mon")}
 
-        # Calculate volume fractions
-        tot_vol = sum(comp_dict.values())
-        v_fracs = {k: v / tot_vol for k, v in comp_dict.items()}
+    df.to_csv(OUT_DIR / "octane_blending_predictions.csv", index=False)
+    summary.to_csv(OUT_DIR / "octane_blending_summary.csv", index=False)
+    fam.to_csv(OUT_DIR / "octane_blending_by_family.csv", index=False)
+    face.to_csv(OUT_DIR / "octane_face_ethanol_linear_volume.csv", index=False)
 
-        # Calculate mole fractions
-        moles = {k: (v_fracs[k] * PURE_PROPS[k]["density"]) / PURE_PROPS[k]["mw"] for k in v_fracs}
-        tot_moles = sum(moles.values())
-        x_fracs = {k: m / tot_moles for k, m in moles.items()}
+    # ---------------- report: computed values only ----------------
+    def S(t, m):
+        return summary[(summary.target == t) & (summary.model == m)].iloc[0]
 
-        # Linear volume predictions
-        ron_lin_v = sum(v_fracs[k] * PURE_PROPS[k]["ron"] for k in v_fracs)
-        mon_lin_v = sum(v_fracs[k] * PURE_PROPS[k]["mon"] for k in v_fracs)
+    lines = ["# KAUST octane blending benchmark (computed)", "",
+             "All numbers below are produced by `scripts/external_ingest/eval_octane_blending_benchmarks.py`.",
+             f"Data: KAUST Table 4, {len(full)} rows, of which {len(anchors)} single-component anchor rows "
+             f"({', '.join(anchors['blend_name'])}) define the pure values and are excluded from the metrics; "
+             f"{len(df)} blends scored. Validation: GroupKFold, {n_splits} splits, groups = component set with "
+             f"ethanol removed ({df['group'].nunique()} groups, so ethanol blends share a fold with their base fuel).",
+             "", "## Pure values used (from measured rows)", "", "| Component | RON | MON | Source | Density kg/m3 | Density source |",
+             "|---|---|---|---|---|---|"]
+    for k in NAMES:
+        lines.append(f"| {k} | {pp[k]['ron']} | {pp[k]['mon']} | {pp[k]['source']} | {dens[k][0]:.1f} | {dens[k][1]} |")
+    lines += ["", "Diisobutylene uses the Table 3 row 72 isomer (2,4,4-trimethyl-1-pentene) as a proxy; no pure "
+              "diisobutylene row exists. n-Heptane uses the PRF scale definition (not tabulated in Table 3).",
+              "", "## Overall metrics (ON)", "", "| Target | Model | n | MAE | RMSE | Bias | Max |", "|---|---|---|---|---|---|---|"]
+    for r in summary.itertuples():
+        lines.append(f"| {r.target} | {r.model} | {r.n} | {r.mae} | {r.rmse} | {r.bias:+.3f} | {r.max_err} |")
+    lines += ["", "## Skill checks (computed)", ""]
+    for t in ("RON", "MON"):
+        lm, c, g, lv = (S(t, "Linear molar"), S(t, "Constant (train mean)"),
+                        S(t, "Linear molar + GBM residual (GroupKFold)"), S(t, "Linear volume"))
+        lines.append(f"- {t}: linear molar MAE {lm.mae} vs constant {c.mae} -> "
+                     f"{'beats' if lm.mae < c.mae else 'does not beat'} the constant; "
+                     f"GBM residual MAE {g.mae} vs linear molar {lm.mae} -> "
+                     f"{'improves' if g.mae < lm.mae else 'does not improve'} on it; "
+                     f"linear volume MAE {lv.mae} vs linear molar {lm.mae}.")
+    lines += ["", "## Per base-fuel family (MAE, ON)", "",
+              "| Group | n | RON lin. mol | RON lin. vol | RON GBM | MON lin. mol | MON lin. vol | MON GBM |",
+              "|---|---|---|---|---|---|---|---|"]
+    for r in fam.itertuples():
+        lines.append(f"| `{r.group}` | {r.n} | {r.ron_mae_lin_mol} | {r.ron_mae_lin_vol} | {r.ron_mae_gbm} | "
+                     f"{r.mon_mae_lin_mol} | {r.mon_mae_lin_vol} | {r.mon_mae_gbm} |")
+    lines += ["", "## Density sensitivity (linear molar MAE, diisobutylene density scaled)", "",
+              "| DIB density scale | RON MAE | MON MAE |", "|---|---|---|"]
+    for r in sens.itertuples():
+        lines.append(f"| {r.dib_density_scale} | {r.ron_mae_lin_mol} | {r.mon_mae_lin_mol} |")
+    lines += ["", "## FACE gasoline + ethanol (Table 5), linear volume between measured FACE+0 and ethanol", "",
+              f"n = {len(face)} blends; RON MAE {face_m['ron']['mae']:.3f} (bias {face_m['ron']['bias']:+.3f}, "
+              f"max {face_m['ron']['max_err']:.3f}); MON MAE {face_m['mon']['mae']:.3f} "
+              f"(bias {face_m['mon']['bias']:+.3f}, max {face_m['mon']['max_err']:.3f}). No model is fitted here.",
+              "", "## Scope", "",
+              "Model-level benchmark on literature-compiled data. Oxygenate (ethanol) rows are in scope for octane only. "
+              "No comparison to literature model errors is made because none is computed in this repository."]
+    (OUT_DIR / "octane_blending_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(summary.to_string(index=False))
+    print(fam.to_string(index=False))
+    print(sens.to_string(index=False))
+    print(face_m)
 
-        # Linear mole predictions
-        ron_lin_x = sum(x_fracs[k] * PURE_PROPS[k]["ron"] for k in x_fracs)
-        mon_lin_x = sum(x_fracs[k] * PURE_PROPS[k]["mon"] for k in x_fracs)
-
-        # Feature vector for ML (fractions of each of the 8 components)
-        feat_vec = [v_fracs.get(k, 0.0) for k in PURE_PROPS.keys()]
-
-        records.append({
-            "blend_name": b_name,
-            "system_id": sys_id,
-            "n_comp": len(comp_dict),
-            "ron_meas": ron_meas,
-            "ron_lin_vol": ron_lin_v,
-            "ron_lin_mol": ron_lin_x,
-            "mon_meas": mon_meas,
-            "mon_lin_vol": mon_lin_v,
-            "mon_lin_mol": mon_lin_x,
-            "features": feat_vec,
-        })
-
-    bench_df = pd.DataFrame(records)
-
-    # Errors of Linear Blending
-    bench_df["ron_err_vol"] = bench_df["ron_lin_vol"] - bench_df["ron_meas"]
-    bench_df["ron_err_mol"] = bench_df["ron_lin_mol"] - bench_df["ron_meas"]
-    bench_df["mon_err_vol"] = bench_df["mon_lin_vol"] - bench_df["mon_meas"]
-    bench_df["mon_err_mol"] = bench_df["mon_lin_mol"] - bench_df["mon_meas"]
-
-    # GroupKFold Residual Learning Benchmark (GBM on top of Linear Volume Blending)
-    X = np.array(bench_df["features"].tolist())
-    y_ron_res = (bench_df["ron_meas"] - bench_df["ron_lin_vol"]).values
-    y_mon_res = (bench_df["mon_meas"] - bench_df["mon_lin_vol"]).values
-    groups = bench_df["system_id"].values
-
-    gkf = GroupKFold(n_splits=5)
-    ron_pred_gbm = np.zeros(len(bench_df))
-    mon_pred_gbm = np.zeros(len(bench_df))
-
-    for train_idx, test_idx in gkf.split(X, y_ron_res, groups):
-        # RON Residual
-        gbm_ron = GradientBoostingRegressor(n_estimators=45, max_depth=3, learning_rate=0.08, random_state=42)
-        gbm_ron.fit(X[train_idx], y_ron_res[train_idx])
-        ron_pred_gbm[test_idx] = bench_df["ron_lin_vol"].values[test_idx] + gbm_ron.predict(X[test_idx])
-
-        # MON Residual
-        gbm_mon = GradientBoostingRegressor(n_estimators=45, max_depth=3, learning_rate=0.08, random_state=42)
-        gbm_mon.fit(X[train_idx], y_mon_res[train_idx])
-        mon_pred_gbm[test_idx] = bench_df["mon_lin_vol"].values[test_idx] + gbm_mon.predict(X[test_idx])
-
-    bench_df["ron_pred_gbm"] = ron_pred_gbm
-    bench_df["mon_pred_gbm"] = mon_pred_gbm
-    bench_df["ron_err_gbm"] = bench_df["ron_pred_gbm"] - bench_df["ron_meas"]
-    bench_df["mon_err_gbm"] = bench_df["mon_pred_gbm"] - bench_df["mon_meas"]
-
-    preds_csv = OUT_DIR / "octane_blending_predictions.csv"
-    bench_df.drop(columns=["features"]).to_csv(preds_csv, index=False)
-    print(f"Saved detailed octane predictions to {preds_csv}")
-
-    def calc_metrics(err_series):
-        mae = float(np.mean(np.abs(err_series)))
-        rmse = float(np.sqrt(np.mean(err_series ** 2)))
-        bias = float(np.mean(err_series))
-        max_e = float(np.max(np.abs(err_series)))
-        return {"mae": round(mae, 2), "rmse": round(rmse, 2), "bias": round(bias, 2), "max_err": round(max_e, 2)}
-
-    summary_rows = [
-        {"target": "RON", "model": "Linear Volume (ASTM)", **calc_metrics(bench_df["ron_err_vol"])},
-        {"target": "RON", "model": "Linear Molar", **calc_metrics(bench_df["ron_err_mol"])},
-        {"target": "RON", "model": "Physics + GBM Residual (GroupKFold)", **calc_metrics(bench_df["ron_err_gbm"])},
-        {"target": "MON", "model": "Linear Volume (ASTM)", **calc_metrics(bench_df["mon_err_vol"])},
-        {"target": "MON", "model": "Linear Molar", **calc_metrics(bench_df["mon_err_mol"])},
-        {"target": "MON", "model": "Physics + GBM Residual (GroupKFold)", **calc_metrics(bench_df["mon_err_gbm"])},
-    ]
-
-    sum_df = pd.DataFrame(summary_rows)
-    sum_csv = OUT_DIR / "octane_blending_summary.csv"
-    sum_df.to_csv(sum_csv, index=False)
-    print("\n--- Octane Blending Benchmark Summary ---")
-    print(sum_df.to_string(index=False))
-
-    # Detailed breakdown by blend class
-    class_records = []
-    for (sys_id), g in bench_df.groupby("system_id"):
-        class_records.append({
-            "system": sys_id,
-            "n_obs": len(g),
-            "ron_mae_vol": round(np.mean(np.abs(g["ron_err_vol"])), 2),
-            "ron_mae_gbm": round(np.mean(np.abs(g["ron_err_gbm"])), 2),
-            "mon_mae_vol": round(np.mean(np.abs(g["mon_err_vol"])), 2),
-            "mon_mae_gbm": round(np.mean(np.abs(g["mon_err_gbm"])), 2),
-        })
-    class_df = pd.DataFrame(class_records)
-
-    report_md = f"""# Standalone Multi-Component Octane Blending Benchmark (KAUST Jameel 2018)
-
-> **Dataset Source**: Abdul Jameel et al. *Energy & Fuels* 2018 ([DOI: 10.1021/acs.energyfuels.8b00556](https://doi.org/10.1021/acs.energyfuels.8b00556))  
-> **Staged Data**: `data/interim/external_staging/kaust_jameel_table4_blends.csv` (123 multi-component blends, 100% exact volume fractions)  
-> **Validation Scheme**: Strict 5-Fold **GroupKFold by Blend System** (`system_id`), preventing leakage across concentration series.  
-> **Execution Mode**: STRICT STANDALONE EVALUATION (Zero alterations to production pipeline)
-
----
-
-## 1. Executive Summary & Benchmark Results
-
-Linear volume blending is the universal industrial baseline for Research Octane Number (RON) and Motor Octane Number (MON). However, autoignition kinetics exhibit substantial non-linear synergies when oxygenates (ethanol) and aromatics (toluene, 1,2,4-TMB) interact with paraffins.
-
-### Headline Benchmark Performance across all 123 Multi-Component Blends:
-
-| Target | Blending Model | MAE (ON) | RMSE (ON) | Bias (ON) | Max Error (ON) |
-|---|---|---|---|---|---|
-"""
-    for _, r in sum_df.iterrows():
-        report_md += f"| **{r['target']}** | {r['model']} | **{r['mae']}** | {r['rmse']} | {r['bias']:+.2f} | {r['max_err']} |\n"
-
-    report_md += f"""
----
-
-## 2. Key Physical & Chemical Findings
-
-1. **Failure of Linear Blending on Oxygenated / Multi-Component Fuels**:
-   - Linear volume blending underpredicts RON with a systematic negative bias of **{sum_df.loc[0, 'bias']:+.2f} ON** and an MAE of **{sum_df.loc[0, 'mae']} ON** (maximum underprediction up to **{sum_df.loc[0, 'max_err']} ON**).
-   - Linear molar blending is worse (RON MAE **{sum_df.loc[1, 'mae']} ON**, MON MAE **{sum_df.loc[4, 'mae']} ON**), showing that physical engine knock response scales closer to liquid volume fractions in the intake charge than vapor stoichiometry.
-2. **Superiority of Physics Baseline + Residual Learning**:
-   - The Gradient Boosted Tree residual model evaluated under **strict out-of-system GroupKFold validation** slashes the RON MAE from **{sum_df.loc[0, 'mae']} ON** down to **{sum_df.loc[2, 'mae']} ON** (a **{round((1.0 - sum_df.loc[2, 'mae'] / sum_df.loc[0, 'mae']) * 100, 1)}% error reduction**), and cuts MON MAE from **{sum_df.loc[3, 'mae']} ON** down to **{sum_df.loc[5, 'mae']} ON**.
-   - Max error is reduced by over half (from **{sum_df.loc[0, 'max_err']} ON** down to **{sum_df.loc[2, 'max_err']} ON**).
-
----
-
-## 3. System-by-System Error Breakdown
-
-| Blend System | Blend Count | RON Linear MAE | RON GBM MAE | MON Linear MAE | MON GBM MAE |
-|---|---|---|---|---|---|
-"""
-    for _, r in class_df.iterrows():
-        report_md += f"| `{r['system']}` | {r['n_obs']} | {r['ron_mae_vol']} | **{r['ron_mae_gbm']}** | {r['mon_mae_vol']} | **{r['mon_mae_gbm']}** |\n"
-
-    report_md += f"""
----
-
-## 4. Comparison with Literature
-
-| Benchmark Source | Model Type | Validation | RON MAE | MON MAE |
-|---|---|---|---|---|
-| **Linear Volume Blending (This Work)** | Physics Baseline (ASTM) | Zero-shot | {sum_df.loc[0, 'mae']} | {sum_df.loc[3, 'mae']} |
-| **Physics + Residual GBM (This Work)** | Residual Learning | 5-Fold GroupKFold | **{sum_df.loc[2, 'mae']}** | **{sum_df.loc[5, 'mae']}** |
-| Abdul Jameel et al. (KAUST 2018) | NMR Spectroscopy + ANN | 5-Fold Cross-Val | ~1.3 | ~1.4 |
-| Zhang et al. (AI4fuel 2026) | Directed Message Passing GNN | Pure Molecules Only | 1.8 | 2.1 |
-"""
-
-    report_path = OUT_DIR / "octane_blending_report.md"
-    with open(report_path, "w", encoding="utf-8") as f:
-        f.write(report_md)
-    print(f"Report written to {report_path}")
 
 if __name__ == "__main__":
     main()

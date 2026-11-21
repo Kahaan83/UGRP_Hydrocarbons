@@ -1,0 +1,7 @@
+{
+ "max_abs_diff":0.0000030859,
+ "n_headline":50,
+ "mae":8.4245950812,
+ "bias":5.8778236047,
+ "passed":true
+}

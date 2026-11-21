@@ -1,3 +1,6 @@
 *.csv text eol=lf
 *.json text eol=lf
 models/** -text
+
+# BASE bytes are pinned by SHA256SUMS_v5_base.txt (CSV/JSON CRLF, md/txt LF); no EOL conversion
+results/v5/BASE/** -text

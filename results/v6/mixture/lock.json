@@ -1,0 +1,54 @@
+{
+ "row_max": 0.25,
+ "rule": "md5('v6c:'+group) ascending; lock a group while locked rows <= row_max of the head's rows; per head",
+ "heads": {
+  "boehm": {
+   "n_groups": 23,
+   "locked": [
+    "75abfffb316e",
+    "9a6c3acca088",
+    "ac65ce4fa9aa",
+    "daa973b5da84",
+    "fe6b9b01a1f9",
+    "e89be1395c78",
+    "6cdbfdaf3c3f",
+    "f1d5f2f85452",
+    "4d36ae4f672b",
+    "f7cf4e70fc02",
+    "c20fb14d6072"
+   ]
+  },
+  "kaust": {
+   "n_groups": 8,
+   "locked": [
+    "diisobutylene+i-octane+n-heptane",
+    "cyclopentane",
+    "diisobutylene+i-octane+n-heptane+toluene"
+   ]
+  },
+  "leenhouts": {
+   "n_groups": 52,
+   "locked": [
+    "44234693cc2f",
+    "6e0c62613088",
+    "af8347757042",
+    "101588757878",
+    "dd811a982508",
+    "e4b924c1d527",
+    "27267c9dd253",
+    "d8bb0660cc83",
+    "668f025c8e46",
+    "1c6cbc86181e",
+    "759c993ae37b",
+    "f0b5caa7d346",
+    "92e50d77c012",
+    "940f5ed0afcf",
+    "0d7aa32d7963",
+    "56f8ac1bb966",
+    "36e367ee5b95",
+    "a4622ea57efe"
+   ]
+  }
+ },
+ "rows_csv_sha256": "226b2acf1120e26d3fbfed025b6eec69428ce4cb9bf7e42cb8df8934276a0455"
+}

@@ -13,18 +13,18 @@ NOTE: Staged output ONLY. DOES NOT alter active production datasets or pipeline.
 
 from pathlib import Path
 import json
-import hashlib
 import pandas as pd
 from rdkit import Chem
-from rdkit.Chem.Descriptors import ExactMolWt
+from rdkit.Chem.Descriptors import MolWt as ExactMolWt  # average MolWt
+
+from _common import system_id
 
 RAW_CSV = Path("data/interim/leenhouts_dcn/datasets/fuel_ignition_numbers/processed_data/mon_mix_exp.csv")
 STAGING_DIR = Path("data/interim/external_staging")
 
 
 def compute_system_id(inchikeys: list[str]) -> str:
-    sorted_keys = sorted(inchikeys)
-    return hashlib.md5("".join(sorted_keys).encode("utf-8")).hexdigest()[:12]
+    return system_id(inchikeys)  # production convention
 
 
 def main():

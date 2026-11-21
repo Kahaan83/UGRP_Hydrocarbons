@@ -1,0 +1,9 @@
+model,subset,n_nonfinite,n,mae,bias,rmse,frac_under,mae_const,diff_vs_const,ci_lo,ci_hi,margin90,verdict
+e2_tiles_gnn,all,0,52,7.8787,7.8787,9.4269,0.0000,6.6354,-1.2433,-2.9784,0.8536,-4.3090,no_skill_shown
+e2_tiles_gnn,no_fuel64,0,51,7.3121,7.3121,8.0057,0.0000,6.0074,-1.3047,-3.0462,0.8706,-4.2850,no_skill_shown
+e3_tiles_fusion_tm,all,0,52,8.0860,8.0860,10.2735,0.0000,6.6354,-1.4506,-3.2097,0.6604,-4.3090,no_skill_shown
+e3_tiles_fusion_tm,no_fuel64,0,51,7.3248,7.3248,8.0293,0.0000,6.0074,-1.3174,-3.0586,0.8525,-4.2850,no_skill_shown
+b_unifac_svl,all,0,52,8.8296,5.5133,14.3470,0.0192,6.6354,-2.1943,-4.7526,0.2835,-4.0979,no_skill_shown
+b_unifac_svl,no_fuel64,0,51,7.3121,7.3121,8.0057,0.0000,6.0074,-1.3047,-3.0462,0.8706,-4.2850,no_skill_shown
+e_isomer_tiles_v6,all,0,52,8.8296,5.5133,14.3470,0.0192,6.6354,-2.1943,-4.7526,0.2835,-4.0979,no_skill_shown
+e_isomer_tiles_v6,no_fuel64,0,51,7.3121,7.3121,8.0057,0.0000,6.0074,-1.3047,-3.0462,0.8706,-4.2850,no_skill_shown

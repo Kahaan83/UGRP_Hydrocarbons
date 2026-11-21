@@ -1,0 +1,25 @@
+{
+ "n": 56,
+ "groups": 17,
+ "config": {
+  "hidden": 300,
+  "depth": 3,
+  "dropout": 0.2
+ },
+ "mae_gnn": 59.61638481383993,
+ "mae_const": 366.02622621026904,
+ "mae_ridge": 133.58111466097242,
+ "gain_vs_const_ci90": [
+  223.85844622540463,
+  435.23900681472605
+ ],
+ "gain_vs_ridge_ci90": [
+  32.63990412543209,
+  153.95906336430028
+ ],
+ "over_pred_mean": 49.15516806521782,
+ "gate_pass": true,
+ "margin90_abs_dev_oof": 190.12928750991642,
+ "holdout_coverage": 0.9107142857142857,
+ "n_margin": 168
+}
