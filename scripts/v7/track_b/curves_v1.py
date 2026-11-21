@@ -10,12 +10,15 @@ from fuelblend.v7 import runner
 R = Path(__file__).resolve().parents[3]
 OUT = R / "results/v7/track_b/curves_v1"
 QUICK = "--quick" in sys.argv
+LONG_ONLY = "--long-only" in sys.argv   # post-hoc rerun that also saves OOF predictions (Task 5 first run did not)
 if QUICK: OUT = OUT.parent / "curves_v1_quick"
+if LONG_ONLY: OUT = OUT.parent / "curves_v1_long"
 OUT.mkdir(parents=True, exist_ok=True)
 CFGS = [dict(hidden=200, depth=4, dropout=0.1), dict(hidden=300, depth=3, dropout=0.2)]
 REG = {"v1cap": dict(epochs=150, patience=25), "long": dict(epochs=1000, patience=100)}
 NM = 2 if QUICK else 5
-if QUICK: REG = {"v1cap": dict(epochs=6, patience=3), "long": dict(epochs=12, patience=6)}
+if LONG_ONLY: REG = {"long": REG["long"]}
+if QUICK and not LONG_ONLY: REG = {"v1cap": dict(epochs=6, patience=3), "long": dict(epochs=12, patience=6)}
 
 comp, folds, tasks = runner.load_track_b_pool()
 Yraw = comp[tasks].values.astype(float); Mask = ~np.isnan(Yraw)
@@ -58,6 +61,11 @@ for j, t in enumerate(tasks):
     m = Mask[:, j]; y = Yraw[m, j]; r = dict(target=t, n=int(m.sum()), mae_const=np.abs(const[m, j] - y).mean())
     for rn in REG: r[f"mae_{rn}"] = np.abs(oof[rn][m, j] - y).mean()
     rows.append(r)
+oo = comp[["inchikey", "smiles", "grp"]].copy()
+for j, t in enumerate(tasks):
+    oo[t + "_obs"] = Yraw[:, j]
+    for rn in REG: oo[f"{t}_{rn}"] = oof[rn][:, j]
+oo.to_csv(OUT / "oof.csv", index=False)
 res = pd.DataFrame(rows); res.to_csv(OUT / "cv_summary.csv", index=False)
 be = pd.DataFrame(best_rows); be.to_csv(OUT / "best_epoch.csv", index=False)
 cv = pd.read_csv(OUT / "curves.csv")
