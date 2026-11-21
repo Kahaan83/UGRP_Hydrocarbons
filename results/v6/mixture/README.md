@@ -84,3 +84,10 @@ which has any row in dev or locked (checked), so they are system-disjoint from e
   n_comp >= 3 no worse. Pass means replicated; anything else means the first pass is not replicated and is reported as such.
 - Expected: low-coverage rows make every baseline worse (MON of the filled part is uncertain, Track B MON MAE 8.2), so absolute MAEs
   will be larger. With 15 systems the CI will be wide; a tie is plausible.
+
+### Holdout replication result (scored once, 2026-11-21; `holdout51_readings.json`, `holdout51_pred.csv`)
+51 rows, 15 systems, median pure-MON coverage 0.66. MAE: linear molar 8.23, corrected-pure 5.26, descriptor GBM 4.97, MolPool 5.28.
+Gain vs desc GBM (comparator minus MolPool), 90 % system bootstrap: [-1.24, 0.58]. Rows with n_comp >= 3 (49): GBM 4.85, MolPool 5.22.
+**Gate fails: the Leenhouts MON pass is not replicated.** MolPool beats linear molar clearly (gain [1.31, 4.66]) but ties corrected-pure
+([-0.66, 0.56]) and the GBM. Reading: the earlier pass is best treated as chance or as specific to the high-coverage rows; the model does
+not beat a descriptor GBM on new systems. Status for Track C: no mixture head has demonstrated skill over the strongest comparator.

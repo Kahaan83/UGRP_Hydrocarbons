@@ -27,3 +27,6 @@ Frozen D-MPNN encoder + MolPool + pair term, residual over physics, gates declar
 over GBM or linear molar), Boehm viscosity (dev and locked loss, CI < 0) and Boehm density (dev loss; head reverted to no correction).
 Passed: Leenhouts MON only (dev gain CI [0.04, 1.33], locked [0.07, 0.98] MON units vs descriptor GBM), single head of five, no
 multiplicity correction. The "corrected-pure" baseline was worse than linear molar everywhere.
+Track C replication (2026-11-21): the single passing head (Leenhouts MON) was re-tested on 51 unscored, system-disjoint rows (15 systems,
+pure MON of missing components filled by the Track B head). MolPool 5.28 vs descriptor GBM 4.97 MAE, gain CI [-1.24, 0.58]: not replicated.
+Post-hoc v2 tuning (wider head grid, shrinkage) did not help either (dev only). Track C status: no skill shown over the strongest comparator.
