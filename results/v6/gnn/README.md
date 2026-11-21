@@ -31,3 +31,11 @@ Readings
 - dHfus has no existing comparator and n = 81; the CI is wide.
 - Not done: locked holdout, conformal margins, feeding missing Tm/dHfus into Track A tiles (Tm head does not beat the existing estimator;
   Track A result "no skill shown" is unchanged).
+
+## v2 (post-hoc, 2026-11-21): wider config grid, `results/v6/gnn_v2/`
+Same pool, folds and protocol; 2 extra configs (lower lr 5e-4 / wd 1e-4 / patience 40; depth 4 with lr 1e-3), chosen per outer fold on the inner
+validation split. Run on CPU (`train_eval.py --v2`); a GPU path exists (`FUELBLEND_DEVICE=cuda`, CUDA torch in a separate target dir) but was not used for the reported numbers.
+MAE v1 -> v2: cetane 9.04 -> 8.98, dcn 5.56 -> 5.53, density 21.9 -> 20.9, dHfus 12.8 -> 12.6, flash 19.1 -> 18.1, log10 visc 0.225 -> 0.212,
+MON 8.24 -> 8.12, RON 8.99 -> 8.77, Tm 30.4 -> 29.6, YSI 69.4 -> 63.9 (all 0.5 to 8 % lower). Tm still does not beat the v5 estimator (28.36 K).
+These are exploratory, not a new declared result: the grid was extended after seeing v1, the CV has no locked holdout, and per-target
+differences of 1 to 5 % are within the likely noise of a 5-fold split. v1 stays the declared Track B result.

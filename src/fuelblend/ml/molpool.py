@@ -30,7 +30,7 @@ def embed(models, smiles) -> np.ndarray:
     """Ensemble-mean frozen embedding, one row per SMILES."""
     b = D.collate([D.featurize(s) for s in smiles])
     with torch.no_grad():
-        return torch.stack([m.encode(b) for m in models]).mean(0).numpy()
+        return torch.stack([m.encode(b) for m in models]).mean(0).cpu().numpy()
 
 
 def pad_sets(emb_rows, x_rows):

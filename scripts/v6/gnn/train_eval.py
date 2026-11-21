@@ -13,9 +13,17 @@ from fuelblend.ml import ysi_model as Y
 from fuelblend.thermo import fusion_estimate as F
 
 R = Path(__file__).resolve().parents[3]
-OUT = R / "results/v6/gnn"
+V2 = "--v2" in sys.argv   # post-hoc optimisation variant (wider grid, longer patience); writes to results/v6/gnn_v2
+OUT = R / ("results/v6/gnn_v2" if V2 else "results/v6/gnn")
+POOL = R / "results/v6/gnn"
+import os
+if V2 and os.environ.get("FUELBLEND_DEVICE", "cpu") != "cpu": OUT = R / "results/v6/gnn_v2_gpu"   # keep the CPU and GPU runs apart
 QUICK = "--quick" in sys.argv
 CFGS = [dict(hidden=200, depth=4, dropout=0.1), dict(hidden=300, depth=3, dropout=0.2)]
+if V2:
+    CFGS += [dict(hidden=300, depth=3, dropout=0.2, lr=5e-4, wd=1e-4, patience=40),
+             dict(hidden=300, depth=4, dropout=0.2, lr=1e-3, wd=1e-4, patience=40)]
+OUT.mkdir(parents=True, exist_ok=True)
 NM, EP = (2, 8) if QUICK else (5, 150)
 
 def group(s):
@@ -24,7 +32,7 @@ def group(s):
     sc = MurckoScaffold.MakeScaffoldGeneric(MurckoScaffold.GetScaffoldForMol(m))
     return Chem.MolToSmiles(sc)
 
-pool = pd.read_csv(OUT / "pool.csv")
+pool = pd.read_csv(POOL / "pool.csv")
 comp = pool.drop_duplicates("inchikey")[["inchikey", "smiles", "is_hc"]].reset_index(drop=True)
 comp["grp"] = comp.smiles.map(group)
 tasks = sorted(pool.target.unique())
