@@ -1,0 +1,17 @@
+{
+ "boehm_density": [
+  "None"
+ ],
+ "boehm_ln_visc": [
+  "{'d': 24, 'wd': 0.01}"
+ ],
+ "kaust_mon": [
+  "{'d': 24, 'wd': 0.01}"
+ ],
+ "kaust_ron": [
+  "{'d': 24, 'wd': 0.01}"
+ ],
+ "leenhouts_mon": [
+  "{'d': 24, 'wd': 0.01}"
+ ]
+}

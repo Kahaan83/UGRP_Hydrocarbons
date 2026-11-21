@@ -48,3 +48,24 @@ correction. Conformal margins are fitted only for a head that passes.
 A tie or a loss. Dev has 5 KAUST families over 8 components, 34 Leenhouts systems and 12 Boehm systems; the GBM residual already
 beats linear molar on KAUST, and v5 WS4 found no neural mixture encoder passing against LightGBM pair residuals. A negative result is
 a valid result and goes to `docs/v6_negative_results.md`.
+
+## Results (scored 2026-11-21: dev OOF first, then locked once; `summary.csv`, `readings.json`)
+MAE of the gate comparator (best on dev OOF) vs MolPool; gain = comparator minus MolPool, 90 % paired group-bootstrap CI.
+
+| head | gate comparator | dev MAE comp / MolPool | dev gain CI | locked MAE comp / MolPool | locked gain CI | pass |
+|---|---|---|---|---|---|---|
+| kaust_ron | desc GBM | 1.49 / 2.60 | [-2.95, -0.55] | 3.80 / 3.85 | [-0.23, 0.08] | no |
+| kaust_mon | linear molar | 2.91 / 3.35 | [-2.78, 0.01] | 3.67 / 3.55 | [-0.46, 0.46] | no |
+| leenhouts_mon | desc GBM | 3.08 / 2.29 | [0.04, 1.33] | 2.42 / 1.97 | [0.07, 0.98] | **yes** |
+| boehm_ln_visc | desc GBM | 0.055 / 0.078 | [-0.043, -0.004] | 0.026 / 0.036 | [-0.017, -0.001] | no |
+| boehm_density | physics | 2.87 / 3.87 | [-2.01, -0.09] | 2.42 / 2.42 (head chose no correction) | [0, 0] | no |
+
+- Leenhouts MON (n-comp >= 3 rows): dev 2.74 -> 1.89, locked 1.97 -> 1.50, so the third gate holds. Linear molar there is 5.78 dev MAE and
+  corrected-pure 6.50, so MolPool beats both by a wide margin; the gate comparator is the descriptor GBM. Out-of-fold 90 % margins
+  (`leenhouts_mon_margin.json`): absolute 4.92 MON, one-sided over-prediction 3.43; locked coverage 93 % and 97 %.
+- Caveats: one head of five passes with no multiplicity correction (expected false pass rate across 5 heads is not negligible); 34 dev
+  and 18 locked systems; rows with pure-MON coverage < 0.9 were dropped; Leenhouts dev rows within a system are correlated (bootstrap
+  resamples systems). No lab measurement exists, so this is a model-level result only.
+- KAUST: no skill over the in-fold GBM or linear molar (8 components, 5 dev families). Boehm: MolPool is significantly worse on dev;
+  for density it fell back to no correction in most folds.
+- Corrected-pure (our definition) was worse than plain linear molar on every octane head.

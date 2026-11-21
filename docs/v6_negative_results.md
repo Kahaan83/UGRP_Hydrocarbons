@@ -21,3 +21,9 @@ holdout was scored. Numbers come from the CSVs named in the last column.
 ## Track B: pure-compound D-MPNN (2026-11-21)
 - Tm head (MAE 30.4 K) does not beat the v5 fusion_estimate (28.4 K) on the same scaffold-grouped folds; not adopted for Track A.
 - Tb and LHV heads not trained (no Tb source; LHV units unverified). Details: `results/v6/gnn/README.md`.
+
+## Track C mixture ML retry (2026-11-21, `results/v6/mixture/`)
+Frozen D-MPNN encoder + MolPool + pair term, residual over physics, gates declared before fitting. Failed: KAUST RON and MON (no gain
+over GBM or linear molar), Boehm viscosity (dev and locked loss, CI < 0) and Boehm density (dev loss; head reverted to no correction).
+Passed: Leenhouts MON only (dev gain CI [0.04, 1.33], locked [0.07, 0.98] MON units vs descriptor GBM), single head of five, no
+multiplicity correction. The "corrected-pure" baseline was worse than linear molar everywhere.
