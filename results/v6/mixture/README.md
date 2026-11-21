@@ -69,3 +69,18 @@ MAE of the gate comparator (best on dev OOF) vs MolPool; gain = comparator minus
 - KAUST: no skill over the in-fold GBM or linear molar (8 components, 5 dev families). Boehm: MolPool is significantly worse on dev;
   for density it fell back to no correction in most folds.
 - Corrected-pure (our definition) was worse than plain linear molar on every octane head.
+
+## Holdout replication: 51 unscored Leenhouts rows (declared 2026-11-21 BEFORE scoring; `scripts/v6/mixture/holdout51.py`)
+Purpose: independent test of the single head that passed (leenhouts_mon), since one pass in five heads has no multiplicity correction.
+The 51 rows dropped from `rows.csv` for pure-MON coverage < 0.9 were never fitted or scored. They come from 15 systems, none of
+which has any row in dev or locked (checked), so they are system-disjoint from every training row.
+- Pure MON for components absent from the pool is filled with the frozen Track B MON head (`encoder.pt`, ensemble mean, de-standardised);
+  measured pool values are used wherever they exist. Linear molar uses the filled values with no renormalisation. All comparators get the
+  same filled values. Mole fraction filled is reported per row (median coverage 0.66, min 0.31).
+- Training rows: all 241 scored Leenhouts rows (dev + locked). Procedure, configs, seeds, comparators identical to v1 (`run_cv.py`); no
+  retuning, no v2 settings. Corrected-pure is allowed to use the filled values of unseen components as its prior (`include_te`).
+- Gate comparator: desc GBM (the dev-chosen comparator, fixed now). All comparators are reported.
+- Gate: 90 % paired system bootstrap (2000 draws, 15 systems) gain (MAE desc GBM - MAE MolPool) lower bound > 0, and MAE on rows with
+  n_comp >= 3 no worse. Pass means replicated; anything else means the first pass is not replicated and is reported as such.
+- Expected: low-coverage rows make every baseline worse (MON of the filled part is uncertain, Track B MON MAE 8.2), so absolute MAEs
+  will be larger. With 15 systems the CI will be wide; a tie is plausible.

@@ -21,8 +21,13 @@ CONFIGS = [None, dict(d=8, wd=1e-2), dict(d=8, wd=1e-1), dict(d=24, wd=1e-2), di
 ap = argparse.ArgumentParser()
 ap.add_argument("--stage", required=True, choices=["dev", "locked", "summary"])
 ap.add_argument("--quick", action="store_true")
+ap.add_argument("--v2", action="store_true", help="post-hoc dev-only optimisation variant (locked groups were already scored once)")
 args = ap.parse_args()
-Q = "_quick" if args.quick else ""
+Q = "_quick" if args.quick else ("_v2" if args.v2 else "")
+if args.v2:
+    assert args.stage != "locked", "locked groups are spent; v2 is dev-only"
+    CONFIGS = [None] + [dict(d=d, wd=wd, epochs=ep, lr=lr) for d in (8, 24) for wd in (1e-2, 1e-1, 1.0) for ep, lr in ((60, 3e-3), (300, 1e-3))]
+SHRINKS = (0.5, 1.0) if args.v2 else (1.0,)
 EPOCHS, SEEDS, INNER_EP = (15, (0,), 15) if args.quick else (150, (0, 1, 2, 3, 4), 120)
 COMPARATORS = {"octane": ["lin_molar", "corrected_pure", "desc_gbm"], "boehm": ["physics", "t_bias", "desc_gbm"]}
 
@@ -64,9 +69,9 @@ class Head:
         self.g = self.df.group.to_numpy()
 
 
-def corrected_pure(h, tr, te, pure):
+def corrected_pure(h, tr, te, pure, include_te=False):
     """Linear molar with per-component effective values c = p + (X'X + lam I)^-1 X'(y - Xp); lam by inner GroupKFold(3)."""
-    comps = sorted({k for i in tr for k in h.ks[i] if k in pure})
+    comps = sorted({k for i in (list(tr) + list(te) if include_te else tr) for k in h.ks[i] if k in pure})
     pos = {k: j for j, k in enumerate(comps)}
     p = np.array([pure[k] for k in comps])
 
@@ -126,31 +131,37 @@ def candidate(h, tr, te, use_T, rec):
     scores = {}
     for ci, cfg in enumerate(CONFIGS):
         if cfg is None:
-            scores[ci] = float(np.abs(r).mean() / s)   # no correction: held-out error is |residual|
+            scores[(ci, 1.0)] = float(np.abs(r).mean() / s)   # no correction: held-out error is |residual|
             continue
         if ng < 3:
-            scores[ci] = 1e9
+            scores[(ci, 1.0)] = 1e9
             continue
-        e = []
+        kw = dict(cfg)
+        kw.setdefault("epochs", INNER_EP)
+        e = {sh: [] for sh in SHRINKS}
         for a, b in GroupKFold(min(3, ng)).split(tr, groups=h.g[tr]):
             Ha, Xa, Aa = sub(tr[a]); Hb, Xb, Ab = sub(tr[b])
-            pr = MP.fit_predict(Ha, Xa, (h.y[tr[a]] - h.base[tr[a]]) / s, Hb, Xb, Aa, Ab, epochs=INNER_EP, seeds=(0,), **cfg)
-            e.append(np.abs(pr - (h.y[tr[b]] - h.base[tr[b]]) / s))
-        scores[ci] = float(np.concatenate(e).mean())
-    best = min(scores, key=scores.get)
+            pr = MP.fit_predict(Ha, Xa, (h.y[tr[a]] - h.base[tr[a]]) / s, Hb, Xb, Aa, Ab, seeds=(0,), **kw)
+            for sh in SHRINKS:
+                e[sh].append(np.abs(sh * pr - (h.y[tr[b]] - h.base[tr[b]]) / s))
+        for sh in SHRINKS:
+            scores[(ci, sh)] = float(np.concatenate(e[sh]).mean())
+    best, bsh = min(scores, key=scores.get)
     rec.append(best)
     if CONFIGS[best] is None or ng < 3:
         return h.base[te].copy()
     Ha, Xa, Aa = sub(tr); Hb, Xb, Ab = sub(te)
-    pr = MP.fit_predict(Ha, Xa, r / s, Hb, Xb, Aa, Ab, epochs=EPOCHS, seeds=SEEDS, **CONFIGS[best])
-    return h.base[te] + pr * s
+    kw = dict(CONFIGS[best])
+    kw.setdefault("epochs", EPOCHS)
+    pr = MP.fit_predict(Ha, Xa, r / s, Hb, Xb, Aa, Ab, seeds=SEEDS, **kw)
+    return h.base[te] + bsh * pr * s
 
 
-def fit_all(h, tr, te, kind, pure, rec):
+def fit_all(h, tr, te, kind, pure, rec, include_te=False):
     out = {}
     if kind == "octane":
         out["lin_molar"] = h.base[te].copy()
-        out["corrected_pure"] = corrected_pure(h, tr, te, pure)
+        out["corrected_pure"] = corrected_pure(h, tr, te, pure, include_te)
         out["desc_gbm"] = gbm_residual(h, tr, te, False)
         out["molpool"] = candidate(h, tr, te, False, rec)
     else:
@@ -165,7 +176,7 @@ def fit_all(h, tr, te, kind, pure, rec):
 
 def run(stage):
     df = pd.read_csv(OUT / "rows.csv")
-    enc = MP.load_encoder(OUT / f"encoder{Q}.pt")
+    enc = MP.load_encoder(OUT / ("encoder_quick.pt" if args.quick else "encoder.pt"))
     rows, cfgs = [], {}
     t0 = time.time()
     for (head, prop), sub in df.groupby(["head", "prop"]):
@@ -212,17 +223,17 @@ def boot(d, groups, rng, B=2000):
 
 def summary():
     dev = pd.read_csv(OUT / f"dev_oof{Q}.csv")
-    lk = pd.read_csv(OUT / f"locked_pred{Q}.csv")
+    lk = None if args.v2 else pd.read_csv(OUT / "locked_pred.csv")
     rng = np.random.default_rng(0)
     rows, readings = [], {}
     for (head, prop), d in dev.groupby(["head", "prop"]):
         kind = "boehm" if head == "boehm" else "octane"
-        l = lk[(lk["head"] == head) & (lk["prop"] == prop)]
+        l = None if args.v2 else lk[(lk["head"] == head) & (lk["prop"] == prop)]
         mae = {k: float(np.abs(d[f"pred_{k}"] - d.y).mean()) for k in COMPARATORS[kind] + ["molpool"]}
         best = min(COMPARATORS[kind], key=lambda k: mae[k])
         r = dict(head=head, prop=prop, best_comparator=best)
         gate = []
-        for name, part in (("dev", d), ("locked", l)):
+        for name, part in ((("dev", d),) if args.v2 else (("dev", d), ("locked", l))):
             ec = np.abs(part[f"pred_{best}"] - part.y).to_numpy()
             em = np.abs(part["pred_molpool"] - part.y).to_numpy()
             lo, hi = boot(ec - em, part.group.to_numpy(), rng)
@@ -236,13 +247,14 @@ def summary():
             r[f"{name}_mae_molpool_multi"] = float(em[mc].mean()) if mc.any() else np.nan
             gate.append(lo > 0)
             gate.append(True if not mc.any() else bool(em[mc].mean() <= ec[mc].mean()))
-        r["gate_pass"] = bool(all(gate))
+        r["gate_pass"] = None if args.v2 else bool(all(gate))
         rows.append(r)
         readings[f"{head}_{prop}"] = r
     pd.DataFrame(rows).to_csv(OUT / f"summary{Q}.csv", index=False)
     json.dump(readings, open(OUT / f"readings{Q}.json", "w"), indent=1, default=float)
-    show = ["head", "prop", "best_comparator", "dev_n", "dev_mae_best", "dev_mae_molpool", "dev_gain_lo", "dev_gain_hi",
-            "locked_n", "locked_mae_best", "locked_mae_molpool", "locked_gain_lo", "locked_gain_hi", "gate_pass"]
+    show = ["head", "prop", "best_comparator", "dev_n", "dev_mae_best", "dev_mae_molpool", "dev_gain_lo", "dev_gain_hi"]
+    if not args.v2:
+        show += ["locked_n", "locked_mae_best", "locked_mae_molpool", "locked_gain_lo", "locked_gain_hi", "gate_pass"]
     print(pd.DataFrame(rows)[show].round(3).to_string())
 
 
