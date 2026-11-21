@@ -1,0 +1,61 @@
+{
+ "rule": [
+  "Declared before any v6 model is run.  Rules (also written to results/v6/freezing/holdout_lock.json):",
+  " * Start from the v5 T2 freezing entities (results/v5/BASE/delta_freeze_t2_unifac/rows.csv, 58 rows) and add AJFTD fuels",
+  "   20, 21, 22, 64, 154, 155 (32 is the same fuel as FuelLib posf10264 and is not added).",
+  " * CV/holdout group = v6 dup_group (data/real_fuels/v6/ajftd_fuel_groups.csv); one entity per group (v5 source priority).",
+  " * Holdout (locked) = v5 S4 locked fuels (role=='locked' in v5 rows) U fuels in the older splits/locked.json",
+  "   (real_fuel_ids_locked, which v5 headline did not honour) U AJFTD 20 (also in splits/locked.json).",
+  " * Target for new AJFTD fuels = median of uncensored readings (same rule as s5_freezing_nalkane.freezing_ajftd)."
+ ],
+ "n_total": 64,
+ "n_dev": 52,
+ "n_holdout": 12,
+ "holdout_entities": [
+  "AJFTD:86",
+  "AJFTD:93",
+  "AJFTD:95",
+  "AJFTD:97",
+  "AJFTD:98",
+  "AJFTD:20",
+  "AJFTD:156",
+  "AJFTD:161",
+  "AJFTD:175",
+  "AJFTD:195",
+  "AJFTD:239",
+  "AJFTD:325"
+ ],
+ "holdout_groups": [
+  "posf:11769",
+  "posf:12223",
+  "posf:12341",
+  "posf:12344",
+  "posf:12345",
+  "posf:3166",
+  "posf:4751",
+  "posf:4909",
+  "posf:5225",
+  "posf:5698",
+  "posf:6308",
+  "posf:8092"
+ ],
+ "dropped_double_count": [],
+ "new_fuels_in_dev": [
+  "AJFTD:64",
+  "AJFTD:154",
+  "AJFTD:21",
+  "AJFTD:22",
+  "AJFTD:155"
+ ],
+ "new_fuels_in_holdout": [
+  "AJFTD:20"
+ ],
+ "note_fuel_64": "freezing = -90 C (single uncensored reading); '<-61' readings are censored and dropped; reported with and without 64.",
+ "input_sha256": {
+  "v5_rows": "b6a82fbe8babebc77005e9dfb36c240c3a401f2efed658abac9c2f6ee55bb36b",
+  "groups": "82b38aa8bb3cd5386672768171f1330a34ea1acf398a172d3850b1e494148e14",
+  "long_v6": "8f5b3f74d82d0db4b8803f8ea465e9d78f80d8c86db82a63c9460ba54f50dae1",
+  "old_locked": "a7fe815c8b86e07f2ae567d0c345af12d4cbbc92f8c14cb0adba93115d966c20"
+ },
+ "dataset_sha256": "929082d21c4962312e4dd6a1b9432e00984e6605ee17f6d0fb3a2cbd0f36d4a8"
+}
