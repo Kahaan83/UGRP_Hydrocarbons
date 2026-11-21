@@ -1,0 +1,14 @@
+{
+  "task": "7_chemprop_parity",
+  "n_models": 5,
+  "epochs": 150,
+  "patience": 25,
+  "total_s": 1171.2349059581757,
+  "n_locked_ysi": 56,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "git_commit": "39ee67f613cfdefd38784b918c9ea4ac782f7dae",
+  "guard_drops": {}
+}
