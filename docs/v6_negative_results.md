@@ -35,3 +35,6 @@ Post-hoc v2 tuning (wider head grid, shrinkage) did not help either (dev only). 
 MolPool arm B beat the descriptor GBM on dev oxy (gain CI [0.16, 1.04]) but not on the locked oxy systems ([-0.47, 1.38]); primary gate
 failed. Hydrocarbon non-inferiority passed on 14 locked systems (upper bound 0.65) but failed on dev (3.29); not established. Le Chatelier
 is not evaluable on oxygenates (no constants). Status: no skill shown.
+
+Track A tile fill (2026-11-21, post-hoc, dev only): isomer tiles with missing Tm/dHfus filled by the Track B D-MPNN (e2) or fusion_estimate Tm (e3).
+31 tiles change; dev MAE 7.88 / 8.09 vs v5 8.83 vs constant 6.64. The gain is entirely fuel 64; on the other 51 fuels it is identical to v5 (7.31). No skill shown.

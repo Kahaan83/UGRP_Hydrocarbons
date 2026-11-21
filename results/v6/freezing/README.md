@@ -54,3 +54,20 @@ bootstrap CI (over fuels) of (MAE constant minus MAE model) above 0; holdout sco
 
 Verdict: status "no skill shown" is unchanged. The dev LOGO gain of (f) did not replicate on the locked holdout. See `docs/v6_negative_results.md`.
 Holdout was scored once (`holdout_scored.flag`, entry in `reports/LOCKED_ACCESS.log`).
+
+## Post-hoc step 5: tiles filled with Track B constants (exploratory, DEV ONLY; `scripts/v6/freezing/step5_tiles_gnn.py`, `tiles_gnn/`)
+Written after the holdout was scored; the holdout is not used and these variants are not part of the declared result. The registry has 1,042
+compounds, of which 172 constant slots (Tm and dHfus) were designated, 452 filled from measured pool values and 1,460 estimated. e2 uses the
+Track B D-MPNN for Tm and dHfus; e3 uses the v5 fusion_estimate for Tm and the D-MPNN for dHfus (D-MPNN dHfus MAE 12.8 kJ/mol, n 81; Tm MAE
+about 30 K). 31 representatives change (4 before). Dev (n 52, no fitting, so no LOGO needed):
+
+| model | dev MAE | bias | CI of gain vs constant | no fuel 64 MAE |
+|---|---|---|---|---|
+| a constant | 6.64 | 0.00 | trivial | |
+| b / e (v5 tiles) | 8.83 | +5.51 | [-4.75, 0.28] | 7.31 |
+| e2 tiles, D-MPNN fill | 7.88 | +7.88 | [-2.98, 0.85] | 7.31 |
+| e3 tiles, fusion Tm fill | 8.09 | +8.09 | [-3.21, 0.66] | 7.32 |
+
+Reading: the whole improvement (8.83 -> 7.88) is fuel 64, whose tile had no constants; without it e2 and e3 equal the v5 value (7.31), and every
+fuel is over-predicted (frac_under 0). Neither beats the constant. Status unchanged: no skill shown. Filling tiles with estimated constants
+does not help the freezing point on the other 51 dev fuels.

@@ -1,0 +1,18 @@
+{
+ "e2_tiles_gnn": {
+  "fills": {
+   "designated": 172,
+   "pool_measured": 452,
+   "estimated": 1460
+  },
+  "tiles_changed": 31
+ },
+ "e3_tiles_fusion_tm": {
+  "fills": {
+   "designated": 172,
+   "pool_measured": 452,
+   "estimated": 1460
+  },
+  "tiles_changed": 31
+ }
+}
