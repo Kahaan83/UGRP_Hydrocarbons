@@ -11,8 +11,22 @@ import torch
 import torch.nn as nn
 from rdkit import Chem
 
+def resolve_device(req: str | None = None) -> torch.device:
+    """Device from req or FUELBLEND_DEVICE (default cpu). A cuda request without CUDA raises; it never falls back."""
+    name = (req or os.environ.get("FUELBLEND_DEVICE", "cpu")).strip() or "cpu"
+    if name.startswith("cuda") and not torch.cuda.is_available():
+        raise RuntimeError(f"CUDA requested but torch {torch.__version__} has no CUDA")
+    return torch.device(name)
+
+
+def device_info() -> dict:
+    d = resolve_device()
+    gpu = torch.cuda.get_device_name(0) if d.type == "cuda" else ""
+    return {"device": str(d), "torch_version": torch.__version__, "cuda_version": torch.version.cuda or "", "gpu_name": gpu}
+
+
 # Device for training/inference tensors. Default cpu; set FUELBLEND_DEVICE=cuda for a GPU run (results differ at float level).
-DEVICE = torch.device(os.environ.get("FUELBLEND_DEVICE", "cpu"))
+DEVICE = resolve_device()
 
 ELEM = [6, 7, 8, 9, 15, 16, 17, 35, 53]
 HYB = [Chem.HybridizationType.SP, Chem.HybridizationType.SP2, Chem.HybridizationType.SP3]
@@ -94,8 +108,13 @@ class DMPNN(nn.Module):
 
 
 def fit_ensemble(feats, Y, M, val_feats, val_Y, val_M, n_models=5, epochs=150, patience=25, lr=1e-3, wd=1e-5, bs=32,
-                 hidden=200, depth=4, dropout=0.1, seed=0):
-    """Train n_models with different seeds; early-stop each on masked val MSE. Y,M are standardised/ masks (N,T)."""
+                 hidden=200, depth=4, dropout=0.1, seed=0, logger=None, on_epoch=None, scheduler="none", min_epochs=0):
+    """Train n_models with different seeds; early-stop each on masked val MSE. Y,M are standardised/ masks (N,T).
+
+    v7 hooks (defaults reproduce v6 exactly): logger (CurveLogger, one row per epoch with per-task masked val MAE as
+    val_<i>), on_epoch(epoch, val_loss) (may raise, e.g. TrialPruned), scheduler none|plateau|cosine, min_epochs (no early
+    stop before it). The best epoch of each model is stored as net.best_epoch_."""
+    import time
     models = []
     Yt, Mt = torch.tensor(Y, dtype=torch.float32, device=DEVICE), torch.tensor(M, dtype=torch.float32, device=DEVICE)
     vY, vM = torch.tensor(val_Y, dtype=torch.float32, device=DEVICE), torch.tensor(val_M, dtype=torch.float32, device=DEVICE)
@@ -106,25 +125,47 @@ def fit_ensemble(feats, Y, M, val_feats, val_Y, val_M, n_models=5, epochs=150, p
         rng = np.random.default_rng(seed * 1000 + k)
         net = DMPNN(Y.shape[1], hidden, depth, dropout).to(DEVICE)
         opt = torch.optim.AdamW(net.parameters(), lr=lr, weight_decay=wd)
-        best, best_sd, bad = 1e9, None, 0
+        if scheduler == "plateau":
+            sch = torch.optim.lr_scheduler.ReduceLROnPlateau(opt, factor=0.5, patience=max(1, patience // 3))
+        elif scheduler == "cosine":
+            sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, epochs))
+        elif scheduler == "none":
+            sch = None
+        else:
+            raise ValueError(f"scheduler {scheduler!r}")
+        lg = None if logger is None else logger.child(seed=k)
+        best, best_sd, bad, best_ep = 1e9, None, 0, 0
         for ep in range(epochs):
+            t0 = time.time()
             net.train()
             perm = rng.permutation(n)
+            tl, tn = 0.0, 0
             for i in range(0, n, bs):
                 idx = perm[i:i + bs]
                 if len(idx) < 2: continue
                 out = net(collate([feats[j] for j in idx]))
                 loss = (((out - Yt[idx]) ** 2) * Mt[idx]).sum() / Mt[idx].sum().clamp(min=1)
                 opt.zero_grad(); loss.backward(); opt.step()
+                if lg is not None:
+                    tl += float(loss.detach()); tn += 1
             net.eval()
             with torch.no_grad():
                 vo = net(vb)
                 vl = float((((vo - vY) ** 2) * vM).sum() / vM.sum().clamp(min=1))
-            if vl < best - 1e-5: best, bad, best_sd = vl, 0, {a: b.clone() for a, b in net.state_dict().items()}
+            if lg is not None:
+                with torch.no_grad():
+                    per = ((vo - vY).abs() * vM).sum(0) / vM.sum(0).clamp(min=1)
+                lg.log(ep + 1, train_loss=tl / max(tn, 1), val_loss=vl, lr=opt.param_groups[0]["lr"], sec=time.time() - t0,
+                       **{f"val_{j}": float(v) for j, v in enumerate(per.cpu().numpy())})
+            if on_epoch is not None:
+                on_epoch(ep + 1, vl)
+            if sch is not None:
+                sch.step(vl) if scheduler == "plateau" else sch.step()
+            if vl < best - 1e-5: best, bad, best_sd, best_ep = vl, 0, {a: b.clone() for a, b in net.state_dict().items()}, ep + 1
             else:
                 bad += 1
-                if bad >= patience: break
-        net.load_state_dict(best_sd); net.eval(); models.append(net)
+                if bad >= patience and ep + 1 >= min_epochs: break
+        net.load_state_dict(best_sd); net.eval(); net.best_epoch_ = best_ep; models.append(net)
     return models
 
 
