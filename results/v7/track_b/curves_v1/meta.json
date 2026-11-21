@@ -1,0 +1,81 @@
+{
+  "median_best_epoch": {
+    "long": 136.0,
+    "v1cap": 36.5
+  },
+  "sec_per_epoch_median": {
+    "long_cfg0": 0.2055671215057373,
+    "long_cfg1": 0.1683436632156372,
+    "v1cap_cfg0": 0.20059454441070557,
+    "v1cap_cfg1": 0.1686023473739624
+  },
+  "chosen": [
+    {
+      "regime": "v1cap",
+      "fold": 0,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 0,
+      "cfg": 0
+    },
+    {
+      "regime": "v1cap",
+      "fold": 1,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 1,
+      "cfg": 1
+    },
+    {
+      "regime": "v1cap",
+      "fold": 2,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 2,
+      "cfg": 1
+    },
+    {
+      "regime": "v1cap",
+      "fold": 3,
+      "cfg": 1
+    },
+    {
+      "regime": "long",
+      "fold": 3,
+      "cfg": 0
+    },
+    {
+      "regime": "v1cap",
+      "fold": 4,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 4,
+      "cfg": 0
+    }
+  ],
+  "n_models": 5,
+  "regimes": {
+    "v1cap": {
+      "epochs": 150,
+      "patience": 25
+    },
+    "long": {
+      "epochs": 1000,
+      "patience": 100
+    }
+  },
+  "n_locked_ysi": 56,
+  "total_s": 3236.140160560608,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU"
+}
