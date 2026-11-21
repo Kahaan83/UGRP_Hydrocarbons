@@ -23,3 +23,10 @@ conformal calibration.
 ## Expected outcome
 A positive gain over the constant is near certain. Versus the ridge a tie or win is plausible but 17 locked groups give a wide CI, and the
 GNN's CV gain could shrink on unseen scaffolds. A failure is logged in `docs/v6_negative_results.md`.
+
+## Result (scored once, 2026-11-21 on GPU; `readings.json`, `holdout_pred.csv`)
+n 56 compounds, 17 scaffold groups. MAE: GNN 59.6, ridge 133.6, constant 366.0 (YSI units). Gain over ridge 90 % CI [32.6, 154.0]; over
+constant [223.9, 435.2]. **Gate passes.** Chosen config hidden 300 / depth 3 / dropout 0.2. Mean one-sided over-prediction 49.2. Rough 90 %
+absolute margin 190.1 (from non-holdout CV errors) covers 91 % of the holdout. Caveats: one head, 17 groups, no lab data beyond the pool; the
+constant is a weak bar (the YSI values span orders of magnitude); the margin is not a clean conformal calibration (see above). Model-level
+result only; YSI is not exposed in `predict_fuel`.
