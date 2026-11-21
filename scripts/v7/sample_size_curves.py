@@ -59,14 +59,14 @@ if WHICH in ("gbm_trackb", "dmpnn_trackb"):
                     Ym = np.where(Mk[tr2], Yraw[tr2], np.nan)
                     mu = np.nan_to_num(np.nanmean(Ym, 0))
                     sd = np.nanstd(Ym, 0) + 1e-9
-                    sd = np.where(np.isnan(sd), 1, sd)
+                    sd = np.where(np.isnan(sd) | (Mk[tr2].sum(0) < 2) | (sd < 1e-6), 1.0, sd)   # tasks with < 2 labels: no scaling (avoids 1e9 blow-up)
                     Z = np.nan_to_num((Yraw - mu) / sd)
                     ms = D.fit_ensemble([feats[i] for i in tr2], Z[tr2], Mk[tr2], [feats[i] for i in va], Z[va], Mk[va], n_models=NM,
                                         epochs=EP, patience=PAT, seed=k * 10 + rep, hidden=200, depth=4, dropout=0.1)
                     p = D.predict(ms, [feats[i] for i in te])[0] * sd + mu
                     for j, t in enumerate(tasks):
                         mm = Mk[te, j]
-                        if mm.sum() == 0 or Mk[tr2, j].sum() < 1:
+                        if mm.sum() == 0 or Mk[tr2, j].sum() < 2:
                             continue
                         rows.append(dict(frac=f, repeat=rep, fold=k, target=t, n_train=int(Mk[tr2, j].sum()),
                                          n_train_groups=len(np.unique(g[tr2])), mae=float(np.abs(p[mm, j] - Yraw[te, j][mm]).mean())))
