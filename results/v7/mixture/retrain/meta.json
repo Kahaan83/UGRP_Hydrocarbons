@@ -1,0 +1,12 @@
+{
+  "task": "11_mixture_molpool",
+  "n_trials": 60,
+  "timeout_s": 1800,
+  "total_s": 8034.266865491867,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "git_commit": "ed688bdd7011296fcf7268929a354a646c7d2a69",
+  "guard_drops": {}
+}
