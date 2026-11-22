@@ -208,8 +208,13 @@ def system_macro_weights(systems, props=None) -> np.ndarray:
 
 
 def train_ensemble(make_model, data: SetBatch, y, w, seeds=(0, 1, 2, 3, 4), epochs=60, batch_size=512, lr=2e-3, wd=1e-4,
-                   device="cpu", clip=1.0, log=None):
-    """Weighted-MSE training (per-batch sum(w e^2)/sum(w)), AdamW + cosine schedule, one model per seed. y is target-scaled."""
+                   device="cpu", clip=1.0, log=None, curve=None, on_epoch=None, val=None, patience=None):
+    """Weighted-MSE training (per-batch sum(w e^2)/sum(w)), AdamW + cosine schedule, one model per seed. y is target-scaled.
+
+    v7 hooks (defaults reproduce v6 exactly): curve (CurveLogger, one row per epoch), on_epoch(epoch, val_loss or train
+    loss), val = (SetBatch, y, w) for a weighted val loss per epoch; with patience set, training stops early on val loss
+    and the best state is restored."""
+    import time
     y = torch.as_tensor(np.asarray(y, np.float32)).to(device)
     w = torch.as_tensor(np.asarray(w, np.float32)).to(device)
     data = data.to(device)
@@ -225,7 +230,11 @@ def train_ensemble(make_model, data: SetBatch, y, w, seeds=(0, 1, 2, 3, 4), epoc
         steps = epochs * max(1, math.ceil(n / batch_size))
         sch = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=steps)
         m.train()
+        lg = None if curve is None else curve.child(seed=s)
+        best, best_sd, bad = float("inf"), None, 0
         for ep in range(epochs):
+            t0 = time.time()
+            m.train()
             perm = torch.randperm(n, generator=g).to(device)
             tot = 0.0
             for k in range(0, n, batch_size):
@@ -242,6 +251,29 @@ def train_ensemble(make_model, data: SetBatch, y, w, seeds=(0, 1, 2, 3, 4), epoc
                 tot += float(loss.detach()) * len(idx)
             if log is not None and (ep + 1) % max(1, epochs // 4) == 0:
                 log(f"  seed {s} epoch {ep + 1}/{epochs} loss {tot / n:.4g}")
+            vl = None
+            if val is not None:
+                m.eval()
+                with torch.no_grad():
+                    vb, vy, vw = val
+                    ve = m(vb.to(device)) - torch.as_tensor(np.asarray(vy, np.float32)).to(device)
+                    vww = torch.as_tensor(np.asarray(vw, np.float32)).to(device)
+                    vl = float((vww * ve ** 2).sum() / vww.sum().clamp(min=1e-12))
+                m.train()
+            if lg is not None:
+                lg.log(ep + 1, train_loss=tot / n, **({} if vl is None else {"val_loss": vl}),
+                       lr=opt.param_groups[0]["lr"], sec=time.time() - t0)
+            if on_epoch is not None:
+                on_epoch(ep + 1, vl if vl is not None else tot / n)
+            if vl is not None and patience is not None:
+                if vl < best - 1e-9:
+                    best, bad, best_sd = vl, 0, {a: b.clone() for a, b in m.state_dict().items()}
+                else:
+                    bad += 1
+                    if bad >= patience:
+                        break
+        if best_sd is not None:
+            m.load_state_dict(best_sd)
         m.eval()
         models.append(m)
     return models

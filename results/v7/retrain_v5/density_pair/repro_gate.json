@@ -1,0 +1,8 @@
+{
+  "model": "density_pair",
+  "repro_mae": 0.9577868304818979,
+  "base_mae": 0.9577868304818979,
+  "rel_diff": 0.0,
+  "passed": true,
+  "total_s": 3538.500215291977
+}

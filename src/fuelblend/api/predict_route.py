@@ -333,7 +333,7 @@ def _finish(res: dict, yaml_prop: str, iks: list, T_K: float, fuel_type, kind: s
 
 
 def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = None, mole_fractions=None,
-                 composition_kind: str = "known") -> dict:
+                 composition_kind: str = "known", exploratory: bool = True) -> dict:
     """Viscosity (kinematic and dynamic), density and flash point of a hydrocarbon blend on the BASE scoring route.
 
     composition: {id: weight} or [(id, weight), ...]; id = InChIKey or SMILES; weights are mass fractions (``mole_fractions``,
@@ -439,6 +439,9 @@ def predict_fuel(composition, T_K: float = 298.15, fuel_type: Optional[str] = No
     _add_task3_props(out, comps, ctx, fuel_type, T_K, composition_kind)
     _attach_indicative(out, fuel_type, T_K)
     _add_distillation(out, comps, ctx, P, pf)
+    if exploratory:
+        from fuelblend.api import blend_from_pure
+        out.update(blend_from_pure.exploratory_props(comps, ctx, composition_kind))
     return out
 
 

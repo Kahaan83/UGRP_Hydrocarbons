@@ -1,0 +1,11 @@
+{
+  "model": "freezing_step3",
+  "repro_mae": 3.3147092078478124,
+  "base_mae": 3.3147,
+  "max_abs_row_diff": 4.943848550453822e-05,
+  "tolerance_row": 0.0001,
+  "tolerance_mae": 5e-05,
+  "rel_diff": 2.7778827080038596e-06,
+  "passed": true,
+  "total_s": 9373.80964422226
+}

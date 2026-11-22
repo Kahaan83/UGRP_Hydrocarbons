@@ -1,0 +1,2 @@
+model,metric,n_groups,mae_v7,mae_refit_original,mae_base_file,mae_physics_baseline,gain_vs_original,gain_lo,gain_hi
+viscosity_pair,"dev OOF macro MAE (ln, warm dev rows)",264,0.06037482652324935,0.05989025404412356,0.05989025404412356,0.08238412165803917,-0.0004845724791257902,-0.0021337998143295084,0.0012056652970563058

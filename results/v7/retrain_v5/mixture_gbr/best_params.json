@@ -1,0 +1,37 @@
+{
+  "boehm_density": [
+    "{\"colsample\": 0.7499270970949183, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.010828380004610488, \"learning_rate\": 0.047020213921809, \"min_child_samples\": 20, \"n_estimators\": 5000, \"num_leaves\": 24, \"subsample\": 0.7013863223765626}",
+    "{\"colsample\": 0.5518557311983542, \"early_stopping_rounds\": 100, \"lambda_l2\": 4.241779873980763, \"learning_rate\": 0.12511755724668927, \"min_child_samples\": 9, \"n_estimators\": 5000, \"num_leaves\": 8, \"subsample\": 0.8863320814637101}",
+    "{\"colsample\": 0.6237597116247775, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.007593312941944951, \"learning_rate\": 0.050252483668635654, \"min_child_samples\": 30, \"n_estimators\": 5000, \"num_leaves\": 26, \"subsample\": 0.8764096752218273}",
+    "{\"colsample\": 0.6347116231092933, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.15142512910034409, \"learning_rate\": 0.13599415290111125, \"min_child_samples\": 8, \"n_estimators\": 5000, \"num_leaves\": 9, \"subsample\": 0.6748956446033221}",
+    "{\"colsample\": 0.9099967142194155, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.2599755480262461, \"learning_rate\": 0.1763133380230882, \"min_child_samples\": 11, \"n_estimators\": 5000, \"num_leaves\": 20, \"subsample\": 0.7781037868631618}"
+  ],
+  "boehm_ln_visc": [
+    "{\"colsample\": 0.679753950286893, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.05599223654063348, \"learning_rate\": 0.1689836001876967, \"min_child_samples\": 39, \"n_estimators\": 5000, \"num_leaves\": 20, \"subsample\": 0.8409101495517417}",
+    "{\"colsample\": 0.7546541934947928, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.8376722010100709, \"learning_rate\": 0.1584113721658831, \"min_child_samples\": 31, \"n_estimators\": 5000, \"num_leaves\": 23, \"subsample\": 0.6521821328864784}",
+    "{\"colsample\": 0.912438452048821, \"early_stopping_rounds\": 100, \"lambda_l2\": 3.086677015234336, \"learning_rate\": 0.0678403496766982, \"min_child_samples\": 24, \"n_estimators\": 5000, \"num_leaves\": 25, \"subsample\": 0.9291216214729526}",
+    "{\"colsample\": 0.6334234937689646, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.04323878676040946, \"learning_rate\": 0.12247743109456546, \"min_child_samples\": 14, \"n_estimators\": 5000, \"num_leaves\": 20, \"subsample\": 0.6407216387594238}",
+    "{\"colsample\": 0.9260458263940904, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.00475495944771142, \"learning_rate\": 0.1378297678866264, \"min_child_samples\": 49, \"n_estimators\": 5000, \"num_leaves\": 13, \"subsample\": 0.8797414219706573}"
+  ],
+  "kaust_mon": [
+    "{\"colsample\": 0.5585026759678401, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.006049731621421301, \"learning_rate\": 0.0885966304353115, \"min_child_samples\": 11, \"n_estimators\": 5000, \"num_leaves\": 30, \"subsample\": 0.8491120431107801}",
+    "{\"colsample\": 0.6875898716399605, \"early_stopping_rounds\": 100, \"lambda_l2\": 1.1947329385202399, \"learning_rate\": 0.0471557012365004, \"min_child_samples\": 22, \"n_estimators\": 5000, \"num_leaves\": 18, \"subsample\": 0.7896499549295786}",
+    "{\"colsample\": 0.969856274244022, \"early_stopping_rounds\": 100, \"lambda_l2\": 1.2901823306644966, \"learning_rate\": 0.024353909292154283, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 13, \"subsample\": 0.5059190810747424}",
+    "{\"colsample\": 0.5703750685886632, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.9544561285517236, \"learning_rate\": 0.04382804690683399, \"min_child_samples\": 12, \"n_estimators\": 5000, \"num_leaves\": 26, \"subsample\": 0.8927409065696373}",
+    "{\"colsample\": 0.9872701160241635, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.003298631895742748, \"learning_rate\": 0.02094899861887415, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 23, \"subsample\": 0.7606512983346634}"
+  ],
+  "kaust_ron": [
+    "{\"colsample\": 0.6775044151422672, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.0068384062652408, \"learning_rate\": 0.15978335169970287, \"min_child_samples\": 6, \"n_estimators\": 5000, \"num_leaves\": 11, \"subsample\": 0.8676547929756504}",
+    "{\"colsample\": 0.8488610254040017, \"early_stopping_rounds\": 100, \"lambda_l2\": 1.7537669149962676, \"learning_rate\": 0.02304148483592621, \"min_child_samples\": 17, \"n_estimators\": 5000, \"num_leaves\": 8, \"subsample\": 0.7463963502558723}",
+    "{\"colsample\": 0.5428242133263186, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.06676759571485548, \"learning_rate\": 0.1164836237952666, \"min_child_samples\": 6, \"n_estimators\": 5000, \"num_leaves\": 15, \"subsample\": 0.6826843359822145}",
+    "{\"colsample\": 0.5470226462503923, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.259124603261455, \"learning_rate\": 0.14236920598414546, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 28, \"subsample\": 0.6245102970979273}",
+    "{\"colsample\": 0.9391191259024017, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.006531261583652271, \"learning_rate\": 0.030338770737557155, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 27, \"subsample\": 0.6536049461539415}"
+  ],
+  "leenhouts_mon": [
+    "{\"colsample\": 0.6565868166701158, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.0075305834059525515, \"learning_rate\": 0.1659501853783561, \"min_child_samples\": 9, \"n_estimators\": 5000, \"num_leaves\": 31, \"subsample\": 0.5429804390498224}",
+    "{\"colsample\": 0.6926917682686096, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.10249859847932537, \"learning_rate\": 0.09642595728208342, \"min_child_samples\": 7, \"n_estimators\": 5000, \"num_leaves\": 5, \"subsample\": 0.9975754057699773}",
+    "{\"colsample\": 0.9122263762201265, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.0011027062327502812, \"learning_rate\": 0.18985206430035872, \"min_child_samples\": 17, \"n_estimators\": 5000, \"num_leaves\": 11, \"subsample\": 0.6881479117751625}",
+    "{\"colsample\": 0.5862314577263026, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.27763110291031656, \"learning_rate\": 0.05522021965002159, \"min_child_samples\": 8, \"n_estimators\": 5000, \"num_leaves\": 5, \"subsample\": 0.8738613110587682}",
+    "{\"colsample\": 0.8536236448927799, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.12699214953570653, \"learning_rate\": 0.1611831741701343, \"min_child_samples\": 11, \"n_estimators\": 5000, \"num_leaves\": 26, \"subsample\": 0.7958098121137284}"
+  ]
+}

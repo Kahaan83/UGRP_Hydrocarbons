@@ -1,0 +1,15 @@
+{
+  "task": "10_trackb_retrain",
+  "n_trials": 60,
+  "timeout_s": 5400,
+  "n_models": 5,
+  "oom_retries": 0,
+  "total_s": 8835.920984983444,
+  "n_locked_ysi": 56,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "git_commit": "853ae86bac67a92cf4f91ce3b33e9ef11bb3618c",
+  "guard_drops": {}
+}

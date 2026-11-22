@@ -1,0 +1,2 @@
+model,metric,n_groups,mae_v7,mae_refit_original,mae_base_file,mae_physics_baseline,gain_vs_original,gain_lo,gain_hi
+density_pair,dev OOF macro MAE (kg/m3),167,0.9872391375903047,0.9577868304818979,0.9577868304818979,1.3335364544518757,-0.029452307108406853,-0.08393140780074855,0.023768804430979888

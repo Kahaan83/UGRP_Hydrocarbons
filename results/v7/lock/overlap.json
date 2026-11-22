@@ -1,0 +1,26 @@
+{
+ "staging_rows": 1006,
+ "staging_systems": 113,
+ "by_n_comp": {
+  "2": 96,
+  "3": 12,
+  "4": 5
+ },
+ "in_dedup_any_property": 31,
+ "in_dedup_flash": 31,
+ "locks": {
+  "ysi_holdout": "not comparable (id kind inchikey)",
+  "freezing_holdout": "not comparable (id kind group)",
+  "mixture_lock": 0,
+  "mixture_holdout51": 0,
+  "flash_oxy_lock": 35,
+  "splits_locked": "not comparable (id kind fuel_id)"
+ },
+ "unseen_systems": 61,
+ "unseen_rows": 658,
+ "unseen_by_n_comp": {
+  "2": 52,
+  "3": 7,
+  "4": 2
+ }
+}

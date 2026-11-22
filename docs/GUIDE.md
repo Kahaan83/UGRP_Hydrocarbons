@@ -6,7 +6,7 @@ Authors: Kahaan Shah, Namyaa Parmar, Arijit Ganguli, A. S. K. Sinha, Ahmedabad U
 
 **Who this guide is for.** Anyone, including a reader who has never studied chemistry, fuels, statistics or machine learning. Part A builds the background from nothing. Parts 0 to 14 then explain every term, every decision, the current status, every important code file and how to run it. If you only have five minutes, read Part A section A9 and then section 0.
 
-**Source of truth for numbers.** `docs/final_numbers_v5.md` and `Fuel_Blend_Methodology.pdf`. If a number in this guide ever disagrees with those, they win. Worked examples in this guide that use made-up round numbers are marked **(illustration)** and are not results.
+**Source of truth for numbers.** `docs/final_numbers_v5.md` (blends), `docs/final_numbers_v7.md` (pure compounds, best method per property) and `Fuel_Blend_Methodology.pdf`. If a number in this guide ever disagrees with those, they win. Worked examples in this guide that use made-up round numbers are marked **(illustration)** and are not results.
 
 **Contents**
 
@@ -308,6 +308,8 @@ Blending octane value: `RON = (1-v) RON_base + v BOV` (v volume fraction, BOV th
 | ML YSI for smoke | class mean | rel. error 0.229 > 0.20 | **failed** |
 | ML DCN | none | only 31 usable systems (about 40 needed) | **not feasible** |
 | Antoine interpolation, Tm/dH_fus estimators, multicomponent freezing | none | fail declared gates | failed, flagged unused |
+| Pure-compound property models (v7): random forest on RDKit descriptors, D-MPNN | constant | MAE per property in `docs/final_numbers_v7.md` (dev rows, optimistic) | **deployed in `predict_pure`** for 10 pure-compound properties |
+| v7 blend candidates: HANNA gamma, parameter-head Antoine, MolPool, set models | v5 route | none beats v5 with a CI above 0 | **not adopted, kept** |
 
 **Process every model followed:** (1) pass rules committed to git first; (2) development by cross-validation over whole systems; (3) locked systems scored once; (4) bootstrap CI over systems; (5) compare to trivial constant; (6) failed models stay in code and in `docs/v5_negative_results.md`.
 
@@ -396,8 +398,9 @@ Pools: P0 = 7 pure molecules (n-decane, n-undecane, n-dodecane, butylcyclohexane
 
 ---
 
-# 9. Where we are (status, 17 Nov 2026)
+# 9. Where we are (status, 22 Nov 2026)
 
+* **Pure-compound layer (v7):** `predict_pure` gives the best-evidenced method for ten pure-compound properties (random forest for flash point, cetane, heat of fusion, log viscosity, melting point, YSI; D-MPNN for derived cetane, density, MON, RON). Significant wins: flash point, heat of fusion, log viscosity. The rest are tied or nominal. Errors are dev-row CV and optimistic; no conformal margin. Blend routes are unchanged because no v7 candidate beat v5. `predict_fuel` also returns three uncertified exploratory keys built from the pure models by a linear mole-fraction rule: `dcn_blend_exploratory` (MAE 6.90 vs 21.57 constant, 31 systems), `ron_blend_exploratory` (6.38 vs 13.56, 5 systems only) and `mon_blend_exploratory` (not offered, status: no skill shown; sources disagree). `predict_fuel(..., exploratory=False)` removes them.
 * **Working and evidenced:** physics routes for all properties; viscosity and density ML corrections (lab-gated); conformal margins; 16-design table; frozen, hash-checked scoreboard; API accepting SMILES/InChIKeys.
 * **No proven skill on real fuels:** freezing, heat of combustion (reconstructed), pour point, cold viscosity (below 263 K, Refutas), CRC reconstructed density.
 * **Not done / not claimed:** any laboratory validation; diesel validation; multicomponent freezing margin; real-fuel ML density testing; Jet A-1 limits verified against Def Stan 91-091; lab freezing of hexadecane mixtures (Oakley 2017) and smoke of 23 coal/JP-8 fuels (Yang 2006) are in the data but unscored.
@@ -436,6 +439,9 @@ History in one line: v1 data pipeline, then v2/v3 (circular, quarantined), then 
 | File | Role |
 |---|---|
 | `src/fuelblend/api/predict_route.py` | `predict_fuel(composition, T_K, fuel_type)`: the public prediction function; loads the frozen grid (`GRID_SHA256` check), resolves names/SMILES/InChIKeys, returns each property with `value`, `method`, `status`, `in_domain`, `lo/hi`, `variants`, `warnings` |
+| `src/fuelblend/api/best_methods.py` | registry: best method per property for pure compounds and blends, with the committed CSV and column behind each error; `best_method(prop, scope)` |
+| `src/fuelblend/api/predict_pure.py` | `predict_pure(smiles, props)`: best-method predictions for pure compounds; RF fits on first use into `data/cache/pure_models/`, D-MPNN weights come from `scripts/v7/final/fit_pure_models.py` |
+| `src/fuelblend/api/blend_from_pure.py` | exploratory blend keys for `predict_fuel` (derived cetane, RON, MON status) from the pure models; evidence in `results/v7/final/blend_from_pure/` |
 | `src/fuelblend/api/predict_blend.py` | `predict(...)`: v4-compatible wrapper on the same route; reads margins from the yaml (`_load_margins`, `_applied_margin`) |
 | `scripts/v5/base/reproduce_base.py` | rebuilds the scoreboard, runs the BASE tests, checks every file in `results/v5/BASE` against `SHA256SUMS_v5_base.txt` |
 | `scripts/v5/run_design_userpool_v5.py`, `run_jet_designs_v5.py` | inverse design on a user pool / the jet pools |
@@ -513,6 +519,11 @@ History in one line: v1 data pipeline, then v2/v3 (circular, quarantined), then 
 # 2. Predict a blend
 $env:PYTHONPATH="src"
 .venv\Scripts\python.exe -c "from fuelblend.api.predict_route import predict_fuel; r=predict_fuel([('CCCCCCCCCCCC',.45),('CCCCCCCCCCCCCC',.20),('Cc1ccccc1',.15),('CC1CCCCC1C',.20)],T_K=288.15,fuel_type='jet'); print(r['flash_point_C']['value'], r['density_kg_m3']['value'])"
+
+# 2b. Predict pure-compound properties with the best method (random forests fit on first use)
+.venv\Scripts\python.exe -c "from fuelblend.api.predict_pure import predict_pure; print(predict_pure('CCCCCCCCCCCC', props=['flash_C','tm_K']))"
+# fit the D-MPNN properties (derived cetane, density, MON, RON) in the GPU environment
+$env:FUELBLEND_DEVICE='cuda'; C:uelblend-gpu\.venv\Scripts\python.exe scripts/v7/final/fit_pure_models.py
 
 # 3. Inverse design on a pool
 .venv\Scripts\python.exe scripts/v5/run_design_userpool_v5.py --spec astm:jet_a,bis:jet_a1 --pool v5pool --n-starts 30 --seed 42 --out results/v5/demo_design

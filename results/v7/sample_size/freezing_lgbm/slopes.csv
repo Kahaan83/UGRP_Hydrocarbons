@@ -1,0 +1,2 @@
+target,frac_lo,frac_hi,n_lo,n_hi,mae_lo,mae_hi,slope,slope_lo,slope_hi,flattened
+freezing_C,0.8,1.0,41.0,51.0,3.2602111682631256,3.3147092078478115,0.2497005688314252,-0.5414672966224617,1.043153763731663,True

@@ -1,0 +1,49 @@
+{
+  "median_best_epoch": {
+    "long": 113.0
+  },
+  "sec_per_epoch_median": {
+    "long_cfg0": 0.19659924507141113,
+    "long_cfg1": 0.1637098789215088
+  },
+  "chosen": [
+    {
+      "regime": "long",
+      "fold": 0,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 1,
+      "cfg": 1
+    },
+    {
+      "regime": "long",
+      "fold": 2,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 3,
+      "cfg": 0
+    },
+    {
+      "regime": "long",
+      "fold": 4,
+      "cfg": 0
+    }
+  ],
+  "n_models": 5,
+  "regimes": {
+    "long": {
+      "epochs": 1000,
+      "patience": 100
+    }
+  },
+  "n_locked_ysi": 56,
+  "total_s": 2303.477384328842,
+  "device": "cuda",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU"
+}

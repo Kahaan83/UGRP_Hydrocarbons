@@ -1,0 +1,10 @@
+{
+  "model": "fusion_estimate",
+  "repro_mae": 54.685741801016476,
+  "base_mae": 54.685741801016476,
+  "repro_mae_c8_c20": 47.74740408253937,
+  "base_mae_c8_c20": 47.74740408253937,
+  "rel_diff": 0.0,
+  "passed": true,
+  "total_s": 2727.1452310085297
+}

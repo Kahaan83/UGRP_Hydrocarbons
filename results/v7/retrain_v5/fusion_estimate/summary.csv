@@ -1,0 +1,2 @@
+model,metric,n_groups,n,mae_v7,mae_refit_original,mae_base_file,mae_physics_baseline,gain_vs_original,gain_lo,gain_hi,mae_v7_c8_c20,mae_refit_original_c8_c20,gain_c8_c20,gain_c8_c20_lo,gain_c8_c20_hi
+fusion_estimate,"leave-one-family-out Tm MAE (K), all hydrocarbons",9,109,50.47701820833336,54.685741801016476,54.685741801016476,60.119119266055044,-4.903265932382052,-16.391483203666066,5.239224065660199,43.40673634556794,47.74740408253937,-7.34800874040372,-16.999296828394787,1.8310577141010773

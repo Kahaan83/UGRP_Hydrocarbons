@@ -1,0 +1,2 @@
+model,metric,n_groups,n,mae_v7,mae_refit_original,mae_base_file_all222,mae_physics_baseline,gain_vs_original,gain_lo,gain_hi
+ysi_lgbm,dev-only OOF MAE (YSI),21,169,220.14131285568433,236.76430599630027,274.6767577436092,234.14517744290677,35.92017841633619,11.871105775485754,64.1657352518558

@@ -1,0 +1,8 @@
+{
+  "model": "viscosity_pair",
+  "repro_mae": 0.05989025404412356,
+  "base_mae": 0.05989025404412356,
+  "rel_diff": 0.0,
+  "passed": true,
+  "total_s": 2344.592128753662
+}
