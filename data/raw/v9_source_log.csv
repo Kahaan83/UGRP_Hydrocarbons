@@ -1,1 +1,13 @@
 source,target,status,note
+edwards2017,freezing,ingested,"AFRL/NJFCP reference fuels (A-1, A-2, A-3, POSF-4658); A-2/A-3 duplicate AJFTD canonical ids"
+edwards2017,cold_viscosity,ingested,"Kinematic viscosity at -20 C and -40 C from Table A-3"
+vozka2019_energyfuels,freezing,not_found,"Energy Fuels 33(4) 3275-3289 SI: Purdue e-Pubs 403, Figshare returned challenge"
+vozka2019_energyfuels,cold_viscosity,not_found,"Energy Fuels 33(4) 3275-3289: Purdue e-Pubs 403, Figshare returned challenge"
+bell2025_wsu,freezing,plot_only,"Bell 2025 Tables 1-2 already in ascent065A_freezing.csv; mixture freezing in plots only"
+bell2025_wsu,cold_viscosity,plot_only,"No cold viscosity tables"
+crc_aviation_reports,freezing,duplicate,"AV-33-22 and Report 647 already ingested; no additional open GCxGC tables found"
+crc_aviation_reports,cold_viscosity,duplicate,"AV-33-22 already ingested"
+astm_d4054_rr,freezing,paywalled,"ASTM D4054 research reports are gated/proprietary"
+astm_d4054_rr,cold_viscosity,paywalled,"ASTM D4054 research reports are gated/proprietary"
+cookson1987_1992,freezing,plot_only,"Linear regressions only; no per-fuel carbon-number tables with freezing points"
+boehm2022,cold_viscosity,ingested,"HEAT LAB measured kinematic viscosity and density at -20 C and -40 C for neat fuels and blends"
