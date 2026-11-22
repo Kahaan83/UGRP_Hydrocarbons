@@ -1,0 +1,5 @@
+task,n_rows,n_systems,n_dropped,n_locked_removed,n_rows_oof_only,mae_model,mae_const,gain,lo,hi,p_boot,n_ref,mae_model_on_ref,mae_measured_pure_blend,p_holm,usable_exploratory
+mon_leenhouts,135,32,0,46,130,10.604,10.055,-0.54881,-4.3422,4.0723,0.744,121,10.892,7.4969,0.744,False
+mon_kaust,90,5,0,0,90,6.4877,10.409,3.9212,2.36,5.8836,0.002,90,6.4877,3.1152,0.006,True
+ron_kaust,90,5,0,0,90,6.3785,13.559,7.1804,4.2772,9.8063,0.002,8,4.6928,2.8697,0.006,True
+dcn_leenhouts,251,31,0,95,251,6.8955,21.571,14.675,11.278,17.902,0,242,6.9046,6.8708,0,True
