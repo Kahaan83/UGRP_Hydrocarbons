@@ -60,3 +60,28 @@ Best: joint MolPool, nominally; it is statistically tied with fuel-only MolPool 
 
 ## F. Coverage of the one-sided 90 % margin (Task 19)
 Global margin vs family-conditional (Mondrian) coverage on dev rows: YSI poly_arom 0.28 to 0.96, flash D93/IP170 0.84 to 0.87 or 0.90, freezing crc_jeta 0.83 to 0.96 (`results/v7/uq/READING.md`). Mondrian margins are wide where errors are heavy tailed (YSI global margins about 300 to 700 units).
+
+## G. Oxygenate results (added 2026-11-22; same OOF predictions, split by oxygenate vs hydrocarbon rows)
+Only these properties have oxygenate labels: the production unified data (`data/unified/`) is hydrocarbon-only (`is_hc` True on every row), so density, viscosity, freezing, melting point, YSI, cetane, dcn, dhfus and vapour pressure have no oxygenate rows to score. Oxygenates enter through the Track B pool (MON, RON), the Track C mixtures (KAUST and Leenhouts MON/RON) and the separate flash-oxygenate set. Numbers are MAE from existing OOF files, dev rows only; "n/a" means that comparator was not computed for the head.
+
+**Track B pure compounds (MON, RON)**
+| Property | Rows | Constant | v7 D-MPNN | Long-cap D-MPNN | LightGBM | Random forest | Best |
+|---|---|---|---|---|---|---|---|
+| MON, oxygenates | 65 | 10.78 | 6.68 | 6.51 | 6.70 | 6.23 | RF |
+| MON, hydrocarbons | 298 | 15.04 | 8.22 | 8.03 | 9.53 | 9.74 | Long-cap D-MPNN |
+| RON, oxygenates | 79 | 9.04 | 6.81 | 6.92 | 7.94 | 6.96 | v7 D-MPNN |
+| RON, hydrocarbons | 299 | 18.52 | 9.34 | 8.76 | 11.47 | 10.65 | Long-cap D-MPNN |
+
+**Track C mixtures (rows containing at least one non-C/H atom vs hydrocarbon-only rows)**
+| Head, property | Subset | Rows (groups) | Linear molar | Desc. GBM | v6 MolPool v1 | v7 MolPool | Best |
+|---|---|---|---|---|---|---|---|
+| KAUST MON | oxygenate | 39 (4) | 5.34 | n/a | 6.37 | 4.78 | v7 MolPool |
+| KAUST MON | hydrocarbon | 51 (3) | 1.06 | n/a | 1.03 | 1.10 | v6 MolPool v1 |
+| KAUST RON | oxygenate | 39 (4) | n/a | 2.29 | 4.44 | 2.90 | Desc. GBM |
+| KAUST RON | hydrocarbon | 51 (3) | n/a | 0.87 | 1.20 | 1.36 | Desc. GBM |
+| Leenhouts MON | oxygenate | 106 (21) | n/a | 3.23 | 2.71 | 3.99 | v6 MolPool v1 |
+| Leenhouts MON | hydrocarbon | 75 (13) | n/a | 2.88 | 1.71 | 3.28 | v6 MolPool v1 |
+
+**Flash point, oxygenate set (641 rows, 57 systems; Task 11)**: desc_gbm 4.08, v6 MolPool v1 3.44, v7 MolPool 3.61; best v6 v1. On the 95 hydrocarbon rows of the same set, a model trained on hydrocarbons only (arm A) has MAE 4.21 and the model trained with oxygenates (arm B) 6.40, so adding oxygenates hurts hydrocarbon rows (non-inferiority fails). Le Chatelier is not evaluable on oxygenates (no Antoine or LFL constants).
+
+Reading: oxygenate MON and RON are predicted about as well as hydrocarbon ones for pure compounds (smaller MAE, but their constant baseline is also smaller, 10.8 and 9.0 vs 15.0 and 18.5). In mixtures the oxygenate rows have the larger errors, and the v7 MolPool is worse than v6 v1 on Leenhouts MON in both subsets. Counts per cell are small (3 to 21 groups), so these are descriptive, not significance tests. Adding oxygenate labels for the other properties needs new data acquisition, which is not part of v7.
