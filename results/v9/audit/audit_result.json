@@ -65,7 +65,7 @@
       ]
     },
     "cold_visc_v9": {
-      "rows": 276,
+      "rows": 36,
       "forbidden_sources": {
         "status": "PASS",
         "violations": []
@@ -78,26 +78,26 @@
       "sanity_bounds": [
         {
           "property": "density_kg_m3",
-          "n_rows": 133,
+          "n_rows": 18,
           "status": "PASS",
           "outlier_count": 0,
           "bounds": [
             600.0,
             1150.0
           ],
-          "min_val": 720.5500000000001,
-          "max_val": 870.3499999999999
+          "min_val": 785.0500000000001,
+          "max_val": 866.53
         },
         {
           "property": "cold_viscosity_at_-40C",
-          "n_rows": 62,
+          "n_rows": 7,
           "status": "PASS",
           "outlier_count": 0,
           "bounds": [
             1.0,
             50.0
           ],
-          "min_val": 1.2029,
+          "min_val": 6.5151,
           "max_val": 25.206
         }
       ]
