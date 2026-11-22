@@ -40,3 +40,9 @@ Predeclare before running; dev-only gains cannot reopen a v5 or v6 verdict; lock
 ## 6. v8: ML-filled constants (negative result)
 
 Question: can out-of-fold pure-compound ML values replace measured constants in the v5 physics blend routes, and can a real-fuel margin be earned for represented blendstocks? Gates and tolerances were fixed in `docs/v8_predeclaration.md` before any result. Substituting ML density, viscosity, flash-derived LFL, and melting point with heat of fusion failed the dev gate in all four cases (dMAE upper bounds 11.8 kg/m3, 0.144 ln, 2.07 C, 4.81 C against tolerances 2, 0.02, 2, 2). The designated freezing route on real fuels has no skill over a constant (MAE 8.55 against 6.24 C, bias +5.66 C), so no freezing margin is earned. Designs were not re-run; the certified count stays at 3 of 16 and design certification remains model-level only. Numbers: `docs/final_numbers_v8.md`.
+
+## 7. v9 data
+
+The v9 round added data from sources whose values could be checked against the original files. Boehm 2022 neat real-fuel viscosities (checked cell by cell against the workbook) and ThermoML 2020 files not in v5 (checked against the archive) entered `data/unified_v9/`. Edwards 2017 and the pure-compound drafts could not be verified (the DTIC and ROSAP links returned HTML pages) and were withheld. All seven Antoine refit candidates failed for lack of verified source data.
+
+The lock rule is md5 of the system id modulo 4 equal to 0, applied only to new v9 systems: 4 of 14 were locked, once. No freezing fuel was added and no composition-bearing viscosity system was added, so the 8-fuel floors were not met. Real-fuel freezing point: status: no skill shown. Cold viscosity: status: no skill shown. Numbers: `docs/final_numbers_v9.md`.

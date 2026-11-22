@@ -610,3 +610,6 @@ certified <=> margin finite AND in_domain AND (flash - margin >= 38 C, freezing 
 6. In design mode the optimiser calls this same function, then the judge checks each limit with the margin applied and labels the outcome `certified`, `meets_at_point_estimate`, `fails` or uncertified.
 
 Reading the output: trust a number only after checking `in_domain`, `status` and `warnings`; a value without a margin is a point estimate, not a guarantee.
+
+## v9 data layer
+`data/unified_v9/` (local, rebuilt by `scripts/v9/build_unified_v9.py`) holds v5 rows plus verified Boehm 2022 and ThermoML additions. `data/unified/` is unchanged. Set `FUELBLEND_DEDUP_PATH` to use it; the default keeps BASE reproducible. Lock: `results/v9/lock.json`. Readings: `results/v9/readings/`. Numbers: `docs/final_numbers_v9.md`.

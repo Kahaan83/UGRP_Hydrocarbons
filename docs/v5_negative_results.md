@@ -33,3 +33,8 @@ Spec `verification:` flags (smoke, aromatics); adopt WS6 cold-viscosity offset m
 ## Decided 2026-11-14
 - **Lab test cannot happen** (user). No lab measurement of any design is possible, so every design stays a model prediction. `results/v5/BASE/delta_ws7_design_realism/LAB_TEST_REQUEST.md` is superseded; the report must say designs are unmeasured and "certified" means certified under the model and declared margins only.
 - Items 5 and 6 were handled before merging: the three failing tests (`test_predict_blend::test_pure_component_viscosity_follows_composition_kind`, `test_base_delta_representatives`, `test_v4_provenance`) all pass on the main `v5` checkout (14 passed), so those failures were worktree-environment artifacts. `antoine_refit.csv` was deliberately NOT overwritten: it is a gitignored artifact the original refit script for which is not in the repo, and it feeds the live anchored-Antoine flash route, so refreshing it would change frozen BASE flash numbers and the 2.21 C margin. The exploratory fresh refit is in `results/v5/BASE/delta_ws3_pure_gaps/antoine_exploratory_fresh_refit.csv` (`results/v5/BASE/delta_ws3_pure_gaps/`).
+
+## v9 data acquisition (2026-11-23)
+- Edwards 2017 freezing and cold viscosity, and the pure-compound drafts: not verifiable against primary files, withheld (`results/v9/verification.md`).
+- Antoine refits for 7 candidates: `failed:no_verified_source_data`.
+- R9-1 and R9-3: status: no skill shown (lock floor of 8 fuels unmet). R9-2: more data helps: not shown, retrain not run.
