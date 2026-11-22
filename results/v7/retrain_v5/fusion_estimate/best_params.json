@@ -1,0 +1,11 @@
+[
+  "{\"colsample\": 0.6051912805369204, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.0032787264983352763, \"learning_rate\": 0.07370271679354486, \"min_child_samples\": 8, \"n_estimators\": 5000, \"num_leaves\": 23, \"subsample\": 0.8353189348090797}",
+  "{\"colsample\": 0.6114702001960871, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.27916598338222964, \"learning_rate\": 0.07450705061383868, \"min_child_samples\": 6, \"n_estimators\": 5000, \"num_leaves\": 18, \"subsample\": 0.9209250732751689}",
+  "{\"colsample\": 0.6156619127962711, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.10578616402629785, \"learning_rate\": 0.11247768730092635, \"min_child_samples\": 9, \"n_estimators\": 5000, \"num_leaves\": 24, \"subsample\": 0.6796890598100809}",
+  "{\"colsample\": 0.5926690351013698, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.8775752702766025, \"learning_rate\": 0.025983514096687924, \"min_child_samples\": 12, \"n_estimators\": 5000, \"num_leaves\": 27, \"subsample\": 0.8662589841453482}",
+  "{\"colsample\": 0.9096021168724635, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.02656233852853849, \"learning_rate\": 0.08407056301241114, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 24, \"subsample\": 0.6831822102496141}",
+  "{\"colsample\": 0.5585904358050746, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.057702795938681946, \"learning_rate\": 0.15645192862981058, \"min_child_samples\": 15, \"n_estimators\": 5000, \"num_leaves\": 6, \"subsample\": 0.9801693191514351}",
+  "{\"colsample\": 0.8213496146861886, \"early_stopping_rounds\": 100, \"lambda_l2\": 1.625227911379618, \"learning_rate\": 0.06396650706529092, \"min_child_samples\": 11, \"n_estimators\": 5000, \"num_leaves\": 23, \"subsample\": 0.5892377636243413}",
+  "{\"colsample\": 0.8570316003569992, \"early_stopping_rounds\": 100, \"lambda_l2\": 6.1598236775193165, \"learning_rate\": 0.10836325684258519, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 29, \"subsample\": 0.8205835635160117}",
+  "{\"colsample\": 0.9858855175588991, \"early_stopping_rounds\": 100, \"lambda_l2\": 0.6231752716180962, \"learning_rate\": 0.08081724720448533, \"min_child_samples\": 5, \"n_estimators\": 5000, \"num_leaves\": 17, \"subsample\": 0.8395705383349582}"
+]

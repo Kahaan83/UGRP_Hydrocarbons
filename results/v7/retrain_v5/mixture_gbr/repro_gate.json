@@ -1,0 +1,48 @@
+{
+  "model": "mixture_gbr",
+  "units": [
+    {
+      "head": "boehm",
+      "prop": "density",
+      "repro_mae": 3.885071786802631,
+      "base_mae": 3.885071786802631,
+      "rel_diff": 0.0,
+      "passed": true
+    },
+    {
+      "head": "boehm",
+      "prop": "ln_visc",
+      "repro_mae": 0.055059284653192445,
+      "base_mae": 0.055059284653192445,
+      "rel_diff": 0.0,
+      "passed": true
+    },
+    {
+      "head": "kaust",
+      "prop": "mon",
+      "repro_mae": 3.154392400778801,
+      "base_mae": 3.1543924007788,
+      "rel_diff": 2.815687799275827e-16,
+      "passed": true
+    },
+    {
+      "head": "kaust",
+      "prop": "ron",
+      "repro_mae": 1.486216401117166,
+      "base_mae": 1.486216401117166,
+      "rel_diff": 0.0,
+      "passed": true
+    },
+    {
+      "head": "leenhouts",
+      "prop": "mon",
+      "repro_mae": 3.0834586181915147,
+      "base_mae": 3.0834586181915147,
+      "rel_diff": 0.0,
+      "passed": true
+    }
+  ],
+  "rel_diff": 2.815687799275827e-16,
+  "passed": true,
+  "total_s": 1987.638433456421
+}

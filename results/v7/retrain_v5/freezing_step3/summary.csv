@@ -1,0 +1,2 @@
+model,metric,n_groups,n,mae_v7,mae_refit_original,mae_base_file,mae_physics_baseline,gain_vs_original,gain_lo,gain_hi,mae_v7_no_fuel64,mae_refit_original_no_fuel64,bias_v7,over_pred_v7,over_pred_original
+freezing_step3,"dev LOGO MAE (degC), all 52",52,52,3.0677080270357453,3.3147092078478124,3.3147,6.635373076923075,0.24700118081206668,-0.11094741377406923,0.6072060442645643,2.7654866693617315,3.0149777573324696,-0.5360662073590832,1.2658209098383313,1.57774272067633

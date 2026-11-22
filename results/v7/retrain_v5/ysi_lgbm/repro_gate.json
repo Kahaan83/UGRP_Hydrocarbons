@@ -1,0 +1,9 @@
+{
+  "model": "ysi_lgbm",
+  "repro_mae": 274.6767577436092,
+  "base_mae": 274.6767577436092,
+  "rel_diff": 0.0,
+  "passed": true,
+  "note": "gate uses all 222 v5 rows; v7 comparison below uses dev compounds only",
+  "total_s": 8139.983872652054
+}
