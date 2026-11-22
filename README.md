@@ -2,7 +2,7 @@
 
 Predict flash point, viscosity, density, freezing point, heat of combustion and smoke point of a hydrocarbon blend from its
 composition, with a measured error margin on every number and an honest "no skill" label wherever a model does not beat a constant.
-Full explanation: `docs/GUIDE.md`. Methodology: `Fuel_Blend_Methodology.pdf`. All numbers: `docs/final_numbers_v5.md`.
+Full explanation: `docs/GUIDE.md`. Methodology: `Fuel_Blend_Methodology.pdf`. All numbers: `docs/final_numbers_v5.md` (blends), `docs/final_numbers_v7.md` (pure compounds). Current methods: `docs/methodology_v7.md`.
 
 ## Quick start (Windows, venv python)
 
