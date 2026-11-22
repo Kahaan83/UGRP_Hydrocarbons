@@ -61,7 +61,7 @@ def fit_es(X, y, w, grp, idx, params, cat, seed, logger=None, trial=None, early=
     return b
 
 
-def nested_lgb(X, y, w, elig, grp, folds, *, cat, prefix, out_dir, nt, to, tb=None, quick=False, n_jobs=4):
+def nested_lgb(X, y, w, elig, grp, folds, *, cat, prefix, out_dir, nt, to, tb=None, quick=False, n_jobs=4, extra=None):
     """Nested CV over prediction units X (rows). Trainable rows are `elig`; outer folds `folds` (one id per row); inner GroupKFold(3) by hpo.
     Returns (oof prediction per row, per-fold search summary, curves path). Final fit per outer fold uses the best params with early stopping."""
     space = hpo.load_space("lgbm")
@@ -73,7 +73,7 @@ def nested_lgb(X, y, w, elig, grp, folds, *, cat, prefix, out_dir, nt, to, tb=No
     lg = CurveLogger(out_dir / f"curves_{prefix}.csv", tb_dir=tb)
 
     def fit_score(params, tr, va, logger, on_epoch=None):
-        p = lgb_params(params, n_jobs)
+        p = {**lgb_params(params, n_jobs), **(extra or {})}
         tre, vae = tr[elig[tr]], va[elig[va]]
         dtr = lgb.Dataset(X.iloc[tre], y[tre], weight=w[tre], categorical_feature=cat or "auto", free_raw_data=False)
         dva = lgb.Dataset(X.iloc[vae], y[vae], weight=w[vae], reference=dtr)
@@ -88,7 +88,7 @@ def nested_lgb(X, y, w, elig, grp, folds, *, cat, prefix, out_dir, nt, to, tb=No
 
     def final_fit(params, tr, te):
         k = int(folds[te[0]])
-        b = fit_es(X, y, w, grp, tr[elig[tr]], lgb_params(params, n_jobs), cat, k, logger=lg.child(model="final", fold=k), early=early, n_est=n_est)
+        b = fit_es(X, y, w, grp, tr[elig[tr]], {**lgb_params(params, n_jobs), **(extra or {})}, cat, k, logger=lg.child(model="final", fold=k), early=early, n_est=n_est)
         return b.predict(X.iloc[te], num_iteration=b.best_iteration)
 
     res = hpo.nested_cv(None, grp, folds, fit_score=fit_score, space=space, n_trials=nt, timeout_s=to, study_prefix=prefix,
