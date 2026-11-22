@@ -1,0 +1,9 @@
+prop,model,n_points,n_molecules,mae,gain_vs_pooled,gain_vs_pooled_lo,gain_vs_pooled_hi,gain_vs_ridge,gain_vs_ridge_lo,gain_vs_ridge_hi
+log10_P,head,4416,189,0.47435,1.487,1.3492,1.6279,-0.33665,-0.39679,-0.27899
+log10_P,pooled,4416,189,1.7931,,,,,,
+log10_P,ridge,4416,189,0.21966,,,,,,
+log10_P,refit,4416,189,0.005483,,,,,,
+ln_mu,head,1947,136,0.2803,0.41256,0.33176,0.49483,-0.037972,-0.07891,0.0022016
+ln_mu,pooled,1947,136,0.72565,,,,,,
+ln_mu,ridge,1947,136,0.2836,,,,,,
+ln_mu,refit,1947,136,0.032919,,,,,,

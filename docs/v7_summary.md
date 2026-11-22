@@ -13,4 +13,5 @@ Dev-only and exploratory; every number is read from a committed file under `resu
 | 16 freezing joint MolPool | LOGO MAE 3.00 vs constant 6.64 and ridge 5.83; joint vs fuel-only CI includes 0 | `freezing/molpool_joint/READING.md` |
 | 19 conformal | global margin under-covers some families (YSI poly_arom 0.28); Mondrian restores 0.92 to 0.96 at large width | `uq/READING.md` |
 | 20 fresh lock | 61 unseen systems (658 rows) locked | `lock/LOCK.md`, `lock/overlap.json` |
-| 17, 18 | not run (HANNA download not permitted in this session; Task 18 pending) | |
+| 17 HANNA vs UNIFAC vs ideal gamma (flash, 92 dev rows, 16 systems) | HANNA worse than ideal (MAE gain -0.48, CI -0.75 to -0.24); no difference from UNIFAC; fresh lock left unspent | `flash/hanna/READING.md` |
+| 18 Antoine and Andrade heads | beat pooled curve, not the descriptor ridge on log P (-0.34); flash recompute over-predicts 16 degC on average | `track_b/param_heads/READING.md` |
