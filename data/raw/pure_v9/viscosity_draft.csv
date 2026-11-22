@@ -1,0 +1,16 @@
+name,smiles,T_K,value_mPas,visc_type,ref,page,table,confidence
+1-methylnaphthalene,Cc1cccc2ccccc12,293.15,3.42,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,298.15,2.98,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,303.15,2.62,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,313.15,2.08,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,323.15,1.70,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,333.15,1.41,dynamic,10.1021/je101256z,Table 2,viscosity,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,293.15,8.54,dynamic,10.1021/je500381c,Table 3,viscosity,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,298.15,6.92,dynamic,10.1021/je500381c,Table 3,viscosity,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,303.15,5.71,dynamic,10.1021/je500381c,Table 3,viscosity,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,313.15,4.02,dynamic,10.1021/je500381c,Table 3,viscosity,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,323.15,2.97,dynamic,10.1021/je500381c,Table 3,viscosity,clear
+1-methyltetralin,CC1CCCc2ccccc21,298.15,2.35,dynamic,Boehm 2022 / HEAT Lab,p. 4,viscosity,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,293.15,2.82,dynamic,Seyer (1942) / Boehm 2022,Table 1,viscosity,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,298.15,2.44,dynamic,Seyer (1942) / Boehm 2022,Table 1,viscosity,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,303.15,2.14,dynamic,Seyer (1942) / Boehm 2022,Table 1,viscosity,clear

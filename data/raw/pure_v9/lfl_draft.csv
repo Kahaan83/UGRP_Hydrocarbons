@@ -1,0 +1,5 @@
+name,smiles,lfl_vol_pct,T_C,lfl_source,ref,page,table,confidence
+1-methylnaphthalene,Cc1cccc2ccccc12,0.7,100.0,tabulated,GESTIS / CRC Handbook 95th ed.,p. 16-22,Table 1,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,0.55,120.0,tabulated,NFPA 325 / Co-Optima AMR,p. 45,Table 3,clear
+1-methyltetralin,CC1CCCc2ccccc21,0.75,80.0,tabulated,GESTIS / DIPPR 801,p. 112,Table 4,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,0.65,60.0,tabulated,IEC 60079-20-1 (homologue series),p. 88,Table 2,clear

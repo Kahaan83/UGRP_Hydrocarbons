@@ -1,0 +1,30 @@
+name,smiles,T_K,P_kPa,source,ref,page,table,confidence
+1-methylnaphthalene,Cc1cccc2ccccc12,293.15,0.0075,literature,Macknick & Prausnitz (1979) / Sasse (1988),Table 1,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,313.15,0.028,literature,Sasse et al. (1988),Table 1,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,333.15,0.098,literature,Sasse et al. (1988),Table 1,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,353.15,0.31,literature,Sasse et al. (1988),Table 1,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,373.15,0.87,literature,Sasse et al. (1988),Table 1,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,393.15,2.22,literature,Camin & Rossini (1955),Table 4,Vapor Pressure,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,415.29,5.12,webbook,Camin & Rossini (1955),p. 2188,Antoine,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,450.0,15.6,webbook,Camin & Rossini (1955),p. 2188,Antoine,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,480.0,35.8,webbook,Camin & Rossini (1955),p. 2188,Antoine,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,518.48,101.325,webbook,Camin & Rossini (1955),p. 2188,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,384.0,0.94,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,390.0,1.34,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,395.0,1.77,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,400.0,2.33,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,405.0,3.03,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,410.0,3.91,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,415.0,5.01,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,418.0,5.8,webbook,Osborn & Douslin (1975),Table 2,Antoine,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,455.0,3.12,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,475.0,7.34,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,495.0,15.8,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,515.0,31.5,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,535.0,58.9,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+perhydrophenanthrene,C1CCC2C(C1)CCC1CCCCC12,551.0,101.325,literature,Rohác et al. (2000),Table 3,Ebulliometry,clear
+1-methyltetralin,CC1CCCc2ccccc21,368.15,1.333,literature,Karo et al. (1953) / Hipsher (1954),Table 1,Reduced BP,clear
+1-methyltetralin,CC1CCCc2ccccc21,398.15,4.0,literature,Karo et al. (1953) / Hipsher (1954),Table 1,Reduced BP,clear
+1-methyltetralin,CC1CCCc2ccccc21,428.15,13.332,literature,Karo et al. (1953) / Hipsher (1954),Table 1,Reduced BP,clear
+1-methyltetralin,CC1CCCc2ccccc21,458.15,38.0,literature,Karo et al. (1953) / Hipsher (1954),Table 1,Reduced BP,clear
+1-methyltetralin,CC1CCCc2ccccc21,493.65,101.325,webbook,Karo et al. (1953) / Hipsher (1954),Table 1,Boiling Point,clear
