@@ -2,6 +2,10 @@
 
 Loader: `src/fuelblend/data/loaders_cold_visc_v9.py`; test: `tests/test_loaders_cold_visc_v9.py`.
 
+## Licence
+* Edwards (2017): AIAA 2017-0146, US Government work (AFRL Wright-Patterson AFB), public domain / open numeric facts.
+* Boehm et al. (2022): Frontiers in Energy Research, Open Access under Creative Commons Attribution License (CC BY 4.0).
+
 ## edwards2017_cold_visc_draft.csv
 * Edwards, "Reference Jet Fuels for Combustion Testing", 55th AIAA Aerospace Sciences Meeting (AIAA 2017-0146), doi 10.2514/6.2017-0146.
 * Table A-3 (p14): kinematic viscosity (mm^2/s = cSt) measured at -20 C (253.15 K) and -40 C (233.15 K).
