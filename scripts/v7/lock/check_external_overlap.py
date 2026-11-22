@@ -25,3 +25,12 @@ out["unseen_rows"] = int(st.system_id.astype(str).isin(unseen).sum())
 out["unseen_by_n_comp"] = {str(k): int(v) for k, v in st[st.system_id.astype(str).isin(unseen)].groupby("n_comp").system_id.nunique().items()}
 (ROOT / "results/v7/lock/overlap.json").write_text(json.dumps(out, indent=1))
 print(json.dumps(out, indent=1))
+
+if "--write-lock" in sys.argv:
+    ids = sorted(unseen)
+    lock = dict(name="v7_flash_fresh", id_kind="system_id", n_systems=len(ids), n_rows=out["unseen_rows"], source="Leenhouts flash mixtures, external staging",
+                primary_comparison="HANNA gamma vs UNIFAC gamma in the v5 flash route, per-system MAE gain (UNIFAC minus HANNA), group bootstrap 90 % CI over systems",
+                gate="MAE gain CI above 0 and upper CI bound of mean over-prediction increase below 0.5 degC",
+                holm="single primary comparison; no further comparison is scored on this lock", scored_once=True, locked_system_ids=ids)
+    (ROOT / "results/v7/lock/lock.json").write_text(json.dumps(lock, indent=1))
+    print("lock written", len(ids))
