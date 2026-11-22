@@ -21,7 +21,7 @@ def load_encoder(path):
     for sd in ck["states"]:
         m = D.DMPNN(len(ck["tasks"]), c["hidden"], c["depth"], c["dropout"])
         m.load_state_dict(sd)
-        m.eval()
+        m.to(D.DEVICE).eval()
         models.append(m)
     return models
 
@@ -65,7 +65,7 @@ class MolPool(nn.Module):
 
 
 def fit_predict(H_tr, X_tr, r_tr, H_te, X_te, aux_tr=None, aux_te=None, d=16, wd=1e-2, epochs=200, lr=3e-3, seeds=(0,),
-                rank=8, dropout=0.1, device=None, val_idx=None, patience=None, logger=None, on_epoch=None):
+                rank=8, dropout=0.1, hidden=32, device=None, val_idx=None, patience=None, logger=None, on_epoch=None):
     """Train on residual targets r_tr (already standardised); returns the mean prediction over seeds for the test sets.
 
     v7 hooks (defaults reproduce v6 exactly): device (None = cpu); val_idx = indices into the training arrays held out for
@@ -96,7 +96,7 @@ def fit_predict(H_tr, X_tr, r_tr, H_te, X_te, aux_tr=None, aux_te=None, d=16, wd
     preds = []
     for s in seeds:
         torch.manual_seed(1000 + s)
-        net = MolPool(H_tr.shape[2], d, rank, 0 if aux_tr is None else aux_tr.shape[1], dropout=dropout).to(dev)
+        net = MolPool(H_tr.shape[2], d, rank, 0 if aux_tr is None else aux_tr.shape[1], hidden=hidden, dropout=dropout).to(dev)
         opt = torch.optim.AdamW(net.parameters(), lr=lr, weight_decay=wd)
         n = len(rt)
         g = torch.Generator().manual_seed(s)

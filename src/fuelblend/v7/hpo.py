@@ -55,7 +55,7 @@ def _call_fit_score(fit_score, params, tr, va, logger, on_epoch):
 
 def nested_cv(df, groups, outer_folds, *, fit_score: Callable, space: dict, n_trials: int, timeout_s: int,
               study_prefix: str, storage: str | None = None, final_fit: Callable | None = None,
-              out_dir=None, logger=None, inner_k: int = 3, seed: int = 0) -> pd.DataFrame:
+              out_dir=None, logger=None, inner_k: int = 3, seed: int = 0, on_fold: Callable | None = None) -> pd.DataFrame:
     """One row per outer fold: fold, best_params (json), inner_score, outer_pred_path.
 
     fit_score(params, idx_tr, idx_va, logger[, on_epoch]) -> float, lower is better (indices are positions in df).
@@ -71,6 +71,8 @@ def nested_cv(df, groups, outer_folds, *, fit_score: Callable, space: dict, n_tr
     for k in sorted(np.unique(outer)):
         te = np.where(outer == k)[0]
         tr = np.where(outer != k)[0]
+        if on_fold is not None:
+            on_fold(int(k), tr)
         pred_path = None if out is None else out / f"pred_fold{k}.npy"
         done = out is not None and pred_path.exists()
         study = optuna.create_study(
