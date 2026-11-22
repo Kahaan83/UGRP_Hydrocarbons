@@ -1,0 +1,11 @@
+source_id,doi,table_or_page,sample_id,kind,components,smiles,fractions,fraction_basis,property,value,unit,T_C,method,qualifier,note,page,table,confidence
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,real_fuel,"[""POSF-10264""]",[],[1.0],mass,viscosity_kin_cSt,3.5,cSt,-20.0,ASTM D445,,A-1 JP-8 at -20 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,real_fuel,"[""POSF-10264""]",[],[1.0],mass,viscosity_kin_cSt,6.6,cSt,-40.0,ASTM D445,,A-1 JP-8 at -40 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,real_fuel,"[""POSF-10289""]",[],[1.0],mass,viscosity_kin_cSt,6.5,cSt,-20.0,ASTM D445,,A-3 JP-5 at -20 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,real_fuel,"[""POSF-10289""]",[],[1.0],mass,viscosity_kin_cSt,14.1,cSt,-40.0,ASTM D445,,A-3 JP-5 at -40 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,real_fuel,"[""POSF-10325""]",[],[1.0],mass,viscosity_kin_cSt,4.5,cSt,-20.0,ASTM D445,,A-2 Jet A at -20 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,real_fuel,"[""POSF-10325""]",[],[1.0],mass,viscosity_kin_cSt,9.2,cSt,-40.0,ASTM D445,,A-2 Jet A at -40 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,real_fuel,"[""POSF-4658""]",[],[1.0],mass,viscosity_kin_cSt,4.4,cSt,-20.0,ASTM D445,,Jet A baseline at -20 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,real_fuel,"[""POSF-4658""]",[],[1.0],mass,viscosity_kin_cSt,8.8,cSt,-40.0,ASTM D445,,Jet A baseline at -40 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-11498,real_fuel,"[""POSF-11498""]",[],[1.0],mass,viscosity_kin_cSt,5.0,cSt,-20.0,ASTM D445,,C-1 ATJ at -20 C,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-11498,real_fuel,"[""POSF-11498""]",[],[1.0],mass,viscosity_kin_cSt,9.89,cSt,-40.0,ASTM D445,,C-1 ATJ at -40 C,14,Table A-3,clear
