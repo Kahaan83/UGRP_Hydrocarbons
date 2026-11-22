@@ -15,3 +15,5 @@ Dev-only and exploratory; every number is read from a committed file under `resu
 | 20 fresh lock | 61 unseen systems (658 rows) locked | `lock/LOCK.md`, `lock/overlap.json` |
 | 17 HANNA vs UNIFAC vs ideal gamma (flash, 92 dev rows, 16 systems) | HANNA worse than ideal (MAE gain -0.48, CI -0.75 to -0.24); no difference from UNIFAC; fresh lock left unspent | `flash/hanna/READING.md` |
 | 18 Antoine and Andrade heads | beat pooled curve, not the descriptor ridge on log P (-0.34); flash recompute over-predicts 16 degC on average | `track_b/param_heads/READING.md` |
+
+Full suite after Task 21 (2026-11-22): 844 passed, 2 skipped, 1 failed (`tests/test_s4_splits.py::test_committed_splits_match_rebuild`, the CRLF working-copy difference in `splits/locked.json`, unchanged by v7).
