@@ -1,0 +1,12 @@
+# v9 phase S1 verification of the phase G drafts
+
+| source | rows | method | result |
+|---|---|---|---|
+| Boehm 2022 cold viscosity (`boehm2022_cold_visc.csv`) | 266 (36 neat-fuel rows, 230 blend rows) | every row compared programmatically with the workbook cell (`This Work`, value, temperature, density x1000) and with the header row labels and volume fractions; 76 workbook rows | 266 of 266 values and 76 of 76 compositions match; renamed from `_draft`. Blend rows contain a real fuel and have no InChIKey composition, so only the 36 neat-fuel rows enter `unified_v9` |
+| ThermoML 2020 files not in v5 (`extracted.csv`) | 994 | random 40 rows (seed 42) located in the archive XML by file and value | 40 of 40 values found; extraction code unchanged. Duplicates of v5 rows are dropped or pooled in the build |
+| Edwards 2017 freezing, composition, cold viscosity (drafts) | 12 + 268 + 10 | source PDF not on disk; DTIC returned a consent page (`<!DOCTYPE`), ROSAP returned HTML, not retried | NOT verified, NOT used. The 4 fuels are already in v5 (AJFTD 2, 23, 39 and FuelLib), the draft compositions match the AJFTD GCxGC class sums, and the draft C-1 labelled POSF-11498 does not match Boehm C-1 (POSF 13718). Drafts stay named `_draft`, logged `unverified` |
+| pure_v9 vapour pressure, LFL, viscosity, density (drafts) | 29 + 4 + 15 + 14 | cited DOIs searched in `extracted.csv` and the archive (none present); NIST WebBook Antoine for 1-methylnaphthalene fetched once | NOT verified, NOT used. WebBook gives only 415.29 to 518.48 K (A=4.16082 bar, B=1826.948, C=-78.148); the draft point at 415.29 K (5.12 kPa) differs from the WebBook curve (5.51 kPa); the low-temperature "literature" points and the LFL values by "homologue series" have no retrievable source |
+
+Corrections: none to Boehm or ThermoML. Gemini loader review: the cold-viscosity loader assigned invented canonical ids (`fuel:afrl:*`, `fuel:ajftd:24567`, `fuel:fuellib:posf7720`, ids with the wrong `fuel:ajftd:` prefix); it is rewritten and ids come from the AJFTD label table in `scripts/v9/build_unified_v9.py`. The freezing and pure loaders still read drafts and are not used by the build.
+
+Task 5 Step 6: no pure-constant draft passed verification, so the refit was not run on drafts. `results/v9/antoine_refit/refits.csv` lists the 7 candidates as `failed:no_verified_source_data`. The P4 condition (measured Antoine, LFL, viscosity, density) holds for 0 of 7 candidates.

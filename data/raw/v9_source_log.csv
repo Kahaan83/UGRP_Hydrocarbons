@@ -16,3 +16,7 @@ nist_webbook,pure_constants,ingested,"Antoine constants and reduced boiling poin
 iec_60079_20_1,pure_constants,ingested,"IS IEC 60079-20-1 (2010) tabulated LFL"
 gestis_crc_dippr,pure_constants,ingested,"GESTIS / CRC Handbook 95th ed. / DIPPR 801 tabulated LFL"
 thermoml_archives,pure_constants,ingested,"je101256z (1-methylnaphthalene viscosity/density), je500381c (perhydrofluorene viscosity/density)"
+edwards2017,freezing,unverified,"source PDF not retrievable (DTIC consent page, ROSAP HTML); drafts kept, not used"
+edwards2017,cold_viscosity,unverified,"same; values near Boehm rows for the same fuels"
+boehm2022,cold_viscosity,duplicate,"A-2, A-3 rows overlap crc647/AJFTD fuels 2 and 39; C-3, C-7, C-8, POSF12945 no_composition; blends no_composition"
+pure_v9,pure_constants,unverified,"vapour pressure, LFL, viscosity, density drafts have no retrievable source; not used"
