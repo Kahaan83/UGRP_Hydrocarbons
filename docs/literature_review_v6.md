@@ -83,3 +83,5 @@ re-verified; re-check before manuscript use.
 | Joint conformal regions for design | none verified; method idea, to be tested | after Track C |
 
 Gates for every item: GroupKFold on `system_id`, locked holdout, beat-trivial, out-of-fold conformal margins.
+
+Note (v7): the years given for Leenhouts et al. and Hall et al. are online dates; print years may differ by one. Pending a DOI check, do not quote them as final.

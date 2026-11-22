@@ -38,3 +38,13 @@ is not evaluable on oxygenates (no constants). Status: no skill shown.
 
 Track A tile fill (2026-11-21, post-hoc, dev only): isomer tiles with missing Tm/dHfus filled by the Track B D-MPNN (e2) or fusion_estimate Tm (e3).
 31 tiles change; dev MAE 7.88 / 8.09 vs v5 8.83 vs constant 6.64. The gain is entirely fuel 64; on the other 51 fuels it is identical to v5 (7.31). No skill shown.
+
+## v7 dev-only rows (2026-11-22; exploratory, dev rows already seen, no verdict above reopened; sources under `results/v7/`)
+| Item | Result | Source |
+|---|---|---|
+| Set models (PairDeepSets, MolSets GNN, set transformer), 6 cells | no cell passes the gate; density GNN significantly worse than LightGBM pair baseline | `set_models/READING.md` |
+| Tree retrains (Task 13) | viscosity_pair, density_pair, fusion_estimate, freezing_step3: gain vs refit original CI includes 0; mixture_gbr: 0 of 5 units above 0 | `PHASE3_READINGS.md` |
+| Freezing limiting-species baseline | worse than constant on dev | `freezing/baseline_d/READING.md` |
+| Freezing heavy-tail GP | fails the predeclared skill rule under LOGO and LOFO | `freezing/gp/READING.md` |
+| Flash oxygenates, MolPool retrain | +0.47 vs desc_gbm, Holm p 0.162; hydrocarbon non-inferiority fails | `flash_oxy/READING.md` |
+| Freezing joint MolPool | beats constant and ridge on dev, but joint vs fuel-only CI includes 0; no real-fuel claim | `freezing/molpool_joint/READING.md` |
