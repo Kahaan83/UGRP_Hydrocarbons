@@ -11,3 +11,8 @@ astm_d4054_rr,freezing,paywalled,"ASTM D4054 research reports are gated/propriet
 astm_d4054_rr,cold_viscosity,paywalled,"ASTM D4054 research reports are gated/proprietary"
 cookson1987_1992,freezing,plot_only,"Linear regressions only; no per-fuel carbon-number tables with freezing points"
 boehm2022,cold_viscosity,ingested,"HEAT LAB measured kinematic viscosity and density at -20 C and -40 C for neat fuels and blends"
+thermoml_post2020,mixtures,ingested,"475 post-2020 XMLs from NIST TRC across 5 journals; 994 hydrocarbon rows (561 mixture rows)"
+nist_webbook,pure_constants,ingested,"Antoine constants and reduced boiling points for Camin 1955, Osborn 1975, Hipsher 1954"
+iec_60079_20_1,pure_constants,ingested,"IS IEC 60079-20-1 (2010) tabulated LFL"
+gestis_crc_dippr,pure_constants,ingested,"GESTIS / CRC Handbook 95th ed. / DIPPR 801 tabulated LFL"
+thermoml_archives,pure_constants,ingested,"je101256z (1-methylnaphthalene viscosity/density), je500381c (perhydrofluorene viscosity/density)"
