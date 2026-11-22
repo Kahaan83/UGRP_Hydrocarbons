@@ -36,3 +36,7 @@ Joint pure plus fuel training for freezing (tied with fuel-only), equation-param
 ## 5. Rules that bound every claim
 
 Predeclare before running; dev-only gains cannot reopen a v5 or v6 verdict; locked sets are scored once; paired group bootstrap over systems with Holm correction; no laboratory validation exists, so certification is model-level only.
+
+## 6. v8: ML-filled constants (negative result)
+
+Question: can out-of-fold pure-compound ML values replace measured constants in the v5 physics blend routes, and can a real-fuel margin be earned for represented blendstocks? Gates and tolerances were fixed in `docs/v8_predeclaration.md` before any result. Substituting ML density, viscosity, flash-derived LFL, and melting point with heat of fusion failed the dev gate in all four cases (dMAE upper bounds 11.8 kg/m3, 0.144 ln, 2.07 C, 4.81 C against tolerances 2, 0.02, 2, 2). The designated freezing route on real fuels has no skill over a constant (MAE 8.55 against 6.24 C, bias +5.66 C), so no freezing margin is earned. Designs were not re-run; the certified count stays at 3 of 16 and design certification remains model-level only. Numbers: `docs/final_numbers_v8.md`.
