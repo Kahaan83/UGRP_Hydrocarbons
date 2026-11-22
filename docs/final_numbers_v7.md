@@ -32,7 +32,18 @@ Sources: `results/v7/track_b/descriptor_gbm/cv_summary.csv` (random forest), `re
 
 Full per-method error tables for blends, oxygenates, equation parameters and conformal coverage: `docs/v7_errors_by_property.md`; complete task-by-task results: `docs/v7_results_table.md`.
 
-## C. Limits
+## C. Exploratory blend values from the pure models (in `predict_fuel`)
+
+| key | task | systems | rows | MAE model | MAE constant | reading |
+|---|---|---|---|---|---|---|
+| dcn_blend_exploratory | dcn_leenhouts | 31 | 251 | 6.896 | 21.57 | usable, exploratory |
+| ron_blend_exploratory | ron_kaust | 5 | 90 | 6.378 | 13.56 | usable, exploratory |
+| mon_blend_exploratory (not offered, sources disagree): Leenhouts | mon_leenhouts | 32 | 135 | 10.6 | 10.05 | no skill shown |
+| same, KAUST | mon_kaust | 5 | 90 | 6.488 | 10.41 | usable, exploratory |
+
+Linear mole-fraction rule, no mixture fitting; source `results/v7/final/blend_from_pure/summary.csv`, reading in `READING.md`. Uncertified: no conformal margin, no lab validation; RON rests on 5 systems. Cetane has no mixture data.
+
+## D. Limits
 
 * Real-fuel freezing point: status: no skill shown. Cold viscosity: status: no skill shown.
 * Pure-compound predictions carry no conformal margin; the MAE is a dev-row CV estimate, not a certified bound.

@@ -7,7 +7,7 @@ Rule applied as predeclared (Holm p below 0.10, gain above 0, interval above 0).
 | dcn_leenhouts | 251 | 31 | 6.90 | 21.57 | 14.68 (11.28 to 17.90) | 0.000 | usable, exploratory |
 | ron_kaust | 90 | 5 | 6.38 | 13.56 | 7.18 (4.28 to 9.81) | 0.006 | usable, exploratory (5 systems only) |
 | mon_kaust | 90 | 5 | 6.49 | 10.41 | 3.92 (2.36 to 5.88) | 0.006 | usable on this source (5 systems only) |
-| mon_leenhouts | 135 | 32 | 10.60 | 10.06 | -0.55 (-4.34 to 4.07) | 0.744 | no skill shown |
+| mon_leenhouts | 135 | 32 | 10.60 | 10.05 | -0.55 (-4.34 to 4.07) | 0.744 | no skill shown |
 
 Notes.
 * Derived cetane: the blend error (6.90) equals the error of the same rule with measured pure labels (6.87 on 242 rows), so the linear mole-fraction rule, not the pure model, is the limit.

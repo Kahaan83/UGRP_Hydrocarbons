@@ -17,6 +17,7 @@ from fuelblend.api import best_methods as BM
 ROOT = Path(__file__).resolve().parents[3]
 CACHE = ROOT / "data/cache/pure_models"
 RF_TREES, RF_SEED = 500, 0
+_MODELS: dict = {}          # in-process cache of loaded models, keyed by file path
 
 
 def _rf_path(prop: str) -> Path:
@@ -49,7 +50,10 @@ def _predict_rf(prop: str, smiles: list) -> np.ndarray:
     from fuelblend.features.rdkit_desc import rdkit_2d
     if not _rf_path(prop).exists():
         fit_rf(prop)
-    b = joblib.load(_rf_path(prop))
+    key = str(_rf_path(prop))
+    if key not in _MODELS:
+        _MODELS[key] = joblib.load(_rf_path(prop))
+    b = _MODELS[key]
     X = rdkit_2d(smiles)[b["cols"]]
     return b["rf"].predict(X.fillna(pd.Series(b["med"])))
 
@@ -62,12 +66,15 @@ def _predict_dmpnn(prop: str, smiles: list) -> np.ndarray:
         raise FileNotFoundError("D-MPNN weights missing; run scripts/v7/final/fit_pure_models.py "
                                 "(GPU venv, FUELBLEND_DEVICE=cuda)")
     m = json.loads(meta.read_text())
-    nets = []
-    for sd in torch.load(p, map_location=D.DEVICE):
-        net = D.DMPNN(len(m["tasks"]), **m["arch"]).to(D.DEVICE)
-        net.load_state_dict(sd)
-        net.eval()
-        nets.append(net)
+    if str(p) not in _MODELS:
+        nets = []
+        for sd in torch.load(p, map_location=D.DEVICE):
+            net = D.DMPNN(len(m["tasks"]), **m["arch"]).to(D.DEVICE)
+            net.load_state_dict(sd)
+            net.eval()
+            nets.append(net)
+        _MODELS[str(p)] = nets
+    nets = _MODELS[str(p)]
     j = m["tasks"].index(prop)
     pred, _ = D.predict(nets, [D.featurize(s) for s in smiles])
     return pred[:, j] * m["sd"][j] + m["mu"][j]

@@ -16,6 +16,8 @@ Blend properties (viscosity, density, flash point, freezing point, heat, smoke p
 
 No neural mixture model (set transformer, deep sets, MolPool) passed its gate against the v5 route, so none is deployed for blends.
 
+Exploratory blend values from the pure-compound models: derived cetane and RON (and a MON entry marked no skill) are returned by `predict_fuel` as extra keys. The rule is a linear mole-fraction blend of the best pure-compound predictions, with no mixture fitting. Predeclared test on development mixtures: derived cetane MAE 6.90 against 21.57 for a constant (31 systems, 251 rows), RON 6.38 against 13.56 (5 systems), MON usable on KAUST surrogates (5 systems) but no skill on Leenhouts mixtures (32 systems), so MON is not offered. These values are uncertified: no conformal margin, no lab validation, and the RON evidence is thin. Existing keys and margins are unchanged. Cetane has no mixture data and is not blended.
+
 ## 3. Pure compounds
 
 Training data: the Track B pool, one row per compound and property, with the locked YSI hold-out labels masked. Evaluation: scaffold-grouped 5-fold cross-validation on those development rows; errors are optimistic because the same rows guided tuning.
