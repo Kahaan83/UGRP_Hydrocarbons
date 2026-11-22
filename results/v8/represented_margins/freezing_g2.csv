@@ -1,0 +1,2 @@
+n_fuels,n_groups,mae_route,mae_const,bias_route,gain_group_mean,gain_ci90_lo,gain_ci90_hi,a_beats_constant,margin_C,b_finite,cov,c_transfer,reading
+58,58,8.546730812068965,6.242466517241379,5.658231743103449,-2.3042642948275853,-4.093329689655169,-0.46963367939654965,False,-1.3777019999999993,True,"{'AJFTD->other': 1.0, 'other->AJFTD': 0.7619047619047619}",False,no_skill_shown
