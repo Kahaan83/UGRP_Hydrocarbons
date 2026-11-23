@@ -219,7 +219,7 @@ Other standing decisions: pour point scoped out (`docs/scope_decisions.md` SD-01
 5. T2 real-fuel cells are descriptive (those fuels informed the route), not held-out claims.
 6. CRC 647 compositions are reconstructed, not measured.
 7. Jet A-1 limits and the new D86 limits come from secondary sources; the user intends to read D7566, D1655 and IS 1571 and upgrade the `verification:` flags in the spec yamls. Until then nothing counts as certified against verified limits.
-8. The o-/m-xylene eutectic composition looks transposed in `ingest_calorimetry_primary.py` (EUT). Not fixed; margins are unchanged either way (with the swap the S_F MAE would be 4.19 ideal / 3.65 UNIFAC).
+8. The o-/m-xylene eutectic composition was transposed in `ingest_calorimetry_primary.py` (EUT); corrected in v11c (checked by ideal Schroeder-van Laar consistency, not against the page image). Lab liquidus S_F MAE is now 4.187 ideal / 3.648 UNIFAC (was 4.474 / 3.935); margins unchanged. `docs/final_numbers_v5.md` still shows the old S_F values.
 9. AJFTD:325 has a freezing prediction of -144.7 C against a measured -81 C under the designated constants (error -63.7 C); the reason it is in the pooled n of 50 and not 49 is documented in `delta_freeze_t2_unifac`.
 10. The engine's freezing constraint label still reads `ideal_sle_mole_fraction` in `designs.csv` even though the value and margin are UNIFAC (label issue only).
 11. Data in the repo but unscored: lab freezing of hexadecane mixtures (Oakley 2017) and smoke of 23 coal/JP-8 fuels (Yang 2006). The ML density model has not been tested on real fuels. Diesel is unvalidated.
@@ -245,7 +245,7 @@ Other standing decisions: pour point scoped out (`docs/scope_decisions.md` SD-01
 2. Spec limits: verify against ASTM D1655, D7566, IS 1571, Def Stan 91-091 and upgrade the `verification:` flags in `configs/specs_*.yaml`.
 3. Data gap: real-fuel freezing and cold viscosity need verified fuel-level data (Edwards 2017, AIAA 2017-0146, and the true AFRL-TR-2020-0017 / DTIC AD1093317 were not obtained; the supplied AFRL file is a different paper). Multicomponent flash, freezing and viscosity margins need 8 or more systems per class.
 4. v7 fresh flash lock: not scorable with the v5 route (all 61 systems lack Antoine or LFL constants; HANNA is binary only). Needs constants for the lock compounds first.
-5. Fix or document the o-/m-xylene eutectic transposition after checking the primary paper.
+5. Confirm the xylene eutectic correction against the Pitzer and Scott 1943 page image; supply verified Antoine and LFL for the 34 oxygenates that block the v7 flash lock (`results/v11/lock_missing_constants.csv`).
 
 ## 12. Troubleshooting
 
@@ -296,6 +296,7 @@ Every term (Refutas, VBN, Antoine, LFL, SvL, UNIFAC, conformal margin, locked se
 | v8 | no ML-constant substitution passed G1; real-fuel freezing: status: no skill shown | `docs/final_numbers_v8.md` |
 | v9 | 539 new dedup groups (ThermoML, Boehm 2022) built in `data/unified_v9/`; 14 new systems, 4 locked; no freezing fuel added; Antoine refits mostly failed the flash-window gate | `docs/final_numbers_v9.md` |
 | v10 | 3 PDFs supplied, 25 perhydrophenanthrene vapour-pressure points verified against page images, 0 new fuel rows; closed as a negative result | `docs/final_numbers_v10.md` |
+| v11c | minor optimisations: xylene eutectic fixed (S_F MAE 3.935 to 3.648 UNIFAC); seed averaging, pure-compound ensembles, tuned random forest, viscosity hybrid and lock constants: not adopted or not done | `docs/final_numbers_v11c.md` |
 | v11, v11b | nested-CV tuning of the viscosity and density pair models. Viscosity: not adopted (cold-bin margin guard failed). Density: adopted (loss l1, 296 trees, lr 0.03, 11 leaves); dev ML MAE 0.958 to 0.908 kg/m3, locked second look 0.897 to 0.839; still a labelled variant, ternaries about equal to ideal | `docs/final_numbers_v11.md`, `docs/v11b_predeclaration.md` |
 
 ## 16. Handoff checklist

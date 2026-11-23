@@ -41,6 +41,7 @@ BLOCKS = [
     ("10d. v9 audit", "final_numbers_v9.md", "E. Audit"),
     ("11. v9 statements", "final_numbers_v9.md", "F. Statements"),
     ("11b. v11 and v11b tuning (viscosity not adopted)", "final_numbers_v11.md", "B. v11b nested tuning"),
+    ("11c. v11c minor optimisations (xylene correction applied; it supersedes the S_F lab-liquidus MAEs 4.474 and 3.935 quoted in sections 1 and 2; others not adopted)", "final_numbers_v11c.md", "v11c final numbers"),
     ("12. v5 negative results (kept)", "final_numbers_v5.md", "F. Negative results"),
     ("13. Limitations (v5)", "final_numbers_v5.md", "G. Limitations"),
 ]

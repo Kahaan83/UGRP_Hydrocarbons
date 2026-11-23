@@ -12,7 +12,7 @@ Docs (read only when needed): `docs/PROJECT_HANDOFF.md`, `docs/GUIDE.md`, `docs/
 - Public API: `src/fuelblend/api/predict_route.py` (`predict_fuel()`).
 
 ## Commands (Windows, PowerShell, Python 3.12 in `.venv`)
-- Tests: `.venv\Scripts\python.exe -m pytest -q` (run one file/test, full suite only at the end). Baseline (2026-11-23, full run): 909 passed, 2 skipped, 2 failed. `test_committed_splits_match_rebuild` fails (known, AJFTD input hash); `test_fit_ensemble_logger_none_bitwise` is load-sensitive and passes alone (8 passed in `tests/test_v7_curves.py`).
+- Tests: `.venv\Scripts\python.exe -m pytest -q` (run one file/test, full suite only at the end). Baseline (2026-11-23, full run after v11c): 910 passed, 2 skipped, 1 failed. `test_committed_splits_match_rebuild` fails (known, AJFTD input hash); `test_fit_ensemble_logger_none_bitwise` is load-sensitive (passed in this run, failed once under load).
 - Setup: AJFTD tools need `beautifulsoup4` and `playwright`; after install run `python -m playwright install chromium`.
 - Keep the project out of OneDrive if possible (~800 small files, ~600 MB raw data sync badly; deep zip paths hit the Windows 260-char limit).
 - v5 baseline check: `python scripts/v5/base/reproduce_base.py`

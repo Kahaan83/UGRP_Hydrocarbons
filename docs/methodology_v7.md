@@ -57,4 +57,8 @@ A random search of 30 LightGBM configurations for the viscosity pair residual, s
 
 A second, nested analysis (outer GroupKFold(5), inner GroupKFold(3), Optuna TPE with loss and weighting in the search) gave the same verdict for viscosity (the below-263 K margin guard failed) and adopted new settings for the density pair model (L1 loss, 296 trees, learning rate 0.03, 11 leaves). Density remains a labelled variant; its locked-system numbers are a second look.
 
+## 10. v11c: minor optimisations
+
+The o-/m-xylene eutectic composition was corrected (it was entered transposed), which lowers the lab liquidus freezing MAE to 3.65 C (UNIFAC) and 4.19 C (ideal) without changing the margins. Averaging five seeds, averaging the deployed pure-compound models, and tuning the random forest each showed no gain that survived the interval and Holm rules. Numbers: `docs/final_numbers_v11c.md`.
+
 The fresh v7 flash lock (61 Leenhouts mixture systems, 658 rows) could not be scored: the v5 flash route lacks Antoine or LFL constants for every lock compound and HANNA is binary only. The primary comparison (HANNA against UNIFAC) is not evaluated. See `results/v7/lock/scored/NOT_SCORABLE.md`.
