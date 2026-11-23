@@ -1,0 +1,5 @@
+filename,sha256,is_pdf,n_pages,has_text_layer,title_from_sources_txt,status
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,faa1d0f2e569ac959fb422de1bd3645f917e95056c493d554487766a160f24c8,True,10,True,,ok
+je500381c_si_001.pdf,7f46a20992234c7d73f547a23d336a5e04a642edc924f66fdd13d8676fb72657,True,23,True,,ok
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,24d4a64b7f5ee4de56141c410071a62ea2533a7e96507ca2b1a20d620d86994a,True,6,True,,ok
+AIAA 2017-0146,,False,0,False,,not provided
