@@ -174,5 +174,14 @@ def combine():
     print(json.dumps(out, indent=1))
 
 
+def final(which):
+    """Run the tuning procedure once on all dev systems; the result is the config used if the model is adopted."""
+    S = Setup(which)
+    (prm, p), raw, val = tune_fold(S, S.dev_rows)
+    out = dict(model=which, inner_macro=val, params=raw, lgb=prm, weight_exponent=p)
+    (OUT / f"{which}_final_params.json").write_text(json.dumps(out, indent=1, default=float))
+    print(json.dumps(out, indent=1, default=float))
+
+
 if __name__ == "__main__":
-    {"visc": lambda: run("visc"), "dens": lambda: run("dens"), "combine": combine}[sys.argv[1]]()
+    {"final_dens": lambda: final("dens"), "visc": lambda: run("visc"), "dens": lambda: run("dens"), "combine": combine}[sys.argv[1]]()
