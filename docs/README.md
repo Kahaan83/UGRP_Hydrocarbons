@@ -6,6 +6,7 @@ Status labels: **current** = kept up to date, **reference** = accurate for its r
 
 | File | Status | Purpose |
 |---|---|---|
+| `CURRENT_NUMBERS.md` | current, generated | latest value of every quantity changed after the v5 freeze, with the v5 value it replaces (`scripts/paper/build_current_numbers.py`) |
 | `RESULTS_FOR_PAPER.md` | current, generated | every paper number in one place, copied from the final-numbers docs (`scripts/paper/build_paper_numbers.py`) |
 | `PROJECT_HANDOFF.md` | current | state, rules, repository map, known issues, open items |
 | `GUIDE.md` | current | concepts from zero, decisions, glossary |

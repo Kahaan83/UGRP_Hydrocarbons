@@ -8,8 +8,8 @@ Blend properties (viscosity, density, flash point, freezing point, heat, smoke p
 
 ## 2. Blend properties
 
-* Viscosity: Refutas blending with an optional LightGBM pair residual, gated on locked systems.
-* Density: ideal volume mixing with an optional LightGBM excess-volume residual.
+* Viscosity: Refutas blending with an optional LightGBM pair residual, gated on locked systems. Since v11c the residual is a hybrid: a nested-tuned model at 283.15 K and above, the v5 model below.
+* Density: ideal volume mixing with an optional LightGBM excess-volume residual (nested-tuned settings since v11b).
 * Flash point: Le Chatelier rule with Raoult's law, anchored Antoine constants and an LFL overlay. Ideal activity coefficients. HANNA and UNIFAC activity coefficients showed no skill against ideal on hydrocarbon binaries; Antoine constants predicted by a D-MPNN head over-predict flash by 16 degC and are not used.
 * Freezing point: Schroeder-van Laar with UNIFAC. Real-fuel freezing: status: no skill shown. Learned residual models were tied with simpler ones on development rows and did not reopen that verdict.
 * Uncertainty: one-sided 90 percent conformal margins from held-out lab systems. Row-level, family-conditional and shift-weighted margins were studied (coverage by family) and remain exploratory.

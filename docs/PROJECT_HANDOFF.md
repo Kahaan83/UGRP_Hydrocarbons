@@ -26,7 +26,7 @@ The project predicts six properties of a hydrocarbon fuel blend (kinematic visco
 | Full pre-simplification state | git tag `v5-full-2026-11-16` |
 | Other branches / tags | branches `main`, `v4-integrity`, `v4-review-fixes`, `v5`; tags `v2.1-2026-11-05`, `v3-2026-11-06`, `v4`, `v4-r3-final`, `v5-full-2026-11-16` |
 | Python | 3.12.5 in the repo `.venv` (Windows). The deck/PDF tooling uses a separate `py -3.11` |
-| Source of truth for numbers | `docs/RESULTS_FOR_PAPER.md` (built from `docs/final_numbers_v5.md`, `_v7`, `_v8`, `_v9`, `_v10`) |
+| Source of truth for numbers | `docs/CURRENT_NUMBERS.md` (latest values changed since v5) and `docs/RESULTS_FOR_PAPER.md` (built from `docs/final_numbers_v5.md`, `_v7`, `_v8`, `_v9`, `_v10`) |
 
 **Rules the user has set (keep following them):**
 
@@ -132,8 +132,8 @@ Full detail and worked examples: `docs/GUIDE.md` parts A and 3. The designated r
 
 | Property | Designated method | Learned part | Applied margin |
 |---|---|---|---|
-| Density | ideal volume mixing, 1/rho = sum w_i/rho_i | `ml_pair_excess_volume`: a labelled variant for known binaries only (v5 settings failed ternaries, 3.92 against 3.64 kg/m3 for ideal; after v11b tuning ternaries are about equal, 3.64, so still a variant) | +4.59 / -3.25 kg/m3 (ML variant +/-4.42) |
-| Kinematic viscosity | Refutas (VBN = 14.534 ln(ln(nu+0.8)) + 10.975) | `ml_pair_residual` (LightGBM on pair features) is the designated value **inside its domain** (known molecules, 233 to 393 K, class pairs seen at least 5 times, no stand-ins) | ML: 0.134 ln (283 K and above), 0.608 (263 to 283 K), 0.287 (below 263 K); Refutas 0.186 |
+| Density | ideal volume mixing, 1/rho = sum w_i/rho_i | `ml_pair_excess_volume`: a labelled variant for known binaries only (v5 settings failed ternaries, 3.92 against 3.64 kg/m3 for ideal; after v11b tuning ternaries are about equal, 3.64, so still a variant) | +4.59 / -3.25 kg/m3 (ML variant +/-4.42, unchanged to 4 s.f. by the retune) |
+| Kinematic viscosity | Refutas (VBN = 14.534 ln(ln(nu+0.8)) + 10.975) | `ml_pair_residual` (LightGBM on pair features) is the designated value **inside its domain** (known molecules, 233 to 393 K, class pairs seen at least 5 times, no stand-ins) | ML: 0.120 ln (283 K and above; v11c hybrid, 0.134 before), 0.608 (263 to 283 K), 0.287 (below 263 K); Refutas 0.186 |
 | Flash point | Le Chatelier + Raoult + Antoine (anchored to measured vapour pressure) + Zabetakis LFL correction, solved with `brentq` on 150 to 650 K; registry overlay adds bicyclohexyl and cis-decalin | none (nothing fitted to blends) | 2.207 C (35 lab systems; the yaml value 3.699 is superseded) |
 | Freezing point | Schroeder-van Laar with UNIFAC activity coefficients (`svl_unifac`); ideal SvL is a reported variant | none | 13.84 C (variant 16.98 C); lab margin only |
 | Net heat of combustion | group additivity, sum w_i dH_c,i | none | none; reported only |
@@ -155,7 +155,7 @@ Full detail and worked examples: `docs/GUIDE.md` parts A and 3. The designated r
 | Flash (real fuels, T2, 70 groups) | MAE 2.196 C vs trivial 5.156, bias +0.06 C | beats trivial, **descriptive** |
 | Flash (AJFTD GCxGC, 31 fuels) | bias -0.152, MAE 2.995 | beats trivial after the overlay |
 | Flash (D56) | rests on one GC fuel (POSF-10325) | no margin |
-| Freezing (lab liquidus, 12 systems, 73 points) | UNIFAC MAE 3.93 C, bias +2.47, margin 13.84; ideal 4.47 / +1.17 / 16.98; constant 15.63 | lab skill only |
+| Freezing (lab liquidus, 12 systems, 73 points) | UNIFAC MAE 3.65 C, bias +2.18, margin 13.84; ideal 4.19 / +0.88 / 16.98; constant 15.63 (v11c xylene correction; was 3.93 and 4.47) | lab skill only |
 | Freezing (real fuels) | pooled n 50: 8.425 vs trivial 6.413; locked n 8: 9.31 vs 5.176 | no skill / worse than trivial; bias +4 to +6 C (safe side) |
 | Smoke | 0.904 mm MAE on the 100-fuel set (beats trivial); broad set 1.679 vs about 1.65 | no skill on broad set |
 | Heat of combustion | reconstructed CRC fuels worse than trivial (0.376 vs 0.114); AJFTD bulk models beat trivial | no margin issued |
