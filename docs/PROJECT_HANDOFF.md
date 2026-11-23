@@ -1,10 +1,10 @@
 # PROJECT HANDOFF: UGRP Hydrocarbons (fuel-blend property prediction)
 
-State as of 2026-11-16 (the day before the faculty presentation on 2026-11-17). Written so that a person or an agent who has never seen this project can pick it up without asking anyone.
+State as of 2026-11-23 (v10 closed; paper-writing phase). Written so that a person or an agent who has never seen this project can pick it up without asking anyone.
 
-**Read order for a newcomer:** this file (all of it), then `docs/GUIDE.md` (teaches every concept from zero), then `docs/final_numbers_v5.md` (every number), then `README.md`.
+**Read order for a newcomer:** this file (all of it), then `docs/README.md` (index of current and historical docs), `docs/GUIDE.md` (teaches every concept from zero), `docs/RESULTS_FOR_PAPER.md` (every paper number, generated), then `README.md`.
 
-**What this file replaces.** `AGENTS.md` (repo root) is a v1-era handoff. Its sections 2, 6 (data schema), 9 (bugs fixed) and 13 (conventions) are still correct and useful; its "current state" and "next steps" sections are historic. `docs/PROJECT_HANDOFF.md` is the v4-era handoff (dated 2026-11-09), also historic. Where they conflict with this file, this file and `docs/final_numbers_v5.md` win.
+**What this file replaces.** The v4-era handoff of the same name and the v1-era handoff in `AGENTS.md` are superseded. Where older docs conflict with this file, `docs/RESULTS_FOR_PAPER.md` and the `docs/final_numbers_v*.md` files win.
 
 ---
 
@@ -22,11 +22,11 @@ The project predicts six properties of a hydrocarbon fuel blend (kinematic visco
 | Authors, in order | Kahaan Shah (first), Namyaa Parmar (second); faculty: Arijit Ganguli, A. S. K. Sinha |
 | Presentation | faculty presentation 2026-11-17; a conference deck (ChemCon-style, 16 slides) also exists |
 | Repo root | `C:\Users\kahaa\OneDrive\Desktop\UGRP_hydrocarbons` |
-| Working branch | `v5-simple` (a simplified copy of `v5`) |
+| Working branch | `feat/external-datasets-ingest` (holds v5 to v10) |
 | Full pre-simplification state | git tag `v5-full-2026-11-16` |
 | Other branches / tags | branches `main`, `v4-integrity`, `v4-review-fixes`, `v5`; tags `v2.1-2026-11-05`, `v3-2026-11-06`, `v4`, `v4-r3-final`, `v5-full-2026-11-16` |
 | Python | 3.12.5 in the repo `.venv` (Windows). The deck/PDF tooling uses a separate `py -3.11` |
-| Source of truth for numbers | `docs/final_numbers_v5.md` and `Fuel_Blend_Methodology.pdf` |
+| Source of truth for numbers | `docs/RESULTS_FOR_PAPER.md` (built from `docs/final_numbers_v5.md`, `_v7`, `_v8`, `_v9`, `_v10`) |
 
 **Rules the user has set (keep following them):**
 
@@ -36,9 +36,9 @@ The project predicts six properties of a hydrocarbon fuel blend (kinematic visco
 4. **No lab test.** Certification stays model-level and must say so.
 5. **Wording.** Use "calibrated", "scope", "validated range", "status: no skill shown". Do not write "honest" or "we say so" in presentation or paper text. Prose should be direct and academic, no em dashes in decks or manuscript.
 6. **No attribution lines** in git commit messages or pull request descriptions.
-7. **Nothing is pushed** from this branch unless the user asks (the earlier `v5` push on 2026-11-15 was explicitly approved).
+7. **Push only when the user asks** (pushing this branch after the v10 and paper-prep commits was approved on 2026-11-23).
 8. **Treat personal and project details as private** (do not paste them into external services).
-9. **The manuscript is paused** ("dont write the manuscript now"). Do not start it unless asked.
+9. **The manuscript is active** (`manuscript/main.tex`, `references.bib`, `figures/`). Verify every `references.bib` entry before citing.
 
 ---
 
@@ -227,10 +227,10 @@ Other standing decisions: pour point scoped out (`docs/scope_decisions.md` SD-01
 
 **Engineering state**
 
-13. Tests: `tests/test_base_*.py` = 47 passed, 1 skipped (run 2026-11-16 on `v5-simple`). The last **full** run was 785 passed / 0 failed before the simplification; the full suite has **not** been re-run on `v5-simple`. Run it before trusting the branch for new work.
-14. Git: working tree on `v5-simple` has one modified file (`docs/data_audit_2026-11-11.md`) and untracked items (`docs/abstracts/Abstract_Chemcon2026_final (1).docx` and three plan files in `docs/superpowers/plans/`, which the user decided to leave untracked). `GUIDE.md` was rewritten and this file added on 2026-11-16 and are not yet committed. Nothing from `v5-simple` is pushed.
-15. A PowerPoint COM instance left over from rendering may still hold `UGRP_Faculty_Presentation.pptx` open; if the file reports "permission denied", close PowerPoint windows or the stale `POWERPNT.EXE` process.
-16. The simplified branch removed the v2/v3 scripts, `archive/` (except manifests), `jobs/`, `fuels.csv` and `results/v2`. The full tree is at tag `v5-full-2026-11-16`; GPU job files lived in `jobs/v5_gpu/` there.
+13. Tests: last full run 2026-11-23 on this branch is recorded in section 16 below. One known failure, `test_committed_splits_match_rebuild` (input hash of the AJFTD long/wide files differs), is deliberately left unchanged.
+14. Git: branch `feat/external-datasets-ingest`; `results/v5/BASE/delta_*` shows as modified in `git status` only because of line endings (`git diff --ignore-cr-at-eol` is empty and the manifest hashes match). Do not stage, checkout or normalise them.
+15. `data/unified/` is the v5 production set (76,328 dedup rows). The v9 additions are in `data/unified_v9/` (gitignored, rebuild with `scripts/v9/build_unified_v9.py`); v5 and earlier results are not retrained on them.
+16. The simplified-branch history is kept: the full pre-simplification tree is at tag `v5-full-2026-11-16`.
 
 **Deliverable caveats**
 
@@ -239,18 +239,13 @@ Other standing decisions: pour point scoped out (`docs/scope_decisions.md` SD-01
 
 ---
 
-## 11. Suggested next steps (suggestions, in priority order; none is started)
+## 11. Open items (none started)
 
-1. **Before the presentation:** read `UGRP_Faculty_Talking_Points.pdf` and `docs/GUIDE.md` sections 0, 6, 8 and 13 once; rehearse the qualifiers (model-level only, descriptive, no lab).
-2. Run the full test suite on `v5-simple` and record the result in this file (`python -m pytest -q`).
-3. Commit the documentation (`docs/GUIDE.md`, `PROJECT_HANDOFF.md`) on `v5-simple`; push only if the user asks.
-4. Verify the spec limits against the standards (ASTM D1655, D7566, IS 1571, Def Stan 91-091) and upgrade the `verification:` flags in `configs/specs_*.yaml`; then re-run pool C and the 16 designs.
-5. Obtain lab or literature ternary-and-above data for flash, freezing and viscosity margins (the main scientific gap); 8 or more systems per class mix are needed for a finite 90 % margin.
-6. Score the unused datasets (Oakley 2017 freezing; Yang 2006 smoke) and test the ML density model on real fuels.
-7. Fix or document the xylene eutectic transposition after checking the primary paper.
-8. When the user lifts the pause: write the manuscript from `docs/final_numbers_v5.md` and `Fuel_Blend_Methodology.pdf`, verify every `refs.bib` entry first.
-
----
+1. Paper: write from `docs/RESULTS_FOR_PAPER.md`; verify `manuscript/references.bib`; qualifiers stay beside every claim.
+2. Spec limits: verify against ASTM D1655, D7566, IS 1571, Def Stan 91-091 and upgrade the `verification:` flags in `configs/specs_*.yaml`.
+3. Data gap: real-fuel freezing and cold viscosity need verified fuel-level data (Edwards 2017, AIAA 2017-0146, and the true AFRL-TR-2020-0017 / DTIC AD1093317 were not obtained; the supplied AFRL file is a different paper). Multicomponent flash, freezing and viscosity margins need 8 or more systems per class.
+4. v7 fresh flash lock: not scorable with the v5 route (all 61 systems lack Antoine or LFL constants; HANNA is binary only). Needs constants for the lock compounds first.
+5. Fix or document the o-/m-xylene eutectic transposition after checking the primary paper.
 
 ## 12. Troubleshooting
 
@@ -292,11 +287,21 @@ Every term (Refutas, VBN, Antoine, LFL, SvL, UNIFAC, conformal margin, locked se
 
 ---
 
-## 15. Handoff checklist (tick these before you start working)
+## 15. Since v5 (v6 to v10), one line each
+
+| Round | Outcome | Source |
+|---|---|---|
+| v6 | freezing holdout scored once; pure-compound GNN and mixture retries; failures kept | `docs/v6_summary.md`, `docs/v6_negative_results.md` |
+| v7 | pure-compound models (random forest or D-MPNN per property) deployed in `predict_pure`; no blend route replaced the v5 designated route; fresh flash lock not scorable | `docs/final_numbers_v7.md`, `docs/methodology_v7.md` |
+| v8 | no ML-constant substitution passed G1; real-fuel freezing: status: no skill shown | `docs/final_numbers_v8.md` |
+| v9 | 539 new dedup groups (ThermoML, Boehm 2022) built in `data/unified_v9/`; 14 new systems, 4 locked; no freezing fuel added; Antoine refits mostly failed the flash-window gate | `docs/final_numbers_v9.md` |
+| v10 | 3 PDFs supplied, 25 perhydrophenanthrene vapour-pressure points verified against page images, 0 new fuel rows; closed as a negative result | `docs/final_numbers_v10.md` |
+
+## 16. Handoff checklist
 
 - [ ] Read this file, then `docs/GUIDE.md` Part A and sections 0, 6, 8.
-- [ ] `git status` and `git log --oneline -5` on branch `v5-simple`; confirm tag `v5-full-2026-11-16` exists.
+- [ ] `git status` and `git log --oneline -5` on branch `feat/external-datasets-ingest`; confirm tag `v5-full-2026-11-16` exists.
 - [ ] `.venv\Scripts\python.exe -m pytest tests/test_base_*.py -q` shows 47 passed, 1 skipped.
 - [ ] `scripts/v5/base/reproduce_base.py` reports no drift.
-- [ ] Decide whether to run the full test suite (item 13) before editing code.
-- [ ] Re-read the rules in section 2 (no number changes, qualifiers stay, negative results stay, no attribution lines, nothing pushed unless asked).
+- [ ] Run the full test suite before editing code (item 13); expect one known failure.
+- [ ] Re-read the rules in section 2 (no number changes, qualifiers stay, negative results stay, no attribution lines, push only when asked).
