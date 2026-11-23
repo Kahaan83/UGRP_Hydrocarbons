@@ -46,3 +46,9 @@ Question: can out-of-fold pure-compound ML values replace measured constants in 
 The v9 round added data from sources whose values could be checked against the original files. Boehm 2022 neat real-fuel viscosities (checked cell by cell against the workbook) and ThermoML 2020 files not in v5 (checked against the archive) entered `data/unified_v9/`. Edwards 2017 and the pure-compound drafts could not be verified (the DTIC and ROSAP links returned HTML pages) and were withheld. All seven Antoine refit candidates failed for lack of verified source data.
 
 The lock rule is md5 of the system id modulo 4 equal to 0, applied only to new v9 systems: 4 of 14 were locked, once. No freezing fuel was added and no composition-bearing viscosity system was added, so the 8-fuel floors were not met. Real-fuel freezing point: status: no skill shown. Cold viscosity: status: no skill shown. Numbers: `docs/final_numbers_v9.md`.
+
+## 8. v10: PDF transcription (negative result)
+
+Three user-supplied PDFs were registered. Of the 25 perhydrophenanthrene vapour-pressure points drafted, all 25 matched the rendered page image (454.7 to 551.6 K), but the Antoine refit failed the flash-window gate (no points in 40 to 100 degC). The supplied file labelled AFRL-TR-2020-0017 is a different paper and contains no fuel property tables, and AIAA 2017-0146 was not supplied. No fuel-level row was added, so real-fuel freezing point and cold viscosity remain: status: no skill shown. Numbers: `docs/final_numbers_v10.md`.
+
+The fresh v7 flash lock (61 Leenhouts mixture systems, 658 rows) could not be scored: the v5 flash route lacks Antoine or LFL constants for every lock compound and HANNA is binary only. The primary comparison (HANNA against UNIFAC) is not evaluated. See `results/v7/lock/scored/NOT_SCORABLE.md`.
