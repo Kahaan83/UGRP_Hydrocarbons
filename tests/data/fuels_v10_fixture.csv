@@ -1,0 +1,7 @@
+source_id,table_or_page,sample_id,kind,property,value,unit,T_C,method,qualifier,note,page,table,confidence,raw_text,extraction
+edwards2017,"Table A-3, p14",POSF-10264,real_fuel,freezing_point_C,−47,C,,ASTM D5972,,A-1 JP-8,14,Table A-3,clear,−47,text_layer
+edwards2017,"Table A-3, p14",POSF-10289,real_fuel,freezing_point_C,–47,C,,ASTM D5972,,A-3 JP-5,14,Table A-3,clear,–47,text_layer
+edwards2017,"Table A-3, p14",POSF-4658,real_fuel,freezing_point_C,-47,C,,ASTM D5972,,Jet A baseline,14,Table A-3,clear,-47,text_layer
+edwards2017,"Table A-3, p14",POSF-10325,real_fuel,viscosity_kin_cSt,4.5,mm2/s,-20.0,ASTM D445,,A-2 Jet A,14,Table A-3,clear,4.5,text_layer
+edwards2017,"Table A-3, p14",POSF-11498,real_fuel,flash_point_C,104.0,degF,,ASTM D56,,C-1 ATJ,14,Table A-3,clear,104.0,text_layer
+edwards2017,"Table A-3, p14",POSF-10325,real_fuel,viscosity_kin_cSt,8.5,cSt,-40.0,ASTM D445,,A-2 Jet A,14,Table A-3,clear,8.5,text_layer
