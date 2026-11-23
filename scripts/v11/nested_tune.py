@@ -184,4 +184,4 @@ def final(which):
 
 
 if __name__ == "__main__":
-    {"final_dens": lambda: final("dens"), "visc": lambda: run("visc"), "dens": lambda: run("dens"), "combine": combine}[sys.argv[1]]()
+    {"final_dens": lambda: final("dens"), "final_visc": lambda: final("visc"), "visc": lambda: run("visc"), "dens": lambda: run("dens"), "combine": combine}[sys.argv[1]]()

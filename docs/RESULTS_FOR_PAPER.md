@@ -383,7 +383,7 @@ Margin guard satisfied: False. Viscosity is therefore not adopted although the g
 
 Density dev ternary rows (615), MAE kg/m3: ideal 3.644, v5 ML 3.902, tuned ML 3.661.
 
-## 11c. v11c minor optimisations (xylene correction applied; it supersedes the S_F lab-liquidus MAEs 4.474 and 3.935 quoted in sections 1 and 2; others not adopted)
+## 11c. v11c minor optimisations (xylene correction applied; it supersedes the S_F lab-liquidus MAEs 4.474 and 3.935 quoted in sections 1 and 2, and the viscosity hybrid supersedes the ML viscosity numbers of section 3 and the v11 viscosity statement of section 11b; others not adopted)
 
 Source: `docs/final_numbers_v11c.md`, heading "v11c final numbers"
 
@@ -411,9 +411,25 @@ The only v9 density binary system absent from v5 (2c635cfd3548, 45 rows) is in t
 | visc | 0.0599 | 0.0598 | 0.0001 | -0.0002 to 0.0004 | False |
 | dens | 0.9076 | 0.9018 | 0.0057 | -0.0044 to 0.0163 | False |
 
-## 4. Viscosity warm-only hybrid (post hoc)
+## 4. Viscosity hybrid: tuned model in warm bins (T >= 283.15 K), v5 model below (adopted, post hoc)
 
-Evaluated from the v11b out-of-fold numbers (`docs/final_numbers_v11.md`): warm gain 0.0021 ln, interval 0.0002 to 0.0041, warm margin 0.1343 to 0.1258; cold bins unchanged by construction. Not applied: it would shift viscosity values in the design runs and the choice was made after seeing the guard failure. Status: not adopted.
+Requested after the v11b result and chosen after seeing the cold-bin guard fail, so it is post hoc. Warm settings are those of the v11b final tuning (`results/v11/nested/visc_final_params.json`, tuned on all dev systems, so the dev and locked readings below are mildly optimistic). Cold bins use the unchanged v5 model; its predictions were verified identical to the pre-hybrid model (maximum absolute difference 0 on 3000 random pairs, 220 to 330 K). Locked rows are a second look, not a fresh hold-out.
+
+| reading | before | after |
+|---|---|---|
+| R-MLV-1 dev out-of-fold warm macro MAE (ln) | 0.0599 | 0.0572 |
+| R-MLV-2 locked warm macro MAE (ln) | 0.0311 | 0.0290 |
+| R-MLV-4 cold macro MAE (ln) | 0.0612 | 0.0612 |
+| R-MLV-3 ternaries MAE (ln) | 0.0398 | 0.0423 |
+| margin T >= 283 K (ln) | 0.1343 | 0.1195 |
+| margin 263 to 283 K and below 263 K (ln) | 0.6084 and 0.2875 | 0.6084 and 0.2875 (unchanged) |
+| locked systems covered, T >= 283 K | 64 of 70 | 63 of 70 |
+
+Honest (nested, per-fold tuned) estimate for the warm margin: 0.1258 ln, against 0.1195 deployed from the all-dev settings. Ternary MAE rises slightly (R-MLV-3 still passes). The nested rule applied to the whole model still fails on the cold-bin guard, which is why the hybrid keeps v5 below 283.15 K.
+
+Designs: viscosity is constrained at -20 C only, a cold bin, so the hybrid cannot change any design. Check: pool P0, spec astm:jet_a, 10 starts, seed 42 re-run with the hybrid and with the warm model removed; designs.csv identical except timing columns: True (`results/v11/hybrid_check/`). The other 15 design runs were not repeated. These re-runs differ from the committed BASE design rows (for example density 791.53 against 784.26 kg/m3 at the P0 optimum), a drift from changes since 2026-11-15 that is not caused by the hybrid and is left unresolved.
+
+Status: adopted for T >= 283.15 K as a labelled variant (the designated route stays Refutas).
 
 ## 5a. Ensembles of the deployed pure-compound models (saved scaffold-CV predictions)
 

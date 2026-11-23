@@ -25,8 +25,14 @@ def test_order_invariant_and_symmetric():
 
 
 def test_fixture_prediction_pinned():
-    assert abs(vp.ln_correction(S, [0.3, 0.4, 0.3], 298.15) - (-0.11807490658002913)) < 1e-9
-    assert abs(vp.ln_correction(S[:2], [0.5, 0.5], 298.15) - (-0.09307318764893947)) < 1e-9
+    # warm bin (298.15 K): v11c tuned warm model
+    assert abs(vp.ln_correction(S, [0.3, 0.4, 0.3], 298.15) - (-0.11354700154179026)) < 1e-9
+    assert abs(vp.ln_correction(S[:2], [0.5, 0.5], 298.15) - (-0.08783985085020041)) < 1e-9
+
+
+def test_cold_bin_unchanged_by_hybrid():
+    # below 283.15 K the v5 model is used; the value was verified identical to the pre-v11c model (max |dg| = 0 on 3000 random pairs)
+    assert abs(vp.ln_correction(S, [0.3, 0.4, 0.3], 253.15) - 0.03257997765578142) < 1e-9
 
 
 def test_readings_keys_and_meta():

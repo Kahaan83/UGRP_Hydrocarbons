@@ -296,7 +296,7 @@ Every term (Refutas, VBN, Antoine, LFL, SvL, UNIFAC, conformal margin, locked se
 | v8 | no ML-constant substitution passed G1; real-fuel freezing: status: no skill shown | `docs/final_numbers_v8.md` |
 | v9 | 539 new dedup groups (ThermoML, Boehm 2022) built in `data/unified_v9/`; 14 new systems, 4 locked; no freezing fuel added; Antoine refits mostly failed the flash-window gate | `docs/final_numbers_v9.md` |
 | v10 | 3 PDFs supplied, 25 perhydrophenanthrene vapour-pressure points verified against page images, 0 new fuel rows; closed as a negative result | `docs/final_numbers_v10.md` |
-| v11c | minor optimisations: xylene eutectic fixed (S_F MAE 3.935 to 3.648 UNIFAC); seed averaging, pure-compound ensembles, tuned random forest, viscosity hybrid and lock constants: not adopted or not done | `docs/final_numbers_v11c.md` |
+| v11c | minor optimisations: xylene eutectic fixed (S_F MAE 3.935 to 3.648 UNIFAC); viscosity hybrid adopted post hoc (tuned warm model for T >= 283.15 K, v5 below; warm margin 0.134 to 0.120 ln; designs unaffected, cold only); seed averaging, pure-compound ensembles, tuned random forest and lock constants: not adopted or not done | `docs/final_numbers_v11c.md` |
 | v11, v11b | nested-CV tuning of the viscosity and density pair models. Viscosity: not adopted (cold-bin margin guard failed). Density: adopted (loss l1, 296 trees, lr 0.03, 11 leaves); dev ML MAE 0.958 to 0.908 kg/m3, locked second look 0.897 to 0.839; still a labelled variant, ternaries about equal to ideal | `docs/final_numbers_v11.md`, `docs/v11b_predeclaration.md` |
 
 ## 16. Handoff checklist

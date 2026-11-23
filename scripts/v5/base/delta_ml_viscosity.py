@@ -121,10 +121,10 @@ def targets(R, Ptr):
     return g, w / tot
 
 
-def fit_lgb(Ptr, g, w):
+def fit_lgb(Ptr, g, w, warm=False):
     import lightgbm as lgb
-    from fuelblend.ml.viscosity_pair import FEATURES, LGB_PARAMS
-    m = lgb.LGBMRegressor(**LGB_PARAMS)
+    from fuelblend.ml.viscosity_pair import FEATURES, LGB_PARAMS, LGB_PARAMS_WARM
+    m = lgb.LGBMRegressor(**(LGB_PARAMS_WARM if warm else LGB_PARAMS))
     m.fit(Ptr[FEATURES], g, sample_weight=w, categorical_feature=["class_pair"])
     return m
 
@@ -137,9 +137,10 @@ def fit_baselines(Ptr, g, w):
 
 
 def predict_all(model, base, P):
-    from fuelblend.ml.viscosity_pair import FEATURES
+    """model = (cold LGBMRegressor, warm LGBMRegressor); ml is the v11c hybrid (warm model where T >= 283.15 K)."""
+    from fuelblend.ml.viscosity_pair import hybrid_predict
     g0, tab = base
-    return dict(ml=model.booster_.predict(P[FEATURES]), const=np.full(len(P), g0),
+    return dict(ml=hybrid_predict(model[0].booster_, model[1].booster_, P), const=np.full(len(P), g0),
                 classpair=np.array([tab.get(int(c), g0) for c in P.class_pair]))
 
 
@@ -205,7 +206,7 @@ def main():
         tr_sys = set(sysarr[dev_rows[tr]])
         Ptr = train_set(R, P, tr_sys)
         g, w = targets(R, Ptr)
-        model, base = fit_lgb(Ptr, g, w), fit_baselines(Ptr, g, w)
+        model, base = (fit_lgb(Ptr, g, w), fit_lgb(Ptr, g, w, warm=True)), fit_baselines(Ptr, g, w)
         te_rows = dev_rows[te]
         Pte = P[P.row.isin(te_rows)]
         for k, gv in predict_all(model, base, Pte).items():
@@ -218,8 +219,9 @@ def main():
     # ---- final model on all dev systems
     Ptr = train_set(R, P, set(dev_sys))
     g, w = targets(R, Ptr)
-    model, base = fit_lgb(Ptr, g, w), fit_baselines(Ptr, g, w)
-    model.booster_.save_model(str(MODEL_DIR / "model.txt"))
+    model, base = (fit_lgb(Ptr, g, w), fit_lgb(Ptr, g, w, warm=True)), fit_baselines(Ptr, g, w)
+    model[0].booster_.save_model(str(MODEL_DIR / "model.txt"))
+    model[1].booster_.save_model(str(MODEL_DIR / "model_warm.txt"))
     final_pairs = {tuple(sorted((a, b))) for a, b in zip(Ptr.ia, Ptr.ib)}
     cps = pd.DataFrame({"s": sysarr[Ptr.row.to_numpy()], "c": Ptr.class_pair.to_numpy()}).drop_duplicates()
     cp_counts = {vp.CLASS_PAIRS[int(c)]: int(k) for c, k in cps.groupby("c").size().items()}
@@ -334,7 +336,7 @@ def main():
     inputs = (RES_CSV, SPLIT, ROOT / "data/unified/measurements_dedup.csv", ROOT / "data/real_fuels/v5/boehm2022_viscosity.csv",
               ROOT / "data/unified/compounds.csv")
     meta = dict(model="LightGBM pair g(d_i,d_j,T); ln eta_ML = ln eta_Refutas + sum_{i<j} x_i x_j g", features=vp.FEATURES, class_pairs=vp.CLASS_PAIRS,
-                lgb_params=vp.LGB_PARAMS, winsor_ln=WINS, xmin=XMIN, seed=SEED, T_min_K=(100.0 if c4["pass"] else T_WARM),
+                lgb_params=vp.LGB_PARAMS, lgb_params_warm=vp.LGB_PARAMS_WARM, winsor_ln=WINS, xmin=XMIN, seed=SEED, T_min_K=(100.0 if c4["pass"] else T_WARM),
                 class_pair_training_systems=cp_counts, grid_sha256=GRID_SHA,
                 input_sha256={str(p.relative_to(ROOT)).replace("\\", "/"): sha(p) for p in inputs},
                 cv_scores=dict(dev_oof_warm_macro_mae_refutas=r1["ml"]["mae_a"], dev_oof_warm_macro_mae_ml=r1["ml"]["mae_b"],

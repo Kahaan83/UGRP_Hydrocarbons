@@ -27,7 +27,27 @@ o += ["", "Margins are the worst-error order statistics over 12 systems and did 
       "## 3. Seed averaging (5 seeds), outer dev folds", "", "| model | single seed MAE | 5-seed MAE | gain | 95 % interval | adopted |", "|---|---|---|---|---|---|"]
 for k, r in sd.items():
     o.append(f"| {k} | {f(r['mae_single'])} | {f(r['mae_avg5'])} | {f(r['gain'])} | {f(r['lo'])} to {f(r['hi'])} | {r['adopt']} |")
-o += ["", "## 4. Viscosity warm-only hybrid (post hoc)", "", "Evaluated from the v11b out-of-fold numbers (`docs/final_numbers_v11.md`): warm gain 0.0021 ln, interval 0.0002 to 0.0041, warm margin 0.1343 to 0.1258; cold bins unchanged by construction. Not applied: it would shift viscosity values in the design runs and the choice was made after seeing the guard failure. Status: not adopted.", "",
+vo = json.loads((ROOT / "results/v11/hybrid_check/readings_before_hybrid.json").read_text())
+vn = json.loads((ROOT / "results/v5/BASE/delta_ml_viscosity/readings.json").read_text())
+vs = json.loads((ROOT / "results/v11/nested/visc_summary.json").read_text())
+des = pd.read_csv(ROOT / "results/v11/hybrid_check/designs_P0_astm_hybrid.csv")
+dsn = pd.read_csv(ROOT / "results/v11/hybrid_check/designs_P0_astm_no_hybrid.csv")
+same = all(des[c].equals(dsn[c]) for c in des.columns if c not in ("build_s", "design_s"))
+def rd(r, k, s="ml"):
+    return r[k][s] if s in r[k] else r[k]
+o += ["", "## 4. Viscosity hybrid: tuned model in warm bins (T >= 283.15 K), v5 model below (adopted, post hoc)", "",
+      "Requested after the v11b result and chosen after seeing the cold-bin guard fail, so it is post hoc. Warm settings are those of the v11b final tuning (`results/v11/nested/visc_final_params.json`, tuned on all dev systems, so the dev and locked readings below are mildly optimistic). Cold bins use the unchanged v5 model; its predictions were verified identical to the pre-hybrid model (maximum absolute difference 0 on 3000 random pairs, 220 to 330 K). Locked rows are a second look, not a fresh hold-out.", "",
+      "| reading | before | after |", "|---|---|---|",
+      f"| R-MLV-1 dev out-of-fold warm macro MAE (ln) | {f(rd(vo,'R-MLV-1')['mae_b'])} | {f(rd(vn,'R-MLV-1')['mae_b'])} |",
+      f"| R-MLV-2 locked warm macro MAE (ln) | {f(rd(vo,'R-MLV-2')['mae_b'])} | {f(rd(vn,'R-MLV-2')['mae_b'])} |",
+      f"| R-MLV-4 cold macro MAE (ln) | {f(vo['R-MLV-4']['mae_b'])} | {f(vn['R-MLV-4']['mae_b'])} |",
+      f"| R-MLV-3 ternaries MAE (ln) | {f(vo['R-MLV-3']['all']['mae_ml'])} | {f(vn['R-MLV-3']['all']['mae_ml'])} |",
+      f"| margin T >= 283 K (ln) | {f(vo['R-MLV-6']['ml']['T_ge_283K']['margin'])} | {f(vn['R-MLV-6']['ml']['T_ge_283K']['margin'])} |",
+      f"| margin 263 to 283 K and below 263 K (ln) | {f(vo['R-MLV-6']['ml']['T_263_283K']['margin'])} and {f(vo['R-MLV-6']['ml']['T_lt_263K']['margin'])} | {f(vn['R-MLV-6']['ml']['T_263_283K']['margin'])} and {f(vn['R-MLV-6']['ml']['T_lt_263K']['margin'])} (unchanged) |",
+      f"| locked systems covered, T >= 283 K | {vo['R-MLV-6']['locked_coverage']['ml']['T_ge_283K']['covered']} of {vo['R-MLV-6']['locked_coverage']['ml']['T_ge_283K']['locked_systems']} | {vn['R-MLV-6']['locked_coverage']['ml']['T_ge_283K']['covered']} of {vn['R-MLV-6']['locked_coverage']['ml']['T_ge_283K']['locked_systems']} |", "",
+      f"Honest (nested, per-fold tuned) estimate for the warm margin: {f(vs['margins_tuned']['T_ge_283K'])} ln, against {f(vn['R-MLV-6']['ml']['T_ge_283K']['margin'])} deployed from the all-dev settings. Ternary MAE rises slightly (R-MLV-3 still passes). The nested rule applied to the whole model still fails on the cold-bin guard, which is why the hybrid keeps v5 below 283.15 K.", "",
+      "Designs: viscosity is constrained at -20 C only, a cold bin, so the hybrid cannot change any design. Check: pool P0, spec astm:jet_a, 10 starts, seed 42 re-run with the hybrid and with the warm model removed; designs.csv identical except timing columns: " + str(same) + " (`results/v11/hybrid_check/`). The other 15 design runs were not repeated. These re-runs differ from the committed BASE design rows (for example density 791.53 against 784.26 kg/m3 at the P0 optimum), a drift from changes since 2026-11-15 that is not caused by the hybrid and is left unresolved.", "",
+      "Status: adopted for T >= 283.15 K as a labelled variant (the designated route stays Refutas).", "",
       "## 5a. Ensembles of the deployed pure-compound models (saved scaffold-CV predictions)", "", "| property | deployed | best ensemble | MAE deployed | MAE ensemble | gain | 95 % interval | Holm p | adopted |", "|---|---|---|---|---|---|---|---|---|"]
 for r in ens.itertuples():
     o.append(f"| {r.property} | {r.deployed} | {r.ensemble} | {f(r.mae_deployed,3)} | {f(r.mae_ensemble,3)} | {f(r.gain,3)} | {f(r.lo,3)} to {f(r.hi,3)} | {f(r.p_holm,3)} | {r.adopt} |")

@@ -59,6 +59,6 @@ A second, nested analysis (outer GroupKFold(5), inner GroupKFold(3), Optuna TPE 
 
 ## 10. v11c: minor optimisations
 
-The o-/m-xylene eutectic composition was corrected (it was entered transposed), which lowers the lab liquidus freezing MAE to 3.65 C (UNIFAC) and 4.19 C (ideal) without changing the margins. Averaging five seeds, averaging the deployed pure-compound models, and tuning the random forest each showed no gain that survived the interval and Holm rules. Numbers: `docs/final_numbers_v11c.md`.
+The o-/m-xylene eutectic composition was corrected (it was entered transposed), which lowers the lab liquidus freezing MAE to 3.65 C (UNIFAC) and 4.19 C (ideal) without changing the margins. The viscosity pair residual became a hybrid, adopted post hoc: the nested-tuned LightGBM above 283.15 K and the unchanged v5 model below (warm macro MAE 0.0599 to 0.0572 ln on dev out-of-fold rows, warm margin 0.134 to 0.120 ln; the viscosity design constraint is at -20 C and is unaffected). Averaging five seeds, averaging the deployed pure-compound models, and tuning the random forest each showed no gain that survived the interval and Holm rules. Numbers: `docs/final_numbers_v11c.md`.
 
 The fresh v7 flash lock (61 Leenhouts mixture systems, 658 rows) could not be scored: the v5 flash route lacks Antoine or LFL constants for every lock compound and HANNA is binary only. The primary comparison (HANNA against UNIFAC) is not evaluated. See `results/v7/lock/scored/NOT_SCORABLE.md`.
