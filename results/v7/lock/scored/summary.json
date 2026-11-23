@@ -1,0 +1,24 @@
+{
+ "n_rows": 0,
+ "n_systems": 0,
+ "n_dropped": 658,
+ "mae": {
+  "ideal": NaN,
+  "unifac": NaN,
+  "hanna": NaN
+ },
+ "mean_over": {
+  "ideal": NaN,
+  "unifac": NaN,
+  "hanna": NaN
+ },
+ "primary_hanna_vs_unifac": {
+  "mae_gain": NaN,
+  "mae_gain_lo": NaN,
+  "mae_gain_hi": NaN,
+  "over_increase": NaN,
+  "over_increase_lo": NaN,
+  "over_increase_hi": NaN,
+  "gate_pass": false
+ }
+}

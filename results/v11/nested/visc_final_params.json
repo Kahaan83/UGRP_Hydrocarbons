@@ -1,0 +1,31 @@
+{
+ "model": "visc",
+ "inner_macro": 0.05739667549829179,
+ "params": {
+  "loss": "l1",
+  "n_estimators": 836,
+  "num_leaves": 6,
+  "min_child_samples": 88,
+  "colsample_bytree": 0.6112856994020235,
+  "subsample": 0.8481247864240425,
+  "reg_lambda": 4.695895917678957,
+  "p": 2
+ },
+ "lgb": {
+  "learning_rate": 0.03,
+  "n_estimators": 836,
+  "num_leaves": 6,
+  "min_child_samples": 88,
+  "colsample_bytree": 0.6112856994020235,
+  "subsample": 0.8481247864240425,
+  "subsample_freq": 1,
+  "reg_lambda": 4.695895917678957,
+  "objective": "l1",
+  "random_state": 42,
+  "deterministic": true,
+  "force_row_wise": true,
+  "n_jobs": 4,
+  "verbose": -1
+ },
+ "weight_exponent": 2
+}

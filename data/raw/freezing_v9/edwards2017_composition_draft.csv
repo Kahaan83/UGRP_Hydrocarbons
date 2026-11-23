@@ -1,0 +1,269 @@
+source_id,doi,table_or_page,fuel_id,fuel_label,class,n_carbon,value,basis,unit,page,table,confidence
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,7,0.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,8,1.98,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,9,4.17,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,10,2.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,11,1.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,12,0.66,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,13,0.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,14,0.12,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,alkylbenzene,15,0.06,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,diaromatic,10,0.1,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,diaromatic,11,0.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,diaromatic,12,0.41,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,diaromatic,13,0.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,9,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,10,0.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,11,0.37,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,12,0.38,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,13,0.34,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,cycloaromatic,14,0.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,7,0.21,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,8,0.88,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,9,2.59,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,10,8.15,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,11,8.38,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,12,5.41,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,13,4.63,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,14,3.96,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,15,2.28,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,16,0.75,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,17,0.2,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,18,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,19,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,iso_paraffin,20,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,7,0.24,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,8,1.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,9,2.97,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,10,6.46,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,11,5.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,12,3.99,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,13,2.97,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,14,1.97,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,15,0.83,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,16,0.23,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,17,0.06,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,n_paraffin,18,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,7,0.51,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,8,1.01,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,9,3.06,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,10,4.47,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,11,3.55,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,12,2.45,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,13,2.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,14,1.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,15,0.77,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,16,0.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,monocycloparaffin,17,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,8,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,9,0.35,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,10,0.47,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,11,0.71,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,12,0.77,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,13,0.52,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,14,0.45,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,dicycloparaffin,15,0.08,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,other,10,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,other,11,0.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,A-1 JP-8,other,12,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,7,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,8,0.41,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,9,1.32,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,10,2.09,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,11,1.98,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,12,1.8,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,13,1.24,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,14,1.05,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,alkylbenzene,15,0.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,diaromatic,10,0.09,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,diaromatic,11,0.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,diaromatic,12,0.6,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,diaromatic,13,0.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,9,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,10,0.57,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,11,1.91,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,12,2.67,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,13,2.27,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,cycloaromatic,14,1.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,7,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,8,0.13,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,9,0.48,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,10,1.66,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,11,2.73,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,12,3.36,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,13,3.57,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,14,3.54,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,15,2.7,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,16,0.65,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,17,0.08,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,18,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,19,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,iso_paraffin,20,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,7,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,8,0.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,9,0.64,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,10,1.41,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,11,2.6,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,12,3.09,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,13,2.5,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,14,1.92,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,15,0.86,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,16,0.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,17,0.01,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,n_paraffin,18,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,7,0.08,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,8,0.35,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,9,1.53,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,10,3.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,11,5.77,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,12,6.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,13,6.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,14,4.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,15,2.27,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,16,0.41,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,monocycloparaffin,17,0.01,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,8,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,9,0.46,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,10,1.04,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,11,2.84,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,12,4.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,13,4.53,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,14,3.14,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,dicycloparaffin,15,0.67,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,other,10,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,other,11,0.1,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,A-3 JP-5,other,12,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,7,0.17,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,8,1.1,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,9,2.97,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,10,3.32,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,11,2.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,12,1.45,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,13,0.73,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,14,0.52,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,alkylbenzene,15,0.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,diaromatic,10,0.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,diaromatic,11,0.66,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,diaromatic,12,0.86,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,diaromatic,13,0.6,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,9,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,10,0.26,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,11,0.66,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,12,0.89,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,13,0.85,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,cycloaromatic,14,0.61,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,7,0.15,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,8,0.44,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,9,1.05,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,10,4.2,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,11,5.7,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,12,5.63,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,13,4.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,14,4.2,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,15,2.51,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,16,1.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,17,0.39,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,18,0.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,19,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,iso_paraffin,20,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,7,0.17,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,8,0.54,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,9,1.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,10,3.26,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,11,4.29,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,12,3.74,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,13,2.8,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,14,2.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,15,1.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,16,0.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,17,0.21,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,n_paraffin,18,0.06,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,7,0.36,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,8,0.78,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,9,2.3,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,10,4.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,11,5.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,12,3.73,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,13,4.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,14,2.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,15,1.33,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,16,0.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,monocycloparaffin,17,0.24,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,8,0.03,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,9,0.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,10,0.72,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,11,1.52,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,12,1.57,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,13,1.21,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,14,0.81,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,dicycloparaffin,15,0.27,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,other,10,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,other,11,0.16,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,A-2 Jet A,other,12,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,7,0.16,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,8,0.78,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,9,2.24,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,10,3.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,11,2.48,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,12,1.93,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,13,1.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,14,0.89,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,alkylbenzene,15,1.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,diaromatic,10,0.12,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,diaromatic,11,0.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,diaromatic,12,0.6,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,diaromatic,13,0.63,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,9,0.04,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,10,0.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,11,1.13,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,12,1.63,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,13,1.45,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,cycloaromatic,14,1.12,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,7,0.23,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,8,0.56,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,9,1.08,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,10,3.59,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,11,5.12,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,12,5.31,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,13,5.25,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,14,4.44,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,15,3.1,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,16,1.66,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,17,0.69,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,18,0.19,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,19,0.08,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,iso_paraffin,20,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,7,0.15,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,8,0.54,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,9,1.14,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,10,2.55,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,11,3.62,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,12,3.7,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,13,2.86,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,14,2.17,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,15,1.28,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,16,0.61,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,17,0.27,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,n_paraffin,18,0.07,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,7,0.2,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,8,0.69,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,9,1.67,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,10,3.26,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,11,4.11,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,12,4.07,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,13,3.65,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,14,2.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,15,1.55,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,16,0.64,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,monocycloparaffin,17,0.37,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,8,0.02,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,9,0.29,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,10,0.43,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,11,1.26,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,12,1.22,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,13,1.42,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,14,0.82,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,dicycloparaffin,15,0.26,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,other,10,0.0,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,other,11,0.05,mass,wt_pct,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,Jet A baseline,other,12,0.0,mass,wt_pct,14,Table A-3,clear

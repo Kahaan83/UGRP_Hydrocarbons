@@ -29,6 +29,10 @@ BASE_FEATS = STATIC + DYNAMIC
 FEATURES = [f"{p}_{b}" for b in BASE_FEATS for p in ("mean", "absdiff")] + ["class_pair", "inv_T"]
 LGB_PARAMS = dict(n_estimators=400, learning_rate=0.05, num_leaves=15, min_child_samples=40, subsample=0.8, subsample_freq=1,
                   colsample_bytree=0.8, reg_lambda=1.0, random_state=42, deterministic=True, force_row_wise=True, n_jobs=1, verbose=-1)
+# v11c hybrid: warm bins (T >= COLD_GATE_K) use LGB_PARAMS_WARM (nested-tuned, docs/final_numbers_v11.md); colder bins keep LGB_PARAMS.
+LGB_PARAMS_WARM = dict(objective="l1", n_estimators=836, learning_rate=0.03, num_leaves=6, min_child_samples=88, subsample=0.8481247864240425,
+                       subsample_freq=1, colsample_bytree=0.6112856994020235, reg_lambda=4.695895917678957, random_state=42, deterministic=True,
+                       force_row_wise=True, n_jobs=1, verbose=-1)
 MIN_SYSTEMS_PER_PAIR = 5
 COLD_GATE_K = 283.15           # correction defined for T >= this unless meta says the cold gate passed
 
@@ -69,6 +73,7 @@ class Context:
 
 _CTX: Context | None = None
 _MODEL = None
+_MODEL_WARM = None
 
 
 def context() -> Context:
@@ -106,8 +111,31 @@ def load_model():
     return _MODEL
 
 
+def load_model_warm():
+    """Warm-bin booster, or None when model_warm.txt is absent (then the single model serves every T)."""
+    global _MODEL_WARM
+    if _MODEL_WARM is None:
+        f = MODEL_DIR / "model_warm.txt"
+        if not f.exists():
+            return False
+        import lightgbm as lgb
+        _MODEL_WARM = lgb.Booster(model_file=str(f))
+    return _MODEL_WARM
+
+
+def hybrid_predict(cold, warm, frame: pd.DataFrame) -> np.ndarray:
+    """g from the cold-bin booster, replaced by the warm booster where T >= COLD_GATE_K (T = 1000 / inv_T)."""
+    X = frame[FEATURES]
+    g = np.asarray(cold.predict(X), float)
+    if warm:
+        w = (1000.0 / X["inv_T"].to_numpy(float)) >= COLD_GATE_K - 1e-9
+        if w.any():
+            g[w] = np.asarray(warm.predict(X[w]), float)
+    return g
+
+
 def predict_g(frame: pd.DataFrame) -> np.ndarray:
-    return np.asarray(load_model().predict(frame[FEATURES]), float)
+    return hybrid_predict(load_model(), load_model_warm(), frame)
 
 
 def pair_features(smiles_i: str, smiles_j: str, T_K: float) -> pd.DataFrame:

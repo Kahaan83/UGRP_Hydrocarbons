@@ -1,0 +1,31 @@
+{
+ "model": "dens",
+ "inner_macro": 0.9415776763978032,
+ "params": {
+  "loss": "l1",
+  "n_estimators": 296,
+  "num_leaves": 11,
+  "min_child_samples": 67,
+  "colsample_bytree": 0.7836597008485529,
+  "subsample": 0.9477038383763738,
+  "reg_lambda": 1.23346611278236,
+  "p": 2
+ },
+ "lgb": {
+  "learning_rate": 0.03,
+  "n_estimators": 296,
+  "num_leaves": 11,
+  "min_child_samples": 67,
+  "colsample_bytree": 0.7836597008485529,
+  "subsample": 0.9477038383763738,
+  "subsample_freq": 1,
+  "reg_lambda": 1.23346611278236,
+  "objective": "l1",
+  "random_state": 42,
+  "deterministic": true,
+  "force_row_wise": true,
+  "n_jobs": 4,
+  "verbose": -1
+ },
+ "weight_exponent": 2
+}

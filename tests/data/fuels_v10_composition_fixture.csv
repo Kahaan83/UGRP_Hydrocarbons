@@ -1,0 +1,7 @@
+source_id,table_or_page,sample_id,fuel_label,class,n_carbon,value,basis,unit,page,table,confidence,raw_text,extraction
+edwards2017,"Table A-4, p15",POSF-OPEN,open_test,paraffins,8,40.0,mass,wt_pct,15,Table A-4,clear,40.0,text_layer
+edwards2017,"Table A-4, p15",POSF-OPEN,open_test,aromatics,9,57.0,mass,wt_pct,15,Table A-4,clear,57.0,text_layer
+edwards2017,"Table A-4, p15",POSF-CLOSED,closed_test,paraffins,8,50.0,mass,wt_pct,15,Table A-4,clear,50.0,text_layer
+edwards2017,"Table A-4, p15",POSF-CLOSED,closed_test,aromatics,9,50.0,mass,wt_pct,15,Table A-4,clear,50.0,text_layer
+edwards2017,"Table A-5, p16",POSF-CLASS,class_only_test,paraffins,,65.0,mass,wt_pct,16,Table A-5,clear,65.0,text_layer
+edwards2017,"Table A-5, p16",POSF-CLASS,class_only_test,aromatics,,35.0,mass,wt_pct,16,Table A-5,clear,35.0,text_layer

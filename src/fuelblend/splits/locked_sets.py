@@ -26,7 +26,7 @@ def select_locked(df):
     return lock_ids
 
 
-def locked_sets(path="data/unified/measurements_dedup.csv", out_dir="splits"):
+def locked_sets(path=os.environ.get("FUELBLEND_DEDUP_PATH", "data/unified/measurements_dedup.csv"), out_dir="splits"):
     df = pd.read_csv(path, low_memory=False)
     rng = np.random.default_rng(SEED)
     os.makedirs(out_dir, exist_ok=True)

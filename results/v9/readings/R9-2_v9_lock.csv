@@ -1,0 +1,2 @@
+reading,n,floor,verdict,note
+R9-2,0,CI gain > 0,more data helps: not shown (retrain not run),"2 new viscosity groups; new viscosity systems are real fuels without composition, so no new composition-bearing training system exists"

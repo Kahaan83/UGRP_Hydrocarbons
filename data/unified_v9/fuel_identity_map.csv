@@ -1,0 +1,11 @@
+source_id,source_sample,canonical_system_id,match_key
+boehm2022,A-1 (POSF 10264),fuel:32,posf
+boehm2022,A-2 (POSF 10325),fuel:2,posf
+boehm2022,A-3 (POSF10289),fuel:39,posf
+boehm2022,C-1 (POSF 13718),fuel:24570,posf
+boehm2022,C-3 (POSF 12959),fuel:boehm2022:C-3 (POSF 12959),none
+boehm2022,C-7 (POSF 13727),fuel:boehm2022:C-7 (POSF 13727),none
+boehm2022,C-8 (POSF 13491),fuel:boehm2022:C-8 (POSF 13491),none
+boehm2022,C-9 (POSF 12968),fuel:143,posf
+boehm2022,HRJ Camelina (POSF 7720),fuel:304,posf
+boehm2022,POSF12945,fuel:boehm2022:POSF12945,none

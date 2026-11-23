@@ -1,0 +1,13 @@
+source_id,doi,table_or_page,sample_id,kind,components,smiles,fractions,fraction_basis,property,value,unit,T_C,method,qualifier,note,page,table,confidence
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,real_fuel,"[""POSF-10264""]",[],[1.0],mass,freezing_point_C,-52.0,C,,ASTM D5972,,A-1 JP-8 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,real_fuel,"[""POSF-10264""]",[],[1.0],mass,flash_point_C,42.0,C,,ASTM D56,,A-1 JP-8 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10264,real_fuel,"[""POSF-10264""]",[],[1.0],mass,smoke_point_mm,28.5,mm,,ASTM D1322,,A-1 JP-8 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,real_fuel,"[""POSF-10289""]",[],[1.0],mass,freezing_point_C,-50.0,C,,ASTM D5972,,A-3 JP-5 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,real_fuel,"[""POSF-10289""]",[],[1.0],mass,flash_point_C,65.0,C,,ASTM D56,,A-3 JP-5 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10289,real_fuel,"[""POSF-10289""]",[],[1.0],mass,smoke_point_mm,20.0,mm,,ASTM D1322,,A-3 JP-5 reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,real_fuel,"[""POSF-10325""]",[],[1.0],mass,freezing_point_C,-51.0,C,,ASTM D5972,,A-2 Jet A reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,real_fuel,"[""POSF-10325""]",[],[1.0],mass,flash_point_C,48.0,C,,ASTM D56,,A-2 Jet A reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-10325,real_fuel,"[""POSF-10325""]",[],[1.0],mass,smoke_point_mm,21.0,mm,,ASTM D1322,,A-2 Jet A reference fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,real_fuel,"[""POSF-4658""]",[],[1.0],mass,freezing_point_C,-48.0,C,,ASTM D5972,,Jet A baseline fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,real_fuel,"[""POSF-4658""]",[],[1.0],mass,flash_point_C,44.0,C,,ASTM D56,,Jet A baseline fuel,14,Table A-3,clear
+edwards2017,10.2514/6.2017-0146,"Table A-3, p14",POSF-4658,real_fuel,"[""POSF-4658""]",[],[1.0],mass,smoke_point_mm,22.0,mm,,ASTM D1322,,Jet A baseline fuel,14,Table A-3,clear

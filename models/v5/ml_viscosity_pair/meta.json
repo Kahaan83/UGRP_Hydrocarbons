@@ -52,6 +52,22 @@
   "n_jobs": 1,
   "verbose": -1
  },
+ "lgb_params_warm": {
+  "objective": "l1",
+  "n_estimators": 836,
+  "learning_rate": 0.03,
+  "num_leaves": 6,
+  "min_child_samples": 88,
+  "subsample": 0.8481247864240425,
+  "subsample_freq": 1,
+  "colsample_bytree": 0.6112856994020235,
+  "reg_lambda": 4.695895917678957,
+  "random_state": 42,
+  "deterministic": true,
+  "force_row_wise": true,
+  "n_jobs": 1,
+  "verbose": -1
+ },
  "winsor_ln": 0.5,
  "xmin": 0.01,
  "seed": 42,
@@ -74,17 +90,17 @@
  },
  "grid_sha256": "b931e969926698dff52d69ff51dd99a990c24ff12eca545aa98e970afd3e7daf",
  "input_sha256": {
-  "results/v5/S1/viscosity_lab_residuals_v5.csv": "ec00c8709fd3ecfb482d6a0ed7563c9f368d815906faf6a58806c29879923511",
-  "results/v5/S1/lab_systems_splits_v5.json": "0cae446ff5d4e54087439883b5f5846d232e922bdac3e9cf40eb3df8806ddcba",
-  "data/unified/measurements_dedup.csv": "39a217957f9c7d587d4f2a4b4b2d2f240dcd3e6c4d801115c3e4a309e20b0aab",
-  "data/real_fuels/v5/boehm2022_viscosity.csv": "2e34d67be33f42a57ded0c184377ca3c5fd54cd1f180dcf25b6587fdd0e534cf",
+  "results/v5/S1/viscosity_lab_residuals_v5.csv": "9c111d87850efeb6c9fcc7e097b05514e5112e3d0b752a963117c704fa88cafa",
+  "results/v5/S1/lab_systems_splits_v5.json": "c5a142bd988fb46c15213896a318b72c28dfabf7abc201173f4ecd83a39d46ab",
+  "data/unified/measurements_dedup.csv": "79d638a22c2c0a3386c5b98e0beb5c62634168eb09385418602cc325d5f61b7a",
+  "data/real_fuels/v5/boehm2022_viscosity.csv": "66e42810943d4e1b7573d9be3bcabaec95bd919493ac315512906a89a2a08e54",
   "data/unified/compounds.csv": "4abff26ee14bc1e7d3f6d4233e5f102c29379ccf97f63c480e55e86ada75de95"
  },
  "cv_scores": {
   "dev_oof_warm_macro_mae_refutas": 0.08238412165803917,
-  "dev_oof_warm_macro_mae_ml": 0.05989025404412356,
+  "dev_oof_warm_macro_mae_ml": 0.057243165511211,
   "locked_warm_macro_mae_refutas": 0.05438398146528558,
-  "locked_warm_macro_mae_ml": 0.03110334688971239
+  "locked_warm_macro_mae_ml": 0.028955373942052574
  },
  "training": {
   "systems": 250,
@@ -103,7 +119,7 @@
    "k": 16
   },
   "T_ge_283K": {
-   "margin": 0.13426357484240542,
+   "margin": 0.1195470671912311,
    "n_dev_systems": 264,
    "k": 239
   }

@@ -1,0 +1,2 @@
+name,smiles,A_kPa,B,C,T_min_K,T_max_K,n_points,rms_log10,status,in_flash_window
+perhydrophenanthrene,,,,,454.684,551.61,25,,failed:missing_flash_window,False

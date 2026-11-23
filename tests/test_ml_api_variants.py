@@ -20,7 +20,7 @@ def test_variant_present_and_designated_unchanged(blend):
     v = r["viscosity_kin_cSt"]
     ml = v["variants"]["ml_pair_residual"]
     assert ml["status"] == "ok" and ml["in_domain"] is True and ml["margin_unit"] == "ln"
-    assert ml["margin"] == pytest.approx(0.13426357, abs=1e-6)
+    assert ml["margin"] == pytest.approx(0.11954707, abs=1e-6)
     # designated is the ML value; the Refutas result is kept as variants['refutas_raw']
     from fuelblend.eval.composition_route import refutas_nu_safe
     ctx = pr.get_ctx()
@@ -78,7 +78,7 @@ def test_density_ml_variant_binary_has_margin_designated_unchanged():
     assert d["method"] == "dens_idvol"
     v = d["variants"]["ml_pair_excess_volume"]
     if v["status"] == "ok":
-        assert v["in_domain"] is True and v["margin"] == pytest.approx(4.4248287, abs=1e-6)
+        assert v["in_domain"] is True and v["margin"] == pytest.approx(4.4240504, abs=1e-6)
         assert abs(v["value"] - d["value"]) < 20.0
 
 

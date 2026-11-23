@@ -1,9 +1,10 @@
 """Build a model table: one row per (system_id, T, P, property) from measurements_dedup.csv."""
 import json
+import os
 import pandas as pd
 import numpy as np
 
-DEDUP = "data/unified/measurements_dedup.csv"
+DEDUP = os.environ.get("FUELBLEND_DEDUP_PATH", "data/unified/measurements_dedup.csv")
 
 def _json_loads(s):
     if isinstance(s, (list, dict)):

@@ -1,0 +1,15 @@
+name,smiles,T_K,value_kg_m3,ref,page,table,confidence
+1-methylnaphthalene,Cc1cccc2ccccc12,293.15,1024.1,10.1021/je101256z,Table 1,density,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,298.15,1020.2,10.1021/je101256z,Table 1,density,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,303.15,1016.3,10.1021/je101256z,Table 1,density,clear
+1-methylnaphthalene,Cc1cccc2ccccc12,313.15,1008.5,10.1021/je101256z,Table 1,density,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,385.15,958.4,Osborn & Douslin (1975),Table 1,density,clear
+"2,6-dimethylnaphthalene",Cc1ccc2cc(C)ccc2c1,395.15,950.2,Osborn & Douslin (1975),Table 1,density,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,293.15,928.6,10.1021/je500381c,Table 2,density,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,298.15,924.9,10.1021/je500381c,Table 2,density,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,303.15,921.2,10.1021/je500381c,Table 2,density,clear
+perhydrofluorene,C1CCC2C(C1)CC1CCCCC12,313.15,913.7,10.1021/je500381c,Table 2,density,clear
+1-methyltetralin,CC1CCCc2ccccc21,293.15,968.2,Hipsher & Wise (1954),Table 2,density,clear
+1-methyltetralin,CC1CCCc2ccccc21,298.15,964.5,Hipsher & Wise (1954),Table 2,density,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,293.15,878.1,Seyer (1942),Table 2,density,clear
+2-methyldecalin,CC1CCC2CCCCC2C1,298.15,874.5,Seyer (1942),Table 2,density,clear

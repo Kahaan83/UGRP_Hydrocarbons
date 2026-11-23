@@ -8,8 +8,8 @@ Blend properties (viscosity, density, flash point, freezing point, heat, smoke p
 
 ## 2. Blend properties
 
-* Viscosity: Refutas blending with an optional LightGBM pair residual, gated on locked systems.
-* Density: ideal volume mixing with an optional LightGBM excess-volume residual.
+* Viscosity: Refutas blending with an optional LightGBM pair residual, gated on locked systems. Since v11c the residual is a hybrid: a nested-tuned model at 283.15 K and above, the v5 model below.
+* Density: ideal volume mixing with an optional LightGBM excess-volume residual (nested-tuned settings since v11b).
 * Flash point: Le Chatelier rule with Raoult's law, anchored Antoine constants and an LFL overlay. Ideal activity coefficients. HANNA and UNIFAC activity coefficients showed no skill against ideal on hydrocarbon binaries; Antoine constants predicted by a D-MPNN head over-predict flash by 16 degC and are not used.
 * Freezing point: Schroeder-van Laar with UNIFAC. Real-fuel freezing: status: no skill shown. Learned residual models were tied with simpler ones on development rows and did not reopen that verdict.
 * Uncertainty: one-sided 90 percent conformal margins from held-out lab systems. Row-level, family-conditional and shift-weighted margins were studied (coverage by family) and remain exploratory.
@@ -36,3 +36,29 @@ Joint pure plus fuel training for freezing (tied with fuel-only), equation-param
 ## 5. Rules that bound every claim
 
 Predeclare before running; dev-only gains cannot reopen a v5 or v6 verdict; locked sets are scored once; paired group bootstrap over systems with Holm correction; no laboratory validation exists, so certification is model-level only.
+
+## 6. v8: ML-filled constants (negative result)
+
+Question: can out-of-fold pure-compound ML values replace measured constants in the v5 physics blend routes, and can a real-fuel margin be earned for represented blendstocks? Gates and tolerances were fixed in `docs/v8_predeclaration.md` before any result. Substituting ML density, viscosity, flash-derived LFL, and melting point with heat of fusion failed the dev gate in all four cases (dMAE upper bounds 11.8 kg/m3, 0.144 ln, 2.07 C, 4.81 C against tolerances 2, 0.02, 2, 2). The designated freezing route on real fuels has no skill over a constant (MAE 8.55 against 6.24 C, bias +5.66 C), so no freezing margin is earned. Designs were not re-run; the certified count stays at 3 of 16 and design certification remains model-level only. Numbers: `docs/final_numbers_v8.md`.
+
+## 7. v9 data
+
+The v9 round added data from sources whose values could be checked against the original files. Boehm 2022 neat real-fuel viscosities (checked cell by cell against the workbook) and ThermoML 2020 files not in v5 (checked against the archive) entered `data/unified_v9/`. Edwards 2017 and the pure-compound drafts could not be verified (the DTIC and ROSAP links returned HTML pages) and were withheld. All seven Antoine refit candidates failed for lack of verified source data.
+
+The lock rule is md5 of the system id modulo 4 equal to 0, applied only to new v9 systems: 4 of 14 were locked, once. No freezing fuel was added and no composition-bearing viscosity system was added, so the 8-fuel floors were not met. Real-fuel freezing point: status: no skill shown. Cold viscosity: status: no skill shown. Numbers: `docs/final_numbers_v9.md`.
+
+## 8. v10: PDF transcription (negative result)
+
+Three user-supplied PDFs were registered. Of the 25 perhydrophenanthrene vapour-pressure points drafted, all 25 matched the rendered page image (454.7 to 551.6 K), but the Antoine refit failed the flash-window gate (no points in 40 to 100 degC). The supplied file labelled AFRL-TR-2020-0017 is a different paper and contains no fuel property tables, and AIAA 2017-0146 was not supplied. No fuel-level row was added, so real-fuel freezing point and cold viscosity remain: status: no skill shown. Numbers: `docs/final_numbers_v10.md`.
+
+## 9. v11: tuning (negative result)
+
+A random search of 30 LightGBM configurations for the viscosity pair residual, scored on dev systems only and confirmed on three reshuffled partitions, gained 0.0010 ln (95 % interval -0.0002 to 0.0023); the predeclared rule (interval above 0, gain at least 0.002) was not met and the v5 settings stay. Numbers: `docs/final_numbers_v11.md`.
+
+A second, nested analysis (outer GroupKFold(5), inner GroupKFold(3), Optuna TPE with loss and weighting in the search) gave the same verdict for viscosity (the below-263 K margin guard failed) and adopted new settings for the density pair model (L1 loss, 296 trees, learning rate 0.03, 11 leaves). Density remains a labelled variant; its locked-system numbers are a second look.
+
+## 10. v11c: minor optimisations
+
+The o-/m-xylene eutectic composition was corrected (it was entered transposed), which lowers the lab liquidus freezing MAE to 3.65 C (UNIFAC) and 4.19 C (ideal) without changing the margins. The viscosity pair residual became a hybrid, adopted post hoc: the nested-tuned LightGBM above 283.15 K and the unchanged v5 model below (warm macro MAE 0.0599 to 0.0572 ln on dev out-of-fold rows, warm margin 0.134 to 0.120 ln; the viscosity design constraint is at -20 C and is unaffected). Averaging five seeds, averaging the deployed pure-compound models, and tuning the random forest each showed no gain that survived the interval and Holm rules. Numbers: `docs/final_numbers_v11c.md`.
+
+The fresh v7 flash lock (61 Leenhouts mixture systems, 658 rows) could not be scored: the v5 flash route lacks Antoine or LFL constants for every lock compound and HANNA is binary only. The primary comparison (HANNA against UNIFAC) is not evaluated. See `results/v7/lock/scored/NOT_SCORABLE.md`.

@@ -12,6 +12,7 @@ Written 2026-11-14 at the user's request. Purpose: show in the methodology, repo
 | WS2 multicomponent freezing | Class-mix margin validation (ideal SvL, UNIFAC; predictive UNIQUAC not implemented) | Fails R-W2-2 for all class mixes (scorable systems: alkane-only 2, alkane+naphthene 1, with-aromatic 0 of 8 needed). 16.98 C binary margin stays by transfer. Ideal SvL on the Shariatrad C11-C18 quaternary: mean error 1.17 C, worst under-prediction 3.08 C | merged into `v5` (merge commit `6f52186`); `results/v5/BASE/delta_ws2_freeze_multicomp/` |
 | WS1 / smoke pool | Inverse designs with recipe-dependent smoke margin (4.11 mm, user decision) and isooctane pool C | 0 of 14 designs certified; pool C would certify if the smoke and aromatics spec flags were verified (counterfactual only) | `results/v5/BASE/delta_smoke_cert/`, `results/v5/BASE/delta_smoke_pool/` (commit 6dc66f8 and earlier on `v5`) |
 | WS7 design realism | Blendstock pools (Jet A base, HEFA, ATJ), D86 constraints, multi-start SLSQP with uncertainty penalty | FINISHED, 0 of 6 D86-on designs certified (0 of 10 runs). Passed: feature-off unchanged; D86 margin gate on 65 fuels (T10 7.93, FBP 3.26, T50-T10 18.68, T90-T10 18.25 C); optimiser reproduces pool C optimum. P0 fails T90-T10 (49.9 C) and flash; P1 fails flash (~35.5 C) and freezing; P2 meets flash/viscosity/NHOC/D86 but misses density and aromatics by 0.0008 slack. SAK later added as pool P3 (2026-11-14): not selected (weight 0.001), 0 of 2 certified. New D86 limits are secondary_sources_only | merged into `v5` (merge commit `9ca8ddf`); `results/v5/BASE/delta_ws7_design_realism/` incl. `LAB_TEST_REQUEST.md`; claims CLM-60..62 |
+| v8 ML-filled constants | Out-of-fold ML density, log viscosity, flash (via LFL), Tm and dHfus substituted for measured constants; real-fuel freezing margin | Fails G1 on dev for all four (upper bounds 11.79 kg/m3, 0.144 ln, 2.07 C, 4.81 C against 2, 0.02, 2, 2); freezing route no skill over constant on real fuels (8.55 vs 6.24 C) | results/v8/ |
 
 ## How to use in the methodology
 - Present each row as a pre-declared hypothesis with a gate written before any result; the outcome is a valid negative result.
@@ -32,3 +33,22 @@ Spec `verification:` flags (smoke, aromatics); adopt WS6 cold-viscosity offset m
 ## Decided 2026-11-14
 - **Lab test cannot happen** (user). No lab measurement of any design is possible, so every design stays a model prediction. `results/v5/BASE/delta_ws7_design_realism/LAB_TEST_REQUEST.md` is superseded; the report must say designs are unmeasured and "certified" means certified under the model and declared margins only.
 - Items 5 and 6 were handled before merging: the three failing tests (`test_predict_blend::test_pure_component_viscosity_follows_composition_kind`, `test_base_delta_representatives`, `test_v4_provenance`) all pass on the main `v5` checkout (14 passed), so those failures were worktree-environment artifacts. `antoine_refit.csv` was deliberately NOT overwritten: it is a gitignored artifact the original refit script for which is not in the repo, and it feeds the live anchored-Antoine flash route, so refreshing it would change frozen BASE flash numbers and the 2.21 C margin. The exploratory fresh refit is in `results/v5/BASE/delta_ws3_pure_gaps/antoine_exploratory_fresh_refit.csv` (`results/v5/BASE/delta_ws3_pure_gaps/`).
+
+## v9 data acquisition (2026-11-23)
+- Edwards 2017 freezing and cold viscosity, and the pure-compound drafts: not verifiable against primary files, withheld (`results/v9/verification.md`).
+- Antoine refits for 7 candidates: `failed:no_verified_source_data`.
+- R9-1 and R9-3: status: no skill shown (lock floor of 8 fuels unmet). R9-2: more data helps: not shown, retrain not run.
+
+## v10 PDF transcription (2026-11-23)
+- The supplied "AFRL-TR-2020-0017" file was an unrelated combustor-cycle paper (no fuel tables); AIAA 2017-0146 could not be obtained; the third PDF held adamantane-alcohol excess properties. 0 new fuel rows.
+- R10-1 (real-fuel freezing) and R10-2 (cold viscosity): status: no skill shown (0 of the 8-fuel floor; no lock spent). R10-3: no overlap to compare.
+- R10-4: perhydrophenanthrene vapour pressure verified (25/25 against the page image) but the refit fails `missing_flash_window` (454.7 to 551.6 K), so 0 candidates meet the flash-window condition. Other 6 candidates: no source.
+- `unified_v10` not built (no new fuel data); `results/v10/lock.json` not written.
+
+## v11: tuned LightGBM settings for the viscosity pair residual
+
+Best of 30 random configurations gained 0.0010 ln (95 % interval -0.0002 to 0.0023) over the v5 settings on reshuffled dev partitions; the adoption rule (interval above 0, gain at least 0.002) was not met. v5 settings kept. Numbers: `docs/final_numbers_v11.md`.
+
+v11c (no gain shown): 5-seed averaging of the pair models, ensembles of the deployed pure-compound models, and a nested-tuned random forest. See `docs/final_numbers_v11c.md`.
+
+Second attempt (v11b, nested CV, Optuna): viscosity gain 0.0021 ln, Holm p 0.024, but the below-263 K margin rose from 0.287 to 0.386, so the predeclared margin guard failed and v5 viscosity settings stay.

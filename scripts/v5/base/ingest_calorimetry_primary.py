@@ -175,11 +175,13 @@ def dhvap_rows():
 # ---------------------------------------------------------------- xylene eutectics (PS43 Table X)
 X_NAMES = ["o-xylene", "m-xylene", "p-xylene"]
 # (label, x_o, x_m, x_p (percent), solid phases, calc_K, exp_K, exp_unc, nakatsuchi_K, nak_unc, exp_composition_note)
+# v11c: the o-m row was entered with the two percentages transposed (66.6 o / 33.4 m). Ideal-solution Schroeder-van Laar at 211.2 K from the
+# paper's own Tm and dHfus gives x_o = 0.32, x_m = 0.66, so the corrected order is 33.4 o / 66.6 m (checked by consistency, not against the page image).
 EUT = [
     ("m-p binary eutectic", 0.0, 87.0, 13.0, ["m-xylene", "p-xylene"], 220.3, 220.2, 0.2, 216.2, 3.0,
      "experimental composition (this research) 12.9% para, 87.1% meta (deduced from the intersection of the melting curve and the heats of fusion)"),
     ("o-p binary eutectic", 75.7, 0.0, 24.3, ["o-xylene", "p-xylene"], 237.6, None, None, 237.7, 0.4, "no experiment in this work for this eutectic"),
-    ("o-m binary eutectic", 66.6, 33.4, 0.0, ["o-xylene", "m-xylene"], 211.2, 211.4, 1.0, 210.2, 1.0, ""),
+    ("o-m binary eutectic", 33.4, 66.6, 0.0, ["o-xylene", "m-xylene"], 211.2, 211.4, 1.0, 210.2, 1.0, ""),
     ("o-m-p ternary eutectic", 30.5, 61.4, 8.1, ["o-xylene", "m-xylene", "p-xylene"], 208.5, 209.0, 1.0, None, None, ""),
 ]
 
@@ -308,6 +310,12 @@ def integrate():
     dd = pd.concat([dd, pd.DataFrame(fixed)[dd.columns]], ignore_index=True)
     dd.to_csv(U / "measurements_dedup.csv", index=False)
 
+    integrate_sle()
+    print("integrated:", len(vp), "vapour-pressure obs")
+
+
+def integrate_sle():
+    import numpy as np
     sle_p = ROOT / "data" / "processed" / "v5" / "thermoml_sle_hc.csv"
     sle = pd.read_csv(sle_p, low_memory=False)
     sle = sle[~sle.file.astype(str).str.startswith(SRC_TAG)]
@@ -324,7 +332,7 @@ def integrate():
                      "point_kind": "eutectic", "is_hc": True, "system_id": r.system_id, "inchikeys": r.inchikeys,
                      "crystal_inchikeys": r.crystal_inchikeys, "comp_scale": "mole fraction", "prop_name": "Eutectic temperature, K", "prop_phase": "Crystal"})
     pd.concat([sle, pd.DataFrame(rows)[sle.columns]], ignore_index=True).to_csv(sle_p, index=False)
-    print("integrated:", len(vp), "vapour-pressure obs,", len(rows), "eutectic rows")
+    print("integrated", len(rows), "eutectic rows")
 
 
 def main():
@@ -341,6 +349,8 @@ def main():
     print(ver[["name", "paper", "in_tm_dhfus_verified", "d_tm_K", "d_dhfus_kJ_mol", "d_ss_dH_kJ_mol", "status"]].to_string())
     if "--integrate" in sys.argv:
         integrate()
+    elif "--integrate-sle" in sys.argv:
+        integrate_sle()
 
 
 if __name__ == "__main__":

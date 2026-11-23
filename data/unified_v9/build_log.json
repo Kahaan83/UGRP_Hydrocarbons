@@ -1,0 +1,12 @@
+{
+  "v5_dedup_rows": 76328,
+  "new_groups": 539,
+  "merged_into_v5": 316,
+  "exact_repeats_dropped": 12,
+  "new_by_source": {
+    "boehm2022_v9": 27,
+    "thermoml_v9": 512
+  },
+  "new_real_fuel_groups_no_composition": 17,
+  "total_dedup_rows": 76867
+}

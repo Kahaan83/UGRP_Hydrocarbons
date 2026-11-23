@@ -243,9 +243,9 @@ Convert each pure nu_i to VBN_i = 14.534 ln(ln(nu_i+0.8)) + 10.975; average by *
 
 *In plain words.* The physics rule is right on average but misses how particular pairs of molecules interact. For every pair of molecules in the blend, a small model predicts a correction from *descriptions* of the two molecules (not their names). The correction is weighted by x_i x_j, so it vanishes for a pure compound and grows when both are present in quantity. Because only pairs are learned, the same model handles blends of any number of components.
 
-LightGBM (400 trees, 15 leaves, learning rate 0.05, seed 42, deterministic) on *pair features*: mean and absolute difference of carbon number, molar mass, ring counts, CH3 count, quaternary carbon count, ln eta, molar volume, the class pair and 1/T. Symmetric in the pair, zero for a pure compound. Trained on 264 binary systems, graded once on 70 locked systems.
+LightGBM on *pair features* (v5 settings below 283.15 K: 400 trees, 15 leaves, learning rate 0.05; from v11c, at 283.15 K and above, a nested-tuned model: L1 loss, 836 trees, 6 leaves, learning rate 0.03; seed 42, deterministic): mean and absolute difference of carbon number, molar mass, ring counts, CH3 count, quaternary carbon count, ln eta, molar volume, the class pair and 1/T. Symmetric in the pair, zero for a pure compound. Trained on 264 binary systems, graded once on 70 locked systems.
 
-Gate results (Refutas to ML, MAE in ln eta): R-MLV-1 dev 0.082 to 0.060; R-MLV-2 locked 0.054 to 0.031; R-MLV-3 ternary+ 0.098 to 0.042 (per-system); R-MLV-4 cold (below 283 K) 0.099 to 0.061. All passed.
+Gate results (Refutas to ML, MAE in ln eta, after the v11c warm hybrid): R-MLV-1 dev 0.082 to 0.057; R-MLV-2 locked 0.054 to 0.029; R-MLV-3 ternary+ 0.098 to 0.042 (per-system); R-MLV-4 cold (below 283 K) 0.099 to 0.061 (unchanged). All passed. Before the hybrid: 0.060 and 0.031 on the first two. The hybrid was a post hoc choice (the whole-model nested tuning failed the cold-bin margin guard), so the locked figure is a second look.
 
 **Designation rule (user decision):** ML is the main viscosity *inside its domain* (known molecules, 283 K and above for scoring, class pairs with at least 5 training systems). Elsewhere the main value is Refutas with a warning.
 
@@ -275,7 +275,7 @@ Limits: the D56 real-fuel check rests on **one** GC fuel (POSF-10325), so no mar
 
 `1/T_i = 1/T_m,i - R ln(x_i gamma_i)/dH_fus,i`; `T_freeze = max_i T_i`. (R = gas constant.) Main route: gamma from original UNIFAC (`baselines/flash_unifac.py` and the SLE code in `eval/composition_route.py::freezing_C`, `DESIGNATED_FREEZING_MODEL = "svl_unifac"`). Variant: ideal (gamma=1). Melting points / dH_fus come from a *verified* constants table (`data/raw/sle_constants/tm_dhfus_verified.csv`); bicyclohexyl uses dH_fus plus its solid-solid transition (13.94 kJ/mol).
 
-Lab liquidus set (73 points, 12 systems): UNIFAC MAE 3.93 C, bias +2.47, **margin 13.84 C**; ideal 4.47 / +1.17 / 16.98; constant guess 15.63.
+Lab liquidus set (73 points, 12 systems): UNIFAC MAE 3.65 C, bias +2.18, **margin 13.84 C**; ideal 4.19 / +0.88 / 16.98; constant guess 15.63. (v11c corrected a transposed o-/m-xylene eutectic; before it the MAEs were 3.93 and 4.47 with biases +2.47 and +1.17, and the margins did not change.)
 
 **Real fuels: no skill.** Pooled 50 fuels MAE 8.42 vs constant 6.41; locked 8 fuels 9.31 vs 5.18 (`worse_than_trivial`). Bias is +4 to +6 C (safe side), so the 13.84 margin "covers" 98 % trivially. We use freezing *only* through the lab margin, for known molecules with verified constants.
 
@@ -299,8 +299,8 @@ Blending octane value: `RON = (1-v) RON_base + v BOV` (v volume fraction, BOV th
 
 | Model | Base | Held-out result | Status |
 |---|---|---|---|
-| Viscosity pair correction (LightGBM) | Refutas | 0.054 to 0.031 ln (70 systems) | **main value in domain** |
-| Density excess volume (LightGBM) | ideal volume | 1.20 to 0.90 kg/m3 (41 systems); ternaries fail | option (known binaries) |
+| Viscosity pair correction (LightGBM) | Refutas | 0.054 to 0.029 ln (70 systems, v11c warm hybrid; 0.031 before) | **main value in domain** |
+| Density excess volume (LightGBM) | ideal volume | 1.20 to 0.84 kg/m3 (41 systems, v11b tuned; 0.90 before); ternaries about equal to ideal | option (known binaries) |
 | Octane GP | BOV rule | RON 2.29 / MON 1.15 (CV) | research only |
 | Neural mixture encoders (DeepSets, GNN, set transformer) | Refutas / ideal volume | none pass; GNN worse (0.031 to 0.040) | **failed, kept** |
 | GH-GNN activity coefficients in flash | ideal Le Chatelier | +0.70 C worse lab, +1.09 C worse real fuels | **failed, kept** |
@@ -356,7 +356,7 @@ For each held-out system *g* take the **worst dangerous-side error** `s_g = max_
 | Freezing (ideal, variant) | too low | 16.98 C | 12 |
 | Density (ideal) | both | +4.59 / -3.25 kg/m3 | 167 |
 | Density (ML, binaries) | both | +/-4.42 kg/m3 | 41 locked |
-| Viscosity ML 283 K and above | both | +/-0.134 ln (about +/-14 %) | 264 |
+| Viscosity ML 283 K and above | both | +/-0.120 ln (about +/-13 %; 0.134 before the v11c hybrid) | 264 |
 | Viscosity ML 263 to 283 K | both | +/-0.608 ln | 16 |
 | Viscosity ML below 263 K | both | +/-0.287 ln | 20 |
 | Viscosity Refutas 283 K and above | both | +/-0.186 ln | 255 |
@@ -365,7 +365,7 @@ For each held-out system *g* take the **worst dangerous-side error** `s_g = max_
 
 **Worked example.** Jet A needs flash at least 38 C; margin 2.207 means certified only if predicted flash is at least 40.207 C. "Predicted 38.1 C" is *not* certified.
 
-**Reading a ln margin.** A viscosity margin of 0.134 in ln means the true value lies within a factor exp(0.134) = 1.14 either way, about plus or minus 14 %.
+**Reading a ln margin.** A viscosity margin of 0.120 in ln means the true value lies within a factor exp(0.120) = 1.13 either way, about plus or minus 13 %.
 
 **Certified =** (a) a finite margin exists, (b) the blend is `in_domain`, (c) the limit still holds after the margin. Otherwise `meets_at_point_estimate` or `fails`.
 
@@ -398,13 +398,16 @@ Pools: P0 = 7 pure molecules (n-decane, n-undecane, n-dodecane, butylcyclohexane
 
 ---
 
-# 9. Where we are (status, 22 Nov 2026)
+# 9. Where we are (status, 23 Nov 2026)
 
+* **v11, v11b, v11c (23 Nov 2026):** nested tuning adopted for density (labelled variant) and, post hoc, for viscosity at 283.15 K and above (hybrid); the xylene eutectic transposition was corrected; seed averaging, pure-compound ensembles, a tuned random forest and the flash-lock constants gave no adoption. All numbers: `docs/CURRENT_NUMBERS.md`.
+
+* **v8 (23 Nov 2026):** ML-filled pure constants failed the substitution gate for density, viscosity, flash and freezing; real-fuel freezing stays "status: no skill shown"; certified designs stay 3 of 16. See `docs/final_numbers_v8.md`.
 * **Pure-compound layer (v7):** `predict_pure` gives the best-evidenced method for ten pure-compound properties (random forest for flash point, cetane, heat of fusion, log viscosity, melting point, YSI; D-MPNN for derived cetane, density, MON, RON). Significant wins: flash point, heat of fusion, log viscosity. The rest are tied or nominal. Errors are dev-row CV and optimistic; no conformal margin. Blend routes are unchanged because no v7 candidate beat v5. `predict_fuel` also returns three uncertified exploratory keys built from the pure models by a linear mole-fraction rule: `dcn_blend_exploratory` (MAE 6.90 vs 21.57 constant, 31 systems), `ron_blend_exploratory` (6.38 vs 13.56, 5 systems only) and `mon_blend_exploratory` (not offered, status: no skill shown; sources disagree). `predict_fuel(..., exploratory=False)` removes them.
 * **Working and evidenced:** physics routes for all properties; viscosity and density ML corrections (lab-gated); conformal margins; 16-design table; frozen, hash-checked scoreboard; API accepting SMILES/InChIKeys.
 * **No proven skill on real fuels:** freezing, heat of combustion (reconstructed), pour point, cold viscosity (below 263 K, Refutas), CRC reconstructed density.
 * **Not done / not claimed:** any laboratory validation; diesel validation; multicomponent freezing margin; real-fuel ML density testing; Jet A-1 limits verified against Def Stan 91-091; lab freezing of hexadecane mixtures (Oakley 2017) and smoke of 23 coal/JP-8 fuels (Yang 2006) are in the data but unscored.
-* **Tests:** last full run 785 passed / 0 failed (before the simplification); after simplification the BASE suite and the touched suites were re-run (see the repository's final commit message). The full suite has not been re-run on the simplified branch since.
+* **Tests:** last full run (23 Nov 2026, after the v11c hybrid): 911 passed, 2 skipped, 1 failed (`test_committed_splits_match_rebuild`, known AJFTD input hash).
 * **Manuscript:** paused by the user; only `manuscript/refs.bib` (with unverified entries) and figures exist in the deliverables folder.
 
 ---
@@ -555,7 +558,7 @@ Worked example output (4-component jet-like blend at 15 C: 45 % n-dodecane, 20 %
 
 **Why is the Jet A-1 design above the AJFTD dicyclo range?** The optimiser is free to leave the observed real-fuel range; we flag it (37.8 % vs 30 % max) and do not claim realism.
 
-**Why is the ML density only an option?** It failed the ternary gate (3.64 to 3.92 kg/m3).
+**Why is the ML density only an option?** With the v5 settings it failed the ternary gate (3.92 against 3.64 kg/m3 for the ideal rule). After the v11b tuning (L1 loss, 296 trees) the ternary row-level error is about equal to the ideal rule (3.64), so it remains an option and is not promoted; see `docs/final_numbers_v11.md`.
 
 **Why Refutas and not something fancier?** It is a standard petroleum-industry rule, it needs only each component's viscosity, it has no fitted parameters of our own, and it scored well against real fuels above 263 K. The ML part is a small correction on top of it.
 
@@ -609,3 +612,6 @@ certified <=> margin finite AND in_domain AND (flash - margin >= 38 C, freezing 
 6. In design mode the optimiser calls this same function, then the judge checks each limit with the margin applied and labels the outcome `certified`, `meets_at_point_estimate`, `fails` or uncertified.
 
 Reading the output: trust a number only after checking `in_domain`, `status` and `warnings`; a value without a margin is a point estimate, not a guarantee.
+
+## v9 data layer
+`data/unified_v9/` (local, rebuilt by `scripts/v9/build_unified_v9.py`) holds v5 rows plus verified Boehm 2022 and ThermoML additions. `data/unified/` is unchanged. Set `FUELBLEND_DEDUP_PATH` to use it; the default keeps BASE reproducible. Lock: `results/v9/lock.json`. Readings: `results/v9/readings/`. Numbers: `docs/final_numbers_v9.md`.

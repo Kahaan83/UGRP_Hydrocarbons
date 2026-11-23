@@ -2,7 +2,7 @@
 
 Predict flash point, viscosity, density, freezing point, heat of combustion and smoke point of a hydrocarbon blend from its
 composition, with a measured error margin on every number and an honest "no skill" label wherever a model does not beat a constant.
-Full explanation: `docs/GUIDE.md`. Methodology: `Fuel_Blend_Methodology.pdf`. All numbers: `docs/final_numbers_v5.md` (blends), `docs/final_numbers_v7.md` (pure compounds). Current methods: `docs/methodology_v7.md`.
+Full explanation: `docs/GUIDE.md`. Methodology: `Fuel_Blend_Methodology.pdf`. Latest changed values: `docs/CURRENT_NUMBERS.md`. All paper numbers: `docs/RESULTS_FOR_PAPER.md` (generated from `docs/final_numbers_v5.md` blends, `_v7` pure compounds, `_v8`, `_v9`, `_v10`). Current methods: `docs/methodology_v7.md`. Doc index: `docs/README.md`.
 
 ## Quick start (Windows, venv python)
 
@@ -37,8 +37,10 @@ r["flash_point_C"]["value"], r["flash_point_C"]["method"], r["flash_point_C"]["i
 | `scripts/v4/` | earlier evidence pipeline that v5 builds on (kept because `src/` and tests use it) |
 | `results/v5/BASE/` | frozen v5 evidence, one folder per experiment, protected by `SHA256SUMS_v5_base.txt` |
 | `results/v4`, `results/t*`, `results/pairwise` | earlier results still read by code/tests |
-| `data/`, `models/v5/` | unified measurements, real-fuel tables, trained pair models |
-| `docs/` | `GUIDE.md` (start here), `final_numbers_v5.md`, `claims_register.md`, `model_decision.md`, `v5_negative_results.md`, `FULL_REPORT_v4.md` |
+| `data/`, `models/v5/` | unified measurements (`data/unified/`, v5), v9 additions (`data/unified_v9/`, gitignored, rebuild with `scripts/v9/build_unified_v9.py`), real-fuel tables, trained pair models |
+| `scripts/v7` to `scripts/v10`, `scripts/paper/` | pure-compound and blend experiments, data acquisition, `build_paper_numbers.py` |
+| `manuscript/` | LaTeX paper sources (`main.tex`, `references.bib`, `figures/`) |
+| `docs/` | `README.md` (index), `RESULTS_FOR_PAPER.md`, `PROJECT_HANDOFF.md`, `GUIDE.md`, `methodology_v7.md`, `claims_register.md`, negative-results files |
 | `tests/` | pytest suites (`test_base_*` guard the frozen scoreboard) |
 
 ## Status in one paragraph
@@ -46,6 +48,6 @@ r["flash_point_C"]["value"], r["flash_point_C"]["method"], r["flash_point_C"]["i
 Physics baselines are the backbone; two learned corrections (viscosity pair model, excess-volume pair model) passed pre-declared gates
 and are used inside their domain. Freezing, smoke and diesel models show no skill over a constant on real fuels and are labelled so.
 Inverse design returns 16 blends; 3 pass the certification test **under the model only** (no laboratory validation was done).
-Failed approaches (neural mixture encoders, GNN flash activity, GCxGC models, ML YSI, ML DCN) are kept on purpose; see `docs/v5_negative_results.md`.
+Failed approaches (neural mixture encoders, GNN flash activity, GCxGC models, ML YSI, ML DCN, ML-filled constants, v9 and v10 data acquisition for real-fuel freezing) are kept on purpose; see `docs/v5_negative_results.md` and `docs/v6_negative_results.md`. Pure-compound models (v7) are deployed in `predict_pure` with dev-CV (optimistic) errors.
 
 The full pre-simplification repository is the git tag `v5-full-2026-11-16`.

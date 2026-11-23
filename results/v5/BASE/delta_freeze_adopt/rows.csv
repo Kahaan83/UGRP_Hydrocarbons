@@ -846,5 +846,5 @@ bcae407645e2,bcae407645e2,10.1021/je800628a,naphthalene + toluene,334.65000,61.5
 541d514d47d6,541d514d47d6,10.1021/je800628a,naphthalene + heptane,331.50000,58.35000,2,True,False,False,False,False,,False,not_all_verified,,False,liquidus,10.1021/je800628a.xml,"[0.3505, 0.6495]"
 541d514d47d6,541d514d47d6,10.1021/je800628a,naphthalene + heptane,333.75000,60.60000,2,True,False,False,False,False,,False,not_all_verified,,False,liquidus,10.1021/je800628a.xml,"[0.389, 0.611]"
 a44fe03d18dd,a44fe03d18dd,,m-xylene + p-xylene,220.20000,-52.95000,2,True,True,True,True,True,-50.08492,False,ok,-50.08492,False,eutectic,calorimetry_primary:PS43_TableX,"[0.87, 0.13]"
-74aede3c6579,74aede3c6579,,o-xylene + m-xylene,211.40000,-61.75000,2,True,True,True,True,True,-39.70799,False,ok,-39.70799,False,eutectic,calorimetry_primary:PS43_TableX,"[0.6659999999999999, 0.33399999999999996]"
+74aede3c6579,74aede3c6579,,o-xylene + m-xylene,211.40000,-61.75000,2,True,True,True,True,True,-60.64217,False,ok,-60.64216,False,eutectic,calorimetry_primary:PS43_TableX,"[0.33399999999999996, 0.6659999999999999]"
 d7d3558e3a17,d7d3558e3a17,,o-xylene + m-xylene + p-xylene,209.00000,-64.15000,3,True,True,True,True,True,-60.96409,False,ok,-60.96409,False,eutectic,calorimetry_primary:PS43_TableX,"[0.305, 0.614, 0.081]"

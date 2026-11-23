@@ -1,0 +1,11 @@
+{
+  "rule": "md5 mod 4 == 0",
+  "ids": [
+    "2c635cfd3548",
+    "a872de160719",
+    "ee84707f3ba1",
+    "fuel:boehm2022:C-7 (POSF 13727)"
+  ],
+  "n_new_systems": 14,
+  "created": "2026-11-23"
+}

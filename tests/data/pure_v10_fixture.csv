@@ -1,0 +1,11 @@
+compound,inchikey,source_id,table_or_page,sample_id,kind,property,value,unit,T_C,method,qualifier,note,page,table,confidence,raw_text,extraction
+perhydrophenanthrene,,test_source,p1,test1,pure,vapor_pressure,760.0,mmHg,100.0,ebulliometry,,,1,Table 1,clear,760 mmHg,text_layer
+perhydrophenanthrene,,test_source,p1,test2,pure,vapor_pressure,1.0,bar,100.0,ebulliometry,,,1,Table 1,clear,1.0 bar,text_layer
+perhydrophenanthrene,,test_source,p1,test3,pure,vapor_pressure,100000.0,Pa,100.0,ebulliometry,,,1,Table 1,clear,100000 Pa,text_layer
+perhydrophenanthrene,,test_source,p1,test4,pure,vapor_pressure,101.325,kPa,100.0,ebulliometry,,,1,Table 1,clear,101.325 kPa,text_layer
+perhydrophenanthrene,,test_source,p2,test5,pure,lfl,0.7,vol_pct,25.0,measured ASTM E681,,,2,Table 2,clear,0.7,text_layer
+perhydrophenanthrene,,test_source,p2,test6,pure,lfl,0.8,vol_pct,25.0,Jones estimate (0.55*Cst),,,2,Table 2,clear,0.8,text_layer
+perhydrophenanthrene,,test_source,p2,test7,pure,lfl,0.75,vol_pct,25.0,homologue extrapolation,,,2,Table 2,clear,0.75,text_layer
+perhydrophenanthrene,,test_source,p2,test8,pure,lfl,0.72,vol_pct,25.0,estimated from boiling point,,,2,Table 2,clear,0.72,text_layer
+perhydrophenanthrene,,test_source,p3,test9,pure,vapor_pressure,50.0,kPa,80.0,manometry,,,3,Table 3,clear,50.0,image
+perhydrophenanthrene,,test_source,p3,test10,pure,vapor_pressure,60.0,kPa,90.0,manometry,,,3,Table 3,clear,60.0,text_layer
