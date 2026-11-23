@@ -51,3 +51,6 @@ manuscript/*.synctex.gz
 # co-author Word files
 docs/abstracts/*.docx
 manuscript/main.pdf
+
+# manuscript is local only
+manuscript/
