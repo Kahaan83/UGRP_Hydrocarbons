@@ -38,3 +38,9 @@ Spec `verification:` flags (smoke, aromatics); adopt WS6 cold-viscosity offset m
 - Edwards 2017 freezing and cold viscosity, and the pure-compound drafts: not verifiable against primary files, withheld (`results/v9/verification.md`).
 - Antoine refits for 7 candidates: `failed:no_verified_source_data`.
 - R9-1 and R9-3: status: no skill shown (lock floor of 8 fuels unmet). R9-2: more data helps: not shown, retrain not run.
+
+## v10 PDF transcription (2026-11-23)
+- The supplied "AFRL-TR-2020-0017" file was an unrelated combustor-cycle paper (no fuel tables); AIAA 2017-0146 could not be obtained; the third PDF held adamantane-alcohol excess properties. 0 new fuel rows.
+- R10-1 (real-fuel freezing) and R10-2 (cold viscosity): status: no skill shown (0 of the 8-fuel floor; no lock spent). R10-3: no overlap to compare.
+- R10-4: perhydrophenanthrene vapour pressure verified (25/25 against the page image) but the refit fails `missing_flash_window` (454.7 to 551.6 K), so 0 candidates meet the flash-window condition. Other 6 candidates: no source.
+- `unified_v10` not built (no new fuel data); `results/v10/lock.json` not written.
