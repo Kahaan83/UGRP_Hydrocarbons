@@ -38,3 +38,16 @@ results/t0_repro/rerun_outputs/
 .agents/
 .claude/
 skills-lock.json
+
+# scratch work area and LaTeX build output (manuscript sources stay tracked)
+scratch/
+manuscript/*.aux
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.log
+manuscript/*.out
+manuscript/*.toc
+manuscript/*.synctex.gz
+# co-author Word files
+docs/abstracts/*.docx
+manuscript/main.pdf
