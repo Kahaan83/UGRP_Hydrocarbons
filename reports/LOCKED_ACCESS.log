@@ -1,0 +1,4 @@
+2026-11-21T10:44:06Z v6-freezing holdout lock written (12 entities); no scoring yet
+2026-11-21T10:50:11.146325+00:00 v6-freezing holdout scored once (12 groups) by step4_holdout.py
+2026-11-23T11:21:35.743451+00:00 v7-flash-fresh lock scored once (0 systems) by score_fresh_lock.py
+2026-11-23T11:22:36+00:00 v7-flash-fresh correction: previous line is a failed run; 0 rows were predicted or compared (route constants missing for all 658 rows), so no lock information was read
