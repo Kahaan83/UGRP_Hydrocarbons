@@ -296,6 +296,7 @@ Every term (Refutas, VBN, Antoine, LFL, SvL, UNIFAC, conformal margin, locked se
 | v8 | no ML-constant substitution passed G1; real-fuel freezing: status: no skill shown | `docs/final_numbers_v8.md` |
 | v9 | 539 new dedup groups (ThermoML, Boehm 2022) built in `data/unified_v9/`; 14 new systems, 4 locked; no freezing fuel added; Antoine refits mostly failed the flash-window gate | `docs/final_numbers_v9.md` |
 | v10 | 3 PDFs supplied, 25 perhydrophenanthrene vapour-pressure points verified against page images, 0 new fuel rows; closed as a negative result | `docs/final_numbers_v10.md` |
+| v11 | tuning the viscosity pair LightGBM settings on dev systems: gain 0.0010 ln, interval includes 0, rule not met; BASE unchanged; density not tuned | `docs/final_numbers_v11.md` |
 
 ## 16. Handoff checklist
 

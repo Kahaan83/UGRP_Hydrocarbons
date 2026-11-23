@@ -1,0 +1,17 @@
+{
+ "best": {
+  "n_estimators": 800,
+  "learning_rate": 0.02,
+  "num_leaves": 15,
+  "min_child_samples": 20,
+  "colsample_bytree": 0.8,
+  "reg_lambda": 20.0
+ },
+ "n_systems": 264,
+ "mean_gain": 0.0010088310706177501,
+ "ci_lo": -0.00016984285375778869,
+ "ci_hi": 0.002301213047664747,
+ "v5_search_mae": 0.05989025404412356,
+ "best_search_mae": 0.05846848317559465,
+ "adopt": false
+}

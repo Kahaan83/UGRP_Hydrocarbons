@@ -51,4 +51,8 @@ The lock rule is md5 of the system id modulo 4 equal to 0, applied only to new v
 
 Three user-supplied PDFs were registered. Of the 25 perhydrophenanthrene vapour-pressure points drafted, all 25 matched the rendered page image (454.7 to 551.6 K), but the Antoine refit failed the flash-window gate (no points in 40 to 100 degC). The supplied file labelled AFRL-TR-2020-0017 is a different paper and contains no fuel property tables, and AIAA 2017-0146 was not supplied. No fuel-level row was added, so real-fuel freezing point and cold viscosity remain: status: no skill shown. Numbers: `docs/final_numbers_v10.md`.
 
+## 9. v11: tuning (negative result)
+
+A random search of 30 LightGBM configurations for the viscosity pair residual, scored on dev systems only and confirmed on three reshuffled partitions, gained 0.0010 ln (95 % interval -0.0002 to 0.0023); the predeclared rule (interval above 0, gain at least 0.002) was not met and the v5 settings stay. Numbers: `docs/final_numbers_v11.md`.
+
 The fresh v7 flash lock (61 Leenhouts mixture systems, 658 rows) could not be scored: the v5 flash route lacks Antoine or LFL constants for every lock compound and HANNA is binary only. The primary comparison (HANNA against UNIFAC) is not evaluated. See `results/v7/lock/scored/NOT_SCORABLE.md`.

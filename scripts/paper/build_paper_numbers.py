@@ -39,6 +39,7 @@ BLOCKS = [
     ("10c. v9 readings (dev and lock)", "final_numbers_v9.md", "D. Readings"),
     ("10d. v9 audit", "final_numbers_v9.md", "E. Audit"),
     ("11. v9 statements", "final_numbers_v9.md", "F. Statements"),
+    ("11b. v11 tuning of the viscosity pair model (negative)", "final_numbers_v11.md", "v11 final numbers"),
     ("12. v5 negative results (kept)", "final_numbers_v5.md", "F. Negative results"),
     ("13. Limitations (v5)", "final_numbers_v5.md", "G. Limitations"),
 ]
