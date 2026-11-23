@@ -227,7 +227,7 @@ Other standing decisions: pour point scoped out (`docs/scope_decisions.md` SD-01
 
 **Engineering state**
 
-13. Tests: last full run 2026-11-23 on this branch is recorded in section 16 below. One known failure, `test_committed_splits_match_rebuild` (input hash of the AJFTD long/wide files differs), is deliberately left unchanged.
+13. Tests: last full run 2026-11-23: 909 passed, 2 skipped, 2 failed. `test_committed_splits_match_rebuild` (input hash of the AJFTD long/wide files differs) is a known failure, deliberately left unchanged. `test_fit_ensemble_logger_none_bitwise` is load-sensitive and passes when run alone. `tests/test_base_*.py`: 48 passed; `reproduce_base.py` reports 0 changed, 0 missing, 0 new of 23 hashed files.
 14. Git: branch `feat/external-datasets-ingest`; `results/v5/BASE/delta_*` shows as modified in `git status` only because of line endings (`git diff --ignore-cr-at-eol` is empty and the manifest hashes match). Do not stage, checkout or normalise them.
 15. `data/unified/` is the v5 production set (76,328 dedup rows). The v9 additions are in `data/unified_v9/` (gitignored, rebuild with `scripts/v9/build_unified_v9.py`); v5 and earlier results are not retrained on them.
 16. The simplified-branch history is kept: the full pre-simplification tree is at tag `v5-full-2026-11-16`.
