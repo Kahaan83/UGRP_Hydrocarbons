@@ -556,7 +556,7 @@ Worked example output (4-component jet-like blend at 15 C: 45 % n-dodecane, 20 %
 
 **Why is the Jet A-1 design above the AJFTD dicyclo range?** The optimiser is free to leave the observed real-fuel range; we flag it (37.8 % vs 30 % max) and do not claim realism.
 
-**Why is the ML density only an option?** It failed the ternary gate (3.64 to 3.92 kg/m3).
+**Why is the ML density only an option?** With the v5 settings it failed the ternary gate (3.92 against 3.64 kg/m3 for the ideal rule). After the v11b tuning (L1 loss, 296 trees) the ternary row-level error is about equal to the ideal rule (3.64), so it remains an option and is not promoted; see `docs/final_numbers_v11.md`.
 
 **Why Refutas and not something fancier?** It is a standard petroleum-industry rule, it needs only each component's viscosity, it has no fitted parameters of our own, and it scored well against real fuels above 263 K. The ML part is a small correction on top of it.
 

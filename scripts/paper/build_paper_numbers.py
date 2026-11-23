@@ -28,6 +28,7 @@ BLOCKS = [
     ("1. Blend properties: headline results (v5, frozen BASE)", "final_numbers_v5.md", "A. Headline results per property"),
     ("2. Blend properties: margins and spec limits (v5)", "final_numbers_v5.md", "C. Margins and the spec limits"),
     ("3. Learned components that passed their gates (v5)", "final_numbers_v5.md", "D. Machine learning"),
+    ("3b. Density pair model after v11b tuning (replaces the density ML numbers of section 3)", "final_numbers_v11.md", "C. Density adoption"),
     ("4. Inverse design (v5; model-level certification only)", "final_numbers_v5.md", "E. Inverse-design results"),
     ("5. Pure-compound models (v7, dev CV, optimistic)", "final_numbers_v7.md", "A. Pure compounds"),
     ("6. Blend alternatives tried in v7", "final_numbers_v7.md", "B. Blend properties"),
@@ -39,7 +40,7 @@ BLOCKS = [
     ("10c. v9 readings (dev and lock)", "final_numbers_v9.md", "D. Readings"),
     ("10d. v9 audit", "final_numbers_v9.md", "E. Audit"),
     ("11. v9 statements", "final_numbers_v9.md", "F. Statements"),
-    ("11b. v11 tuning of the viscosity pair model (negative)", "final_numbers_v11.md", "v11 final numbers"),
+    ("11b. v11 and v11b tuning (viscosity not adopted)", "final_numbers_v11.md", "B. v11b nested tuning"),
     ("12. v5 negative results (kept)", "final_numbers_v5.md", "F. Negative results"),
     ("13. Limitations (v5)", "final_numbers_v5.md", "G. Limitations"),
 ]

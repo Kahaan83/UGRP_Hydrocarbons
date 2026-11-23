@@ -78,7 +78,7 @@ def test_density_ml_variant_binary_has_margin_designated_unchanged():
     assert d["method"] == "dens_idvol"
     v = d["variants"]["ml_pair_excess_volume"]
     if v["status"] == "ok":
-        assert v["in_domain"] is True and v["margin"] == pytest.approx(4.4248287, abs=1e-6)
+        assert v["in_domain"] is True and v["margin"] == pytest.approx(4.4240504, abs=1e-6)
         assert abs(v["value"] - d["value"]) < 20.0
 
 

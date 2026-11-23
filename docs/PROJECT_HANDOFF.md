@@ -132,7 +132,7 @@ Full detail and worked examples: `docs/GUIDE.md` parts A and 3. The designated r
 
 | Property | Designated method | Learned part | Applied margin |
 |---|---|---|---|
-| Density | ideal volume mixing, 1/rho = sum w_i/rho_i | `ml_pair_excess_volume`: a labelled variant for known binaries only (fails ternaries 3.64 to 3.92 kg/m3) | +4.59 / -3.25 kg/m3 (ML variant +/-4.42) |
+| Density | ideal volume mixing, 1/rho = sum w_i/rho_i | `ml_pair_excess_volume`: a labelled variant for known binaries only (v5 settings failed ternaries, 3.92 against 3.64 kg/m3 for ideal; after v11b tuning ternaries are about equal, 3.64, so still a variant) | +4.59 / -3.25 kg/m3 (ML variant +/-4.42) |
 | Kinematic viscosity | Refutas (VBN = 14.534 ln(ln(nu+0.8)) + 10.975) | `ml_pair_residual` (LightGBM on pair features) is the designated value **inside its domain** (known molecules, 233 to 393 K, class pairs seen at least 5 times, no stand-ins) | ML: 0.134 ln (283 K and above), 0.608 (263 to 283 K), 0.287 (below 263 K); Refutas 0.186 |
 | Flash point | Le Chatelier + Raoult + Antoine (anchored to measured vapour pressure) + Zabetakis LFL correction, solved with `brentq` on 150 to 650 K; registry overlay adds bicyclohexyl and cis-decalin | none (nothing fitted to blends) | 2.207 C (35 lab systems; the yaml value 3.699 is superseded) |
 | Freezing point | Schroeder-van Laar with UNIFAC activity coefficients (`svl_unifac`); ideal SvL is a reported variant | none | 13.84 C (variant 16.98 C); lab margin only |
@@ -296,7 +296,7 @@ Every term (Refutas, VBN, Antoine, LFL, SvL, UNIFAC, conformal margin, locked se
 | v8 | no ML-constant substitution passed G1; real-fuel freezing: status: no skill shown | `docs/final_numbers_v8.md` |
 | v9 | 539 new dedup groups (ThermoML, Boehm 2022) built in `data/unified_v9/`; 14 new systems, 4 locked; no freezing fuel added; Antoine refits mostly failed the flash-window gate | `docs/final_numbers_v9.md` |
 | v10 | 3 PDFs supplied, 25 perhydrophenanthrene vapour-pressure points verified against page images, 0 new fuel rows; closed as a negative result | `docs/final_numbers_v10.md` |
-| v11 | tuning the viscosity pair LightGBM settings on dev systems: gain 0.0010 ln, interval includes 0, rule not met; BASE unchanged; density not tuned | `docs/final_numbers_v11.md` |
+| v11, v11b | nested-CV tuning of the viscosity and density pair models. Viscosity: not adopted (cold-bin margin guard failed). Density: adopted (loss l1, 296 trees, lr 0.03, 11 leaves); dev ML MAE 0.958 to 0.908 kg/m3, locked second look 0.897 to 0.839; still a labelled variant, ternaries about equal to ideal | `docs/final_numbers_v11.md`, `docs/v11b_predeclaration.md` |
 
 ## 16. Handoff checklist
 

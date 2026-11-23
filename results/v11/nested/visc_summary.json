@@ -1,0 +1,96 @@
+{
+ "model": "visc",
+ "n_systems": 264,
+ "mae_v5": 0.05989025404412356,
+ "mae_tuned": 0.057825613081148045,
+ "mean_gain": 0.0020646409629755157,
+ "ci95": [
+  0.00020922199275584232,
+  0.004104979705509927
+ ],
+ "p_one_sided": 0.01199400299850075,
+ "threshold": 0.002,
+ "folds": [
+  {
+   "fold": 0,
+   "inner_macro": 0.065511817716533,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 495,
+    "num_leaves": 5,
+    "min_child_samples": 93,
+    "colsample_bytree": 0.5326132610463706,
+    "subsample": 0.9475510380134315,
+    "reg_lambda": 0.3609824243172387,
+    "p": 2
+   }
+  },
+  {
+   "fold": 1,
+   "inner_macro": 0.0659735975701076,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 386,
+    "num_leaves": 25,
+    "min_child_samples": 88,
+    "colsample_bytree": 0.6842338982719334,
+    "subsample": 0.8676201310550136,
+    "reg_lambda": 14.84545339533062,
+    "p": 2
+   }
+  },
+  {
+   "fold": 2,
+   "inner_macro": 0.06392085774699818,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 772,
+    "num_leaves": 12,
+    "min_child_samples": 99,
+    "colsample_bytree": 0.5945182165646148,
+    "subsample": 0.8527210952087116,
+    "reg_lambda": 26.805968090517844,
+    "p": 2
+   }
+  },
+  {
+   "fold": 3,
+   "inner_macro": 0.06535810167740182,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 484,
+    "num_leaves": 16,
+    "min_child_samples": 39,
+    "colsample_bytree": 0.6829073211031076,
+    "subsample": 0.6024865744765378,
+    "reg_lambda": 15.444387837888284,
+    "p": 2
+   }
+  },
+  {
+   "fold": 4,
+   "inner_macro": 0.03032952322969194,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 954,
+    "num_leaves": 10,
+    "min_child_samples": 29,
+    "colsample_bytree": 0.9752143472245011,
+    "subsample": 0.8257544881435951,
+    "reg_lambda": 0.33744032478984354,
+    "p": 1
+   }
+  }
+ ],
+ "margins_v5": {
+  "T_lt_263K": 0.28747778594508044,
+  "T_263_283K": 0.6084381907110359,
+  "T_ge_283K": 0.13426357484240542
+ },
+ "margins_tuned": {
+  "T_lt_263K": 0.38641134075491895,
+  "T_263_283K": 0.6084381907110359,
+  "T_ge_283K": 0.12582920973410938
+ },
+ "margin_guard_ok": false
+}

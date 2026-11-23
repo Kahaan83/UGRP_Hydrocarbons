@@ -48,3 +48,5 @@ Spec `verification:` flags (smoke, aromatics); adopt WS6 cold-viscosity offset m
 ## v11: tuned LightGBM settings for the viscosity pair residual
 
 Best of 30 random configurations gained 0.0010 ln (95 % interval -0.0002 to 0.0023) over the v5 settings on reshuffled dev partitions; the adoption rule (interval above 0, gain at least 0.002) was not met. v5 settings kept. Numbers: `docs/final_numbers_v11.md`.
+
+Second attempt (v11b, nested CV, Optuna): viscosity gain 0.0021 ln, Holm p 0.024, but the below-263 K margin rose from 0.287 to 0.386, so the predeclared margin guard failed and v5 viscosity settings stay.

@@ -23,8 +23,11 @@ CLASS_PAIRS = ["|".join(p) for p in combinations_with_replacement(sorted(CLASSES
 STATIC = ["n_carbon", "mw", "n_rings", "n_arom_rings", "n_ch3", "n_quat_c"]
 BASE_FEATS = STATIC + ["v_molar"]
 FEATURES = [f"{p}_{b}" for b in BASE_FEATS for p in ("mean", "absdiff")] + ["class_pair", "T"]
-LGB_PARAMS = dict(n_estimators=400, learning_rate=0.05, num_leaves=15, min_child_samples=40, subsample=0.8, subsample_freq=1,
-                  colsample_bytree=0.8, reg_lambda=1.0, random_state=42, deterministic=True, force_row_wise=True, n_jobs=1, verbose=-1)
+# v11b: tuned by nested Optuna search on dev systems (results/v11/nested/dens_final_params.json); v5 settings were
+# n_estimators=400, learning_rate=0.05, num_leaves=15, min_child_samples=40, subsample=0.8, colsample_bytree=0.8, reg_lambda=1.0, l2 loss.
+LGB_PARAMS = dict(objective="l1", n_estimators=296, learning_rate=0.03, num_leaves=11, min_child_samples=67, subsample=0.9477038383763738,
+                  subsample_freq=1, colsample_bytree=0.7836597008485529, reg_lambda=1.23346611278236, random_state=42, deterministic=True,
+                  force_row_wise=True, n_jobs=1, verbose=-1)
 MIN_SYSTEMS_PER_PAIR = 5
 _MODEL = None
 

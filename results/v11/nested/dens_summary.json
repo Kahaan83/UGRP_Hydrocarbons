@@ -1,0 +1,93 @@
+{
+ "model": "dens",
+ "n_systems": 167,
+ "mae_v5": 0.9577868304818979,
+ "mae_tuned": 0.9077070848140457,
+ "mean_gain": 0.05007974566785242,
+ "ci95": [
+  0.0006706020361658548,
+  0.10363298000397342
+ ],
+ "p_one_sided": 0.02348825587206397,
+ "threshold": 0.04,
+ "folds": [
+  {
+   "fold": 0,
+   "inner_macro": 0.9310169264564244,
+   "params": {
+    "loss": "huber",
+    "n_estimators": 621,
+    "num_leaves": 42,
+    "min_child_samples": 91,
+    "colsample_bytree": 0.5167185234493137,
+    "subsample": 0.8541410092295021,
+    "reg_lambda": 0.15712379599518106,
+    "huber_delta": 0.416781213446308,
+    "p": 2
+   }
+  },
+  {
+   "fold": 1,
+   "inner_macro": 0.9629846589370459,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 375,
+    "num_leaves": 10,
+    "min_child_samples": 90,
+    "colsample_bytree": 0.800564048417092,
+    "subsample": 0.7395501939745465,
+    "reg_lambda": 5.892483675490704,
+    "p": 2
+   }
+  },
+  {
+   "fold": 2,
+   "inner_macro": 0.894738950296733,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 474,
+    "num_leaves": 41,
+    "min_child_samples": 58,
+    "colsample_bytree": 0.9466729988804361,
+    "subsample": 0.7662014676899361,
+    "reg_lambda": 0.5915970270439844,
+    "p": 1
+   }
+  },
+  {
+   "fold": 3,
+   "inner_macro": 0.9799241084359784,
+   "params": {
+    "loss": "l1",
+    "n_estimators": 896,
+    "num_leaves": 5,
+    "min_child_samples": 63,
+    "colsample_bytree": 0.6985600010232373,
+    "subsample": 0.9502232284426764,
+    "reg_lambda": 10.363134347351238,
+    "p": 1
+   }
+  },
+  {
+   "fold": 4,
+   "inner_macro": 0.9478376871442581,
+   "params": {
+    "loss": "huber",
+    "n_estimators": 201,
+    "num_leaves": 46,
+    "min_child_samples": 56,
+    "colsample_bytree": 0.5371797873042647,
+    "subsample": 0.923268424843928,
+    "reg_lambda": 0.45805264346884766,
+    "huber_delta": 1.277237005190389,
+    "p": 2
+   }
+  }
+ ],
+ "dev_ternary_rows": 615,
+ "dev_ternary_mae": {
+  "ideal": 3.6439208661852893,
+  "v5": 3.9019601559476667,
+  "tuned": 3.6612325231370026
+ }
+}

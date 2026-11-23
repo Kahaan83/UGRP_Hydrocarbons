@@ -15,11 +15,11 @@ Status labels: **current** = kept up to date, **reference** = accurate for its r
 
 ## Numbers by round (all generated from committed result files)
 
-`final_numbers_v5.md` (blends, frozen BASE), `final_numbers_v7.md` (pure compounds), `final_numbers_v8.md` (ML constants, freezing, designs), `final_numbers_v9.md` (data acquisition), `final_numbers_v10.md` (PDF transcription, negative), `final_numbers_v11.md` (pair-model tuning, negative).
+`final_numbers_v5.md` (blends, frozen BASE), `final_numbers_v7.md` (pure compounds), `final_numbers_v8.md` (ML constants, freezing, designs), `final_numbers_v9.md` (data acquisition), `final_numbers_v10.md` (PDF transcription, negative), `final_numbers_v11.md` (pair-model tuning; density adopted, viscosity not).
 
 ## Protocols and predeclarations (reference)
 
-`v7_protocol.md`, `v8_predeclaration.md`, `v9_predeclaration.md`, `v10_predeclaration.md`, `v11_predeclaration.md`, `decisions_2026-11-15.md`, `scope_decisions.md`, `model_decision.md`.
+`v7_protocol.md`, `v8_predeclaration.md`, `v9_predeclaration.md`, `v10_predeclaration.md`, `v11_predeclaration.md`, `v11b_predeclaration.md`, `decisions_2026-11-15.md`, `scope_decisions.md`, `model_decision.md`.
 
 ## Audits and data records (reference)
 

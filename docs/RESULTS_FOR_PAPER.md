@@ -150,6 +150,27 @@ Margins and locked coverage (90 %, two-sided, ln for viscosity, kg/m3 for densit
 
 Reading: R-MLV-3 passed; the gate is the per-system macro row (bootstrap CI). The row-level figure is shown too. R-MLD-3 mixes bases: its gain is row-level while its CI is the per-system macro CI (`ci_basis`). At >= 283 K the ML margin is tighter (0.134 vs 0.185 ln) but covers 64 of 70 locked systems against 66 of 70 for Refutas. R-MLV-5 (real fuels, descriptive) is mixed: a large gain at 233/253 K, worse at several warm cells; no claim beyond lab mixtures is made. Sources: `results/v5/BASE/delta_ml_viscosity/readings.json`, `readings_R-MLV-5.json`, `results/v5/BASE/delta_ml_density/readings.json`; `docs/model_decision.md` (v5 ML components). Figures `results/v5/final/figures/e_ml_before_after.png`, `b_viscosity_refutas_vs_ml.png`, `c_density_ideal_vs_ml.png` (residual distributions; the row files store residuals only, so no parity plot).
 
+## 3b. Density pair model after v11b tuning (replaces the density ML numbers of section 3)
+
+Source: `docs/final_numbers_v11.md`, heading "C. Density adoption"
+
+Final configuration: loss l1, 296 trees, learning rate 0.03, 11 leaves, min child 67, weight exponent 2. Applied in `src/fuelblend/ml/density_pair.py`; `models/v5/ml_density_pair` and `results/v5/BASE/delta_ml_density/` regenerated. The locked systems were read a second time (R-MLD-2 had already read them in v5), so the locked numbers are a second look, not a fresh hold-out.
+
+| reading | quantity | v5 settings | tuned |
+|---|---|---|---|
+| R-MLD-1 dev OOF | ML MAE kg/m3 (per system) | 0.9578 | 0.9076 |
+| R-MLD-1 dev OOF | gain over ideal | 0.3757 | 0.4260 |
+| R-MLD-2 locked (second look) | ML MAE kg/m3 | 0.8972 | 0.8389 |
+| R-MLD-2 locked (second look) | gain over ideal | 0.3036 | 0.3619 |
+| R-MLD-3 ternaries+ (row level) | ML MAE kg/m3 | 3.9224 | 3.6385 |
+| R-MLD-3 ternaries+ (per system) | gain over ideal | -0.1321 | 0.0391 |
+| R-MLD-4 | dev OOF margin kg/m3 | 5.0671 | 4.5424 |
+| R-MLD-4 | locked margin kg/m3 | 4.4248 | 4.4241 |
+
+Gate flags (v5 settings then tuned): R-MLD-3 pass False then True; promotion offered by the script False then True.
+
+Reading: the tuned density pair model lowers lab error on dev and on the already-read locked systems. Row-level ternary error is about equal to the ideal-volume rule (dev ternary MAE above), so density stays a labelled variant and is not promoted to the designated route; that decision is the user's. No laboratory validation exists.
+
 ## 4. Inverse design (v5; model-level certification only)
 
 Source: `docs/final_numbers_v5.md`, heading "E. Inverse-design results"
@@ -341,23 +362,26 @@ Source: `docs/final_numbers_v9.md`, heading "F. Statements"
 - Cold viscosity: status: no skill shown. No new composition-bearing viscosity system was added.
 - Edwards 2017 and the pure-compound drafts were withheld as unverifiable and are not in unified_v9.
 
-## 11b. v11 tuning of the viscosity pair model (negative)
+## 11b. v11 and v11b tuning (viscosity not adopted)
 
-Source: `docs/final_numbers_v11.md`, heading "v11 final numbers"
+Source: `docs/final_numbers_v11.md`, heading "B. v11b nested tuning"
 
-Source: `results/v11/tune_viscosity/summary.json` and `search.csv`; protocol `docs/v11_predeclaration.md`; script `scripts/v11/tune_pair_viscosity.py`. Dev systems only; locked systems not read.
+| model | systems | v5 macro MAE | tuned macro MAE | mean gain | 95 % interval | one-sided p | Holm p | threshold | adopted |
+|---|---|---|---|---|---|---|---|---|---|
+| visc (ln) | 264 | 0.0599 | 0.0578 | 0.0021 | 0.0002 to 0.0041 | 0.0120 | 0.0240 | 0.002 | False |
+| dens (kg/m3) | 167 | 0.9578 | 0.9077 | 0.0501 | 0.0007 to 0.1036 | 0.0235 | 0.0235 | 0.04 | True |
 
-| item | value |
-|---|---|
-| dev systems | 264 |
-| configurations searched | 30 random plus the v5 default |
-| v5 default, per-system macro MAE (ln), v5 folds | 0.05989 |
-| best tuned (800 trees, lr 0.02, 15 leaves, min child 20, colsample 0.8, lambda 20), same folds | 0.05847 |
-| confirmation on 3 reshuffled partitions: mean gain (default minus tuned) | 0.0010 |
-| 95 % system-bootstrap interval of the gain | -0.0002 to 0.0023 |
-| adoption rule (interval above 0 and gain at least 0.002) | not met |
+Viscosity temperature-bin margins (R-MLV-6 definition, ln), v5 settings against tuned:
 
-Reading: tuning does not give a gain that survives reshuffled partitions. The v5 settings stay, `results/v5/BASE/` and its manifest are unchanged, and the density pair model was not tuned (predeclared: only if viscosity is adopted). Status: no improvement shown.
+| bin | v5 | tuned |
+|---|---|---|
+| T_lt_263K | 0.2875 | 0.3864 |
+| T_263_283K | 0.6084 | 0.6084 |
+| T_ge_283K | 0.1343 | 0.1258 |
+
+Margin guard satisfied: False. Viscosity is therefore not adopted although the gain and Holm p pass: the margin below 263 K rises. v5 viscosity settings stay.
+
+Density dev ternary rows (615), MAE kg/m3: ideal 3.644, v5 ML 3.902, tuned ML 3.661.
 
 ## 12. v5 negative results (kept)
 
