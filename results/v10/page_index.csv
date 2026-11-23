@@ -1,0 +1,24 @@
+filename,page,table_label,content,target,extraction
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,2,Table 1,"Fuels features: MW and average formula for A-1, A-2, A-3, C-1 to C-6",other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,2,Table 2,"Fuel heating values (LHV, HHV in MJ/kg for hydrogen, gasoline, etc.)",other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,5,Table 3,General theoretical characteristics of turbojet engine,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,6,Table 4,GasTurb numerical analysis cases,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,6,Table 5,Parametric analysis input data BPR-FHV-BFF,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,6,Table 6,Parametric analysis input data FHV-BET-BFF,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,7,Table 7,Parametric analysis input data T1-FHV-BFF,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,7,Table 8,Parametric analysis input data P1-FHV-BFF,other,text_layer
+AFRL-TR-2020-0017 (DTIC AD1093317).pdf,8,Table 9,Parametric analysis input data BDE-FHV-BFF,other,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,2,Table 1,Vapor Pressure of Perhydroacenaphthylene,other,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,3,Table 2,"Vapor Pressure of Perhydrophenanthrene (25 points, T=454.68-551.61 K, P=8.29-99.53 kPa)",pure_vp,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,3,Table 3,Parameters of the Antoine Equation for perhydrophenanthrene and perhydroacenaphthylene,pure_vp,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,4,Table 4,Parameters of the Cox Equation for perhydrophenanthrene and perhydroacenaphthylene,pure_vp,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,5,Table 5,Liquid Heat Capacities of perhydrophenanthrene and perhydroacenaphthylene,other,text_layer
+Vapor_Pressure_and_Liquid_Heat_Capacity.pdf,5,Table 6,Parameters of Heat Capacity Eq 6,other,text_layer
+je500381c_si_001.pdf,1,Table S1 (p1-5),Excess molar volumes for binary mixtures of 1-heptanol / cyclohexylmethanol with adamantane derivatives,other,text_layer
+je500381c_si_001.pdf,6,Table S2 (p6-7),Redlich-Kister coefficients for excess molar volumes,other,text_layer
+je500381c_si_001.pdf,8,Table S3 (p8-12),Viscosity deviations for binary mixtures with 1-heptanol and cyclohexylmethanol,other,text_layer
+je500381c_si_001.pdf,13,Table S4 (p13-14),Redlich-Kister coefficients for viscosity deviations,other,text_layer
+je500381c_si_001.pdf,15,Table S5 (p15-19),Molar refraction deviations for binary mixtures with alcohols,other,text_layer
+je500381c_si_001.pdf,20,Table S6 (p20-21),Redlich-Kister coefficients for molar refraction deviations,other,text_layer
+je500381c_si_001.pdf,22,Table S7,Surface tension deviations for binary mixtures with alcohols,other,text_layer
+je500381c_si_001.pdf,23,Table S8,Redlich-Kister coefficients for surface tension deviations,other,text_layer
