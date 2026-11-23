@@ -47,3 +47,12 @@ The tuned pair model beats the ideal rule on ternaries under row-level and macro
 - The 2.207 C margin is the third largest of 35 per-system worst over-predictions (10.60, 3.79, 2.21). Margin guarantee for cyclic blends rests on one point.
 - n-Dodecane Antoine: refit_measured, covers the window, so the AGENTS trap 3 is not the cause. Cause not established.
 - The "61 unscored systems (658 rows)" in the review: dedup holds only 32 binary/multi flash systems, all scored, so this figure was not reproduced.
+
+## RM-12 viscosity mixing-rule benchmark (scratch/rm12_mixing.py; results/v11/claim_risk/rm12_mixing_rules.json)
+Macro MAE (ln), T >= 283.15 K, untuned pair correction refit on each base's residuals, 5000 paired resamples. Mole-fraction Arrhenius and Kendall-Monroe use the same pure-component ln eta as Refutas.
+| base | dev base | dev +pair | dev gain [CI] | locked base | locked +pair | locked gain [CI] |
+|---|---|---|---|---|---|---|
+| Refutas | 0.0824 | 0.0599 | 0.0225 [0.0182, 0.0269] | 0.0544 | 0.0311 | 0.0233 [0.0163, 0.0302] |
+| Arrhenius | 0.0989 | 0.0642 | 0.0347 [0.0285, 0.0413] | 0.0831 | 0.0389 | 0.0442 [0.0307, 0.0600] |
+| Kendall-Monroe | 0.0965 | 0.0633 | 0.0332 [0.0275, 0.0388] | 0.0717 | 0.0367 | 0.0351 [0.0251, 0.0453] |
+Refutas is the best base and the best base+pair combination; the pair gain holds for all three bases.
