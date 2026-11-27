@@ -311,7 +311,10 @@ def legacy_freezing(monkeypatch):
 
 def test_margin_fn_absent_unchanged(legacy_freezing):
     """R-SC-4: with recipe_margins off (default) the results equal the frozen pre-change results."""
-    frozen = json.loads(BASELINE.read_text())
+    # the design freezing model was renamed from the stale label 'ideal_sle_mole_fraction' to the designated route name (label
+    # only; values, margins and statuses are still compared against the frozen file, which is not edited)
+    from fuelblend.eval import composition_route as CR
+    frozen = json.loads(BASELINE.read_text().replace('"ideal_sle_mole_fraction"', json.dumps(CR.designated_freezing_model())))
     assert dataclasses.fields(E.PropertyModel)                      # imports fine
     import inspect
     assert inspect.signature(LR.design_routed).parameters["recipe_margins"].default is False

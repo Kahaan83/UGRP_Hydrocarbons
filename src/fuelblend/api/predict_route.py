@@ -670,7 +670,7 @@ def _add_density_ml(out: dict, ctx, pm: PropMap, T_K: float, composition_kind: s
     except Exception as e:                                      # model files missing or feature failure
         return _none(f"ml model unavailable ({type(e).__name__})")
     ok = composition_kind == "known" and len(smi) == 2
-    w = [] if ok else ["ml_pair_excess_volume_no_margin: margin only for known binaries (R-MLD-3 ternaries failed; real fuels not tested)"]
+    w = [] if ok else ["ml_pair_excess_volume_no_margin: margin only for known binaries (R-MLD-3 ternaries failed; real fuels: no skill shown, v12)"]
     v = float(res["value"] * r["rho_ml"] / r["rho_ideal"])     # same correction ratio applied on the API's ideal value
     lo, hi = (v - m, v + m) if ok else (math.nan, math.nan)
     res["variants"]["ml_pair_excess_volume"] = dict(base, value=v, excess_volume_cm3_mol=r["excess_volume_cm3_mol"], status="ok",

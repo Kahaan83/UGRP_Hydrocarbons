@@ -81,6 +81,8 @@ Table: `results/v5/final/table_A_headline.csv` (full columns incl. margin90, uns
 | lab_liquidus_S_F | svl_unifac | designated (CLM-73) | 12 | 73 | 3.935 | 2.466 | 15.63 | 13.84 | 0.2603 |
 | lab_liquidus_S_F | svl_verified | variant (ideal SvL) | 12 | 73 | 4.474 | 1.17 | 15.63 | 16.98 | 0.3288 |
 
+  Superseded MAE values (v11c xylene eutectic correction, `docs/final_numbers_v11c.md` section 1): UNIFAC 3.935 -> 3.648, ideal 4.474 -> 4.187. Margins unchanged (13.84 UNIFAC, 16.98 ideal). The table above is kept as frozen v5.
+
 * **Viscosity.** The scoreboard's designated T2 viscosity route is `refutas_raw` (v4 routing), and its cold bins are `worse_than_trivial`. `ml_pair_residual`, the designated in-domain viscosity of `predict_fuel`, has gate evidence on lab mixtures only (section D); its real-fuel transfer is descriptive and mixed.
 
 * **D86.** All distillation cells are `no_evaluation` (exploratory) in the scoreboard; no D86 accuracy is claimed here.
