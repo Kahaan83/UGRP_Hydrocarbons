@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  base-manifest:
+    # The frozen v5 BASE is hashed byte for byte; .gitattributes marks results/v5/BASE/** as -text, so a checkout keeps the bytes.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify SHA256SUMS_v5_base.txt
+        run: tr -d '\r' < SHA256SUMS_v5_base.txt | sha256sum --check --strict -
+
+  tests:
+    # Only test files that pass on a clean checkout (data/cache, data/unified_v9, licensed and raw AJFTD data are not in git).
+    # The full suite needs the local data and is run locally: .venv\Scripts\python.exe -m pytest -q
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r .github/ci-requirements.txt
+      - name: Clean-checkout test subset
+        run: python -m pytest -q -p no:cacheprovider $(tr -d '\r' < .github/ci-tests.txt | grep -v '^#' | tr '\n' ' ')
