@@ -1,0 +1,32 @@
+{
+ "ideal": {
+  "n_tern_sys": 19,
+  "macro_tern": 2.2073996779987333,
+  "row_tern": 3.6439208661852893,
+  "big_sys_rows": 216,
+  "macro_tern_ex_big": 1.9589062399950998,
+  "row_tern_ex_big": 2.0001767300704265,
+  "macro_all_dev": 1.3335364544518757,
+  "macro_binary": 1.2213513108884277
+ },
+ "v5": {
+  "n_tern_sys": 19,
+  "macro_tern": 2.204444539385568,
+  "row_tern": 3.9019601559476667,
+  "big_sys_rows": 216,
+  "macro_tern_ex_big": 1.9340646697112038,
+  "row_tern_ex_big": 2.1862369476356003,
+  "macro_all_dev": 0.9577868304818979,
+  "macro_binary": 0.7977429354199403
+ },
+ "tuned": {
+  "n_tern_sys": 19,
+  "macro_tern": 2.054403800214843,
+  "row_tern": 3.6193345887996,
+  "big_sys_rows": 216,
+  "macro_tern_ex_big": 1.7919301874601017,
+  "row_tern_ex_big": 1.9088775560774764,
+  "macro_all_dev": 0.9075660124997734,
+  "macro_binary": 0.7603368370498657
+ }
+}
