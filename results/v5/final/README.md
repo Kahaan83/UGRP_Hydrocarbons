@@ -1,6 +1,6 @@
 # v5 final numbers pack: tables and figures
 
-Built by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `a3c5967` (`git show`, never the working tree).
+Built by `scripts/v5/final/build_final_numbers_v5.py` from files committed at `8f5d11c` (`git show`, never the working tree).
 Master document: `docs/final_numbers_v5.md`. Nothing here is recomputed; values are selected, joined and plotted.
 
 | file | content | sources |
