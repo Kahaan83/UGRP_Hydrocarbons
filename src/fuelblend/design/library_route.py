@@ -332,7 +332,9 @@ def build_route_models(pool_ids, pure_props=PURE_PROPS_V5, require=("grid", "fla
     mole = next(p for p in alts["freezing"] if p.name == "ideal_sle_mole_fraction")
     alts["freezing"] = [p for p in alts["freezing"] if p.name != "ideal_sle_mole_fraction"] + [props["freezing"]]
     # the yaml key is attached unconditionally: a margins file without it gives the engine's "no such entry" reason (uncertified)
-    props["freezing"] = dataclasses.replace(mole, fn=_freezing_api_fn(L), certified_kinds={"jet"},
+    # name = the designated route (was left as 'ideal_sle_mole_fraction' although the value and margin are the designated route)
+    from fuelblend.eval import composition_route as CR
+    props["freezing"] = dataclasses.replace(mole, name=CR.designated_freezing_model(), fn=_freezing_api_fn(L), certified_kinds={"jet"},
                                             margin_keys=(freezing_margin_key(),), margin_missing_reason="")
     # viscosity: same value as predict_fuel (ML pair residual designated in its domain, cc5f5ef); the optimiser runs with the
     # Refutas yaml margin of the T bin, the final recipe is re-judged with the ML margin in ``annotate`` (``_rejudge_viscosity``)

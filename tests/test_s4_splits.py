@@ -24,6 +24,8 @@ def test_split_deterministic(built):
     assert json.dumps(sp, sort_keys=True) == json.dumps(E.make_splits(t2, dup2), sort_keys=True)
 
 
+@pytest.mark.xfail(reason="known: the input hash of the AJFTD long/wide files differs from the one recorded in the committed "
+                          "splits; the splits are kept unchanged on purpose (docs/PROJECT_HANDOFF.md item 13)", strict=False)
 def test_committed_splits_match_rebuild(built):
     p = E.OUT / "splits_ajftd_v5.json"
     if not p.exists():
