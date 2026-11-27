@@ -7,4 +7,4 @@ bicyclohexyl dHfus 13.94 kJ/mol over-predicts freezing (safe side),14.8454,C sys
 certified Jet A-1 design outside AJFTD dicycloparaffin range,37.784,wt % dicyclo,AJFTD GCxGC maximum 30.0 %,results/v5/BASE/delta_adopt_designs/results_table.csv
 engine freezing label,16.0,design rows,designs.csv freezing_model_y = ideal_sle_mole_fraction (16); value and margin are UNIFAC SvL (freezing_route column),results/v5/BASE/delta_adopt_designs/designs.csv
 no lab validation,0.0,designs measured,lab test ruled out by the user (2026-11-14); certification is model-level only,docs/v5_negative_results.md
-re-score adopted as the frozen BASE (U4),,,"adopted in 3b75437: results/v5/BASE/ = delta_adopt_rescore/rerun, SHA256SUMS_v5_base.txt re-written; pre-adoption BASE recoverable at 3ab033d",results/v5/BASE/delta_adopt_rescore/README.md
+re-score adopted as the frozen BASE (U4),,,"adopted in 91f2380: results/v5/BASE/ = delta_adopt_rescore/rerun, SHA256SUMS_v5_base.txt re-written; pre-adoption BASE recoverable at 09e1366",results/v5/BASE/delta_adopt_rescore/README.md
